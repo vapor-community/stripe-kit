@@ -43,7 +43,6 @@ class TransferTests: XCTestCase {
       },
     ],
     "has_more": false,
-    "total_count": 2,
     "url": "/v1/transfers/tr_164xRv2eZvKYlo2CZxJZWm1E/reversals"
   },
   "reversed": true,
@@ -86,7 +85,6 @@ class TransferTests: XCTestCase {
                 // This test covers the transfer reversal
                 XCTAssertEqual(tran.reversals?.object, "list")
                 XCTAssertEqual(tran.reversals?.hasMore, false)
-                XCTAssertEqual(tran.reversals?.totalCount, 2)
                 XCTAssertEqual(tran.reversals?.url, "/v1/transfers/tr_164xRv2eZvKYlo2CZxJZWm1E/reversals")
                 XCTAssertEqual(tran.reversals?.data?[0].id, "trr_1BGmS02eZvKYlo2CklK9McmT")
                 XCTAssertEqual(tran.reversals?.data?[0].object, "transfer_reversal")

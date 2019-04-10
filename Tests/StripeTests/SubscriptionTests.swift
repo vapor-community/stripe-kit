@@ -53,7 +53,6 @@ class SubscriptionTests: XCTestCase {
                 XCTAssertNotNil(sub.items)
                 XCTAssertEqual(sub.items?.object, "list")
                 XCTAssertEqual(sub.items?.hasMore, false)
-                XCTAssertEqual(sub.items?.totalCount, 1)
                 XCTAssertEqual(sub.items?.url, "/v1/subscription_items?subscription=sub_AJ6s2Iy65K3RxN")
                 
                 // This test covers the SubscriptionItem  object
@@ -258,7 +257,6 @@ class SubscriptionTests: XCTestCase {
       }
     ],
     "has_more": false,
-    "total_count": 1,
     "url": "/v1/subscription_items?subscription=sub_AJ6s2Iy65K3RxN"
   },
   "livemode": true,
