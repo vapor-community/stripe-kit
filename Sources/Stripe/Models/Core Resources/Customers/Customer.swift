@@ -28,7 +28,7 @@ public struct StripeCustomer: StripeModel {
     public var invoiceSettings: StripeInvoiceSettings?
     public var livemode: Bool?
     public var metadata: [String: String]
-    public var shipping: ShippingLabel?
+    public var shipping: StripeShippingLabel?
     public var sources: StripeSourcesList?
     public var subscriptions: StripeSubscriptionsList?
     public var taxInfo: StripeCustomerTaxInfo?

@@ -11,7 +11,7 @@ import Vapor
 public protocol CustomerRoutes {
     func create(accountBalance: Int?, coupon: String?, description: String?, email: String?, invoicePrefix: String?, invoiceSettings: [String: Any]?, metadata: [String: String]?, shipping: [String: Any]?, source: Any?, taxInfo: [String: String]?) throws -> Future<StripeCustomer>
     func retrieve(customer: String) throws -> Future<StripeCustomer>
-    func update(customer: String, accountBalance: Int?, businessVatId: String?, coupon: String?, defaultSource: String?, description: String?, email: String?, metadata: [String: String]?, shipping: ShippingLabel?, source: Any?) throws -> Future<StripeCustomer>
+    func update(customer: String, accountBalance: Int?, businessVatId: String?, coupon: String?, defaultSource: String?, description: String?, email: String?, metadata: [String: String]?, shipping: StripeShippingLabel?, source: Any?) throws -> Future<StripeCustomer>
     func delete(customer: String) throws -> Future<StripeDeletedObject>
     func listAll(filter: [String: Any]?) throws -> Future<StripeCustomersList>
     func addNewSource(customer: String, source: String, toConnectedAccount: String?) throws -> Future<StripeSource>
@@ -56,7 +56,7 @@ extension CustomerRoutes {
                        description: String? = nil,
                        email: String? = nil,
                        metadata: [String: String]? = nil,
-                       shipping: ShippingLabel? = nil,
+                       shipping: StripeShippingLabel? = nil,
                        source: Any? = nil) throws -> Future<StripeCustomer> {
         return try update(customer: customer,
                           accountBalance: accountBalance,
@@ -180,7 +180,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
                        description: String?,
                        email: String?,
                        metadata: [String: String]?,
-                       shipping: ShippingLabel?,
+                       shipping: StripeShippingLabel?,
                        source: Any?) throws -> Future<StripeCustomer> {
         var body: [String: Any] = [:]
         

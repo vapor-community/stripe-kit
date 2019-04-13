@@ -31,7 +31,7 @@ public struct StripeOrder: StripeModel {
     public var metadata: [String: String]
     public var returns: OrderReturnList?
     public var selectedShippingMethod: String?
-    public var shipping: ShippingLabel?
+    public var shipping: StripeShippingLabel?
     public var shippingMethods: [StripeShippingMethod]?
     public var status: OrderStatus?
     public var statusTransitions: StripeOrderStatusTransitions?
