@@ -25,8 +25,8 @@ extension BalanceTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__BalanceTests = [
-        ("testBalanceParsedProperly", testBalanceParsedProperly),
-        ("testBalanceTransactionParsedProperly", testBalanceTransactionParsedProperly),
+        ("testBalanceParsesProperly", testBalanceParsesProperly),
+        ("testBalanceTransactionParsesProperly", testBalanceTransactionParsesProperly),
     ]
 }
 

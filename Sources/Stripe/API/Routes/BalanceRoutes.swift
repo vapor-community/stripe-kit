@@ -6,24 +6,40 @@
 //
 //
 
-import Vapor
+import NIO
 
 public protocol BalanceRoutes {
-    func retrieve() throws -> Future<StripeBalance>
-    func retrieve(forTransaction: String) throws -> Future<StripeBalanceTransactionItem>
-    func listAll(filter: [String: Any]?) throws -> Future<BalanceHistoryList>
+    /// Retrieves the current account balance, based on the authentication that was used to make the request. For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
+    ///
+    /// - Returns: A `StripeBalance`.
+    /// - Throws: A `StripeError`.
+    func retrieve() throws -> EventLoopFuture<StripeBalance>
+    
+    /// Retrieves the balance transaction with the given ID.
+    ///
+    /// - Parameter id: The ID of the desired balance transaction, as found on any API object that affects the balance (e.g., a charge or transfer).
+    /// - Returns: A `StripeBalanceTransaction`.
+    /// - Throws: A `StripeError`.
+    func retrieve(id: String) throws -> EventLoopFuture<StripeBalanceTransaction>
+    
+    /// Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.
+    ///
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/balance/balance_history).
+    /// - Returns: A `StripeBalanceTransactionList`.
+    /// - Throws: A `StripeError`.
+    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeBalanceTransactionList>
 }
 
 extension BalanceRoutes {
-    public func retrieve() throws -> Future<StripeBalance> {
+    public func retrieve() throws -> EventLoopFuture<StripeBalance> {
         return try retrieve()
     }
     
-    public func retrieve(forTransaction: String) throws -> Future<StripeBalanceTransactionItem> {
-        return try retrieve(forTransaction: forTransaction)
+    public func retrieve(id: String) throws -> EventLoopFuture<StripeBalanceTransaction> {
+        return try retrieve(id: id)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> Future<BalanceHistoryList> {
+    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeBalanceTransactionList> {
         return try listAll(filter: filter)
     }
 }
@@ -35,21 +51,15 @@ public struct StripeBalanceRoutes: BalanceRoutes {
         self.request = request
     }
     
-    /// Retrieve balance
-    /// [Learn More →](https://stripe.com/docs/api/curl#retrieve_balance)
-    public func retrieve() throws -> Future<StripeBalance> {
+    public func retrieve() throws -> EventLoopFuture<StripeBalance> {
         return try request.send(method: .GET, path: StripeAPIEndpoint.balance.endpoint)
     }
     
-    /// Retrieve a balance transaction
-    /// [Learn More →](https://stripe.com/docs/api/curl#balance_transaction_retrieve)
-    public func retrieve(forTransaction transactionId: String) throws -> Future<StripeBalanceTransactionItem> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.balanceHistoryTransaction(transactionId).endpoint)
+    public func retrieve(id: String) throws -> EventLoopFuture<StripeBalanceTransaction> {
+        return try request.send(method: .GET, path: StripeAPIEndpoint.balanceHistoryTransaction(id).endpoint)
     }
     
-    /// List all balance history
-    /// [Learn More →](https://stripe.com/docs/api/curl#balance_history)
-    public func listAll(filter: [String: Any]?) throws -> Future<BalanceHistoryList> {
+    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeBalanceTransactionList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

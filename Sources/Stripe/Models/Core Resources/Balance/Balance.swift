@@ -6,23 +6,32 @@
 //
 //
 
-/**
- Balance object
- https://stripe.com/docs/api/curl#balance_object
- */
-
+/// The [Balance Object](https://stripe.com/docs/api/balance/balance_object)
 public struct StripeBalance: StripeModel {
+    /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
-    public var available: [StripeBalanceTransfer]?
-    public var connectReserved: [StripeBalanceTransfer]?
+    /// Funds that are available to be transferred or paid out, whether automatically by Stripe or explicitly via the [Transfers API](https://stripe.com/docs/api/balance/balance_object#transfers) or [Payouts API](https://stripe.com/docs/api/balance/balance_object#payouts). The available balance for each currency and payment type can be found in the `source_types` property.
+    public var available: [StripeBalanceAmount]?
+    /// Funds held due to negative balances on connected Custom accounts. The connect reserve balance for each currency and payment type can be found in the `source_types` property.
+    public var connectReserved: [StripeBalanceAmount]?
+    ///Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
-    public var pending: [StripeBalanceTransfer]?
-    
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case available
-        case connectReserved = "connect_reserved"
-        case livemode
-        case pending
-    }
+    /// Funds that are not yet available in the balance, due to the 7-day rolling pay cycle. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
+    public var pending: [StripeBalanceAmount]?
+}
+
+public struct StripeBalanceAmount: StripeModel {
+    /// Balance amount.
+    public var amount: Int?
+    /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
+    public var currency: StripeCurrency?
+    /// Breakdown of balance by source types.
+    public var sourceTypes: StripeBalanceAmountSourceType?
+}
+
+public struct StripeBalanceAmountSourceType: StripeModel {
+    /// Amount for bank account.
+    public var bankAccount: Int?
+    /// Amount for card.
+    public var card: Int?
 }

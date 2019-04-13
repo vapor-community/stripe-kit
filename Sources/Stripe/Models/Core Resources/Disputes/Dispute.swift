@@ -16,7 +16,7 @@ public struct StripeDispute: StripeModel {
     public var id: String
     public var object: String
     public var amount: Int?
-    public var balanceTransactions: [StripeBalanceTransactionItem]?
+    public var balanceTransactions: [StripeBalanceTransaction]?
     public var charge: String?
     public var created: Date?
     public var currency: StripeCurrency?
