@@ -53,7 +53,7 @@ extension CustomerTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__CustomerTests = [
-        ("testCustomerParsedProperly", testCustomerParsedProperly),
+        ("testCustomerParsesProperly", testCustomerParsesProperly),
     ]
 }
 
