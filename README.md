@@ -1,7 +1,7 @@
 # Vapor Stripe Provider
 
-![Swift](http://img.shields.io/badge/swift-5.0-brightgreen.svg)
-![Vapor](http://img.shields.io/badge/vapor-4.0-brightgreen.svg)
+![Swift](https://img.shields.io/badge/swift-5-lightgrey.svg?style=for-the-badge)
+![Vapor](https://img.shields.io/badge/vapor-4-lightgrey.svg?style=for-the-badge)
 [![CircleCI](https://circleci.com/gh/vapor-community/stripe-provider.svg?style=svg)](https://circleci.com/gh/vapor-community/stripe-provider)
 
 [Stripe][stripe_home] is a payment platform that handles credit cards, bitcoin and ACH transfers. They have become one of the best platforms for handling payments for projects, services or products.
