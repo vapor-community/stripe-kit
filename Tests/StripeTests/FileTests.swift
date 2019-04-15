@@ -10,6 +10,14 @@ import XCTest
 @testable import Vapor
 
 class FileTests: XCTestCase {
+    var decoder: JSONDecoder!
+    
+    override func setUp() {
+        decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+    }
+    
     let fileLinkString = """
 {
   "id": "link_1DAf602eZvKYlo2CwXzohqY4",
@@ -27,30 +35,22 @@ class FileTests: XCTestCase {
     
     func testFileLinkParsedProperly() throws {
         do {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .secondsSince1970
-            
             let body = HTTPBody(string: fileLinkString)
             var headers: HTTPHeaders = [:]
             headers.replaceOrAdd(name: .contentType, value: MediaType.json.description)
             let request = HTTPRequest(headers: headers, body: body)
-            let fileLink = try decoder.decode(StripeFileLink.self, from: request, maxSize: 65_536, on: EmbeddedEventLoop())
+            let fileLink = try decoder.decode(StripeFileLink.self, from: request, maxSize: 65_536, on: EmbeddedEventLoop()).wait()
             
-            fileLink.do { (link) in
-                XCTAssertEqual(link.id, "link_1DAf602eZvKYlo2CwXzohqY4")
-                XCTAssertEqual(link.object, "file_link")
-                XCTAssertEqual(link.created, Date(timeIntervalSince1970: 1537023004))
-                XCTAssertEqual(link.expired, false)
-                XCTAssertEqual(link.expiresAt, nil)
-                XCTAssertEqual(link.file, "file_1CcHwQ2eZvKYlo2CS8LDX4wK")
-                XCTAssertEqual(link.livemode, false)
-                XCTAssertEqual(link.metadata, [:])
-                XCTAssertEqual(link.url, "https://files.stripe.com/links/fl_test_iBHkHOhKU7YuwN7wXjKGOhcw")
-                }.catch { (error) in
-                    XCTFail("\(error.localizedDescription)")
-            }
-        }
-        catch {
+            XCTAssertEqual(fileLink.id, "link_1DAf602eZvKYlo2CwXzohqY4")
+            XCTAssertEqual(fileLink.object, "file_link")
+            XCTAssertEqual(fileLink.created, Date(timeIntervalSince1970: 1537023004))
+            XCTAssertEqual(fileLink.expired, false)
+            XCTAssertEqual(fileLink.expiresAt, nil)
+            XCTAssertEqual(fileLink.file, "file_1CcHwQ2eZvKYlo2CS8LDX4wK")
+            XCTAssertEqual(fileLink.livemode, false)
+            XCTAssertEqual(fileLink.metadata, [:])
+            XCTAssertEqual(fileLink.url, "https://files.stripe.com/links/fl_test_iBHkHOhKU7YuwN7wXjKGOhcw")
+        } catch {
             XCTFail("\(error.localizedDescription)")
         }
     }
@@ -89,35 +89,26 @@ class FileTests: XCTestCase {
     
     func testFileUploadParsedProperly() throws {
         do {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .secondsSince1970
-            
             let body = HTTPBody(string: fileUploadString)
             var headers: HTTPHeaders = [:]
             headers.replaceOrAdd(name: .contentType, value: MediaType.json.description)
             let request = HTTPRequest(headers: headers, body: body)
-            let fileUpload = try decoder.decode(StripeFileUpload.self, from: request, maxSize: 65_536, on: EmbeddedEventLoop())
+            let fileUpload = try decoder.decode(StripeFile.self, from: request, maxSize: 65_536, on: EmbeddedEventLoop()).wait()
             
-            fileUpload.do { (upload) in
-                XCTAssertEqual(upload.id, "file_1CcHwQ2eZvKYlo2CS8LDX4wK")
-                XCTAssertEqual(upload.object, "file_upload")
-                XCTAssertEqual(upload.created, Date(timeIntervalSince1970: 1528830846))
-                XCTAssertEqual(upload.filename, "icon1.png")
-                XCTAssertEqual(upload.purpose, .businessLogo)
-                XCTAssertEqual(upload.size, 9676)
-                XCTAssertEqual(upload.type, .png)
-                XCTAssertEqual(upload.url, "https://files.stripe.com/files/f_test_F3TKCoF1vHGS0B5EmdyH1sUn")
-                
-                XCTAssertEqual(upload.links?.object, "list")
-                XCTAssertEqual(upload.links?.hasMore, true)
-                XCTAssertEqual(upload.links?.url, "/v1/file_links?file=file_1CcHwQ2eZvKYlo2CS8LDX4wK")
-                XCTAssertEqual(upload.links?.data?.count, 1)
-                
-                }.catch { (error) in
-                    XCTFail("\(error.localizedDescription)")
-            }
-        }
-        catch {
+            XCTAssertEqual(fileUpload.id, "file_1CcHwQ2eZvKYlo2CS8LDX4wK")
+            XCTAssertEqual(fileUpload.object, "file_upload")
+            XCTAssertEqual(fileUpload.created, Date(timeIntervalSince1970: 1528830846))
+            XCTAssertEqual(fileUpload.filename, "icon1.png")
+            XCTAssertEqual(fileUpload.purpose, .businessLogo)
+            XCTAssertEqual(fileUpload.size, 9676)
+            XCTAssertEqual(fileUpload.type, .png)
+            XCTAssertEqual(fileUpload.url, "https://files.stripe.com/files/f_test_F3TKCoF1vHGS0B5EmdyH1sUn")
+            
+            XCTAssertEqual(fileUpload.links?.object, "list")
+            XCTAssertEqual(fileUpload.links?.hasMore, true)
+            XCTAssertEqual(fileUpload.links?.url, "/v1/file_links?file=file_1CcHwQ2eZvKYlo2CS8LDX4wK")
+            XCTAssertEqual(fileUpload.links?.data?.count, 1)
+        } catch {
             XCTFail("\(error.localizedDescription)")
         }
     }

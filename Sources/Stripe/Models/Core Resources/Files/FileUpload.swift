@@ -5,10 +5,10 @@
 //  Created by Andrew Edwards on 9/15/18.
 //
 
-import Vapor
+import Foundation
 
-/// There are various times when you’ll want to upload files to Stripe (for example, when uploading dispute evidence). This can be done by creating a File Upload object. When you upload a file, the API responds with a file upload token and other information about the upload. The token can then be used to retrieve a File Upload object.
-public struct StripeFileUpload: StripeModel {
+/// The [File Object](https://stripe.com/docs/api/files/object).
+public struct StripeFile: StripeModel {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -18,18 +18,20 @@ public struct StripeFileUpload: StripeModel {
     /// A filename for the file, suitable for saving to a filesystem.
     public var filename: String?
     /// A list of file links.
-    public var links: FileLinkList?
-    /// The purpose of the uploaded file.
-    public var purpose: FilePurpose?
+    public var links: StripeFileLinkList?
+    /// The purpose of the file. Possible values are `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `identity_document`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
+    public var purpose: StripeFilePurpose?
     /// The size in bytes of the file upload object.
     public var size: Int?
-    /// The type of the file returned.
-    public var type: FileType?
-    /// A read-only URL where the uploaded file can be accessed. Will be nil if the purpose of the uploaded file is identity_document. Also nil if retrieved with the publishable API key.
+    /// A user friendly title for the document.
+    public var title: String?
+    /// The type of the file returned (e.g., `csv`, `pdf`, `jpg`, or `png`).
+    public var type: StripeFileType?
+    /// The URL from which the file can be downloaded using your live secret API key.
     public var url: String?
 }
 
-public enum FilePurpose: String, Content {
+public enum StripeFilePurpose: String, StripeModel {
     case businessLogo = "business_logo"
     case customerSignature = "customer_signature"
     case disputeEvidence = "dispute_evidence"
@@ -38,7 +40,7 @@ public enum FilePurpose: String, Content {
     case taxDocumentUserUpload = "tax_document_user_upload"
 }
 
-public enum FileType: String, Content {
+public enum StripeFileType: String, StripeModel {
     case csv
     case docx
     case gif
@@ -47,4 +49,11 @@ public enum FileType: String, Content {
     case png
     case xls
     case xlsx
+}
+
+public struct StripeFileUploadList: StripeModel {
+    public var object: String
+    public var hasMore: Bool?
+    public var url: String?
+    public var data: [StripeFile]?
 }

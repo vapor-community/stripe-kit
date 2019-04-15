@@ -5,7 +5,7 @@
 //  Created by Andrew Edwards on 9/14/18.
 //
 
-import Vapor
+import Foundation
 
 /// To share the contents of a File object with non-Stripe users, you can create a FileLink. FileLinks contain a URL that can be used to retrieve the contents of the file without authentication.
 public struct StripeFileLink: StripeModel {
@@ -21,22 +21,17 @@ public struct StripeFileLink: StripeModel {
     public var expiresAt: Date?
     /// The file object this link points to.
     public var file: String?
-    /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
+    /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
-    /// Set of key-value pairs that you can attach to an object.
-    public var metadata: [String: String]
+    /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+    public var metadata: [String: String]?
     /// The publicly accessible URL to download the file.
     public var url: String?
-    
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case object
-        case created
-        case expired
-        case expiresAt = "expires_at"
-        case file
-        case livemode
-        case metadata
-        case url
-    }
+}
+
+public struct StripeFileLinkList: StripeModel {
+    public var object: String
+    public var hasMore: Bool?
+    public var url: String?
+    public var data: [StripeFileLink]?
 }

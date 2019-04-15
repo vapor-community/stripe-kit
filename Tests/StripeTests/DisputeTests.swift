@@ -11,6 +11,14 @@ import XCTest
 @testable import Vapor
 
 class DisputeTests: XCTestCase {
+    var decoder: JSONDecoder!
+    
+    override func setUp() {
+        decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+    }
+    
     let disputeString = """
 {
     "amount": 1000,
@@ -65,67 +73,58 @@ class DisputeTests: XCTestCase {
     
     func testDisputeParsedProperly() throws {
         do {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .secondsSince1970
-            
             let body = HTTPBody(string: disputeString)
             var headers: HTTPHeaders = [:]
             headers.replaceOrAdd(name: .contentType, value: MediaType.json.description)
             let request = HTTPRequest(headers: headers, body: body)
-            let futureDispute = try decoder.decode(StripeDispute.self, from: request, maxSize: 65_536, on: EmbeddedEventLoop())
+            let dispute = try decoder.decode(StripeDispute.self, from: request, maxSize: 65_536, on: EmbeddedEventLoop()).wait()
             
-            futureDispute.do { (dispute) in
-                XCTAssertEqual(dispute.amount, 1000)
-                XCTAssertEqual(dispute.charge, "ch_1BoJ2MKrZ43eBVAbDNoY8Anc")
-                XCTAssertEqual(dispute.created, Date(timeIntervalSince1970: 1234567890))
-                XCTAssertEqual(dispute.currency, .usd)
-                XCTAssertEqual(dispute.id, "dp_1BoJ2MKrZ43eBVAbjyK5qAWL")
-                XCTAssertEqual(dispute.isChargeRefundable, false)
-                XCTAssertEqual(dispute.livemode, false)
-                XCTAssertEqual(dispute.object, "dispute")
-                XCTAssertEqual(dispute.reason, .general)
-                XCTAssertEqual(dispute.status, .needsResponse)
-                
-                // Evidence Datails
-                XCTAssertEqual(dispute.evidenceDetails?.dueBy, Date(timeIntervalSince1970: 1518566399))
-                XCTAssertEqual(dispute.evidenceDetails?.hasEvidence, false)
-                XCTAssertEqual(dispute.evidenceDetails?.pastDue, false)
-                XCTAssertEqual(dispute.evidenceDetails?.submissionCount, 0)
-                
-                // Evidence
-                XCTAssertEqual(dispute.evidence?.accessActivityLog, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.billingAddress, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.cancellationPolicy, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.cancellationPolicyDisclosure, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.cancellationRebuttal, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.customerCommunication, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.customerEmailAddress, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.customerName, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.customerPurchaseIp, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.customerSignature, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.duplicateChargeDocumentation, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.duplicateChargeExplanation, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.duplicateChargeId, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.productDescription, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.receipt, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.refundPolicy, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.refundPolicyDisclosure, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.refundRefusalExplanation, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.serviceDate, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.serviceDocumentation, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.shippingAddress, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.shippingCarrier, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.shippingDate, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.shippingDocumentation, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.shippingTrackingNumber, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.uncategorizedFile, "Rasengan")
-                XCTAssertEqual(dispute.evidence?.uncategorizedText, "Rasengan")
-                
-                }.catch { (error) in
-                    XCTFail("\(error.localizedDescription)")
-            }
-        }
-        catch {
+            XCTAssertEqual(dispute.amount, 1000)
+            XCTAssertEqual(dispute.charge, "ch_1BoJ2MKrZ43eBVAbDNoY8Anc")
+            XCTAssertEqual(dispute.created, Date(timeIntervalSince1970: 1234567890))
+            XCTAssertEqual(dispute.currency, .usd)
+            XCTAssertEqual(dispute.id, "dp_1BoJ2MKrZ43eBVAbjyK5qAWL")
+            XCTAssertEqual(dispute.isChargeRefundable, false)
+            XCTAssertEqual(dispute.livemode, false)
+            XCTAssertEqual(dispute.object, "dispute")
+            XCTAssertEqual(dispute.reason, .general)
+            XCTAssertEqual(dispute.status, .needsResponse)
+            
+            // Evidence Datails
+            XCTAssertEqual(dispute.evidenceDetails?.dueBy, Date(timeIntervalSince1970: 1518566399))
+            XCTAssertEqual(dispute.evidenceDetails?.hasEvidence, false)
+            XCTAssertEqual(dispute.evidenceDetails?.pastDue, false)
+            XCTAssertEqual(dispute.evidenceDetails?.submissionCount, 0)
+            
+            // Evidence
+            XCTAssertEqual(dispute.evidence?.accessActivityLog, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.billingAddress, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.cancellationPolicy, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.cancellationPolicyDisclosure, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.cancellationRebuttal, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.customerCommunication, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.customerEmailAddress, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.customerName, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.customerPurchaseIp, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.customerSignature, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.duplicateChargeDocumentation, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.duplicateChargeExplanation, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.duplicateChargeId, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.productDescription, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.receipt, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.refundPolicy, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.refundPolicyDisclosure, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.refundRefusalExplanation, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.serviceDate, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.serviceDocumentation, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.shippingAddress, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.shippingCarrier, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.shippingDate, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.shippingDocumentation, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.shippingTrackingNumber, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.uncategorizedFile, "Rasengan")
+            XCTAssertEqual(dispute.evidence?.uncategorizedText, "Rasengan")
+        } catch {
             XCTFail("\(error.localizedDescription)")
         }
     }
