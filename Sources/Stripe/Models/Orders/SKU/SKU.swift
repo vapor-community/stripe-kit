@@ -24,7 +24,7 @@ public struct StripeSKU: StripeModel {
     public var inventory: StripeInventory?
     public var livemode: Bool?
     public var metadata: [String: String]
-    public var packageDimensions: StripePackageDimensions?
+    public var packageDimensions: StripeProductPackageDimensions?
     public var price: Int?
     public var product: String?
     public var updated: Date?

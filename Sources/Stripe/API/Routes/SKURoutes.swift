@@ -9,9 +9,9 @@
 import Vapor
 
 public protocol SKURoutes {
-    func create(id: String?, currency: StripeCurrency, inventory: StripeInventory, price: Int, product: String, active: Bool?, attributes: [String]?, image: String?, metadata: [String: String]?, packageDimensions: StripePackageDimensions?) throws -> Future<StripeSKU>
+    func create(id: String?, currency: StripeCurrency, inventory: StripeInventory, price: Int, product: String, active: Bool?, attributes: [String]?, image: String?, metadata: [String: String]?, packageDimensions: StripeProductPackageDimensions?) throws -> Future<StripeSKU>
     func retrieve(id: String) throws -> Future<StripeSKU>
-    func update(sku: String, active: Bool?, attributes: [String]?, currency: StripeCurrency?, image: String?, inventory: StripeInventory?, metadata: [String: String]?, packageDimensions: StripePackageDimensions?, price: Int?, product: String?) throws -> Future<StripeSKU>
+    func update(sku: String, active: Bool?, attributes: [String]?, currency: StripeCurrency?, image: String?, inventory: StripeInventory?, metadata: [String: String]?, packageDimensions: StripeProductPackageDimensions?, price: Int?, product: String?) throws -> Future<StripeSKU>
     func listAll(filter: [String: Any]?) throws -> Future<SKUList>
     func delete(sku: String) throws -> Future<StripeDeletedObject>
 }
@@ -26,7 +26,7 @@ extension SKURoutes {
                        attributes: [String]? = nil,
                        image: String? = nil,
                        metadata: [String: String]? = nil,
-                       packageDimensions: StripePackageDimensions? = nil) throws -> Future<StripeSKU> {
+                       packageDimensions: StripeProductPackageDimensions? = nil) throws -> Future<StripeSKU> {
         return try create(id: id,
                           currency: currency,
                           inventory: inventory,
@@ -50,7 +50,7 @@ extension SKURoutes {
                        image: String? = nil,
                        inventory: StripeInventory? = nil,
                        metadata: [String: String]? = nil,
-                       packageDimensions: StripePackageDimensions? = nil,
+                       packageDimensions: StripeProductPackageDimensions? = nil,
                        price: Int? = nil,
                        product: String? = nil) throws -> Future<StripeSKU> {
         return try update(sku: sku,
@@ -92,7 +92,7 @@ public struct StripeSKURoutes: SKURoutes {
                        attributes: [String]?,
                        image: String?,
                        metadata: [String: String]?,
-                       packageDimensions: StripePackageDimensions?) throws -> Future<StripeSKU> {
+                       packageDimensions: StripeProductPackageDimensions?) throws -> Future<StripeSKU> {
         var body: [String: Any] = [:]
         
         body["currency"] = currency.rawValue
@@ -142,7 +142,7 @@ public struct StripeSKURoutes: SKURoutes {
                        image: String?,
                        inventory: StripeInventory?,
                        metadata: [String: String]?,
-                       packageDimensions: StripePackageDimensions?,
+                       packageDimensions: StripeProductPackageDimensions?,
                        price: Int?,
                        product: String?) throws -> Future<StripeSKU> {
         var body: [String: Any] = [:]
