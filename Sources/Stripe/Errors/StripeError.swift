@@ -7,13 +7,12 @@
 //
 
 import Foundation
-import Vapor
 /**
  Error object
  https://stripe.com/docs/api#errors
  */
 
-public enum StripeUploadError: Error, Debuggable {
+public enum StripeUploadError: Error {
     case unsupportedFileType
     
     public var localizedDescription: String {
@@ -45,36 +44,38 @@ public enum StripeUploadError: Error, Debuggable {
     }
 }
 
-public struct StripeError: StripeModel, Error, Debuggable {
+public struct StripeError: StripeModel, Error {
     public var identifier: String {
-        return self.error.type.rawValue
+        return self.error.type?.rawValue ?? "Unknown"
     }
     public var reason: String {
-        return self.error.message
+        return self.error.message ?? "An unknown error occured."
     }
     public var error: StripeAPIError
 }
 
-public struct StripeAPIError: StripeModel {
-    public var type: StripeErrorType
+public final class StripeAPIError: StripeModel {
+    /// The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
+    public var type: StripeErrorType?
+    /// For card errors, the ID of the failed charge.
     public var charge: String?
+    /// For some errors that could be handled programmatically, a short string indicating the error code reported.
     public var code: StripeErrorCode?
+    /// For card errors resulting from a card issuer decline, a short string indicating the [card issuer’s reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.
     public var declineCode: StripeDeclineCode?
+    /// A URL to more information about the error code reported.
     public var docUrl: String?
-    public var message: String
+    /// A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
+    public var message: String?
+    /// If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
     public var param: String?
-    
-    public enum CodingKeys: String, CodingKey {
-        case type
-        case charge
-        case code
-        case declineCode = "decline_code"
-        case docUrl = "doc_url"
-        case message
-        case param
-    }
+    /// The PaymentIntent object for errors returned on a request involving a PaymentIntent.
+    public var paymentIntent: StripePaymentIntent?
+    /// The PaymentMethod object for errors returned on a request involving a PaymentMethod.
+    // TODO: - paymentMethod.
+    /// The source object for errors returned on a request involving a source.
+    public var source: StripeSource?
 }
-
 
 // https://stripe.com/docs/api#errors-type
 public enum StripeErrorType: String, StripeModel {

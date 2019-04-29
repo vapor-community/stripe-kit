@@ -153,6 +153,12 @@ internal enum StripeAPIEndpoint {
     case valueList
     case valueLists(String)
     
+    case paymentIntents
+    case paymentIntent(String)
+    case paymentIntentConfirm(String)
+    case paymentIntentCapture(String)
+    case paymentIntentCancel(String)
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -269,6 +275,12 @@ internal enum StripeAPIEndpoint {
             
         case .valueList: return APIBase + APIVersion + "value_lists"
         case .valueLists(let id): return APIBase + APIVersion + "value_lists/\(id)"
+            
+        case .paymentIntents: return APIBase + APIVersion + "payment_intents"
+        case .paymentIntent(let id): return APIBase + APIVersion + "payment_intents/\(id)"
+        case .paymentIntentConfirm(let id): return APIBase + APIVersion + "payment_intents/\(id)/confirm"
+        case .paymentIntentCapture(let id): return APIBase + APIVersion + "payment_intents/\(id)/capture"
+        case .paymentIntentCancel(let id): return APIBase + APIVersion + "payment_intents/\(id)/cancel"
         }
     }
 }

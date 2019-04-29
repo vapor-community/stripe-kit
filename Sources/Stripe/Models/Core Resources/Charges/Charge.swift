@@ -27,7 +27,7 @@ public struct StripeCharge: StripeModel {
     /// ID of the balance transaction that describes the impact of this charge on your account balance (not including refunds or disputes).
     public var balanceTransaction: String?
     /// Billing information associated with the payment method at the time of the transaction.
-    public var billingDetails: StripeChargeBillingDetails?
+    public var billingDetails: StripeBillingDetails?
     /// If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
     public var captured: Bool?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -94,17 +94,6 @@ public struct StripeCharge: StripeModel {
     public var transferData: StripeChargeTransferData?
     /// A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
     public var transferGroup: String?
-}
-
-public struct StripeChargeBillingDetails: StripeModel {
-    /// Billing address.
-    public var address: StripeAddress?
-    /// Email address.
-    public var email: String?
-    /// Full name.
-    public var name: String?
-    /// Billing phone number (including extension).
-    public var phone: String?
 }
 
 public struct StripeChargeFraudDetails: StripeModel {
