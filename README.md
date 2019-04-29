@@ -58,7 +58,7 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [ ] Events
 * [x] File Links
 * [x] File Uploads
-* [ ] PaymentIntents
+* [x] PaymentIntents
 * [x] Payouts
 * [x] Products
 * [x] Refunds
