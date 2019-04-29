@@ -6,22 +6,58 @@
 //
 //
 
-import Vapor
+import NIO
 
 public protocol RefundRoutes {
-    func create(charge: String, amount: Int?, metadata: [String: String]?, reason: RefundReason?, refundApplicationFee: Bool?, reverseTransfer: Bool?) throws -> Future<StripeRefund>
-    func retrieve(refund: String) throws -> Future<StripeRefund>
-    func update(refund: String, metadata: [String: String]?) throws -> Future<StripeRefund>
-    func listAll(filter: [String: Any]?) throws -> Future<RefundsList>
+    /// When you create a new refund, you must specify a charge on which to create it. /n Creating a new refund will refund a charge that has previously been created but not yet refunded. Funds will be refunded to the credit or debit card that was originally charged. /n You can optionally refund only part of a charge. You can do so multiple times, until the entire charge has been refunded. /n Once entirely refunded, a charge can’t be refunded again. This method will return an error when called on an already-refunded charge, or when trying to refund more money than is left on a charge.
+    ///
+    /// - Parameters:
+    ///   - charge: The identifier of the charge to refund.
+    ///   - amount: A positive integer in cents representing how much of this charge to refund. Can refund only up to the remaining, unrefunded amount of the charge.
+    ///   - metadata: A set of key-value pairs that you can attach to a `Refund` object. This can be useful for storing additional information about the refund in a structured format. You can unset individual keys if you POST an empty value for that key. You can clear all keys if you POST an empty value for `metadata`
+    ///   - reason: String indicating the reason for the refund. If set, possible values are `duplicate`, `fraudulent`, and `requested_by_customer`. If you believe the charge to be fraudulent, specifying `fraudulent` as the reason will add the associated card and email to your blocklists, and will also help us improve our fraud detection algorithms.
+    ///   - refundApplicationFee: Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. /n An application fee can be refunded only by the application that created the charge.
+    ///   - reverseTransfer: Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). /n A transfer can be reversed only by the application that created the charge.
+    /// - Returns: A `StripeRefund`.
+    /// - Throws: A `StripeError`.
+    func create(charge: String,
+                amount: Int?,
+                metadata: [String: String]?,
+                reason: StripeRefundReason?,
+                refundApplicationFee: Bool?,
+                reverseTransfer: Bool?) throws -> EventLoopFuture<StripeRefund>
+    
+    /// Retrieves the details of an existing refund.
+    ///
+    /// - Parameter refund: ID of refund to retrieve.
+    /// - Returns: A `StripeRefund`.
+    /// - Throws: A `StripeError`.
+    func retrieve(refund: String) throws -> EventLoopFuture<StripeRefund>
+    
+    /// Updates the specified refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged. /n This request only accepts metadata as an argument.
+    ///
+    /// - Parameters:
+    ///   - refund: ID of refund to update.
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+    /// - Returns: A `StripeRefund`.
+    /// - Throws: A `StripeError`.
+    func update(refund: String, metadata: [String: String]?) throws -> EventLoopFuture<StripeRefund>
+    
+    /// Returns a list of all refunds you’ve previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
+    ///
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/refunds/list)
+    /// - Returns: A `StripeRefundsList`.
+    /// - Throws: A `StripeError`.
+    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeRefundsList>
 }
 
 extension RefundRoutes {
     public func create(charge: String,
                        amount: Int? = nil,
-                       metadata: [String : String]? = nil,
-                       reason: RefundReason? = nil,
+                       metadata: [String: String]? = nil,
+                       reason: StripeRefundReason? = nil,
                        refundApplicationFee: Bool? = nil,
-                       reverseTransfer: Bool? = nil) throws -> Future<StripeRefund> {
+                       reverseTransfer: Bool? = nil) throws -> EventLoopFuture<StripeRefund> {
         return try create(charge: charge,
                           amount: amount,
                           metadata: metadata,
@@ -30,15 +66,15 @@ extension RefundRoutes {
                           reverseTransfer: reverseTransfer)
     }
     
-    public func retrieve(refund: String) throws -> Future<StripeRefund> {
+    public func retrieve(refund: String) throws -> EventLoopFuture<StripeRefund> {
         return try retrieve(refund: refund)
     }
     
-    public func update(refund: String, metadata: [String : String]? = nil) throws -> Future<StripeRefund> {
+    public func update(refund: String, metadata: [String: String]? = nil) throws -> EventLoopFuture<StripeRefund> {
         return try update(refund: refund, metadata: metadata)
     }
     
-    public func listAll(filter: [String : Any]? = nil) throws -> Future<RefundsList> {
+    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeRefundsList> {
         return try listAll(filter: filter)
     }
 }
@@ -50,14 +86,12 @@ public struct StripeRefundRoutes: RefundRoutes {
         self.request = request
     }
 
-    /// Create a refund
-    /// [Learn More →](https://stripe.com/docs/api/curl#create_refund)
     public func create(charge: String,
                        amount: Int?,
-                       metadata: [String : String]?,
-                       reason: RefundReason?,
+                       metadata: [String: String]?,
+                       reason: StripeRefundReason?,
                        refundApplicationFee: Bool?,
-                       reverseTransfer: Bool?) throws -> Future<StripeRefund> {
+                       reverseTransfer: Bool?) throws -> EventLoopFuture<StripeRefund> {
         var body: [String: Any] = [:]
         
         body["charge"] = charge
@@ -85,15 +119,11 @@ public struct StripeRefundRoutes: RefundRoutes {
         return try request.send(method: .POST, path: StripeAPIEndpoint.refunds.endpoint, body: body.queryParameters)
     }
     
-    /// Retrieve a refund
-    /// [Learn More →](https://stripe.com/docs/api/curl#retrieve_refund)
-    public func retrieve(refund: String) throws -> Future<StripeRefund> {
+    public func retrieve(refund: String) throws -> EventLoopFuture<StripeRefund> {
         return try request.send(method: .GET, path: StripeAPIEndpoint.refund(refund).endpoint)
     }
     
-    /// Update a refund
-    /// [Learn More →](https://stripe.com/docs/api/curl#update_refund)
-    public func update(refund: String, metadata: [String : String]?) throws -> Future<StripeRefund> {
+    public func update(refund: String, metadata: [String: String]?) throws -> EventLoopFuture<StripeRefund> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {
@@ -103,9 +133,7 @@ public struct StripeRefundRoutes: RefundRoutes {
         return try request.send(method: .POST, path: StripeAPIEndpoint.refund(refund).endpoint, body: body.queryParameters)
     }
     
-    /// List all refunds
-    /// [Learn More →](https://stripe.com/docs/api/curl#list_refunds)
-    public func listAll(filter: [String : Any]? = nil) throws -> Future<RefundsList> {
+    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeRefundsList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

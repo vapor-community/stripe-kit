@@ -75,7 +75,7 @@ public struct StripeCharge: StripeModel {
     /// Whether the charge has been fully refunded. If the charge is only partially refunded, this attribute will still be false.
     public var refunded: Bool?
     /// A list of refunds that have been applied to the charge.
-    public var refunds: RefundsList
+    public var refunds: StripeRefundsList
     /// ID of the review associated with this charge if one exists.
     public var review: String?
     /// Shipping information for the charge.
