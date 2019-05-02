@@ -133,3 +133,10 @@ public enum StripePaymentMethodType: String, StripeModel {
     case card
     case cardPresent = "card_present"
 }
+
+public struct StripePaymentMethodList: StripeModel {
+    public var object: String
+    public var data: [StripePaymentMethod]?
+    public var hasMore: Bool?
+    public var url: String?
+}

@@ -40,6 +40,25 @@ public struct StripeTopUp: StripeModel {
     public var status: StripeTopUpStatus?
     /// A string that identifies this top-up as part of a group.
     public var transferGroup: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case object
+        case amount
+        case balanceTransaction = "balance_transaction"
+        case created
+        case currency
+        case description
+        case expectedAvailabilityDate = "expected_availability_date"
+        case failureCode = "failure_code"
+        case failureMessage = "failure_message"
+        case livemode
+        case metadata
+        case source
+        case statementDescriptor = "statement_descriptor"
+        case status
+        case transferGroup = "transfer_group"
+    }
 }
 
 public enum StripeTopUpStatus: String, StripeModel {

@@ -64,36 +64,6 @@ public struct StripeCard: StripeModel {
     public var recipient: String?
     /// If the card number is tokenized, this is the method that was used. Can be `apple_pay` or `google_pay`.
     public var tokenizationMethod: StripeCardTokenizedMethod?
-    
-    public enum CodingKeys: String, CodingKey {
-        case id
-        case object
-        case account
-        case addressCity = "address_city"
-        case addressCountry = "address_country"
-        case addressLine1 = "address_line1"
-        case addressLine1Check = "address_line1_check"
-        case addressLine2 = "address_line2"
-        case addressState = "address_state"
-        case addressZip = "address_zip"
-        case addressZipCheck = "address_zip_check"
-        case availablePayoutMethods = "available_payout_methods"
-        case brand
-        case country
-        case customer
-        case cvcCheck = "cvc_check"
-        case defaultForCurrency = "default_for_currency"
-        case dynamicLast4 = "dynamic_last4"
-        case expMonth = "exp_month"
-        case expYear = "exp_year"
-        case fingerprint
-        case funding
-        case last4
-        case metadata
-        case name
-        case recipient
-        case tokenizationMethod = "tokenization_method"
-    }
 }
 
 public struct StripeCardList: StripeModel {
@@ -105,13 +75,6 @@ public struct StripeCardList: StripeModel {
     public var hasMore: Bool?
     /// The URL where this list can be accessed.
     public var url: String?
-    
-    private enum CodingKeys: String, CodingKey {
-        case object
-        case data
-        case hasMore = "has_more"
-        case url
-    }
 }
 
 public enum StripeCardValidationCheck: String, Codable {
