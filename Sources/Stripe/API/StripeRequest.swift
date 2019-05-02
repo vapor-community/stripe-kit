@@ -7,74 +7,49 @@
 //
 
 import Foundation
-import Vapor
-import HTTP
+import NIO
+import NIOFoundationCompat
+import NIOHTTP1
+import NIOHTTPClient
 
-public protocol StripeRequest: class {
-    func serializedResponse<SM: StripeModel>(response: HTTPResponse, worker: EventLoop) throws -> Future<SM>
-    func send<SM: StripeModel>(method: HTTPMethod, path: String, query: String, body: LosslessHTTPBodyRepresentable, headers: HTTPHeaders) throws -> Future<SM>
-}
+public struct APIError: Error {}
 
-public extension StripeRequest {
-    func send<SM: StripeModel>(method: HTTPMethod, path: String, query: String = "", body: LosslessHTTPBodyRepresentable = HTTPBody(string: ""), headers: HTTPHeaders = [:]) throws -> Future<SM> {
-        return try send(method: method, path: path, query: query, body: body, headers: headers)
-    }
-    
-    func serializedResponse<SM: StripeModel>(response: HTTPResponse, worker: EventLoop) throws -> Future<SM> {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-        
-        guard response.status == .ok else {
-            return try decoder.decode(StripeError.self, from: response, maxSize: 1_000_000, on: worker).map(to: SM.self){ error in
-                throw error
-            }
-        }
-        
-        return try decoder.decode(SM.self, from: response, maxSize: 1_000_000, on: worker)
-    }
-}
-
-extension HTTPHeaderName {
-    public static var stripeVersion: HTTPHeaderName {
-        return .init("Stripe-Version")
-    }
-    public static var stripeAccount: HTTPHeaderName {
-        return .init("Stripe-Account")
-    }
-}
-
-extension HTTPHeaders {
-    public static var stripeDefault: HTTPHeaders {
-        var headers: HTTPHeaders = [:]
-        headers.replaceOrAdd(name: .stripeVersion, value: "2019-02-19")
-        headers.replaceOrAdd(name: .contentType, value: MediaType.urlEncodedForm.description)
-        return headers
-    }
-}
-
-public class StripeAPIRequest: StripeRequest {
-    private let httpClient: Client
+public struct StripeAPIHandler {
+    private let httpClient: HTTPClient
     private let apiKey: String
-    private let testApiKey: String?
-    
-    init(httpClient: Client, apiKey: String, testApiKey: String?) {
+    private let decoder = JSONDecoder()
+
+    init(httpClient: HTTPClient, apiKey: String) {
         self.httpClient = httpClient
         self.apiKey = apiKey
-        self.testApiKey = testApiKey
+        decoder.dateDecodingStrategy = .secondsSince1970
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
     
-    public func send<SM: StripeModel>(method: HTTPMethod, path: String, query: String, body: LosslessHTTPBodyRepresentable, headers: HTTPHeaders) throws -> Future<SM> {
-        var finalHeaders: HTTPHeaders = .stripeDefault
+    func send<SM: StripeModel>(method: HTTPMethod,
+                               path: String,
+                               query: String = "",
+                               body: HTTPClient.Body = .string(""),
+                               headers: HTTPHeaders = [:]) throws -> EventLoopFuture<SM> {
         
-        // Get the appropiate API key based on the environment and if the test key is present
-        let apiKey = self.httpClient.container.environment == .development ? (self.testApiKey ?? self.apiKey) : self.apiKey
-        finalHeaders.add(name: .authorization, value: "Bearer \(apiKey)")
-        headers.forEach { finalHeaders.replaceOrAdd(name: $0.name, value: $0.value) }
-
-        return httpClient.send(method, headers: finalHeaders, to: "\(path)?\(query)") { (request) in
-            request.http.body = body.convertToHTTPBody()
-            }.flatMap(to: SM.self) { (response) -> Future<SM> in
-                return try self.serializedResponse(response: response.http, worker: self.httpClient.container.eventLoop)
+        var _headers: HTTPHeaders = ["Stripe-Version": "2019-03-14",
+                                     "Authorization": "Bearer \(apiKey)"]
+        headers.forEach { _headers.replaceOrAdd(name: $0.name, value: $0.value) }
+        
+        let request = try HTTPClient.Request(url: "\(path)?\(query)", method: method, headers: headers, body: body)
+        
+        return httpClient.execute(request: request).flatMapThrowing { response in
+            guard var byteBuffer = response.body else {
+                throw APIError()
+            }
+            let responseData = byteBuffer.readData(length: byteBuffer.readableBytes)!
+            
+            guard response.status == .ok else {
+                let stripeError = try self.decoder.decode(StripeError.self, from: responseData)
+                return self.httpClient.eventLoopGroup.next().makeSucceededFuture(stripeError) as! SM
+            }
+            let stripeResponse = try self.decoder.decode(SM.self, from: responseData)
+            return self.httpClient.eventLoopGroup.next().makeSucceededFuture(stripeResponse) as! SM
         }
     }
 }

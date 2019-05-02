@@ -6,7 +6,6 @@
 //
 //
 
-import Vapor
 
 /**
  Deleted object

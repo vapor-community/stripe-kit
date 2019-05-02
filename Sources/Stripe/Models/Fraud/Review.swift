@@ -5,7 +5,7 @@
 //  Created by Andrew Edwards on 3/26/19.
 //
 
-import Vapor
+import Foundation
 
 /// The [Review Object](https://stripe.com/docs/api/radar/reviews/object).
 public struct StripeReview: StripeModel {

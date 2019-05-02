@@ -6,10 +6,9 @@
 //
 //
 
-import Vapor
 import Foundation
 
-public protocol StripeModel: Content {
+public protocol StripeModel: Codable {
     func toEncodedBody() throws -> String
     func toEncodedDictionary() throws -> [String: Any]
 }

@@ -7,7 +7,7 @@
 //
 
 import NIO
-import Vapor
+import NIOHTTP1
 
 public protocol CustomerRoutes {
     /// Creates a new customer object.
@@ -92,6 +92,7 @@ public protocol CustomerRoutes {
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCustomerList>
     
+    mutating func addHeaders(_ : HTTPHeaders)
 //    func addNewSource(customer: String, source: String, toConnectedAccount: String?) throws -> EventLoopFuture<StripeSource>
 //
 //    func addNewBankAccountSource(customer: String, source: Any, toConnectedAccount: String?, metadata: [String: String]?) throws -> EventLoopFuture<StripeBankAccount>
@@ -189,10 +190,15 @@ extension CustomerRoutes {
 
 
 public struct StripeCustomerRoutes: CustomerRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(accountBalance: Int?,
@@ -256,11 +262,11 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             taxInfo.forEach { body["tax_info[\($0)]"] = $1 }
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.customers.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.customers.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(customer: String) throws -> EventLoopFuture<StripeCustomer> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.customer(customer).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.customer(customer).endpoint, headers: headers)
     }
     
     public func update(customer: String,
@@ -325,11 +331,11 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             taxInfo.forEach { body["tax_info[\($0)]"] = $1 }
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.customer(customer).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.customer(customer).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(customer: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try request.send(method: .DELETE, path: StripeAPIEndpoint.customer(customer).endpoint)
+        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.customer(customer).endpoint, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCustomerList> {
@@ -338,7 +344,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             queryParams = filter.queryParameters
         }
 
-        return try request.send(method: .GET, path: StripeAPIEndpoint.customers.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.customers.endpoint, query: queryParams, headers: headers)
     }
     
 //    /// Attach a source

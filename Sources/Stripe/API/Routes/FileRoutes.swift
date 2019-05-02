@@ -6,7 +6,8 @@
 //
 
 import NIO
-import Vapor
+import NIOHTTP1
+import Foundation
 
 public protocol FileRoutes {
     /// To upload a file to Stripe, you’ll need to send a request of type `multipart/form-data`. The request should contain the file you would like to upload, as well as the parameters for creating a file. \n All of Stripe’s officially supported API libraries should have support for sending `multipart/form-data`.
@@ -32,6 +33,8 @@ public protocol FileRoutes {
     /// - Returns: A `FileUploadList`
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeFileUploadList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension FileRoutes {
@@ -49,23 +52,25 @@ extension FileRoutes {
 }
 
 public struct StripeFileRoutes: FileRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
     }
     
-    public func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) throws -> EventLoopFuture<StripeFile> {
-        var headers: HTTPHeaders = [:]
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
+    }
+    
+    public mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) throws -> EventLoopFuture<StripeFile> {
         var body: Data = Data()
         
         // Form data structure found here.
         // https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4
         
         let boundary = "Stripe-Vapor-\(UUID().uuidString)"
-        headers.replaceOrAdd(name: .contentType, value: MediaType(type: "multipart",
-                                                                  subType: "form-data",
-                                                                  parameters: ["boundary": boundary]).description)
+        addHeaders(["Content-Type": "multipart/form-data;boundary=\(boundary)"])
         body.append("\r\n--\(boundary)\r\n")
         body.append("Content-Disposition: form-data; name=\"purpose\"\r\n\r\n")
         body.append("\(purpose.rawValue)")
@@ -85,11 +90,11 @@ public struct StripeFileRoutes: FileRoutes {
         
         body.append("\r\n--\(boundary)--\r\n")
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.file.endpoint, body: body, headers: headers)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.file.endpoint, body: .data(body), headers: headers)
     }
     
     public func retrieve(file: String) throws -> EventLoopFuture<StripeFile> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.files(file).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.files(file).endpoint, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeFileUploadList> {
@@ -98,7 +103,7 @@ public struct StripeFileRoutes: FileRoutes {
             queryParams = filter.queryParameters
         }
         
-        return try request.send(method: .GET, path: StripeAPIEndpoint.file.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.file.endpoint, query: queryParams, headers: headers)
     }
 }
 

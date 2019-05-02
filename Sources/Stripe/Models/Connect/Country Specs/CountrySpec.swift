@@ -5,7 +5,7 @@
 //  Created by Andrew Edwards on 3/23/19.
 //
 
-import Vapor
+import Foundation
 /// Stripe needs to collect certain pieces of information about each account created. These requirements can differ depending on the account's country. The Country Specs API makes these rules available to your integration.
 public struct StripeCountrySpec: StripeModel {
     /// Unique identifier for the object. Represented as the ISO country code for this country.

@@ -6,78 +6,106 @@
 //
 //
 
-import Vapor
+import NIO
+import NIOHTTP1
 
 public protocol TokenRoutes {
-    func createCard(card: [String: Any]?, customer: String?, connectAccount: String?) throws -> Future<StripeToken>
-    func createBankAccount(bankAcocunt: [String: Any]?, customer: String?, connectAccount: String?) throws -> Future<StripeToken>
-    func createPII(personalId: String?) throws -> Future<StripeToken>
-    func retrieve(token: String) throws -> Future<StripeToken>
+    /// Creates a single-use token that represents a credit card’s details. This token can be used in place of a credit card dictionary with any API method. These tokens can be used only once: by creating a new Charge object, or by attaching them to a Customer object. /n In most cases, you should use our recommended payments integrations instead of using the API.
+    ///
+    /// - Parameters:
+    ///   - card: The card this token will represent. If you also pass in a customer, the card must be the ID of a card belonging to the customer. Otherwise, if you do not pass in a customer, this is a dictionary containing a user's credit card details, with the options described below.
+    ///   - customer: The customer (owned by the application's account) for which to create a token. For use only with Stripe Connect. Also, this can be used only with an OAuth access token or Stripe-Account header. For more details, see Shared Customers.
+    /// - Returns: A `StripeToken`.
+    /// - Throws: A `StripeError`.
+    func create(card: Any?, customer: String?) throws -> EventLoopFuture<StripeToken>
+    
+    /// Creates a single-use token that represents a bank account’s details. This token can be used with any API method in place of a bank account dictionary. This token can be used only once, by attaching it to a Custom account.
+    ///
+    /// - Parameters:
+    ///   - bankAcocunt: The bank account this token will represent.
+    ///   - customer: The customer (owned by the application’s account) for which to create a token. For use only with Stripe Connect. Also, this can be used only with an OAuth access token or Stripe-Account header. For more details, see Shared Customers.
+    /// - Returns: A `StripeToken`.
+    /// - Throws: A `StripeError`.
+    func create(bankAcocunt: [String: Any]?, customer: String?) throws -> EventLoopFuture<StripeToken>
+    
+    /// Creates a single-use token that represents the details of personally identifiable information (PII). This token can be used in place of an id_number in Account or Person Update API methods. A PII token can be used only once.
+    ///
+    /// - Parameter pii: The PII this token will represent.
+    /// - Returns: A `StripeToken`.
+    /// - Throws: A `StripeError`.
+    func create(pii: String?) throws -> EventLoopFuture<StripeToken>
+    
+    /// Creates a single-use token that wraps a user’s legal entity information. Use this when creating or updating a Connect account. See the account tokens documentation to learn more. /n Account tokens may be created only in live mode, with your application’s publishable key. Your application’s secret key may be used to create account tokens only in test mode.
+    ///
+    /// - Parameter account: Information for the account this token will represent.
+    /// - Returns: A `StripeToken`.
+    /// - Throws: A `StripeError`.
+    func create(account: [String: Any]?) throws -> EventLoopFuture<StripeToken>
+    
+    /// Retrieves the token with the given ID.
+    ///
+    /// - Parameter token: The ID of the desired token.
+    /// - Returns: A `StripeToken`.
+    /// - Throws: A `StripeError`.
+    func retrieve(token: String) throws -> EventLoopFuture<StripeToken>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension TokenRoutes {
-    public func createCard(card: [String: Any]? = nil,
-                           customer: String? = nil,
-                           connectAccount: String? = nil) throws -> Future<StripeToken> {
-        return try createCard(card: card,
-                              customer: customer,
-                              connectAccount: connectAccount)
+    public func create(card: Any? = nil, customer: String? = nil) throws -> EventLoopFuture<StripeToken> {
+        return try create(card: card, customer: customer)
     }
     
-    public func createBankAccount(bankAcocunt: [String: Any]? = nil,
-                                  customer: String? = nil,
-                                  connectAccount: String? = nil) throws -> Future<StripeToken> {
-        return try createBankAccount(bankAcocunt: bankAcocunt,
-                                     customer: customer,
-                                     connectAccount: connectAccount)
+    public func create(bankAcocunt: [String: Any]? = nil, customer: String? = nil) throws -> EventLoopFuture<StripeToken> {
+        return try create(bankAcocunt: bankAcocunt, customer: customer)
     }
     
-    public func createPII(personalId: String? = nil) throws -> Future<StripeToken> {
-        return try createPII(personalId: personalId)
+    public func create(pii: String? = nil) throws -> EventLoopFuture<StripeToken> {
+        return try create(pii: pii)
     }
     
-    public func retrieve(token: String) throws -> Future<StripeToken> {
+    public func create(account: [String: Any]? = nil) throws -> EventLoopFuture<StripeToken> {
+        return try create(account: account)
+    }
+    
+    public func retrieve(token: String) throws -> EventLoopFuture<StripeToken> {
         return try retrieve(token: token)
     }
 }
 
 public struct StripeTokenRoutes: TokenRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
     }
 
-    /// Create a card token
-    /// [Learn More →](https://stripe.com/docs/api/curl#create_card_token)
-    public func createCard(card: [String: Any]?,
-                           customer: String?,
-                           connectAccount: String?) throws -> Future<StripeToken> {
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
+    }
+    
+    public func create(card: Any?, customer: String?) throws -> EventLoopFuture<StripeToken> {
         var body: [String: Any] = [:]
-        var headers: HTTPHeaders = [:]
         
-        if let card = card {
+        if let card = card as? [String: Any] {
             card.forEach { body["card[\($0)]"] = $1 }
+        }
+        
+        if let card = card as? String {
+            body["card"] = card
         }
         
         if let customer = customer {
             body["customer"] = customer
         }
         
-        if let connectAccount = connectAccount {
-            headers.add(name: .stripeAccount, value: connectAccount)
-        }
-        
-        return try request.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: body.queryParameters, headers: headers)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    /// Create a bank account token
-    /// [Learn More →](https://stripe.com/docs/api/curl#create_bank_account_token)
-    public func createBankAccount(bankAcocunt: [String: Any]?,
-                                  customer: String?,
-                                  connectAccount: String?) throws -> Future<StripeToken> {
+    public func create(bankAcocunt: [String: Any]?, customer: String?) throws -> EventLoopFuture<StripeToken> {
         var body: [String: Any] = [:]
-        var headers: HTTPHeaders = [:]
         
         if let bankAcocunt = bankAcocunt {
             bankAcocunt.forEach { body["bank_account[\($0)]"] = $1 }
@@ -87,28 +115,30 @@ public struct StripeTokenRoutes: TokenRoutes {
             body["customer"] = customer
         }
         
-        if let connectAccount = connectAccount {
-            headers.add(name: .stripeAccount, value: connectAccount)
-        }
-        
-        return try request.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: body.queryParameters, headers: headers)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    /// Create a PII token
-    /// [Learn More →](https://stripe.com/docs/api/curl#create_pii_token)
-    public func createPII(personalId: String?) throws -> Future<StripeToken> {
+    public func create(pii: String?) throws -> EventLoopFuture<StripeToken> {
         var body: [String: Any] = [:]
         
-        if let personalId = personalId {
-            body["personal_id_number"] = personalId
+        if let pii = pii {
+            body["personal_id_number"] = pii
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    /// Retrieve a token
-    /// [Learn More →](https://stripe.com/docs/api/curl#retrieve_token)
-    public func retrieve(token: String) throws -> Future<StripeToken> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.token(token).endpoint)
+    public func create(account: [String: Any]?) throws -> EventLoopFuture<StripeToken> {
+        var body: [String: Any] = [:]
+        
+        if let account = account {
+            account.forEach { body["account[\($0)]"] = $1 }
+        }
+        
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func retrieve(token: String) throws -> EventLoopFuture<StripeToken> {
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.token(token).endpoint, headers: headers)
     }
 }

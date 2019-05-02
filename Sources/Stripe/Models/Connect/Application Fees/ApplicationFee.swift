@@ -5,7 +5,7 @@
 //  Created by Andrew Edwards on 3/16/19.
 //
 
-import Vapor
+import Foundation
 /// When you collect a transaction fee on top of a charge made for your user (using [Connect](https://stripe.com/docs/connect) ), an `Application Fee` object is created in your account. You can list, retrieve, and refund application fees. For details, see [Collecting application fees](https://stripe.com/docs/connect/direct-charges#collecting-fees). [Learn More →](https://stripe.com/docs/api/application_fees)
 public struct StripeApplicationFee: StripeModel {
     /// Unique identifier for the object.

@@ -6,6 +6,7 @@
 //
 
 import NIO
+import NIOHTTP1
 import Foundation
 
 public protocol FileLinkRoutes {
@@ -43,6 +44,8 @@ public protocol FileLinkRoutes {
     /// - Returns: A `StripeFileLinkList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeFileLinkList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension FileLinkRoutes {
@@ -64,10 +67,15 @@ extension FileLinkRoutes {
 }
 
 public struct StripeFileLinkRoutes: FileLinkRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(file: String, expiresAt: Date?, metadata: [String: String]?) throws -> EventLoopFuture<StripeFileLink> {
@@ -79,11 +87,11 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        return try request.send(method: .POST, path: StripeAPIEndpoint.fileLink.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.fileLink.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(link: String) throws -> EventLoopFuture<StripeFileLink> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.fileLinks(link).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.fileLinks(link).endpoint, headers: headers)
     }
     
     public func update(link: String, expiresAt: Any?, metadata: [String: String]?) throws -> EventLoopFuture<StripeFileLink> {
@@ -100,7 +108,7 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        return try request.send(method: .POST, path: StripeAPIEndpoint.fileLinks(link).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.fileLinks(link).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeFileLinkList> {
@@ -109,6 +117,6 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
             queryParams = filter.queryParameters
         }
         
-        return try request.send(method: .GET, path: StripeAPIEndpoint.fileLink.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.fileLink.endpoint, query: queryParams, headers: headers)
     }
 }

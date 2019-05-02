@@ -7,6 +7,7 @@
 //
 
 import NIO
+import NIOHTTP1
 
 public protocol RefundRoutes {
     /// When you create a new refund, you must specify a charge on which to create it. /n Creating a new refund will refund a charge that has previously been created but not yet refunded. Funds will be refunded to the credit or debit card that was originally charged. /n You can optionally refund only part of a charge. You can do so multiple times, until the entire charge has been refunded. /n Once entirely refunded, a charge can’t be refunded again. This method will return an error when called on an already-refunded charge, or when trying to refund more money than is left on a charge.
@@ -49,6 +50,8 @@ public protocol RefundRoutes {
     /// - Returns: A `StripeRefundsList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeRefundsList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension RefundRoutes {
@@ -80,10 +83,15 @@ extension RefundRoutes {
 }
 
 public struct StripeRefundRoutes: RefundRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
 
     public func create(charge: String,
@@ -116,11 +124,11 @@ public struct StripeRefundRoutes: RefundRoutes {
             body["reverse_transfer"] = reverseTransfer
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.refunds.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.refunds.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(refund: String) throws -> EventLoopFuture<StripeRefund> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.refund(refund).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.refund(refund).endpoint, headers: headers)
     }
     
     public func update(refund: String, metadata: [String: String]?) throws -> EventLoopFuture<StripeRefund> {
@@ -130,7 +138,7 @@ public struct StripeRefundRoutes: RefundRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.refund(refund).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.refund(refund).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeRefundsList> {
@@ -139,6 +147,6 @@ public struct StripeRefundRoutes: RefundRoutes {
             queryParams = filter.queryParameters
         }
         
-        return try request.send(method: .GET, path: StripeAPIEndpoint.refunds.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.refunds.endpoint, query: queryParams, headers: headers)
     }
 }

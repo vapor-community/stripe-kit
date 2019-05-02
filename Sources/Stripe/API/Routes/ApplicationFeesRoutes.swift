@@ -5,7 +5,8 @@
 //  Created by Andrew Edwards on 3/17/19.
 //
 
-import Vapor
+import NIO
+import NIOHTTP1
 
 public protocol ApplicationFeesRoutes {
     /// Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
@@ -21,6 +22,8 @@ public protocol ApplicationFeesRoutes {
     /// - Returns: A `StripeApplicationFeeList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeApplicationFeeList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension ApplicationFeesRoutes {
@@ -34,14 +37,19 @@ extension ApplicationFeesRoutes {
 }
 
 public struct StripeApplicationFeeRoutes: ApplicationFeesRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func retrieve(fee: String) throws -> EventLoopFuture<StripeApplicationFee> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.applicationFees(fee).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFees(fee).endpoint, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeApplicationFeeList> {
@@ -49,6 +57,6 @@ public struct StripeApplicationFeeRoutes: ApplicationFeesRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try request.send(method: .GET, path: StripeAPIEndpoint.applicationFee.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFee.endpoint, query: queryParams, headers: headers)
     }
 }

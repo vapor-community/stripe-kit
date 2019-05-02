@@ -7,6 +7,7 @@
 //
 
 import NIO
+import NIOHTTP1
 
 public protocol ProductRoutes {
     /// Creates a new product object. To create a product for use with subscriptions, see [Subscriptions Products](https://stripe.com/docs/api/products/create#create_service_product).
@@ -95,6 +96,8 @@ public protocol ProductRoutes {
     /// - Returns: A `StripeDeletedObject`.
     /// - Throws:  A `StripeError`.
     func delete(id: String) throws -> EventLoopFuture<StripeDeletedObject>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension ProductRoutes {
@@ -172,10 +175,15 @@ extension ProductRoutes {
 }
 
 public struct StripeProductRoutes: ProductRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
 
     public func create(id: String?,
@@ -241,11 +249,11 @@ public struct StripeProductRoutes: ProductRoutes {
             body["url"] = url
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.product.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.product.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String) throws -> EventLoopFuture<StripeProduct> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.products(id).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.products(id).endpoint, headers: headers)
     }
     
     public func update(product: String,
@@ -317,7 +325,7 @@ public struct StripeProductRoutes: ProductRoutes {
             body["url"] = url
         }
 
-        return try request.send(method: .POST, path: StripeAPIEndpoint.products(product).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.products(product).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeProductsList> {
@@ -326,10 +334,10 @@ public struct StripeProductRoutes: ProductRoutes {
             queryParams = filter.queryParameters
         }
         
-        return try request.send(method: .GET, path: StripeAPIEndpoint.product.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.product.endpoint, query: queryParams, headers: headers)
     }
     
     public func delete(id: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try request.send(method: .DELETE, path: StripeAPIEndpoint.products(id).endpoint)
+        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.products(id).endpoint, headers: headers)
     }
 }

@@ -5,7 +5,8 @@
 //  Created by Andrew Edwards on 3/24/19.
 //
 
-import Vapor
+import NIO
+import NIOHTTP1
 
 public protocol TopUpRoutes {
     /// Top up the balance of an account
@@ -58,6 +59,8 @@ public protocol TopUpRoutes {
     /// - Returns: A canceled `StripeTopUp`.
     /// - Throws: A `StripeError`.
     func cancel(topup: String) throws -> EventLoopFuture<StripeTopUp>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension TopUpRoutes {
@@ -95,10 +98,15 @@ extension TopUpRoutes {
 }
 
 public struct StripeTopUpRoutes: TopUpRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(amount: Int,
@@ -131,11 +139,11 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.topup.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.topup.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String) throws -> EventLoopFuture<StripeTopUp> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.topups(id).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.topups(id).endpoint)
     }
     
     public func update(topup: String, description: String?, metadata: [String: String]?) throws -> EventLoopFuture<StripeTopUp> {
@@ -149,7 +157,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.topups(topup).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.topups(topup).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeTopUpList> {
@@ -157,10 +165,10 @@ public struct StripeTopUpRoutes: TopUpRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try request.send(method: .GET, path: StripeAPIEndpoint.topup.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.topup.endpoint, query: queryParams, headers: headers)
     }
     
     public func cancel(topup: String) throws -> EventLoopFuture<StripeTopUp> {
-        return try request.send(method: .POST, path: StripeAPIEndpoint.topupsCancel(topup).endpoint)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.topupsCancel(topup).endpoint, headers: headers)
     }
 }

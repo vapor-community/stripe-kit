@@ -5,7 +5,8 @@
 //  Created by Andrew Edwards on 2/28/19.
 //
 
-import Vapor
+import NIO
+import NIOHTTP1
 
 public protocol PersonRoutes {
     /// Creates a new person.
@@ -104,6 +105,8 @@ public protocol PersonRoutes {
     /// - Returns: A `PersonsList`
     /// - Throws: A `StripeError`
     func listAll(account: String, filter: [String: Any]?) throws -> EventLoopFuture<PersonsList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension PersonRoutes {
@@ -183,10 +186,15 @@ extension PersonRoutes {
 }
 
 public struct StripePersonRoutes: PersonRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(account: String,
@@ -257,11 +265,11 @@ public struct StripePersonRoutes: PersonRoutes {
             verification.forEach { body["verification[\($0)]"] = $1 }
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.person(account).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.person(account).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(account: String, person: String) throws -> EventLoopFuture<StripePerson> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.persons(account, person).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.persons(account, person).endpoint, headers: headers)
     }
     
     public func update(account: String,
@@ -333,11 +341,11 @@ public struct StripePersonRoutes: PersonRoutes {
             verification.forEach { body["verification[\($0)]"] = $1 }
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.persons(account, person).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.persons(account, person).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(account: String, person: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try request.send(method: .DELETE, path: StripeAPIEndpoint.persons(account, person).endpoint)
+        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.persons(account, person).endpoint, headers: headers)
     }
     
     public func listAll(account: String, filter: [String : Any]?) throws -> EventLoopFuture<PersonsList> {
@@ -345,6 +353,6 @@ public struct StripePersonRoutes: PersonRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try request.send(method: .GET, path: StripeAPIEndpoint.person(account).endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.person(account).endpoint, query: queryParams, headers: headers)
     }
 }

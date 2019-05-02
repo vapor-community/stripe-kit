@@ -7,6 +7,7 @@
 //
 
 import NIO
+import NIOHTTP1
 
 public protocol ChargeRoutes {
     /// To charge a credit card or other payment source, you create a Charge object. If your API key is in test mode, the supplied payment source (e.g., card) won’t actually be charged, although everything else will occur as if in live mode. (Stripe assumes that the charge would have completed successfully).
@@ -98,6 +99,8 @@ public protocol ChargeRoutes {
     /// - Returns: A `StripeChargesList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeChargesList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension ChargeRoutes {
@@ -175,10 +178,15 @@ extension ChargeRoutes {
 }
 
 public struct StripeChargeRoutes: ChargeRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(amount: Int,
@@ -248,11 +256,11 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.charges.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.charges.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(charge: String) throws -> EventLoopFuture<StripeCharge> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.charge(charge).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.charge(charge).endpoint, headers: headers)
     }
     
     public func update(charge: String,
@@ -293,7 +301,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.charge(charge).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.charge(charge).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func capture(charge: String,
@@ -329,7 +337,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.captureCharge(charge).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.captureCharge(charge).endpoint, body: .string(body.queryParameters), headers: headers)
     }
 
     public func listAll(filter: [String : Any]?) throws -> EventLoopFuture<StripeChargesList> {
@@ -338,6 +346,6 @@ public struct StripeChargeRoutes: ChargeRoutes {
             queryParams = filter.queryParameters
         }
         
-        return try request.send(method: .GET, path: StripeAPIEndpoint.charges.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.charges.endpoint, query: queryParams, headers: headers)
     }
 }

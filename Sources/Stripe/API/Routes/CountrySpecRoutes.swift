@@ -5,7 +5,8 @@
 //  Created by Andrew Edwards on 3/23/19.
 //
 
-import Vapor
+import NIO
+import NIOHTTP1
 
 public protocol CountrySpecRoutes {
     /// Lists all Country Spec objects available in the API.
@@ -21,6 +22,8 @@ public protocol CountrySpecRoutes {
     /// - Returns: A `StripeCountrySpec`.
     /// - Throws: A `StripeError`.
     func retrieve(country: String) throws -> EventLoopFuture<StripeCountrySpec>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension CountrySpecRoutes {
@@ -34,10 +37,15 @@ extension CountrySpecRoutes {
 }
 
 public struct StripeCountrySpecRoutes: CountrySpecRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCountrySpecList> {
@@ -45,10 +53,10 @@ public struct StripeCountrySpecRoutes: CountrySpecRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try request.send(method: .GET, path: StripeAPIEndpoint.countrySpec.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.countrySpec.endpoint, query: queryParams, headers: headers)
     }
     
     public func retrieve(country: String) throws -> EventLoopFuture<StripeCountrySpec> {
-         return try request.send(method: .GET, path: StripeAPIEndpoint.countrySpecs(country).endpoint)
+         return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.countrySpecs(country).endpoint, headers: headers)
     }
 }

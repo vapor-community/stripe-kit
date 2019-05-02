@@ -5,7 +5,8 @@
 //  Created by Andrew Edwards on 3/30/19.
 //
 
-import Vapor
+import NIO
+import NIOHTTP1
 
 public protocol ValueListItemRoutes {
     /// Creates a new `ValueListItem` object, which is added to the specified parent value list.
@@ -37,6 +38,8 @@ public protocol ValueListItemRoutes {
     /// - Returns: A `StripeValueListItemList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeValueListItemList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension ValueListItemRoutes {
@@ -58,23 +61,28 @@ extension ValueListItemRoutes {
 }
 
 public struct StripeValueListItemRoutes: ValueListItemRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(value: String, valueList: String) throws -> EventLoopFuture<StripeValueListItem> {
         let body = ["value": value, "value_list": valueList]
-        return try request.send(method: .POST, path: StripeAPIEndpoint.valueListItem.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.valueListItem.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(item: String) throws -> EventLoopFuture<StripeValueListItem> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.valueListItems(item).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.valueListItems(item).endpoint, headers: headers)
     }
     
     public func delete(item: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try request.send(method: .DELETE, path: StripeAPIEndpoint.valueListItems(item).endpoint)
+        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.valueListItems(item).endpoint, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeValueListItemList> {
@@ -82,6 +90,6 @@ public struct StripeValueListItemRoutes: ValueListItemRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try request.send(method: .GET, path: StripeAPIEndpoint.valueListItem.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.valueListItem.endpoint, query: queryParams, headers: headers)
     }
 }

@@ -7,10 +7,11 @@ let package = Package(
         .library(name: "Stripe", targets: ["Stripe"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "3.3.0"),
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.0.0"),
+        .package(url: "https://github.com/swift-server/swift-nio-http-client.git", .branch("master"))
     ],
     targets: [
-        .target(name: "Stripe", dependencies: ["Vapor"]),
-        .testTarget(name: "StripeTests", dependencies: ["Vapor", "Stripe"])
+        .target(name: "Stripe", dependencies: ["NIOHTTPClient", "NIOFoundationCompat"]),
+        .testTarget(name: "StripeTests", dependencies: ["NIOHTTPClient", "Stripe"])
     ]
 )

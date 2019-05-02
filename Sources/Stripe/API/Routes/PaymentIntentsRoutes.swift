@@ -5,8 +5,8 @@
 //  Created by Andrew Edwards on 4/28/19.
 //
 
-import Foundation
 import NIO
+import NIOHTTP1
 
 public protocol PaymentIntentsRoutes {
     /// Creates a PaymentIntent object.
@@ -141,6 +141,8 @@ public protocol PaymentIntentsRoutes {
     /// - Returns: A `StripePaymentIntentsList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripePaymentIntentsList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension PaymentIntentsRoutes {
@@ -250,10 +252,15 @@ extension PaymentIntentsRoutes {
 }
 
 public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(amount: Int,
@@ -346,11 +353,11 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.paymentIntents.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.paymentIntents.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String) throws -> EventLoopFuture<StripePaymentIntent> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.paymentIntent(id).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.paymentIntent(id).endpoint)
     }
     
     public func update(id: String,
@@ -422,7 +429,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.paymentIntent(id).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.paymentIntent(id).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func confirm(id: String,
@@ -458,7 +465,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["source"] = source
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.paymentIntentConfirm(id).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.paymentIntentConfirm(id).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func capture(id: String, amountToCapture: Int?, applicationFeeAmount: Int?) throws -> EventLoopFuture<StripePaymentIntent> {
@@ -472,7 +479,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["application_fee_amount"] = applicationFeeAmount
         }
 
-        return try request.send(method: .POST, path: StripeAPIEndpoint.paymentIntentCapture(id).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.paymentIntentCapture(id).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func cancel(id: String, cancellationReason: StripePaymentIntentCancellationReason?) throws -> EventLoopFuture<StripePaymentIntent> {
@@ -482,7 +489,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["cancellation_reason"] = cancellationReason.rawValue
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.paymentIntentCancel(id).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.paymentIntentCancel(id).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripePaymentIntentsList> {
@@ -491,6 +498,6 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             queryParams = filter.queryParameters
         }
         
-        return try request.send(method: .GET, path: StripeAPIEndpoint.paymentIntents.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.paymentIntents.endpoint, query: queryParams, headers: headers)
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import NIO
-import Foundation
+import NIOHTTP1
 
 public protocol PayoutRoutes {
     /// To send funds to your own bank account, you create a new payout object. Your Stripe balance must be able to cover the payout amount, or you’ll receive an “Insufficient Funds” error. /n If your API key is in test mode, money won’t actually be sent, though everything else will occur as if in live mode. /n If you are creating a manual payout on a Stripe account that uses multiple payment source types, you’ll need to specify the source type balance that the payout should draw from. The balance object details available and pending amounts by source type.
@@ -60,6 +60,8 @@ public protocol PayoutRoutes {
     /// - Returns: A `StripePayout`.
     /// - Throws: A `StripeError`.
     func cancel(payout: String) throws -> EventLoopFuture<StripePayout>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension PayoutRoutes {
@@ -99,10 +101,15 @@ extension PayoutRoutes {
 }
 
 public struct StripePayoutRoutes: PayoutRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(amount: Int,
@@ -142,11 +149,11 @@ public struct StripePayoutRoutes: PayoutRoutes {
             body["statement_descriptor"] = statementDescriptor
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.payout.endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.payout.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(payout: String) throws -> EventLoopFuture<StripePayout> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.payouts(payout).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.payouts(payout).endpoint, headers: headers)
     }
     
     public func update(payout: String, metadata: [String: String]?) throws -> EventLoopFuture<StripePayout> {
@@ -154,7 +161,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        return try request.send(method: .POST, path: StripeAPIEndpoint.payouts(payout).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.payouts(payout).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String : Any]?) throws -> EventLoopFuture<StripePayoutsList> {
@@ -163,10 +170,10 @@ public struct StripePayoutRoutes: PayoutRoutes {
             queryParams = filter.queryParameters
         }
         
-        return try request.send(method: .GET, path: StripeAPIEndpoint.payout.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.payout.endpoint, query: queryParams, headers: headers)
     }
     
     public func cancel(payout: String) throws -> EventLoopFuture<StripePayout> {
-        return try request.send(method: .POST, path: StripeAPIEndpoint.payoutsCancel(payout).endpoint)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.payoutsCancel(payout).endpoint, headers: headers)
     }
 }

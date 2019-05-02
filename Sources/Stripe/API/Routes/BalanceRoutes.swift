@@ -7,6 +7,7 @@
 //
 
 import NIO
+import NIOHTTP1
 
 public protocol BalanceRoutes {
     /// Retrieves the current account balance, based on the authentication that was used to make the request. For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
@@ -28,6 +29,8 @@ public protocol BalanceRoutes {
     /// - Returns: A `StripeBalanceTransactionList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeBalanceTransactionList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension BalanceRoutes {
@@ -45,18 +48,23 @@ extension BalanceRoutes {
 }
 
 public struct StripeBalanceRoutes: BalanceRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func retrieve() throws -> EventLoopFuture<StripeBalance> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.balance.endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.balance.endpoint, headers: headers)
     }
     
     public func retrieve(id: String) throws -> EventLoopFuture<StripeBalanceTransaction> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.balanceHistoryTransaction(id).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.balanceHistoryTransaction(id).endpoint, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeBalanceTransactionList> {
@@ -64,6 +72,6 @@ public struct StripeBalanceRoutes: BalanceRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try request.send(method: .GET, path: StripeAPIEndpoint.balanceHistory.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.balanceHistory.endpoint, query: queryParams, headers: headers)
     }
 }

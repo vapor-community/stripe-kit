@@ -7,6 +7,7 @@
 //
 
 import NIO
+import NIOHTTP1
 
 public protocol DisputeRoutes {
     /// Retrieves the dispute with the given ID.
@@ -43,6 +44,8 @@ public protocol DisputeRoutes {
     /// - Returns: A `StripeDisputeList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeDisputeList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension DisputeRoutes {
@@ -67,14 +70,19 @@ extension DisputeRoutes {
 }
 
 public struct StripeDisputeRoutes: DisputeRoutes {
-    private let request: StripeRequest
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
     
-    init(request: StripeRequest) {
-        self.request = request
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func retrieve(dispute: String) throws -> EventLoopFuture<StripeDispute> {
-        return try request.send(method: .GET, path: StripeAPIEndpoint.disputes(dispute).endpoint)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.disputes(dispute).endpoint, headers: headers)
     }
     
     public func update(dispute: String, evidence: [String: Any]?, metadata: [String: String]?, submit: Bool?) throws -> EventLoopFuture<StripeDispute> {
@@ -92,11 +100,11 @@ public struct StripeDisputeRoutes: DisputeRoutes {
             body["submit"] = submit
         }
         
-        return try request.send(method: .POST, path: StripeAPIEndpoint.disputes(dispute).endpoint, body: body.queryParameters)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.disputes(dispute).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
     public func close(dispute: String) throws -> EventLoopFuture<StripeDispute> {
-        return try request.send(method: .POST, path: StripeAPIEndpoint.closeDispute(dispute).endpoint)
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.closeDispute(dispute).endpoint, headers: headers)
     }
     
     public func listAll(filter: [String : Any]?) throws -> EventLoopFuture<StripeDisputeList> {
@@ -105,6 +113,6 @@ public struct StripeDisputeRoutes: DisputeRoutes {
             queryParams = filter.queryParameters
         }
         
-        return try request.send(method: .GET, path: StripeAPIEndpoint.dispute.endpoint, query: queryParams)
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.dispute.endpoint, query: queryParams, headers: headers)
     }
 }
