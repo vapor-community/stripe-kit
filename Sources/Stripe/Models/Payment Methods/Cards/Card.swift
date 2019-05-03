@@ -6,7 +6,7 @@
 //
 //
 
-/// The card object. [See here](https://stripe.com/docs/api/external_account_cards/object).
+/// The [Card Object](https://stripe.com/docs/api/external_account_cards/object).
 public struct StripeCard: StripeModel {
     /// Unique identifier for the object.
     public var id: String

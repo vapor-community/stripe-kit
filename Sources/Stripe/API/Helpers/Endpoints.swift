@@ -27,9 +27,9 @@ internal enum StripeAPIEndpoint {
     // MARK: - CUSTOMERS
     case customers
     case customer(String)
-    case customerSources(String)
-    case customerDetachSources(String,String)
-    case customerDiscount(String)
+//    case customerSources(String)
+//    case customerDetachSources(String,String)
+//    case customerDiscount(String)
     
     // MARK: - TOKENS
     case tokens
@@ -164,6 +164,10 @@ internal enum StripeAPIEndpoint {
     case paymentMethodsAttach(String)
     case paymentMethodsDetach(String)
     
+    case bankAccount(String)
+    case bankAccounts(String, String)
+    case bankAccountVerify(String, String)
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -176,9 +180,9 @@ internal enum StripeAPIEndpoint {
             
         case .customers: return APIBase + APIVersion + "customers"
         case .customer(let id): return APIBase + APIVersion + "customers/\(id)"
-        case .customerSources(let id): return APIBase + APIVersion + "customers/\(id)/sources"
-        case .customerDetachSources(let id, let src): return APIBase + APIVersion + "customers/\(id)/sources/\(src)"
-        case .customerDiscount(let id): return APIBase + APIVersion + "customers/\(id)/discount"
+//        case .customerSources(let id): return APIBase + APIVersion + "customers/\(id)/sources"
+//        case .customerDetachSources(let id, let src): return APIBase + APIVersion + "customers/\(id)/sources/\(src)"
+//        case .customerDiscount(let id): return APIBase + APIVersion + "customers/\(id)/discount"
             
         case .tokens: return APIBase + APIVersion + "tokens"
         case .token(let id): return APIBase + APIVersion + "tokens/\(id)"
@@ -291,6 +295,10 @@ internal enum StripeAPIEndpoint {
         case .paymentMethods(let id): return APIBase + APIVersion + "payment_method/\(id)"
         case .paymentMethodsAttach(let id): return APIBase + APIVersion + "payment_method/\(id)/attach"
         case .paymentMethodsDetach(let id): return APIBase + APIVersion + "payment_method/\(id)/detach"
+            
+        case .bankAccount(let customer): return APIBase + APIVersion + "customers/\(customer)/sources"
+        case .bankAccounts(let customer, let bankAccount): return APIBase + APIVersion + "customers/\(customer)/sources/\(bankAccount)"
+        case .bankAccountVerify(let customer, let bankAccount): return APIBase + APIVersion + "customers/\(customer)/sources/\(bankAccount)/verify"
         }
     }
 }
