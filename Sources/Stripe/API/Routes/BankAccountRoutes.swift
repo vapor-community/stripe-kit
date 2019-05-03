@@ -14,7 +14,7 @@ public protocol BankAccountRoutes {
     /// - Parameters:
     ///   - customer: The ID of the customer to attach this source to.
     ///   - source: Either a token, like the ones returned by Stripe.js, or a dictionary containing a user’s bank account details (with the options shown below).
-    ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the card in a structured format.
+    ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the bank account in a structured format.
     /// - Returns: A `StripeBankAccount`.
     /// - Throws: A `StripeError`.
     func create(customer: String, source: Any, metadata: [String: String]?) throws -> EventLoopFuture<StripeBankAccount>
@@ -35,7 +35,7 @@ public protocol BankAccountRoutes {
     ///   - customer: The ID of the customer this source belongs to.
     ///   - accountHolderName: The name of the person or business that owns the bank account.
     ///   - accountHolderType: The type of entity that holds the account. This can be either `individual` or `company`.
-    ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the card in a structured format.
+    ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the bank account in a structured format.
     /// - Returns: A `StripeBankAccount`.
     /// - Throws: A `StripeError`.
     func update(id: String,
