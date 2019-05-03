@@ -71,6 +71,8 @@ public protocol BankAccountRoutes {
     /// - Returns: A `StripeBankAccountList`.
     /// - Throws: A `StripeError`.
     func listAll(customer: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeBankAccountList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension BankAccountRoutes {

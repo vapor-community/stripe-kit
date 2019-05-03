@@ -43,6 +43,7 @@ public final class StripeClient {
     public var valueList: ValueListRoutes
     public var paymentMethods: PaymentMethodRoutes
     public var bankAccounts: BankAccountRoutes
+    public var cards: CardRoutes
     
     init(eventLoop: EventLoopGroup, apiKey: String) {
         let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
@@ -82,5 +83,6 @@ public final class StripeClient {
         valueList = StripeValueListRoutes(apiHandler: handler)
         paymentMethods = StripePaymentMethodRoutes(apiHandler: handler)
         bankAccounts = StripeBankAccountRoutes(apiHandler: handler)
+        cards = StripeCardRoutes(apiHandler: handler)
     }
 }

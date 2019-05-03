@@ -33,7 +33,8 @@ public struct StripeAPIHandler {
                                headers: HTTPHeaders = [:]) throws -> EventLoopFuture<SM> {
         
         var _headers: HTTPHeaders = ["Stripe-Version": "2019-03-14",
-                                     "Authorization": "Bearer \(apiKey)"]
+                                     "Authorization": "Bearer \(apiKey)",
+                                     "Content-Type": "application/x-www-form-urlencoded"]
         headers.forEach { _headers.replaceOrAdd(name: $0.name, value: $0.value) }
         
         let request = try HTTPClient.Request(url: "\(path)?\(query)", method: method, headers: headers, body: body)

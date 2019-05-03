@@ -75,6 +75,8 @@ public protocol CardRoutes {
     /// - Returns: A `StripeCardList`.
     /// - Throws: A `StripeError`.
     func listAll(customer: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeCardList>
+    
+    mutating func addHeaders(_ : HTTPHeaders)
 }
 
 extension CardRoutes {
@@ -97,7 +99,7 @@ extension CardRoutes {
                        expMonth: Int? = nil,
                        expYear: Int? = nil,
                        metadata: [String: String]? = nil,
-                       name: String?) throws -> EventLoopFuture<StripeCard> {
+                       name: String? = nil) throws -> EventLoopFuture<StripeCard> {
         return try update(id: id,
                           customer: customer,
                           addressCity: addressCity,
@@ -121,4 +123,107 @@ extension CardRoutes {
     }
 }
 
-
+public struct StripeCardRoutes: CardRoutes {
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
+    
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
+    }
+    
+    public func create(customer: String, source: Any, metadata: [String: String]?) throws -> EventLoopFuture<StripeCard> {
+        var body: [String: Any] = [:]
+        
+        if let source = source as? String {
+            body["source"] = source
+        }
+        
+        if let source = source as? [String: Any] {
+            source.forEach { body["source[\($0)]"] = $1 }
+        }
+        
+        if let metadata = metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.card(customer).endpoint, body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func retrieve(id: String, customer: String) throws -> EventLoopFuture<StripeCard> {
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.cards(customer, id).endpoint, headers: headers)
+    }
+    
+    public func update(id: String,
+                       customer: String,
+                       addressCity: String?,
+                       addressCountry: String?,
+                       addressLine1: String?,
+                       addressLine2: String?,
+                       addressState: String?,
+                       addressZip: String?,
+                       expMonth: Int?,
+                       expYear: Int?,
+                       metadata: [String: String]?,
+                       name: String?) throws -> EventLoopFuture<StripeCard> {
+        var body: [String: Any] = [:]
+        
+        if let addressCity = addressCity {
+            body["address_city"] = addressCity
+        }
+        
+        if let addressCountry = addressCountry {
+            body["address_country"] = addressCountry
+        }
+        
+        if let addressLine1 = addressLine1 {
+            body["address_line1"] = addressLine1
+        }
+        
+        if let addressLine2 = addressLine2 {
+            body["address_line2"] = addressLine2
+        }
+        
+        if let addressState = addressState {
+            body["address_state"] = addressState
+        }
+        
+        if let addressZip = addressZip {
+            body["address_zip"] = addressZip
+        }
+        
+        if let expMonth = expMonth {
+            body["exp_month"] = expMonth
+        }
+        
+        if let expYear = expYear {
+            body["exp_year"] = expYear
+        }
+        
+        if let metadata = metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let name = name {
+            body["name"] = name
+        }
+        
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.cards(customer, id).endpoint, body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func delete(id: String, customer: String) throws -> EventLoopFuture<StripeDeletedObject> {
+        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.cards(customer, id).endpoint, headers: headers)
+    }
+    
+    public func listAll(customer: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeBankAccountList> {
+        var queryParams = "object=card"
+        if let filter = filter {
+            queryParams = "&" + filter.queryParameters
+        }
+        
+        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.card(customer).endpoint, query: queryParams, headers: headers)
+    }
+}
