@@ -12,7 +12,7 @@ public final class StripeClient {
     public var balance: BalanceRoutes
     public var charge: ChargeRoutes
     //    public var connectAccount: AccountRoutes
-    //    public var coupon: CouponRoutes
+    public var coupons: CouponRoutes
     public var customer: CustomerRoutes
     public var dispute: DisputeRoutes
     //    public var ephemeralKey: EphemeralKeyRoutes
@@ -53,7 +53,7 @@ public final class StripeClient {
         balance = StripeBalanceRoutes(apiHandler: handler)
         charge = StripeChargeRoutes(apiHandler: handler)
         //        connectAccount = StripeConnectAccountRoutes(request: apiRequest)
-        //        coupon = StripeCouponRoutes(request: apiRequest)
+        coupons = StripeCouponRoutes(apiHandler: handler)
         customer = StripeCustomerRoutes(apiHandler: handler)
         dispute = StripeDisputeRoutes(apiHandler: handler)
         //        ephemeralKey = StripeEphemeralKeyRoutes(request: apiRequest)

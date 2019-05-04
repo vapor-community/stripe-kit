@@ -6,11 +6,6 @@
 //
 //
 
-public enum StripeDuration: String, Codable {
-    case forever
-    case once
-    case repeating
-}
 
 // https://stripe.com/docs/api/curl#account_object-payout_schedule-interval
 public enum StripePayoutInterval: String, Codable {
