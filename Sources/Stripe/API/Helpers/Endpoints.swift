@@ -27,7 +27,6 @@ internal enum StripeAPIEndpoint {
     // MARK: - CUSTOMERS
     case customers
     case customer(String)
-//    case customerDiscount(String)
     
     // MARK: - TOKENS
     case tokens
@@ -58,7 +57,6 @@ internal enum StripeAPIEndpoint {
     // MARK: - SUBSCRIPTIONS
     case subscription
     case subscriptions(String)
-    case subscriptionDiscount(String)
     
     // MARK: - ACCOUNTS
     case account
@@ -174,6 +172,9 @@ internal enum StripeAPIEndpoint {
     case session
     case sessions(String)
     
+    case discountCustomer(String)
+    case discountSubscription(String)
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -186,7 +187,6 @@ internal enum StripeAPIEndpoint {
             
         case .customers: return APIBase + APIVersion + "customers"
         case .customer(let id): return APIBase + APIVersion + "customers/\(id)"
-//        case .customerDiscount(let id): return APIBase + APIVersion + "customers/\(id)/discount"
             
         case .tokens: return APIBase + APIVersion + "tokens"
         case .token(let id): return APIBase + APIVersion + "tokens/\(id)"
@@ -210,7 +210,6 @@ internal enum StripeAPIEndpoint {
             
         case .subscription: return APIBase + APIVersion + "subscriptions"
         case .subscriptions(let id): return APIBase + APIVersion + "subscriptions/\(id)"
-        case .subscriptionDiscount(let id): return APIBase + APIVersion + "subscriptions/\(id)/discount"
             
         case .account: return APIBase + APIVersion + "accounts"
         case .accounts(let id): return APIBase + APIVersion + "accounts/\(id)"
@@ -311,6 +310,9 @@ internal enum StripeAPIEndpoint {
             
         case .session: return APIBase + APIVersion + "checkout/sessions"
         case .sessions(let session): return APIBase + APIVersion + "checkout/sessions/\(session)"
+            
+        case .discountCustomer(let customer): return APIBase + APIVersion + "customers/\(customer)/discount"
+        case .discountSubscription(let subscription): return APIBase + APIVersion + "subscriptions/\(subscription)/discount"
         }
     }
 }

@@ -45,6 +45,7 @@ public final class StripeClient {
     public var bankAccounts: BankAccountRoutes
     public var cards: CardRoutes
     public var sessions: SessionRoutes
+    public var discounts: DiscountRoutes
     
     init(eventLoop: EventLoopGroup, apiKey: String) {
         let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
@@ -86,5 +87,6 @@ public final class StripeClient {
         bankAccounts = StripeBankAccountRoutes(apiHandler: handler)
         cards = StripeCardRoutes(apiHandler: handler)
         sessions = StripeSessionRoutes(apiHandler: handler)
+        discounts = StripeDiscountRoutes(apiHandler: handler)
     }
 }
