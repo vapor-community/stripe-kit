@@ -27,8 +27,6 @@ internal enum StripeAPIEndpoint {
     // MARK: - CUSTOMERS
     case customers
     case customer(String)
-//    case customerSources(String)
-//    case customerDetachSources(String,String)
 //    case customerDiscount(String)
     
     // MARK: - TOKENS
@@ -48,8 +46,10 @@ internal enum StripeAPIEndpoint {
     case plan(String)
     
     // MARK: - SOURCES
-    case sources
-    case source(String)
+    case source
+    case sources(String)
+    case sourcesAttach(String)
+    case sourcesDetach(String, String)
     
     // MARK: - SUBSCRIPTION ITEMS
     case subscriptionItem
@@ -183,8 +183,6 @@ internal enum StripeAPIEndpoint {
             
         case .customers: return APIBase + APIVersion + "customers"
         case .customer(let id): return APIBase + APIVersion + "customers/\(id)"
-//        case .customerSources(let id): return APIBase + APIVersion + "customers/\(id)/sources"
-//        case .customerDetachSources(let id, let src): return APIBase + APIVersion + "customers/\(id)/sources/\(src)"
 //        case .customerDiscount(let id): return APIBase + APIVersion + "customers/\(id)/discount"
             
         case .tokens: return APIBase + APIVersion + "tokens"
@@ -199,8 +197,10 @@ internal enum StripeAPIEndpoint {
         case .plans: return APIBase + APIVersion + "plans"
         case .plan(let id): return APIBase + APIVersion + "plans/\(id)"
             
-        case .sources: return APIBase + APIVersion + "sources"
-        case .source(let id): return APIBase + APIVersion + "sources/\(id)"
+        case .source: return APIBase + APIVersion + "sources"
+        case .sources(let id): return APIBase + APIVersion + "sources/\(id)"
+        case .sourcesAttach(let id): return APIBase + APIVersion + "customers/\(id)/sources"
+        case .sourcesDetach(let customer, let source): return APIBase + APIVersion + "customers/\(customer)/sources/\(source)"
             
         case .subscriptionItem: return APIBase + APIVersion + "subscription_items"
         case .subscriptionItems(let id): return APIBase + APIVersion + "subscription_items/\(id)"

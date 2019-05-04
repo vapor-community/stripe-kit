@@ -93,14 +93,6 @@ public protocol CustomerRoutes {
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCustomerList>
     
     mutating func addHeaders(_ : HTTPHeaders)
-//    func addNewSource(customer: String, source: String, toConnectedAccount: String?) throws -> EventLoopFuture<StripeSource>
-//
-//    func addNewBankAccountSource(customer: String, source: Any, toConnectedAccount: String?, metadata: [String: String]?) throws -> EventLoopFuture<StripeBankAccount>
-//
-//    func addNewCardSource(customer: String, source: Any, toConnectedAccount: String?, metadata: [String : String]?) throws -> EventLoopFuture<StripeCard>
-//
-//    func deleteSource(customer: String, source: String) throws -> EventLoopFuture<StripeDeletedObject>
-//
 //    func deleteDiscount(customer: String) throws -> EventLoopFuture<StripeDeletedObject>
 }
 
@@ -167,22 +159,6 @@ extension CustomerRoutes {
         return try listAll(filter: filter)
     }
     
-//    public func addNewSource(customer: String, source: String, toConnectedAccount: String? = nil) throws -> EventLoopFuture<StripeSource> {
-//        return try addNewSource(customer: customer, source: source, toConnectedAccount: toConnectedAccount)
-//    }
-//
-//    public func addNewBankAccountSource(customer: String, source: Any, toConnectedAccount: String? = nil, metadata: [String : String]? = nil) throws -> EventLoopFuture<StripeBankAccount> {
-//        return try addNewBankAccountSource(customer: customer, source: source, toConnectedAccount: toConnectedAccount, metadata: metadata)
-//    }
-//
-//    public func addNewCardSource(customer: String, source: Any, toConnectedAccount: String? = nil, metadata: [String : String]? = nil) throws -> EventLoopFuture<StripeCard> {
-//        return try addNewCardSource(customer: customer, source: source, toConnectedAccount: toConnectedAccount, metadata: metadata)
-//    }
-//
-//    public func deleteSource(customer: String, source: String) throws -> EventLoopFuture<StripeDeletedObject> {
-//        return try deleteSource(customer: customer, source: source)
-//    }
-//
 //    public func deleteDiscount(customer: String) throws -> EventLoopFuture<StripeDeletedObject> {
 //        return try deleteDiscount(customer: customer)
 //    }
@@ -347,77 +323,6 @@ public struct StripeCustomerRoutes: CustomerRoutes {
         return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.customers.endpoint, query: queryParams, headers: headers)
     }
     
-//    /// Attach a source
-//    /// [Learn More →](https://stripe.com/docs/api/curl#attach_source)
-//    public func addNewSource(customer: String, source: String, toConnectedAccount: String?) throws -> EventLoopFuture<StripeSource> {
-//        let body: [String: Any] = ["source": source]
-//        var headers: HTTPHeaders = [:]
-//
-//        if let connectedAccount = toConnectedAccount {
-//            headers.add(name: .stripeAccount, value: connectedAccount)
-//        }
-//
-//        return try request.send(method: .POST, path: StripeAPIEndpoint.customerSources(customer).endpoint, body: body.queryParameters, headers: headers)
-//    }
-//
-//    /// Create a bank account
-//    /// [Learn More →](https://stripe.com/docs/api/curl#customer_create_bank_account)
-//    public func addNewBankAccountSource(customer: String, source: Any, toConnectedAccount: String?, metadata: [String : String]?) throws -> EventLoopFuture<StripeBankAccount> {
-//        var body: [String: Any] = [:]
-//        var headers: HTTPHeaders = [:]
-//
-//        if let connectedAccount = toConnectedAccount {
-//            headers.add(name: .stripeAccount, value: connectedAccount)
-//        }
-//
-//        if let source = source as? String {
-//            body["source"] = source
-//        }
-//
-//        if let source = source as? [String: Any] {
-//            source.forEach { body["source[\($0)]"] = $1 }
-//        }
-//
-//        if let metadata = metadata {
-//            metadata.forEach { body["metadata[\($0)]"] = $1 }
-//        }
-//
-//        return try request.send(method: .POST, path: StripeAPIEndpoint.customerSources(customer).endpoint, body: body.queryParameters, headers: headers)
-//    }
-//
-//    /// Create a card
-//    /// [Learn More →](https://stripe.com/docs/api/curl#create_card)
-//    public func addNewCardSource(customer: String, source: Any, toConnectedAccount: String?, metadata: [String : String]?) throws -> EventLoopFuture<StripeCard> {
-//        var body: [String: Any] = [:]
-//        var headers: HTTPHeaders = [:]
-//
-//        if let connectedAccount = toConnectedAccount {
-//            headers.add(name: .stripeAccount, value: connectedAccount)
-//        }
-//
-//        if let source = source as? String {
-//            body["source"] = source
-//        }
-//
-//        if let source = source as? [String: Any] {
-//            source.forEach { body["source[\($1)]"] = $1 }
-//        }
-//
-//        if let metadata = metadata {
-//            metadata.forEach { body["metadata[\($0)]"] = $1 }
-//        }
-//
-//        return try request.send(method: .POST, path: StripeAPIEndpoint.customerSources(customer).endpoint, body: body.queryParameters, headers: headers)
-//    }
-//
-//    /// Detach a source
-//    /// [Learn More →](https://stripe.com/docs/api/curl#detach_source)
-//    public func deleteSource(customer: String, source: String) throws -> EventLoopFuture<StripeDeletedObject> {
-//        return try request.send(method: .DELETE, path: StripeAPIEndpoint.customerDetachSources(customer, source).endpoint)
-//    }
-//
-//    /// Delete a customer discount
-//    /// [Learn More →](https://stripe.com/docs/api/curl#delete_discount)
 //    public func deleteDiscount(customer: String) throws -> EventLoopFuture<StripeDeletedObject> {
 //        return try request.send(method: .DELETE, path: StripeAPIEndpoint.customerDiscount(customer).endpoint)
 //    }
