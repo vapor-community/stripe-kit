@@ -72,7 +72,7 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [x] Sources
 ---
 ### Checkout
-* [ ] Sessions
+* [x] Sessions
 ---
 ### Billing
 * [x] Coupons
