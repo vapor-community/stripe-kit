@@ -8,43 +8,60 @@
 
 import Foundation
 
-/**
- InvoiceItem object
- https://stripe.com/docs/api#invoice_line_item_object
- */
-
+/// The [Invoice Line Item Object](https://stripe.com/docs/api/invoices/line_item).
 public struct StripeInvoiceLineItem: StripeModel {
+    /// Unique identifier for the object.
     public var id: String?
+    /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
+    /// The amount, in cents.
     public var amount: Int?
+    /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
+    /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
+    /// If true, discounts will apply to this line item. Always false for prorations.
     public var discountable: Bool?
+    public var invoiceItem: String?
+    /// Whether this is a test line item.
     public var livemode: Bool?
-    public var metadata: [String: String]
-    public var period: Period?
+    /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
+    public var metadata: [String: String]?
+    /// The timespan covered by this invoice item.
+    public var period: StripeInvoiceLineItemPeriod?
+    /// The plan of the subscription, if the line item is a subscription or a proration.
     public var plan: StripePlan?
+    /// Whether this is a proration.
     public var proration: Bool?
+    /// The quantity of the subscription, if the line item is a subscription or a proration.
     public var quantity: Int?
+    /// The subscription that the invoice item pertains to, if any.
     public var subscription: String?
+    /// The subscription item that generated this invoice item. Left empty if the line item is not an explicit result of a subscription.
     public var subscriptionItem: String?
-    public var type: String?
-    
-    public enum CodingKeys: String, CodingKey {
-        case id
-        case object
-        case amount
-        case currency
-        case description
-        case discountable
-        case livemode
-        case metadata
-        case period
-        case plan
-        case proration
-        case quantity
-        case subscription
-        case subscriptionItem = "subscription_item"
-        case type
-    }
+    /// The amount of tax calculated per tax rate for this line item
+    public var taxAmounts: [StripeInvoiceTotalTaxAmount]?
+    /// The tax rates which apply to the line item.
+    public var taxRates: [StripeTaxRate]?
+    /// A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
+    public var type: StripeInvoiceLineItemType?
+}
+
+public struct StripeInvoiceLineItemPeriod: StripeModel {
+    /// Start of the line item’s billing period
+    public var start: Date?
+    /// End of the line item’s billing period
+    public var end: Date?
+}
+
+public enum StripeInvoiceLineItemType: String, StripeModel {
+    case invoiceitem
+    case subscription
+}
+
+public struct StripeInvoiceLineItemList: StripeModel {
+    public var object: String
+    public var hasMore: Bool
+    public var url: String?
+    public var data: [StripeInvoiceLineItem]?
 }

@@ -93,7 +93,6 @@ public protocol CustomerRoutes {
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCustomerList>
     
     mutating func addHeaders(_ : HTTPHeaders)
-//    func deleteDiscount(customer: String) throws -> EventLoopFuture<StripeDeletedObject>
 }
 
 extension CustomerRoutes {
@@ -158,10 +157,6 @@ extension CustomerRoutes {
     public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeCustomerList> {
         return try listAll(filter: filter)
     }
-    
-//    public func deleteDiscount(customer: String) throws -> EventLoopFuture<StripeDeletedObject> {
-//        return try deleteDiscount(customer: customer)
-//    }
 }
 
 
@@ -322,8 +317,4 @@ public struct StripeCustomerRoutes: CustomerRoutes {
 
         return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.customers.endpoint, query: queryParams, headers: headers)
     }
-    
-//    public func deleteDiscount(customer: String) throws -> EventLoopFuture<StripeDeletedObject> {
-//        return try request.send(method: .DELETE, path: StripeAPIEndpoint.customerDiscount(customer).endpoint)
-//    }
 }

@@ -25,7 +25,7 @@ public struct StripeInvoiceItem: StripeModel {
     public var invoice: String?
     public var livemode: Bool?
     public var metadata: [String: String]
-    public var period: Period?
+    public var period: StripeInvoiceLineItemPeriod?
     public var plan: StripePlan?
     public var proration: Bool?
     public var quantity: Int?

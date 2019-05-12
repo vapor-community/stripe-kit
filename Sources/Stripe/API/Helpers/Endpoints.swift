@@ -88,11 +88,16 @@ internal enum StripeAPIEndpoint {
     case orderReturns(String)
     
     // MARK: - INVOICES
-    case invoices
-    case invoice(String)
-    case payInvoice(String)
-    case invoiceLines(String)
-    case upcomingInvoices
+    case invoice
+    case invoices(String)
+    case invoicesFinalize(String)
+    case invoicesPay(String)
+    case invoicesSend(String)
+    case invoicesVoid(String)
+    case invoicesMarkUncollectible(String)
+    case invoicesLineItems(String)
+    case invoicesUpcoming
+    case invoicesUpcomingLineItems
     
     // MARK: - INVOICE ITEMS
     case invoiceItems
@@ -175,6 +180,12 @@ internal enum StripeAPIEndpoint {
     case discountCustomer(String)
     case discountSubscription(String)
     
+    case taxid(String)
+    case taxids(String, String)
+    
+    case taxRate
+    case taxRates(String)
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -234,11 +245,16 @@ internal enum StripeAPIEndpoint {
         case .orderReturn: return APIBase + APIVersion + "order_returns"
         case .orderReturns(let id): return APIBase + APIVersion + "order_returns/\(id)"
             
-        case .invoices: return APIBase + APIVersion + "invoices"
-        case .invoice(let id): return APIBase + APIVersion + "invoices/\(id)"
-        case .payInvoice(let id): return APIBase + APIVersion + "invoices/\(id)/pay"
-        case .invoiceLines(let id): return APIBase + APIVersion + "invoices/\(id)/lines"
-        case .upcomingInvoices: return APIBase + APIVersion + "invoices/upcoming"
+        case .invoice: return APIBase + APIVersion + "invoices"
+        case .invoices(let invoice): return APIBase + APIVersion + "invoices/\(invoice)"
+        case .invoicesFinalize(let invoice): return APIBase + APIVersion + "invoices/\(invoice)/finalize"
+        case .invoicesPay(let invoice): return APIBase + APIVersion + "invoices/\(invoice)/pay"
+        case .invoicesSend(let invoice): return APIBase + APIVersion + "invoices/\(invoice)/send"
+        case .invoicesVoid(let invoice): return APIBase + APIVersion + "invoices/\(invoice)/void"
+        case .invoicesMarkUncollectible(let invoice): return APIBase + APIVersion + "invoices/\(invoice)/mark_uncollectible"
+        case .invoicesLineItems(let invoice): return APIBase + APIVersion + "invoices/\(invoice)/lines"
+        case .invoicesUpcoming: return APIBase + APIVersion + "invoices/upcoming"
+        case .invoicesUpcomingLineItems: return APIBase + APIVersion + "invoices/upcoming/lines"
             
         case .invoiceItems: return APIBase + APIVersion + "invoiceitems"
         case .invoiceItem(let id): return APIBase + APIVersion + "invoiceitems/\(id)"
@@ -270,8 +286,8 @@ internal enum StripeAPIEndpoint {
         case .applicationFeeRefund(let fee): return APIBase + APIVersion + "application_fees/\(fee)/refunds"
         case .applicationFeeRefunds(let fee, let refund): return APIBase + APIVersion + "application_fees/\(fee)/refunds/\(refund)"
             
-        case . externalAccount(let account): return APIBase + APIVersion + "accounts/\(account)/external_accounts"
-        case . externalAccounts(let account, let id): return APIBase + APIVersion + "accounts/\(account)/external_accounts/\(id)"
+        case .externalAccount(let account): return APIBase + APIVersion + "accounts/\(account)/external_accounts"
+        case .externalAccounts(let account, let id): return APIBase + APIVersion + "accounts/\(account)/external_accounts/\(id)"
             
         case .countrySpec: return APIBase + APIVersion + "country_specs"
         case .countrySpecs(let country): return APIBase + APIVersion + "country_specs/\(country)"
@@ -313,6 +329,12 @@ internal enum StripeAPIEndpoint {
             
         case .discountCustomer(let customer): return APIBase + APIVersion + "customers/\(customer)/discount"
         case .discountSubscription(let subscription): return APIBase + APIVersion + "subscriptions/\(subscription)/discount"
+            
+        case .taxid(let customer): return APIBase + APIVersion + "customers/\(customer)/tax_ids"
+        case .taxids(let customer, let taxid): return APIBase + APIVersion + "customers/\(customer)/tax_ids/\(taxid)"
+            
+        case .taxRate: return APIBase + APIVersion + "tax_rates"
+        case .taxRates(let taxRate): return APIBase + APIVersion + "tax_rates/\(taxRate)"
         }
     }
 }

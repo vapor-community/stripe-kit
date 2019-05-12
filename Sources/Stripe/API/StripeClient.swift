@@ -17,7 +17,7 @@ public final class StripeClient {
     public var dispute: DisputeRoutes
     //    public var ephemeralKey: EphemeralKeyRoutes
     //    public var invoiceItem: InvoiceItemRoutes
-    //    public var invoice: InvoiceRoutes
+    public var invoice: InvoiceRoutes
     //    public var orderReturn: OrderReturnRoutes
     //    public var order: OrderRoutes
     //    public var plan: PlanRoutes
@@ -46,6 +46,8 @@ public final class StripeClient {
     public var cards: CardRoutes
     public var sessions: SessionRoutes
     public var discounts: DiscountRoutes
+    public var taxids: TaxIDRoutes
+    public var taxRates: TaxRateRoutes
     
     init(eventLoop: EventLoopGroup, apiKey: String) {
         let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
@@ -59,7 +61,7 @@ public final class StripeClient {
         dispute = StripeDisputeRoutes(apiHandler: handler)
         //        ephemeralKey = StripeEphemeralKeyRoutes(request: apiRequest)
         //        invoiceItem = StripeInvoiceItemRoutes(request: apiRequest)
-        //        invoice = StripeInvoiceRoutes(request: apiRequest)
+        invoice = StripeInvoiceRoutes(apiHandler: handler)
         //        orderReturn = StripeOrderReturnRoutes(request: apiRequest)
         //        order = StripeOrderRoutes(request: apiRequest)
         //        plan = StripePlanRoutes(request: apiRequest)
@@ -88,5 +90,7 @@ public final class StripeClient {
         cards = StripeCardRoutes(apiHandler: handler)
         sessions = StripeSessionRoutes(apiHandler: handler)
         discounts = StripeDiscountRoutes(apiHandler: handler)
+        taxids = StripeTaxIDRoutes(apiHandler: handler)
+        taxRates = StripeTaxRateRoutes(apiHandler: handler)
     }
 }
