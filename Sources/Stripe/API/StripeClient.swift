@@ -48,6 +48,7 @@ public final class StripeClient {
     public var discounts: DiscountRoutes
     public var taxids: TaxIDRoutes
     public var taxRates: TaxRateRoutes
+    public var creditNotes: CreditNoteRoutes
     
     init(eventLoop: EventLoopGroup, apiKey: String) {
         let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
@@ -92,5 +93,6 @@ public final class StripeClient {
         discounts = StripeDiscountRoutes(apiHandler: handler)
         taxids = StripeTaxIDRoutes(apiHandler: handler)
         taxRates = StripeTaxRateRoutes(apiHandler: handler)
+        creditNotes = StripeCreditNoteRoutes(apiHandler: handler)
     }
 }

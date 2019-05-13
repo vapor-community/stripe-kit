@@ -80,7 +80,7 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [x] Invoices
 * [x] Invoice Items
 * [x] Tax Rates
-* [ ] Credit Notes
+* [x] Credit Notes
 * [x] Products
 * [x] Plans
 * [x] Subscriptions

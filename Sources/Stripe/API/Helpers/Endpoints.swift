@@ -186,6 +186,10 @@ internal enum StripeAPIEndpoint {
     case taxRate
     case taxRates(String)
     
+    case creditNote
+    case creditNotes(String)
+    case creditNotesVoid(String)
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -335,6 +339,10 @@ internal enum StripeAPIEndpoint {
             
         case .taxRate: return APIBase + APIVersion + "tax_rates"
         case .taxRates(let taxRate): return APIBase + APIVersion + "tax_rates/\(taxRate)"
+            
+        case .creditNote: return APIBase + APIVersion + "credit_notes"
+        case .creditNotes(let id): return APIBase + APIVersion + "credit_notes/\(id)"
+        case .creditNotesVoid(let id): return APIBase + APIVersion + "credit_notes/\(id)/void"
         }
     }
 }
