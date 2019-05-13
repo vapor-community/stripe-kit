@@ -100,8 +100,8 @@ internal enum StripeAPIEndpoint {
     case invoicesUpcomingLineItems
     
     // MARK: - INVOICE ITEMS
-    case invoiceItems
-    case invoiceItem(String)
+    case invoiceItem
+    case invoiceItems(String)
     
     // MARK: - EPHEMERAL KEYS
     case ephemeralKeys
@@ -256,8 +256,8 @@ internal enum StripeAPIEndpoint {
         case .invoicesUpcoming: return APIBase + APIVersion + "invoices/upcoming"
         case .invoicesUpcomingLineItems: return APIBase + APIVersion + "invoices/upcoming/lines"
             
-        case .invoiceItems: return APIBase + APIVersion + "invoiceitems"
-        case .invoiceItem(let id): return APIBase + APIVersion + "invoiceitems/\(id)"
+        case .invoiceItem: return APIBase + APIVersion + "invoiceitems"
+        case .invoiceItems(let id): return APIBase + APIVersion + "invoiceitems/\(id)"
         
         case .ephemeralKeys: return APIBase + APIVersion + "ephemeral_keys"
         case .ephemeralKey(let id): return APIBase + APIVersion + "ephemeral_keys/\(id)"

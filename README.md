@@ -54,7 +54,7 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [x] Balance
 * [x] Charges
 * [x] Customers
-* [ ] Customer Tax IDs
+* [x] Customer Tax IDs
 * [x] Disputes  
 * [ ] Events
 * [x] File Links
@@ -79,7 +79,7 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [x] Discounts
 * [x] Invoices
 * [x] Invoice Items
-* [ ] Tax Rates
+* [x] Tax Rates
 * [ ] Credit Notes
 * [x] Products
 * [x] Plans
