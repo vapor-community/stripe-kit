@@ -85,7 +85,7 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [x] Plans
 * [x] Subscriptions
 * [x] Subscription items
-* [ ] Usage Records
+* [x] Usage Records
 ---
 ### Connect
 * [x] Account

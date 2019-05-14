@@ -190,6 +190,9 @@ internal enum StripeAPIEndpoint {
     case creditNotes(String)
     case creditNotesVoid(String)
     
+    case usageRecords(String)
+    case usageRecordSummaries(String)
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -343,6 +346,9 @@ internal enum StripeAPIEndpoint {
         case .creditNote: return APIBase + APIVersion + "credit_notes"
         case .creditNotes(let id): return APIBase + APIVersion + "credit_notes/\(id)"
         case .creditNotesVoid(let id): return APIBase + APIVersion + "credit_notes/\(id)/void"
+            
+        case .usageRecords(let subscriptionItem): return APIBase + APIVersion + "subscription_items/\(subscriptionItem)/usage_records"
+        case .usageRecordSummaries(let subscriptionItem): return APIBase + APIVersion + "subscription_items/\(subscriptionItem)/usage_record_summaries"
         }
     }
 }
