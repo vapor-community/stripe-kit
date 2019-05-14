@@ -18,15 +18,6 @@ public enum StripeStatus: String, Codable {
     case available
 }
 
-// https://stripe.com/docs/api/curl#subscription_object-status
-public enum StripeSubscriptionStatus: String, Codable {
-    case trialing
-    case active
-    case pastDue = "past_due"
-    case canceled
-    case unpaid
-}
-
 // https://stripe.com/docs/api/invoices/object#invoice_object-status
 
 public enum StripeConnectAccountCapabilitiesStatus: String, Codable {

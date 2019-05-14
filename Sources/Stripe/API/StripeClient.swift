@@ -25,8 +25,8 @@ public final class StripeClient {
     public var refund: RefundRoutes
     //    public var sku: SKURoutes
     public var source: SourceRoutes
-    //    public var subscriptionItem: SubscriptionItemRoutes
-    //    public var subscription: SubscriptionRoutes
+    public var subscriptionItems: SubscriptionItemRoutes
+    public var subscriptions: SubscriptionRoutes
     public var token: TokenRoutes
     //    public var transfer: TransferRoutes
     //    public var transferReversals: TransferReversalRoutes
@@ -70,8 +70,8 @@ public final class StripeClient {
         refund = StripeRefundRoutes(apiHandler: handler)
         //        sku = StripeSKURoutes(request: apiRequest)
         source = StripeSourceRoutes(apiHandler: handler)
-        //        subscriptionItem = StripeSubscriptionItemRoutes(request: apiRequest)
-        //        subscription = StripeSubscriptionRoutes(request: apiRequest)
+        subscriptionItems = StripeSubscriptionItemRoutes(apiHandler: handler)
+        subscriptions = StripeSubscriptionRoutes(apiHandler: handler)
         token = StripeTokenRoutes(apiHandler: handler)
         //        transfer = StripeTransferRoutes(request: apiRequest)
         //        transferReversals = StripeTransferReversalRoutes(request: apiRequest)

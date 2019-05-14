@@ -43,7 +43,7 @@ public struct StripeCustomer: StripeModel {
     /// The customer’s payment sources, if any.
     public var sources: StripeSourcesList?
     /// The customer’s current subscriptions, if any.
-    public var subscriptions: StripeSubscriptionsList?
+    public var subscriptions: StripeSubscriptionList?
     /// The customer’s tax information. Appears on invoices emailed to this customer.
     public var taxInfo: StripeCustomerTaxInfo?
     /// Describes the status of looking up the tax ID provided in `tax_info`.
