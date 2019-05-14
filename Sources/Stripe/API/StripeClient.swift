@@ -20,7 +20,7 @@ public final class StripeClient {
     public var invoices: InvoiceRoutes
     //    public var orderReturn: OrderReturnRoutes
     //    public var order: OrderRoutes
-    //    public var plan: PlanRoutes
+    public var plans: PlanRoutes
     public var product: ProductRoutes
     public var refund: RefundRoutes
     //    public var sku: SKURoutes
@@ -65,7 +65,7 @@ public final class StripeClient {
         invoices = StripeInvoiceRoutes(apiHandler: handler)
         //        orderReturn = StripeOrderReturnRoutes(request: apiRequest)
         //        order = StripeOrderRoutes(request: apiRequest)
-        //        plan = StripePlanRoutes(request: apiRequest)
+        plans = StripePlanRoutes(apiHandler: handler)
         product = StripeProductRoutes(apiHandler: handler)
         refund = StripeRefundRoutes(apiHandler: handler)
         //        sku = StripeSKURoutes(request: apiRequest)

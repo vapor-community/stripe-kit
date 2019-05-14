@@ -41,8 +41,8 @@ internal enum StripeAPIEndpoint {
     case coupon(String)
     
     // MARK: - PLANS
-    case plans
-    case plan(String)
+    case plan
+    case plans(String)
     
     // MARK: - SOURCES
     case source
@@ -212,8 +212,8 @@ internal enum StripeAPIEndpoint {
         case .coupons: return APIBase + APIVersion + "coupons"
         case .coupon(let id): return APIBase + APIVersion + "coupons/\(id)"
             
-        case .plans: return APIBase + APIVersion + "plans"
-        case .plan(let id): return APIBase + APIVersion + "plans/\(id)"
+        case .plan: return APIBase + APIVersion + "plans"
+        case .plans(let id): return APIBase + APIVersion + "plans/\(id)"
             
         case .source: return APIBase + APIVersion + "sources"
         case .sources(let id): return APIBase + APIVersion + "sources/\(id)"
