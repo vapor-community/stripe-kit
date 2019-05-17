@@ -17,11 +17,3 @@ public enum StripeStatus: String, Codable {
     case chargeable
     case available
 }
-
-// https://stripe.com/docs/api/invoices/object#invoice_object-status
-
-public enum StripeConnectAccountCapabilitiesStatus: String, Codable {
-    case active
-    case inactive
-    case pending
-}

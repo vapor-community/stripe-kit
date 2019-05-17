@@ -11,7 +11,7 @@ import NIOHTTPClient
 public final class StripeClient {
     public var balance: BalanceRoutes
     public var charge: ChargeRoutes
-    //    public var connectAccount: AccountRoutes
+    public var connectAccounts: AccountRoutes
     public var coupons: CouponRoutes
     public var customer: CustomerRoutes
     public var dispute: DisputeRoutes
@@ -57,7 +57,7 @@ public final class StripeClient {
         
         balance = StripeBalanceRoutes(apiHandler: handler)
         charge = StripeChargeRoutes(apiHandler: handler)
-        //        connectAccount = StripeConnectAccountRoutes(request: apiRequest)
+        connectAccounts = StripeConnectAccountRoutes(apiHandler: handler)
         coupons = StripeCouponRoutes(apiHandler: handler)
         customer = StripeCustomerRoutes(apiHandler: handler)
         dispute = StripeDisputeRoutes(apiHandler: handler)
