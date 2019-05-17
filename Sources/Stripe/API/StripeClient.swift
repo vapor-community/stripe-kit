@@ -29,7 +29,7 @@ public final class StripeClient {
     public var subscriptions: SubscriptionRoutes
     public var token: TokenRoutes
     public var transfers: TransferRoutes
-    //    public var transferReversals: TransferReversalRoutes
+    public var transferReversals: TransferReversalRoutes
     public var payouts: PayoutRoutes
     public var fileLinks: FileLinkRoutes
     public var files: FileRoutes
@@ -75,7 +75,7 @@ public final class StripeClient {
         subscriptions = StripeSubscriptionRoutes(apiHandler: handler)
         token = StripeTokenRoutes(apiHandler: handler)
         transfers = StripeTransferRoutes(apiHandler: handler)
-        //        transferReversals = StripeTransferReversalRoutes(request: apiRequest)
+        transferReversals = StripeTransferReversalRoutes(apiHandler: handler)
         payouts = StripePayoutRoutes(apiHandler: handler)
         fileLinks = StripeFileLinkRoutes(apiHandler: handler)
         files = StripeFileRoutes(apiHandler: handler)
