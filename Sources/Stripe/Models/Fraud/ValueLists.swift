@@ -29,23 +29,10 @@ public struct StripeValueList: StripeModel {
     public var metadata: [String: String]?
     /// The name of the value list.
     public var name: String?
-
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case object
-        case alias
-        case created
-        case createdBy = "created_by"
-        case itemType = "item_type"
-        case listItems = "list_items"
-        case livemode
-        case metadata
-        case name
-    }
 }
 
 public enum StripeValueListItemType: String, StripeModel {
-    case casrFingerprint = "card_fingerprint"
+    case cardFingerprint = "card_fingerprint"
     case cardBin = "card_bin"
     case email
     case ipAddress = "ip_address"
@@ -59,11 +46,4 @@ public struct StripeValueListList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeValueList]?
-    
-    private enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }

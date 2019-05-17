@@ -104,7 +104,7 @@ public protocol AccountRoutes {
     ///   - for: The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
     /// - Returns: A `StripeConnectAccount`.
     /// - Throws: A `StripeError`.
-    func reject(account: String, for: AccountRejectReason) throws -> EventLoopFuture<StripeConnectAccount>
+    func reject(account: String, for: StripeConnectAccountRejectReason) throws -> EventLoopFuture<StripeConnectAccount>
     
     /// Returns a list of accounts connected to your platform via Connect. If you’re not a platform, the list is empty.
     ///
@@ -193,7 +193,7 @@ extension AccountRoutes {
         return try delete(account: account)
     }
     
-    public func reject(account: String, for: AccountRejectReason) throws -> EventLoopFuture<StripeConnectAccount> {
+    public func reject(account: String, for: StripeConnectAccountRejectReason) throws -> EventLoopFuture<StripeConnectAccount> {
         return try reject(account: account, for: `for`)
     }
     
@@ -368,7 +368,7 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
         return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.accounts(accountId).endpoint, headers: headers)
     }
     
-    public func reject(account accountId: String, for rejectReason: AccountRejectReason) throws -> EventLoopFuture<StripeConnectAccount> {
+    public func reject(account accountId: String, for rejectReason: StripeConnectAccountRejectReason) throws -> EventLoopFuture<StripeConnectAccount> {
         let body = ["reason": rejectReason.rawValue].queryParameters
         return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.accountsReject(accountId).endpoint, body: .string(body), headers: headers)
     }

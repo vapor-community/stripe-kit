@@ -23,16 +23,6 @@ public struct StripeValueListItem: StripeModel {
     public var value: String?
     /// The identifier of the value list this item belongs to.
     public var valueList: String?
-    
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case object
-        case created
-        case createdBy = "created_by"
-        case livemode
-        case value
-        case valueList = "value_list"
-    }
 }
 
 public struct StripeValueListItemList: StripeModel {
@@ -40,11 +30,4 @@ public struct StripeValueListItemList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeValueListItem]?
-    
-    private enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }

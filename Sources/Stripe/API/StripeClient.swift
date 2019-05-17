@@ -36,7 +36,7 @@ public final class StripeClient {
     public var person: PersonRoutes
     public var applicationFee: ApplicationFeesRoutes
     public var applicationFeeRefunds: ApplicationFeeRefundRoutes
-    //    public var externalAccounts: ExternalAccountsRoutes
+    public var externalAccounts: ExternalAccountsRoutes
     public var countrySpecs: CountrySpecRoutes
     public var topup: TopUpRoutes
     public var valueListItems: ValueListItemRoutes
@@ -50,6 +50,7 @@ public final class StripeClient {
     public var taxRates: TaxRateRoutes
     public var creditNotes: CreditNoteRoutes
     public var usageRecords: UsageRecordRoutes
+    public var reviews: ReviewRoutes
     
     init(eventLoop: EventLoopGroup, apiKey: String) {
         let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
@@ -82,7 +83,7 @@ public final class StripeClient {
         person = StripePersonRoutes(apiHandler: handler)
         applicationFee = StripeApplicationFeeRoutes(apiHandler: handler)
         applicationFeeRefunds = StripeApplicationFeeRefundRoutes(apiHandler: handler)
-        //        externalAccounts = StripeExternalAccountsRoutes(request: apiRequest)
+        externalAccounts = StripeExternalAccountsRoutes(apiHandler: handler)
         countrySpecs = StripeCountrySpecRoutes(apiHandler: handler)
         topup = StripeTopUpRoutes(apiHandler: handler)
         valueListItems = StripeValueListItemRoutes(apiHandler: handler)
@@ -96,5 +97,6 @@ public final class StripeClient {
         taxRates = StripeTaxRateRoutes(apiHandler: handler)
         creditNotes = StripeCreditNoteRoutes(apiHandler: handler)
         usageRecords = StripeUsageRecordRoutes(apiHandler: handler)
+        reviews = StripeReviewRoutes(apiHandler: handler)
     }
 }

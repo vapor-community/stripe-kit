@@ -221,3 +221,9 @@ public struct StripeConnectAccountLoginLink: StripeModel {
     /// The URL for the login link.
     public var url: String?
 }
+
+public enum StripeConnectAccountRejectReason: String, Codable {
+    case fraud
+    case termsOfService = "terms_of_service"
+    case other
+}

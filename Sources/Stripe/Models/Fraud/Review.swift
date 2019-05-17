@@ -18,7 +18,7 @@ public struct StripeReview: StripeModel {
     /// The charge associated with this review.
     public var charge: String?
     /// The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
-    public var closedReason: StripeReviewReason?
+    public var closedReason: StripeReviewClosedReason?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?
     /// The IP address where the payment originated.
@@ -30,30 +30,13 @@ public struct StripeReview: StripeModel {
     /// If `true`, the review needs action.
     public var open: Bool?
     /// The reason the review was opened. One of rule or manual.
-    public var openedReason: StripeReviewReason?
+    public var openedReason: StripeReviewOpenedReason?
     /// The PaymentIntent ID associated with this review, if one exists.
     public var paymentIntent: String?
     /// The reason the review is currently open or closed. One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
     public var reason: StripeReviewReason?
     /// Information related to the browsing session of the user who initiated the payment.
     public var session: StripeReviewSession?
-
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case object
-        case billingZip = "billing_zip"
-        case charge
-        case closedReason = "closed_reason"
-        case created
-        case ipAddress = "ip_address"
-        case ipAddressLocation = "ip_address_location"
-        case livemode
-        case open
-        case openedReason = "opened_reason"
-        case paymentIntent = "payment_intent"
-        case reason
-        case session
-    }
 }
 
 public enum StripeReviewReason: String, StripeModel {
@@ -63,6 +46,18 @@ public enum StripeReviewReason: String, StripeModel {
     case refunded
     case refundedAsFraud = "refunded_as_fraud"
     case disputed
+}
+
+public enum StripeReviewClosedReason: String, StripeModel {
+    case approved
+    case refunded
+    case refundedAsFraud = "refunded_as_fraud"
+    case disputed
+}
+
+public enum StripeReviewOpenedReason: String, StripeModel {
+    case rule
+    case manual
 }
 
 public struct StripeReviewIPAddressLocation: StripeModel {
@@ -94,11 +89,4 @@ public struct StripeReviewList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeReview]?
-    
-    private enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }
