@@ -51,7 +51,7 @@ public struct StripeDisputeEvidenceDetails: StripeModel {
     public var submissionCount: Int?
 }
 
-public enum StripeDisputeReason: String, Codable {
+public enum StripeDisputeReason: String, StripeModel {
     case duplicate
     case fraudulent
     case subscriptionCanceled = "subscription_canceled"
@@ -67,7 +67,7 @@ public enum StripeDisputeReason: String, Codable {
     case customerInitiated = "customer_initiated"
 }
 
-public enum StripeDisputeStatus: String, Codable {
+public enum StripeDisputeStatus: String, StripeModel {
     case warningNeedsResponse = "warning_needs_response"
     case warningUnderReview = "warning_under_review"
     case warningClosed = "warning_closed"

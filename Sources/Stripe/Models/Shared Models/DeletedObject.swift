@@ -7,11 +7,6 @@
 //
 
 
-/**
- Deleted object
- https://stripe.com/docs/api/curl#delete_customer
- */
-
 public struct StripeDeletedObject: StripeModel {
     public var id: String
     public var object: String

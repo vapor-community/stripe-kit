@@ -78,7 +78,7 @@ public struct StripePlanTier: StripeModel {
     public var upTo: Int?
 }
 
-public enum StripePlanTiersMode: String, Codable {
+public enum StripePlanTiersMode: String, StripeModel {
     case graduated
     case volume
 }

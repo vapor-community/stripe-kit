@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [Refund Object](https://stripe.com/docs/api/refunds/object).
+/// The [Refund Object](https://stripe.com/docs/api/refunds/object ).
 public struct StripeRefund: StripeModel {
     /// Unique identifier for the object.
     public var id: String
@@ -39,7 +39,7 @@ public struct StripeRefund: StripeModel {
     /// The transfer reversal that is associated with the refund. Only present if the charge came from another Stripe account. See the Connect documentation for details.
     public var sourceTransferReversal: String?
     /// Status of the refund. For credit card refunds, this can be `pending`, `succeeded`, or `failed`. For other types of refunds, it can be `pending`, `succeeded`, `failed`, or `canceled`. Refer to our refunds documentation for more details.
-    public var status: StripeStatus?
+    public var status: StripeRefundStatus?
     /// If the accompanying transfer was reversed, the transfer reversal object. Only applicable if the charge was created using the destination parameter.
     public var transferReversal: String?
 }
@@ -61,4 +61,11 @@ public struct StripeRefundsList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeRefund]?
+}
+
+public enum StripeRefundStatus: String, StripeModel {
+    case pending
+    case succeeded
+    case failed
+    case canceled
 }

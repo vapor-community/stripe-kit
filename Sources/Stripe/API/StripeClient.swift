@@ -15,7 +15,7 @@ public final class StripeClient {
     public var coupons: CouponRoutes
     public var customer: CustomerRoutes
     public var dispute: DisputeRoutes
-    //    public var ephemeralKey: EphemeralKeyRoutes
+    public var ephemeralKeys: EphemeralKeyRoutes
     public var invoiceItems: InvoiceItemRoutes
     public var invoices: InvoiceRoutes
     public var orderReturns: OrderReturnRoutes
@@ -23,7 +23,7 @@ public final class StripeClient {
     public var plans: PlanRoutes
     public var product: ProductRoutes
     public var refund: RefundRoutes
-    //    public var sku: SKURoutes
+    public var skus: SKURoutes
     public var source: SourceRoutes
     public var subscriptionItems: SubscriptionItemRoutes
     public var subscriptions: SubscriptionRoutes
@@ -62,7 +62,7 @@ public final class StripeClient {
         coupons = StripeCouponRoutes(apiHandler: handler)
         customer = StripeCustomerRoutes(apiHandler: handler)
         dispute = StripeDisputeRoutes(apiHandler: handler)
-        //        ephemeralKey = StripeEphemeralKeyRoutes(request: apiRequest)
+        ephemeralKeys = StripeEphemeralKeyRoutes(apiHandler: handler)
         invoiceItems = StripeInvoiceItemRoutes(apiHandler: handler)
         invoices = StripeInvoiceRoutes(apiHandler: handler)
         orderReturns = StripeOrderReturnRoutes(apiHandler: handler)
@@ -70,7 +70,7 @@ public final class StripeClient {
         plans = StripePlanRoutes(apiHandler: handler)
         product = StripeProductRoutes(apiHandler: handler)
         refund = StripeRefundRoutes(apiHandler: handler)
-        //        sku = StripeSKURoutes(request: apiRequest)
+        skus = StripeSKURoutes(apiHandler: handler)
         source = StripeSourceRoutes(apiHandler: handler)
         subscriptionItems = StripeSubscriptionItemRoutes(apiHandler: handler)
         subscriptions = StripeSubscriptionRoutes(apiHandler: handler)

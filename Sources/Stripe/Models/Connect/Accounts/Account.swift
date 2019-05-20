@@ -191,11 +191,11 @@ public struct StripeConnectAccountSettingsPayoutSchedule: StripeModel {
     /// The number of days charges for the account will be held before being paid out.
     public var delayDays: Int?
     /// How frequently funds will be paid out. One of manual (payouts only created via API call), daily, weekly, or monthly.
-    public var interval: StripePayoutInterval?
+    public var interval: StripeConnectAccountSettingsPayoutScheduleInterval?
     /// The day of the month funds will be paid out. Only shown if interval is monthly. Payouts scheduled between the 29th and 31st of the month are sent on the last day of shorter months.
     public var monthlyAnchor: Int?
     /// The day of the week funds will be paid out, of the style ‘monday’, ‘tuesday’, etc. Only shown if interval is weekly.
-    public var weeklyAnchor: StripeWeeklyAnchor?
+    public var weeklyAnchor: StripeConnectAccountSettingsPayoutScheduleWeeklyAnchor?
 }
 
 public struct StripeConnectAccountTOSAcceptance: StripeModel {
@@ -222,8 +222,25 @@ public struct StripeConnectAccountLoginLink: StripeModel {
     public var url: String?
 }
 
-public enum StripeConnectAccountRejectReason: String, Codable {
+public enum StripeConnectAccountRejectReason: String, StripeModel {
     case fraud
     case termsOfService = "terms_of_service"
     case other
+}
+
+public enum StripeConnectAccountSettingsPayoutScheduleInterval: String, StripeModel {
+    case manual
+    case daily
+    case weekly
+    case monthly
+}
+
+public enum StripeConnectAccountSettingsPayoutScheduleWeeklyAnchor: String, StripeModel {
+    case sunday
+    case monday
+    case tuesday
+    case wednesday
+    case thursday
+    case friday
+    case saturday
 }

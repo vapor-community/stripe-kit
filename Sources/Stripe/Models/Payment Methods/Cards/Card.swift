@@ -77,14 +77,14 @@ public struct StripeCardList: StripeModel {
     public var url: String?
 }
 
-public enum StripeCardValidationCheck: String, Codable {
+public enum StripeCardValidationCheck: String, StripeModel {
     case pass
     case failed
     case unavailable
     case unchecked
 }
 
-public enum StripeCardBrand: String, Codable {
+public enum StripeCardBrand: String, StripeModel {
     case americanExpress = "American Express"
     case dinersClub = "Diners Club"
     case discover = "Discover"
@@ -95,14 +95,14 @@ public enum StripeCardBrand: String, Codable {
     case unknown = "Unknown"
 }
 
-public enum StripeCardFundingType: String, Codable {
+public enum StripeCardFundingType: String, StripeModel {
     case credit
     case debit
     case prepaid
     case unknown
 }
 
-public enum StripeCardTokenizedMethod: String, Codable {
+public enum StripeCardTokenizedMethod: String, StripeModel {
     case applePay = "apple_pay"
     case androidPay = "android_pay"
 }

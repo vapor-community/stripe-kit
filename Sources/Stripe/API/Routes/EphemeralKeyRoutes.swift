@@ -1,47 +1,51 @@
-////
-////  EphemeralKeyRoutes.swift
-////  Stripe
-////
-////  Created by Andrew Edwards on 10/17/17.
-////
 //
+//  EphemeralKeyRoutes.swift
+//  Stripe
 //
-//import Vapor
+//  Created by Andrew Edwards on 10/17/17.
 //
-//public protocol EphemeralKeyRoutes {
-//    func create(customer: String, apiVersion: String?) throws -> Future<StripeEphemeralKey>
-//    func delete(ephemeralKey: String) throws -> Future<StripeEphemeralKey>
-//}
-//
-//extension EphemeralKeyRoutes {
-//    public func create(customer: String, apiVersion: String? = nil) throws -> Future<StripeEphemeralKey> {
-//        return try create(customer: customer, apiVersion: apiVersion)
-//    }
-//    
-//    public func delete(ephemeralKey: String) throws -> Future<StripeEphemeralKey> {
-//        return try delete(ephemeralKey: ephemeralKey)
-//    }
-//}
-//
-//public struct StripeEphemeralKeyRoutes: EphemeralKeyRoutes {
-//    private let request: StripeRequest
-//    
-//    init(request: StripeRequest) {
-//        self.request = request
-//    }
-//    
-//    public func create(customer: String, apiVersion: String?) throws -> Future<StripeEphemeralKey> {
-//        var headers: HTTPHeaders = [:]
-//        
-//        if let otherApiVersion = apiVersion {
-//            headers.replaceOrAdd(name: .stripeVersion, value: otherApiVersion)
-//        }
-//        
-//        let body = ["customer": customer]
-//        return try request.send(method: .POST, path: StripeAPIEndpoint.ephemeralKeys.endpoint, body: body.queryParameters, headers: headers)
-//    }
-//    
-//    public func delete(ephemeralKey: String) throws -> Future<StripeEphemeralKey> {
-//        return try request.send(method: .DELETE, path: StripeAPIEndpoint.ephemeralKey(ephemeralKey).endpoint)
-//    }
-//}
+
+import NIO
+import NIOHTTP1
+
+public protocol EphemeralKeyRoutes {
+    func create(customer: String, issuingCard: String?) throws -> EventLoopFuture<StripeEphemeralKey>
+    func delete(ephemeralKey: String) throws -> EventLoopFuture<StripeEphemeralKey>
+}
+
+extension EphemeralKeyRoutes {
+    public func create(customer: String, issuingCard: String? = nil) throws -> EventLoopFuture<StripeEphemeralKey> {
+        return try create(customer: customer, issuingCard: issuingCard)
+    }
+    
+    public func delete(ephemeralKey: String) throws -> EventLoopFuture<StripeEphemeralKey> {
+        return try delete(ephemeralKey: ephemeralKey)
+    }
+}
+
+public struct StripeEphemeralKeyRoutes: EphemeralKeyRoutes {
+    private let apiHandler: StripeAPIHandler
+    private var headers: HTTPHeaders = [:]
+    
+    init(apiHandler: StripeAPIHandler) {
+        self.apiHandler = apiHandler
+    }
+    
+    public mutating func addHeaders(_ _headers: HTTPHeaders) {
+        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
+    }
+    
+    public func create(customer: String, issuingCard: String?) throws -> EventLoopFuture<StripeEphemeralKey> {
+        var body: [String: Any] = ["customer": customer]
+        
+        if let issuingCard = issuingCard {
+            body["issuing_card"] = issuingCard
+        }
+        
+        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.ephemeralKeys.endpoint, body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func delete(ephemeralKey: String) throws -> EventLoopFuture<StripeEphemeralKey> {
+        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.ephemeralKey(ephemeralKey).endpoint, headers: headers)
+    }
+}

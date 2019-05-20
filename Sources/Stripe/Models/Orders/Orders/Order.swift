@@ -41,7 +41,7 @@ public struct StripeOrder: StripeModel {
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     ///
-    public var returns: OrderReturnList?
+    public var returns: StripeOrderReturnList?
     /// The shipping method that is currently selected for this order, if any. If present, it is equal to one of the ids of shipping methods in the shipping_methods array. At order creation time, if there are multiple shipping methods, Stripe will automatically selected the first method.
     public var selectedShippingMethod: String?
     /// The shipping address for the order. Present if the order is for goods to be shipped.
