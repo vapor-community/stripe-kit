@@ -34,7 +34,7 @@ public struct StripeTransfer: StripeModel {
     /// A set of key-value pairs that you can attach to a transfer object. It can be useful for storing additional information about the transfer in a structured format.
     public var metadata: [String: String]?
     /// A list of reversals that have been applied to the transfer.
-    public var reversals: TransferReversalList?
+    public var reversals: StripeTransferReversalList?
     /// Whether the transfer has been fully reversed. If the transfer is only partially reversed, this attribute will still be false.
     public var reversed: Bool?
     /// ID of the charge or payment that was used to fund the transfer. If null, the transfer was funded from the available balance.
