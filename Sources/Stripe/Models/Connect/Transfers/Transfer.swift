@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// The [Transfer Object](https://stripe.com/docs/api/transfers/object?lang=curl).
+/// The [Transfer Object](https://stripe.com/docs/api/transfers/object).
 public struct StripeTransfer: StripeModel {
     /// Unique identifier for the object.
     public var id: String

@@ -75,7 +75,7 @@ public protocol SubscriptionItemRoutes {
     ///
     /// - Parameters:
     ///   - subscription: The ID of the subscription whose items will be retrieved.
-    ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/subscription_items/list?lang=curl)
+    ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/subscription_items/list)
     /// - Returns: A `StripeSubscriptionItemList`.
     /// - Throws: A `StripeError`.
     func listAll(subscription: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeSubscriptionItemList>

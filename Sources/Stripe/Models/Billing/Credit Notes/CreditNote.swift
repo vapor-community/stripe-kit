@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// The [Credit Note Object](https://stripe.com/docs/api/credit_notes/object?lang=curl).
+/// The [Credit Note Object](https://stripe.com/docs/api/credit_notes/object).
 public struct StripeCreditNote: StripeModel {
     /// Unique identifier for the object.
     public var id: String

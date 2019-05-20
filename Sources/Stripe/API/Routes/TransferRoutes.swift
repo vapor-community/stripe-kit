@@ -9,7 +9,7 @@ import NIO
 import NIOHTTP1
 
 public protocol TransferRoutes {
-    /// To send funds from your Stripe account to a connected account, you create a new transfer object. Your [Stripe balance](https://stripe.com/docs/api/transfers/create?lang=curl#balance) must be able to cover the transfer amount, or you’ll receive an “Insufficient Funds” error.
+    /// To send funds from your Stripe account to a connected account, you create a new transfer object. Your [Stripe balance](https://stripe.com/docs/api/transfers/create#balance) must be able to cover the transfer amount, or you’ll receive an “Insufficient Funds” error.
     ///
     /// - Parameters:
     ///   - amount: A positive integer in cents representing how much to transfer.

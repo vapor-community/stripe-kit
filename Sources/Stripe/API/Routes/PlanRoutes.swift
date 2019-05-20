@@ -82,7 +82,7 @@ public protocol PlanRoutes {
     
     /// Returns a list of your plans.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/plans/list?lang=curl)
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/plans/list)
     /// - Returns: A `StripePlanList`
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripePlanList>

@@ -63,7 +63,7 @@ public protocol CouponRoutes {
     
     /// Returns a list of your coupons.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/coupons/list?lang=curl).
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/coupons/list).
     /// - Returns: A `StripeCouponList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCouponList>

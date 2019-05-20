@@ -80,7 +80,7 @@ public protocol InvoiceItemRoutes {
     
     /// Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/invoiceitems/list?lang=curl)
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/invoiceitems/list)
     /// - Returns: A `StripeInvoiceItemList`
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeInvoiceItemList>

@@ -18,7 +18,7 @@ public protocol ApplicationFeesRoutes {
     
     /// Returns a list of application fees you’ve previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/application_fees/list?lang=curl)
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/application_fees/list)
     /// - Returns: A `StripeApplicationFeeList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeApplicationFeeList>

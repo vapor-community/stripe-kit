@@ -5,7 +5,7 @@
 //  Created by Andrew Edwards on 5/4/19.
 //
 
-/// The [Session Object](https://stripe.com/docs/api/checkout/sessions/object?lang=curl).
+/// The [Session Object](https://stripe.com/docs/api/checkout/sessions/object).
 public struct StripeSession: StripeModel {
     /// Unique identifier for the object. Used to pass to redirectToCheckout in Stripe.js.
     public var id: String

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [SKU Object](https://stripe.com/docs/api/skus/object?lang=curl).
+/// The [SKU Object](https://stripe.com/docs/api/skus/object).
 public struct StripeSKU: StripeModel {
     /// Unique identifier for the object.
     public var id: String

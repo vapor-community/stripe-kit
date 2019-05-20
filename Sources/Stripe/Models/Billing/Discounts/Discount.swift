@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [Discount Object](https://stripe.com/docs/api/discounts/object?lang=curl).
+/// The [Discount Object](https://stripe.com/docs/api/discounts/object).
 public struct StripeDiscount: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String

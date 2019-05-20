@@ -71,7 +71,7 @@ public protocol CardRoutes {
     ///
     /// - Parameters:
     ///   - customer: The ID of the customer whose cards will be retrieved.
-    ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/cards/list?lang=curl).
+    ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/cards/list).
     /// - Returns: A `StripeCardList`.
     /// - Throws: A `StripeError`.
     func listAll(customer: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeCardList>

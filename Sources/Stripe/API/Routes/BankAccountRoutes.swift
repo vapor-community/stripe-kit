@@ -67,7 +67,7 @@ public protocol BankAccountRoutes {
     ///
     /// - Parameters:
     ///   - customer: The ID of the customer whose bank accounts will be retrieved.
-    ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/customer_bank_accounts/list?lang=curl).
+    ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/customer_bank_accounts/list).
     /// - Returns: A `StripeBankAccountList`.
     /// - Throws: A `StripeError`.
     func listAll(customer: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeBankAccountList>

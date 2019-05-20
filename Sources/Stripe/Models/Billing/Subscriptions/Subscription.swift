@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [Subscription Object](https://stripe.com/docs/api/subscriptions/object?lang=curl).
+/// The [Subscription Object](https://stripe.com/docs/api/subscriptions/object).
 public struct StripeSubscription: StripeModel {
     /// Unique identifier for the object.
     public var id: String

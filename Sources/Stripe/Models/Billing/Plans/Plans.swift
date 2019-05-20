@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [Plan Object](https://stripe.com/docs/api/plans/object?lang=curl).
+/// The [Plan Object](https://stripe.com/docs/api/plans/object).
 public struct StripePlan: StripeModel {
     /// Unique identifier for the object.
     public var id: String

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [InvoiceItem Object](https://stripe.com/docs/api/invoiceitems/object?lang=curl)
+/// The [InvoiceItem Object](https://stripe.com/docs/api/invoiceitems/object)
 public struct StripeInvoiceItem: StripeModel {
     /// Unique identifier for the object.
     public var id: String?

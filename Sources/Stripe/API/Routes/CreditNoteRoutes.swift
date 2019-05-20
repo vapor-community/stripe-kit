@@ -57,7 +57,7 @@ public protocol CreditNoteRoutes {
     
     /// Returns a list of credit notes.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/credit_notes/list?lang=curl)
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/credit_notes/list)
     /// - Returns: A `StripeCreditNoteList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCreditNoteList>

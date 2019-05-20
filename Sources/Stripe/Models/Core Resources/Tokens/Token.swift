@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [Token Object](https://stripe.com/docs/api/tokens/object?lang=curl).
+/// The [Token Object](https://stripe.com/docs/api/tokens/object).
 public struct StripeToken: StripeModel {
     /// Unique identifier for the object.
     public var id: String

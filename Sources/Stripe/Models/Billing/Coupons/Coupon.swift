@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [Coupon Object](https://stripe.com/docs/api/coupons/object?lang=curl).
+/// The [Coupon Object](https://stripe.com/docs/api/coupons/object).
 public struct StripeCoupon: StripeModel {
     /// Unique identifier for the object.
     public var id: String

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [Account Object](https://stripe.com/docs/api/accounts/object?lang=curl).
+/// The [Account Object](https://stripe.com/docs/api/accounts/object).
 public struct StripeConnectAccount: StripeModel {
     /// Unique identifier for the object.
     public var id: String
