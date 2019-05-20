@@ -18,7 +18,7 @@ public final class StripeClient {
     //    public var ephemeralKey: EphemeralKeyRoutes
     public var invoiceItems: InvoiceItemRoutes
     public var invoices: InvoiceRoutes
-    //    public var orderReturn: OrderReturnRoutes
+    public var orderReturns: OrderReturnRoutes
     public var orders: OrderRoutes
     public var plans: PlanRoutes
     public var product: ProductRoutes
@@ -65,7 +65,7 @@ public final class StripeClient {
         //        ephemeralKey = StripeEphemeralKeyRoutes(request: apiRequest)
         invoiceItems = StripeInvoiceItemRoutes(apiHandler: handler)
         invoices = StripeInvoiceRoutes(apiHandler: handler)
-        //        orderReturn = StripeOrderReturnRoutes(request: apiRequest)
+        orderReturns = StripeOrderReturnRoutes(apiHandler: handler)
         orders = StripeOrderRoutes(apiHandler: handler)
         plans = StripePlanRoutes(apiHandler: handler)
         product = StripeProductRoutes(apiHandler: handler)
