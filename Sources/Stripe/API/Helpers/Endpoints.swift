@@ -193,6 +193,14 @@ internal enum StripeAPIEndpoint {
     case usageRecords(String)
     case usageRecordSummaries(String)
     
+    case authorization
+    case authorizations(String)
+    case authorizationsApprove(String)
+    case authorizationsDecline(String)
+    
+    case cardholder
+    case cardholders(String)
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -349,6 +357,14 @@ internal enum StripeAPIEndpoint {
             
         case .usageRecords(let subscriptionItem): return APIBase + APIVersion + "subscription_items/\(subscriptionItem)/usage_records"
         case .usageRecordSummaries(let subscriptionItem): return APIBase + APIVersion + "subscription_items/\(subscriptionItem)/usage_record_summaries"
+            
+        case .authorization: return APIBase + APIVersion + "issuing/authorizations"
+        case .authorizations(let authorization): return APIBase + APIVersion + "issuing/authorizations/\(authorization)"
+        case .authorizationsApprove(let authorization): return APIBase + APIVersion + "issuing/authorizations/\(authorization)/approve"
+        case .authorizationsDecline(let authorization): return APIBase + APIVersion + "issuing/authorizations/\(authorization)/decline"
+            
+        case .cardholder: return APIBase + APIVersion + "issuing/cardholders"
+        case .cardholders(let cardholder): return APIBase + APIVersion + "issuing/cardholders/\(cardholder)"
         }
     }
 }

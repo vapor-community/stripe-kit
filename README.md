@@ -104,8 +104,8 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [x] Value List Items
 ---
 ### Issuing
-* [ ] Authorizations
-* [ ] Cardholders
+* [x] Authorizations
+* [x] Cardholders
 * [ ] Cards
 * [ ] Disputes
 * [ ] Transactions
