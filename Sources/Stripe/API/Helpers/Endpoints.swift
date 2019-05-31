@@ -201,6 +201,10 @@ internal enum StripeAPIEndpoint {
     case cardholder
     case cardholders(String)
     
+    case issuingCard
+    case issuingCards(String)
+    case issuingCardDetails(String)
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -365,6 +369,10 @@ internal enum StripeAPIEndpoint {
             
         case .cardholder: return APIBase + APIVersion + "issuing/cardholders"
         case .cardholders(let cardholder): return APIBase + APIVersion + "issuing/cardholders/\(cardholder)"
+            
+        case .issuingCard: return APIBase + APIVersion + "issuing/cards"
+        case .issuingCards(let card): return APIBase + APIVersion + "issuing/cards/\(card)"
+        case .issuingCardDetails(let card): return APIBase + APIVersion + "issuing/cards/\(card)/details"
         }
     }
 }

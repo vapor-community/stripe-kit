@@ -46,6 +46,21 @@ public struct StripeIssuingCard: StripeModel {
     /// One of virtual or physical.
     public var type: StripeIssuingCardType?
 }
+public struct StripeIssuingCardList: StripeModel {
+    public var object: String
+    public var hasMore: Bool
+    public var url: String?
+    public var data: [StripeIssuingCard]?
+}
+
+public struct StripeIssuingCardDetails: StripeModel {
+    public var object: String
+    public var card: StripeIssuingCard?
+    public var cvc: String?
+    public var expMonth: Int?
+    public var expYear: Int?
+    public var number: String?
+}
 
 public struct StripeIssuingCardAuthorizationControls: StripeModel {
     /// Array of strings containing categories of authorizations permitted on this card.

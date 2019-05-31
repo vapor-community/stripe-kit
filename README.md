@@ -106,7 +106,7 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 ### Issuing
 * [x] Authorizations
 * [x] Cardholders
-* [ ] Cards
+* [x] Cards
 * [ ] Disputes
 * [ ] Transactions
 ---
