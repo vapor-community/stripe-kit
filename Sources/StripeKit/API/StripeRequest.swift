@@ -14,7 +14,15 @@ import NIOHTTPClient
 
 public struct APIError: Error {}
 
-public struct StripeAPIHandler {
+public protocol StripeAPIHandler {
+    func send<SM: StripeModel>(method: HTTPMethod,
+                               path: String,
+                               query: String,
+                               body: HTTPClient.Body,
+                               headers: HTTPHeaders) throws -> EventLoopFuture<SM>
+}
+
+public struct StripeDefaultAPIHandler: StripeAPIHandler {
     private let httpClient: HTTPClient
     private let apiKey: String
     private let decoder = JSONDecoder()
@@ -26,7 +34,7 @@ public struct StripeAPIHandler {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
     
-    func send<SM: StripeModel>(method: HTTPMethod,
+    public func send<SM: StripeModel>(method: HTTPMethod,
                                path: String,
                                query: String = "",
                                body: HTTPClient.Body = .string(""),

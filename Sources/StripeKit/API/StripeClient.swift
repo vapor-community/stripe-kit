@@ -57,7 +57,7 @@ public final class StripeClient {
     
     init(eventLoop: EventLoopGroup, apiKey: String) {
         let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
-        let handler = StripeAPIHandler(httpClient: client, apiKey: apiKey)
+        let handler = StripeDefaultAPIHandler(httpClient: client, apiKey: apiKey)
         
         balance = StripeBalanceRoutes(apiHandler: handler)
         charge = StripeChargeRoutes(apiHandler: handler)
