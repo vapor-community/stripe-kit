@@ -33,6 +33,13 @@ public struct StripeIssuingDispute: StripeModel {
     public var status: StripeIssuingDisputeStatus?
 }
 
+public struct StripeIssuingDisputeList: StripeModel {
+    public var object: String
+    public var hasMore: Bool
+    public var url: String?
+    public var data: [StripeIssuingDispute]?
+}
+
 public struct StripeIssuingDisputeEvidence: StripeModel {
     /// Evidence to support a fraudulent dispute. This will only be present if your dispute’s `reason` is `fraudulent`.
     public var fraudulent: StripeIssuingDisputeEvidenceFraudulent?

@@ -22,6 +22,20 @@ public protocol StripeAPIHandler {
                                headers: HTTPHeaders) throws -> EventLoopFuture<SM>
 }
 
+extension StripeAPIHandler {
+    func send<SM: StripeModel>(method: HTTPMethod,
+                               path: String,
+                               query: String = "",
+                               body: HTTPClient.Body = .string(""),
+                               headers: HTTPHeaders = [:]) throws -> EventLoopFuture<SM> {
+        return try send(method: method,
+                        path: path,
+                        query: query,
+                        body: body,
+                        headers: headers)
+    }
+}
+
 public struct StripeDefaultAPIHandler: StripeAPIHandler {
     private let httpClient: HTTPClient
     private let apiKey: String
