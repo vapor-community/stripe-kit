@@ -59,6 +59,7 @@ public final class StripeClient {
     public var connectionTokens: ConnectionTokenRoutes
     public var locations: LocationRoutes
     public var readers: ReaderRoutes
+    public var scheduledQueryRuns: ScheduledQueryRunRoutes
     
     init(eventLoop: EventLoopGroup, apiKey: String) {
         let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
@@ -114,5 +115,6 @@ public final class StripeClient {
         connectionTokens = StripeConnectionTokenRoutes(apiHandler: handler)
         locations = StripeLocationRoutes(apiHandler: handler)
         readers = StripeReaderRoutes(apiHandler: handler)
+        scheduledQueryRuns = StripeScheduledQueryRunRoutes(apiHandler: handler)
     }
 }

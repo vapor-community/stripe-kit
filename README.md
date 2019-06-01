@@ -123,7 +123,7 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [x] Ephemeral Keys
 ---
 ### Sigma
-* [ ] Scheduled Queries
+* [x] Scheduled Queries
 ---
 ### Webhooks
 * [ ] Webhook Endpoints
