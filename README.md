@@ -107,8 +107,8 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [x] Authorizations
 * [x] Cardholders
 * [x] Cards
-* [ ] Disputes
-* [ ] Transactions
+* [x] Disputes
+* [x] Transactions
 ---
 ### Terminal
 * [ ] Connection Tokens

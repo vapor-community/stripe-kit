@@ -38,6 +38,13 @@ public struct StripeTransaction: StripeModel {
     public var type: StripeTransactionType?
 }
 
+public struct StripeTransactionList: StripeModel {
+    public var object: String
+    public var hasMore: Bool
+    public var url: String?
+    public var data: [StripeTransaction]?
+}
+
 public enum StripeTransactionType: String, StripeModel {
     case capture
     case refund
