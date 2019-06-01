@@ -66,7 +66,7 @@ public struct StripeFileRoutes: FileRoutes {
         // https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4
         
         let boundary = "Stripe-Vapor-\(UUID().uuidString)"
-        addHeaders(["Content-Type": "multipart/form-data;boundary=\(boundary)"])
+        headers.add(name: "Content-Type", value: "multipart/form-data;boundary=\(boundary)")
         body.append("\r\n--\(boundary)\r\n")
         body.append("Content-Disposition: form-data; name=\"purpose\"\r\n\r\n")
         body.append("\(purpose.rawValue)")
