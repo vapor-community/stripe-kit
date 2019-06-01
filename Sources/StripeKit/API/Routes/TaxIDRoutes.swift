@@ -46,19 +46,15 @@ public protocol TaxIDRoutes {
     /// - Throws: A `StripeError`.
     func listAll(customer: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeTaxIDList>
     
-    mutating func addHeaders(_ : HTTPHeaders)
+    var headers: HTTPHeaders { get set }
 }
 
 public struct StripeTaxIDRoutes: TaxIDRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(customer: String, type: StripeTaxIDType, value: String) throws -> EventLoopFuture<StripeTaxID> {

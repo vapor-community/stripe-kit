@@ -34,7 +34,7 @@ public protocol FileRoutes {
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeFileUploadList>
     
-    mutating func addHeaders(_ : HTTPHeaders)
+    var headers: HTTPHeaders { get set }
 }
 
 extension FileRoutes {
@@ -53,14 +53,10 @@ extension FileRoutes {
 
 public struct StripeFileRoutes: FileRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) throws -> EventLoopFuture<StripeFile> {

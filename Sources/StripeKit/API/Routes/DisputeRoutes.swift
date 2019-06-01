@@ -45,7 +45,7 @@ public protocol DisputeRoutes {
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeDisputeList>
     
-    mutating func addHeaders(_ : HTTPHeaders)
+    var headers: HTTPHeaders { get set }
 }
 
 extension DisputeRoutes {
@@ -71,14 +71,10 @@ extension DisputeRoutes {
 
 public struct StripeDisputeRoutes: DisputeRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func retrieve(dispute: String) throws -> EventLoopFuture<StripeDispute> {

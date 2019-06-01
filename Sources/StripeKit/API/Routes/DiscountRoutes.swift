@@ -23,19 +23,15 @@ public protocol DiscountRoutes {
     /// - Throws: A `StripeError`.
     func delete(subscription: String) throws -> EventLoopFuture<StripeDeletedObject>
     
-    mutating func addHeaders(_ : HTTPHeaders)
+    var headers: HTTPHeaders { get set }
 }
 
 public struct StripeDiscountRoutes: DiscountRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func delete(customer: String) throws -> EventLoopFuture<StripeDeletedObject> {

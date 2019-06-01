@@ -11,6 +11,8 @@ import NIOHTTP1
 public protocol EphemeralKeyRoutes {
     func create(customer: String, issuingCard: String?) throws -> EventLoopFuture<StripeEphemeralKey>
     func delete(ephemeralKey: String) throws -> EventLoopFuture<StripeEphemeralKey>
+    
+    var headers: HTTPHeaders { get set }
 }
 
 extension EphemeralKeyRoutes {
@@ -25,14 +27,10 @@ extension EphemeralKeyRoutes {
 
 public struct StripeEphemeralKeyRoutes: EphemeralKeyRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(customer: String, issuingCard: String?) throws -> EventLoopFuture<StripeEphemeralKey> {

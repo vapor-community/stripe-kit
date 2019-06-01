@@ -68,6 +68,8 @@ public protocol CardholderRoutes {
     /// - Returns: A `StripeAuthorizationList`.
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeAuthorizationList>
+    
+    var headers: HTTPHeaders { get set }
 }
 
 extension CardholderRoutes {
@@ -120,14 +122,10 @@ extension CardholderRoutes {
 
 public struct StripeCardholderRoutes: CardholderRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(billing: [String: Any],

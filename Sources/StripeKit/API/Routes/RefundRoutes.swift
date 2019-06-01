@@ -51,7 +51,7 @@ public protocol RefundRoutes {
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeRefundsList>
     
-    mutating func addHeaders(_ : HTTPHeaders)
+    var headers: HTTPHeaders { get set }
 }
 
 extension RefundRoutes {
@@ -84,16 +84,12 @@ extension RefundRoutes {
 
 public struct StripeRefundRoutes: RefundRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
-    }
-
     public func create(charge: String,
                        amount: Int?,
                        metadata: [String: String]?,

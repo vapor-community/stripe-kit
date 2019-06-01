@@ -84,7 +84,7 @@ public protocol SKURoutes {
     /// - Throws: A `StripeError`.
     func delete(id: String) throws -> EventLoopFuture<StripeDeletedObject>
     
-    mutating func addHeaders(_ : HTTPHeaders)
+    var headers: HTTPHeaders { get set }
 }
 
 extension SKURoutes {
@@ -147,14 +147,10 @@ extension SKURoutes {
 
 public struct StripeSKURoutes: SKURoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
 
     public func create(id: String?,

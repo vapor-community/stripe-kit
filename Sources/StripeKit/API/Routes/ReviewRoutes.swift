@@ -30,7 +30,7 @@ public protocol ReviewRoutes {
     /// - Throws: A `StripeError`.
     func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeReviewList>
     
-    mutating func addHeaders(_ : HTTPHeaders)
+    var headers: HTTPHeaders { get set }
 }
 
 extension ReviewRoutes {
@@ -49,15 +49,11 @@ extension ReviewRoutes {
 
 public struct StripeReviewRoutes: ReviewRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
-    }
+    }    
     
     public func approve(review: String) throws -> EventLoopFuture<StripeReview> {
         return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.reviewsApprove(review).endpoint, headers: headers)

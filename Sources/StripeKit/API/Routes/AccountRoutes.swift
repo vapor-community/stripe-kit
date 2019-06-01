@@ -123,7 +123,7 @@ public protocol AccountRoutes {
     /// - Throws: A `StripeError`.
     func createLoginLink(account: String, redirectUrl: String?) throws -> EventLoopFuture<StripeConnectAccountLoginLink>
     
-    mutating func addHeaders(_ : HTTPHeaders)
+    var headers: HTTPHeaders { get set }
 }
 
 extension AccountRoutes {
@@ -208,14 +208,10 @@ extension AccountRoutes {
 
 public struct StripeConnectAccountRoutes: AccountRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
     
     public func create(type: StripeConnectAccountType,

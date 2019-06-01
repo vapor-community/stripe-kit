@@ -89,7 +89,7 @@ public protocol OrderRoutes {
     /// - Throws: A `StripeError`.
     func `return`(id: String, items: [[String: Any]]?) throws -> EventLoopFuture<StripeOrder>
     
-    mutating func addHeaders(_ : HTTPHeaders)
+    var headers: HTTPHeaders { get set }
 }
 
 extension OrderRoutes {
@@ -152,14 +152,10 @@ extension OrderRoutes {
 
 public struct StripeOrderRoutes: OrderRoutes {
     private let apiHandler: StripeAPIHandler
-    private var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
-    }
-    
-    public mutating func addHeaders(_ _headers: HTTPHeaders) {
-        _headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
     }
 
     public func create(currency: StripeCurrency,
