@@ -211,6 +211,14 @@ internal enum StripeAPIEndpoint {
     case transaction
     case transactions(String)
     
+    case connectionToken
+    
+    case location
+    case locations(String)
+    
+    case reader
+    case readers(String)
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -385,6 +393,14 @@ internal enum StripeAPIEndpoint {
             
         case .transaction: return APIBase + APIVersion + "issuing/transactions"
         case .transactions(let transaction): return APIBase + APIVersion + "issuing/transactions/\(transaction)"
+            
+        case .connectionToken: return APIBase + APIVersion + "terminal/connection_tokens"
+        
+        case .location: return APIBase + APIVersion + "terminal/locations"
+        case .locations(let location): return APIBase + APIVersion + "terminal/locations/\(location)"
+            
+        case .reader: return APIBase + APIVersion + "terminal/readers"
+        case .readers(let reader): return APIBase + APIVersion + "terminal/readers/\(reader)"
         }
     }
 }

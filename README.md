@@ -111,9 +111,9 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 * [x] Transactions
 ---
 ### Terminal
-* [ ] Connection Tokens
-* [ ] Locations
-* [ ] Readers
+* [x] Connection Tokens
+* [x] Locations
+* [x] Readers
 ---
 ### Orders
 * [x] Orders
