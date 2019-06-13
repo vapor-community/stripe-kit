@@ -54,16 +54,16 @@ For example consider the connect account api.
 // We define a custom dictionary to represent the paramaters stripe requires.
 // This allows 
 let individual: [String: Any] = ["address": ["city": "New York",
-											 "country": "US",
+					     "country": "US",
                                              "line1": "1551 Broadway",
                                              "postal_code": "10036",
-									         "state": "NY"],
-								 "first_name": "Taylor",
-						    	 "last_name": "Swift",
+	                  	             "state": "NY"],
+				 "first_name": "Taylor",
+			         "last_name": "Swift",
                                  "ssn_last_4": "0000",
-								 "dob": ["day": "13",
-										 "month": "12",
-										 "year": "1989"]]
+				 "dob": ["day": "13",
+					 "month": "12",
+					 "year": "1989"]]
 												 
 let businessSettings: [String: Any] = ["payouts": ["statement_descriptor": "SWIFTFORALL"]]
 
@@ -71,16 +71,16 @@ let tosDictionary: [String: Any] = ["date": Int(Date().timeIntervalSince1970), "
 
 try stripe.connectAccount.create(type: .custom,										
                                  country: "US",
-								 email: "a@example.com,
-						   		 businessType: .individual,
-								 defaultCurrency: .usd,
-								 externalAccount: "bank_token",
-								 individual: individual,
-								 requestedCapabilities: ["platform_payments"],
-								 settings: businessSettings,
-								 tosAcceptance: tosDictionary).flatMap { connectAccount in
-									  print("New Stripe Connect account ID: \(connectAccount.id)")
-					              }
+				 email: "a@example.com",
+				 businessType: .individual,
+			         defaultCurrency: .usd,
+				 externalAccount: "bank_token",
+			         individual: individual,
+				 requestedCapabilities: ["platform_payments"],
+				 settings: businessSettings,
+				 tosAcceptance: tosDictionary).flatMap { connectAccount in
+					print("New Stripe Connect account ID: \(connectAccount.id)")			
+				}
 ~~~~
 
 
