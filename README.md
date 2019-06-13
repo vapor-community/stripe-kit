@@ -1,52 +1,88 @@
-# Vapor Stripe Provider
+# StripeKit
+![](https://img.shields.io/badge/Swift-5-lightgrey.svg?style=svg)
+![](https://img.shields.io/badge/SwiftNio-2-lightgrey.svg?style=svg)
 
-![Swift](https://img.shields.io/badge/swift-5-lightgrey.svg?style=for-the-badge)
-![Vapor](https://img.shields.io/badge/vapor-4-lightgrey.svg?style=for-the-badge)
-[![CircleCI](https://circleci.com/gh/vapor-community/stripe-provider.svg?style=svg)](https://circleci.com/gh/vapor-community/stripe-provider)
+<!--[![CircleCI](https://circleci.com/gh/vapor-community/stripe-provider.svg?style=svg)](https://circleci.com/gh/vapor-community/stripe-provider)-->
 
-[Stripe][stripe_home] is a payment platform that handles credit cards, bitcoin and ACH transfers. They have become one of the best platforms for handling payments for projects, services or products.
+### StripeKit is a Swift package used to communicate with the [Stripe](https://stripe.com) API for Server Side Swift Apps.
 
-## Getting Started
-In your `Package.swift` file, add the following
+## Version Support
+Version **1.0.0** of this library supports the Stripe API version of **[2019-03-14](https://stripe.com/docs/upgrades#2019-03-14)**. 
+You can check the releases page to use a version of this package that supports a version of the Stripe API you require.
+
+## Installation
+To start using StripeKit, in your `Package.swift`, add the following
 
 ~~~~swift
-.package(url: "https://github.com/vapor-community/stripe-provider.git", from: "2.2.0")
+.package(url: "https://github.com/vapor-community/stripekit.git", from: "1.0.0")
 ~~~~
 
-Register the config and the provider in `configure.swift`
-~~~~swift
-let config = StripeConfig(productionKey: "sk_live_1234", testKey: "sk_test_1234")
+## Using the API
+Initialize the `StripeClient`
 
-services.register(config)
-try services.register(StripeProvider())
+~~~~swift
+let elg = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+let stripe = StripeClient(eventLoop: elg, apiKey: "sk_12345")
 ~~~~
 
-And you are all set. Interacting with the API is quite easy from any route handler.
+And now you have acess to the APIs via `stripe`.
+
+The APIs you have available corrospond to what's implemented.
+
+For example to use the `charges` API, the stripeclient has a property to access that API via routes.
+
 ~~~~swift
-
-struct ChargeToken: Content {
-    var stripeToken: String
-}
-
-func chargeCustomer(_ req: Request) throws -> EventLoopFuture<HTTPStatus> {
-    return try req.content.decode(ChargeToken.self).flatMap { charge in
-        return try req.make(StripeClient.self).charge.create(amount: 2500, currency: .usd, source: charge.stripeToken).map { stripeCharge in
-            if stripeCharge.status == .success {
-                return .ok
-            } else {
-                print("Stripe charge status: \(stripeCharge.status.rawValue)")
-                return .badRequest
+try stripe.charge.create(amount: 2500,
+                         currency: .usd,
+                         description: "A server written in swift.",
+                         source: "tok_visa").flatMap { (charge) -> EventLoopFuture<Void> in
+                           if charge.status == .succeeded {
+                               print("New servers are on the way 🚀")
+                           } else {
+                               print("Sorry you have to use Node.js 🤢")
+                           }
             }
-        }
-    }
-}
 ~~~~
 
-And you can always check the documentation to see the required paramaters for specific API calls.
+## Nuances with parameters and type safety
+Stripe has a habit of changing APIs and having dynamic paramters for alot of their APIs.
+To accomadate for these changes, certain routes that take arguments that are `hash`s or `Dictionaries`, are represented by a swift dictionary `[String: Any]`.
 
-## JS Stripe integration
+For example consider the connect account api. 
 
-Also make sure to check out stripes documenation to add the client JS magic [here]( https://stripe.com/docs/checkout#integration-simple) or [here](https://stripe.com/docs/checkout#integration-custom)
+~~~~swift
+// We define a custom dictionary to represent the paramaters stripe requires.
+// This allows 
+let individual: [String: Any] = ["address": ["city": "New York",
+											 "country": "US",
+                                             "line1": "1551 Broadway",
+                                             "postal_code": "10036",
+									         "state": "NY"],
+								 "first_name": "Taylor",
+						    	 "last_name": "Swift",
+                                 "ssn_last_4": "0000",
+								 "dob": ["day": "13",
+										 "month": "12",
+										 "year": "1989"]]
+												 
+let businessSettings: [String: Any] = ["payouts": ["statement_descriptor": "SWIFTFORALL"]]
+
+let tosDictionary: [String: Any] = ["date": Int(Date().timeIntervalSince1970), "ip": "127.0.0.1"]
+
+try stripe.connectAccount.create(type: .custom,										
+                                 country: "US",
+								 email: "a@example.com,
+						   		 businessType: .individual,
+								 defaultCurrency: .usd,
+								 externalAccount: "bank_token",
+								 individual: individual,
+								 requestedCapabilities: ["platform_payments"],
+								 settings: businessSettings,
+								 tosAcceptance: tosDictionary).flatMap { connectAccount in
+									  print("New Stripe Connect account ID: \(connectAccount.id)")
+					              }
+~~~~
+
 
 ## Whats Implemented
 
@@ -128,12 +164,10 @@ Also make sure to check out stripes documenation to add the client JS magic [her
 ### Webhooks
 * [ ] Webhook Endpoints
 
-[stripe_home]: http://stripe.com "Stripe"
-[stripe_api]: https://stripe.com/docs/api "Stripe API Endpoints"
 
 ## License
 
-Vapor Stripe Provider is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
+StripeKit is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
 
 ## Want to help?
 Feel free to submit a pull request whether it's a clean up, a new approach to handling things, adding a new part of the API, or even if it's just a typo. All help is welcomed! 😀
