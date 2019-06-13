@@ -71,7 +71,7 @@ let tosDictionary: [String: Any] = ["date": Int(Date().timeIntervalSince1970), "
 
 try stripe.connectAccount.create(type: .custom,										
                                  country: "US",
-				 email: "a@example.com,
+				 email: "a@example.com",
 				 businessType: .individual,
 			         defaultCurrency: .usd,
 				 externalAccount: "bank_token",
