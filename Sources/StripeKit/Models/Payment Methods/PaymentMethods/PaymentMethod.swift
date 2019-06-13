@@ -17,7 +17,8 @@ public struct StripePaymentMethod: StripeModel {
     public var billingDetails: StripeBillingDetails?
     /// If this is a `card` PaymentMethod, this hash contains details about the card.
     public var card: StripePaymentMethodCard?
-    /// If this is a `card_present` PaymentMethod, this hash contains details about the Card Present payment method. /n Stripe does not [provide any details](https://stripe.com/docs/api/payment_methods/object#payment_method_object-card_present) about possible values so this will remain nil/unimplemented.
+    /// If this is a `card_present` PaymentMethod, this hash contains details about the Card Present payment method.
+    /// Stripe does not [provide any details](https://stripe.com/docs/api/payment_methods/object#payment_method_object-card_present) about possible values so this will remain nil/unimplemented.
     public var cardPresent: String? = nil
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?

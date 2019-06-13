@@ -30,6 +30,10 @@ public struct StripeTransaction: StripeModel {
     public var dispute: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
+    ///
+    public var merchantAmount: Int?
+    ///
+    public var merchantCurrency: StripeCurrency?
     /// More information about the user involved in the transaction.
     public var merchantData: StripeAuthorizationMerchantData?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

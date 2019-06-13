@@ -23,7 +23,8 @@ public struct StripeAuthorization: StripeModel {
     public var authorizedCurrency: StripeCurrency?
     /// array, contains: balance_transaction object
     public var balanceTransactions: [StripeBalanceTransaction]?
-    /// TODO: - Card/CardHolder
+    ///
+    public var card: StripeIssuingCard?
     /// The cardholder to whom this authorization belongs.
     public var cardholder: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -48,7 +49,9 @@ public struct StripeAuthorization: StripeModel {
     public var requestHistory: [StripeAuthorizationRequestHistory]?
     /// One of `pending`, `reversed`, or `closed`.
     public var status: StripeAuthorizationStatus?
-    /// TODO: - Transactions
+    ///
+    public var transactions: [StripeTransaction]?
+    ///
     public var verificationData: StripeAuthorizationVerificationData?
     /// What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
     public var walletProvider: StripeAuthorizationWalletProvider?
