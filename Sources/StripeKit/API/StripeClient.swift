@@ -61,7 +61,7 @@ public final class StripeClient {
     public var readers: ReaderRoutes
     public var scheduledQueryRuns: ScheduledQueryRunRoutes
     
-    init(eventLoop: EventLoopGroup, apiKey: String) {
+    public init(eventLoop: EventLoopGroup, apiKey: String) {
         let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
         let handler = StripeDefaultAPIHandler(httpClient: client, apiKey: apiKey)
         
