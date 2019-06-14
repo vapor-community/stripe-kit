@@ -2,13 +2,11 @@
 ![](https://img.shields.io/badge/Swift-5-lightgrey.svg?style=svg)
 ![](https://img.shields.io/badge/SwiftNio-2-lightgrey.svg?style=svg)
 
-<!--[![CircleCI](https://circleci.com/gh/vapor-community/stripe-provider.svg?style=svg)](https://circleci.com/gh/vapor-community/stripe-provider)-->
-
 ### StripeKit is a Swift package used to communicate with the [Stripe](https://stripe.com) API for Server Side Swift Apps.
 
-## Version Support
-Version **1.0.0** of this library supports the Stripe API version of **[2019-03-14](https://stripe.com/docs/upgrades#2019-03-14)**. 
-You can check the releases page to use a version of this package that supports a version of the Stripe API you require.
+## Current supported version
+Version **1.0.0** of StripeKit supports the Stripe API version of **[2019-05-16](https://stripe.com/docs/upgrades#2019-05-16)**. 
+You can check the releases page to use a version of StripeKit that meets your needs.
 
 ## Installation
 To start using StripeKit, in your `Package.swift`, add the following
