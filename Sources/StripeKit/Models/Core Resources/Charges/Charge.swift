@@ -64,8 +64,8 @@ public struct StripeCharge: StripeModel {
     public var paymentIntent: String?
     /// ID of the payment method used in this charge.
     public var paymentMethod: String?
-    ///
-    // TODO: - PaymentMethod API
+    /// Details about the payment method at the time of the transaction.
+    public var paymentDetails: StripeChargePaymentDetails?
     /// This is the email address that the receipt for this charge was sent to.
     public var receiptEmail: String?
     /// This is the transaction number that appears on email receipts sent for this charge. This attribute will be `null` until a receipt has been sent.
@@ -80,8 +80,6 @@ public struct StripeCharge: StripeModel {
     public var review: String?
     /// Shipping information for the charge.
     public var shipping: StripeShippingLabel?
-    /// For most Stripe users, the source of every charge is a credit or debit card. This hash is then the [card object](https://stripe.com/docs/api/charges/object#card_object) describing that card.
-    public var source: StripeSource?
     /// The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
     public var sourceTransfer: String?
     /// Extra information about a charge. This will appear on your customer’s credit card statement. It must contain at least one letter.
@@ -169,4 +167,273 @@ public struct StripeChargesList: StripeModel {
     /// The URL where this list can be accessed.
     public var url: String?
     public var data: [StripeCharge]?
+}
+
+public struct StripeChargePaymentDetails: StripeModel {
+    ///If this is a `ach_credit_transfer` payment, this hash contains a snapshot of the transaction specific details of the `ach_credit_transfer` payment method.
+    public var achCreditTransfer: StripeChargePaymentDetailsACHCreditTransfer?
+    /// If this is a `ach_debit` payment, this hash contains a snapshot of the transaction specific details of the `ach_debit` payment method.
+    public var achDebit: StripeChargePaymentDetailsACHDebit?
+    /// If this is a `alipay` payment, this hash contains a snapshot of the transaction specific details of the `alipay` payment method.
+    public var alipay: StripeChargePaymentDetailsAlipay?
+    /// If this is a `bancontact` payment, this hash contains a snapshot of the transaction specific details of the `bancontact` payment method.
+    public var bancontact: StripeChargePaymentDetailsBancontact?
+    /// If this is a `card` payment, this hash contains a snapshot of the transaction specific details of the `card` payment method.
+    public var card: StripeChargePaymentDetailsCard?
+    /// If this is a `card_present` payment, this hash contains a snapshot of the transaction specific details of the `card_present` payment method.
+    public var cardPresent: StripeChargePaymentDetailsCardPresent?
+    /// If this is a `eps` payment, this hash contains a snapshot of the transaction specific details of the `eps` payment method.
+    public var eps: StripeChargePaymentDetailsEPS?
+    /// If this is a `giropay` payment, this hash contains a snapshot of the transaction specific details of the `giropay` payment method.
+    public var giropay: StripeChargePaymentDetailsGiropay?
+    /// If this is a `ideal` payment, this hash contains a snapshot of the transaction specific details of the `ideal` payment method.
+    public var ideal: StripeChargePaymentDetailsIdeal?
+    /// If this is a `multibanco` payment, this hash contains a snapshot of the transaction specific details of the `multibanco` payment method.
+    public var multibanco: StripeChargePaymentDetailsMultibanco?
+    /// If this is a `p24` payment, this hash contains a snapshot of the transaction specific details of the `p24` payment method.
+    public var p24: StripeChargePaymentDetailsP24?
+    /// If this is a `sepa_debit` payment, this hash contains a snapshot of the transaction specific details of the `sepa_debit` payment method.
+    public var sepaDebit: StripeChargePaymentDetailsSepaDebit?
+    /// If this is a `sofort` payment, this hash contains a snapshot of the transaction specific details of the `sofort` payment method
+    public var sofort: StripeChargePaymentDetailsSofort?
+    /// If this is a `stripe_account` payment, this hash contains a snapshot of the transaction specific details of the `stripe_account` payment method
+    public var stripeAccount: StripeChargePaymentDetailsStripeAccount?
+    /// The type of transaction-specific details of the payment method used in the payment, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `p24`, `sepa_debit`, `sofort`, `stripe_account`, or `wechat`. An additional hash is included on `payment_method_details` with a name matching this value. It contains information specific to the payment method.
+    public var type: StripeChargePaymentDetailsType?
+    /// If this is a wechat payment, this hash contains a snapshot of the transaction specific details of the wechat payment method.
+    public var wechat: StripeChargePaymentDetailsWechat?
+}
+
+public struct StripeChargePaymentDetailsACHCreditTransfer: StripeModel {
+    /// Account number to transfer funds to.
+    public var accountNumber: String?
+    /// Name of the bank associated with the routing number.
+    public var bankName: String?
+    /// Routing transit number for the bank account to transfer funds to.
+    public var routingNumber: String?
+    /// SWIFT code of the bank associated with the routing number
+    public var swiftCode: String?
+}
+
+public struct StripeChargePaymentDetailsACHDebit: StripeModel {
+    // TODO: - Make enum
+    /// Type of entity that holds the account. This can be either individual or company.
+    public var accountHolderType: String?
+    /// Name of the bank associated with the bank account.
+    public var bankName: String?
+    /// Two-letter ISO code representing the country the bank account is located in.
+    public var country: String?
+    /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+    public var fingerprint: String?
+    /// Account number to transfer funds to.
+    public var last4: String?
+    /// Routing transit number for the bank account.
+    public var routingNumber: String?
+}
+
+public struct StripeChargePaymentDetailsAlipay: StripeModel {
+    // https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-alipay
+}
+
+public struct StripeChargePaymentDetailsBancontact: StripeModel {
+    /// Bank code of bank associated with the bank account.
+    public var bankCode: String?
+    /// Name of the bank associated with the bank account.
+    public var bankName: String?
+    /// Bank Identifier Code of the bank associated with the bank account.
+    public var bic: String?
+    /// Last four characters of the IBAN.
+    public var ibanLast4: String?
+    // TODO: - Make enum (might already live somewhere in the codebase?)
+    /// Preferred language of the Bancontact authorization page that the customer is redirected to. Can be one of `en`, `de`, `fr`, or `nl`
+    public var preferredLanguage: String?
+    /// Owner’s verified full name. Values are verified or provided by Bancontact directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+    public var verifiedName: String?
+}
+
+public struct StripeChargePaymentDetailsCard: StripeModel {
+    /// Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+    public var brand: StripePaymentMethodCardBrand?
+    /// Checks on Card address and CVC if provided.
+    public var checks: StripePaymentMethodCardChecks?
+    /// Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you’ve collected.
+    public var country: String?
+    /// Two-digit number representing the card’s expiration month.
+    public var expMonth: Int?
+    /// Four-digit number representing the card’s expiration year.
+    public var expYear: Int?
+    /// Uniquely identifies this particular card number. You can use this attribute to check whether two customers who’ve signed up with you are using the same card number, for example.
+    public var fingerprint: String?
+    /// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+    public var funding: StripeCardFundingType?
+    /// The last four digits of the card.
+    public var last4: String?
+    /// Contains details on how this Card maybe be used for 3D Secure authentication.
+    public var threeDSecure: StripeChargePaymentDetailsCardThreeDSecure?
+    /// If this Card is part of a card wallet, this contains the details of the card wallet.
+    public var wallet: StripePaymentMethodCardWallet?
+}
+
+public struct StripeChargePaymentDetailsCardThreeDSecure: StripeModel {
+    /// Whether or not authentication was performed. 3D Secure will succeed without authentication when the card is not enrolled.
+    public var authenticated: Bool?
+    /// Whether or not 3D Secure succeeded.
+    public var succeeded: Bool?
+    /// The version of 3D Secure that was used for this payment.
+    public var version: String?
+}
+
+public struct StripeChargePaymentDetailsCardPresent: StripeModel {
+    /// Card brand. Can be amex, diners, discover, jcb, mastercard, unionpay, visa, or unknown.
+    public var brand: StripePaymentMethodCardBrand?
+    /// Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you’ve collected.
+    public var country: String?
+    /// Authorization response cryptogram.
+    public var emvAuthData: String?
+    /// Two-digit number representing the card’s expiration month.
+    public var expMonth: Int?
+    /// Four-digit number representing the card’s expiration year.
+    public var expYear: Int?
+    /// Uniquely identifies this particular card number. You can use this attribute to check whether two customers who’ve signed up with you are using the same card number, for example.
+    public var fingerprint: String?
+    /// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+    public var funding: StripeCardFundingType?
+    /// ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
+    public var generatedCard: String?
+    /// The last four digits of the card.
+    public var last4: String?
+    // TODO: - Make enum when not lazy.
+    /// How were card details read in this transaction. Can be `contact_emv`, `contactless_emv`, `magnetic_stripe_fallback`, `magnetic_stripe_track2`, or `contactless_magstripe_mode`
+    public var readMethod: String?
+    /// A collection of fields required to be displayed on receipts. Only required for EMV transactions.
+    public var receipt: StripeChargePaymentDetailsCardPresentReceipt?
+}
+
+public struct StripeChargePaymentDetailsCardPresentReceipt: StripeModel {
+    /// EMV tag 9F26, cryptogram generated by the integrated circuit chip.
+    public var applicationCryptogram: String?
+    /// Mnenomic of the Application Identifier.
+    public var applicationPreferredName: String?
+    /// Identifier for this transaction.
+    public var authorizationCode: String?
+    /// EMV tag 8A. A code returned by the card issuer.
+    public var authorizationResponseCode: String?
+    /// How the cardholder verified ownership of the card.
+    public var cardholderVerificationMethod: String?
+    /// EMV tag 84. Similar to the application identifier stored on the integrated circuit chip.
+    public var dedicatedFileName: String?
+    /// The outcome of a series of EMV functions performed by the card reader.
+    public var terminalVerificationResults: String?
+    /// An indication of various EMV functions performed during the transaction.
+    public var transactionStatusInformation: String?
+}
+
+public struct StripeChargePaymentDetailsEPS: StripeModel {
+    /// Owner’s verified full name. Values are verified or provided by EPS directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+    public var verifiedName: String?
+}
+
+public struct StripeChargePaymentDetailsGiropay: StripeModel {
+    /// Bank code of bank associated with the bank account.
+    public var bankCode: String?
+    /// Name of the bank associated with the bank account.
+    public var bankName: String?
+    /// Bank Identifier Code of the bank associated with the bank account.
+    public var bic: String?
+    /// Owner’s verified full name. Values are verified or provided by Giropay directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+    public var verifiedName: String?
+}
+
+public struct StripeChargePaymentDetailsIdeal: StripeModel {
+    /// The customer’s bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
+    public var bank: StripeChargePaymentDetailsIdealBank?
+    /// The Bank Identifier Code of the customer’s bank.
+    public var bic: String?
+    /// Last four characters of the IBAN.
+    public var ibanLast4: String?
+    /// Owner’s verified full name. Values are verified or provided by iDEAL directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+    public var verifiedName: String?
+}
+
+public enum StripeChargePaymentDetailsIdealBank: String, StripeModel {
+    case abnAmro = "abn_amro"
+    case asnBank = "asn_bank"
+    case bunq
+    case handelsbanken
+    case ing
+    case knab
+    case moneyou
+    case rabobank
+    case regiobank
+    case snsBank = "sns_bank"
+    case triodosBank = "triodos_bank"
+    case vanLanschot = "van_laschot"
+}
+
+public struct StripeChargePaymentDetailsMultibanco: StripeModel {
+    /// Entity number associated with this Multibanco payment.
+    public var entity: String?
+    /// Reference number associated with this Multibanco payment.
+    public var reference: String?
+}
+
+public struct StripeChargePaymentDetailsP24: StripeModel {
+    /// Unique reference for this Przelewy24 payment.
+    public var reference: String?
+    /// Owner’s verified full name. Values are verified or provided by Przelewy24 directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+    public var verifiedName: String?
+}
+
+public struct StripeChargePaymentDetailsSepaDebit: StripeModel {
+    /// Bank code of bank associated with the bank account.
+    public var bankCode: String?
+    /// Branch code of bank associated with the bank account.
+    public var branchCode: String?
+    /// Two-letter ISO code representing the country the bank account is located in.
+    public var country: String?
+    /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+    public var fingerprint: String?
+    /// Last four characters of the IBAN.
+    public var last4: String?
+}
+
+public struct StripeChargePaymentDetailsSofort: StripeModel {
+    /// Bank code of bank associated with the bank account.
+    public var bankCode: String?
+    /// Name of the bank associated with the bank account.
+    public var bankName: String?
+    /// Bank Identifier Code of the bank associated with the bank account.
+    public var bic: String?
+    /// Two-letter ISO code representing the country the bank account is located in.
+    public var country: String?
+    /// Last four characters of the IBAN.
+    public var ibanLast4: String?
+    /// Owner’s verified full name. Values are verified or provided by SOFORT directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+    public var verifiedName: String?
+}
+
+public struct StripeChargePaymentDetailsStripeAccount: StripeModel {
+    // https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-stripe_account
+}
+
+public enum StripeChargePaymentDetailsType: String, StripeModel {
+    case achCreditTransfer = "ach_credit_transfer"
+    case achDebit = "ach_debit"
+    case alipay
+    case bancontact
+    case card
+    case cardPresent = "card_present"
+    case eps
+    case giropay
+    case ideal
+    case multibanco
+    case p24
+    case sepaDebit = "sepa_debit"
+    case sofort
+    case stripeAccount = "stripe_account"
+    case wechat
+}
+
+public struct StripeChargePaymentDetailsWechat: StripeModel {
+    // https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-wechat
 }
