@@ -9,36 +9,36 @@ import NIO
 import NIOHTTPClient
 
 public final class StripeClient {
-    public var balance: BalanceRoutes
-    public var charge: ChargeRoutes
+    public var balances: BalanceRoutes
+    public var charges: ChargeRoutes
     public var connectAccounts: AccountRoutes
     public var coupons: CouponRoutes
-    public var customer: CustomerRoutes
-    public var dispute: DisputeRoutes
+    public var customers: CustomerRoutes
+    public var disputes: DisputeRoutes
     public var ephemeralKeys: EphemeralKeyRoutes
     public var invoiceItems: InvoiceItemRoutes
     public var invoices: InvoiceRoutes
     public var orderReturns: OrderReturnRoutes
     public var orders: OrderRoutes
     public var plans: PlanRoutes
-    public var product: ProductRoutes
-    public var refund: RefundRoutes
+    public var products: ProductRoutes
+    public var refunds: RefundRoutes
     public var skus: SKURoutes
-    public var source: SourceRoutes
+    public var sources: SourceRoutes
     public var subscriptionItems: SubscriptionItemRoutes
     public var subscriptions: SubscriptionRoutes
-    public var token: TokenRoutes
+    public var tokens: TokenRoutes
     public var transfers: TransferRoutes
     public var transferReversals: TransferReversalRoutes
     public var payouts: PayoutRoutes
     public var fileLinks: FileLinkRoutes
     public var files: FileRoutes
-    public var person: PersonRoutes
-    public var applicationFee: ApplicationFeesRoutes
+    public var persons: PersonRoutes
+    public var applicationFees: ApplicationFeesRoutes
     public var applicationFeeRefunds: ApplicationFeeRefundRoutes
     public var externalAccounts: ExternalAccountsRoutes
     public var countrySpecs: CountrySpecRoutes
-    public var topup: TopUpRoutes
+    public var topups: TopUpRoutes
     public var valueListItems: ValueListItemRoutes
     public var valueList: ValueListRoutes
     public var paymentMethods: PaymentMethodRoutes
@@ -65,36 +65,36 @@ public final class StripeClient {
         let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
         let handler = StripeDefaultAPIHandler(httpClient: client, apiKey: apiKey)
         
-        balance = StripeBalanceRoutes(apiHandler: handler)
-        charge = StripeChargeRoutes(apiHandler: handler)
+        balances = StripeBalanceRoutes(apiHandler: handler)
+        charges = StripeChargeRoutes(apiHandler: handler)
         connectAccounts = StripeConnectAccountRoutes(apiHandler: handler)
         coupons = StripeCouponRoutes(apiHandler: handler)
-        customer = StripeCustomerRoutes(apiHandler: handler)
-        dispute = StripeDisputeRoutes(apiHandler: handler)
+        customers = StripeCustomerRoutes(apiHandler: handler)
+        disputes = StripeDisputeRoutes(apiHandler: handler)
         ephemeralKeys = StripeEphemeralKeyRoutes(apiHandler: handler)
         invoiceItems = StripeInvoiceItemRoutes(apiHandler: handler)
         invoices = StripeInvoiceRoutes(apiHandler: handler)
         orderReturns = StripeOrderReturnRoutes(apiHandler: handler)
         orders = StripeOrderRoutes(apiHandler: handler)
         plans = StripePlanRoutes(apiHandler: handler)
-        product = StripeProductRoutes(apiHandler: handler)
-        refund = StripeRefundRoutes(apiHandler: handler)
+        products = StripeProductRoutes(apiHandler: handler)
+        refunds = StripeRefundRoutes(apiHandler: handler)
         skus = StripeSKURoutes(apiHandler: handler)
-        source = StripeSourceRoutes(apiHandler: handler)
+        sources = StripeSourceRoutes(apiHandler: handler)
         subscriptionItems = StripeSubscriptionItemRoutes(apiHandler: handler)
         subscriptions = StripeSubscriptionRoutes(apiHandler: handler)
-        token = StripeTokenRoutes(apiHandler: handler)
+        tokens = StripeTokenRoutes(apiHandler: handler)
         transfers = StripeTransferRoutes(apiHandler: handler)
         transferReversals = StripeTransferReversalRoutes(apiHandler: handler)
         payouts = StripePayoutRoutes(apiHandler: handler)
         fileLinks = StripeFileLinkRoutes(apiHandler: handler)
         files = StripeFileRoutes(apiHandler: handler)
-        person = StripePersonRoutes(apiHandler: handler)
-        applicationFee = StripeApplicationFeeRoutes(apiHandler: handler)
+        persons = StripePersonRoutes(apiHandler: handler)
+        applicationFees = StripeApplicationFeeRoutes(apiHandler: handler)
         applicationFeeRefunds = StripeApplicationFeeRefundRoutes(apiHandler: handler)
         externalAccounts = StripeExternalAccountsRoutes(apiHandler: handler)
         countrySpecs = StripeCountrySpecRoutes(apiHandler: handler)
-        topup = StripeTopUpRoutes(apiHandler: handler)
+        topups = StripeTopUpRoutes(apiHandler: handler)
         valueListItems = StripeValueListItemRoutes(apiHandler: handler)
         valueList = StripeValueListRoutes(apiHandler: handler)
         paymentMethods = StripePaymentMethodRoutes(apiHandler: handler)
