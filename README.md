@@ -52,7 +52,7 @@ For example consider the connect account api.
 
 ~~~~swift
 // We define a custom dictionary to represent the paramaters stripe requires.
-// This allows 
+// This allows us to avoid having to add updates to the library when a paramater or structure changes.
 let individual: [String: Any] = ["address": ["city": "New York",
 					     "country": "US",
                                              "line1": "1551 Broadway",
@@ -83,6 +83,13 @@ try stripe.connectAccount.create(type: .custom,
 				}
 ~~~~
 
+## Authentication via the Stripe-Account header
+The first, preferred, authentication option is to use your (the platform account’s) secret key and pass a `Stripe-Account` header identifying the connected account for which the request is being made. The example request performs a refund of a  charge on behalf of a connected account:
+~~~swift
+   stripe.refunds.headers.add(name: "Stripe-Account", value: "acc_12345")
+   try stripe.refunds.create(charge: "ch_12345", reason: .requestedByCustomer)
+~~~
+The modified headers will remain on the route instance _(refunds in this case)_ of the `StripeClient` if a reference to it is held. If you're accessing the StripeClient in the scope of a function, the headers will not be retained.
 
 ## Whats Implemented
 
@@ -165,8 +172,11 @@ try stripe.connectAccount.create(type: .custom,
 * [ ] Webhook Endpoints
 
 
-## License
+## TODO At some point
+* [ ] [Object expansion](https://stripe.com/docs/api/expanding_objects)
+* [ ] [Idempotent Requests](https://stripe.com/docs/api/idempotent_requests)
 
+## License
 StripeKit is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
 
 ## Want to help?
