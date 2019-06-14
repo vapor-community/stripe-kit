@@ -12,8 +12,6 @@ import NIOFoundationCompat
 import NIOHTTP1
 import NIOHTTPClient
 
-public struct APIError: Error {}
-
 public protocol StripeAPIHandler {
     func send<SM: StripeModel>(method: HTTPMethod,
                                path: String,
@@ -63,13 +61,12 @@ public struct StripeDefaultAPIHandler: StripeAPIHandler {
         
         return httpClient.execute(request: request).flatMapThrowing { response in
             guard var byteBuffer = response.body else {
-                throw APIError()
+                fatalError("Response body from Stripe is missing! This should never happen.")
             }
             let responseData = byteBuffer.readData(length: byteBuffer.readableBytes)!
             
             guard response.status == .ok else {
-                let stripeError = try self.decoder.decode(StripeError.self, from: responseData)
-                return self.httpClient.eventLoopGroup.next().makeSucceededFuture(stripeError) as! SM
+                throw try self.decoder.decode(StripeError.self, from: responseData)
             }
             let stripeResponse = try self.decoder.decode(SM.self, from: responseData)
             return self.httpClient.eventLoopGroup.next().makeSucceededFuture(stripeResponse) as! SM
