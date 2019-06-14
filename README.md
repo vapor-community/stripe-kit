@@ -30,10 +30,10 @@ The APIs you have available corrospond to what's implemented.
 For example to use the `charges` API, the stripeclient has a property to access that API via routes.
 
 ~~~~swift
-try stripe.charge.create(amount: 2500,
-                         currency: .usd,
-                         description: "A server written in swift.",
-                         source: "tok_visa").flatMap { (charge) -> EventLoopFuture<Void> in
+try stripe.charges.create(amount: 2500,
+                          currency: .usd,
+                          description: "A server written in swift.",
+                          source: "tok_visa").flatMap { (charge) -> EventLoopFuture<Void> in
                            if charge.status == .succeeded {
                                print("New servers are on the way 🚀")
                            } else {
@@ -67,16 +67,16 @@ let businessSettings: [String: Any] = ["payouts": ["statement_descriptor": "SWIF
 
 let tosDictionary: [String: Any] = ["date": Int(Date().timeIntervalSince1970), "ip": "127.0.0.1"]
 
-try stripe.connectAccount.create(type: .custom,										
-                                 country: "US",
-				 email: "a@example.com",
-				 businessType: .individual,
-			         defaultCurrency: .usd,
-				 externalAccount: "bank_token",
-			         individual: individual,
-				 requestedCapabilities: ["platform_payments"],
-				 settings: businessSettings,
-				 tosAcceptance: tosDictionary).flatMap { connectAccount in
+try stripe.connectAccounts.create(type: .custom,									
+                                  country: "US",
+				  email: "a@example.com",
+				  businessType: .individual,
+			          defaultCurrency: .usd,
+				  externalAccount: "bank_token",
+			          individual: individual,
+				  requestedCapabilities: ["platform_payments"],
+				  settings: businessSettings,
+				  tosAcceptance: tosDictionary).flatMap { connectAccount in
 					print("New Stripe Connect account ID: \(connectAccount.id)")			
 				}
 ~~~~
@@ -87,7 +87,7 @@ The first, preferred, authentication option is to use your (the platform account
    stripe.refunds.headers.add(name: "Stripe-Account", value: "acc_12345")
    try stripe.refunds.create(charge: "ch_12345", reason: .requestedByCustomer)
 ~~~
-The modified headers will remain on the route instance _(refunds in this case)_ of the `StripeClient` if a reference to it is held. If you're accessing the StripeClient in the scope of a function, the headers will not be retained.
+**NOTE:** The modified headers will remain on the route instance _(refunds in this case)_ of the `StripeClient` if a reference to it is held. If you're accessing the StripeClient in the scope of a function, the headers will not be retained.
 
 ## Whats Implemented
 
