@@ -1,5 +1,5 @@
 import XCTest
-@testable import Stripe
+@testable import StripeKit
 
 class QueryEncodingTests: XCTestCase {
     
