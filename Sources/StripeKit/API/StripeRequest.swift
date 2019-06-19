@@ -68,8 +68,7 @@ public struct StripeDefaultAPIHandler: StripeAPIHandler {
             guard response.status == .ok else {
                 throw try self.decoder.decode(StripeError.self, from: responseData)
             }
-            let stripeResponse = try self.decoder.decode(SM.self, from: responseData)
-            return self.httpClient.eventLoopGroup.next().makeSucceededFuture(stripeResponse) as! SM
+            return try self.decoder.decode(SM.self, from: responseData)
         }
     }
 }
