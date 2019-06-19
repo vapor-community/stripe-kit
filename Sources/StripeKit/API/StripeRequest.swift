@@ -57,7 +57,7 @@ public struct StripeDefaultAPIHandler: StripeAPIHandler {
                                      "Content-Type": "application/x-www-form-urlencoded"]
         headers.forEach { _headers.replaceOrAdd(name: $0.name, value: $0.value) }
         
-        let request = try HTTPClient.Request(url: "\(path)?\(query)", method: method, headers: headers, body: body)
+        let request = try HTTPClient.Request(url: "\(path)?\(query)", method: method, headers: _headers, body: body)
         
         return httpClient.execute(request: request).flatMapThrowing { response in
             guard var byteBuffer = response.body else {
