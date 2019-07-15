@@ -15,15 +15,13 @@ public protocol LocationRoutes {
     ///   - address: The full address of the location.
     ///   - displayName: A name for the location.
     /// - Returns: A `StripeLocation`.
-    /// - Throws: A `StripeError`.
-    func create(address: [String: Any], displayName: String) throws -> EventLoopFuture<StripeLocation>
+    func create(address: [String: Any], displayName: String) -> EventLoopFuture<StripeLocation>
     
     /// Retrieves a Location object.
     ///
     /// - Parameter location: The identifier of the location to be retrieved.
     /// - Returns: A `StripeLocation`.
-    /// - Throws: A `StripeError`.
-    func retrieve(location: String) throws -> EventLoopFuture<StripeLocation>
+    func retrieve(location: String) -> EventLoopFuture<StripeLocation>
     
     /// Updates a Location object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -32,45 +30,42 @@ public protocol LocationRoutes {
     ///   - address: The full address of the location.
     ///   - displayName: A name for the location.
     /// - Returns: A `StripeLocation`.
-    /// - Throws: A `StripeError`.
-    func update(location: String, address: [String: Any]?, displayName: String?) throws -> EventLoopFuture<StripeLocation>
+    func update(location: String, address: [String: Any]?, displayName: String?) -> EventLoopFuture<StripeLocation>
     
     /// Deletes a Location object.
     ///
     /// - Parameter location: The identifier of the location to be deleted.
     /// - Returns: A `StripeLocation`.
-    /// - Throws: A `StripeError`.
-    func delete(location: String) throws -> EventLoopFuture<StripeLocation>
+    func delete(location: String) -> EventLoopFuture<StripeLocation>
     
     /// Returns a list of Location objects.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/terminal/locations/list)
     /// - Returns: A `StripeLocationList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeLocationList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeLocationList>
     
     var headers: HTTPHeaders { get set }
 }
 
 extension LocationRoutes {
-    func create(address: [String: Any], displayName: String) throws -> EventLoopFuture<StripeLocation> {
-        return try create(address: address, displayName: displayName)
+    func create(address: [String: Any], displayName: String) -> EventLoopFuture<StripeLocation> {
+        return create(address: address, displayName: displayName)
     }
     
-    func retrieve(location: String) throws -> EventLoopFuture<StripeLocation> {
-        return try retrieve(location: location)
+    func retrieve(location: String) -> EventLoopFuture<StripeLocation> {
+        return retrieve(location: location)
     }
     
-    func update(location: String, address: [String: Any]? = nil, displayName: String? = nil) throws -> EventLoopFuture<StripeLocation> {
-        return try update(location: location, address: address, displayName: displayName)
+    func update(location: String, address: [String: Any]? = nil, displayName: String? = nil) -> EventLoopFuture<StripeLocation> {
+        return update(location: location, address: address, displayName: displayName)
     }
     
-    func delete(location: String) throws -> EventLoopFuture<StripeLocation> {
-        return try delete(location: location)
+    func delete(location: String) -> EventLoopFuture<StripeLocation> {
+        return delete(location: location)
     }
     
-    func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeLocationList> {
-        return try listAll(filter: filter)
+    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeLocationList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -82,18 +77,18 @@ public struct StripeLocationRoutes: LocationRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(address: [String: Any], displayName: String) throws -> EventLoopFuture<StripeLocation> {
+    public func create(address: [String: Any], displayName: String) -> EventLoopFuture<StripeLocation> {
         var body: [String: Any] = ["display_name": displayName]
         address.forEach { body["address[\($0)]"] = $1 }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.location.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.location.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(location: String) throws -> EventLoopFuture<StripeLocation> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.locations(location).endpoint, headers: headers)
+    public func retrieve(location: String) -> EventLoopFuture<StripeLocation> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.locations(location).endpoint, headers: headers)
     }
     
-    public func update(location: String, address: [String: Any]?, displayName: String?) throws -> EventLoopFuture<StripeLocation> {
+    public func update(location: String, address: [String: Any]?, displayName: String?) -> EventLoopFuture<StripeLocation> {
         var body: [String: Any] = [:]
         if let address = address {
             address.forEach { body["address[\($0)]"] = $1 }
@@ -103,19 +98,19 @@ public struct StripeLocationRoutes: LocationRoutes {
             body["display_name"] = displayName
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.locations(location).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.locations(location).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(location: String) throws -> EventLoopFuture<StripeLocation> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.locations(location).endpoint, headers: headers)
+    public func delete(location: String) -> EventLoopFuture<StripeLocation> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.locations(location).endpoint, headers: headers)
     }
     
-    public func listAll(filter: [String : Any]? = nil) throws -> EventLoopFuture<StripeLocationList> {
+    public func listAll(filter: [String : Any]? = nil) -> EventLoopFuture<StripeLocationList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.location.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.location.endpoint, query: queryParams, headers: headers)
     }
 }

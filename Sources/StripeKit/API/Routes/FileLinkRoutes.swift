@@ -17,15 +17,13 @@ public protocol FileLinkRoutes {
     ///   - expiresAt: A future timestamp after which the link will no longer be usable.
     ///   - metadata: Set of key-value pairs that you can attach to an object.
     /// - Returns: A `StripeFileLink`.
-    /// - Throws: A `StripeError`.
-    func create(file: String, expiresAt: Date?, metadata: [String: String]?) throws -> EventLoopFuture<StripeFileLink>
+    func create(file: String, expiresAt: Date?, metadata: [String: String]?) -> EventLoopFuture<StripeFileLink>
     
     /// Retrieves the file link with the given ID.
     ///
     /// - Parameter link: The identifier of the file link to be retrieved.
     /// - Returns: A `StripeFileLink`.
-    /// - Throws: A `StripeError`.
-    func retrieve(link: String) throws -> EventLoopFuture<StripeFileLink>
+    func retrieve(link: String) -> EventLoopFuture<StripeFileLink>
     
     /// Updates an existing file link object. Expired links can no longer be updated
     ///
@@ -34,35 +32,33 @@ public protocol FileLinkRoutes {
     ///   - expiresAt: A future timestamp after which the link will no longer be usable, or `now` to expire the link immediately.
     ///   - metadata: Set of key-value pairs that you can attach to an object.
     /// - Returns: A `StripeFileLink`.
-    /// - Throws: A `StripeError`.
-    func update(link: String, expiresAt: Any?, metadata: [String: String]?) throws -> EventLoopFuture<StripeFileLink>
+    func update(link: String, expiresAt: Any?, metadata: [String: String]?) -> EventLoopFuture<StripeFileLink>
     
     
     /// Returns a list of file links.
     ///
     /// - Parameter filter: A dictionary that contains the filters. More info [here](https://stripe.com/docs/api/curl#list_file_links).
     /// - Returns: A `StripeFileLinkList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeFileLinkList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileLinkList>
     
     var headers: HTTPHeaders { get set }
 }
 
 extension FileLinkRoutes {
-    public func create(file: String, expiresAt: Date? = nil, metadata: [String: String]? = nil) throws -> EventLoopFuture<StripeFileLink> {
-        return try create(file: file, expiresAt: expiresAt, metadata: metadata)
+    public func create(file: String, expiresAt: Date? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeFileLink> {
+        return create(file: file, expiresAt: expiresAt, metadata: metadata)
     }
     
-    public func retrieve(link: String) throws -> EventLoopFuture<StripeFileLink> {
-        return try retrieve(link: link)
+    public func retrieve(link: String) -> EventLoopFuture<StripeFileLink> {
+        return retrieve(link: link)
     }
     
-    public func update(link: String, expiresAt: Any? = nil, metadata: [String: String]? = nil) throws -> EventLoopFuture<StripeFileLink> {
-        return try update(link: link, expiresAt: expiresAt, metadata: metadata)
+    public func update(link: String, expiresAt: Any? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeFileLink> {
+        return update(link: link, expiresAt: expiresAt, metadata: metadata)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeFileLinkList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeFileLinkList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -74,7 +70,7 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(file: String, expiresAt: Date?, metadata: [String: String]?) throws -> EventLoopFuture<StripeFileLink> {
+    public func create(file: String, expiresAt: Date?, metadata: [String: String]?) -> EventLoopFuture<StripeFileLink> {
         var body: [String: Any] = [:]
         if let expiresAt = expiresAt {
             body["expires_at"] = Int(expiresAt.timeIntervalSince1970)
@@ -83,14 +79,14 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.fileLink.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.fileLink.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(link: String) throws -> EventLoopFuture<StripeFileLink> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.fileLinks(link).endpoint, headers: headers)
+    public func retrieve(link: String) -> EventLoopFuture<StripeFileLink> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.fileLinks(link).endpoint, headers: headers)
     }
     
-    public func update(link: String, expiresAt: Any?, metadata: [String: String]?) throws -> EventLoopFuture<StripeFileLink> {
+    public func update(link: String, expiresAt: Any?, metadata: [String: String]?) -> EventLoopFuture<StripeFileLink> {
         var body: [String: Any] = [:]
         
         if let expiresAt = expiresAt as? Date {
@@ -104,15 +100,15 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.fileLinks(link).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.fileLinks(link).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeFileLinkList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileLinkList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.fileLink.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.fileLink.endpoint, query: queryParams, headers: headers)
     }
 }

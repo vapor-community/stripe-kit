@@ -18,11 +18,10 @@ public protocol UsageRecordRoutes {
     ///   - timestamp: The timestamp for the usage event. This timestamp must be within the current billing period of the subscription of the provided `subscription_item`.
     ///   - action: Valid values are `increment` (default) or `set`. When using `increment` the specified `quantity` will be added to the usage at the specified timestamp. The `set` action will overwrite the usage quantity at that timestamp. If the subscription has [billing thresholds](https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_thresholds), `increment` is the only allowed value.
     /// - Returns: A `StripeUsageRecord`.
-    /// - Throws: A `StripeError`.
     func create(quantity: Int,
                 subscriptionItem: String,
                 timestamp: Date,
-                action: String?) throws -> EventLoopFuture<StripeUsageRecord>
+                action: String?) -> EventLoopFuture<StripeUsageRecord>
     
     /// For the specified subscription item, returns a list of summary objects. Each object in the list provides usage information that’s been summarized from multiple usage records and over a subscription billing period (e.g., 15 usage records in the billing plan’s month of September). \n The list is sorted in reverse-chronological order (newest first). The first list item represents the most current usage period that hasn’t ended yet. Since new usage records can still be added, the returned summary information for the subscription item’s ID should be seen as unstable until the subscription billing period ends.
     ///
@@ -30,8 +29,7 @@ public protocol UsageRecordRoutes {
     ///   - subscriptionItem: Only summary items for the given subscription item.
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/usage_records/subscription_item_summary_list)
     /// - Returns: A `StripeUsageRecordList`.
-    /// - Throws: A `StripeError`.
-    func listAll(subscriptionItem: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeUsageRecordList>
+    func listAll(subscriptionItem: String, filter: [String: Any]?) -> EventLoopFuture<StripeUsageRecordList>
     
     var headers: HTTPHeaders { get set }
 }
@@ -40,15 +38,15 @@ extension UsageRecordRoutes {
     public func create(quantity: Int,
                        subscriptionItem: String,
                        timestamp: Date,
-                       action: String? = nil) throws -> EventLoopFuture<StripeUsageRecord> {
-        return try create(quantity: quantity,
+                       action: String? = nil) -> EventLoopFuture<StripeUsageRecord> {
+        return create(quantity: quantity,
                           subscriptionItem: subscriptionItem,
                           timestamp: timestamp,
                           action: action)
     }
     
-    public func listAll(subscriptionItem: String, filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeUsageRecordList> {
-        return try listAll(subscriptionItem: subscriptionItem, filter: filter)
+    public func listAll(subscriptionItem: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeUsageRecordList> {
+        return listAll(subscriptionItem: subscriptionItem, filter: filter)
     }
 }
 
@@ -63,7 +61,7 @@ public struct StripeUsageRecordRoutes: UsageRecordRoutes {
     public func create(quantity: Int,
                        subscriptionItem: String,
                        timestamp: Date,
-                       action: String?) throws -> EventLoopFuture<StripeUsageRecord> {
+                       action: String?) -> EventLoopFuture<StripeUsageRecord> {
         var body: [String: Any] = ["quantity": quantity,
                                    "timestamp": Int(timestamp.timeIntervalSince1970)]
         
@@ -71,15 +69,15 @@ public struct StripeUsageRecordRoutes: UsageRecordRoutes {
             body["action"] = action
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.usageRecords(subscriptionItem).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.usageRecords(subscriptionItem).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(subscriptionItem: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeUsageRecordList> {
+    public func listAll(subscriptionItem: String, filter: [String: Any]?) -> EventLoopFuture<StripeUsageRecordList> {
         var queryParams = ""
         if let filter = filter {
             queryParams += filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.usageRecordSummaries(subscriptionItem).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.usageRecordSummaries(subscriptionItem).endpoint, query: queryParams, headers: headers)
     }
 }

@@ -17,37 +17,34 @@ public protocol FileRoutes {
     ///   - purpose: The purpose of the uploaded file. Possible values are `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `identity_document`, `pci_document`, or `tax_document_user_upload`.
     ///   - fileLinkData: Optional parameters to automatically create a file link for the newly created file.
     /// - Returns: A `StripeFile`.
-    /// - Throws: A `StripeError`.
-    func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) throws -> EventLoopFuture<StripeFile>
+    func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) -> EventLoopFuture<StripeFile>
     
     /// Retrieves the details of an existing file object. Supply the unique file upload ID from a file creation request, and Stripe will return the corresponding transfer information.
     ///
     /// - Parameter id: The identifier of the file upload to be retrieved.
     /// - Returns: A `StripeFile`.
-    /// - Throws: A `StripeError`.
-    func retrieve(file: String) throws -> EventLoopFuture<StripeFile>
+    func retrieve(file: String) -> EventLoopFuture<StripeFile>
     
     /// Returns a list of the files that you have uploaded to Stripe. The file uploads are returned sorted by creation date, with the most recently created file uploads appearing first.
     ///
     /// - Parameter filter: A dictionary that contains the filters. More info [here](https://stripe.com/docs/api/curl#list_file_uploads).
     /// - Returns: A `FileUploadList`
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeFileUploadList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileUploadList>
     
     var headers: HTTPHeaders { get set }
 }
 
 extension FileRoutes {
-    public func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]? = nil) throws -> EventLoopFuture<StripeFile> {
-        return try create(file: file, purpose: purpose, fileLinkData: fileLinkData)
+    public func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]? = nil) -> EventLoopFuture<StripeFile> {
+        return create(file: file, purpose: purpose, fileLinkData: fileLinkData)
     }
     
-    public func retrieve(file: String) throws -> EventLoopFuture<StripeFile> {
-        return try retrieve(file: file)
+    public func retrieve(file: String) -> EventLoopFuture<StripeFile> {
+        return retrieve(file: file)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeFileUploadList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeFileUploadList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -59,7 +56,7 @@ public struct StripeFileRoutes: FileRoutes {
         self.apiHandler = apiHandler
     }
     
-    public mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) throws -> EventLoopFuture<StripeFile> {
+    public mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) -> EventLoopFuture<StripeFile> {
         var body: Data = Data()
         
         // Form data structure found here.
@@ -86,20 +83,20 @@ public struct StripeFileRoutes: FileRoutes {
         
         body.append("\r\n--\(boundary)--\r\n")
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.file.endpoint, body: .data(body), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.file.endpoint, body: .data(body), headers: headers)
     }
     
-    public func retrieve(file: String) throws -> EventLoopFuture<StripeFile> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.files(file).endpoint, headers: headers)
+    public func retrieve(file: String) -> EventLoopFuture<StripeFile> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.files(file).endpoint, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeFileUploadList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileUploadList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.file.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.file.endpoint, query: queryParams, headers: headers)
     }
 }
 

@@ -16,15 +16,13 @@ public protocol ReaderRoutes {
     ///   - label: Custom label given to the reader for easier identification. If no label is specified, the registration code will be used.
     ///   - location: The location to assign the reader to. If no location is specified, the reader will be assigned to the account’s default location.
     /// - Returns: A `StripeReader`.
-    /// - Throws: A `StripeError`.
-    func create(registrationCode: String, label: String?, location: String?) throws -> EventLoopFuture<StripeReader>
+    func create(registrationCode: String, label: String?, location: String?) -> EventLoopFuture<StripeReader>
     
     /// Retrieves a Reader object.
     ///
     /// - Parameter reader: The identifier of the reader to be retrieved.
     /// - Returns: A `StripeReader`.
-    /// - Throws: A `StripeError`.
-    func retrieve(reader: String) throws -> EventLoopFuture<StripeReader>
+    func retrieve(reader: String) -> EventLoopFuture<StripeReader>
     
     /// Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -32,45 +30,42 @@ public protocol ReaderRoutes {
     ///   - reader: The identifier of the reader to be updated.
     ///   - label: The new label of the reader.
     /// - Returns: A `StripeReader`.
-    /// - Throws: A `StripeError`.
-    func update(reader: String, label: String?) throws -> EventLoopFuture<StripeReader>
+    func update(reader: String, label: String?) -> EventLoopFuture<StripeReader>
     
     /// Deletes a Reader object.
     ///
     /// - Parameter reader: The identifier of the reader to be deleted.
     /// - Returns: A `StripeReader`.
-    /// - Throws: A `StripeError`.
-    func delete(reader: String) throws -> EventLoopFuture<StripeReader>
+    func delete(reader: String) -> EventLoopFuture<StripeReader>
     
     /// Returns a list of Reader objects.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/terminal/readers/list)
     /// - Returns: A `StripeReaderList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeReaderList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeReaderList>
     
     var headers: HTTPHeaders { get set }
 }
 
 extension ReaderRoutes {
-    func create(registrationCode: String, label: String? = nil, location: String? = nil) throws -> EventLoopFuture<StripeReader> {
-        return try create(registrationCode: registrationCode, label: label, location: location)
+    func create(registrationCode: String, label: String? = nil, location: String? = nil) -> EventLoopFuture<StripeReader> {
+        return create(registrationCode: registrationCode, label: label, location: location)
     }
     
-    func retrieve(reader: String) throws -> EventLoopFuture<StripeReader> {
-        return try retrieve(reader: reader)
+    func retrieve(reader: String) -> EventLoopFuture<StripeReader> {
+        return retrieve(reader: reader)
     }
     
-    func update(reader: String, label: String? = nil) throws -> EventLoopFuture<StripeReader> {
-        return try update(reader: reader, label: label)
+    func update(reader: String, label: String? = nil) -> EventLoopFuture<StripeReader> {
+        return update(reader: reader, label: label)
     }
     
-    func delete(reader: String) throws -> EventLoopFuture<StripeReader> {
-        return try delete(reader: reader)
+    func delete(reader: String) -> EventLoopFuture<StripeReader> {
+        return delete(reader: reader)
     }
     
-    func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeReaderList> {
-        return try listAll(filter: filter)
+    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeReaderList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -82,7 +77,7 @@ public struct StripeReaderRoutes: ReaderRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(registrationCode: String, label: String?, location: String?) throws -> EventLoopFuture<StripeReader> {
+    public func create(registrationCode: String, label: String?, location: String?) -> EventLoopFuture<StripeReader> {
         var body: [String: Any] = ["registration_code": registrationCode]
         
         if let label = label {
@@ -93,34 +88,34 @@ public struct StripeReaderRoutes: ReaderRoutes {
             body["location"] = location
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.reader.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.reader.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(reader: String) throws -> EventLoopFuture<StripeReader> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.readers(reader).endpoint, headers: headers)
+    public func retrieve(reader: String) -> EventLoopFuture<StripeReader> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.readers(reader).endpoint, headers: headers)
     }
     
-    public func update(reader: String, label: String?) throws -> EventLoopFuture<StripeReader> {
+    public func update(reader: String, label: String?) -> EventLoopFuture<StripeReader> {
         var body: [String: Any] = [:]
         
         if let label = label {
             body["label"] = label
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.readers(reader).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.readers(reader).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(reader: String) throws -> EventLoopFuture<StripeReader> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.readers(reader).endpoint, headers: headers)
+    public func delete(reader: String) -> EventLoopFuture<StripeReader> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.readers(reader).endpoint, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeReaderList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeReaderList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.reader.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.reader.endpoint, query: queryParams, headers: headers)
 
     }
 }

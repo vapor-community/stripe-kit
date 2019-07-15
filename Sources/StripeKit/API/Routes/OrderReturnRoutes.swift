@@ -14,26 +14,24 @@ public protocol OrderReturnRoutes {
     ///
     /// - Parameter id: The identifier of the order return to be retrieved.
     /// - Returns: A `StripeOrderReturn`.
-    /// - Throws: A `StripeError`.
-    func retrieve(id: String) throws -> EventLoopFuture<StripeOrderReturn>
+    func retrieve(id: String) -> EventLoopFuture<StripeOrderReturn>
     
     /// Returns a list of your order returns. The returns are returned sorted by creation date, with the most recently created return appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/order_returns/list)
     /// - Returns: A `StripeOrderReturnList`.
-    /// - Throws: A `StripeError`
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeOrderReturnList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeOrderReturnList>
     
     var headers: HTTPHeaders { get set }
 }
 
 extension OrderReturnRoutes {
-    public func retrieve(id: String) throws -> EventLoopFuture<StripeOrderReturn> {
-        return try retrieve(id: id)
+    public func retrieve(id: String) -> EventLoopFuture<StripeOrderReturn> {
+        return retrieve(id: id)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeOrderReturnList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeOrderReturnList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -45,16 +43,16 @@ public struct StripeOrderReturnRoutes: OrderReturnRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(id: String) throws -> EventLoopFuture<StripeOrderReturn> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.orderReturns(id).endpoint, headers: headers)
+    public func retrieve(id: String) -> EventLoopFuture<StripeOrderReturn> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.orderReturns(id).endpoint, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeOrderReturnList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeOrderReturnList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.orderReturn.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.orderReturn.endpoint, query: queryParams, headers: headers)
     }
 }

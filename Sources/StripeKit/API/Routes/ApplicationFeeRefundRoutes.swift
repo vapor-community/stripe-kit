@@ -18,8 +18,7 @@ public protocol ApplicationFeeRefundRoutes {
     ///   - amount: A positive integer, in `cents`, representing how much of this fee to refund. Can refund only up to the remaining unrefunded amount of the fee.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     /// - Returns: A `StripeApplicationFeeRefund`.
-    /// - Throws: A `StripeError`.
-    func create(fee: String, amount: Int?, metadata: [String: String]?) throws -> EventLoopFuture<StripeApplicationFeeRefund>
+    func create(fee: String, amount: Int?, metadata: [String: String]?) -> EventLoopFuture<StripeApplicationFeeRefund>
     
     /// By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.
     ///
@@ -27,8 +26,7 @@ public protocol ApplicationFeeRefundRoutes {
     ///   - refund: ID of refund to retrieve.
     ///   - fee: ID of the application fee refunded.
     /// - Returns: A `StripeApplicationFeeRefund`.
-    /// - Throws: A `StripeError`.
-    func retrieve(refund: String, fee: String) throws -> EventLoopFuture<StripeApplicationFeeRefund>
+    func retrieve(refund: String, fee: String) -> EventLoopFuture<StripeApplicationFeeRefund>
     
     /// Updates the specified application fee refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     /// This request only accepts metadata as an argument.
@@ -38,8 +36,7 @@ public protocol ApplicationFeeRefundRoutes {
     ///   - fee: ID of the application fee refunded.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     /// - Returns: A `StripeApplicationFeeRefund`.
-    /// - Throws: A `StripeError`.
-    func update(refund: String, fee: String, metadata: [String: String]?) throws -> EventLoopFuture<StripeApplicationFeeRefund>
+    func update(refund: String, fee: String, metadata: [String: String]?) -> EventLoopFuture<StripeApplicationFeeRefund>
     
     /// You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
     ///
@@ -47,27 +44,26 @@ public protocol ApplicationFeeRefundRoutes {
     ///   - fee: The ID of the application fee whose refunds will be retrieved.
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/fee_refunds/list)
     /// - Returns: A `StripeApplicationFeeRefundList`.
-    /// - Throws: A `StripeError`.
-    func listAll(fee: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeApplicationFeeRefundList>
+    func listAll(fee: String, filter: [String: Any]?) -> EventLoopFuture<StripeApplicationFeeRefundList>
     
     var headers: HTTPHeaders { get set }
 }
 
 extension ApplicationFeeRefundRoutes {
-    public func create(fee: String, amount: Int? = nil, metadata: [String: String]? = nil) throws -> EventLoopFuture<StripeApplicationFeeRefund> {
-        return try create(fee: fee, amount: amount, metadata: metadata)
+    public func create(fee: String, amount: Int? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeApplicationFeeRefund> {
+        return create(fee: fee, amount: amount, metadata: metadata)
     }
     
-    public func retrieve(refund: String, fee: String) throws -> EventLoopFuture<StripeApplicationFeeRefund> {
-        return try retrieve(refund: refund, fee: fee)
+    public func retrieve(refund: String, fee: String) -> EventLoopFuture<StripeApplicationFeeRefund> {
+        return retrieve(refund: refund, fee: fee)
     }
     
-    public func update(refund: String, fee: String, metadata: [String: String]? = nil) throws -> EventLoopFuture<StripeApplicationFeeRefund> {
-        return try update(refund: refund, fee: fee, metadata: metadata)
+    public func update(refund: String, fee: String, metadata: [String: String]? = nil) -> EventLoopFuture<StripeApplicationFeeRefund> {
+        return update(refund: refund, fee: fee, metadata: metadata)
     }
     
-    public func listAll(fee: String, filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeApplicationFeeRefundList> {
-        return try listAll(fee: fee, filter: filter)
+    public func listAll(fee: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeApplicationFeeRefundList> {
+        return listAll(fee: fee, filter: filter)
     }
 }
 
@@ -79,7 +75,7 @@ public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(fee: String, amount: Int?, metadata: [String: String]?) throws -> EventLoopFuture<StripeApplicationFeeRefund> {
+    public func create(fee: String, amount: Int?, metadata: [String: String]?) -> EventLoopFuture<StripeApplicationFeeRefund> {
         var body: [String: Any] = [:]
         
         if let amount = amount {
@@ -90,28 +86,28 @@ public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.applicationFeeRefund(fee).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.applicationFeeRefund(fee).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(refund: String, fee: String) throws -> EventLoopFuture<StripeApplicationFeeRefund> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFeeRefunds(fee, refund).endpoint, headers: headers)
+    public func retrieve(refund: String, fee: String) -> EventLoopFuture<StripeApplicationFeeRefund> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFeeRefunds(fee, refund).endpoint, headers: headers)
     }
     
-    public func update(refund: String, fee: String, metadata: [String: String]?) throws -> EventLoopFuture<StripeApplicationFeeRefund> {
+    public func update(refund: String, fee: String, metadata: [String: String]?) -> EventLoopFuture<StripeApplicationFeeRefund> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.applicationFeeRefunds(fee, refund).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.applicationFeeRefunds(fee, refund).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(fee: String, filter: [String: Any]?) throws -> EventLoopFuture<StripeApplicationFeeList> {
+    public func listAll(fee: String, filter: [String: Any]?) -> EventLoopFuture<StripeApplicationFeeList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFeeRefund(fee).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFeeRefund(fee).endpoint, query: queryParams, headers: headers)
     }
 }

@@ -22,7 +22,6 @@ public protocol CardholderRoutes {
     ///   - phoneNumber: The cardholder’s phone number. This will be transformed to E.164 if it is not provided in that format already.
     ///   - status: Specifies whether to permit authorizations on this cardholder’s cards. Possible values are `active` or `inactive`.
     /// - Returns: A `StripeCardholder`.
-    /// - Throws: A `StripeError`.
     func create(billing: [String: Any],
                 name: String,
                 type: StripeCardholderType,
@@ -31,14 +30,13 @@ public protocol CardholderRoutes {
                 isDefault: Bool?,
                 metadata: [String: String]?,
                 phoneNumber: String?,
-                status: StripeCardholderStatus?) throws -> EventLoopFuture<StripeCardholder>
+                status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder>
     
     /// Retrieves an Issuing Cardholder object.
     ///
     /// - Parameter cardholder: The identifier of the cardholder to be retrieved.
     /// - Returns: A `StripeCardholder`.
-    /// - Throws: A `StripeError`.
-    func retrieve(cardholder: String) throws -> EventLoopFuture<StripeCardholder>
+    func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder>
     
     /// Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -52,7 +50,6 @@ public protocol CardholderRoutes {
     ///   - phoneNumber: The cardholder’s phone number. This will be transformed to E.164 if it is not provided in that format already.
     ///   - status: Specifies whether to permit authorizations on this cardholder’s cards. Possible values are `active` or `inactive`.
     /// - Returns: A `StripeCardholder`.
-    /// - Throws: A `StripeError`.
     func update(cardholder: String,
                 authorizationControls: [String: Any]?,
                 billing: [String: Any]?,
@@ -60,14 +57,13 @@ public protocol CardholderRoutes {
                 isDefault: Bool?,
                 metadata: [String: String]?,
                 phoneNumber: String?,
-                status: StripeCardholderStatus?) throws -> EventLoopFuture<StripeCardholder>
+                status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder>
     
     /// Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
     /// - Parameter filter:  A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/issuing/cardholders/list).
     /// - Returns: A `StripeAuthorizationList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeAuthorizationList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeAuthorizationList>
     
     var headers: HTTPHeaders { get set }
 }
@@ -81,8 +77,8 @@ extension CardholderRoutes {
                 isDefault: Bool? = nil,
                 metadata: [String: String]? = nil,
                 phoneNumber: String? = nil,
-                status: StripeCardholderStatus? = nil) throws -> EventLoopFuture<StripeCardholder> {
-        return try create(billing: billing,
+                status: StripeCardholderStatus? = nil) -> EventLoopFuture<StripeCardholder> {
+        return create(billing: billing,
                           name: name,
                           type: type,
                           authorizationControls: authorizationControls,
@@ -93,8 +89,8 @@ extension CardholderRoutes {
                           status: status)
     }
     
-    func retrieve(cardholder: String) throws -> EventLoopFuture<StripeCardholder> {
-        return try retrieve(cardholder: cardholder)
+    func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder> {
+        return retrieve(cardholder: cardholder)
     }
     
     func update(cardholder: String,
@@ -104,8 +100,8 @@ extension CardholderRoutes {
                 isDefault: Bool? = nil,
                 metadata: [String: String]? = nil,
                 phoneNumber: String? = nil,
-                status: StripeCardholderStatus? = nil) throws -> EventLoopFuture<StripeCardholder> {
-        return try update(cardholder: cardholder,
+                status: StripeCardholderStatus? = nil) -> EventLoopFuture<StripeCardholder> {
+        return update(cardholder: cardholder,
                           authorizationControls: authorizationControls,
                           billing: billing,
                           email: email,
@@ -115,8 +111,8 @@ extension CardholderRoutes {
                           status: status)
     }
     
-    func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeAuthorizationList> {
-        return try listAll(filter: filter)
+    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeAuthorizationList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -136,7 +132,7 @@ public struct StripeCardholderRoutes: CardholderRoutes {
                        isDefault: Bool?,
                        metadata: [String: String]?,
                        phoneNumber: String?,
-                       status: StripeCardholderStatus?) throws -> EventLoopFuture<StripeCardholder> {
+                       status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder> {
         var body: [String: Any] = ["name": name,
                                    "type": type.rawValue]
         billing.forEach { body["billing[\($0)]"] = $1 }
@@ -165,11 +161,11 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             body["status"] = status.rawValue
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.cardholder.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.cardholder.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(cardholder: String) throws -> EventLoopFuture<StripeCardholder> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.cardholders(cardholder).endpoint, headers: headers)
+    public func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.cardholders(cardholder).endpoint, headers: headers)
     }
     
     public func update(cardholder: String,
@@ -179,7 +175,7 @@ public struct StripeCardholderRoutes: CardholderRoutes {
                        isDefault: Bool?,
                        metadata: [String: String]?,
                        phoneNumber: String?,
-                       status: StripeCardholderStatus?) throws -> EventLoopFuture<StripeCardholder> {
+                       status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder> {
         var body: [String: Any] = [:]
         
         if let authorizationControls = authorizationControls {
@@ -210,15 +206,15 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             body["status"] = status.rawValue
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.cardholders(cardholder).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.cardholders(cardholder).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String : Any]?) throws -> EventLoopFuture<StripeAuthorizationList> {
+    public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripeAuthorizationList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.cardholder.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.cardholder.endpoint, query: queryParams, headers: headers)
     }
 }

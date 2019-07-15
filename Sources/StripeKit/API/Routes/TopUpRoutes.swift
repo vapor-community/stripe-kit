@@ -20,21 +20,19 @@ public protocol TopUpRoutes {
     ///   - statementDescriptor: Extra information about a top-up for the source’s bank statement. Limited to 15 ASCII characters.
     ///   - transferGroup: A string that identifies this top-up as part of a group.
     /// - Returns: A `StripeTopUp`.
-    /// - Throws: A `StripeError`.
     func create(amount: Int,
                 currency: StripeCurrency,
                 description: String?,
                 metadata: [String: String]?,
                 source: String?,
                 statementDescriptor: String?,
-                transferGroup: String?) throws -> EventLoopFuture<StripeTopUp>
+                transferGroup: String?) -> EventLoopFuture<StripeTopUp>
     
     /// Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
     ///
     /// - Parameter id: The ID of the top-up to retrieve.
     /// - Returns: A `StripeTopUp`.
-    /// - Throws: A `StripeError`.
-    func retrieve(id: String) throws -> EventLoopFuture<StripeTopUp>
+    func retrieve(id: String) -> EventLoopFuture<StripeTopUp>
     
     /// Updates the metadata of a top-up. Other top-up details are not editable by design.
     ///
@@ -43,22 +41,19 @@ public protocol TopUpRoutes {
     ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     /// - Returns: A `StripeTopUp`.
-    /// - Throws: A `StripeError`.
-    func update(topup: String, description: String?, metadata: [String: String]?) throws -> EventLoopFuture<StripeTopUp>
+    func update(topup: String, description: String?, metadata: [String: String]?) -> EventLoopFuture<StripeTopUp>
     
     /// Returns a list of top-ups.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/topups/list).
     /// - Returns: A `StripeTopUpList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeTopUpList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTopUpList>
     
     /// Cancels a top-up. Only pending top-ups can be canceled.
     ///
     /// - Parameter topup: The ID of the top-up to cancel.
     /// - Returns: A canceled `StripeTopUp`.
-    /// - Throws: A `StripeError`.
-    func cancel(topup: String) throws -> EventLoopFuture<StripeTopUp>
+    func cancel(topup: String) -> EventLoopFuture<StripeTopUp>
     
     var headers: HTTPHeaders { get set }
 }
@@ -70,8 +65,8 @@ extension TopUpRoutes {
                        metadata: [String: String]? = nil,
                        source: String? = nil,
                        statementDescriptor: String? = nil,
-                       transferGroup: String? = nil) throws -> EventLoopFuture<StripeTopUp> {
-        return try create(amount: amount,
+                       transferGroup: String? = nil) -> EventLoopFuture<StripeTopUp> {
+        return create(amount: amount,
                           currency: currency,
                           description: description,
                           metadata: metadata,
@@ -80,20 +75,20 @@ extension TopUpRoutes {
                           transferGroup: transferGroup)
     }
     
-    public func retrieve(id: String) throws -> EventLoopFuture<StripeTopUp> {
-        return try retrieve(id: id)
+    public func retrieve(id: String) -> EventLoopFuture<StripeTopUp> {
+        return retrieve(id: id)
     }
     
-    public func update(topup: String, description: String? = nil, metadata: [String: String]? = nil) throws -> EventLoopFuture<StripeTopUp> {
-        return try update(topup: topup, description: description, metadata: metadata)
+    public func update(topup: String, description: String? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeTopUp> {
+        return update(topup: topup, description: description, metadata: metadata)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeTopUpList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTopUpList> {
+        return listAll(filter: filter)
     }
     
-    public func cancel(topup: String) throws -> EventLoopFuture<StripeTopUp> {
-        return try cancel(topup: topup)
+    public func cancel(topup: String) -> EventLoopFuture<StripeTopUp> {
+        return cancel(topup: topup)
     }
 }
 
@@ -111,7 +106,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
                        metadata: [String: String]?,
                        source: String?,
                        statementDescriptor: String?,
-                       transferGroup: String?) throws -> EventLoopFuture<StripeTopUp> {
+                       transferGroup: String?) -> EventLoopFuture<StripeTopUp> {
         var body: [String: Any] = ["amount": amount,
                                    "currency": currency.rawValue]
         
@@ -135,14 +130,14 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.topup.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.topup.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String) throws -> EventLoopFuture<StripeTopUp> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.topups(id).endpoint)
+    public func retrieve(id: String) -> EventLoopFuture<StripeTopUp> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.topups(id).endpoint)
     }
     
-    public func update(topup: String, description: String?, metadata: [String: String]?) throws -> EventLoopFuture<StripeTopUp> {
+    public func update(topup: String, description: String?, metadata: [String: String]?) -> EventLoopFuture<StripeTopUp> {
         var body: [String: Any] = [:]
         
         if let description = description {
@@ -153,18 +148,18 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.topups(topup).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.topups(topup).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeTopUpList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTopUpList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.topup.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.topup.endpoint, query: queryParams, headers: headers)
     }
     
-    public func cancel(topup: String) throws -> EventLoopFuture<StripeTopUp> {
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.topupsCancel(topup).endpoint, headers: headers)
+    public func cancel(topup: String) -> EventLoopFuture<StripeTopUp> {
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.topupsCancel(topup).endpoint, headers: headers)
     }
 }

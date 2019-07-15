@@ -13,26 +13,24 @@ public protocol CountrySpecRoutes {
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/country_specs/list)
     /// - Returns: A `StripeCountrySpecList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCountrySpecList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCountrySpecList>
     
     /// Returns a Country Spec for a given Country code.
     ///
     /// - Parameter country: An ISO 3166-1 alpha-2 country code. Available country codes can be listed with the [List Country Specs](https://stripe.com/docs/api#list_country_specs) endpoint.
     /// - Returns: A `StripeCountrySpec`.
-    /// - Throws: A `StripeError`.
-    func retrieve(country: String) throws -> EventLoopFuture<StripeCountrySpec>
+    func retrieve(country: String) -> EventLoopFuture<StripeCountrySpec>
     
     var headers: HTTPHeaders { get set }
 }
 
 extension CountrySpecRoutes {
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeCountrySpecList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeCountrySpecList> {
+        return listAll(filter: filter)
     }
     
-    public func retrieve(country: String) throws -> EventLoopFuture<StripeCountrySpec> {
-        return try retrieve(country: country)
+    public func retrieve(country: String) -> EventLoopFuture<StripeCountrySpec> {
+        return retrieve(country: country)
     }
 }
 
@@ -44,15 +42,15 @@ public struct StripeCountrySpecRoutes: CountrySpecRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCountrySpecList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCountrySpecList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.countrySpec.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.countrySpec.endpoint, query: queryParams, headers: headers)
     }
     
-    public func retrieve(country: String) throws -> EventLoopFuture<StripeCountrySpec> {
-         return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.countrySpecs(country).endpoint, headers: headers)
+    public func retrieve(country: String) -> EventLoopFuture<StripeCountrySpec> {
+         return apiHandler.send(method: .GET, path: StripeAPIEndpoint.countrySpecs(country).endpoint, headers: headers)
     }
 }

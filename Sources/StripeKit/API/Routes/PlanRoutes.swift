@@ -30,7 +30,6 @@ public protocol PlanRoutes {
     ///   - trialPeriodDays: Default number of trial days when subscribing a customer to this plan using `trial_from_plan=true`.
     ///   - usageType: Configures how the quantity per period should be determined, can be either `metered` or `licensed`. `licensed` will automatically bill the `quantity` set for a plan when adding it to a subscription, `metered` will aggregate the total usage based on usage records. Defaults to `licensed`.
     /// - Returns: A `StripePlan`.
-    /// - Throws: A `StripeError`.
     func create(id: String?,
                 currency: StripeCurrency,
                 interval: StripePlanInterval,
@@ -46,14 +45,13 @@ public protocol PlanRoutes {
                 tiersMode: StripePlanTiersMode?,
                 transformUsage: [String: Any]?,
                 trialPeriodDays: Int?,
-                usageType: StripePlanUsageType?) throws -> EventLoopFuture<StripePlan>
+                usageType: StripePlanUsageType?) -> EventLoopFuture<StripePlan>
     
     /// Retrieves the plan with the given ID.
     ///
     /// - Parameter plan: The ID of the desired plan.
     /// - Returns: A `StripePlan`.
-    /// - Throws: A `StripeError`
-    func retrieve(plan: String) throws -> EventLoopFuture<StripePlan>
+    func retrieve(plan: String) -> EventLoopFuture<StripePlan>
     
     /// Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan’s ID, amount, currency, or billing cycle.
     ///
@@ -65,27 +63,24 @@ public protocol PlanRoutes {
     ///   - product: The product the plan belongs to. Note that after updating, statement descriptors and line items of the plan in active subscriptions will be affected.
     ///   - trialPeriodDays: Default number of trial days when subscribing a customer to this plan using `trial_from_plan=true`.
     /// - Returns: A `StripePlan`.
-    /// - Throws: A `StripeError`.
     func update(plan: String,
                 active: Bool?,
                 metadata: [String: String]?,
                 nickname: String?,
                 product: Any?,
-                trialPeriodDays: Int?) throws -> EventLoopFuture<StripePlan>
+                trialPeriodDays: Int?) -> EventLoopFuture<StripePlan>
     
     /// Deleting plans means new subscribers can’t be added. Existing subscribers aren’t affected.
     ///
     /// - Parameter plan: The identifier of the plan to be deleted.
     /// - Returns: A `StripeDeletedObject`
-    /// - Throws: A `StripeError`.
-    func delete(plan: String) throws -> EventLoopFuture<StripeDeletedObject>
+    func delete(plan: String) -> EventLoopFuture<StripeDeletedObject>
     
     /// Returns a list of your plans.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/plans/list)
     /// - Returns: A `StripePlanList`
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripePlanList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePlanList>
     
     var headers: HTTPHeaders { get set }
 }
@@ -106,8 +101,8 @@ extension PlanRoutes {
                        tiersMode: StripePlanTiersMode? = nil,
                        transformUsage: [String: Any]? = nil,
                        trialPeriodDays: Int? = nil,
-                       usageType: StripePlanUsageType? = nil) throws -> EventLoopFuture<StripePlan> {
-        return try create(id: id,
+                       usageType: StripePlanUsageType? = nil) -> EventLoopFuture<StripePlan> {
+        return create(id: id,
                           currency: currency,
                           interval: interval,
                           product: product,
@@ -125,8 +120,8 @@ extension PlanRoutes {
                           usageType: usageType)
     }
     
-    public func retrieve(plan: String) throws -> EventLoopFuture<StripePlan> {
-        return try retrieve(plan: plan)
+    public func retrieve(plan: String) -> EventLoopFuture<StripePlan> {
+        return retrieve(plan: plan)
     }
     
     public func update(plan: String,
@@ -134,8 +129,8 @@ extension PlanRoutes {
                        metadata: [String: String]? = nil,
                        nickname: String? = nil,
                        product: Any? = nil,
-                       trialPeriodDays: Int? = nil) throws -> EventLoopFuture<StripePlan> {
-        return try update(plan: plan,
+                       trialPeriodDays: Int? = nil) -> EventLoopFuture<StripePlan> {
+        return update(plan: plan,
                           active: active,
                           metadata: metadata,
                           nickname: nickname,
@@ -143,12 +138,12 @@ extension PlanRoutes {
                           trialPeriodDays: trialPeriodDays)
     }
     
-    public func delete(plan: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try delete(plan: plan)
+    public func delete(plan: String) -> EventLoopFuture<StripeDeletedObject> {
+        return delete(plan: plan)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripePlanList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePlanList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -175,7 +170,7 @@ public struct StripePlanRoutes: PlanRoutes {
                        tiersMode: StripePlanTiersMode?,
                        transformUsage: [String: Any]?,
                        trialPeriodDays: Int?,
-                       usageType: StripePlanUsageType?) throws -> EventLoopFuture<StripePlan> {
+                       usageType: StripePlanUsageType?) -> EventLoopFuture<StripePlan> {
         var body: [String: Any] = ["currency": currency.rawValue,
                                    "interval": interval.rawValue]
         
@@ -234,11 +229,11 @@ public struct StripePlanRoutes: PlanRoutes {
             body["trial_period_days"] = trialperiodDays
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.plan.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.plan.endpoint, body: .string(body.queryParameters), headers: headers)
     }
 
-    public func retrieve(plan: String) throws -> EventLoopFuture<StripePlan> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.plans(plan).endpoint, headers: headers)
+    public func retrieve(plan: String) -> EventLoopFuture<StripePlan> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.plans(plan).endpoint, headers: headers)
     }
     
     public func update(plan: String,
@@ -246,7 +241,7 @@ public struct StripePlanRoutes: PlanRoutes {
                        metadata: [String: String]?,
                        nickname: String?,
                        product: Any?,
-                       trialPeriodDays: Int?) throws -> EventLoopFuture<StripePlan> {
+                       trialPeriodDays: Int?) -> EventLoopFuture<StripePlan> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -271,19 +266,19 @@ public struct StripePlanRoutes: PlanRoutes {
             body["trial_period_days"] = trialPeriodDays
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.plans(plan).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.plans(plan).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(plan: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.plans(plan).endpoint, headers: headers)
+    public func delete(plan: String) -> EventLoopFuture<StripeDeletedObject> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.plans(plan).endpoint, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripePlanList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePlanList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.plan.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.plan.endpoint, query: queryParams, headers: headers)
     }
 }

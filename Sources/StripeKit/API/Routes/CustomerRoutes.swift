@@ -25,7 +25,6 @@ public protocol CustomerRoutes {
     ///   - source: The source can be a Token or a Source, as returned by Elements. You must provide a source if the customer does not already have a valid source attached, and you are subscribing the customer to be charged automatically for a plan that is not free. \n Passing source will create a new source object, make it the customer default source, and delete the old customer default if one exists. If you want to add an additional source, instead use the card creation API to add the card and then the customer update API to set it as the default. \n Whenever you attach a card to a customer, Stripe will automatically validate the card.
     ///   - taxInfo: The customer’s tax information. Appears on invoices emailed to this customer.
     /// - Returns: A `StripeCustomer`.
-    /// - Throws: A `StripeError`.
     func create(accountBalance: Int?,
                 coupon: String?,
                 description: String?,
@@ -36,15 +35,14 @@ public protocol CustomerRoutes {
                 paymentMethod: String?,
                 shipping: [String: Any]?,
                 source: Any?,
-                taxInfo: [String: String]?) throws -> EventLoopFuture<StripeCustomer>
+                taxInfo: [String: String]?) -> EventLoopFuture<StripeCustomer>
     
     
     /// Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
     ///
     /// - Parameter customer: The identifier of the customer to be retrieved.
     /// - Returns: A `StripeCustomer`.
-    /// - Throws: A `StripeError`.
-    func retrieve(customer: String) throws -> EventLoopFuture<StripeCustomer>
+    func retrieve(customer: String) -> EventLoopFuture<StripeCustomer>
     
     /// Updates the specified customer by setting the values of the parameters passed. Any parameters not provided will be left unchanged. For example, if you pass the source parameter, that becomes the customer’s active source (e.g., a card) to be used for all charges in the future. When you update a customer to a new valid card source by passing the source parameter: for each of the customer’s current subscriptions, if the subscription bills automatically and is in the `past_due` state, then the latest open invoice for the subscription with automatic collection enabled will be retried. This retry will not count as an automatic retry, and will not affect the next regularly scheduled payment for the invoice. Changing the default_source for a customer will not trigger this behavior. \n This request accepts mostly the same arguments as the customer creation call.
     ///
@@ -63,7 +61,6 @@ public protocol CustomerRoutes {
     ///   - source: The source can be a Token or a Source, as returned by Elements. You must provide a source if the customer does not already have a valid source attached, and you are subscribing the customer to be charged automatically for a plan that is not free. \n Passing source will create a new source object, make it the customer default source, and delete the old customer default if one exists. If you want to add an additional source, instead use the card creation API to add the card and then the customer update API to set it as the default. \n Whenever you attach a card to a customer, Stripe will automatically validate the card.
     ///   - taxInfo: The customer’s tax information. Appears on invoices emailed to this customer.
     /// - Returns: A `StripeCustomer`.
-    /// - Throws: A `StripeError`.
     func update(customer: String,
                 accountBalance: Int?,
                 coupon: String?,
@@ -75,22 +72,20 @@ public protocol CustomerRoutes {
                 metadata: [String: String]?,
                 shipping: [String: Any]?,
                 source: Any?,
-                taxInfo: [String: String]?) throws -> EventLoopFuture<StripeCustomer>
+                taxInfo: [String: String]?) -> EventLoopFuture<StripeCustomer>
     
     
     /// Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
     ///
     /// - Parameter customer: The identifier of the customer to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    /// - Throws: A `StripeError`.
-    func delete(customer: String) throws -> EventLoopFuture<StripeDeletedObject>
+    func delete(customer: String) -> EventLoopFuture<StripeDeletedObject>
     
     /// Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/customers/list).
     /// - Returns: A `StripeCustomerList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCustomerList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCustomerList>
     
     var headers: HTTPHeaders { get set }
 }
@@ -106,8 +101,8 @@ extension CustomerRoutes {
                        paymentMethod: String? = nil,
                        shipping: [String: Any]? = nil,
                        source: Any? = nil,
-                       taxInfo: [String: String]? = nil) throws -> EventLoopFuture<StripeCustomer> {
-        return try create(accountBalance: accountBalance,
+                       taxInfo: [String: String]? = nil) -> EventLoopFuture<StripeCustomer> {
+        return create(accountBalance: accountBalance,
                           coupon: coupon,
                           description: description,
                           email: email,
@@ -120,8 +115,8 @@ extension CustomerRoutes {
                           taxInfo: taxInfo)
     }
     
-    public func retrieve(customer: String) throws -> EventLoopFuture<StripeCustomer> {
-        return try retrieve(customer: customer)
+    public func retrieve(customer: String) -> EventLoopFuture<StripeCustomer> {
+        return retrieve(customer: customer)
     }
     
     public func update(customer: String,
@@ -135,8 +130,8 @@ extension CustomerRoutes {
                        metadata: [String: String]? = nil,
                        shipping: [String: Any]? = nil,
                        source: Any? = nil,
-                       taxInfo: [String: String]? = nil) throws -> EventLoopFuture<StripeCustomer> {
-        return try update(customer: customer,
+                       taxInfo: [String: String]? = nil) -> EventLoopFuture<StripeCustomer> {
+        return update(customer: customer,
                           accountBalance: accountBalance,
                           coupon: coupon,
                           defaultSource: defaultSource,
@@ -150,12 +145,12 @@ extension CustomerRoutes {
                           taxInfo: taxInfo)
     }
     
-    public func delete(customer: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try delete(customer: customer)
+    public func delete(customer: String) -> EventLoopFuture<StripeDeletedObject> {
+        return delete(customer: customer)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeCustomerList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeCustomerList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -178,7 +173,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
                        paymentMethod: String?,
                        shipping: [String: Any]?,
                        source: Any?,
-                       taxInfo: [String: String]?) throws -> EventLoopFuture<StripeCustomer> {
+                       taxInfo: [String: String]?) -> EventLoopFuture<StripeCustomer> {
         var body: [String: Any] = [:]
         
         if let accountBalance = accountBalance {
@@ -229,11 +224,11 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             taxInfo.forEach { body["tax_info[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.customers.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.customers.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(customer: String) throws -> EventLoopFuture<StripeCustomer> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.customer(customer).endpoint, headers: headers)
+    public func retrieve(customer: String) -> EventLoopFuture<StripeCustomer> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.customer(customer).endpoint, headers: headers)
     }
     
     public func update(customer: String,
@@ -247,7 +242,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
                        metadata: [String: String]?,
                        shipping: [String: Any]?,
                        source: Any?,
-                       taxInfo: [String: String]?) throws -> EventLoopFuture<StripeCustomer> {
+                       taxInfo: [String: String]?) -> EventLoopFuture<StripeCustomer> {
         var body: [String: Any] = [:]
         
         if let accountBalance = accountBalance {
@@ -298,19 +293,19 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             taxInfo.forEach { body["tax_info[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.customer(customer).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.customer(customer).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(customer: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.customer(customer).endpoint, headers: headers)
+    public func delete(customer: String) -> EventLoopFuture<StripeDeletedObject> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.customer(customer).endpoint, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCustomerList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCustomerList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
 
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.customers.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.customers.endpoint, query: queryParams, headers: headers)
     }
 }

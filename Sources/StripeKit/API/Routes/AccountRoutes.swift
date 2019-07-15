@@ -31,7 +31,6 @@ public protocol AccountRoutes {
     ///   - settings: Options for customizing how the account functions within Stripe.
     ///   - tosAcceptance: Details on the account’s acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
     /// - Returns: A `StripeConnectAccount`.
-    /// - Throws: A `StripeError`.
     func create(type: StripeConnectAccountType,
                 country: String?,
                 email: String?,
@@ -45,14 +44,13 @@ public protocol AccountRoutes {
                 metadata: [String: String]?,
                 requestedCapabilities: [String]?,
                 settings: [String: Any]?,
-                tosAcceptance: [String: Any]?) throws -> EventLoopFuture<StripeConnectAccount>
+                tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount>
     
     /// Retrieves the details of an account.
     ///
     /// - Parameter account: The identifier of the account to retrieve. If none is provided, the account associated with the API key is returned.
     /// - Returns: A `StripeConnectAccount`.
-    /// - Throws: A `StripeError`.
-    func retrieve(account: String) throws -> EventLoopFuture<StripeConnectAccount>
+    func retrieve(account: String) -> EventLoopFuture<StripeConnectAccount>
     
     /// Updates a connected [Express or Custom account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are supported by both account types.
     /// To update your own account, use the [Dashboard](https://dashboard.stripe.com/account). Refer to our [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
@@ -72,7 +70,6 @@ public protocol AccountRoutes {
     ///   - settings: Options for customizing how the account functions within Stripe.
     ///   - tosAcceptance: Details on the account’s acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
     /// - Returns: A `StripeConnectAccount`.
-    /// - Throws: A `StripeError`.
     func update(account accountId: String,
                 accountToken: String?,
                 businessProfile: [String: Any]?,
@@ -85,7 +82,7 @@ public protocol AccountRoutes {
                 metadata: [String: String]?,
                 requestedCapabilities: [String]?,
                 settings: [String: Any]?,
-                tosAcceptance: [String: Any]?) throws -> EventLoopFuture<StripeConnectAccount>
+                tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount>
     
     /// With Connect, you may delete Custom accounts you manage.
     /// Custom accounts created using test-mode keys can be deleted at any time. Custom accounts created using live-mode keys may only be deleted once all balances are zero.
@@ -93,8 +90,7 @@ public protocol AccountRoutes {
     ///
     /// - Parameter account: The identifier of the account to be deleted. If none is provided, will default to the account of the API key.
     /// - Returns: A `StripeDeletedObject`.
-    /// - Throws: A `StripeError`.
-    func delete(account: String) throws -> EventLoopFuture<StripeDeletedObject>
+    func delete(account: String) -> EventLoopFuture<StripeDeletedObject>
     
     /// With Connect, you may flag accounts as suspicious.
     /// Test-mode Custom and Express accounts can be rejected at any time. Accounts created using live-mode keys may only be rejected once all balances are zero.
@@ -103,15 +99,13 @@ public protocol AccountRoutes {
     ///   - account: The identifier of the account to reject
     ///   - for: The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
     /// - Returns: A `StripeConnectAccount`.
-    /// - Throws: A `StripeError`.
-    func reject(account: String, for: StripeConnectAccountRejectReason) throws -> EventLoopFuture<StripeConnectAccount>
+    func reject(account: String, for: StripeConnectAccountRejectReason) -> EventLoopFuture<StripeConnectAccount>
     
     /// Returns a list of accounts connected to your platform via Connect. If you’re not a platform, the list is empty.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/accounts/list)
     /// - Returns: A `StripeConnectAccountList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeConnectAccountList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeConnectAccountList>
     
     /// Creates a single-use login link for an Express account to access their Stripe dashboard.
     /// You may only create login links for [Express accounts](https://stripe.com/docs/connect/express-accounts) connected to your platform.
@@ -120,8 +114,7 @@ public protocol AccountRoutes {
     /// - account: The identifier of the account to create a login link for.
     /// - redirectUrl: Where to redirect the user after they log out of their dashboard.
     /// - Returns: A `StripeConnectAccountLoginLink`.
-    /// - Throws: A `StripeError`.
-    func createLoginLink(account: String, redirectUrl: String?) throws -> EventLoopFuture<StripeConnectAccountLoginLink>
+    func createLoginLink(account: String, redirectUrl: String?) -> EventLoopFuture<StripeConnectAccountLoginLink>
     
     var headers: HTTPHeaders { get set }
 }
@@ -140,8 +133,8 @@ extension AccountRoutes {
                        metadata: [String: String]? = nil,
                        requestedCapabilities: [String]? = nil,
                        settings: [String: Any]? = nil,
-                       tosAcceptance: [String: Any]? = nil) throws -> EventLoopFuture<StripeConnectAccount> {
-        return try create(type: type,
+                       tosAcceptance: [String: Any]? = nil) -> EventLoopFuture<StripeConnectAccount> {
+        return create(type: type,
                           country: country,
                           email: email,
                           accountToken: accountToken,
@@ -157,8 +150,8 @@ extension AccountRoutes {
                           tosAcceptance: tosAcceptance)
     }
     
-    public func retrieve(account: String) throws -> EventLoopFuture<StripeConnectAccount> {
-        return try retrieve(account: account)
+    public func retrieve(account: String) -> EventLoopFuture<StripeConnectAccount> {
+        return retrieve(account: account)
     }
     
     public func update(account accountId: String,
@@ -173,8 +166,8 @@ extension AccountRoutes {
                        metadata: [String: String]? = nil,
                        requestedCapabilities: [String]? = nil,
                        settings: [String: Any]? = nil,
-                       tosAcceptance: [String: Any]? = nil) throws -> EventLoopFuture<StripeConnectAccount> {
-        return try update(account: accountId,
+                       tosAcceptance: [String: Any]? = nil) -> EventLoopFuture<StripeConnectAccount> {
+        return update(account: accountId,
                           accountToken: accountToken,
                           businessProfile: businessProfile,
                           businessType: businessType,
@@ -189,20 +182,20 @@ extension AccountRoutes {
                           tosAcceptance: tosAcceptance)
     }
     
-    public func delete(account: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try delete(account: account)
+    public func delete(account: String) -> EventLoopFuture<StripeDeletedObject> {
+        return delete(account: account)
     }
     
-    public func reject(account: String, for: StripeConnectAccountRejectReason) throws -> EventLoopFuture<StripeConnectAccount> {
-        return try reject(account: account, for: `for`)
+    public func reject(account: String, for: StripeConnectAccountRejectReason) -> EventLoopFuture<StripeConnectAccount> {
+        return reject(account: account, for: `for`)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeConnectAccountList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeConnectAccountList> {
+        return listAll(filter: filter)
     }
     
-    public func createLoginLink(account: String, redirectUrl: String?) throws -> EventLoopFuture<StripeConnectAccountLoginLink> {
-        return try createLoginLink(account: account, redirectUrl: redirectUrl)
+    public func createLoginLink(account: String, redirectUrl: String?) -> EventLoopFuture<StripeConnectAccountLoginLink> {
+        return createLoginLink(account: account, redirectUrl: redirectUrl)
     }
 }
 
@@ -227,7 +220,7 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        metadata: [String: String]?,
                        requestedCapabilities: [String]?,
                        settings: [String: Any]?,
-                       tosAcceptance: [String: Any]?) throws -> EventLoopFuture<StripeConnectAccount> {
+                       tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount> {
         var body: [String: Any] = [:]
         body["type"] = type.rawValue
         
@@ -285,11 +278,11 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
             tos.forEach { body["tos_acceptance[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.account.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.account.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(account accountId: String) throws -> EventLoopFuture<StripeConnectAccount> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.accounts(accountId).endpoint, headers: headers)
+    public func retrieve(account accountId: String) -> EventLoopFuture<StripeConnectAccount> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.accounts(accountId).endpoint, headers: headers)
     }
     
     public func update(account accountId: String,
@@ -304,7 +297,7 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        metadata: [String: String]?,
                        requestedCapabilities: [String]?,
                        settings: [String: Any]?,
-                       tosAcceptance: [String: Any]?) throws -> EventLoopFuture<StripeConnectAccount> {
+                       tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount> {
         var body: [String: Any] = [:]
         
         if let accountToken = accountToken {
@@ -357,33 +350,33 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
             tos.forEach { body["tos_acceptance[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.accounts(accountId).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.accounts(accountId).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(account accountId: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.accounts(accountId).endpoint, headers: headers)
+    public func delete(account accountId: String) -> EventLoopFuture<StripeDeletedObject> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.accounts(accountId).endpoint, headers: headers)
     }
     
-    public func reject(account accountId: String, for rejectReason: StripeConnectAccountRejectReason) throws -> EventLoopFuture<StripeConnectAccount> {
+    public func reject(account accountId: String, for rejectReason: StripeConnectAccountRejectReason) -> EventLoopFuture<StripeConnectAccount> {
         let body = ["reason": rejectReason.rawValue].queryParameters
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.accountsReject(accountId).endpoint, body: .string(body), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.accountsReject(accountId).endpoint, body: .string(body), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeConnectAccountList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeConnectAccountList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.account.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.account.endpoint, query: queryParams, headers: headers)
     }
     
-    public func createLoginLink(account: String, redirectUrl: String?) throws -> EventLoopFuture<StripeConnectAccountLoginLink> {
+    public func createLoginLink(account: String, redirectUrl: String?) -> EventLoopFuture<StripeConnectAccountLoginLink> {
         var body: [String: Any] = [:]
         
         if let redirectUrl = redirectUrl {
             body["redirect_url"] = redirectUrl
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.accountsLoginLink(account).endpoint)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.accountsLoginLink(account).endpoint)
     }
 }

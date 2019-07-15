@@ -13,8 +13,7 @@ public protocol TransactionRoutes {
     ///
     /// - Parameter transaction: The ID of the transaction to retrieve.
     /// - Returns: A `StripeTransaction`.
-    /// - Throws: A `StripeError`.
-    func retrieve(transaction: String) throws -> EventLoopFuture<StripeTransaction>
+    func retrieve(transaction: String) -> EventLoopFuture<StripeTransaction>
     
     /// Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -22,30 +21,28 @@ public protocol TransactionRoutes {
     ///   - transaction: The identifier of the transaction to update.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     /// - Returns: A `StripeTransaction`.
-    /// - Throws: A `StripeError`.
-    func update(transaction: String, metadata: [String: String]?) throws -> EventLoopFuture<StripeTransaction>
+    func update(transaction: String, metadata: [String: String]?) -> EventLoopFuture<StripeTransaction>
     
     /// Returns a list of Issuing Transaction objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/issuing/transactions/list).
     /// - Returns: A `StripeTransactionList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeTransactionList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransactionList>
     
     var headers: HTTPHeaders { get set }
 }
 
 extension TransactionRoutes {
-    func retrieve(transaction: String) throws -> EventLoopFuture<StripeTransaction> {
-        return try retrieve(transaction: transaction)
+    func retrieve(transaction: String) -> EventLoopFuture<StripeTransaction> {
+        return retrieve(transaction: transaction)
     }
     
-    func update(transaction: String, metadata: [String: String]? = nil) throws -> EventLoopFuture<StripeTransaction> {
-        return try update(transaction: transaction, metadata: metadata)
+    func update(transaction: String, metadata: [String: String]? = nil) -> EventLoopFuture<StripeTransaction> {
+        return update(transaction: transaction, metadata: metadata)
     }
     
-    func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeTransactionList> {
-        return try listAll(filter: filter)
+    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTransactionList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -57,26 +54,26 @@ public struct StripeTransactionRoutes: TransactionRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(transaction: String) throws -> EventLoopFuture<StripeTransaction> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.transactions(transaction).endpoint, headers: headers)
+    public func retrieve(transaction: String) -> EventLoopFuture<StripeTransaction> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transactions(transaction).endpoint, headers: headers)
     }
     
-    public func update(transaction: String, metadata: [String: String]?) throws -> EventLoopFuture<StripeTransaction> {
+    public func update(transaction: String, metadata: [String: String]?) -> EventLoopFuture<StripeTransaction> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.transactions(transaction).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.transactions(transaction).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeTransactionList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransactionList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.transaction.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transaction.endpoint, query: queryParams, headers: headers)
     }
 }

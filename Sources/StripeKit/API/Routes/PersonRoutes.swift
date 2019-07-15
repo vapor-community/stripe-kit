@@ -27,7 +27,6 @@ public protocol PersonRoutes {
     ///   - ssnLast4: The last 4 digits of the person’s social security number.
     ///   - verification: The person’s verification status.
     /// - Returns: Returns a person object.
-    /// - Throws: A `StripeError`
     func create(account: String,
                 address: [String: Any]?,
                 dob: [String: Any]?,
@@ -41,7 +40,7 @@ public protocol PersonRoutes {
                 phone: String?,
                 relationship: [String: Any]?,
                 ssnLast4: String?,
-                verification: [String: Any]?) throws -> EventLoopFuture<StripePerson>
+                verification: [String: Any]?) -> EventLoopFuture<StripePerson>
     
     /// Retrieves an existing person.
     ///
@@ -49,8 +48,7 @@ public protocol PersonRoutes {
     ///   - account: The unique identifier of the account the person is associated with.
     ///   - person: The ID of a person to retrieve.
     /// - Returns: Returns a person object.
-    /// - Throws: A `StripeError`
-    func retrieve(account: String, person: String) throws -> EventLoopFuture<StripePerson>
+    func retrieve(account: String, person: String) -> EventLoopFuture<StripePerson>
     
     /// Updates an existing person.
     ///
@@ -71,7 +69,6 @@ public protocol PersonRoutes {
     ///   - ssnLast4: The last 4 digits of the person’s social security number.
     ///   - verification: The person’s verification status.
     /// - Returns: Returns a person object.
-    /// - Throws: A `StripeError`
     func update(account: String,
                 person: String,
                 address: [String: Any]?,
@@ -86,7 +83,7 @@ public protocol PersonRoutes {
                 phone: String?,
                 relationship: [String: Any]?,
                 ssnLast4: String?,
-                verification: [String: Any]?) throws -> EventLoopFuture<StripePerson>
+                verification: [String: Any]?) -> EventLoopFuture<StripePerson>
     
     /// Deletes an existing person’s relationship to the account’s legal entity.
     ///
@@ -94,8 +91,7 @@ public protocol PersonRoutes {
     ///   - account: The unique identifier of the account the person is associated with.
     ///   - person: The ID of a person to update.
     /// - Returns: Returns the deleted person object.
-    /// - Throws: A `StripeError`
-    func delete(account: String, person: String) throws -> EventLoopFuture<StripeDeletedObject>
+    func delete(account: String, person: String) -> EventLoopFuture<StripeDeletedObject>
     
     /// Returns a list of people associated with the account’s legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
     ///
@@ -103,8 +99,7 @@ public protocol PersonRoutes {
     ///   - account: The unique identifier of the account the person is associated with.
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/persons/list?&lang=curl)
     /// - Returns: A `PersonsList`
-    /// - Throws: A `StripeError`
-    func listAll(account: String, filter: [String: Any]?) throws -> EventLoopFuture<PersonsList>
+    func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<PersonsList>
     
     var headers: HTTPHeaders { get set }
 }
@@ -123,8 +118,8 @@ extension PersonRoutes {
                        phone: String? = nil,
                        relationship: [String: Any]? = nil,
                        ssnLast4: String?,
-                       verification: [String: Any]? = nil) throws -> EventLoopFuture<StripePerson> {
-        return try create(account: account,
+                       verification: [String: Any]? = nil) -> EventLoopFuture<StripePerson> {
+        return create(account: account,
                           address: address,
                           dob: dob,
                           email: email,
@@ -140,8 +135,8 @@ extension PersonRoutes {
                           verification: verification)
     }
     
-    public func retrieve(account: String, person: String) throws -> EventLoopFuture<StripePerson> {
-        return try retrieve(account: account, person: person)
+    public func retrieve(account: String, person: String) -> EventLoopFuture<StripePerson> {
+        return retrieve(account: account, person: person)
     }
     
     public func update(account: String,
@@ -158,8 +153,8 @@ extension PersonRoutes {
                        phone: String? = nil,
                        relationship: [String: Any]? = nil,
                        ssnLast4: String? = nil,
-                       verification: [String: Any]? = nil) throws -> EventLoopFuture<StripePerson> {
-        return try update(account: account,
+                       verification: [String: Any]? = nil) -> EventLoopFuture<StripePerson> {
+        return update(account: account,
                           person: person,
                           address: address,
                           dob: dob,
@@ -176,12 +171,12 @@ extension PersonRoutes {
                           verification: verification)
     }
     
-    public func delete(account: String, person: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try delete(account: account, person: person)
+    public func delete(account: String, person: String) -> EventLoopFuture<StripeDeletedObject> {
+        return delete(account: account, person: person)
     }
     
-    public func listAll(account: String, filter: [String: Any]? = nil) throws -> EventLoopFuture<PersonsList> {
-        return try listAll(account: account, filter: filter)
+    public func listAll(account: String, filter: [String: Any]? = nil) -> EventLoopFuture<PersonsList> {
+        return listAll(account: account, filter: filter)
     }
 }
 
@@ -206,7 +201,7 @@ public struct StripePersonRoutes: PersonRoutes {
                        phone: String?,
                        relationship: [String: Any]?,
                        ssnLast4: String?,
-                       verification: [String: Any]?) throws -> EventLoopFuture<StripePerson> {
+                       verification: [String: Any]?) -> EventLoopFuture<StripePerson> {
         var body: [String: Any] = [:]
         
         if let address = address {
@@ -261,11 +256,11 @@ public struct StripePersonRoutes: PersonRoutes {
             verification.forEach { body["verification[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.person(account).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.person(account).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(account: String, person: String) throws -> EventLoopFuture<StripePerson> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.persons(account, person).endpoint, headers: headers)
+    public func retrieve(account: String, person: String) -> EventLoopFuture<StripePerson> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.persons(account, person).endpoint, headers: headers)
     }
     
     public func update(account: String,
@@ -282,7 +277,7 @@ public struct StripePersonRoutes: PersonRoutes {
                        phone: String?,
                        relationship: [String: Any]?,
                        ssnLast4: String?,
-                       verification: [String: Any]?) throws -> EventLoopFuture<StripePerson> {
+                       verification: [String: Any]?) -> EventLoopFuture<StripePerson> {
         var body: [String: Any] = [:]
         
         if let address = address {
@@ -337,18 +332,18 @@ public struct StripePersonRoutes: PersonRoutes {
             verification.forEach { body["verification[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.persons(account, person).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.persons(account, person).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(account: String, person: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.persons(account, person).endpoint, headers: headers)
+    public func delete(account: String, person: String) -> EventLoopFuture<StripeDeletedObject> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.persons(account, person).endpoint, headers: headers)
     }
     
-    public func listAll(account: String, filter: [String : Any]?) throws -> EventLoopFuture<PersonsList> {
+    public func listAll(account: String, filter: [String : Any]?) -> EventLoopFuture<PersonsList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.person(account).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.person(account).endpoint, query: queryParams, headers: headers)
     }
 }
