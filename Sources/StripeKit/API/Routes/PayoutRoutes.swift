@@ -21,7 +21,6 @@ public protocol PayoutRoutes {
     ///   - sourceType: The source balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the balances API. One of `bank_account` or `card`.
     ///   - statementDescriptor: A string to be displayed on the recipient’s bank or card statement. This may be at most 22 characters. Attempting to use a `statement_descriptor` longer than 22 characters will return an error. Note: Most banks will truncate this information and/or display it inconsistently. Some may not display it at all.
     /// - Returns: A `StripePayout`.
-    /// - Throws: A `StripeError`.
     func create(amount: Int,
                 currency: StripeCurrency,
                 description: String?,
@@ -29,14 +28,13 @@ public protocol PayoutRoutes {
                 metadata: [String: String]?,
                 method: StripePayoutMethod?,
                 sourceType: StripePayoutSourceType?,
-                statementDescriptor: String?) throws -> EventLoopFuture<StripePayout>
+                statementDescriptor: String?) -> EventLoopFuture<StripePayout>
     
     /// Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
     ///
     /// - Parameter payout: The identifier of the payout to be retrieved.
     /// - Returns: A `StripePayout`.
-    /// - Throws: A `StripeError`.
-    func retrieve(payout: String) throws -> EventLoopFuture<StripePayout>
+    func retrieve(payout: String) -> EventLoopFuture<StripePayout>
     
     /// Updates the specified payout by setting the values of the parameters passed. Any parameters not provided will be left unchanged. This request accepts only the metadata as arguments.
     ///
@@ -44,22 +42,19 @@ public protocol PayoutRoutes {
     ///   - payout: The identifier of the payout to be updated.
     ///   - metadata: A set of key-value pairs that you can attach to a payout object. It can be useful for storing additional information about the payout in a structured format.
     /// - Returns: A `StripePayout`.
-    /// - Throws: A `StripeError`.
-    func update(payout: String, metadata: [String: String]?) throws -> EventLoopFuture<StripePayout>
+    func update(payout: String, metadata: [String: String]?) -> EventLoopFuture<StripePayout>
     
     /// Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/payouts/list)
     /// - Returns: A `StripePayoutsList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripePayoutsList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePayoutsList>
     
     /// A previously created payout can be canceled if it has not yet been paid out. Funds will be refunded to your available balance. You may not cancel automatic Stripe payouts.
     ///
     /// - Parameter payout: The identifier of the payout to be canceled.
     /// - Returns: A `StripePayout`.
-    /// - Throws: A `StripeError`.
-    func cancel(payout: String) throws -> EventLoopFuture<StripePayout>
+    func cancel(payout: String) -> EventLoopFuture<StripePayout>
     
     var headers: HTTPHeaders { get set }
 }
@@ -72,8 +67,8 @@ extension PayoutRoutes {
                 metadata: [String: String]? = nil,
                 method: StripePayoutMethod? = nil,
                 sourceType: StripePayoutSourceType? = nil,
-                statementDescriptor: String? = nil) throws -> EventLoopFuture<StripePayout> {
-        return try create(amount: amount,
+                statementDescriptor: String? = nil) -> EventLoopFuture<StripePayout> {
+        return create(amount: amount,
                           currency: currency,
                           description: description,
                           destination: destination,
@@ -83,20 +78,20 @@ extension PayoutRoutes {
                           statementDescriptor: statementDescriptor)
     }
     
-    func retrieve(payout: String) throws -> EventLoopFuture<StripePayout> {
-        return try retrieve(payout: payout)
+    func retrieve(payout: String) -> EventLoopFuture<StripePayout> {
+        return retrieve(payout: payout)
     }
     
-    func update(payout: String, metadata: [String: String]? = nil) throws -> EventLoopFuture<StripePayout> {
-        return try update(payout: payout, metadata: metadata)
+    func update(payout: String, metadata: [String: String]? = nil) -> EventLoopFuture<StripePayout> {
+        return update(payout: payout, metadata: metadata)
     }
     
-    func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripePayoutsList> {
-        return try listAll(filter: filter)
+    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePayoutsList> {
+        return listAll(filter: filter)
     }
     
-    func cancel(payout: String) throws -> EventLoopFuture<StripePayout> {
-        return try cancel(payout: payout)
+    func cancel(payout: String) -> EventLoopFuture<StripePayout> {
+        return cancel(payout: payout)
     }
 }
 
@@ -115,7 +110,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
                        metadata: [String: String]?,
                        method: StripePayoutMethod?,
                        sourceType: StripePayoutSourceType?,
-                       statementDescriptor: String?) throws -> EventLoopFuture<StripePayout> {
+                       statementDescriptor: String?) -> EventLoopFuture<StripePayout> {
         var body: [String: Any] = [:]
         
         body["amount"] = amount
@@ -145,31 +140,31 @@ public struct StripePayoutRoutes: PayoutRoutes {
             body["statement_descriptor"] = statementDescriptor
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.payout.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.payout.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(payout: String) throws -> EventLoopFuture<StripePayout> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.payouts(payout).endpoint, headers: headers)
+    public func retrieve(payout: String) -> EventLoopFuture<StripePayout> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.payouts(payout).endpoint, headers: headers)
     }
     
-    public func update(payout: String, metadata: [String: String]?) throws -> EventLoopFuture<StripePayout> {
+    public func update(payout: String, metadata: [String: String]?) -> EventLoopFuture<StripePayout> {
         var body: [String: Any] = [:]
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.payouts(payout).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.payouts(payout).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String : Any]?) throws -> EventLoopFuture<StripePayoutsList> {
+    public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripePayoutsList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.payout.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.payout.endpoint, query: queryParams, headers: headers)
     }
     
-    public func cancel(payout: String) throws -> EventLoopFuture<StripePayout> {
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.payoutsCancel(payout).endpoint, headers: headers)
+    public func cancel(payout: String) -> EventLoopFuture<StripePayout> {
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.payoutsCancel(payout).endpoint, headers: headers)
     }
 }

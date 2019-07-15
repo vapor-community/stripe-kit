@@ -13,15 +13,13 @@ public protocol DiscountRoutes {
     ///
     /// - Parameter customer: The id of the customer this discount belongs to.
     /// - Returns: A `StripeDeletedObject`.
-    /// - Throws: A `StripeError`.
-    func delete(customer: String) throws -> EventLoopFuture<StripeDeletedObject>
+    func delete(customer: String) -> EventLoopFuture<StripeDeletedObject>
     
     /// Removes the currently applied discount on a subscription.
     ///
     /// - Parameter subscription: The id of the subscription this discount was applied to.
     /// - Returns: A `StripeDeletedObject`.
-    /// - Throws: A `StripeError`.
-    func delete(subscription: String) throws -> EventLoopFuture<StripeDeletedObject>
+    func delete(subscription: String) -> EventLoopFuture<StripeDeletedObject>
     
     var headers: HTTPHeaders { get set }
 }
@@ -34,11 +32,11 @@ public struct StripeDiscountRoutes: DiscountRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func delete(customer: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.discountCustomer(customer).endpoint, headers: headers)
+    public func delete(customer: String) -> EventLoopFuture<StripeDeletedObject> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.discountCustomer(customer).endpoint, headers: headers)
     }
     
-    public func delete(subscription: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.discountSubscription(subscription).endpoint, headers: headers)
+    public func delete(subscription: String) -> EventLoopFuture<StripeDeletedObject> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.discountSubscription(subscription).endpoint, headers: headers)
     }
 }

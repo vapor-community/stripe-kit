@@ -14,8 +14,7 @@ public protocol DisputeRoutes {
     ///
     /// - Parameter dispute: ID of dispute to retrieve.
     /// - Returns: A `StripeDispute`.
-    /// - Throws: A `StripeError`.
-    func retrieve(dispute: String) throws -> EventLoopFuture<StripeDispute>
+    func retrieve(dispute: String) -> EventLoopFuture<StripeDispute>
     
     /// When you get a dispute, contacting your customer is always the best first step. If that doesn’t work, you can submit evidence to help us resolve the dispute in your favor. You can do this in your [dashboard](https://dashboard.stripe.com/disputes), but if you prefer, you can use the API to submit evidence programmatically. \n Depending on your dispute type, different evidence fields will give you a better chance of winning your dispute. To figure out which evidence fields to provide, see our [guide to dispute types](https://stripe.com/docs/disputes/categories).
     ///
@@ -25,47 +24,44 @@ public protocol DisputeRoutes {
     ///   - metadata: A set of key-value pairs that you can attach to a dispute object. This can be useful for storing additional information about the dispute in a structured format.
     ///   - submit: Whether to immediately submit evidence to the bank. If `false`, evidence is staged on the dispute. Staged evidence is visible in the API and Dashboard, and can be submitted to the bank by making another request with this attribute set to `true` (the default).
     /// - Returns: A `StripeDispute`.
-    /// - Throws: A `StripeError`.
     func update(dispute: String,
                 evidence: [String: Any]?,
                 metadata: [String: String]?,
-                submit: Bool?) throws -> EventLoopFuture<StripeDispute>
+                submit: Bool?) -> EventLoopFuture<StripeDispute>
     
     /// Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute, acknowledging it as lost. \n The status of the dispute will change from `needs_response` to `lost`. Closing a dispute is irreversible.
     ///
     /// - Parameter dispute: ID of the dispute to close.
     /// - Returns: A `StripeDispute`.
-    /// - Throws: A `StripeError`.
-    func close(dispute: String) throws -> EventLoopFuture<StripeDispute>
+    func close(dispute: String) -> EventLoopFuture<StripeDispute>
     
     /// Returns a list of your disputes.
     ///
     /// - Parameter filter: A dictionary that contains the filters. More info [here](https://stripe.com/docs/api/disputes/list).
     /// - Returns: A `StripeDisputeList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeDisputeList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeDisputeList>
     
     var headers: HTTPHeaders { get set }
 }
 
 extension DisputeRoutes {
-    public func retrieve(dispute: String) throws -> EventLoopFuture<StripeDispute> {
-        return try retrieve(dispute: dispute)
+    public func retrieve(dispute: String) -> EventLoopFuture<StripeDispute> {
+        return retrieve(dispute: dispute)
     }
     
     public func update(dispute: String,
                        evidence: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
-                       submit: Bool? = nil) throws -> EventLoopFuture<StripeDispute> {
-        return try update(dispute: dispute, evidence: evidence, metadata: metadata, submit: submit)
+                       submit: Bool? = nil) -> EventLoopFuture<StripeDispute> {
+        return update(dispute: dispute, evidence: evidence, metadata: metadata, submit: submit)
     }
     
-    public func close(dispute: String) throws -> EventLoopFuture<StripeDispute> {
-        return try close(dispute: dispute)
+    public func close(dispute: String) -> EventLoopFuture<StripeDispute> {
+        return close(dispute: dispute)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeDisputeList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeDisputeList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -77,11 +73,11 @@ public struct StripeDisputeRoutes: DisputeRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(dispute: String) throws -> EventLoopFuture<StripeDispute> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.disputes(dispute).endpoint, headers: headers)
+    public func retrieve(dispute: String) -> EventLoopFuture<StripeDispute> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.disputes(dispute).endpoint, headers: headers)
     }
     
-    public func update(dispute: String, evidence: [String: Any]?, metadata: [String: String]?, submit: Bool?) throws -> EventLoopFuture<StripeDispute> {
+    public func update(dispute: String, evidence: [String: Any]?, metadata: [String: String]?, submit: Bool?) -> EventLoopFuture<StripeDispute> {
         var body: [String: Any] = [:]
         
         if let evidence = evidence {
@@ -96,19 +92,19 @@ public struct StripeDisputeRoutes: DisputeRoutes {
             body["submit"] = submit
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.disputes(dispute).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.disputes(dispute).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func close(dispute: String) throws -> EventLoopFuture<StripeDispute> {
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.closeDispute(dispute).endpoint, headers: headers)
+    public func close(dispute: String) -> EventLoopFuture<StripeDispute> {
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.closeDispute(dispute).endpoint, headers: headers)
     }
     
-    public func listAll(filter: [String : Any]?) throws -> EventLoopFuture<StripeDisputeList> {
+    public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripeDisputeList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.dispute.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.dispute.endpoint, query: queryParams, headers: headers)
     }
 }

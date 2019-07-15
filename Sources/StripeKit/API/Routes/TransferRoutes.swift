@@ -21,7 +21,6 @@ public protocol TransferRoutes {
     ///   - sourceType: The source balance to use for this transfer. One of `bank_account` or `card`. For most users, this will default to `card`.
     ///   - transferGroup: A string that identifies this transaction as part of a group. See the Connect documentation for details.
     /// - Returns: A `StripeTransfer`.
-    /// - Throws: A `StripeError`.
     func create(amount: Int,
                 currency: StripeCurrency,
                 destination: String,
@@ -29,14 +28,13 @@ public protocol TransferRoutes {
                 metadata: [String: String]?,
                 sourceTransaction: String?,
                 sourceType: StripeTransferSourceType?,
-                transferGroup: String?) throws -> EventLoopFuture<StripeTransfer>
+                transferGroup: String?) -> EventLoopFuture<StripeTransfer>
     
     /// Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
     ///
     /// - Parameter transfer: The identifier of the transfer to be retrieved.
     /// - Returns: A `StripeTransfer`.
-    /// - Throws: A `StripeError`.
-    func retrieve(transfer: String) throws -> EventLoopFuture<StripeTransfer>
+    func retrieve(transfer: String) -> EventLoopFuture<StripeTransfer>
     
     /// Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     /// This request accepts only metadata as an argument.
@@ -46,15 +44,13 @@ public protocol TransferRoutes {
     ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     /// - Returns: A `StripeTransfer`.
-    /// - Throws: A `StripeError`.
-    func update(transfer: String, description: String?, metadata: [String: String]?) throws -> EventLoopFuture<StripeTransfer>
+    func update(transfer: String, description: String?, metadata: [String: String]?) -> EventLoopFuture<StripeTransfer>
     
     /// Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/transfers/list)
     /// - Returns: A `StripeTransferList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeTransferList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransferList>
     
     var headers: HTTPHeaders { get set }
 }
@@ -67,8 +63,8 @@ extension TransferRoutes {
                        metadata: [String: String]? = nil,
                        sourceTransaction: String? = nil,
                        sourceType: StripeTransferSourceType? = nil,
-                       transferGroup: String? = nil) throws -> EventLoopFuture<StripeTransfer> {
-        return try create(amount: amount,
+                       transferGroup: String? = nil) -> EventLoopFuture<StripeTransfer> {
+        return create(amount: amount,
                            currency: currency,
                            destination: destination,
                            description: description,
@@ -78,18 +74,18 @@ extension TransferRoutes {
                            transferGroup: transferGroup)
     }
     
-    public func retrieve(transfer: String) throws -> EventLoopFuture<StripeTransfer> {
-        return try retrieve(transfer: transfer)
+    public func retrieve(transfer: String) -> EventLoopFuture<StripeTransfer> {
+        return retrieve(transfer: transfer)
     }
     
     public func update(transfer: String,
                        description: String? = nil,
-                       metadata: [String: String]? = nil) throws -> EventLoopFuture<StripeTransfer> {
-        return try update(transfer: transfer, description: description, metadata: metadata)
+                       metadata: [String: String]? = nil) -> EventLoopFuture<StripeTransfer> {
+        return update(transfer: transfer, description: description, metadata: metadata)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeTransferList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTransferList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -108,7 +104,7 @@ public struct StripeTransferRoutes: TransferRoutes {
                        metadata: [String: String]?,
                        sourceTransaction: String?,
                        sourceType: StripeTransferSourceType?,
-                       transferGroup: String?) throws -> EventLoopFuture<StripeTransfer> {
+                       transferGroup: String?) -> EventLoopFuture<StripeTransfer> {
         var body: [String: Any] = ["amount": amount,
                                    "currency": currency.rawValue,
                                    "destination": destination]
@@ -133,14 +129,14 @@ public struct StripeTransferRoutes: TransferRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.transfer.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.transfer.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(transfer: String) throws -> EventLoopFuture<StripeTransfer> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.transfers(transfer).endpoint, headers: headers)
+    public func retrieve(transfer: String) -> EventLoopFuture<StripeTransfer> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transfers(transfer).endpoint, headers: headers)
     }
     
-    public func update(transfer: String, description: String?, metadata: [String: String]?) throws -> EventLoopFuture<StripeTransfer> {
+    public func update(transfer: String, description: String?, metadata: [String: String]?) -> EventLoopFuture<StripeTransfer> {
         var body: [String: Any] = [:]
         
         if let description = description {
@@ -151,14 +147,14 @@ public struct StripeTransferRoutes: TransferRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.transfers(transfer).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.transfers(transfer).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeTransferList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransferList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.transfer.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transfer.endpoint, query: queryParams, headers: headers)
     }
 }

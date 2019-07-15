@@ -24,7 +24,6 @@ public protocol SessionRoutes {
     ///   - paymentIntentData: A subset of parameters to be passed to PaymentIntent creation.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation.
     /// - Returns: A `StripeSession`.
-    /// - Throws: A `StripeError`.
     func create(cancelUrl: String,
                 paymentMethodTypes: [StripePaymentMethodType],
                 successUrl: String,
@@ -35,14 +34,13 @@ public protocol SessionRoutes {
                 lineItems: [String: Any]?,
                 locale: StripeSessionLocale?,
                 paymentIntentData: [String: Any]?,
-                subscriptionData: [String: Any]?) throws -> EventLoopFuture<StripeSession>
+                subscriptionData: [String: Any]?) -> EventLoopFuture<StripeSession>
     
     /// Retrieves a Session object.
     ///
     /// - Parameter id: The ID of the Checkout Session.
     /// - Returns: A `StripeSession`.
-    /// - Throws: A `StripeError`.
-    func retrieve(id: String) throws -> EventLoopFuture<StripeSession>
+    func retrieve(id: String) -> EventLoopFuture<StripeSession>
     
     var headers: HTTPHeaders { get set }
 }
@@ -58,8 +56,8 @@ extension SessionRoutes {
                        lineItems: [String: Any]? = nil,
                        locale: StripeSessionLocale? = nil,
                        paymentIntentData: [String: Any]? = nil,
-                       subscriptionData: [String: Any]? = nil) throws -> EventLoopFuture<StripeSession> {
-        return try create(cancelUrl: cancelUrl,
+                       subscriptionData: [String: Any]? = nil) -> EventLoopFuture<StripeSession> {
+        return create(cancelUrl: cancelUrl,
                           paymentMethodTypes: paymentMethodTypes,
                           successUrl: successUrl,
                           billingAddressCollection: billingAddressCollection,
@@ -72,8 +70,8 @@ extension SessionRoutes {
                           subscriptionData: subscriptionData)
     }
     
-    public func retrieve(id: String) throws -> EventLoopFuture<StripeSession> {
-        return try retrieve(id: id)
+    public func retrieve(id: String) -> EventLoopFuture<StripeSession> {
+        return retrieve(id: id)
     }
 }
 
@@ -95,7 +93,7 @@ public struct StripeSessionRoutes: SessionRoutes {
                        lineItems: [String: Any]?,
                        locale: StripeSessionLocale?,
                        paymentIntentData: [String: Any]?,
-                       subscriptionData: [String: Any]?) throws -> EventLoopFuture<StripeSession> {
+                       subscriptionData: [String: Any]?) -> EventLoopFuture<StripeSession> {
         var body: [String: Any] = ["cancel_url": cancelUrl,
                                    "payment_method_types": paymentMethodTypes.map { $0.rawValue },
                                    "success_url": successUrl]
@@ -132,10 +130,10 @@ public struct StripeSessionRoutes: SessionRoutes {
             subscriptionData.forEach { body["subscription_data[\($0)]"] = $1 }
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.session.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.session.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String) throws -> EventLoopFuture<StripeSession> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.sessions(id).endpoint, headers: headers)
+    public func retrieve(id: String) -> EventLoopFuture<StripeSession> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.sessions(id).endpoint, headers: headers)
     }
 }

@@ -25,7 +25,6 @@ public protocol CouponRoutes {
     ///   - percentOff: A positive float larger than 0, and smaller or equal to 100, that represents the discount the coupon will apply (required if amount_off is not passed).
     ///   - redeemBy: Unix timestamp specifying the last time at which the coupon can be redeemed. After the redeem_by date, the coupon can no longer be applied to new customers.
     /// - Returns: A `StripeCoupon`.
-    /// - Throws: A `StripeError`.
     func create(id: String?,
                 duration: StripeCouponDuration,
                 amountOff: Int?,
@@ -35,14 +34,13 @@ public protocol CouponRoutes {
                 metadata: [String: String]?,
                 name: String?,
                 percentOff: Int?,
-                redeemBy: Date?) throws -> EventLoopFuture<StripeCoupon>
+                redeemBy: Date?) -> EventLoopFuture<StripeCoupon>
     
     /// Retrieves the coupon with the given ID.
     ///
     /// - Parameter coupon: The ID of the desired coupon.
     /// - Returns: A `StripeCoupon`.
-    /// - Throws: A `StripeError`.
-    func retrieve(coupon: String) throws -> EventLoopFuture<StripeCoupon>
+    func retrieve(coupon: String) -> EventLoopFuture<StripeCoupon>
     
     /// Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
     ///
@@ -51,22 +49,19 @@ public protocol CouponRoutes {
     ///   - metadata: A set of key-value pairs that you can attach to a coupon object. It can be useful for storing additional information about the coupon in a structured format.
     ///   - name: Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the id is shown if name is not set.
     /// - Returns: A `StripeCoupon`.
-    /// - Throws: A `StripeError`.
-    func update(coupon: String, metadata: [String: String]?, name: String?) throws -> EventLoopFuture<StripeCoupon>
+    func update(coupon: String, metadata: [String: String]?, name: String?) -> EventLoopFuture<StripeCoupon>
     
     /// You can delete coupons via the [coupon management page](https://dashboard.stripe.com/coupons) of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can’t redeem the coupon. You can also delete coupons via the API.
     ///
     /// - Parameter coupon: The identifier of the coupon to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    /// - Throws: A `StripeError`.
-    func delete(coupon: String) throws -> EventLoopFuture<StripeDeletedObject>
+    func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject>
     
     /// Returns a list of your coupons.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/coupons/list).
     /// - Returns: A `StripeCouponList`.
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCouponList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCouponList>
     
     var headers: HTTPHeaders { get set }
 }
@@ -81,8 +76,8 @@ extension CouponRoutes {
                        metadata: [String: String]? = nil,
                        name: String? = nil,
                        percentOff: Int? = nil,
-                       redeemBy: Date? = nil) throws -> EventLoopFuture<StripeCoupon> {
-        return try create(id: id,
+                       redeemBy: Date? = nil) -> EventLoopFuture<StripeCoupon> {
+        return create(id: id,
                           duration: duration,
                           amountOff: amountOff,
                           currency: currency,
@@ -94,20 +89,20 @@ extension CouponRoutes {
                           redeemBy: redeemBy)
     }
     
-    public func retrieve(coupon: String) throws -> EventLoopFuture<StripeCoupon> {
-        return try retrieve(coupon: coupon)
+    public func retrieve(coupon: String) -> EventLoopFuture<StripeCoupon> {
+        return retrieve(coupon: coupon)
     }
     
-    public func update(coupon: String, metadata: [String: String]? = nil, name: String? = nil) throws -> EventLoopFuture<StripeCoupon> {
-        return try update(coupon: coupon, metadata: metadata, name: name)
+    public func update(coupon: String, metadata: [String: String]? = nil, name: String? = nil) -> EventLoopFuture<StripeCoupon> {
+        return update(coupon: coupon, metadata: metadata, name: name)
     }
     
-    public func delete(coupon: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try delete(coupon: coupon)
+    public func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject> {
+        return delete(coupon: coupon)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeCouponList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeCouponList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -128,7 +123,7 @@ public struct StripeCouponRoutes: CouponRoutes {
                        metadata: [String: String]?,
                        name: String?,
                        percentOff: Int?,
-                       redeemBy: Date?) throws -> EventLoopFuture<StripeCoupon> {
+                       redeemBy: Date?) -> EventLoopFuture<StripeCoupon> {
         var body: [String: Any] = ["duration": duration.rawValue]
         
         if let id = id {
@@ -167,14 +162,14 @@ public struct StripeCouponRoutes: CouponRoutes {
             body["redeem_by"] = Int(redeemBy.timeIntervalSince1970)
         }
 
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.coupons.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.coupons.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(coupon: String) throws -> EventLoopFuture<StripeCoupon> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.coupon(coupon).endpoint, headers: headers)
+    public func retrieve(coupon: String) -> EventLoopFuture<StripeCoupon> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.coupon(coupon).endpoint, headers: headers)
     }
     
-    public func update(coupon: String, metadata: [String: String]?, name: String?) throws -> EventLoopFuture<StripeCoupon> {
+    public func update(coupon: String, metadata: [String: String]?, name: String?) -> EventLoopFuture<StripeCoupon> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {
@@ -185,19 +180,19 @@ public struct StripeCouponRoutes: CouponRoutes {
             body["name"] = name
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.coupon(coupon).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.coupon(coupon).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(coupon: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.coupon(coupon).endpoint, headers: headers)
+    public func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.coupon(coupon).endpoint, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeCouponList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCouponList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
 
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.coupons.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.coupons.endpoint, query: queryParams, headers: headers)
     }
 }

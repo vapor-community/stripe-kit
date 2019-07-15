@@ -26,7 +26,6 @@ public protocol InvoiceItemRoutes {
     ///   - taxRates: The tax rates which apply to the invoice item. When set, the default_tax_rates on the invoice do not apply to this invoice item.
     ///   - unitAmount: The integer unit amount in cents of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer’s account, pass a negative unit_amount.
     /// - Returns: A `StripeInvoiceItem`.
-    /// - Throws: A `StripeError`.
     func create(currency: StripeCurrency,
                 customer: String,
                 amount: Int?,
@@ -38,14 +37,13 @@ public protocol InvoiceItemRoutes {
                 quantity: Int?,
                 subscription: String?,
                 taxRates: [String]?,
-                unitAmount: Int?) throws -> EventLoopFuture<StripeInvoiceItem>
+                unitAmount: Int?) -> EventLoopFuture<StripeInvoiceItem>
     
     /// Retrieves the invoice item with the given ID.
     ///
     /// - Parameter invoiceItem: The ID of the desired invoice item.
     /// - Returns: A `StripeInvoiceItem`.
-    /// - Throws: A `StripeError`.
-    func retrieve(invoiceItem: String) throws -> EventLoopFuture<StripeInvoiceItem>
+    func retrieve(invoiceItem: String) -> EventLoopFuture<StripeInvoiceItem>
     
     /// Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it’s attached to is closed.
     ///
@@ -60,7 +58,6 @@ public protocol InvoiceItemRoutes {
     ///   - taxRates: The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
     ///   - unitAmount: The integer unit amount in cents of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer’s account, pass a negative unit_amount.
     /// - Returns: A `StripeInvoiceItem`.
-    /// - Throws: A `StripeError`.
     func update(invoiceItem: String,
                 amount: Int?,
                 description: String?,
@@ -69,21 +66,19 @@ public protocol InvoiceItemRoutes {
                 period: [String: Any]?,
                 quantity: Int?,
                 taxRates: [String]?,
-                unitAmount: Int?) throws -> EventLoopFuture<StripeInvoiceItem>
+                unitAmount: Int?) -> EventLoopFuture<StripeInvoiceItem>
     
     /// Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they’re not attached to invoices, or if it’s attached to a draft invoice.
     ///
     /// - Parameter invoiceItem: The identifier of the invoice item to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    /// - Throws: A `StripeError`.
-    func delete(invoiceItem: String) throws -> EventLoopFuture<StripeDeletedObject>
+    func delete(invoiceItem: String) -> EventLoopFuture<StripeDeletedObject>
     
     /// Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/invoiceitems/list)
     /// - Returns: A `StripeInvoiceItemList`
-    /// - Throws: A `StripeError`.
-    func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeInvoiceItemList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceItemList>
     
     var headers: HTTPHeaders { get set }
 }
@@ -100,8 +95,8 @@ extension InvoiceItemRoutes {
                        quantity: Int? = nil,
                        subscription: String? = nil,
                        taxRates: [String]? = nil,
-                       unitAmount: Int? = nil) throws -> EventLoopFuture<StripeInvoiceItem> {
-        return try create(currency: currency,
+                       unitAmount: Int? = nil) -> EventLoopFuture<StripeInvoiceItem> {
+        return create(currency: currency,
                           customer: customer,
                           amount: amount,
                           description: description,
@@ -115,8 +110,8 @@ extension InvoiceItemRoutes {
                           unitAmount: unitAmount)
     }
     
-    public func retrieve(invoiceItem: String) throws -> EventLoopFuture<StripeInvoiceItem> {
-        return try retrieve(invoiceItem: invoiceItem)
+    public func retrieve(invoiceItem: String) -> EventLoopFuture<StripeInvoiceItem> {
+        return retrieve(invoiceItem: invoiceItem)
     }
     
     public func update(invoiceItem: String,
@@ -127,8 +122,8 @@ extension InvoiceItemRoutes {
                        period: [String: Any]? = nil,
                        quantity: Int? = nil,
                        taxRates: [String]? = nil,
-                       unitAmount: Int? = nil) throws -> EventLoopFuture<StripeInvoiceItem> {
-        return try update(invoiceItem: invoiceItem,
+                       unitAmount: Int? = nil) -> EventLoopFuture<StripeInvoiceItem> {
+        return update(invoiceItem: invoiceItem,
                           amount: amount,
                           description: description,
                           discountable: discountable,
@@ -139,12 +134,12 @@ extension InvoiceItemRoutes {
                           unitAmount: unitAmount)
     }
     
-    public func delete(invoiceItem: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try delete(invoiceItem: invoiceItem)
+    public func delete(invoiceItem: String) -> EventLoopFuture<StripeDeletedObject> {
+        return delete(invoiceItem: invoiceItem)
     }
     
-    public func listAll(filter: [String: Any]? = nil) throws -> EventLoopFuture<StripeInvoiceItemList> {
-        return try listAll(filter: filter)
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeInvoiceItemList> {
+        return listAll(filter: filter)
     }
 }
 
@@ -167,7 +162,7 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
                        quantity: Int?,
                        subscription: String?,
                        taxRates: [String]?,
-                       unitAmount: Int?) throws -> EventLoopFuture<StripeInvoiceItem> {
+                       unitAmount: Int?) -> EventLoopFuture<StripeInvoiceItem> {
         var body: [String: Any] = ["currency": currency.rawValue,
                                    "customer": customer]
         
@@ -211,11 +206,11 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
             body["unit_amount"] = unitAmount
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoiceItem.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoiceItem.endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(invoiceItem: String) throws -> EventLoopFuture<StripeInvoiceItem> {
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoiceItems(invoiceItem).endpoint, headers: headers)
+    public func retrieve(invoiceItem: String) -> EventLoopFuture<StripeInvoiceItem> {
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoiceItems(invoiceItem).endpoint, headers: headers)
     }
     
     public func update(invoiceItem: String,
@@ -226,7 +221,7 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
                        period: [String: Any]?,
                        quantity: Int?,
                        taxRates: [String]?,
-                       unitAmount: Int?) throws -> EventLoopFuture<StripeInvoiceItem> {
+                       unitAmount: Int?) -> EventLoopFuture<StripeInvoiceItem> {
         var body: [String: Any] = [:]
         
         if let amount = amount {
@@ -261,19 +256,19 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
             body["unit_amount"] = unitAmount
         }
         
-        return try apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoiceItems(invoiceItem).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoiceItems(invoiceItem).endpoint, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(invoiceItem: String) throws -> EventLoopFuture<StripeDeletedObject> {
-        return try apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.invoiceItems(invoiceItem).endpoint, headers: headers)
+    public func delete(invoiceItem: String) -> EventLoopFuture<StripeDeletedObject> {
+        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.invoiceItems(invoiceItem).endpoint, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) throws -> EventLoopFuture<StripeInvoiceItemList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceItemList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return try apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoiceItem.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoiceItem.endpoint, query: queryParams, headers: headers)
     }
 }
