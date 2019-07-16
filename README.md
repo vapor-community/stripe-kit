@@ -30,15 +30,15 @@ The APIs you have available corrospond to what's implemented.
 For example to use the `charges` API, the stripeclient has a property to access that API via routes.
 
 ~~~~swift
-try stripe.charges.create(amount: 2500,
-                          currency: .usd,
-                          description: "A server written in swift.",
-                          source: "tok_visa").flatMap { (charge) -> EventLoopFuture<Void> in
-                           if charge.status == .succeeded {
-                               print("New servers are on the way 🚀")
-                           } else {
-                               print("Sorry you have to use Node.js 🤢")
-                           }
+ stripe.charges.create(amount: 2500,
+                       currency: .usd,
+		       description: "A server written in swift.",
+                       source: "tok_visa").flatMap { (charge) -> EventLoopFuture<Void> in
+                          if charge.status == .succeeded {
+                              print("New servers are on the way 🚀")
+                          } else {
+                              print("Sorry you have to use Node.js 🤢")
+                          }
             }
 ~~~~
 
@@ -67,7 +67,7 @@ let businessSettings: [String: Any] = ["payouts": ["statement_descriptor": "SWIF
 
 let tosDictionary: [String: Any] = ["date": Int(Date().timeIntervalSince1970), "ip": "127.0.0.1"]
 
-try stripe.connectAccounts.create(type: .custom,									
+    stripe.connectAccounts.create(type: .custom,									
                                   country: "US",
 				  email: "a@example.com",
 				  businessType: .individual,
@@ -85,9 +85,28 @@ try stripe.connectAccounts.create(type: .custom,
 The first, preferred, authentication option is to use your (the platform account’s) secret key and pass a `Stripe-Account` header identifying the connected account for which the request is being made. The example request performs a refund of a  charge on behalf of a connected account:
 ~~~swift
    stripe.refunds.headers.add(name: "Stripe-Account", value: "acc_12345")
-   try stripe.refunds.create(charge: "ch_12345", reason: .requestedByCustomer)
+   stripe.refunds.create(charge: "ch_12345", reason: .requestedByCustomer)
 ~~~
 **NOTE:** The modified headers will remain on the route instance _(refunds in this case)_ of the `StripeClient` if a reference to it is held. If you're accessing the StripeClient in the scope of a function, the headers will not be retained.
+
+## Error Handling
+None of the API calls throw errors. Instead each route returns a successful `EventLoopFuture` or a failed `EventLoopFuture`.
+~~~swift
+ stripe.charges.create(amount: 2500,
+                       currency: .usd,
+		       description: "A server written in swift.",
+                       source: "tok_visa")
+ .flatMap { (charge) -> EventLoopFuture<Void> in
+	  if charge.status == .succeeded {
+	      print("New servers are on the way 🚀")
+	  } else {
+	      print("Sorry you have to use Node.js 🤢")
+	  }
+  }
+  .flatMapError { error in
+     print("Stripe error \(error.message)")
+  }
+~~~
 
 ## Whats Implemented
 
