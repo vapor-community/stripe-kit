@@ -6,7 +6,7 @@
 //
 
 import NIO
-import NIOHTTPClient
+import AsyncHTTPClient
 
 public final class StripeClient {
     public var balances: BalanceRoutes
