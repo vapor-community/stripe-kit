@@ -108,7 +108,6 @@ extension ProductRoutes {
                        metadata: [String: String]? = nil,
                        packageDimensions: [String: Any]? = nil,
                        shippable: Bool? = nil,
-                       statementDescriptor: String? = nil,
                        url: String? = nil) -> EventLoopFuture<StripeProduct> {
         return create(id: id,
                       name: name,
@@ -122,7 +121,6 @@ extension ProductRoutes {
                       metadata: metadata,
                       packageDimensions: packageDimensions,
                       shippable: shippable,
-                      statementDescriptor: statementDescriptor,
                       url: url)
     }
     
