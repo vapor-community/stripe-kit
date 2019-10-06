@@ -120,6 +120,9 @@ public final class StripeClient {
     }
     
     deinit {
-        try client.syncShutdown()
+        do {
+            try client.syncShutdown() 
+        }
+        catch { }
     }
 }
