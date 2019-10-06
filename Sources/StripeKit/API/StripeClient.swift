@@ -60,9 +60,10 @@ public final class StripeClient {
     public var locations: LocationRoutes
     public var readers: ReaderRoutes
     public var scheduledQueryRuns: ScheduledQueryRunRoutes
+    private let client: HTTPClient
     
     public init(eventLoop: EventLoopGroup, apiKey: String) {
-        let client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
+        client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
         let handler = StripeDefaultAPIHandler(httpClient: client, apiKey: apiKey)
         
         balances = StripeBalanceRoutes(apiHandler: handler)
@@ -116,5 +117,9 @@ public final class StripeClient {
         locations = StripeLocationRoutes(apiHandler: handler)
         readers = StripeReaderRoutes(apiHandler: handler)
         scheduledQueryRuns = StripeScheduledQueryRunRoutes(apiHandler: handler)
+    }
+    
+    deinit {
+        try client.syncShutdown()
     }
 }
