@@ -149,6 +149,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 ---
 ### Connect
 * [x] Account
+* [x] Account Links
 * [x] Application Fee Refunds
 * [x] Application Fees
 * [x] Country Specs

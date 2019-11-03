@@ -52,7 +52,7 @@ public struct StripeDefaultAPIHandler: StripeAPIHandler {
                                body: HTTPClient.Body = .string(""),
                                headers: HTTPHeaders = [:]) -> EventLoopFuture<SM> {
         
-        var _headers: HTTPHeaders = ["Stripe-Version": "2019-05-16",
+        var _headers: HTTPHeaders = ["Stripe-Version": "2019-10-08",
                                      "Authorization": "Bearer \(apiKey)",
                                      "Content-Type": "application/x-www-form-urlencoded"]
         headers.forEach { _headers.replaceOrAdd(name: $0.name, value: $0.value) }

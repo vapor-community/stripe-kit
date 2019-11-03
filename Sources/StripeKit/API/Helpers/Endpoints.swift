@@ -222,6 +222,8 @@ internal enum StripeAPIEndpoint {
     case scheduledQueryRun
     case scheduledQueryRuns(String)
     
+    case accountLinks
+    
     var endpoint: String {
         switch self {
         case .balance: return APIBase + APIVersion + "balance"
@@ -407,6 +409,8 @@ internal enum StripeAPIEndpoint {
             
         case .scheduledQueryRun: return APIBase + APIVersion + "sigma/scheduled_query_runs"
         case .scheduledQueryRuns(let query): return APIBase + APIVersion + "sigma/scheduled_query_runs/\(query)"
+        
+        case .accountLinks: return APIBase + APIVersion + "account_links"
         }
     }
 }
