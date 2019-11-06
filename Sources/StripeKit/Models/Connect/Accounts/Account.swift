@@ -84,12 +84,14 @@ public enum StripeConnectAccountBusinessType: String, StripeModel {
 }
 
 public struct StripeConnectAccountCapablities: StripeModel {
+    /// The status of the card issuing capability of the account, or whether you can use Issuing to distribute funds on cards
+    public var cardIssuing: StripeConnectAccountCapabilitiesStatus?
     /// The status of the card payments capability of the account, or whether the account can directly process credit and debit card charges.
     public var cardPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the legacy payments capability of the account.
     public var legacyPayments: StripeConnectAccountCapabilitiesStatus?
-    /// The status of the platform payments capability of the account, or whether your platform can process charges on behalf of the account.
-    public var platformPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the transfers capability of the account, or whether your platform can transfer funds to the account.
+    public var transfers: StripeConnectAccountCapabilitiesStatus?
 }
 
 public enum StripeConnectAccountCapabilitiesStatus: String, StripeModel {

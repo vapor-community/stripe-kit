@@ -62,14 +62,14 @@ public enum StripePersonGender: String, StripeModel {
 }
 
 public struct StripePersonRelationship: StripeModel {
-    public var accountOpener: Bool?
+    public var representative: Bool?
     public var director: Bool?
     public var owner: Bool?
     public var percentOwnership: Decimal?
     public var title: String?
     
     private enum CodingKeys: String, CodingKey {
-        case accountOpener = "account_opener"
+        case representative
         case director
         case owner
         case percentOwnership = "percent_ownership"
@@ -90,6 +90,7 @@ public struct StripePersonRequirements: StripeModel {
 }
 
 public struct StripePersonVerification: StripeModel {
+    public var additionalDocument: StripePersonVerificationDocument?
     public var details: String?
     public var detailsCode: StripePersonVerificationDetailsCode?
     public var document: StripePersonVerificationDocument?
@@ -104,7 +105,12 @@ public struct StripePersonVerification: StripeModel {
 }
 
 public enum StripePersonVerificationDetailsCode: String, StripeModel {
-    case scanNameMismatch = "scan_name_mismatch"
+    case documentAddressMismatch = "document_address_mismatch"
+    case documentDobMismatch = "document_dob_mismatch"
+    case documentDuplicateType = "document_duplicate_type"
+    case documentIdNumberMismatch = "document_id_number_mismatch"
+    case documentNameMismatch = "document_name_mismatch"
+    case documentNationalityMismatch = "document_nationality_mismatch"
     case failedKeyedIdentity = "failed_keyed_identity"
     case failedOther = "failed_other"
 }
