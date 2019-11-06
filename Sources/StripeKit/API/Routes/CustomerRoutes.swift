@@ -76,7 +76,7 @@ public protocol CustomerRoutes {
     /// - Returns: A `StripeCustomer`.
     func update(customer: String,
                 address: [String: Any]?,
-                accountBalance: Int?,
+                balance: Int?,
                 coupon: String?,
                 defaultSource: String?,
                 description: String?,
@@ -293,7 +293,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
     
     public func update(customer: String,
                        address: [String: Any]?,
-                       accountBalance: Int?,
+                       balance: Int?,
                        coupon: String?,
                        defaultSource: String?,
                        description: String?,
