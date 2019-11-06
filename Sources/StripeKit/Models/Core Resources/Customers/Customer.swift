@@ -14,8 +14,10 @@ public struct StripeCustomer: StripeModel {
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
+    /// The customers address.
+    public var addrress: StripeAddress?
     /// Current balance, if any, being stored on the customer’s account. If negative, the customer has credit to apply to the next invoice. If positive, the customer has an amount owed that will be added to the next invoice. The balance does not refer to any unpaid invoices; it solely takes into account amounts that have yet to be successfully applied to any invoice. This balance is only taken into account as invoices are finalized. Note that the balance does not include unpaid invoices.
-    public var accountBalance: Int?
+    public var balance: Int?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?
     /// Three-letter ISO code for the currency the customer can be charged in for recurring billing purposes.
@@ -38,16 +40,22 @@ public struct StripeCustomer: StripeModel {
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
+    /// The customers full name or business name.
+    public var name: String?
+    /// The customers phone number.
+    public var phone: String?
+    /// The customer’s preferred locales (languages), ordered by preference
+    public var preferredLocals: [String]?
     /// Mailing and shipping address for the customer. Appears on invoices emailed to this customer.
     public var shipping: StripeShippingLabel?
     /// The customer’s payment sources, if any.
     public var sources: StripeSourcesList?
     /// The customer’s current subscriptions, if any.
     public var subscriptions: StripeSubscriptionList?
-    /// The customer’s tax information. Appears on invoices emailed to this customer.
-    public var taxInfo: StripeCustomerTaxInfo?
-    /// Describes the status of looking up the tax ID provided in `tax_info`.
-    public var taxInfoVerification: StripeCustomerTaxInfoVerification?
+    /// Describes the customer’s tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text `“Reverse charge”`.
+    public var taxExempt: StripeCustomerTaxExempt?
+    /// The customers tax IDs
+    public var taxIds: StripeTaxIDList?
 }
 
 public struct StripeCustomerInvoiceSettings: StripeModel {
@@ -64,24 +72,10 @@ public struct StripeCustomerInvoiceSettingsCustomFields: StripeModel {
     public var value: String?
 }
 
-public struct StripeCustomerTaxInfo: StripeModel {
-    /// The customer’s tax ID number.
-    public var taxId: String?
-    /// The type of ID number.
-    public var type: String?
-}
-
-public struct StripeCustomerTaxInfoVerification: StripeModel {
-    /// The state of verification for this customer. Possible values are `unverified`, `pending`, or `verified`.
-    public var status: StripeCustomerTaxInfoVerificationStatus?
-    /// The official name associated with the tax ID returned from the external provider.
-    public var verifiedName: String?
-}
-
-public enum StripeCustomerTaxInfoVerificationStatus: String, StripeModel {
-    case unverified
-    case pending
-    case verified
+public enum StripeCustomerTaxExempt: String, StripeModel {
+    case none
+    case exempt
+    case reverse
 }
 
 public struct StripeCustomerList: StripeModel {
