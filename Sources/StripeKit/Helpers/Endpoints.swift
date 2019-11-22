@@ -14,16 +14,6 @@ internal let APIVersion = "v1/"
 
 internal enum StripeAPIEndpoint {
     
-//    // MARK: - BALANCE
-//    case balance
-//    case balanceTransactions
-//    case balanceTransaction(String)
-    
-    // MARK: - CHARGES
-    case charges
-    case charge(String)
-    case captureCharge(String)
-    
     // MARK: - CUSTOMERS
     case customers
     case customer(String)
@@ -226,14 +216,6 @@ internal enum StripeAPIEndpoint {
     
     var endpoint: String {
         switch self {
-//        case .balance: return APIBase + APIVersion + "balance"
-//        case .balanceTransactions: return APIBase + APIVersion + "balance/balance_transactions"
-//        case .balanceTransaction(let id): return APIBase + APIVersion + "balance_transactions/\(id)"
-        
-        case .charges: return APIBase + APIVersion + "charges"
-        case .charge(let id): return APIBase + APIVersion + "charges/\(id)"
-        case .captureCharge(let id): return APIBase + APIVersion + "charges/\(id)/capture"
-            
         case .customers: return APIBase + APIVersion + "customers"
         case .customer(let id): return APIBase + APIVersion + "customers/\(id)"
             

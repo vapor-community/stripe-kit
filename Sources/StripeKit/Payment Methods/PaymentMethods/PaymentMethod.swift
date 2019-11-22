@@ -67,6 +67,18 @@ public enum StripePaymentMethodCardBrand: String, StripeModel {
     case unknown
 }
 
+public enum StripePaymentMethodCardNetwork: String, StripeModel {
+    case amex
+    case diners
+    case discover
+    case interac
+    case jcb
+    case mastercard
+    case unionpay
+    case visa
+    case unknown
+}
+
 public struct StripePaymentMethodCardChecks: StripeModel {
     /// If a address line1 was provided, results of the check, one of ‘pass’, ‘failed’, ‘unavailable’ or ‘unchecked’.
     public var addressLine1Check: StripeCardValidationCheck?

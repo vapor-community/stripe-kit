@@ -24,7 +24,8 @@ public protocol ChargeRoutes {
     ///   - receiptEmail: The email address to which this charge’s [receipt](https://stripe.com/docs/dashboard/receipts) will be sent. The receipt will not be sent until the charge is paid, and no receipts will be sent for test mode charges. If this charge is for a [Customer](https://stripe.com/docs/api/customers/object), the email address specified here will override the customer’s email address. If `receipt_email` is specified for a charge in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
     ///   - shipping: Shipping information for the charge. Helps prevent fraud on charges for physical goods.
     ///   - source: A payment source to be charged. This can be the ID of a card (i.e., credit or debit card), a bank account, a source, a token, or a connected account. For certain sources—namely, cards, bank accounts, and attached sources—you must also pass the ID of the associated customer.
-    ///   - statementDescriptor: An arbitrary string to be used as the dynamic portion of the full descriptor displayed on your customer’s credit card statement. This value will be prefixed by your [account’s statement descriptor](https://stripe.com/docs/charges#dynamic-statement-descriptor). As an example, if your account’s statement descriptor is `RUNCLUB` and the item you’re charging for is a race ticket, you may want to specify a `statement_descriptor` of `5K RACE`, so that the resulting full descriptor would be `RUNCLUB* 5K RACE`. The full descriptor may be up to 22 characters. This value must contain at least one letter, may not include `<>"'` characters, and will appear on your customer’s statement in capital letters. Non-ASCII characters are automatically stripped. While most banks display this information consistently, some may display it incorrectly or not at all.
+    ///   - statementDescriptor: For card charges, use `statement_descriptor_suffix` instead. Otherwise, you can use this value as the complete description of a charge on your customers’ statements. Must contain at least one letter, maximum 22 characters.
+    ///   - statementDescriptorSuffix: Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
     ///   - transferData: An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
     ///   - transferGroup: A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#grouping-transactions).
     /// - Returns: A `StripeCharge`.
@@ -40,6 +41,7 @@ public protocol ChargeRoutes {
                 shipping: [String: Any]?,
                 source: Any?,
                 statementDescriptor: String?,
+                statementDescriptorSuffix: String?,
                 transferData: [String: Any]?,
                 transferGroup: String?) -> EventLoopFuture<StripeCharge>
     
@@ -77,7 +79,8 @@ public protocol ChargeRoutes {
     ///   - amount: The amount to capture, which must be less than or equal to the original amount. Any additional amount will be automatically refunded.
     ///   - applicationFeeAmount: An application fee amount to add on to this charge, which must be less than or equal to the original amount. Can only be used with Stripe Connect.
     ///   - receiptEmail: The email address to send this charge’s receipt to. This will override the previously-specified email address for this charge, if one was set. Receipts will not be sent in test mode.
-    ///   - statementDescriptor: An arbitrary string to be used as the dynamic portion of the full descriptor displayed on your customer’s credit card statement. This value will be prefixed by your [account’s statement descriptor](https://stripe.com/docs/charges#dynamic-statement-descriptor). As an example, if your account’s statement descriptor is `RUNCLUB` and the item you’re charging for is a race ticket, you may want to specify a `statement_descriptor` of `5K RACE`, so that the resulting full descriptor would be `RUNCLUB* 5K RACE`. The full descriptor may be up to 22 characters. This value must contain at least one letter, may not include `<>"'` characters, and will appear on your customer’s statement in capital letters. Non-ASCII characters are automatically stripped. While most banks display this information consistently, some may display it incorrectly or not at all.
+    ///   - statementDescriptor: For card charges, use `statement_descriptor_suffix` instead. Otherwise, you can use this value as the complete description of a charge on your customers’ statements. Must contain at least one letter, maximum 22 characters.
+    ///   - statementDescriptorSuffix: Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
     ///   - transferData: An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
     ///   - transferGroup: A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
     /// - Returns: A `StripeCharge`.
@@ -86,6 +89,7 @@ public protocol ChargeRoutes {
                  applicationFeeAmount: Int?,
                  receiptEmail: String?,
                  statementDescriptor: String?,
+                 statementDescriptorSuffix: String?,
                  transferData: [String: Any]?,
                  transferGroup: String?) -> EventLoopFuture<StripeCharge>
     
@@ -95,6 +99,7 @@ public protocol ChargeRoutes {
     /// - Returns: A `StripeChargesList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeChargesList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
@@ -111,6 +116,7 @@ extension ChargeRoutes {
                        shipping: [String: Any]? = nil,
                        source: Any? = nil,
                        statementDescriptor: String? = nil,
+                       statementDescriptorSuffix: String? = nil,
                        transferData: [String: Any]? = nil,
                        transferGroup: String? = nil) -> EventLoopFuture<StripeCharge> {
         return create(amount: amount,
@@ -125,6 +131,7 @@ extension ChargeRoutes {
                           shipping: shipping,
                           source: source,
                           statementDescriptor: statementDescriptor,
+                          statementDescriptorSuffix: statementDescriptorSuffix,
                           transferData: transferData,
                           transferGroup: transferGroup)
     }
@@ -156,6 +163,7 @@ extension ChargeRoutes {
                         applicationFeeAmount: Int? = nil,
                         receiptEmail: String? = nil,
                         statementDescriptor: String? = nil,
+                        statementDescriptorSuffix: String? = nil,
                         transferData: [String: Any]? = nil,
                         transferGroup: String? = nil) -> EventLoopFuture<StripeCharge> {
         return capture(charge: charge,
@@ -163,6 +171,7 @@ extension ChargeRoutes {
                            applicationFeeAmount: applicationFeeAmount,
                            receiptEmail: receiptEmail,
                            statementDescriptor: statementDescriptor,
+                           statementDescriptorSuffix: statementDescriptorSuffix,
                            transferData: transferData,
                            transferGroup: transferGroup)
     }
@@ -173,8 +182,11 @@ extension ChargeRoutes {
 }
 
 public struct StripeChargeRoutes: ChargeRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let charges = APIBase + APIVersion + "charges/"
+    private let charge = APIBase + APIVersion + "charges"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -192,6 +204,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
                        shipping: [String: Any]?,
                        source: Any?,
                        statementDescriptor: String?,
+                       statementDescriptorSuffix: String?,
                        transferData: [String: Any]?,
                        transferGroup: String?) -> EventLoopFuture<StripeCharge> {
         var body: [String: Any] = ["amount": amount, "currency": currency.rawValue]
@@ -239,6 +252,10 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["statement_descriptor"] = statementDescriptor
         }
         
+        if let statementDescriptorSuffix = statementDescriptorSuffix {
+            body["statement_descriptor_suffix"] = statementDescriptorSuffix
+        }
+        
         if let transferData = transferData {
             transferData.forEach { body["transfer_data[\($0)]"] = $1 }
         }
@@ -247,11 +264,11 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.charges.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: charge, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(charge: String) -> EventLoopFuture<StripeCharge> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.charge(charge).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: charges + charge, headers: headers)
     }
     
     public func update(charge: String,
@@ -292,7 +309,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.charge(charge).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: charges + charge, body: .string(body.queryParameters), headers: headers)
     }
     
     public func capture(charge: String,
@@ -300,6 +317,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
                         applicationFeeAmount: Int?,
                         receiptEmail: String?,
                         statementDescriptor: String?,
+                        statementDescriptorSuffix: String?,
                         transferData: [String: Any]?,
                         transferGroup: String?) -> EventLoopFuture<StripeCharge> {
         var body: [String: Any] = [:]
@@ -320,6 +338,10 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["statement_descriptor"] = statementDescriptor
         }
         
+        if let statementDescriptorSuffix = statementDescriptorSuffix {
+            body["statement_descriptor_suffix"] = statementDescriptorSuffix
+        }
+        
         if let transferData = transferData {
             transferData.forEach { body["transfer_data[\($0)]"] = $1 }
         }
@@ -328,15 +350,15 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.captureCharge(charge).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: charges + charge + "/capture", body: .string(body.queryParameters), headers: headers)
     }
 
-    public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripeChargesList> {
+    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeChargesList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.charges.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: charges, query: queryParams, headers: headers)
     }
 }

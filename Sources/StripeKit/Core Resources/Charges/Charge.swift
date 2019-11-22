@@ -40,6 +40,8 @@ public struct StripeCharge: StripeModel {
     public var description: String?
     /// Details about the dispute if the charge has been disputed.
     public var dispute: String?
+    /// Whether the charge has been disputed.
+    public var disputed: Bool?
     /// Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/api#errors) for a list of codes).
     public var failureCode: String?
     /// Message to user further explaining reason for charge failure if available.
@@ -65,7 +67,7 @@ public struct StripeCharge: StripeModel {
     /// ID of the payment method used in this charge.
     public var paymentMethod: String?
     /// Details about the payment method at the time of the transaction.
-    public var paymentDetails: StripeChargePaymentDetails?
+    public var paymentMethodDetails: StripeChargePaymentDetails?
     /// This is the email address that the receipt for this charge was sent to.
     public var receiptEmail: String?
     /// This is the transaction number that appears on email receipts sent for this charge. This attribute will be `null` until a receipt has been sent.
@@ -84,6 +86,8 @@ public struct StripeCharge: StripeModel {
     public var sourceTransfer: String?
     /// Extra information about a charge. This will appear on your customer’s credit card statement. It must contain at least one letter.
     public var statementDescriptor: String?
+    /// Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
+    public var statementDescriptorSuffix: String?
     /// The status of the payment is either `succeeded`, `pending`, or `failed`.
     public var status: StripeChargeStatus?
     /// ID of the transfer to the `destination` account (only applicable if the charge was created using the `destination` parameter).
@@ -188,12 +192,12 @@ public struct StripeChargePaymentDetails: StripeModel {
     public var giropay: StripeChargePaymentDetailsGiropay?
     /// If this is a `ideal` payment, this hash contains a snapshot of the transaction specific details of the `ideal` payment method.
     public var ideal: StripeChargePaymentDetailsIdeal?
+    /// If this is a klarna payment, this hash contains a snapshot of the transaction specific details of the klarna payment method.
+    public var klarna: StripeChargePaymentDetailsKlarna?
     /// If this is a `multibanco` payment, this hash contains a snapshot of the transaction specific details of the `multibanco` payment method.
     public var multibanco: StripeChargePaymentDetailsMultibanco?
     /// If this is a `p24` payment, this hash contains a snapshot of the transaction specific details of the `p24` payment method.
     public var p24: StripeChargePaymentDetailsP24?
-    /// If this is a `sepa_debit` payment, this hash contains a snapshot of the transaction specific details of the `sepa_debit` payment method.
-    public var sepaDebit: StripeChargePaymentDetailsSepaDebit?
     /// If this is a `sofort` payment, this hash contains a snapshot of the transaction specific details of the `sofort` payment method
     public var sofort: StripeChargePaymentDetailsSofort?
     /// If this is a `stripe_account` payment, this hash contains a snapshot of the transaction specific details of the `stripe_account` payment method
@@ -216,9 +220,8 @@ public struct StripeChargePaymentDetailsACHCreditTransfer: StripeModel {
 }
 
 public struct StripeChargePaymentDetailsACHDebit: StripeModel {
-    // TODO: - Make enum
     /// Type of entity that holds the account. This can be either individual or company.
-    public var accountHolderType: String?
+    public var accountHolderType: StripeChargePaymentDetailsACHDebitAccountHolderType?
     /// Name of the bank associated with the bank account.
     public var bankName: String?
     /// Two-letter ISO code representing the country the bank account is located in.
@@ -229,6 +232,11 @@ public struct StripeChargePaymentDetailsACHDebit: StripeModel {
     public var last4: String?
     /// Routing transit number for the bank account.
     public var routingNumber: String?
+}
+
+public enum StripeChargePaymentDetailsACHDebitAccountHolderType: String, StripeModel {
+    case individual
+    case company
 }
 
 public struct StripeChargePaymentDetailsAlipay: StripeModel {
@@ -244,11 +252,17 @@ public struct StripeChargePaymentDetailsBancontact: StripeModel {
     public var bic: String?
     /// Last four characters of the IBAN.
     public var ibanLast4: String?
-    // TODO: - Make enum (might already live somewhere in the codebase?)
     /// Preferred language of the Bancontact authorization page that the customer is redirected to. Can be one of `en`, `de`, `fr`, or `nl`
-    public var preferredLanguage: String?
+    public var preferredLanguage: StripeChargePaymentDetailsBancontactPreferredLanguage?
     /// Owner’s verified full name. Values are verified or provided by Bancontact directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var verifiedName: String?
+}
+
+public enum StripeChargePaymentDetailsBancontactPreferredLanguage: String, StripeModel {
+    case en
+    case de
+    case fr
+    case nl
 }
 
 public struct StripeChargePaymentDetailsCard: StripeModel {
@@ -266,12 +280,30 @@ public struct StripeChargePaymentDetailsCard: StripeModel {
     public var fingerprint: String?
     /// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
     public var funding: StripeCardFundingType?
+    /// Installment details for this payment (Mexico only). For more information, see the [installments integration guide.](https://stripe.com/docs/payments/installments)
+    public var installments: StripeChargePaymentDetailsCardInstallments?
     /// The last four digits of the card.
     public var last4: String?
+    /// Identifies which network this charge was processed on. Can be `amex`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+    public var network: StripePaymentMethodCardNetwork?
     /// Contains details on how this Card maybe be used for 3D Secure authentication.
     public var threeDSecure: StripeChargePaymentDetailsCardThreeDSecure?
     /// If this Card is part of a card wallet, this contains the details of the card wallet.
     public var wallet: StripePaymentMethodCardWallet?
+}
+
+public struct StripeChargePaymentDetailsCardInstallments: StripeModel {
+    /// Installment plan selected for the payment.
+    public var plan: StripeChargePaymentDetailsCardInstallmentPlan?
+}
+
+public struct StripeChargePaymentDetailsCardInstallmentPlan: StripeModel {
+    /// For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+    public var count: Int?
+    /// For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card. One of `month`.
+    public var interval: StripePlanInterval?
+    /// Type of installment plan, one of `fixed_count`.
+    public var type: String?
 }
 
 public struct StripeChargePaymentDetailsCardThreeDSecure: StripeModel {
@@ -302,11 +334,20 @@ public struct StripeChargePaymentDetailsCardPresent: StripeModel {
     public var generatedCard: String?
     /// The last four digits of the card.
     public var last4: String?
-    // TODO: - Make enum when not lazy.
+    /// Identifies which network this charge was processed on. Can be `amex`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+    public var network: StripePaymentMethodCardNetwork?
     /// How were card details read in this transaction. Can be `contact_emv`, `contactless_emv`, `magnetic_stripe_fallback`, `magnetic_stripe_track2`, or `contactless_magstripe_mode`
-    public var readMethod: String?
+    public var readMethod: StripeChargePaymentDetailsCardPresentReadMethod?
     /// A collection of fields required to be displayed on receipts. Only required for EMV transactions.
     public var receipt: StripeChargePaymentDetailsCardPresentReceipt?
+}
+
+public enum StripeChargePaymentDetailsCardPresentReadMethod: String, StripeModel {
+    case contactEmv = "contact_emv"
+    case contactlessEmv = "contactless_emv"
+    case magneticStrripeFallback = "magnetic_stripe_fallback"
+    case magneticStripeTrack2 = "magnetic_stripe_track2"
+    case contactlessMagstripeMode = "contactless_magstripe_mode"
 }
 
 public struct StripeChargePaymentDetailsCardPresentReceipt: StripeModel {
@@ -355,6 +396,9 @@ public struct StripeChargePaymentDetailsIdeal: StripeModel {
     public var verifiedName: String?
 }
 
+public struct StripeChargePaymentDetailsKlarna: StripeModel {
+}
+
 public enum StripeChargePaymentDetailsIdealBank: String, StripeModel {
     case abnAmro = "abn_amro"
     case asnBank = "asn_bank"
@@ -382,19 +426,6 @@ public struct StripeChargePaymentDetailsP24: StripeModel {
     public var reference: String?
     /// Owner’s verified full name. Values are verified or provided by Przelewy24 directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var verifiedName: String?
-}
-
-public struct StripeChargePaymentDetailsSepaDebit: StripeModel {
-    /// Bank code of bank associated with the bank account.
-    public var bankCode: String?
-    /// Branch code of bank associated with the bank account.
-    public var branchCode: String?
-    /// Two-letter ISO code representing the country the bank account is located in.
-    public var country: String?
-    /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
-    public var fingerprint: String?
-    /// Last four characters of the IBAN.
-    public var last4: String?
 }
 
 public struct StripeChargePaymentDetailsSofort: StripeModel {
