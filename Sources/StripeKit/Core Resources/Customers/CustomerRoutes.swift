@@ -104,6 +104,7 @@ public protocol CustomerRoutes {
     /// - Returns: A `StripeCustomerList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCustomerList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
@@ -189,10 +190,12 @@ extension CustomerRoutes {
     }
 }
 
-
 public struct StripeCustomerRoutes: CustomerRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let customers = APIBase + APIVersion + "customers"
+    private let customer = APIBase + APIVersion + "customers/"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -284,11 +287,11 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             body["tax_id_data"] = taxIdData
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.customers.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: customers, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(customer: String) -> EventLoopFuture<StripeCustomer> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.customer(customer).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: self.customer + customer, headers: headers)
     }
     
     public func update(customer: String,
@@ -373,11 +376,11 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             body["tax_exempt"] = taxExempt.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.customer(customer).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: self.customer + customer, body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(customer: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.customer(customer).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: self.customer + customer, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCustomerList> {
@@ -386,6 +389,6 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             queryParams = filter.queryParameters
         }
 
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.customers.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: customers, query: queryParams, headers: headers)
     }
 }

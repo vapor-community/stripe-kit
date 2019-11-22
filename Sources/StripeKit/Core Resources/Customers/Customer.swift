@@ -59,10 +59,12 @@ public struct StripeCustomer: StripeModel {
 }
 
 public struct StripeCustomerInvoiceSettings: StripeModel {
-    /// Default footer to be displayed on invoices for this customer.
-    public var footer: String?
     /// Default custom fields to be displayed on invoices for this customer.
     public var customFields: [StripeCustomerInvoiceSettingsCustomFields]?
+    /// ID of the default payment method used for subscriptions and invoices for the customer.
+    public var defaultPaymentMethod: String?
+    /// Default footer to be displayed on invoices for this customer.
+    public var footer: String?
 }
 
 public struct StripeCustomerInvoiceSettingsCustomFields: StripeModel {

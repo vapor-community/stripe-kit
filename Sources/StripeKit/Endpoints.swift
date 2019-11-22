@@ -13,11 +13,6 @@ internal let FilesAPIBase = "https://files.stripe.com/"
 internal let APIVersion = "v1/"
 
 internal enum StripeAPIEndpoint {
-    
-    // MARK: - CUSTOMERS
-    case customers
-    case customer(String)
-    
     // MARK: - TOKENS
     case tokens
     case token(String)
@@ -215,10 +210,7 @@ internal enum StripeAPIEndpoint {
     case accountLinks
     
     var endpoint: String {
-        switch self {
-        case .customers: return APIBase + APIVersion + "customers"
-        case .customer(let id): return APIBase + APIVersion + "customers/\(id)"
-            
+        switch self {            
         case .tokens: return APIBase + APIVersion + "tokens"
         case .token(let id): return APIBase + APIVersion + "tokens/\(id)"
             
