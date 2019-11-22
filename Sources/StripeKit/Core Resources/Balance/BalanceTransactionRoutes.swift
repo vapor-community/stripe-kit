@@ -1,20 +1,14 @@
 //
-//  BalanceRoutes.swift
-//  Stripe
+//  BalanceTransactionRoutes.swift
+//  
 //
-//  Created by Anthony Castelli on 4/13/17.
-//
+//  Created by Andrew Edwards on 11/22/19.
 //
 
 import NIO
 import NIOHTTP1
 
-public protocol BalanceRoutes {
-    /// Retrieves the current account balance, based on the authentication that was used to make the request. For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
-    ///
-    /// - Returns: A `StripeBalance`.
-    func retrieve() -> EventLoopFuture<StripeBalance>
-    
+public protocol BalanceTransactionRoutes {
     /// Retrieves the balance transaction with the given ID.
     ///
     /// - Parameter id: The ID of the desired balance transaction, as found on any API object that affects the balance (e.g., a charge or transfer).
@@ -27,14 +21,11 @@ public protocol BalanceRoutes {
     /// - Returns: A `StripeBalanceTransactionList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeBalanceTransactionList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
-extension BalanceRoutes {
-    public func retrieve() -> EventLoopFuture<StripeBalance> {
-        return retrieve()
-    }
-    
+extension BalanceTransactionRoutes {
     public func retrieve(id: String) -> EventLoopFuture<StripeBalanceTransaction> {
         return retrieve(id: id)
     }
@@ -44,20 +35,19 @@ extension BalanceRoutes {
     }
 }
 
-public struct StripeBalanceRoutes: BalanceRoutes {
-    private let apiHandler: StripeAPIHandler
+public struct StripeBalanceTransactionRoutes: BalanceRoutes {
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let balanceTransaction = APIBase + APIVersion + "balance/balance_transaction/"
+    private let balanceTransactions = APIBase + APIVersion + "balance/balance_transactions"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve() -> EventLoopFuture<StripeBalance> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.balance.endpoint, headers: headers)
-    }
-    
     public func retrieve(id: String) -> EventLoopFuture<StripeBalanceTransaction> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.balanceHistoryTransaction(id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: balanceTransaction + id, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeBalanceTransactionList> {
@@ -65,6 +55,6 @@ public struct StripeBalanceRoutes: BalanceRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.balanceHistory.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: balanceTransactions, query: queryParams, headers: headers)
     }
 }
