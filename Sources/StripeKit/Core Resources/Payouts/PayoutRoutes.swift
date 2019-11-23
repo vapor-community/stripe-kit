@@ -97,8 +97,10 @@ extension PayoutRoutes {
 }
 
 public struct StripePayoutRoutes: PayoutRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let payouts = APIBase + APIVersion + "payouts"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -141,7 +143,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
             body["statement_descriptor"] = statementDescriptor
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.payout.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: payouts, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(payout: String) -> EventLoopFuture<StripePayout> {
@@ -153,7 +155,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.payouts(payout).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(payouts)/\(payout)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripePayoutsList> {
@@ -162,10 +164,10 @@ public struct StripePayoutRoutes: PayoutRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.payout.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: payouts, query: queryParams, headers: headers)
     }
     
     public func cancel(payout: String) -> EventLoopFuture<StripePayout> {
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.payoutsCancel(payout).endpoint, headers: headers)
+        return apiHandler.send(method: .POST, path: "\(payouts)/\(payout)/cancel", headers: headers)
     }
 }

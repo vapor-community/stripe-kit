@@ -112,14 +112,17 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 
 ### Core Resources
 * [x] Balance
+* [x] Balance Transactions
 * [x] Charges
 * [x] Customers
 * [x] Customer Tax IDs
 * [x] Disputes  
 * [ ] Events
+* [x] Files
 * [x] File Links
-* [x] File Uploads
+* [x] Mandates
 * [x] PaymentIntents
+* [ ] SetupIntents
 * [x] Payouts
 * [x] Products
 * [x] Refunds
