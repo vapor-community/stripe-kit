@@ -23,6 +23,7 @@ public protocol AccountLinkRoutes {
                 type: AccountLinkCreationType,
                 collect: AccountLinkCreationCollectType?) -> EventLoopFuture<AccountLink>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

@@ -71,6 +71,7 @@ public protocol CardRoutes {
     /// - Returns: A `StripeCardList`.
     func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeCardList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

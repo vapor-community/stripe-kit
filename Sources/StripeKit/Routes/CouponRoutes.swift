@@ -63,6 +63,7 @@ public protocol CouponRoutes {
     /// - Returns: A `StripeCouponList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCouponList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

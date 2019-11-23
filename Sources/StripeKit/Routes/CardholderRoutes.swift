@@ -65,6 +65,7 @@ public protocol CardholderRoutes {
     /// - Returns: A `StripeAuthorizationList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeAuthorizationList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

@@ -123,6 +123,7 @@ public protocol SubscriptionRoutes {
     /// - Returns: A `StripeSubscriptionList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeSubscriptionList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

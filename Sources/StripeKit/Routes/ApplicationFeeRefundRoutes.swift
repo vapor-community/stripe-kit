@@ -46,6 +46,7 @@ public protocol ApplicationFeeRefundRoutes {
     /// - Returns: A `StripeApplicationFeeRefundList`.
     func listAll(fee: String, filter: [String: Any]?) -> EventLoopFuture<StripeApplicationFeeRefundList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

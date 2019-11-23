@@ -21,6 +21,7 @@ public protocol ScheduledQueryRunRoutes {
     /// - Returns: A `StripeScheduledQueryRunList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeScheduledQueryRunList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

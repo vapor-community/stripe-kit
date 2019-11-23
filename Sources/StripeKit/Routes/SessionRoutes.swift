@@ -42,6 +42,7 @@ public protocol SessionRoutes {
     /// - Returns: A `StripeSession`.
     func retrieve(id: String) -> EventLoopFuture<StripeSession>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

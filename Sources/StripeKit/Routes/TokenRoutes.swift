@@ -44,6 +44,7 @@ public protocol TokenRoutes {
     /// - Returns: A `StripeToken`.
     func retrieve(token: String) -> EventLoopFuture<StripeToken>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

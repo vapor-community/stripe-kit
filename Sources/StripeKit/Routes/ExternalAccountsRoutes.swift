@@ -127,6 +127,7 @@ public protocol ExternalAccountsRoutes {
     /// - Returns: A `StripeCardList`.
     func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<StripeCardList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

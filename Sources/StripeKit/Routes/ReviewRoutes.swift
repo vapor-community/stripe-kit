@@ -27,6 +27,7 @@ public protocol ReviewRoutes {
     /// - Returns: A `StripeReviewList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeReviewList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

@@ -10,6 +10,7 @@ import AsyncHTTPClient
 
 public final class StripeClient {
     public var balances: BalanceRoutes
+    public var balanceTransactions: BalanceTransactionRoutes
     public var charges: ChargeRoutes
     public var connectAccounts: AccountRoutes
     public var coupons: CouponRoutes
@@ -61,6 +62,7 @@ public final class StripeClient {
     public var readers: ReaderRoutes
     public var scheduledQueryRuns: ScheduledQueryRunRoutes
     public var accountLinks: AccountLinkRoutes
+    public var mandates: MandateRoutes
     
     private let client: HTTPClient
     
@@ -69,6 +71,7 @@ public final class StripeClient {
         let handler = StripeDefaultAPIHandler(httpClient: client, apiKey: apiKey)
         
         balances = StripeBalanceRoutes(apiHandler: handler)
+        balanceTransactions = StripeBalanceTransactionRoutes(apiHandler: handler)
         charges = StripeChargeRoutes(apiHandler: handler)
         connectAccounts = StripeConnectAccountRoutes(apiHandler: handler)
         coupons = StripeCouponRoutes(apiHandler: handler)
@@ -120,6 +123,7 @@ public final class StripeClient {
         readers = StripeReaderRoutes(apiHandler: handler)
         scheduledQueryRuns = StripeScheduledQueryRunRoutes(apiHandler: handler)
         accountLinks = StripeAccountLinkRoutes(apiHandler: handler)
+        mandates = StripeMandateRoutes(apiHandler: handler)
     }
     
     deinit {

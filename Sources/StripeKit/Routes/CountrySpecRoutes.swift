@@ -21,6 +21,7 @@ public protocol CountrySpecRoutes {
     /// - Returns: A `StripeCountrySpec`.
     func retrieve(country: String) -> EventLoopFuture<StripeCountrySpec>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

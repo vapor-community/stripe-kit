@@ -55,6 +55,7 @@ public protocol TopUpRoutes {
     /// - Returns: A canceled `StripeTopUp`.
     func cancel(topup: String) -> EventLoopFuture<StripeTopUp>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

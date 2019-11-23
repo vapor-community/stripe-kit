@@ -156,6 +156,7 @@ public protocol InvoiceRoutes {
     /// - Returns: A `StripeInvoiceList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

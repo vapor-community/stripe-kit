@@ -115,6 +115,7 @@ public protocol AccountRoutes {
     /// - Returns: A `StripeConnectAccountLoginLink`.
     func createLoginLink(account: String, redirectUrl: String?) -> EventLoopFuture<StripeConnectAccountLoginLink>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

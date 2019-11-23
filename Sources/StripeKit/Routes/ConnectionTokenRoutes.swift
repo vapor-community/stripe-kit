@@ -15,6 +15,7 @@ public protocol ConnectionTokenRoutes {
     /// - Returns: A `StripeConnectionToken`.
     func create(location: String?) -> EventLoopFuture<StripeConnectionToken>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

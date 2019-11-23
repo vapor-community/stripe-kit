@@ -35,7 +35,7 @@ extension BalanceTransactionRoutes {
     }
 }
 
-public struct StripeBalanceTransactionRoutes: BalanceRoutes {
+public struct StripeBalanceTransactionRoutes: BalanceTransactionRoutes {
     public var headers: HTTPHeaders = [:]
     
     private let apiHandler: StripeAPIHandler

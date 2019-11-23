@@ -47,6 +47,7 @@ public protocol RefundRoutes {
     /// - Returns: A `StripeRefundsList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeRefundsList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

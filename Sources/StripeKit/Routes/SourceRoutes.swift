@@ -74,6 +74,7 @@ public protocol SourceRoutes {
     /// - Returns: A `StripeSource`.
     func detach(id: String, customer: String) -> EventLoopFuture<StripeSource>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
