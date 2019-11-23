@@ -16,6 +16,7 @@ public protocol RefundRoutes {
     ///   - charge: The identifier of the charge to refund.
     ///   - amount: A positive integer in cents representing how much of this charge to refund. Can refund only up to the remaining, unrefunded amount of the charge.
     ///   - metadata: A set of key-value pairs that you can attach to a `Refund` object. This can be useful for storing additional information about the refund in a structured format. You can unset individual keys if you POST an empty value for that key. You can clear all keys if you POST an empty value for `metadata`
+    ///   - paymentIntent: ID of the PaymentIntent to refund.
     ///   - reason: String indicating the reason for the refund. If set, possible values are `duplicate`, `fraudulent`, and `requested_by_customer`. If you believe the charge to be fraudulent, specifying `fraudulent` as the reason will add the associated card and email to your blocklists, and will also help us improve our fraud detection algorithms.
     ///   - refundApplicationFee: Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. /n An application fee can be refunded only by the application that created the charge.
     ///   - reverseTransfer: Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). /n A transfer can be reversed only by the application that created the charge.
@@ -23,6 +24,7 @@ public protocol RefundRoutes {
     func create(charge: String,
                 amount: Int?,
                 metadata: [String: String]?,
+                paymentIntent: String?,
                 reason: StripeRefundReason?,
                 refundApplicationFee: Bool?,
                 reverseTransfer: Bool?) -> EventLoopFuture<StripeRefund>
@@ -55,15 +57,17 @@ extension RefundRoutes {
     public func create(charge: String,
                        amount: Int? = nil,
                        metadata: [String: String]? = nil,
+                       paymentIntent: String? = nil,
                        reason: StripeRefundReason? = nil,
                        refundApplicationFee: Bool? = nil,
                        reverseTransfer: Bool? = nil) -> EventLoopFuture<StripeRefund> {
         return create(charge: charge,
-                          amount: amount,
-                          metadata: metadata,
-                          reason: reason,
-                          refundApplicationFee: refundApplicationFee,
-                          reverseTransfer: reverseTransfer)
+                      amount: amount,
+                      metadata: metadata,
+                      paymentIntent: paymentIntent,
+                      reason: reason,
+                      refundApplicationFee: refundApplicationFee,
+                      reverseTransfer: reverseTransfer)
     }
     
     public func retrieve(refund: String) -> EventLoopFuture<StripeRefund> {
@@ -80,8 +84,10 @@ extension RefundRoutes {
 }
 
 public struct StripeRefundRoutes: RefundRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let refunds = APIBase + APIVersion + "refunds"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -90,6 +96,7 @@ public struct StripeRefundRoutes: RefundRoutes {
     public func create(charge: String,
                        amount: Int?,
                        metadata: [String: String]?,
+                       paymentIntent: String?,
                        reason: StripeRefundReason?,
                        refundApplicationFee: Bool?,
                        reverseTransfer: Bool?) -> EventLoopFuture<StripeRefund> {
@@ -104,6 +111,10 @@ public struct StripeRefundRoutes: RefundRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
+        
+        if let paymentIntent = paymentIntent {
+            body["payment_intent"] = paymentIntent
+        }
 
         if let refundReason = reason {
             body["reason"] = refundReason.rawValue
@@ -117,11 +128,11 @@ public struct StripeRefundRoutes: RefundRoutes {
             body["reverse_transfer"] = reverseTransfer
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.refunds.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: refunds, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(refund: String) -> EventLoopFuture<StripeRefund> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.refund(refund).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(refunds)/\(refund)", headers: headers)
     }
     
     public func update(refund: String, metadata: [String: String]?) -> EventLoopFuture<StripeRefund> {
@@ -131,7 +142,7 @@ public struct StripeRefundRoutes: RefundRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.refund(refund).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(refunds)/\(refund)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeRefundsList> {
@@ -140,6 +151,6 @@ public struct StripeRefundRoutes: RefundRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.refunds.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: refunds, query: queryParams, headers: headers)
     }
 }

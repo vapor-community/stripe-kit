@@ -32,6 +32,8 @@ public struct StripeRefund: StripeModel {
     public var failureReason: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
+    /// ID of the PaymentIntent that was refunded.
+    public var paymentIntent: String?
     /// Reason for the refund. If set, possible values are `duplicate`, `fraudulent`, and `requested_by_customer`.
     public var reason: StripeRefundReason?
     /// This is the transaction number that appears on email receipts sent for this refund.
