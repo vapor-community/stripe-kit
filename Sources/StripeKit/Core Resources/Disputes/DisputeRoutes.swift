@@ -41,6 +41,7 @@ public protocol DisputeRoutes {
     /// - Returns: A `StripeDisputeList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeDisputeList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
@@ -66,15 +67,17 @@ extension DisputeRoutes {
 }
 
 public struct StripeDisputeRoutes: DisputeRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let disputes = APIBase + APIVersion + "disputes"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
     public func retrieve(dispute: String) -> EventLoopFuture<StripeDispute> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.disputes(dispute).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(disputes)/\(dispute)", headers: headers)
     }
     
     public func update(dispute: String, evidence: [String: Any]?, metadata: [String: String]?, submit: Bool?) -> EventLoopFuture<StripeDispute> {
@@ -92,11 +95,11 @@ public struct StripeDisputeRoutes: DisputeRoutes {
             body["submit"] = submit
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.disputes(dispute).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(disputes)/\(dispute)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func close(dispute: String) -> EventLoopFuture<StripeDispute> {
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.closeDispute(dispute).endpoint, headers: headers)
+        return apiHandler.send(method: .POST, path: "\(disputes)/\(dispute)/close", headers: headers)
     }
     
     public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripeDisputeList> {
@@ -105,6 +108,6 @@ public struct StripeDisputeRoutes: DisputeRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.dispute.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: disputes, query: queryParams, headers: headers)
     }
 }

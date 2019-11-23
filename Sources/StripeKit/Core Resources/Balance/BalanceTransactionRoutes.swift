@@ -39,8 +39,8 @@ public struct StripeBalanceTransactionRoutes: BalanceRoutes {
     public var headers: HTTPHeaders = [:]
     
     private let apiHandler: StripeAPIHandler
-    private let balanceTransaction = APIBase + APIVersion + "balance/balance_transaction/"
-    private let balanceTransactions = APIBase + APIVersion + "balance/balance_transactions"
+    private let balanceTransaction = APIBase + APIVersion + "balance_transactions/"
+    private let balanceTransactions = APIBase + APIVersion + "balance_transactions"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler

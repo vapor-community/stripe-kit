@@ -48,12 +48,7 @@ internal enum StripeAPIEndpoint {
     case accounts(String)
     case accountsReject(String)
     case accountsLoginLink(String)
-    
-    // MARK: - DISPUTES
-    case dispute
-    case disputes(String)
-    case closeDispute(String)
-    
+        
     // MARK: - SKUS
     case sku
     case skus(String)
@@ -210,7 +205,7 @@ internal enum StripeAPIEndpoint {
     case accountLinks
     
     var endpoint: String {
-        switch self {            
+        switch self {
         case .tokens: return APIBase + APIVersion + "tokens"
         case .token(let id): return APIBase + APIVersion + "tokens/\(id)"
             
@@ -238,11 +233,7 @@ internal enum StripeAPIEndpoint {
         case .accounts(let id): return APIBase + APIVersion + "accounts/\(id)"
         case .accountsReject(let id): return APIBase + APIVersion + "accounts/\(id)/reject"
         case .accountsLoginLink(let id): return APIBase + APIVersion + "accounts/\(id)/login_links"
-            
-        case .dispute: return APIBase + APIVersion + "disputes"
-        case .disputes(let id): return APIBase + APIVersion + "disputes/\(id)"
-        case .closeDispute(let id): return APIBase + APIVersion + "disputes/\(id)/close"
-            
+                        
         case .sku: return APIBase + APIVersion + "skus"
         case .skus(let id): return APIBase + APIVersion + "skus/\(id)"
             
