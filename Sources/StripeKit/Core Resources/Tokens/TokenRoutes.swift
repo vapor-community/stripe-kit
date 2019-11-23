@@ -30,13 +30,17 @@ public protocol TokenRoutes {
     ///
     /// - Parameter pii: The PII this token will represent.
     /// - Returns: A `StripeToken`.
-    func create(pii: String?) -> EventLoopFuture<StripeToken>
+    func create(pii: String) -> EventLoopFuture<StripeToken>
     
     /// Creates a single-use token that wraps a user’s legal entity information. Use this when creating or updating a Connect account. See the account tokens documentation to learn more. /n Account tokens may be created only in live mode, with your application’s publishable key. Your application’s secret key may be used to create account tokens only in test mode.
     ///
     /// - Parameter account: Information for the account this token will represent.
     /// - Returns: A `StripeToken`.
-    func create(account: [String: Any]?) -> EventLoopFuture<StripeToken>
+    func create(account: [String: Any]) -> EventLoopFuture<StripeToken>
+    
+    /// Creates a single-use token that represents the details for a person. Use this when creating or updating persons associated with a Connect account. See the documentation to learn more. Person tokens may be created only in live mode, with your application’s publishable key. Your application’s secret key may be used to create person tokens only in test mode.
+    /// - Parameter person: Information for the person this token will represent.
+    func create(person: [String: Any]) -> EventLoopFuture<StripePerson>
     
     /// Retrieves the token with the given ID.
     ///
@@ -57,12 +61,16 @@ extension TokenRoutes {
         return create(bankAcocunt: bankAcocunt, customer: customer)
     }
     
-    public func create(pii: String? = nil) -> EventLoopFuture<StripeToken> {
+    public func create(pii: String) -> EventLoopFuture<StripeToken> {
         return create(pii: pii)
     }
     
-    public func create(account: [String: Any]? = nil) -> EventLoopFuture<StripeToken> {
+    public func create(account: [String: Any]) -> EventLoopFuture<StripeToken> {
         return create(account: account)
+    }
+    
+    public func create(person: [String: Any]) -> EventLoopFuture<StripePerson> {
+        return create(person: person)
     }
     
     public func retrieve(token: String) -> EventLoopFuture<StripeToken> {
@@ -71,8 +79,10 @@ extension TokenRoutes {
 }
 
 public struct StripeTokenRoutes: TokenRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let tokens = APIBase + APIVersion + "tokens"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -93,7 +103,7 @@ public struct StripeTokenRoutes: TokenRoutes {
             body["customer"] = customer
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
     }
     
     public func create(bankAcocunt: [String: Any]?, customer: String?) -> EventLoopFuture<StripeToken> {
@@ -107,30 +117,32 @@ public struct StripeTokenRoutes: TokenRoutes {
             body["customer"] = customer
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func create(pii: String?) -> EventLoopFuture<StripeToken> {
-        var body: [String: Any] = [:]
+    public func create(pii: String) -> EventLoopFuture<StripeToken> {
+        let body: [String: Any] = ["personal_id_number": pii]
         
-        if let pii = pii {
-            body["personal_id_number"] = pii
-        }
-        
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func create(account: [String: Any]?) -> EventLoopFuture<StripeToken> {
+    public func create(account: [String: Any]) -> EventLoopFuture<StripeToken> {
         var body: [String: Any] = [:]
         
-        if let account = account {
-            account.forEach { body["account[\($0)]"] = $1 }
-        }
+        account.forEach { body["account[\($0)]"] = $1 }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.tokens.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func create(person: [String : Any]) -> EventLoopFuture<StripePerson> {
+        var body: [String: Any] = [:]
+        
+        person.forEach { body["person[\($0)]"] = $1 }
+        
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(token: String) -> EventLoopFuture<StripeToken> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.token(token).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(tokens)/\(token)", headers: headers)
     }
 }

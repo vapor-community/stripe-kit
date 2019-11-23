@@ -32,6 +32,7 @@ public struct StripeToken: StripeModel {
 
 public enum StripeTokenType: String, StripeModel {
     case account
+    case person
     case bankAccount = "bank_account"
     case card
     case pii
