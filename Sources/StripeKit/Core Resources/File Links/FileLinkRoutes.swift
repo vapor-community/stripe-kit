@@ -41,6 +41,7 @@ public protocol FileLinkRoutes {
     /// - Returns: A `StripeFileLinkList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileLinkList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
@@ -63,8 +64,10 @@ extension FileLinkRoutes {
 }
 
 public struct StripeFileLinkRoutes: FileLinkRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let filelinks = APIBase + APIVersion + "file_links"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -79,11 +82,11 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.fileLink.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: filelinks, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(link: String) -> EventLoopFuture<StripeFileLink> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.fileLinks(link).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(filelinks)/\(link)", headers: headers)
     }
     
     public func update(link: String, expiresAt: Any?, metadata: [String: String]?) -> EventLoopFuture<StripeFileLink> {
@@ -100,7 +103,7 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.fileLinks(link).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(filelinks)/\(link)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileLinkList> {
@@ -109,6 +112,6 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.fileLink.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: filelinks, query: queryParams, headers: headers)
     }
 }

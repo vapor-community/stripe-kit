@@ -31,6 +31,7 @@ public protocol FileRoutes {
     /// - Returns: A `FileUploadList`
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileUploadList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

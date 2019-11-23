@@ -97,10 +97,6 @@ internal enum StripeAPIEndpoint {
     case payout
     case payouts(String)
     case payoutsCancel(String)
-    
-    // MARK: - FILE LINKS
-    case fileLink
-    case fileLinks(String)
         
     // MARK: - PERSONS
     case person(String)
@@ -269,10 +265,7 @@ internal enum StripeAPIEndpoint {
         case .payout: return APIBase + APIVersion + "payouts"
         case .payouts(let id): return APIBase + APIVersion + "payouts/\(id)"
         case .payoutsCancel(let id): return APIBase + APIVersion + "payouts/\(id)/cancel"
-            
-        case .fileLink: return APIBase + APIVersion + "file_links"
-        case .fileLinks(let id): return APIBase + APIVersion + "file_links/\(id)"
-                
+                            
         case .person(let account): return APIBase + APIVersion + "accounts/\(account)/persons"
         case .persons(let account, let person): return APIBase + APIVersion + "accounts/\(account)/persons/\(person)"
             
