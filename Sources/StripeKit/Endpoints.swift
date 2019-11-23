@@ -101,11 +101,7 @@ internal enum StripeAPIEndpoint {
     // MARK: - FILE LINKS
     case fileLink
     case fileLinks(String)
-    
-    // MARK: - FILE UPLOAD
-    case file
-    case files(String)
-    
+        
     // MARK: - PERSONS
     case person(String)
     case persons(String, String)
@@ -276,10 +272,7 @@ internal enum StripeAPIEndpoint {
             
         case .fileLink: return APIBase + APIVersion + "file_links"
         case .fileLinks(let id): return APIBase + APIVersion + "file_links/\(id)"
-        
-        case .file: return FilesAPIBase + APIVersion + "files"
-        case .files(let id): return FilesAPIBase + APIVersion + "files/\(id)"
-        
+                
         case .person(let account): return APIBase + APIVersion + "accounts/\(account)/persons"
         case .persons(let account, let person): return APIBase + APIVersion + "accounts/\(account)/persons/\(person)"
             

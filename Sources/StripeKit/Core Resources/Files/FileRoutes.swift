@@ -49,8 +49,11 @@ extension FileRoutes {
 }
 
 public struct StripeFileRoutes: FileRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let filesupload = FilesAPIBase + APIVersion + "files"
+    private let files = APIBase + APIVersion + "files"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -83,11 +86,11 @@ public struct StripeFileRoutes: FileRoutes {
         
         body.append("\r\n--\(boundary)--\r\n")
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.file.endpoint, body: .data(body), headers: headers)
+        return apiHandler.send(method: .POST, path: filesupload, body: .data(body), headers: headers)
     }
     
     public func retrieve(file: String) -> EventLoopFuture<StripeFile> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.files(file).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(files)/\(file)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileUploadList> {
@@ -96,7 +99,7 @@ public struct StripeFileRoutes: FileRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.file.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: files, query: queryParams, headers: headers)
     }
 }
 
