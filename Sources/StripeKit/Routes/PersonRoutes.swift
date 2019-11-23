@@ -101,6 +101,7 @@ public protocol PersonRoutes {
     /// - Returns: A `PersonsList`
     func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<PersonsList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

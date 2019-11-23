@@ -42,6 +42,7 @@ public protocol TaxIDRoutes {
     /// - Returns: A `StripeTaxIDList`.
     func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeTaxIDList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

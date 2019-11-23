@@ -82,6 +82,7 @@ public protocol PlanRoutes {
     /// - Returns: A `StripePlanList`
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePlanList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

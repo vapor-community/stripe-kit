@@ -75,6 +75,7 @@ public protocol SubscriptionItemRoutes {
     /// - Returns: A `StripeSubscriptionItemList`.
     func listAll(subscription: String, filter: [String: Any]?) -> EventLoopFuture<StripeSubscriptionItemList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

@@ -56,6 +56,7 @@ public protocol PayoutRoutes {
     /// - Returns: A `StripePayout`.
     func cancel(payout: String) -> EventLoopFuture<StripePayout>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

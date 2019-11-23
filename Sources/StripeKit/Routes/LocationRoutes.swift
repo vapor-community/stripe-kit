@@ -44,6 +44,7 @@ public protocol LocationRoutes {
     /// - Returns: A `StripeLocationList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeLocationList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

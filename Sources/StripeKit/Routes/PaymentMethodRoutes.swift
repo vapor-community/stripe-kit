@@ -66,6 +66,7 @@ public protocol PaymentMethodRoutes {
     /// - Returns: A `StripePaymentMethod`.
     func detach(paymentMethod: String) -> EventLoopFuture<StripePaymentMethod>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

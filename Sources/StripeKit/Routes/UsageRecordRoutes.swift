@@ -31,6 +31,7 @@ public protocol UsageRecordRoutes {
     /// - Returns: A `StripeUsageRecordList`.
     func listAll(subscriptionItem: String, filter: [String: Any]?) -> EventLoopFuture<StripeUsageRecordList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

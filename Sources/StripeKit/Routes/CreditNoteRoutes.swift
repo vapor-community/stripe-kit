@@ -57,6 +57,7 @@ public protocol CreditNoteRoutes {
     /// - Returns: A `StripeCreditNoteList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCreditNoteList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

@@ -83,6 +83,7 @@ public protocol OrderRoutes {
     /// - Returns: A `StripeOrder`.
     func `return`(id: String, items: [[String: Any]]?) -> EventLoopFuture<StripeOrder>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

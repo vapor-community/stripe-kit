@@ -65,6 +65,7 @@ public protocol IssuingCardRoutes {
     /// - Returns: A `StripeIssuingCardList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeIssuingCardList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

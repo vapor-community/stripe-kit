@@ -22,6 +22,7 @@ public protocol OrderReturnRoutes {
     /// - Returns: A `StripeOrderReturnList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeOrderReturnList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

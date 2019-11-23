@@ -21,6 +21,7 @@ public protocol ApplicationFeesRoutes {
     /// - Returns: A `StripeApplicationFeeList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeApplicationFeeList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

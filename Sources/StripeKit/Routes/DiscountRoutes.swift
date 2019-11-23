@@ -21,6 +21,7 @@ public protocol DiscountRoutes {
     /// - Returns: A `StripeDeletedObject`.
     func delete(subscription: String) -> EventLoopFuture<StripeDeletedObject>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

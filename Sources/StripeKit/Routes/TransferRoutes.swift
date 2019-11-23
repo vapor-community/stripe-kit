@@ -52,6 +52,7 @@ public protocol TransferRoutes {
     /// - Returns: A `StripeTransferList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransferList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

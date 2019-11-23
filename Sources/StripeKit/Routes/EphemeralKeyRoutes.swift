@@ -12,6 +12,7 @@ public protocol EphemeralKeyRoutes {
     func create(customer: String, issuingCard: String?) -> EventLoopFuture<StripeEphemeralKey>
     func delete(ephemeralKey: String) -> EventLoopFuture<StripeEphemeralKey>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

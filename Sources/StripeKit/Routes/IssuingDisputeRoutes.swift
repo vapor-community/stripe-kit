@@ -44,6 +44,7 @@ public protocol IssuingDisputeRoutes {
     /// - Returns: A `StripeIssuingDisputeList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeIssuingDisputeList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

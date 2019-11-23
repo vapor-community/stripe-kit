@@ -135,6 +135,7 @@ public protocol PaymentIntentsRoutes {
     /// - Returns: A `StripePaymentIntentsList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePaymentIntentsList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

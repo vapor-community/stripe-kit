@@ -58,6 +58,7 @@ public protocol TaxRateRoutes {
     /// - Returns: A `StripeTaxRateList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTaxRateList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

@@ -44,6 +44,7 @@ public protocol ReaderRoutes {
     /// - Returns: A `StripeReaderList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeReaderList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

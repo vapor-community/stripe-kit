@@ -66,6 +66,7 @@ public protocol BankAccountRoutes {
     /// - Returns: A `StripeBankAccountList`.
     func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeBankAccountList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

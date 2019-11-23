@@ -79,6 +79,7 @@ public protocol SKURoutes {
     /// - Returns: A `StripeDeletedObject`.
     func delete(id: String) -> EventLoopFuture<StripeDeletedObject>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

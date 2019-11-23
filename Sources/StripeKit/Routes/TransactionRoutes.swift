@@ -29,6 +29,7 @@ public protocol TransactionRoutes {
     /// - Returns: A `StripeTransactionList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransactionList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

@@ -52,6 +52,7 @@ public protocol TransferReversalRoutes {
     /// - Returns: A `StripeTransferReversalList`.
     func listAll(id: String, filter: [String: Any]?) -> EventLoopFuture<StripeTransferReversalList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 

@@ -35,6 +35,7 @@ public protocol ValueListItemRoutes {
     /// - Returns: A `StripeValueListItemList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeValueListItemList>
     
+    /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
