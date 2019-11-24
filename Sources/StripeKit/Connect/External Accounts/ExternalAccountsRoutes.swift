@@ -208,8 +208,10 @@ extension ExternalAccountsRoutes {
 }
 
 public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let accounts = APIBase + APIVersion + "accounts"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -232,11 +234,11 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.externalAccount(account).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts", body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(account: String, id: String) -> EventLoopFuture<StripeBankAccount> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.externalAccounts(account, id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     
     public func update(account: String,
@@ -263,11 +265,11 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.externalAccounts(account, id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func deleteBankAccount(account: String, id: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.externalAccounts(account, id).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     
     public func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<StripeBankAccountList> {
@@ -275,7 +277,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.externalAccount(account).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts", query: queryParams, headers: headers)
     }
     
     public func create(account: String, card: Any, defaultForCurrency: Bool?, metadata: [String: String]?) -> EventLoopFuture<StripeCard> {
@@ -295,11 +297,11 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.externalAccount(account).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts", body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(account: String, id: String) -> EventLoopFuture<StripeCard> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.externalAccounts(account, id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     
     public func update(account: String,
@@ -361,11 +363,11 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
             body["name"] = name
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.externalAccounts(account, id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func deleteCard(account: String, id: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.externalAccounts(account, id).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     
     public func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<StripeCardList> {
@@ -373,6 +375,6 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.externalAccount(account).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts", query: queryParams, headers: headers)
     }
 }

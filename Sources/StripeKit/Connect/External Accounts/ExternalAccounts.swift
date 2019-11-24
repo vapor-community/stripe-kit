@@ -22,7 +22,7 @@ public struct StripeExternalAccountsList: StripeModel {
     public var url: String?
     /// An array of `StripeCard`s associated with the account.
     public var cardAccounts: [StripeCard]?
-    /// /// An array of `StripeBankAccount`s associated with the account.
+    /// An array of `StripeBankAccount`s associated with the account.
     public var bankAccounts: [StripeBankAccount]?
     
     public init(from decoder: Decoder) throws {
@@ -33,14 +33,5 @@ public struct StripeExternalAccountsList: StripeModel {
         
         cardAccounts = try container.decodeIfPresent([StripeCard].self, forKey: .data)?.filter{ $0.object == "card" }
         bankAccounts = try container.decodeIfPresent([StripeBankAccount].self, forKey: .data)?.filter{ $0.object == "bank_account" }
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case object
-        case data
-        case hasMore = "has_more"
-        case url
-        case cardAccounts
-        case bankAccounts
     }
 }
