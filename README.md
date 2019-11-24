@@ -115,7 +115,6 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 * [x] Balance Transactions
 * [x] Charges
 * [x] Customers
-* [x] Customer Tax IDs
 * [x] Disputes  
 * [ ] Events
 * [x] Files
@@ -139,15 +138,17 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 ---
 ### Billing
 * [x] Coupons
+* [x] Credit Notes
+* [ ] Customer Balance Transactions
+* [x] Customer Tax IDs
 * [x] Discounts
 * [x] Invoices
 * [x] Invoice Items
-* [x] Tax Rates
-* [x] Credit Notes
-* [x] Products
 * [x] Plans
+* [x] Products
 * [x] Subscriptions
 * [x] Subscription items
+* [x] Tax Rates
 * [x] Usage Records
 ---
 ### Connect
