@@ -63,10 +63,10 @@ extension TransferReversalRoutes {
                        metadata: [String: String]? = nil,
                        refundApplicationFee: Bool? = nil) -> EventLoopFuture<StripeTransferReversal> {
         return create(id: id,
-                          amount: amount,
-                          description: description,
-                          metadata: metadata,
-                          refundApplicationFee: refundApplicationFee)
+                      amount: amount,
+                      description: description,
+                      metadata: metadata,
+                      refundApplicationFee: refundApplicationFee)
     }
     
     public func retrieve(id: String, transfer: String) -> EventLoopFuture<StripeTransferReversal> {
@@ -87,8 +87,10 @@ extension TransferReversalRoutes {
 }
 
 public struct StripeTransferReversalRoutes: TransferReversalRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let transferreversals = APIBase + APIVersion + "transfers"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -117,11 +119,11 @@ public struct StripeTransferReversalRoutes: TransferReversalRoutes {
             body["refund_application_fee"] = refundApplicationFee
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.transferReversal(id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(transferreversals)/\(id)/reversals", body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String, transfer: String) -> EventLoopFuture<StripeTransferReversal> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transfersReversal(transfer, id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(transferreversals)/\(id)/reversals/\(id)", headers: headers)
     }
     
     public func update(id: String,
@@ -132,7 +134,7 @@ public struct StripeTransferReversalRoutes: TransferReversalRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.transfersReversal(transfer, id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(transferreversals)/\(id)/reversals/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(id: String, filter: [String: Any]?) -> EventLoopFuture<StripeTransferReversalList> {
@@ -140,7 +142,7 @@ public struct StripeTransferReversalRoutes: TransferReversalRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transferReversal(id).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(transferreversals)/\(id)/reversals", query: queryParams, headers: headers)
     }
 }
 
