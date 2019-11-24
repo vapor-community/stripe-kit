@@ -26,18 +26,21 @@ public protocol DiscountRoutes {
 }
 
 public struct StripeDiscountRoutes: DiscountRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let customers = APIBase + APIVersion + "customers"
+    private let subscriptions = APIBase + APIVersion + "subscriptions"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
     public func delete(customer: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.discountCustomer(customer).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(customers)/\(customer)/discount", headers: headers)
     }
     
     public func delete(subscription: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.discountSubscription(subscription).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(subscriptions)/\(subscription)/discount", headers: headers)
     }
 }
