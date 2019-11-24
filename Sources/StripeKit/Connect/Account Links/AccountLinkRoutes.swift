@@ -28,8 +28,10 @@ public protocol AccountLinkRoutes {
 }
 
 public struct StripeAccountLinkRoutes: AccountLinkRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let accountlinks = APIBase + APIVersion + "account_links"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -49,6 +51,6 @@ public struct StripeAccountLinkRoutes: AccountLinkRoutes {
             body["collect"] = collect.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.accountLinks.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: accountlinks, body: .string(body.queryParameters), headers: headers)
     }
 }
