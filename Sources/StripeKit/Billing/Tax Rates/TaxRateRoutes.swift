@@ -71,12 +71,12 @@ extension TaxRateRoutes {
                        jurisdiction: String? = nil,
                        metadata: [String: String]? = nil) -> EventLoopFuture<StripeTaxRate> {
         return create(displayName: displayName,
-                          inclusive: inclusive,
-                          percentage: percentage,
-                          active: active,
-                          description: description,
-                          jurisdiction: jurisdiction,
-                          metadata: metadata)
+                      inclusive: inclusive,
+                      percentage: percentage,
+                      active: active,
+                      description: description,
+                      jurisdiction: jurisdiction,
+                      metadata: metadata)
     }
     
     public func retrieve(taxRate: String) -> EventLoopFuture<StripeTaxRate> {
@@ -90,11 +90,11 @@ extension TaxRateRoutes {
                        jurisdiction: String? = nil,
                        metadata: [String: String]? = nil) -> EventLoopFuture<StripeTaxRate> {
         return update(taxRate: taxRate,
-                          active: active,
-                          description: description,
-                          displayName: displayName,
-                          jurisdiction: jurisdiction,
-                          metadata: metadata)
+                      active: active,
+                      description: description,
+                      displayName: displayName,
+                      jurisdiction: jurisdiction,
+                      metadata: metadata)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTaxRateList> {
@@ -103,8 +103,10 @@ extension TaxRateRoutes {
 }
 
 public struct StripeTaxRateRoutes: TaxRateRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let taxrates = APIBase + APIVersion + "tax_rates"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -137,11 +139,11 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.taxRate.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: taxrates, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(taxRate: String) -> EventLoopFuture<StripeTaxRate> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.taxRates(taxRate).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(taxrates)/\(taxRate)", headers: headers)
     }
     
     public func update(taxRate: String,
@@ -172,7 +174,7 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.taxRates(taxRate).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(taxrates)/\(taxRate)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTaxRateList> {
@@ -181,6 +183,6 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
             queryParams += filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.taxRate.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: taxrates, query: queryParams, headers: headers)
     }
 }
