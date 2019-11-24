@@ -86,8 +86,10 @@ extension ValueListRoutes {
 }
 
 public struct StripeValueListRoutes: ValueListRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let valuelists = APIBase + APIVersion + "radar/value_lists"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -108,11 +110,11 @@ public struct StripeValueListRoutes: ValueListRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.valueList.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: valuelists, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(valueList: String) -> EventLoopFuture<StripeValueList> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.valueLists(valueList).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(valuelists)/\(valueList)", headers: headers)
     }
     
     public func update(valueList: String,
@@ -133,11 +135,11 @@ public struct StripeValueListRoutes: ValueListRoutes {
             body["name"] = name
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.valueLists(valueList).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(valuelists)/\(valueList)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(valueList: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.valueLists(valueList).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(valuelists)/\(valueList)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeValueListList> {
@@ -145,6 +147,6 @@ public struct StripeValueListRoutes: ValueListRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.valueList.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: valuelists, query: queryParams, headers: headers)
     }
 }
