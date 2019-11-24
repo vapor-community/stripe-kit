@@ -35,6 +35,13 @@ public struct StripeSubscriptionItemBillingThresholds: StripeModel {
     public var usageGte: Int?
 }
 
+public enum StripeSubscriptionItemPaymentBehavior: String, StripeModel {
+    /// Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice.
+    case allowIncomplete = "allow_incomplete"
+    /// Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid.
+    case errorIfIncomplete = "error_if_incomplete"
+}
+
 public struct StripeSubscriptionItemList: StripeModel {
     public var object: String
     public var hasMore: Bool
