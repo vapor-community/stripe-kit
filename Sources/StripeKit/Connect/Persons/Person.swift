@@ -117,17 +117,14 @@ public enum StripePersonVerificationDetailsCode: String, StripeModel {
 
 
 public struct StripePersonVerificationDocument: StripeModel {
+    /// The back of a document returned by a file upload with a `purpose` value of `additional_verification`.
     public var back: String?
+    /// A user-displayable string describing the verification state of this document.
     public var details: String?
+    /// One of `document_corrupt`, `document_expired`, `document_failed_copy`, `document_failed_greyscale`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_not_readable`, `document_not_uploaded`, `document_type_not_supported`, or `document_too_large`. A machine-readable code specifying the verification state for this document.
     public var detailsCode: StripePersonVerificationDocumentDetailsCode?
+    /// The front of a document returned by a file upload with a `purpose` value of `additional_verification`.
     public var front: String?
-    
-    private enum CodingKeys: String, CodingKey {
-        case back
-        case details
-        case detailsCode = "details_code"
-        case front
-    }
 }
 
 public enum StripePersonVerificationDocumentDetailsCode: String, StripeModel {
@@ -155,16 +152,9 @@ public enum StripePersonVerificationStatus: String, StripeModel {
     case verified
 }
 
-public struct PersonsList: StripeModel {
+public struct StripePersonsList: StripeModel {
     public var object: String
     public var hasMore: Bool
     public var url: String?
     public var data: [StripePerson]?
-    
-    private enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }

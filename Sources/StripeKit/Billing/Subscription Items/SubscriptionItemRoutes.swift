@@ -96,13 +96,14 @@ extension SubscriptionItemRoutes {
                        quantity: Int? = nil,
                        taxRates: [String]? = nil) -> EventLoopFuture<StripeSubscriptionItem> {
         return create(plan: plan,
-                          subscription: subscription,
-                          billingThresholds: billingThresholds,
-                          metadata: metadata,
-                          prorate: prorate,
-                          prorationDate: prorationDate,
-                          quantity: quantity,
-                          taxRates: taxRates)
+                      subscription: subscription,
+                      billingThresholds: billingThresholds,
+                      metadata: metadata,
+                      paymentBehavior: paymentBehavior,
+                      prorate: prorate,
+                      prorationDate: prorationDate,
+                      quantity: quantity,
+                      taxRates: taxRates)
     }
     
     public func retrieve(item: String) -> EventLoopFuture<StripeSubscriptionItem> {
@@ -120,12 +121,15 @@ extension SubscriptionItemRoutes {
                        quantity: Int? = nil,
                        taxRates: [String]? = nil) -> EventLoopFuture<StripeSubscriptionItem> {
         return update(item: item,
-                          metadata: metadata,
-                          plan: plan,
-                          prorate: prorate,
-                          prorationDate: prorationDate,
-                          quantity: quantity,
-                          taxRates: taxRates)
+                      billingThresholds: billingThresholds,
+                      metadata: metadata,
+                      offSession: offSession,
+                      paymentBehavior: paymentBehavior,
+                      plan: plan,
+                      prorate: prorate,
+                      prorationDate: prorationDate,
+                      quantity: quantity,
+                      taxRates: taxRates)
     }
     
     public func delete(item: String,

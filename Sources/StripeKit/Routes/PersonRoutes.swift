@@ -98,8 +98,8 @@ public protocol PersonRoutes {
     /// - Parameters:
     ///   - account: The unique identifier of the account the person is associated with.
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/persons/list?&lang=curl)
-    /// - Returns: A `PersonsList`
-    func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<PersonsList>
+    /// - Returns: A `StripePersonsList`
+    func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<StripePersonsList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -176,7 +176,7 @@ extension PersonRoutes {
         return delete(account: account, person: person)
     }
     
-    public func listAll(account: String, filter: [String: Any]? = nil) -> EventLoopFuture<PersonsList> {
+    public func listAll(account: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripePersonsList> {
         return listAll(account: account, filter: filter)
     }
 }
@@ -340,7 +340,7 @@ public struct StripePersonRoutes: PersonRoutes {
         return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.persons(account, person).endpoint, headers: headers)
     }
     
-    public func listAll(account: String, filter: [String : Any]?) -> EventLoopFuture<PersonsList> {
+    public func listAll(account: String, filter: [String : Any]?) -> EventLoopFuture<StripePersonsList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

@@ -20,3 +20,37 @@ public struct StripeAddress: StripeModel {
     /// State/County/Province/Region.
     public var state: String?
 }
+
+public struct StripeAddressKana: StripeModel {
+    /// City/Ward
+    public var city: String?
+    /// Two-letter country code (ISO 3166-1 alpha-2).
+    public var country: String?
+    /// Block/Building number.
+    public var line1: String?
+    /// Building details.
+    public var line2: String?
+    /// Zip/Postal Code
+    public var postalCode: String?
+    /// Prefecture
+    public var state: String?
+    /// Town/cho-me
+    public var town: String?
+}
+
+public struct StripeAddressKanji: StripeModel {
+    /// City/Ward
+    public var city: String?
+    /// Two-letter country code (ISO 3166-1 alpha-2).
+    public var country: String?
+    /// Block/Building number.
+    public var line1: String?
+    /// Building details.
+    public var line2: String?
+    /// Zip/Postal Code
+    public var postalCode: String?
+    /// Prefecture
+    public var state: String?
+    /// Town/cho-me
+    public var town: String?
+}

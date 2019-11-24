@@ -103,11 +103,19 @@ public enum StripeConnectAccountCapabilitiesStatus: String, StripeModel {
 public struct StripeConnectAccountCompany: StripeModel {
     /// The company’s primary address.
     public var address: StripeAddress?
+    /// The Kana variation of the company’s primary address (Japan only).
+    public var addressKana: StripeAddressKana?
+    /// The Kanji variation of the company’s primary address (Japan only).
+    public var addressKanji: StripeAddressKanji?
     /// Whether the company’s directors have been provided. This Boolean will be `true` if you’ve manually indicated that all directors are provided via the `directors_provided` parameter.
     public var directorsProvided: Bool?
     /// The company’s legal name.
     public var name: String?
-    /// Whether the company’s owners have been provided. This Boolean will be true if you’ve manually indicated that all owners are provided via the owners_provided parameter, or if Stripe determined that all owners were provided. Stripe determines ownership requirements using both the number of owners provided and their total percent ownership (calculated by adding the percent_ownership of each owner together).
+    /// The Kana variation of the company's legal name (Japan only).
+    public var nameKana: String?
+    /// The Kanji variation of the company's legal name (Japan only).
+    public var nameKanji: String?
+    /// Whether the company’s owners have been provided. This Boolean will be `true` if you’ve manually indicated that all owners are provided via the `owners_provided` parameter, or if Stripe determined that all owners were provided. Stripe determines ownership requirements using both the number of owners provided and their total percent ownership (calculated by adding the `percent_ownership` of each owner together).
     public var ownersProvided: Bool?
     /// The company’s phone number (used for verification).
     public var phone: String?
@@ -117,6 +125,11 @@ public struct StripeConnectAccountCompany: StripeModel {
     public var taxIdRegistrar: String?
     /// Whether the company’s business VAT number was provided.
     public var vatIdProvided: Bool?
+    public var verification: StripePersonVerification?
+}
+
+public struct StripeConnectAccountCompanyVerification: StripeModel {
+    public var document: StripePersonVerificationDocument?
 }
 
 public struct StripeConnectAccountRequirmenets: StripeModel {
@@ -130,6 +143,8 @@ public struct StripeConnectAccountRequirmenets: StripeModel {
     public var eventuallyDue: [String]?
     /// The fields that weren’t collected by the current_deadline. These fields need to be collected to re-enable the account.
     public var pastDue: [String]?
+    /// Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to currently_due or past_due.
+    public var pendingVerification: [String]?
 }
 
 public struct StripeConnectAccountSettings: StripeModel {
@@ -176,8 +191,12 @@ public struct StripeConnectAccountSettingsDashboard: StripeModel {
 }
 
 public struct StripeConnectAccountSettingsPayments: StripeModel {
-    /// The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic statement_descriptor specified on the charge.
+    /// The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
     public var statementDescriptor: String?
+    /// The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only)
+    public var statementDescriptorKana: String?
+    /// The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only)
+    public var statementDescriptorKanji: String?
 }
 
 public struct StripeConnectAccountSettingsPayouts: StripeModel {
