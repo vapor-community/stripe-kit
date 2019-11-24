@@ -108,8 +108,10 @@ extension CouponRoutes {
 }
 
 public struct StripeCouponRoutes: CouponRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let coupons = APIBase + APIVersion + "coupons"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -163,11 +165,11 @@ public struct StripeCouponRoutes: CouponRoutes {
             body["redeem_by"] = Int(redeemBy.timeIntervalSince1970)
         }
 
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.coupons.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: coupons, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(coupon: String) -> EventLoopFuture<StripeCoupon> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.coupon(coupon).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(coupons)/\(coupon)", headers: headers)
     }
     
     public func update(coupon: String, metadata: [String: String]?, name: String?) -> EventLoopFuture<StripeCoupon> {
@@ -181,11 +183,11 @@ public struct StripeCouponRoutes: CouponRoutes {
             body["name"] = name
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.coupon(coupon).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(coupons)/\(coupon)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.coupon(coupon).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(coupons)/\(coupon)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCouponList> {
@@ -194,6 +196,6 @@ public struct StripeCouponRoutes: CouponRoutes {
             queryParams = filter.queryParameters
         }
 
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.coupons.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: coupons, query: queryParams, headers: headers)
     }
 }
