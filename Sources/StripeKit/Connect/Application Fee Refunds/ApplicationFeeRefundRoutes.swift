@@ -69,8 +69,10 @@ extension ApplicationFeeRefundRoutes {
 }
 
 public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let applicationfeesrefund = APIBase + APIVersion + "application_fees"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -87,11 +89,11 @@ public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.applicationFeeRefund(fee).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(applicationfeesrefund)/\(fee)/refunds", body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(refund: String, fee: String) -> EventLoopFuture<StripeApplicationFeeRefund> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFeeRefunds(fee, refund).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(applicationfeesrefund)/\(fee)/refunds/\(refund)", headers: headers)
     }
     
     public func update(refund: String, fee: String, metadata: [String: String]?) -> EventLoopFuture<StripeApplicationFeeRefund> {
@@ -101,7 +103,7 @@ public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.applicationFeeRefunds(fee, refund).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(applicationfeesrefund)/\(fee)/refunds/\(refund)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(fee: String, filter: [String: Any]?) -> EventLoopFuture<StripeApplicationFeeList> {
@@ -109,6 +111,6 @@ public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFeeRefund(fee).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(applicationfeesrefund)/\(fee)/refunds", query: queryParams, headers: headers)
     }
 }

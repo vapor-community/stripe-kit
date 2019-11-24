@@ -24,17 +24,6 @@ public struct StripeApplicationFeeRefund: StripeModel {
     public var fee: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case object
-        case amount
-        case balanceTransaction = "balance_transaction"
-        case created
-        case currency
-        case fee
-        case metadata
-    }
 }
 
 public struct StripeApplicationFeeRefundList: StripeModel {
@@ -42,11 +31,4 @@ public struct StripeApplicationFeeRefundList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeApplicationFeeRefund]?
-    
-    private enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }
