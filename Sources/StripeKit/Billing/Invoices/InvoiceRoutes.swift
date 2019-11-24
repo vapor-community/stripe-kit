@@ -17,7 +17,7 @@ public protocol InvoiceRoutes {
     ///   - customer: The ID of the customer to create this invoice for.
     ///   - applicationFeeAmount: A fee in cents that will be applied to the invoice and transferred to the application owner’s Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees
     ///   - autoAdvance: Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice’s state will not automatically advance without an explicit action.
-    ///   - billing: Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
+    ///   - collectionMethod: Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
     ///   - customFields: A list of up to 4 custom fields to be displayed on the invoice.
     ///   - daysUntilDue: The number of days from when the invoice is created until it is due. Valid only for invoices where `billing=send_invoice`.
     ///   - defaultPaymentMethod: ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription’s default payment method, if any, or to the default payment method in the customer’s invoice settings.
@@ -33,7 +33,7 @@ public protocol InvoiceRoutes {
     func create(customer: String,
                 applicationFeeAmount: Int?,
                 autoAdvance: Bool?,
-                billing: StripeInvoiceBiling?,
+                collectionMethod: StripeInvoiceCollectionMethod?,
                 customFields: [[String: Any]]?,
                 daysUntilDue: Int?,
                 defaultPaymentMethod: String?,
@@ -58,6 +58,7 @@ public protocol InvoiceRoutes {
     ///   - invoice: The ID of the invoice to be updated.
     ///   - applicationFeeAmount: A fee in cents that will be applied to the invoice and transferred to the application owner’s Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees documentation.
     ///   - autoAdvance: Controls whether Stripe will perform automatic collection of the invoice.
+    ///   - collectionMethod: Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
     ///   - customFields: A list of up to 4 custom fields to be displayed on the invoice. If a value for custom_fields is specified, the list specified will replace the existing custom field list on this invoice.
     ///   - daysUntilDue: The number of days from which the invoice is created until it is due. Only valid for invoices where billing=send_invoice. This field can only be updated on draft invoices.
     ///   - defaultPaymentMethod: ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription’s default payment method, if any, or to the default payment method in the customer’s invoice settings.
@@ -72,6 +73,7 @@ public protocol InvoiceRoutes {
     func update(invoice: String,
                 applicationFeeAmount: Int?,
                 autoAdvance: Bool?,
+                collectionMethod: StripeInvoiceCollectionMethod?,
                 customFields: [[String: Any]]?,
                 daysUntilDue: Int?,
                 defaultPaymentMethod: String?,
@@ -164,7 +166,7 @@ extension InvoiceRoutes {
     public func create(customer: String,
                        applicationFeeAmount: Int? = nil,
                        autoAdvance: Bool? = nil,
-                       billing: StripeInvoiceBiling? = nil,
+                       collectionMethod: StripeInvoiceCollectionMethod? = nil,
                        customFields: [[String: Any]]? = nil,
                        daysUntilDue: Int? = nil,
                        defaultPaymentMethod: String? = nil,
@@ -179,7 +181,7 @@ extension InvoiceRoutes {
         return create(customer: customer,
                           applicationFeeAmount: applicationFeeAmount,
                           autoAdvance: autoAdvance,
-                          billing: billing,
+                          collectionMethod: collectionMethod,
                           customFields: customFields,
                           daysUntilDue: daysUntilDue,
                           defaultPaymentMethod: defaultPaymentMethod,
@@ -200,6 +202,7 @@ extension InvoiceRoutes {
     public func update(invoice: String,
                        applicationFeeAmount: Int? = nil,
                        autoAdvance: Bool? = nil,
+                       collectionMethod: StripeInvoiceCollectionMethod? = nil,
                        customFields: [[String: Any]]? = nil,
                        daysUntilDue: Int? = nil,
                        defaultPaymentMethod: String? = nil,
@@ -213,6 +216,7 @@ extension InvoiceRoutes {
         return update(invoice: invoice,
                           applicationFeeAmount: applicationFeeAmount,
                           autoAdvance: autoAdvance,
+                          collectionMethod: collectionMethod,
                           customFields: customFields,
                           daysUntilDue: daysUntilDue,
                           defaultPaymentMethod: defaultPaymentMethod,
@@ -275,9 +279,10 @@ extension InvoiceRoutes {
 }
 
 public struct StripeInvoiceRoutes: InvoiceRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
     
+    private let apiHandler: StripeAPIHandler
+    private let invoices = APIBase + APIVersion + "invoices"
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
@@ -285,7 +290,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
     public func create(customer: String,
                        applicationFeeAmount: Int?,
                        autoAdvance: Bool?,
-                       billing: StripeInvoiceBiling?,
+                       collectionMethod: StripeInvoiceCollectionMethod?,
                        customFields: [[String: Any]]?,
                        daysUntilDue: Int?,
                        defaultPaymentMethod: String?,
@@ -309,8 +314,8 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["auto_advance"] = autoAdvance
         }
         
-        if let billing = billing {
-            body["billing"] = billing.rawValue
+        if let collectionMethod = collectionMethod {
+            body["collection_method"] = collectionMethod.rawValue
         }
         
         if let customFields = customFields {
@@ -357,16 +362,17 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["subscription"] = subscription
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoice.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: invoices, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoices(invoice).endpoint)
+        return apiHandler.send(method: .GET, path: "\(invoices)/\(invoice)")
     }
     
     public func update(invoice: String,
                        applicationFeeAmount: Int?,
                        autoAdvance: Bool?,
+                       collectionMethod: StripeInvoiceCollectionMethod?,
                        customFields: [[String: Any]]?,
                        daysUntilDue: Int?,
                        defaultPaymentMethod: String?,
@@ -385,6 +391,10 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         
         if let autoAdvance = autoAdvance {
             body["auto_advance"] = autoAdvance
+        }
+        
+        if let collectionMethod = collectionMethod {
+            body["collection_method"] = collectionMethod.rawValue
         }
         
         if let customFields = customFields {
@@ -427,11 +437,11 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["statement_descriptor"] = statementDescriptor
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoices(invoice).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(invoice: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.invoices(invoice).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(invoices)/\(invoice)", headers: headers)
     }
     
     public func finalize(invoice: String, autoAdvance: Bool?) -> EventLoopFuture<StripeInvoice> {
@@ -441,7 +451,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["auto_advance"] = autoAdvance
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoicesFinalize(invoice).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/finalize", body: .string(body.queryParameters), headers: headers)
     }
     
     public func pay(invoice: String,
@@ -467,19 +477,19 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["source"] = source
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoicesPay(invoice).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/pay", body: .string(body.queryParameters), headers: headers)
     }
     
     public func send(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoicesSend(invoice).endpoint, headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/send", headers: headers)
     }
     
     public func void(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoicesVoid(invoice).endpoint, headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/void", headers: headers)
     }
     
     public func markUncollectible(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoicesMarkUncollectible(invoice).endpoint, headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/mark_uncollectible", headers: headers)
     }
     
     public func retrieveLineItems(invoice: String, filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceLineItemList> {
@@ -488,7 +498,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoicesLineItems(invoice).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(invoices)/\(invoice)/lines", query: queryParams, headers: headers)
     }
     
     public func retrieveUpcomingInvoice(filter: [String: Any]?) -> EventLoopFuture<StripeInvoice> {
@@ -497,7 +507,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoicesUpcoming.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(invoices)/upcoming", query: queryParams, headers: headers)
     }
     
     public func retrieveUpcomingLineItems(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceLineItemList> {
@@ -506,7 +516,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoicesUpcomingLineItems.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(invoices)/upcoming/lines", query: queryParams, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceList> {
@@ -515,6 +525,6 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoice.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: invoices, query: queryParams, headers: headers)
     }
 }

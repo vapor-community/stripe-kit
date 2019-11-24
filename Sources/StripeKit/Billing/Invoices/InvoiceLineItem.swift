@@ -45,6 +45,8 @@ public struct StripeInvoiceLineItem: StripeModel {
     public var taxRates: [StripeTaxRate]?
     /// A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
     public var type: StripeInvoiceLineItemType?
+    /// For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
+    public var unifiedProration: Bool?
 }
 
 public struct StripeInvoiceLineItemPeriod: StripeModel {

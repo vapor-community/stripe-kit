@@ -25,7 +25,7 @@ public struct StripeSubscription: StripeModel {
     /// If the subscription has been canceled, the date of that cancellation. If the subscription was canceled with `cancel_at_period_end`, `canceled_at` will still reflect the date of the initial cancellation request, not the end of the subscription period when the subscription is automatically moved to a canceled state.
     public var canceledAt: Date?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
-    public var collectionMethod: StripeInvoiceBiling?
+    public var collectionMethod: StripeInvoiceCollectionMethod?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?
     /// End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.
