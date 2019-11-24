@@ -47,8 +47,10 @@ public protocol TaxIDRoutes {
 }
 
 public struct StripeTaxIDRoutes: TaxIDRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let taxids = APIBase + APIVersion + "customers"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -58,15 +60,15 @@ public struct StripeTaxIDRoutes: TaxIDRoutes {
         let body: [String: Any] = ["type": type.rawValue,
                                    "value": value]
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.taxid(customer).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(taxids)/\(customer)/tax_ids", body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String, customer: String) -> EventLoopFuture<StripeTaxID> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.taxids(customer, id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(taxids)/\(customer)/tax_ids/\(id)", headers: headers)
     }
     
     public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.taxids(customer, id).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(taxids)/\(customer)/tax_ids/\(id)", headers: headers)
     }
     
     public func listAll(customer: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeTaxIDList> {
@@ -75,6 +77,6 @@ public struct StripeTaxIDRoutes: TaxIDRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.taxid(customer).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(taxids)/\(customer)/tax_ids", query: queryParams, headers: headers)
     }
 }

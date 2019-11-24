@@ -23,6 +23,8 @@ public struct StripeTaxID: StripeModel {
     public var livemode: Bool?
     /// Type of the tax ID, one of `eu_vat`, `nz_gst`, `au_abn`, or `unknown`
     public var type: StripeTaxIDType?
+    /// Value of the tax ID.
+    public var value: String?
     /// Tax ID verification information.
     public var verification: StripeTaxIDVerififcation?
 }
