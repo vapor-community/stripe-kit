@@ -17,17 +17,18 @@ public struct StripePaymentMethod: StripeModel {
     public var billingDetails: StripeBillingDetails?
     /// If this is a `card` PaymentMethod, this hash contains details about the card.
     public var card: StripePaymentMethodCard?
-    /// If this is a `card_present` PaymentMethod, this hash contains details about the Card Present payment method.
-    /// Stripe does not [provide any details](https://stripe.com/docs/api/payment_methods/object#payment_method_object-card_present) about possible values so this will remain nil/unimplemented.
-    public var cardPresent: String? = nil
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?
     /// The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
     public var customer: String?
+    /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
+    public var ideal: StripePaymentMethodIdeal?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
+    /// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+    public var sepaDebit: StripePaymentMethodSepaDebit?
     /// The type of the PaymentMethod, one of `card` or `card_present`. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
     public var type: StripePaymentMethodType?
 }
@@ -47,7 +48,6 @@ public struct StripePaymentMethodCard: StripeModel {
     public var fingerprint: String?
     /// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
     public var funding: StripeCardFundingType?
-    // TODO: - Generated from. (it's repetative 🥴) https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-generated_from
     /// The last four digits of the card.
     public var last4: String?
     /// Contains details on how this Card maybe be used for 3D Secure authentication.
@@ -149,7 +149,43 @@ public struct StripePaymentMethodCardWalletVisaCheckout: StripeModel {
 
 public enum StripePaymentMethodType: String, StripeModel {
     case card
-    case cardPresent = "card_present"
+    case ideal
+    case sepaDebit = "sepa_debit"
+}
+
+public struct StripePaymentMethodIdeal: StripeModel {
+    /// The customer’s bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
+    public var bank: StripePaymentMethodIdealBank?
+    /// The Bank Identifier Code of the customer’s bank, if the bank was provided.
+    public var bic: String?
+}
+
+public enum StripePaymentMethodIdealBank: String, StripeModel {
+    case abnAmro = "abn_amro"
+    case asnBank = "asn_bank"
+    case bunq
+    case handelsbanken
+    case ing
+    case knab
+    case moneyou
+    case rabobank
+    case regiobank
+    case snsBank = "sns_bank"
+    case triodosBank = "triodos_bank"
+    case vanLanschot = "van_lanschot"
+}
+
+public struct StripePaymentMethodSepaDebit: StripeModel {
+    /// Bank code of bank associated with the bank account.
+    public var bankCode: String?
+    /// Branch code of bank associated with the bank account.
+    public var branchCode: String?
+    /// Two-letter ISO code representing the country the bank account is located in.
+    public var country: String?
+    /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+    public var fingerprint: String?
+    /// Last four characters of the IBAN.
+    public var last4: String?
 }
 
 public struct StripePaymentMethodList: StripeModel {
