@@ -41,9 +41,9 @@ extension UsageRecordRoutes {
                        timestamp: Date,
                        action: String? = nil) -> EventLoopFuture<StripeUsageRecord> {
         return create(quantity: quantity,
-                          subscriptionItem: subscriptionItem,
-                          timestamp: timestamp,
-                          action: action)
+                      subscriptionItem: subscriptionItem,
+                      timestamp: timestamp,
+                      action: action)
     }
     
     public func listAll(subscriptionItem: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeUsageRecordList> {
@@ -52,8 +52,10 @@ extension UsageRecordRoutes {
 }
 
 public struct StripeUsageRecordRoutes: UsageRecordRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let subscriptionitems = APIBase + APIVersion + "subscription_items"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -70,7 +72,7 @@ public struct StripeUsageRecordRoutes: UsageRecordRoutes {
             body["action"] = action
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.usageRecords(subscriptionItem).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(subscriptionitems)/\(subscriptionItem)/usage_records", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(subscriptionItem: String, filter: [String: Any]?) -> EventLoopFuture<StripeUsageRecordList> {
@@ -79,6 +81,6 @@ public struct StripeUsageRecordRoutes: UsageRecordRoutes {
             queryParams += filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.usageRecordSummaries(subscriptionItem).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(subscriptionitems)/\(subscriptionItem)/usage_record_summaries", query: queryParams, headers: headers)
     }
 }
