@@ -30,9 +30,9 @@ public protocol TopUpRoutes {
     
     /// Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
     ///
-    /// - Parameter id: The ID of the top-up to retrieve.
+    /// - Parameter topup: The ID of the top-up to retrieve.
     /// - Returns: A `StripeTopUp`.
-    func retrieve(id: String) -> EventLoopFuture<StripeTopUp>
+    func retrieve(topup: String) -> EventLoopFuture<StripeTopUp>
     
     /// Updates the metadata of a top-up. Other top-up details are not editable by design.
     ///
@@ -76,8 +76,8 @@ extension TopUpRoutes {
                           transferGroup: transferGroup)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeTopUp> {
-        return retrieve(id: id)
+    public func retrieve(topup: String) -> EventLoopFuture<StripeTopUp> {
+        return retrieve(topup: topup)
     }
     
     public func update(topup: String, description: String? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeTopUp> {
@@ -94,8 +94,10 @@ extension TopUpRoutes {
 }
 
 public struct StripeTopUpRoutes: TopUpRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let topups = APIBase + APIVersion + "topups"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -131,11 +133,11 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.topup.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: topups, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeTopUp> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.topups(id).endpoint)
+    public func retrieve(topup: String) -> EventLoopFuture<StripeTopUp> {
+        return apiHandler.send(method: .GET, path: "\(topups)/\(topup)")
     }
     
     public func update(topup: String, description: String?, metadata: [String: String]?) -> EventLoopFuture<StripeTopUp> {
@@ -149,7 +151,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.topups(topup).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(topups)/\(topup)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTopUpList> {
@@ -157,10 +159,10 @@ public struct StripeTopUpRoutes: TopUpRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.topup.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: topups, query: queryParams, headers: headers)
     }
     
     public func cancel(topup: String) -> EventLoopFuture<StripeTopUp> {
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.topupsCancel(topup).endpoint, headers: headers)
+        return apiHandler.send(method: .POST, path: "\(topups)/\(topup)/cancel", headers: headers)
     }
 }
