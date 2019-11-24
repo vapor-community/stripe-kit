@@ -46,7 +46,7 @@ public protocol SubscriptionRoutes {
                 defaultPaymentMethod: String?,
                 defaultSource: String?,
                 defaultTaxRates: [String]?,
-                items: [[String: Any]]?,
+                items: [[String: Any]],
                 metadata: [String: String]?,
                 offSession: Bool?,
                 paymentBehavior: StripeSubscriptionPaymentBehavior?,
@@ -139,7 +139,7 @@ extension SubscriptionRoutes {
                        defaultPaymentMethod: String? = nil,
                        defaultSource: String? = nil,
                        defaultTaxRates: [String]? = nil,
-                       items: [[String: Any]]? = nil,
+                       items: [[String: Any]],
                        metadata: [String: String]? = nil,
                        offSession: Bool? = nil,
                        paymentBehavior: StripeSubscriptionPaymentBehavior? = nil,
@@ -226,8 +226,10 @@ extension SubscriptionRoutes {
 }
 
 public struct StripeSubscriptionRoutes: SubscriptionRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let subscriptions = APIBase + APIVersion + "subscriptions"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -245,7 +247,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        defaultPaymentMethod: String?,
                        defaultSource: String?,
                        defaultTaxRates: [String]?,
-                       items: [[String: Any]]?,
+                       items: [[String: Any]],
                        metadata: [String: String]?,
                        offSession: Bool?,
                        paymentBehavior: StripeSubscriptionPaymentBehavior?,
@@ -254,7 +256,8 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        trialEnd: Any?,
                        trialFromPlan: Bool?,
                        trialPeriodDays: Int?) -> EventLoopFuture<StripeSubscription> {
-        var body: [String: Any] = ["customer": customer]
+        var body: [String: Any] = ["customer": customer,
+                                   "items": items]
         
         if let applicationFeePercent = applicationFeePercent {
             body["application_fee_percent"] = applicationFeePercent
@@ -296,10 +299,6 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
             body["default_tax_rates"] = defaultTaxRates
         }
         
-        if let items = items {
-            body["items"] = items
-        }
-        
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
@@ -336,11 +335,11 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
             body["trial_period_days"] = trialPeriodDays
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.subscription.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: subscriptions, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String) -> EventLoopFuture<StripeSubscription> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.subscriptions(id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(subscriptions)/\(id)", headers: headers)
     }
     
     public func update(subscription: String,
@@ -441,7 +440,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
             body["trial_from_plan"] = trialFromPlan
         }
 
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.subscriptions(subscription).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(subscriptions)/\(subscription)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func cancel(subscription: String, invoiceNow: Bool?, prorate: Bool?) -> EventLoopFuture<StripeSubscription> {
@@ -455,7 +454,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
             body["prorate"] = prorate
         }
         
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.subscriptions(subscription).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(subscriptions)/\(subscription)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripeSubscriptionList> {
@@ -464,6 +463,6 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.subscription.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: subscriptions, query: queryParams, headers: headers)
     }
 }
