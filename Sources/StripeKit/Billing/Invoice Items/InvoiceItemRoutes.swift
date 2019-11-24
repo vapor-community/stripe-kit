@@ -24,7 +24,8 @@ public protocol InvoiceItemRoutes {
     ///   - quantity: Non-negative integer. The quantity of units for the invoice item.
     ///   - subscription: The ID of a subscription to add this invoice item to. When left blank, the invoice item will be be added to the next upcoming scheduled invoice. When set, scheduled invoices for subscriptions other than the specified subscription will ignore the invoice item. Use this when you want to express that an invoice item has been accrued within the context of a particular subscription.
     ///   - taxRates: The tax rates which apply to the invoice item. When set, the default_tax_rates on the invoice do not apply to this invoice item.
-    ///   - unitAmount: The integer unit amount in cents of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer’s account, pass a negative unit_amount.
+    ///   - unitAmount: The integer unit amount in cents of the charge to be applied to the upcoming invoice. This `unit_amount` will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer’s account, pass a negative `unit_amount`.
+    ///   - unitAmountDecimal: Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     /// - Returns: A `StripeInvoiceItem`.
     func create(currency: StripeCurrency,
                 customer: String,
@@ -37,7 +38,8 @@ public protocol InvoiceItemRoutes {
                 quantity: Int?,
                 subscription: String?,
                 taxRates: [String]?,
-                unitAmount: Int?) -> EventLoopFuture<StripeInvoiceItem>
+                unitAmount: Int?,
+                unitAmountDecimal: String?) -> EventLoopFuture<StripeInvoiceItem>
     
     /// Retrieves the invoice item with the given ID.
     ///
@@ -56,7 +58,8 @@ public protocol InvoiceItemRoutes {
     ///   - period: The period associated with this invoice item.
     ///   - quantity: Non-negative integer. The quantity of units for the invoice item.
     ///   - taxRates: The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
-    ///   - unitAmount: The integer unit amount in cents of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer’s account, pass a negative unit_amount.
+    ///   - unitAmount: The integer unit amount in cents of the charge to be applied to the upcoming invoice. This `unit_amount` will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer’s account, pass a negative `unit_amount`.
+    ///   - unitAmountDecimal: Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     /// - Returns: A `StripeInvoiceItem`.
     func update(invoiceItem: String,
                 amount: Int?,
@@ -66,7 +69,8 @@ public protocol InvoiceItemRoutes {
                 period: [String: Any]?,
                 quantity: Int?,
                 taxRates: [String]?,
-                unitAmount: Int?) -> EventLoopFuture<StripeInvoiceItem>
+                unitAmount: Int?,
+                unitAmountDecimal: String?) -> EventLoopFuture<StripeInvoiceItem>
     
     /// Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they’re not attached to invoices, or if it’s attached to a draft invoice.
     ///
@@ -96,7 +100,8 @@ extension InvoiceItemRoutes {
                        quantity: Int? = nil,
                        subscription: String? = nil,
                        taxRates: [String]? = nil,
-                       unitAmount: Int? = nil) -> EventLoopFuture<StripeInvoiceItem> {
+                       unitAmount: Int? = nil,
+                       unitAmountDecimal: String? = nil) -> EventLoopFuture<StripeInvoiceItem> {
         return create(currency: currency,
                           customer: customer,
                           amount: amount,
@@ -108,7 +113,8 @@ extension InvoiceItemRoutes {
                           quantity: quantity,
                           subscription: subscription,
                           taxRates: taxRates,
-                          unitAmount: unitAmount)
+                          unitAmount: unitAmount,
+                          unitAmountDecimal: unitAmountDecimal)
     }
     
     public func retrieve(invoiceItem: String) -> EventLoopFuture<StripeInvoiceItem> {
@@ -123,7 +129,8 @@ extension InvoiceItemRoutes {
                        period: [String: Any]? = nil,
                        quantity: Int? = nil,
                        taxRates: [String]? = nil,
-                       unitAmount: Int? = nil) -> EventLoopFuture<StripeInvoiceItem> {
+                       unitAmount: Int? = nil,
+                       unitAmountDecimal: String? = nil) -> EventLoopFuture<StripeInvoiceItem> {
         return update(invoiceItem: invoiceItem,
                           amount: amount,
                           description: description,
@@ -132,7 +139,8 @@ extension InvoiceItemRoutes {
                           period: period,
                           quantity: quantity,
                           taxRates: taxRates,
-                          unitAmount: unitAmount)
+                          unitAmount: unitAmount,
+                          unitAmountDecimal: unitAmountDecimal)
     }
     
     public func delete(invoiceItem: String) -> EventLoopFuture<StripeDeletedObject> {
@@ -145,8 +153,10 @@ extension InvoiceItemRoutes {
 }
 
 public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let invoiceitems = APIBase + APIVersion + "invoiceitems"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -163,7 +173,8 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
                        quantity: Int?,
                        subscription: String?,
                        taxRates: [String]?,
-                       unitAmount: Int?) -> EventLoopFuture<StripeInvoiceItem> {
+                       unitAmount: Int?,
+                       unitAmountDecimal: String?) -> EventLoopFuture<StripeInvoiceItem> {
         var body: [String: Any] = ["currency": currency.rawValue,
                                    "customer": customer]
         
@@ -207,11 +218,15 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
             body["unit_amount"] = unitAmount
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoiceItem.endpoint, body: .string(body.queryParameters), headers: headers)
+        if let unitAmountDecimal = unitAmountDecimal {
+            body["unit_amount_decimal"] = unitAmountDecimal
+        }
+        
+        return apiHandler.send(method: .POST, path: invoiceitems, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(invoiceItem: String) -> EventLoopFuture<StripeInvoiceItem> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoiceItems(invoiceItem).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(invoiceitems)/\(invoiceItem)", headers: headers)
     }
     
     public func update(invoiceItem: String,
@@ -222,7 +237,8 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
                        period: [String: Any]?,
                        quantity: Int?,
                        taxRates: [String]?,
-                       unitAmount: Int?) -> EventLoopFuture<StripeInvoiceItem> {
+                       unitAmount: Int?,
+                       unitAmountDecimal: String?) -> EventLoopFuture<StripeInvoiceItem> {
         var body: [String: Any] = [:]
         
         if let amount = amount {
@@ -257,11 +273,15 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
             body["unit_amount"] = unitAmount
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.invoiceItems(invoiceItem).endpoint, body: .string(body.queryParameters), headers: headers)
+        if let unitAmountDecimal = unitAmountDecimal {
+            body["unit_amount_decimal"] = unitAmountDecimal
+        }
+        
+        return apiHandler.send(method: .POST, path: "\(invoiceitems)/\(invoiceItem)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(invoiceItem: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.invoiceItems(invoiceItem).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(invoiceitems)/\(invoiceItem)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceItemList> {
@@ -270,6 +290,6 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.invoiceItem.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: invoiceitems, query: queryParams, headers: headers)
     }
 }
