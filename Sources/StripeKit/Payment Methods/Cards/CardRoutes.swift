@@ -120,8 +120,10 @@ extension CardRoutes {
 }
 
 public struct StripeCardRoutes: CardRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let cards = APIBase +  APIVersion + "customer"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -142,11 +144,11 @@ public struct StripeCardRoutes: CardRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.card(customer).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String, customer: String) -> EventLoopFuture<StripeCard> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.cards(customer, id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(cards)/\(customer)/sources/\(id)", headers: headers)
     }
     
     public func update(id: String,
@@ -203,11 +205,11 @@ public struct StripeCardRoutes: CardRoutes {
             body["name"] = name
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.cards(customer, id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.cards(customer, id).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(cards)/\(customer)/sources/\(id)", headers: headers)
     }
     
     public func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeBankAccountList> {
@@ -216,6 +218,6 @@ public struct StripeCardRoutes: CardRoutes {
             queryParams = "&" + filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.card(customer).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(cards)/\(customer)/sources", query: queryParams, headers: headers)
     }
 }
