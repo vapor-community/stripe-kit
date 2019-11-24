@@ -36,15 +36,17 @@ extension ApplicationFeesRoutes {
 }
 
 public struct StripeApplicationFeeRoutes: ApplicationFeesRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let applicationfees = APIBase + APIVersion + "application_fees"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
     public func retrieve(fee: String) -> EventLoopFuture<StripeApplicationFee> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFees(fee).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(applicationfees)/\(fee)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeApplicationFeeList> {
@@ -52,6 +54,6 @@ public struct StripeApplicationFeeRoutes: ApplicationFeesRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.applicationFee.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: applicationfees, query: queryParams, headers: headers)
     }
 }

@@ -36,23 +36,6 @@ public struct StripeApplicationFee: StripeModel {
     public var refunded: Bool?
     /// A list of refunds that have been applied to the fee.
     public var refunds: StripeApplicationFeeRefundList?
-    
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case object
-        case account
-        case amount
-        case amountRefunded = "amount_refunded"
-        case application
-        case balanceTransaction = "balance_transaction"
-        case charge
-        case created
-        case currency
-        case livemode
-        case originatingTransaction = "originating_transaction"
-        case refunded
-        case refunds
-    }
 }
 
 public struct StripeApplicationFeeList: StripeModel {
@@ -60,11 +43,4 @@ public struct StripeApplicationFeeList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeApplicationFee]?
-    
-    private enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }
