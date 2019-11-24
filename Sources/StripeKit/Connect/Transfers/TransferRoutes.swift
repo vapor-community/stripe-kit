@@ -66,13 +66,13 @@ extension TransferRoutes {
                        sourceType: StripeTransferSourceType? = nil,
                        transferGroup: String? = nil) -> EventLoopFuture<StripeTransfer> {
         return create(amount: amount,
-                           currency: currency,
-                           destination: destination,
-                           description: description,
-                           metadata: metadata,
-                           sourceTransaction: sourceTransaction,
-                           sourceType: sourceType,
-                           transferGroup: transferGroup)
+                      currency: currency,
+                      destination: destination,
+                      description: description,
+                      metadata: metadata,
+                      sourceTransaction: sourceTransaction,
+                      sourceType: sourceType,
+                      transferGroup: transferGroup)
     }
     
     public func retrieve(transfer: String) -> EventLoopFuture<StripeTransfer> {
@@ -91,8 +91,10 @@ extension TransferRoutes {
 }
 
 public struct StripeTransferRoutes: TransferRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let transfers = APIBase + APIVersion + "transfers"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -130,11 +132,11 @@ public struct StripeTransferRoutes: TransferRoutes {
             body["transfer_group"] = transferGroup
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.transfer.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: transfers, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(transfer: String) -> EventLoopFuture<StripeTransfer> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transfers(transfer).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(transfers)/\(transfer)", headers: headers)
     }
     
     public func update(transfer: String, description: String?, metadata: [String: String]?) -> EventLoopFuture<StripeTransfer> {
@@ -148,7 +150,7 @@ public struct StripeTransferRoutes: TransferRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.transfers(transfer).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(transfers)/\(transfer)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransferList> {
@@ -156,6 +158,6 @@ public struct StripeTransferRoutes: TransferRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transfer.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: transfers, query: queryParams, headers: headers)
     }
 }
