@@ -24,17 +24,6 @@ public struct StripeCountrySpec: StripeModel {
     public var supportedTransferCountries: [String]?
     /// Lists the types of verification data needed to keep an account open.
     public var verificationFields: StripeCountrySpecVerificationFields?
-    
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case object
-        case defaultCurrency = "default_currency"
-        case supportedBankAccountCurrencies = "supported_bank_account_currencies"
-        case supportedPaymentCurrencies = "supported_payment_currencies"
-        case supportedPaymentMethods = "supported_payment_methods"
-        case supportedTransferCountries = "supported_transfer_countries"
-        case verificationFields = "verification_fields"
-    }
 }
 
 public struct StripeCountrySpecList: StripeModel {
@@ -42,13 +31,6 @@ public struct StripeCountrySpecList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeCountrySpec]?
-    
-    private enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }
 
 public struct StripeCountrySpecVerificationFields: StripeModel {

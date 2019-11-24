@@ -36,8 +36,10 @@ extension CountrySpecRoutes {
 }
 
 public struct StripeCountrySpecRoutes: CountrySpecRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let countryspecs = APIBase + APIVersion + "country_specs"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -48,10 +50,10 @@ public struct StripeCountrySpecRoutes: CountrySpecRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.countrySpec.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: countryspecs, query: queryParams, headers: headers)
     }
     
     public func retrieve(country: String) -> EventLoopFuture<StripeCountrySpec> {
-         return apiHandler.send(method: .GET, path: StripeAPIEndpoint.countrySpecs(country).endpoint, headers: headers)
+         return apiHandler.send(method: .GET, path: "\(countryspecs)/\(country)", headers: headers)
     }
 }
