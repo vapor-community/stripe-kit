@@ -20,6 +20,8 @@ public struct StripePlan: StripeModel {
     public var aggregateUsage: StripePlanAggregateUsage?
     /// The amount in cents to be charged on the interval specified.
     public var amount: Int?
+    /// Same as `amount`, but contains a decimal value with at most 12 decimal places.
+    public var amountDecimal: String?
     /// Describes how to compute the price per period. Either `per_unit` or `tiered`. `per_unit` indicates that the fixed amount (specified in `amount`) will be charged per unit in `quantity` (for plans with `usage_type=licensed`), or per unit of total usage (for plans with `usage_type=metered`). `tiered` indicates that the unit pricing will be computed using a tiering strategy as defined using the `tiers` and `tiers_mode` attributes.
     public var billingScheme: StripePlanBillingScheme?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.

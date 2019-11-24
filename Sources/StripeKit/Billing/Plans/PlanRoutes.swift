@@ -20,6 +20,7 @@ public protocol PlanRoutes {
     ///   - active: Whether the plan is currently available for new subscriptions. Defaults to `true`.
     ///   - aggregateUsage: Specifies a usage aggregation strategy for plans of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for picking the last usage record reported within a period, `last_ever` for picking the last usage record ever (across period bounds) or `max` which picks the usage record with the maximum reported usage during a period. Defaults to `sum`.
     ///   - amount: A positive integer in cents (or 0 for a free plan) representing how much to charge on a recurring basis.
+    ///   - amountDecimal: Same as amount, but accepts a decimal value with at most 12 decimal places. Only one of amount and amount_decimal can be set.
     ///   - billingScheme: Describes how to compute the price per period. Either `per_unit` or `tiered`. `per_unit` indicates that the fixed amount (specified in `amount`) will be charged per unit in `quantity` (for plans with `usage_type=licensed`), or per unit of total usage (for plans with `usage_type=metered`). `tiered` indicates that the unit pricing will be computed using a tiering strategy as defined using the `tiers` and `tiers_mode` attributes.
     ///   - intervalCount: The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
     ///   - metadata: A set of key-value pairs that you can attach to a plan object. It can be useful for storing additional information about the plan in a structured format.
@@ -37,6 +38,7 @@ public protocol PlanRoutes {
                 active: Bool?,
                 aggregateUsage: StripePlanAggregateUsage?,
                 amount: Int?,
+                amountDecimal: Int?,
                 billingScheme: StripePlanBillingScheme?,
                 intervalCount: Int?,
                 metadata: [String: String]?,
@@ -94,6 +96,7 @@ extension PlanRoutes {
                        active: Bool? = nil,
                        aggregateUsage: StripePlanAggregateUsage? = nil,
                        amount: Int? = nil,
+                       amountDecimal: Int? = nil,
                        billingScheme: StripePlanBillingScheme? = nil,
                        intervalCount: Int? = nil,
                        metadata: [String: String]? = nil,
@@ -104,21 +107,22 @@ extension PlanRoutes {
                        trialPeriodDays: Int? = nil,
                        usageType: StripePlanUsageType? = nil) -> EventLoopFuture<StripePlan> {
         return create(id: id,
-                          currency: currency,
-                          interval: interval,
-                          product: product,
-                          active: active,
-                          aggregateUsage: aggregateUsage,
-                          amount: amount,
-                          billingScheme: billingScheme,
-                          intervalCount: intervalCount,
-                          metadata: metadata,
-                          nickname: nickname,
-                          tiers: tiers,
-                          tiersMode: tiersMode,
-                          transformUsage: transformUsage,
-                          trialPeriodDays: trialPeriodDays,
-                          usageType: usageType)
+                      currency: currency,
+                      interval: interval,
+                      product: product,
+                      active: active,
+                      aggregateUsage: aggregateUsage,
+                      amount: amount,
+                      amountDecimal: amountDecimal,
+                      billingScheme: billingScheme,
+                      intervalCount: intervalCount,
+                      metadata: metadata,
+                      nickname: nickname,
+                      tiers: tiers,
+                      tiersMode: tiersMode,
+                      transformUsage: transformUsage,
+                      trialPeriodDays: trialPeriodDays,
+                      usageType: usageType)
     }
     
     public func retrieve(plan: String) -> EventLoopFuture<StripePlan> {
@@ -132,11 +136,11 @@ extension PlanRoutes {
                        product: Any? = nil,
                        trialPeriodDays: Int? = nil) -> EventLoopFuture<StripePlan> {
         return update(plan: plan,
-                          active: active,
-                          metadata: metadata,
-                          nickname: nickname,
-                          product: product,
-                          trialPeriodDays: trialPeriodDays)
+                      active: active,
+                      metadata: metadata,
+                      nickname: nickname,
+                      product: product,
+                      trialPeriodDays: trialPeriodDays)
     }
     
     public func delete(plan: String) -> EventLoopFuture<StripeDeletedObject> {
@@ -149,8 +153,10 @@ extension PlanRoutes {
 }
 
 public struct StripePlanRoutes: PlanRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let plans = APIBase + APIVersion + "plans"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -163,6 +169,7 @@ public struct StripePlanRoutes: PlanRoutes {
                        active: Bool?,
                        aggregateUsage: StripePlanAggregateUsage?,
                        amount: Int?,
+                       amountDecimal: Int?,
                        billingScheme: StripePlanBillingScheme?,
                        intervalCount: Int?,
                        metadata: [String: String]?,
@@ -198,6 +205,10 @@ public struct StripePlanRoutes: PlanRoutes {
             body["amount"] = amount
         }
         
+        if let amountDecimal = amountDecimal {
+            body["amount_decimal"] = amountDecimal
+        }
+        
         if let billingScheme = billingScheme {
             body["billing_scheme"] = billingScheme.rawValue
         }
@@ -230,11 +241,11 @@ public struct StripePlanRoutes: PlanRoutes {
             body["trial_period_days"] = trialperiodDays
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.plan.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: plans, body: .string(body.queryParameters), headers: headers)
     }
 
     public func retrieve(plan: String) -> EventLoopFuture<StripePlan> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.plans(plan).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(plans)/\(plan)", headers: headers)
     }
     
     public func update(plan: String,
@@ -267,11 +278,11 @@ public struct StripePlanRoutes: PlanRoutes {
             body["trial_period_days"] = trialPeriodDays
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.plans(plan).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(plans)/\(plan)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(plan: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.plans(plan).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(plans)/\(plan)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePlanList> {
@@ -280,6 +291,6 @@ public struct StripePlanRoutes: PlanRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.plan.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: plans, query: queryParams, headers: headers)
     }
 }
