@@ -15,7 +15,7 @@ public struct StripeAuthorization: StripeModel {
     public var object: String
     /// Whether the authorization has been approved.
     public var approved: Bool?
-    /// How the card details were provided. One of `keyed_in`, `swipe`, `chip`, `contactless`, or `online`.
+    /// How the card details were provided. One of `chip`, `contactless`, `keyed_in`, `online`, or `swipe`.
     public var authorizationMethod: StripeAuthorizationMethod?
     /// The amount that has been authorized. This will be `0` when the object is created, and increase after it has been approved.
     public var authorizedAmount: Int?
@@ -120,9 +120,27 @@ public enum StripeAuthorizationStatus: String, StripeModel {
 }
 
 public struct StripeAuthorizationVerificationData: StripeModel {
-    public var addressLine1Check: String?
-    public var addressZipCheck: String?
-    public var cvcCheck: String?
+    /// One of `match`, `mismatch`, or `not_provided`.
+    public var addressLine1Check: StripeAuthorizationVerificationDataCheck?
+    /// One of `match`, `mismatch`, or `not_provided`.
+    public var addressZipCheck: StripeAuthorizationVerificationDataCheck?
+    /// One of `exempt`, `failure`, `none`, or `success`.
+    public var authentication: StripeAuthorizationVerificationDataAuthorization?
+    /// One of `match`, `mismatch`, or `not_provided`.
+    public var cvcCheck: StripeAuthorizationVerificationDataCheck?
+}
+
+public enum StripeAuthorizationVerificationDataCheck: String, StripeModel {
+    case match
+    case mismatch
+    case notProvided = "not_provided"
+}
+
+public enum StripeAuthorizationVerificationDataAuthorization: String, StripeModel {
+    case exempt
+    case failure
+    case none
+    case success
 }
 
 public enum StripeAuthorizationWalletProvider: String, StripeModel {
