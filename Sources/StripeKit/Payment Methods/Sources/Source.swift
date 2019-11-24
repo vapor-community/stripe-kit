@@ -62,82 +62,12 @@ public struct StripeSource: StripeModel {
     public var sofort: StripeSourceSofort?
     public var threeDSecure: StripeSourceThreeDSecure?
     public var wechat: StripeSourceWechat?
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(String.self, forKey: .id)
-        object = try container.decode(String.self, forKey: .object)
-        amount = try container.decodeIfPresent(Int.self, forKey: .amount)
-        clientSecret = try container.decodeIfPresent(String.self, forKey: .clientSecret)
-        codeVerification = try container.decodeIfPresent(StripeSourceCodeVerification.self, forKey: .codeVerification)
-        created = try container.decodeIfPresent(Date.self, forKey: .created)
-        currency = try container.decodeIfPresent(StripeCurrency.self, forKey: .currency)
-        flow = try container.decodeIfPresent(StripeSourceFlow.self, forKey: .flow)
-        livemode = try container.decodeIfPresent(Bool.self, forKey: .livemode)
-        metadata = try container.decode([String: String].self, forKey: .metadata)
-        owner = try container.decodeIfPresent(StripeSourceOwner.self, forKey: .owner)
-        receiver = try container.decodeIfPresent(StripeSourceReceiver.self, forKey: .receiver)
-        redirect = try container.decodeIfPresent(StripeSourceRedirect.self, forKey: .redirect)
-        statementDescriptor = try container.decodeIfPresent(String.self, forKey: .statementDescriptor)
-        status = try container.decodeIfPresent(StripeSourceStatus.self, forKey: .status)
-        usage = try container.decodeIfPresent(StripeSourceUsage.self, forKey: .usage)
-        type = try container.decodeIfPresent(StripeSourceType.self, forKey: .type)
-        
-        if let sourceType = type {
-            switch sourceType {
-            case .achCreditTransfer:
-                achCreditTransfer = try container.decodeIfPresent(StripeSourceACHCreditTransfer.self, forKey: .achCreditTransfer)
-                
-            case .achDebit:
-                achDebit =  try container.decodeIfPresent(StripeSourceACHDebit.self, forKey: .achDebit)
-                
-            case .alipay:
-                alipay = try container.decodeIfPresent(StripeSourceAlipay.self, forKey: .alipay)
-                
-            case .bancontact:
-                bancontact = try container.decodeIfPresent(StripeSourceBancontact.self, forKey: .bancontact)
-                
-            case .card:
-                card = try container.decodeIfPresent(StripeSourceCard.self, forKey: .card)
-        
-            case .cardPresent:
-                cardPresent = try container.decodeIfPresent(StripeSourceCardPresent.self, forKey: .cardPresent)
-                
-            case .eps:
-                eps = try container.decodeIfPresent(StripeSourceEPS.self, forKey: .eps)
-                
-            case .giropay:
-                giropay = try container.decodeIfPresent(StripeSourceGiropay.self, forKey: .giropay)
-                
-            case .ideal:
-                ideal = try container.decodeIfPresent(StripeSourceIDEAL.self, forKey: .ideal)
-            
-            case .multibanco:
-                multibanco = try container.decodeIfPresent(StripeSourceMultibanco.self, forKey: .multibanco)
-                
-            case .p24:
-                p24 = try container.decodeIfPresent(StripeSourceP24.self, forKey: .p24)
-                
-            case .sepaDebit:
-                sepaDebit = try container.decodeIfPresent(StripeSourceSepaDebit.self, forKey: .sepaDebit)
-                
-            case .sofort:
-                sofort = try container.decodeIfPresent(StripeSourceSofort.self, forKey: .sofort)
-                
-            case .threeDSecure:
-                threeDSecure = try container.decodeIfPresent(StripeSourceThreeDSecure.self, forKey: .threeDSecure)
-            
-            case .wechat:
-                wechat = try container.decodeIfPresent(StripeSourceWechat.self, forKey: .wechat)
-            }
-        }
-    }
 }
 
 public struct StripeSourceCodeVerification: StripeModel {
     /// The number of attempts remaining to authenticate the source object with a verification code.
     public var attemptsRemaining: Int?
-    /// The status of the code verification, either pending (awaiting verification, attempts_remaining should be greater than 0), succeeded (successful verification) or failed (failed verification, cannot be verified anymore as attempts_remaining should be 0).
+    /// The status of the code verification, either `pending` (awaiting verification, `attempts_remaining` should be greater than 0), `succeeded` (successful verification) or `failed` (failed verification, cannot be verified anymore as `attempts_remaining` should be 0).
     public var status: StripeSourceCodeVerificationStatus?
 }
 

@@ -22,6 +22,7 @@ public protocol SourceRoutes {
     ///   - owner: Information about the owner of the payment instrument that may be used or required by particular source types.
     ///   - receiver: Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
     ///   - redirect: Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
+    ///   - sourceOrder: Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
     ///   - statementDescriptor: An arbitrary string to be displayed on your customer’s statement. As an example, if your website is `RunClub` and the item you’re charging for is a race ticket, you may want to specify a `statement_descriptor` of `RunClub 5K race ticket.` While many payment types will display this information, some may not display it at all.
     ///   - token: An optional token used to create the source. When passed, token properties will override source parameters.
     ///   - usage: Either `reusable` or `single_use`. Whether this source should be reusable or not. Some source types may or may not be reusable by construction, while others may leave the option at creation. If an incompatible value is passed, an error will be returned.
@@ -35,28 +36,35 @@ public protocol SourceRoutes {
                 owner: [String: Any]?,
                 receiver: [String: Any]?,
                 redirect: [String: Any]?,
+                sourceOrder: [String: Any]?,
                 statementDescriptor: String?,
                 token: String?,
                 usage: StripeSourceUsage?) -> EventLoopFuture<StripeSource>
     
     /// Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
     ///
-    /// - Parameter source: The identifier of the source to be retrieved.
+    /// - Parameters:
+    /// - source: The identifier of the source to be retrieved.
+    /// - clientSecret: The client secret of the source. Required if a publishable key is used to retrieve the source.
     /// - Returns: A `StripeSource`.
-    func retrieve(source: String) -> EventLoopFuture<StripeSource>
+    func retrieve(source: String, clientSecret: String?) -> EventLoopFuture<StripeSource>
     
     /// Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged. /n This request accepts the `metadata` and `owner` as arguments. It is also possible to update type specific information for selected payment methods. Please refer to our payment method guides for more detail.
     ///
     /// - Parameters:
     ///   - source: The identifier of the source to be updated.
+    ///   - amount: Amount associated with the source.
     ///   - mandate: Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
     ///   - metadata: A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
     ///   - owner: Information about the owner of the payment instrument that may be used or required by particular source types.
+    ///   - sourceOrder: Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
     /// - Returns: A `StripeSource`.
     func update(source: String,
+                amount: Int?,
                 mandate: [String: Any]?,
                 metadata: [String: String]?,
-                owner: [String: Any]?) -> EventLoopFuture<StripeSource>
+                owner: [String: Any]?,
+                sourceOrder: [String: Any]?) -> EventLoopFuture<StripeSource>
     
     /// Attaches a Source object to a Customer. The source must be in a chargeable or pending state.
     ///
@@ -88,6 +96,7 @@ extension SourceRoutes {
                        owner: [String: Any]? = nil,
                        receiver: [String: Any]? = nil,
                        redirect: [String: Any]? = nil,
+                       sourceOrder: [String: Any]? = nil,
                        statementDescriptor: String? = nil,
                        token: String? = nil,
                        usage: StripeSourceUsage? = nil) -> EventLoopFuture<StripeSource> {
@@ -100,23 +109,28 @@ extension SourceRoutes {
                           owner: owner,
                           receiver: receiver,
                           redirect: redirect,
+                          sourceOrder: sourceOrder,
                           statementDescriptor: statementDescriptor,
                           token: token,
                           usage: usage)
     }
     
-    public func retrieve(source: String) -> EventLoopFuture<StripeSource> {
-        return retrieve(source: source)
+    public func retrieve(source: String, clientSecret: String? = nil) -> EventLoopFuture<StripeSource> {
+        return retrieve(source: source, clientSecret: clientSecret)
     }
     
     public func update(source: String,
+                       amount: Int? = nil,
                        mandate: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
-                       owner: [String: Any]? = nil) -> EventLoopFuture<StripeSource> {
+                       owner: [String: Any]? = nil,
+                       sourceOrder: [String: Any]? = nil) -> EventLoopFuture<StripeSource> {
         return update(source: source,
-                          mandate: mandate,
-                          metadata: metadata,
-                          owner: owner)
+                      amount: amount,
+                      mandate: mandate,
+                      metadata: metadata,
+                      owner: owner,
+                      sourceOrder: sourceOrder)
     }
     
     public func attach(source: String, customer: String) -> EventLoopFuture<StripeSource> {
@@ -129,8 +143,11 @@ extension SourceRoutes {
 }
 
 public struct StripeSourceRoutes: SourceRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let sources = APIBase + APIVersion + "sources"
+    private let customers = APIBase + APIVersion + "customers"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -145,6 +162,7 @@ public struct StripeSourceRoutes: SourceRoutes {
                        owner: [String: Any]?,
                        receiver: [String: Any]?,
                        redirect: [String: Any]?,
+                       sourceOrder: [String: Any]?,
                        statementDescriptor: String?,
                        token: String?,
                        usage: StripeSourceUsage?) -> EventLoopFuture<StripeSource> {
@@ -178,6 +196,10 @@ public struct StripeSourceRoutes: SourceRoutes {
             redirect.forEach { body["redirect[\($0)]"] = $1 }
         }
         
+        if let sourceOrder = sourceOrder {
+            sourceOrder.forEach { body["source_order[\($0)]"] = $1 }
+        }
+        
         if let statementDescriptor = statementDescriptor {
             body["statement_descriptor"] = statementDescriptor
         }
@@ -190,18 +212,28 @@ public struct StripeSourceRoutes: SourceRoutes {
             body["usage"] = usage
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.source.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: sources, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(source: String) -> EventLoopFuture<StripeSource> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.sources(source).endpoint, headers: headers)
+    public func retrieve(source: String, clientSecret: String?) -> EventLoopFuture<StripeSource> {
+        var query = ""
+        if let clientSecret = clientSecret {
+            query += "client_secret=\(clientSecret)"
+        }
+        return apiHandler.send(method: .GET, path: "\(sources)/\(source)", query: query, headers: headers)
     }
     
     public func update(source: String,
+                       amount: Int?,
                        mandate: [String: Any]?,
                        metadata: [String: String]?,
-                       owner: [String: Any]?) -> EventLoopFuture<StripeSource> {
+                       owner: [String: Any]?,
+                       sourceOrder: [String: Any]?) -> EventLoopFuture<StripeSource> {
         var body: [String: Any] = [:]
+        
+        if let amount = amount {
+            body["amount"] = amount
+        }
         
         if let mandate = mandate {
             mandate.forEach { body["mandate[\($0)]"] = $1 }
@@ -215,14 +247,19 @@ public struct StripeSourceRoutes: SourceRoutes {
             owner.forEach { body["owner[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.sources(source).endpoint, body: .string(body.queryParameters), headers: headers)
+        if let sourceOrder = sourceOrder {
+            sourceOrder.forEach { body["source_order[\($0)]"] = $1 }
+        }
+        
+        return apiHandler.send(method: .POST, path: "\(sources)/\(source)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func attach(source: String, customer: String) -> EventLoopFuture<StripeSource> {
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.sourcesAttach(source).endpoint, headers: headers)
+        let body: [String: Any] = ["source": source]
+        return apiHandler.send(method: .POST, path: "\(customers)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
     }
     
     public func detach(id: String, customer: String) -> EventLoopFuture<StripeSource> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.sourcesDetach(customer, id).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(customers)/\(customer)/sources/\(id)", headers: headers)
     }
 }
