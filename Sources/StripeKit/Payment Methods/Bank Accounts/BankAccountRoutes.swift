@@ -105,8 +105,10 @@ extension BankAccountRoutes {
 }
 
 public struct StripeBankAccountRoutes: BankAccountRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let bankaccounts = APIBase + APIVersion + "customers"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -127,11 +129,11 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.bankAccount(customer).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String, customer: String) -> EventLoopFuture<StripeBankAccount> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.bankAccounts(customer, id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(bankaccounts)/\(customer)/sources/\(id)", headers: headers)
     }
     
     public func update(id: String,
@@ -153,7 +155,7 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.bankAccounts(customer, id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func verify(id: String, customer: String, amounts: [Int]?) -> EventLoopFuture<StripeBankAccount> {
@@ -163,11 +165,11 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
             body["amounts"] = amounts
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.bankAccountVerify(customer, id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources/\(id)/verify", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.bankAccounts(customer, id).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(bankaccounts)/\(customer)/sources/\(id)", headers: headers)
     }
     
     public func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeBankAccountList> {
@@ -176,6 +178,6 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
             queryParams = "&" + filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.bankAccount(customer).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(bankaccounts)/\(customer)/sources", query: queryParams, headers: headers)
     }
 }
