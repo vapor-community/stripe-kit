@@ -27,10 +27,16 @@ public struct StripeSession: StripeModel {
     public var livemode: Bool?
     /// The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser’s locale is used.
     public var locale: StripeSessionLocale?
+    /// The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
+    public var mode: StripeSessionMode?
     /// The ID of the PaymentIntent created if SKUs or line items were provided.
     public var paymentIntent: String?
     /// A list of the types of payment methods (e.g. card) this Checkout Session is allowed to accept.
     public var paymentMethodTypes: [StripePaymentMethodType]?
+    /// The ID of the SetupIntent for Checkout Sessions in setup mode.
+    public var setupIntent: String?
+    /// Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in `payment` mode, but not Checkout Sessions in `subscription` or `setup` mode. Supported values are `auto`, `book`, `donate`, or `pay`.
+    public var submitType: StripeSessionSubmitType?
     /// The ID of the subscription created if one or more plans were provided.
     public var subscription: String?
     /// The URL the customer will be directed to after the payment or subscription creation is successful.
@@ -87,4 +93,17 @@ public enum StripeSessionLocale: String, StripeModel {
     case pt
     case sv
     case zh
+}
+
+public enum StripeSessionMode: String, StripeModel {
+    case payment
+    case setup
+    case subscription
+}
+
+public enum StripeSessionSubmitType: String, StripeModel {
+    case auto
+    case book
+    case donate
+    case pay
 }

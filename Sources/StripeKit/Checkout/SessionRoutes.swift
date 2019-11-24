@@ -21,7 +21,10 @@ public protocol SessionRoutes {
     ///   - customerEmail: If provided, this value will be used when the Customer object is created. If not provided, customers will be asked to enter their email address. Use this parameter to prefill customer data if you already have an email on file. To access information about the customer once a session is complete, use the customer field.
     ///   - lineItems: A list of items the customer is purchasing. Use this parameter for one-time payments. To create subscriptions, use subscription_data.items.
     ///   - locale: The IETF language tag of the locale Checkout is displayed in. If blank or auto, the browser’s locale is used. Supported values are auto, da, de, en, es, fi, fr, it, ja, nb, nl, pl, pt, sv, or zh.
+    ///   - mode: The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
     ///   - paymentIntentData: A subset of parameters to be passed to PaymentIntent creation.
+    ///   - setupIntentData: A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
+    ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. submit_type can only be specified on Checkout Sessions in payment mode, but not Checkout Sessions in subscription or setup mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation.
     /// - Returns: A `StripeSession`.
     func create(cancelUrl: String,
@@ -33,7 +36,10 @@ public protocol SessionRoutes {
                 customerEmail: String?,
                 lineItems: [String: Any]?,
                 locale: StripeSessionLocale?,
+                mode: StripeSessionMode?,
                 paymentIntentData: [String: Any]?,
+                setupIntentData: [String: Any]?,
+                submitType: StripeSessionSubmitType?,
                 subscriptionData: [String: Any]?) -> EventLoopFuture<StripeSession>
     
     /// Retrieves a Session object.
@@ -56,19 +62,25 @@ extension SessionRoutes {
                        customerEmail: String? = nil,
                        lineItems: [String: Any]? = nil,
                        locale: StripeSessionLocale? = nil,
+                       mode: StripeSessionMode? = nil,
                        paymentIntentData: [String: Any]? = nil,
+                       setupIntentData: [String: Any]? = nil,
+                       submitType: StripeSessionSubmitType? = nil,
                        subscriptionData: [String: Any]? = nil) -> EventLoopFuture<StripeSession> {
         return create(cancelUrl: cancelUrl,
-                          paymentMethodTypes: paymentMethodTypes,
-                          successUrl: successUrl,
-                          billingAddressCollection: billingAddressCollection,
-                          clientReferenceId: clientReferenceId,
-                          customer: customer,
-                          customerEmail: customerEmail,
-                          lineItems: lineItems,
-                          locale: locale,
-                          paymentIntentData: paymentIntentData,
-                          subscriptionData: subscriptionData)
+                      paymentMethodTypes: paymentMethodTypes,
+                      successUrl: successUrl,
+                      billingAddressCollection: billingAddressCollection,
+                      clientReferenceId: clientReferenceId,
+                      customer: customer,
+                      customerEmail: customerEmail,
+                      lineItems: lineItems,
+                      locale: locale,
+                      mode: mode,
+                      paymentIntentData: paymentIntentData,
+                      setupIntentData: setupIntentData,
+                      submitType: submitType,
+                      subscriptionData: subscriptionData)
     }
     
     public func retrieve(id: String) -> EventLoopFuture<StripeSession> {
@@ -77,8 +89,10 @@ extension SessionRoutes {
 }
 
 public struct StripeSessionRoutes: SessionRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let sessions = APIBase + APIVersion + "checkout/sessions"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -93,7 +107,10 @@ public struct StripeSessionRoutes: SessionRoutes {
                        customerEmail: String?,
                        lineItems: [String: Any]?,
                        locale: StripeSessionLocale?,
+                       mode: StripeSessionMode?,
                        paymentIntentData: [String: Any]?,
+                       setupIntentData: [String: Any]?,
+                       submitType: StripeSessionSubmitType?,
                        subscriptionData: [String: Any]?) -> EventLoopFuture<StripeSession> {
         var body: [String: Any] = ["cancel_url": cancelUrl,
                                    "payment_method_types": paymentMethodTypes.map { $0.rawValue },
@@ -123,18 +140,30 @@ public struct StripeSessionRoutes: SessionRoutes {
             body["locale"] = locale.rawValue
         }
         
+        if let mode = mode {
+            body["mode"] = mode
+        }
+        
         if let paymentIntentData = paymentIntentData {
             paymentIntentData.forEach { body["payment_intent_data[\($0)]"] = $1 }
+        }
+        
+        if let setupIntentData = setupIntentData {
+            setupIntentData.forEach { body["setup_intent_data[\($0)]"] = $1 }
+        }
+        
+        if let submitType = submitType {
+            body["submit_type"] = submitType
         }
         
         if let subscriptionData = subscriptionData {
             subscriptionData.forEach { body["subscription_data[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.session.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: sessions, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String) -> EventLoopFuture<StripeSession> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.sessions(id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(sessions)/\(id)", headers: headers)
     }
 }
