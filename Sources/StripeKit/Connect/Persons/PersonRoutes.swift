@@ -14,14 +14,21 @@ public protocol PersonRoutes {
     /// - Parameters:
     ///   - account: The unique identifier of the account the person is associated with.
     ///   - address: The person’s address.
+    ///   - addressKana: The Kana variation of the person’s address (Japan only).
+    ///   - addressKanji: The Kanji variation of the person’s address (Japan only).
     ///   - dob: The person’s date of birth.
     ///   - email: The person’s email address.
     ///   - firstName: The person’s first name.
+    ///   - firstNameKana: The Kana variation of the person’s first name (Japan only).
+    ///   - firstNameKanji: The Kanji variation of the person’s first name (Japan only).
     ///   - gender: The person’s gender (International regulations require either “male” or “female”).
     ///   - idNumber: The person’s ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a PII token provided by Stripe.js.
     ///   - lastName: The person’s last name.
+    ///   - lastNameKana: The Kana variation of the person’s last name (Japan only).
+    ///   - lastNameKanji: The Kanji variation of the person’s last name (Japan only)
     ///   - maidenName: The person’s maiden name.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    ///   - personToken: A person token, used to securely provide details to the person.
     ///   - phone: The person’s phone number.
     ///   - relationship: The relationship that this person has with the account’s legal entity.
     ///   - ssnLast4: The last 4 digits of the person’s social security number.
@@ -29,14 +36,21 @@ public protocol PersonRoutes {
     /// - Returns: Returns a person object.
     func create(account: String,
                 address: [String: Any]?,
+                addressKana: [String: Any]?,
+                addressKanji: [String: Any]?,
                 dob: [String: Any]?,
                 email: String?,
                 firstName: String?,
+                firstNameKana: String?,
+                firstNameKanji: String?,
                 gender: StripePersonGender?,
                 idNumber: String?,
                 lastName: String?,
+                lastNameKana: String?,
+                lastNameKanji: String?,
                 maidenName: String?,
                 metadata: [String: String]?,
+                personToken: String?,
                 phone: String?,
                 relationship: [String: Any]?,
                 ssnLast4: String?,
@@ -56,14 +70,21 @@ public protocol PersonRoutes {
     ///   - account: The unique identifier of the account the person is associated with.
     ///   - person: The ID of a person to update.
     ///   - address: The person’s address.
+    ///   - addressKana: The Kana variation of the person’s address (Japan only).
+    ///   - addressKanji: The Kanji variation of the person’s address (Japan only).
     ///   - dob: The person’s date of birth.
     ///   - email: The person’s email address.
     ///   - firstName: The person’s first name.
+    ///   - firstNameKana: The Kana variation of the person’s first name (Japan only).
+    ///   - firstNameKanji: The Kanji variation of the person’s first name (Japan only).
     ///   - gender: The person’s gender (International regulations require either “male” or “female”).
     ///   - idNumber: The person’s ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a PII token provided by Stripe.js.
     ///   - lastName: The person’s last name.
+    ///   - lastNameKana: The Kana variation of the person’s last name (Japan only).
+    ///   - lastNameKanji: The Kanji variation of the person’s last name (Japan only)
     ///   - maidenName: The person’s maiden name.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    ///   - personToken: A person token, used to securely provide details to the person.
     ///   - phone: The person’s phone number.
     ///   - relationship: The relationship that this person has with the account’s legal entity.
     ///   - ssnLast4: The last 4 digits of the person’s social security number.
@@ -72,14 +93,21 @@ public protocol PersonRoutes {
     func update(account: String,
                 person: String,
                 address: [String: Any]?,
+                addressKana: [String: Any]?,
+                addressKanji: [String: Any]?,
                 dob: [String: Any]?,
                 email: String?,
                 firstName: String?,
+                firstNameKana: String?,
+                firstNameKanji: String?,
                 gender: StripePersonGender?,
                 idNumber: String?,
                 lastName: String?,
+                lastNameKana: String?,
+                lastNameKanji: String?,
                 maidenName: String?,
                 metadata: [String: String]?,
+                personToken: String?,
                 phone: String?,
                 relationship: [String: Any]?,
                 ssnLast4: String?,
@@ -108,32 +136,46 @@ public protocol PersonRoutes {
 extension PersonRoutes {
     public func create(account: String,
                        address: [String: Any]? = nil,
+                       addressKana: [String: Any]? = nil,
+                       addressKanji: [String: Any]? = nil,
                        dob: [String: Any]? = nil,
                        email: String? = nil,
                        firstName: String? = nil,
+                       firstNameKana: String? = nil,
+                       firstNameKanji: String? = nil,
                        gender: StripePersonGender? = nil,
                        idNumber: String? = nil,
                        lastName: String? = nil,
+                       lastNameKana: String? = nil,
+                       lastNameKanji: String? = nil,
                        maidenName: String? = nil,
                        metadata: [String: String]? = nil,
+                       personToken: String? = nil,
                        phone: String? = nil,
                        relationship: [String: Any]? = nil,
                        ssnLast4: String?,
                        verification: [String: Any]? = nil) -> EventLoopFuture<StripePerson> {
         return create(account: account,
-                          address: address,
-                          dob: dob,
-                          email: email,
-                          firstName: firstName,
-                          gender: gender,
-                          idNumber: idNumber,
-                          lastName: lastName,
-                          maidenName: maidenName,
-                          metadata: metadata,
-                          phone: phone,
-                          relationship: relationship,
-                          ssnLast4: ssnLast4,
-                          verification: verification)
+                      address: address,
+                      addressKana: addressKana,
+                      addressKanji: addressKanji,
+                      dob: dob,
+                      email: email,
+                      firstName: firstName,
+                      firstNameKana: firstName,
+                      firstNameKanji: firstNameKanji,
+                      gender: gender,
+                      idNumber: idNumber,
+                      lastName: lastName,
+                      lastNameKana: lastNameKana,
+                      lastNameKanji: lastNameKanji,
+                      maidenName: maidenName,
+                      metadata: metadata,
+                      personToken: personToken,
+                      phone: phone,
+                      relationship: relationship,
+                      ssnLast4: ssnLast4,
+                      verification: verification)
     }
     
     public func retrieve(account: String, person: String) -> EventLoopFuture<StripePerson> {
@@ -143,33 +185,47 @@ extension PersonRoutes {
     public func update(account: String,
                        person: String,
                        address: [String: Any]? = nil,
+                       addressKana: [String: Any]? = nil,
+                       addressKanji: [String: Any]? = nil,
                        dob: [String: Any]? = nil,
                        email: String? = nil,
                        firstName: String? = nil,
+                       firstNameKana: String? = nil,
+                       firstNameKanji: String? = nil,
                        gender: StripePersonGender? = nil,
                        idNumber: String? = nil,
                        lastName: String? = nil,
+                       lastNameKana: String? = nil,
+                       lastNameKanji: String? = nil,
                        maidenName: String? = nil,
                        metadata: [String: String]? = nil,
+                       personToken: String? = nil,
                        phone: String? = nil,
                        relationship: [String: Any]? = nil,
                        ssnLast4: String? = nil,
                        verification: [String: Any]? = nil) -> EventLoopFuture<StripePerson> {
         return update(account: account,
-                          person: person,
-                          address: address,
-                          dob: dob,
-                          email: email,
-                          firstName: firstName,
-                          gender: gender,
-                          idNumber: idNumber,
-                          lastName: lastName,
-                          maidenName: maidenName,
-                          metadata: metadata,
-                          phone: phone,
-                          relationship: relationship,
-                          ssnLast4: ssnLast4,
-                          verification: verification)
+                      person: person,
+                      address: address,
+                      addressKana: addressKana,
+                      addressKanji: addressKanji,
+                      dob: dob,
+                      email: email,
+                      firstName: firstName,
+                      firstNameKana: firstName,
+                      firstNameKanji: firstNameKanji,
+                      gender: gender,
+                      idNumber: idNumber,
+                      lastName: lastName,
+                      lastNameKana: lastNameKana,
+                      lastNameKanji: lastNameKanji,
+                      maidenName: maidenName,
+                      metadata: metadata,
+                      personToken: personToken,
+                      phone: phone,
+                      relationship: relationship,
+                      ssnLast4: ssnLast4,
+                      verification: verification)
     }
     
     public func delete(account: String, person: String) -> EventLoopFuture<StripeDeletedObject> {
@@ -182,8 +238,11 @@ extension PersonRoutes {
 }
 
 public struct StripePersonRoutes: PersonRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let persons = APIBase + APIVersion + "accounts"
+    
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -191,14 +250,21 @@ public struct StripePersonRoutes: PersonRoutes {
     
     public func create(account: String,
                        address: [String: Any]?,
+                       addressKana: [String: Any]?,
+                       addressKanji: [String: Any]?,
                        dob: [String: Any]?,
                        email: String?,
                        firstName: String?,
+                       firstNameKana: String?,
+                       firstNameKanji: String?,
                        gender: StripePersonGender?,
                        idNumber: String?,
                        lastName: String?,
+                       lastNameKana: String?,
+                       lastNameKanji: String?,
                        maidenName: String?,
                        metadata: [String: String]?,
+                       personToken: String?,
                        phone: String?,
                        relationship: [String: Any]?,
                        ssnLast4: String?,
@@ -207,6 +273,14 @@ public struct StripePersonRoutes: PersonRoutes {
         
         if let address = address {
             address.forEach { body["address[\($0)]"] = $1 }
+        }
+        
+        if let addressKana = addressKana {
+            addressKana.forEach { body["address_kana[\($0)]"] = $1 }
+        }
+        
+        if let addressKanji = addressKanji {
+            addressKanji.forEach { body["address_kanji[\($0)]"] = $1 }
         }
         
         if let dob = dob {
@@ -221,6 +295,14 @@ public struct StripePersonRoutes: PersonRoutes {
             body["first_name"] = firstName
         }
         
+        if let firstNameKana = firstNameKana {
+            body["first_name_kana"] = firstNameKana
+        }
+        
+        if let firstNameKanji = firstNameKanji {
+            body["first_name_kanji"] = firstNameKanji
+        }
+        
         if let gender = gender {
             body["gender"] = gender.rawValue
         }
@@ -233,12 +315,24 @@ public struct StripePersonRoutes: PersonRoutes {
             body["last_name"] = lastName
         }
         
+        if let lastNameKana = lastNameKana {
+            body["last_name_kana"] = lastNameKana
+        }
+        
+        if let lastNameKanji = lastNameKanji {
+            body["last_name_kanji"] = lastNameKanji
+        }
+        
         if let maidenName = maidenName {
             body["maiden_name"] = maidenName
         }
         
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let personToken = personToken {
+            body["person_token"] = personToken
         }
         
         if let phone = phone {
@@ -257,24 +351,31 @@ public struct StripePersonRoutes: PersonRoutes {
             verification.forEach { body["verification[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.person(account).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(persons)/\(account)/persons", body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(account: String, person: String) -> EventLoopFuture<StripePerson> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.persons(account, person).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(persons)/\(account)/persons/\(person)", headers: headers)
     }
     
     public func update(account: String,
                        person: String,
                        address: [String: Any]?,
+                       addressKana: [String: Any]?,
+                       addressKanji: [String: Any]?,
                        dob: [String: Any]?,
                        email: String?,
                        firstName: String?,
+                       firstNameKana: String?,
+                       firstNameKanji: String?,
                        gender: StripePersonGender?,
                        idNumber: String?,
                        lastName: String?,
+                       lastNameKana: String?,
+                       lastNameKanji: String?,
                        maidenName: String?,
                        metadata: [String: String]?,
+                       personToken: String?,
                        phone: String?,
                        relationship: [String: Any]?,
                        ssnLast4: String?,
@@ -283,6 +384,14 @@ public struct StripePersonRoutes: PersonRoutes {
         
         if let address = address {
             address.forEach { body["address[\($0)]"] = $1 }
+        }
+        
+        if let addressKana = addressKana {
+            addressKana.forEach { body["address_kana[\($0)]"] = $1 }
+        }
+        
+        if let addressKanji = addressKanji {
+            addressKanji.forEach { body["address_kanji[\($0)]"] = $1 }
         }
         
         if let dob = dob {
@@ -297,6 +406,14 @@ public struct StripePersonRoutes: PersonRoutes {
             body["first_name"] = firstName
         }
         
+        if let firstNameKana = firstNameKana {
+            body["first_name_kana"] = firstNameKana
+        }
+        
+        if let firstNameKanji = firstNameKanji {
+            body["first_name_kanji"] = firstNameKanji
+        }
+        
         if let gender = gender {
             body["gender"] = gender.rawValue
         }
@@ -309,12 +426,24 @@ public struct StripePersonRoutes: PersonRoutes {
             body["last_name"] = lastName
         }
         
+        if let lastNameKana = lastNameKana {
+            body["last_name_kana"] = lastNameKana
+        }
+        
+        if let lastNameKanji = lastNameKanji {
+            body["last_name_kanji"] = lastNameKanji
+        }
+        
         if let maidenName = maidenName {
             body["maiden_name"] = maidenName
         }
         
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let personToken = personToken {
+            body["person_token"] = personToken
         }
         
         if let phone = phone {
@@ -333,11 +462,11 @@ public struct StripePersonRoutes: PersonRoutes {
             verification.forEach { body["verification[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.persons(account, person).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(persons)/\(account)/persons/\(person)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(account: String, person: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.persons(account, person).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(persons)/\(account)/persons/\(person)", headers: headers)
     }
     
     public func listAll(account: String, filter: [String : Any]?) -> EventLoopFuture<StripePersonsList> {
@@ -345,6 +474,6 @@ public struct StripePersonRoutes: PersonRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.person(account).endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(persons)/\(account)/persons", query: queryParams, headers: headers)
     }
 }
