@@ -21,6 +21,8 @@ public struct StripeCreditNote: StripeModel {
     public var currency: StripeCurrency?
     /// ID of the customer.
     public var customer: String?
+    /// Customer balance transaction related to this credit note.
+    public var customerBalanceTransaction: String?
     /// ID of the invoice.
     public var invoice: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
@@ -41,6 +43,8 @@ public struct StripeCreditNote: StripeModel {
     public var status: StripeCreditNoteStatus?
     /// Type of this credit note, one of `post_payment` or `pre_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
     public var type: StripeCreditNoteType?
+    /// The time that the credit note was voided.
+    public var voidedAt: Date?
 }
 
 public enum StripeCreditNoteReason: String, StripeModel {
