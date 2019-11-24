@@ -76,11 +76,11 @@ public struct StripeReviewIPAddressLocation: StripeModel {
 public struct StripeReviewSession: StripeModel {
     /// The browser used in this browser session (e.g., `Safari`).
     public var browser: String?
-    /// Information about the device used for the browser session (e.g., Samsung SM-G930T).
+    /// Information about the device used for the browser session (e.g., `Samsung SM-G930T`).
     public var device: String?
-    /// The platform for the browser session (e.g., Macintosh).
+    /// The platform for the browser session (e.g., `Macintosh`).
     public var platform: String?
-    /// The version for the browser session (e.g., 61.0.3163.100).
+    /// The version for the browser session (e.g., `61.0.3163.100`).
     public var version: String?
 }
 

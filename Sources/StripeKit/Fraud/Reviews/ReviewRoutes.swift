@@ -46,19 +46,21 @@ extension ReviewRoutes {
 }
 
 public struct StripeReviewRoutes: ReviewRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let reviews = APIBase + APIVersion + "reviews"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }    
     
     public func approve(review: String) -> EventLoopFuture<StripeReview> {
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.reviewsApprove(review).endpoint, headers: headers)
+        return apiHandler.send(method: .POST, path: "\(reviews)\(review)/approve", headers: headers)
     }
     
     public func retrieve(review: String) -> EventLoopFuture<StripeReview> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.reviews(review).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(reviews)\(review)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeReviewList> {
@@ -66,6 +68,6 @@ public struct StripeReviewRoutes: ReviewRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.review.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: reviews, query: queryParams, headers: headers)
     }
 }
