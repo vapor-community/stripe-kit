@@ -12,7 +12,7 @@ public struct StripeTransaction: StripeModel {
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
-    ///
+    /// The amount of this transaction in your currency. This is the amount that your balance will be updated by.
     public var amount: Int?
     /// The Authorization object that led to this transaction.
     public var authorization: String?
@@ -30,9 +30,9 @@ public struct StripeTransaction: StripeModel {
     public var dispute: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
-    ///
+    /// The amount that the merchant will receive, denominated in `merchant_currency`. It will be different from `amount` if the merchant is taking payment in a different currency.
     public var merchantAmount: Int?
-    ///
+    /// The currency with which the merchant is taking payment.
     public var merchantCurrency: StripeCurrency?
     /// More information about the user involved in the transaction.
     public var merchantData: StripeAuthorizationMerchantData?

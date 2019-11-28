@@ -48,15 +48,17 @@ extension TransactionRoutes {
 }
 
 public struct StripeTransactionRoutes: TransactionRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let issuingtransactions = APIBase + APIVersion + "issuing/transactions"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
     public func retrieve(transaction: String) -> EventLoopFuture<StripeTransaction> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transactions(transaction).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(issuingtransactions)/\(transaction)", headers: headers)
     }
     
     public func update(transaction: String, metadata: [String: String]?) -> EventLoopFuture<StripeTransaction> {
@@ -66,7 +68,7 @@ public struct StripeTransactionRoutes: TransactionRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.transactions(transaction).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(issuingtransactions)/\(transaction)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransactionList> {
@@ -75,6 +77,6 @@ public struct StripeTransactionRoutes: TransactionRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.transaction.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: issuingtransactions, query: queryParams, headers: headers)
     }
 }

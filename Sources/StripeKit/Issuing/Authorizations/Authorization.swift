@@ -81,6 +81,8 @@ public struct StripeAuthorizationMerchantData: StripeModel {
     public var postalCode: String?
     /// State where the seller is located
     public var state: String?
+    /// The url an online purchase was made from
+    public var url: String?
 }
 
 public struct StripeAuthorizationRequestHistory: StripeModel {
