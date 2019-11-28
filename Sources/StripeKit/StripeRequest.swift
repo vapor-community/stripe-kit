@@ -12,6 +12,10 @@ import NIOFoundationCompat
 import NIOHTTP1
 import AsyncHTTPClient
 
+internal let APIBase = "https://api.stripe.com/"
+internal let FilesAPIBase = "https://files.stripe.com/"
+internal let APIVersion = "v1/"
+
 public protocol StripeAPIHandler {
     func send<SM: StripeModel>(method: HTTPMethod,
                                path: String,

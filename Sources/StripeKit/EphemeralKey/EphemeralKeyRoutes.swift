@@ -27,8 +27,10 @@ extension EphemeralKeyRoutes {
 }
 
 public struct StripeEphemeralKeyRoutes: EphemeralKeyRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let ephemeralkeys = APIBase + APIVersion + "ephemeral_keys"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -41,10 +43,10 @@ public struct StripeEphemeralKeyRoutes: EphemeralKeyRoutes {
             body["issuing_card"] = issuingCard
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.ephemeralKeys.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: ephemeralkeys, body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(ephemeralKey: String) -> EventLoopFuture<StripeEphemeralKey> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.ephemeralKey(ephemeralKey).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(ephemeralkeys)/\(ephemeralKey)", headers: headers)
     }
 }

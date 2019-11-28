@@ -147,7 +147,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
     }
     
     public func retrieve(payout: String) -> EventLoopFuture<StripePayout> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.payouts(payout).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(payouts)/\(payout)", headers: headers)
     }
     
     public func update(payout: String, metadata: [String: String]?) -> EventLoopFuture<StripePayout> {
