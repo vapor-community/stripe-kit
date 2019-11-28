@@ -121,7 +121,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 * [x] File Links
 * [x] Mandates
 * [x] PaymentIntents
-* [ ] SetupIntents
+* [x] SetupIntents
 * [x] Payouts
 * [x] Products
 * [x] Refunds

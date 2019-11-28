@@ -63,6 +63,7 @@ public final class StripeClient {
     public var scheduledQueryRuns: ScheduledQueryRunRoutes
     public var accountLinks: AccountLinkRoutes
     public var mandates: MandateRoutes
+    public var setupIntents: SetupIntentsRoutes
     
     private let client: HTTPClient
     
@@ -124,6 +125,7 @@ public final class StripeClient {
         scheduledQueryRuns = StripeScheduledQueryRunRoutes(apiHandler: handler)
         accountLinks = StripeAccountLinkRoutes(apiHandler: handler)
         mandates = StripeMandateRoutes(apiHandler: handler)
+        setupIntents = StripeSetupIntentsRoutes(apiHandler: handler)
     }
     
     deinit {
