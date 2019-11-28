@@ -37,15 +37,17 @@ extension OrderReturnRoutes {
 }
 
 public struct StripeOrderReturnRoutes: OrderReturnRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let orderreturns = APIBase + APIVersion + "order_returns"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
     public func retrieve(id: String) -> EventLoopFuture<StripeOrderReturn> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.orderReturns(id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(orderreturns)/\(id)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeOrderReturnList> {
@@ -54,6 +56,6 @@ public struct StripeOrderReturnRoutes: OrderReturnRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.orderReturn.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: orderreturns, query: queryParams, headers: headers)
     }
 }
