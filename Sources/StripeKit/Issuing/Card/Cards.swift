@@ -35,6 +35,8 @@ public struct StripeIssuingCard: StripeModel {
     public var metadata: [String: String]?
     /// The name of the cardholder, printed on the card.
     public var name: String?
+    /// Metadata about the PIN on the card.
+    public var pin: StripeIssuingCardPin?
     /// The card this card replaces, if any.
     public var replacementFor: String?
     /// Why the card that this card replaces (if any) needed to be replaced. One of damage, expiration, loss, or theft.
@@ -46,6 +48,17 @@ public struct StripeIssuingCard: StripeModel {
     /// One of virtual or physical.
     public var type: StripeIssuingCardType?
 }
+
+public struct StripeIssuingCardPin: StripeModel {
+    /// The status of the pin. One of `blocked` or `active`.
+    public var status: StripeIssuingCardPinStatus?
+}
+
+public enum StripeIssuingCardPinStatus: String, StripeModel {
+    case blocked
+    case active
+}
+
 public struct StripeIssuingCardList: StripeModel {
     public var object: String
     public var hasMore: Bool

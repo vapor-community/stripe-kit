@@ -38,7 +38,7 @@ public protocol IssuingCardRoutes {
     /// - Returns: A `StripeIssuingCard`.
     func retrieve(card: String) -> EventLoopFuture<StripeIssuingCard>
     
-    /// For virtual cards only. Retrieves an Issuing Card_details object that contains the sensitive details of a virtual card.
+    /// For virtual cards only. Retrieves an Issuing `card_details` object that contains the sensitive details of a virtual card.
     ///
     /// - Parameter card: The identifier of the virtual card to be retrieved.
     /// - Returns: A `StripeIssuingCardDetails`.
@@ -116,8 +116,10 @@ extension IssuingCardRoutes {
 }
 
 public struct StripeIssuingCardRoutes: IssuingCardRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let issuingcards = APIBase + APIVersion + "issuing/cards"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -163,15 +165,15 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
             body["status"] = status.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.issuingCard.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: issuingcards, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(card: String) -> EventLoopFuture<StripeIssuingCard> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.issuingCards(card).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(issuingcards)/\(card)", headers: headers)
     }
     
     public func retrieveDetails(card: String) -> EventLoopFuture<StripeIssuingCardDetails> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.issuingCardDetails(card).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(issuingcards)/\(card)/details", headers: headers)
     }
     
     public func update(card: String,
@@ -197,7 +199,7 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
             body["status"] = status.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.issuingCards(card).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(issuingcards)/\(card)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeIssuingCardList> {
@@ -206,6 +208,6 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.issuingCard.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: issuingcards, query: queryParams, headers: headers)
     }
 }
