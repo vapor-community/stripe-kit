@@ -36,15 +36,17 @@ extension ScheduledQueryRunRoutes {
 }
 
 public struct StripeScheduledQueryRunRoutes: ScheduledQueryRunRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let scheduledqueryruns = APIBase + APIVersion + "scheduled_query_runs"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
     public func retrieve(scheduledQueryRun: String) -> EventLoopFuture<StripeScheduledQueryRun> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.scheduledQueryRuns(scheduledQueryRun).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(scheduledqueryruns)/\(scheduledQueryRun)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeScheduledQueryRunList> {
@@ -53,6 +55,6 @@ public struct StripeScheduledQueryRunRoutes: ScheduledQueryRunRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.scheduledQueryRun.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: scheduledqueryruns, query: queryParams, headers: headers)
     }
 }
