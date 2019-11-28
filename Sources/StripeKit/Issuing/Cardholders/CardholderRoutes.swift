@@ -16,7 +16,9 @@ public protocol CardholderRoutes {
     ///   - name: The cardholder’s name. This will be printed on cards issued to them.
     ///   - type: The type of cardholder. Possible values are `individual` or `business_entity`.
     ///   - authorizationControls: Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details. This will be unset if you POST an empty value.
+    ///   - company: Additional information about a business_entity cardholder.
     ///   - email: The cardholder’s email address.
+    ///   - individual: Additional information about an `individual` cardholder.
     ///   - isDefault: Specifies whether to set this as the default cardholder.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - phoneNumber: The cardholder’s phone number. This will be transformed to E.164 if it is not provided in that format already.
@@ -26,7 +28,9 @@ public protocol CardholderRoutes {
                 name: String,
                 type: StripeCardholderType,
                 authorizationControls: [String: Any]?,
+                company: [String: Any]?,
                 email: String?,
+                individual: [String: Any]?,
                 isDefault: Bool?,
                 metadata: [String: String]?,
                 phoneNumber: String?,
@@ -44,7 +48,9 @@ public protocol CardholderRoutes {
     ///   - cardholder: The ID of the cardholder to update.
     ///   - authorizationControls: Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details. This will be unset if you POST an empty value.
     ///   - billing: The cardholder’s billing address.
+    ///   - company: Additional information about a `business_entity` cardholder.
     ///   - email: The cardholder’s email address.
+    ///   - individual: Additional information about an individual cardholder.
     ///   - isDefault: Specifies whether to set this as the default cardholder.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - phoneNumber: The cardholder’s phone number. This will be transformed to E.164 if it is not provided in that format already.
@@ -53,7 +59,9 @@ public protocol CardholderRoutes {
     func update(cardholder: String,
                 authorizationControls: [String: Any]?,
                 billing: [String: Any]?,
+                company: [String: Any]?,
                 email: String?,
+                individual: [String: Any]?,
                 isDefault: Bool?,
                 metadata: [String: String]?,
                 phoneNumber: String?,
@@ -74,20 +82,24 @@ extension CardholderRoutes {
                 name: String,
                 type: StripeCardholderType,
                 authorizationControls: [String: Any]? = nil,
+                company: [String: Any]? = nil,
                 email: String? = nil,
+                individual: [String: Any]? = nil,
                 isDefault: Bool? = nil,
                 metadata: [String: String]? = nil,
                 phoneNumber: String? = nil,
                 status: StripeCardholderStatus? = nil) -> EventLoopFuture<StripeCardholder> {
         return create(billing: billing,
-                          name: name,
-                          type: type,
-                          authorizationControls: authorizationControls,
-                          email: email,
-                          isDefault: isDefault,
-                          metadata: metadata,
-                          phoneNumber: phoneNumber,
-                          status: status)
+                      name: name,
+                      type: type,
+                      authorizationControls: authorizationControls,
+                      company: company,
+                      email: email,
+                      individual: individual,
+                      isDefault: isDefault,
+                      metadata: metadata,
+                      phoneNumber: phoneNumber,
+                      status: status)
     }
     
     func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder> {
@@ -97,19 +109,23 @@ extension CardholderRoutes {
     func update(cardholder: String,
                 authorizationControls: [String: Any]? = nil,
                 billing: [String: Any]? = nil,
+                company: [String: Any]? = nil,
                 email: String? = nil,
+                individual: [String: Any]? = nil,
                 isDefault: Bool? = nil,
                 metadata: [String: String]? = nil,
                 phoneNumber: String? = nil,
                 status: StripeCardholderStatus? = nil) -> EventLoopFuture<StripeCardholder> {
         return update(cardholder: cardholder,
-                          authorizationControls: authorizationControls,
-                          billing: billing,
-                          email: email,
-                          isDefault: isDefault,
-                          metadata: metadata,
-                          phoneNumber: phoneNumber,
-                          status: status)
+                      authorizationControls: authorizationControls,
+                      billing: billing,
+                      company: company,
+                      email: email,
+                      individual: individual,
+                      isDefault: isDefault,
+                      metadata: metadata,
+                      phoneNumber: phoneNumber,
+                      status: status)
     }
     
     func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeAuthorizationList> {
@@ -118,8 +134,10 @@ extension CardholderRoutes {
 }
 
 public struct StripeCardholderRoutes: CardholderRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let cardholders = APIBase + APIVersion + "issuing/cardholders"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -129,7 +147,9 @@ public struct StripeCardholderRoutes: CardholderRoutes {
                        name: String,
                        type: StripeCardholderType,
                        authorizationControls: [String: Any]?,
+                       company: [String: Any]?,
                        email: String?,
+                       individual: [String: Any]?,
                        isDefault: Bool?,
                        metadata: [String: String]?,
                        phoneNumber: String?,
@@ -142,8 +162,16 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             authorizationControls.forEach { body["authorization_controls[\($0)]"] = $1 }
         }
         
+        if let company = company {
+            company.forEach { body["company[\($0)]"] = $1 }
+        }
+        
         if let email = email {
             body["email"] = email
+        }
+        
+        if let individual = individual {
+            individual.forEach { body["individual[\($0)]"] = $1 }
         }
         
         if let isDefault = isDefault {
@@ -162,17 +190,19 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             body["status"] = status.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.cardholder.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: cardholders, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.cardholders(cardholder).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(cardholders)/\(cardholder)", headers: headers)
     }
     
     public func update(cardholder: String,
                        authorizationControls: [String: Any]?,
                        billing: [String: Any]?,
+                       company: [String: Any]?,
                        email: String?,
+                       individual: [String: Any]?,
                        isDefault: Bool?,
                        metadata: [String: String]?,
                        phoneNumber: String?,
@@ -187,8 +217,16 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             billing.forEach { body["billing[\($0)]"] = $1 }
         }
         
+        if let company = company {
+            company.forEach { body["company[\($0)]"] = $1 }
+        }
+        
         if let email = email {
             body["email"] = email
+        }
+        
+        if let individual = individual {
+            individual.forEach { body["individual[\($0)]"] = $1 }
         }
         
         if let isDefault = isDefault {
@@ -207,7 +245,7 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             body["status"] = status.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.cardholders(cardholder).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(cardholders)/\(cardholder)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripeAuthorizationList> {
@@ -216,6 +254,6 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.cardholder.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: cardholders, query: queryParams, headers: headers)
     }
 }

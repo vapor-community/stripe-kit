@@ -17,10 +17,14 @@ public struct StripeCardholder: StripeModel {
     public var authorizationControls: StripeCardholderAuthorizationControls?
     /// The cardholder’s billing address.
     public var billing: StripeCardholderBilling?
+    /// Additional information about a business_entity cardholder.
+    public var company: StripeCardholderCompany?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?
     /// The cardholder’s email address.
     public var email: String?
+    /// Additional information about an individual cardholder.
+    public var individual: StripeCardholderIndividual?
     /// Whether or not this cardholder is the default cardholder.
     public var isDefault: Bool?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
@@ -31,6 +35,8 @@ public struct StripeCardholder: StripeModel {
     public var name: String?
     /// The cardholder’s phone number.
     public var phoneNumber: String?
+    /// Information about verification requirements for the cardholder, including what information needs to be collected.
+    public var requirements: StripeCardholderAuthorizationRequirements?
     /// One of `active`, `inactive`, `blocked`, or `pending`.
     public var status: StripeCardholderStatus?
     /// One of `individual` or `business_entity`.
@@ -71,16 +77,49 @@ public struct StripeCardholderBilling: StripeModel {
     public var name: String?
 }
 
+public struct StripeCardholderCompany: StripeModel {
+    /// Whether the company’s business ID number was provided.
+    public var taxIdProvided: Bool?
+}
+
+public struct StripeCardholderIndividual: StripeModel {
+    /// The date of birth of this cardholder.
+    public var dob: StripePersonDOB?
+    /// The first name of this cardholder
+    public var firstName: String?
+    /// The first name of this cardholder
+    public var lastName: String?
+    /// Government-issued ID document for this cardholder.
+    public var verification: StripeCardholderIndividualVerification?
+}
+
+public struct StripeCardholderIndividualVerification: StripeModel {
+    /// An identifying document, either a passport or local ID card.
+    public var document: StripePersonVerificationDocument?
+}
+
+public struct StripeCardholderAuthorizationRequirements: StripeModel {
+    /// If the cardholder is disabled, this string describes why. Can be one of listed, rejected.listed, or under_review.
+    public var disabledReason: StripeRequirementsDisabledReason?
+    /// If not empty, this field contains the list of fields that need to be collected in order to verify and re-enabled the cardholder.
+    public var pastDue: [String]?
+}
+
 public enum StripeCardholderStatus: String, StripeModel {
     case active
     case inactive
     case blocked
-    case pending
 }
 
 public enum StripeCardholderType: String, StripeModel {
     case individial
     case businessEntity = "business_entity"
+}
+
+public enum StripeRequirementsDisabledReason: String, StripeModel {
+    case listed
+    case rejectedListed = "rejected.listed"
+    case underReview = "under_review"
 }
 
 public struct StripeCardholderList: StripeModel {
