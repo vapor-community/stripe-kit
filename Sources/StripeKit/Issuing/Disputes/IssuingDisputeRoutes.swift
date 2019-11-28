@@ -75,8 +75,10 @@ extension IssuingDisputeRoutes {
 }
 
 public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let issuingdisputes = APIBase + APIVersion + "issuing/disputes"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -102,11 +104,11 @@ public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.issuingDispute.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: issuingdisputes, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(dispute: String) -> EventLoopFuture<StripeIssuingDispute> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.issuingDisputes(dispute).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(issuingdisputes)/\(dispute)", headers: headers)
     }
     
     public func update(dispute: String, metadata: [String: String]?) -> EventLoopFuture<StripeIssuingDispute> {
@@ -116,7 +118,7 @@ public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.issuingDisputes(dispute).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(issuingdisputes)/\(dispute)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String : Any]? = nil) -> EventLoopFuture<StripeIssuingDisputeList> {
@@ -125,6 +127,6 @@ public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.issuingDispute.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: issuingdisputes, query: queryParams, headers: headers)
     }
 }
