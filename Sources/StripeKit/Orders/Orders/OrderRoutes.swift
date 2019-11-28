@@ -96,12 +96,12 @@ extension OrderRoutes {
                        metadata: [String: String]? = nil,
                        shipping: [String: Any]? = nil) -> EventLoopFuture<StripeOrder> {
         return create(currency: currency,
-                          coupon: coupon,
-                          customer: customer,
-                          email: email,
-                          items: items,
-                          metadata: metadata,
-                          shipping: shipping)
+                      coupon: coupon,
+                      customer: customer,
+                      email: email,
+                      items: items,
+                      metadata: metadata,
+                      shipping: shipping)
     }
     
     public func retrieve(id: String) -> EventLoopFuture<StripeOrder> {
@@ -115,11 +115,11 @@ extension OrderRoutes {
                        shipping: [String: Any]? = nil,
                        status: StripeOrderStatus? = nil) -> EventLoopFuture<StripeOrder> {
         return update(id: id,
-                          coupon: coupon,
-                          metadata: metadata,
-                          selectedShippingMethod: selectedShippingMethod,
-                          shipping: shipping,
-                          status: status)
+                      coupon: coupon,
+                      metadata: metadata,
+                      selectedShippingMethod: selectedShippingMethod,
+                      shipping: shipping,
+                      status: status)
     }
     
     public func pay(id: String,
@@ -129,11 +129,11 @@ extension OrderRoutes {
                     email: String? = nil,
                     metadata: [String: String]? = nil) -> EventLoopFuture<StripeOrder> {
         return pay(id: id,
-                       customer: customer,
-                       source: source,
-                       applicationFee: applicationFee,
-                       email: email,
-                       metadata: metadata)
+                   customer: customer,
+                   source: source,
+                   applicationFee: applicationFee,
+                   email: email,
+                   metadata: metadata)
     }
     
     public func listAll(filter: [String : Any]? = nil) -> EventLoopFuture<StripeOrderList> {
@@ -146,8 +146,10 @@ extension OrderRoutes {
 }
 
 public struct StripeOrderRoutes: OrderRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let orders = APIBase + APIVersion + "orders"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -186,11 +188,11 @@ public struct StripeOrderRoutes: OrderRoutes {
             shipping.forEach { body["shipping[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.order.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: orders, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String) -> EventLoopFuture<StripeOrder> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.orders(id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(orders)/\(id)", headers: headers)
     }
     
     public func update(id: String,
@@ -221,7 +223,7 @@ public struct StripeOrderRoutes: OrderRoutes {
             body["status"] = status.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.orders(id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(orders)/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func pay(id: String,
@@ -257,7 +259,7 @@ public struct StripeOrderRoutes: OrderRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
 
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.ordersPay(id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(orders)/\(id)/pay", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeOrderList> {
@@ -266,7 +268,7 @@ public struct StripeOrderRoutes: OrderRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.order.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: orders, query: queryParams, headers: headers)
     }
 
     public func `return`(id: String, items: [[String: Any]]?) -> EventLoopFuture<StripeOrder> {
@@ -276,6 +278,6 @@ public struct StripeOrderRoutes: OrderRoutes {
             body["items"] = items
         }
 
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.ordersReturn(id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(orders)/\(id)/returns", body: .string(body.queryParameters), headers: headers)
     }
 }
