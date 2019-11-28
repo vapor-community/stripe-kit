@@ -71,8 +71,10 @@ extension ReaderRoutes {
 }
 
 public struct StripeReaderRoutes: ReaderRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let terminalreaders = APIBase + APIVersion + "terminal/readers"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -89,11 +91,11 @@ public struct StripeReaderRoutes: ReaderRoutes {
             body["location"] = location
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.reader.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: terminalreaders, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(reader: String) -> EventLoopFuture<StripeReader> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.readers(reader).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(terminalreaders)/\(reader)", headers: headers)
     }
     
     public func update(reader: String, label: String?) -> EventLoopFuture<StripeReader> {
@@ -103,11 +105,11 @@ public struct StripeReaderRoutes: ReaderRoutes {
             body["label"] = label
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.readers(reader).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(terminalreaders)/\(reader)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(reader: String) -> EventLoopFuture<StripeReader> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.readers(reader).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(terminalreaders)/\(reader)", headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeReaderList> {
@@ -116,7 +118,6 @@ public struct StripeReaderRoutes: ReaderRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.reader.endpoint, query: queryParams, headers: headers)
-
+        return apiHandler.send(method: .GET, path: terminalreaders, query: queryParams, headers: headers)
     }
 }

@@ -15,7 +15,7 @@ public struct StripeReader: StripeModel {
     public var object: String
     /// The current software version of the reader.
     public var deviceSwVersion: String?
-    /// Type of reader, e.g., verifone_P400 or bbpos_chipper2x.
+    /// Type of reader, one of`verifone_P400` or `bbpos_chipper2x`.
     public var deviceType: String?
     /// The local IP address of the reader.
     public var ipAddress: String?

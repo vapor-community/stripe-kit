@@ -71,8 +71,10 @@ extension LocationRoutes {
 }
 
 public struct StripeLocationRoutes: LocationRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let terminallocations = APIBase + APIVersion + "terminal/locations"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -82,11 +84,11 @@ public struct StripeLocationRoutes: LocationRoutes {
         var body: [String: Any] = ["display_name": displayName]
         address.forEach { body["address[\($0)]"] = $1 }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.location.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: terminallocations, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(location: String) -> EventLoopFuture<StripeLocation> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.locations(location).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(terminallocations)/\(location)", headers: headers)
     }
     
     public func update(location: String, address: [String: Any]?, displayName: String?) -> EventLoopFuture<StripeLocation> {
@@ -99,11 +101,11 @@ public struct StripeLocationRoutes: LocationRoutes {
             body["display_name"] = displayName
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.locations(location).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(terminallocations)/\(location)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func delete(location: String) -> EventLoopFuture<StripeLocation> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.locations(location).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(terminallocations)/\(location)", headers: headers)
     }
     
     public func listAll(filter: [String : Any]? = nil) -> EventLoopFuture<StripeLocationList> {
@@ -112,6 +114,6 @@ public struct StripeLocationRoutes: LocationRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.location.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: terminallocations, query: queryParams, headers: headers)
     }
 }

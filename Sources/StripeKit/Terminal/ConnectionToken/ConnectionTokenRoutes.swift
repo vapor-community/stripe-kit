@@ -26,14 +26,16 @@ extension ConnectionTokenRoutes {
 }
 
 public struct StripeConnectionTokenRoutes: ConnectionTokenRoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let connectiontokens = APIBase + APIVersion + "terminal/connection_tokens"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
     public func create(location: String?) -> EventLoopFuture<StripeConnectionToken> {
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.connectionToken.endpoint, headers: headers)
+        return apiHandler.send(method: .POST, path: connectiontokens, headers: headers)
     }
 }
