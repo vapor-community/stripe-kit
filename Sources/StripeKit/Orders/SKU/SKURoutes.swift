@@ -95,15 +95,15 @@ extension SKURoutes {
                        metadata: [String: String]? = nil,
                        packageDimensions: [String: Any]? = nil) -> EventLoopFuture<StripeSKU> {
         return create(id: id,
-                          currency: currency,
-                          inventory: inventory,
-                          price: price,
-                          product: product,
-                          active: active,
-                          attributes: attributes,
-                          image: image,
-                          metadata: metadata,
-                          packageDimensions: packageDimensions)
+                      currency: currency,
+                      inventory: inventory,
+                      price: price,
+                      product: product,
+                      active: active,
+                      attributes: attributes,
+                      image: image,
+                      metadata: metadata,
+                      packageDimensions: packageDimensions)
     }
     
     public func retrieve(id: String) -> EventLoopFuture<StripeSKU> {
@@ -121,15 +121,15 @@ extension SKURoutes {
                        price: Int? = nil,
                        product: String? = nil) -> EventLoopFuture<StripeSKU> {
         return update(id: id,
-                          active: active,
-                          attributes: attributes,
-                          currency: currency,
-                          image: image,
-                          inventory: inventory,
-                          metadata: metadata,
-                          packageDimensions: packageDimensions,
-                          price: price,
-                          product: product)
+                      active: active,
+                      attributes: attributes,
+                      currency: currency,
+                      image: image,
+                      inventory: inventory,
+                      metadata: metadata,
+                      packageDimensions: packageDimensions,
+                      price: price,
+                      product: product)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSKUList> {
@@ -142,8 +142,10 @@ extension SKURoutes {
 }
 
 public struct StripeSKURoutes: SKURoutes {
-    private let apiHandler: StripeAPIHandler
     public var headers: HTTPHeaders = [:]
+    
+    private let apiHandler: StripeAPIHandler
+    private let skus = APIBase + APIVersion + "skus"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -185,11 +187,11 @@ public struct StripeSKURoutes: SKURoutes {
             packageDimensions.forEach { body["package_dimensions[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.sku.endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: skus, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(id: String) -> EventLoopFuture<StripeSKU> {
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.skus(id).endpoint, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(skus)/\(id)", headers: headers)
     }
     
     public func update(id: String,
@@ -236,7 +238,7 @@ public struct StripeSKURoutes: SKURoutes {
             body["product"] = product
         }
         
-        return apiHandler.send(method: .POST, path: StripeAPIEndpoint.skus(id).endpoint, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(skus)/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeSKUList> {
@@ -245,10 +247,10 @@ public struct StripeSKURoutes: SKURoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: StripeAPIEndpoint.sku.endpoint, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: skus, query: queryParams, headers: headers)
     }
     
     public func delete(id: String) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: StripeAPIEndpoint.skus(id).endpoint, headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(skus)/\(id)", headers: headers)
     }
 }
