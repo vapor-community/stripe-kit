@@ -165,7 +165,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 * [x] Transfer Reversals
 ---
 ### Fraud
-* [ ] Early Fraud Warnings
+* [x] Early Fraud Warnings
 * [x] Reviews
 * [x] Value Lists
 * [x] Value List Items
