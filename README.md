@@ -156,7 +156,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 * [x] Account Links
 * [x] Application Fees
 * [x] Application Fee Refunds
-* [ ] Capabilities
+* [x] Capabilities
 * [x] Country Specs
 * [x] External Accounts
 * [x] Persons

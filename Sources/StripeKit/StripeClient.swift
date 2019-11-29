@@ -53,6 +53,7 @@ public final class StripeClient {
     public var accountLinks: AccountLinkRoutes
     public var applicationFees: ApplicationFeesRoutes
     public var applicationFeeRefunds: ApplicationFeeRefundRoutes
+    public var capabilities: CapabilitiesRoutes
     public var countrySpecs: CountrySpecRoutes
     public var externalAccounts: ExternalAccountsRoutes
     public var persons: PersonRoutes
@@ -131,6 +132,7 @@ public final class StripeClient {
         accountLinks = StripeAccountLinkRoutes(apiHandler: handler)
         applicationFees = StripeApplicationFeeRoutes(apiHandler: handler)
         applicationFeeRefunds = StripeApplicationFeeRefundRoutes(apiHandler: handler)
+        capabilities = StripeCapabilitiesRoutes(apiHandler: handler)
         countrySpecs = StripeCountrySpecRoutes(apiHandler: handler)
         externalAccounts = StripeExternalAccountsRoutes(apiHandler: handler)
         persons = StripePersonRoutes(apiHandler: handler)
