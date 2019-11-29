@@ -139,7 +139,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 ### Billing
 * [x] Coupons
 * [x] Credit Notes
-* [ ] Customer Balance Transactions
+* [x] Customer Balance Transactions
 * [x] Customer Tax IDs
 * [x] Discounts
 * [x] Invoices
