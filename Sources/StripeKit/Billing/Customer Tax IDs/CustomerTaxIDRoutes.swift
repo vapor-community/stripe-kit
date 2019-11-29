@@ -1,5 +1,5 @@
 //
-//  TaxIDRoutes.swift
+//  CustomerTaxIDRoutes.swift
 //  Stripe
 //
 //  Created by Andrew Edwards on 5/12/19.
@@ -8,7 +8,7 @@
 import NIO
 import NIOHTTP1
 
-public protocol TaxIDRoutes {
+public protocol CustomerTaxIDRoutes {
     /// Creates a new `TaxID` object for a customer.
     ///
     /// - Parameters:
@@ -46,7 +46,7 @@ public protocol TaxIDRoutes {
     var headers: HTTPHeaders { get set }
 }
 
-public struct StripeTaxIDRoutes: TaxIDRoutes {
+public struct StripeCustomerTaxIDRoutes: CustomerTaxIDRoutes {
     public var headers: HTTPHeaders = [:]
     
     private let apiHandler: StripeAPIHandler
