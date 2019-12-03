@@ -193,7 +193,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 * [x] Scheduled Queries
 ---
 ### Reporting
-* [ ] Report Runs
+* [x] Report Runs
 * [ ] Report Types
 ---
 ### Webhooks

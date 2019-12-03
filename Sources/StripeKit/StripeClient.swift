@@ -88,6 +88,9 @@ public final class StripeClient {
     // MARK: - SIGMA
     public var scheduledQueryRuns: ScheduledQueryRunRoutes
 
+    // MARK: - REPORTING
+    public var reportRuns: ReportRunRoutes
+    
     private let client: HTTPClient
     
     public init(eventLoop: EventLoopGroup, apiKey: String) {
@@ -162,6 +165,8 @@ public final class StripeClient {
         ephemeralKeys = StripeEphemeralKeyRoutes(apiHandler: handler)
         
         scheduledQueryRuns = StripeScheduledQueryRunRoutes(apiHandler: handler)
+        
+        reportRuns = StripeReportRunRoutes(apiHandler: handler)
     }
     
     deinit {
