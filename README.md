@@ -5,14 +5,14 @@
 ### StripeKit is a Swift package used to communicate with the [Stripe](https://stripe.com) API for Server Side Swift Apps.
 
 ## Current supported version
-Version **2.0.0** of StripeKit supports the Stripe API version of **[2019-11-05](https://stripe.com/docs/upgrades#2019-11-05)**. 
+Version **3.0.0** of StripeKit supports the Stripe API version of **[2019-11-05](https://stripe.com/docs/upgrades#2019-11-05)**. 
 **You can check the releases page to use a version of StripeKit that meets your needs.**
 
 ## Installation
 To start using StripeKit, in your `Package.swift`, add the following
 
 ~~~~swift
-.package(url: "https://github.com/vapor-community/stripekit.git", from: "2.0.0")
+.package(url: "https://github.com/vapor-community/stripekit.git", from: "3.0.0")
 ~~~~
 
 ## Using the API
@@ -25,7 +25,7 @@ let stripe = StripeClient(eventLoop: elg, apiKey: "sk_12345")
 
 And now you have acess to the APIs via `stripe`.
 
-The APIs you have available corrospond to what's implemented.
+The APIs you have available correspond to what's implemented.
 
 For example to use the `charges` API, the stripeclient has a property to access that API via routes.
 
@@ -43,10 +43,10 @@ For example to use the `charges` API, the stripeclient has a property to access 
 ~~~~
 
 ## Nuances with parameters and type safety
-Stripe has a habit of changing APIs and having dynamic paramters for alot of their APIs.
-To accomadate for these changes, certain routes that take arguments that are `hash`s or `Dictionaries`, are represented by a swift dictionary `[String: Any]`.
+Stripe has a habit of changing APIs and having dynamic parameters for a lot of their APIs.
+To accomadate for these changes, certain routes that take arguments that are `hash`s or `Dictionaries`, are represented by a Swift dictionary `[String: Any]`.
 
-For example consider the connect account api. 
+For example consider the Connect account API. 
 
 ~~~~swift
 // We define a custom dictionary to represent the paramaters stripe requires.
@@ -112,14 +112,16 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 
 ### Core Resources
 * [x] Balance
+* [x] Balance Transactions
 * [x] Charges
 * [x] Customers
-* [x] Customer Tax IDs
 * [x] Disputes  
 * [ ] Events
+* [x] Files
 * [x] File Links
-* [x] File Uploads
+* [x] Mandates
 * [x] PaymentIntents
+* [x] SetupIntents
 * [x] Payouts
 * [x] Products
 * [x] Refunds
@@ -136,22 +138,25 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 ---
 ### Billing
 * [x] Coupons
+* [x] Credit Notes
+* [x] Customer Balance Transactions
+* [x] Customer Tax IDs
 * [x] Discounts
 * [x] Invoices
 * [x] Invoice Items
-* [x] Tax Rates
-* [x] Credit Notes
-* [x] Products
 * [x] Plans
+* [x] Products
 * [x] Subscriptions
 * [x] Subscription items
+* [x] Tax Rates
 * [x] Usage Records
 ---
 ### Connect
 * [x] Account
 * [x] Account Links
-* [x] Application Fee Refunds
 * [x] Application Fees
+* [x] Application Fee Refunds
+* [x] Capabilities
 * [x] Country Specs
 * [x] External Accounts
 * [x] Persons
@@ -160,6 +165,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 * [x] Transfer Reversals
 ---
 ### Fraud
+* [x] Early Fraud Warnings
 * [x] Reviews
 * [x] Value Lists
 * [x] Value List Items
@@ -185,6 +191,10 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 ---
 ### Sigma
 * [x] Scheduled Queries
+---
+### Reporting
+* [x] Report Runs
+* [x] Report Types
 ---
 ### Webhooks
 * [ ] Webhook Endpoints

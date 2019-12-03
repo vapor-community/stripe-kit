@@ -1,8 +1,8 @@
 import XCTest
 
-import StripeTests
+import StripeKitTests
 
 var tests = [XCTestCaseEntry]()
-tests += StripeTests.__allTests()
+tests += StripeKitTests.__allTests()
 
 XCTMain(tests)
