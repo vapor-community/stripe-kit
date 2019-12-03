@@ -25,7 +25,7 @@ let stripe = StripeClient(eventLoop: elg, apiKey: "sk_12345")
 
 And now you have acess to the APIs via `stripe`.
 
-The APIs you have available corrospond to what's implemented.
+The APIs you have available correspond to what's implemented.
 
 For example to use the `charges` API, the stripeclient has a property to access that API via routes.
 
@@ -43,10 +43,10 @@ For example to use the `charges` API, the stripeclient has a property to access 
 ~~~~
 
 ## Nuances with parameters and type safety
-Stripe has a habit of changing APIs and having dynamic paramters for alot of their APIs.
-To accomadate for these changes, certain routes that take arguments that are `hash`s or `Dictionaries`, are represented by a swift dictionary `[String: Any]`.
+Stripe has a habit of changing APIs and having dynamic parameters for a lot of their APIs.
+To accomadate for these changes, certain routes that take arguments that are `hash`s or `Dictionaries`, are represented by a Swift dictionary `[String: Any]`.
 
-For example consider the connect account api. 
+For example consider the Connect account API. 
 
 ~~~~swift
 // We define a custom dictionary to represent the paramaters stripe requires.
