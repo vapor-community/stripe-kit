@@ -351,9 +351,9 @@ internal enum StripeAPIEndpoint {
         case .paymentIntentCancel(let id): return APIBase + APIVersion + "payment_intents/\(id)/cancel"
             
         case .paymentMethod: return APIBase + APIVersion + "payment_methods"
-        case .paymentMethods(let id): return APIBase + APIVersion + "payment_method/\(id)"
-        case .paymentMethodsAttach(let id): return APIBase + APIVersion + "payment_method/\(id)/attach"
-        case .paymentMethodsDetach(let id): return APIBase + APIVersion + "payment_method/\(id)/detach"
+        case .paymentMethods(let id): return APIBase + APIVersion + "payment_methods/\(id)"
+        case .paymentMethodsAttach(let id): return APIBase + APIVersion + "payment_methods/\(id)/attach"
+        case .paymentMethodsDetach(let id): return APIBase + APIVersion + "payment_methods/\(id)/detach"
             
         case .bankAccount(let customer): return APIBase + APIVersion + "customers/\(customer)/sources"
         case .bankAccounts(let customer, let bankAccount): return APIBase + APIVersion + "customers/\(customer)/sources/\(bankAccount)"
