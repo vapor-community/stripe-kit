@@ -47,7 +47,6 @@ public struct StripeReportRunRoutes: ReportRunRoutes {
     private let apiHandler: StripeAPIHandler
     private let reportruns = APIBase + APIVersion + "reporting/report_runs"
 
-
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }

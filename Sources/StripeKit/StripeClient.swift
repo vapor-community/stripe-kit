@@ -90,6 +90,7 @@ public final class StripeClient {
 
     // MARK: - REPORTING
     public var reportRuns: ReportRunRoutes
+    public var reportTypes: ReportTypeRoutes
     
     private let client: HTTPClient
     
@@ -167,6 +168,7 @@ public final class StripeClient {
         scheduledQueryRuns = StripeScheduledQueryRunRoutes(apiHandler: handler)
         
         reportRuns = StripeReportRunRoutes(apiHandler: handler)
+        reportTypes = StripeReportTypeRoutes(apiHandler: handler)
     }
     
     deinit {
