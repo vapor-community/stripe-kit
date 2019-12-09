@@ -61,7 +61,7 @@ public struct StripeSubscription: StripeModel {
     /// Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling Create an invoice for the given subscription at the specified interval.
     public var pendingInvoiceItemInterval: StripeSubscriptionPendingInvoiceInterval?
     /// You can use this SetupIntent to collect user authentication when creating a subscription without immediate payment or updating a subscription’s payment method, allowing you to optimize for off-session payments. Learn more in the SCA Migration Guide.
-    public var pendingSetupIntent: String
+    public var pendingSetupIntent: String?
     /// Hash describing the plan the customer is subscribed to. Only set if the subscription contains a single plan.
     public var plan: StripePlan?
     /// The quantity of the plan to which the customer is subscribed. For example, if your plan is $10/user/month, and your customer has 5 users, you could pass 5 as the quantity to have the customer charged $50 (5 x $10) monthly. Only set if the subscription contains a single plan.
