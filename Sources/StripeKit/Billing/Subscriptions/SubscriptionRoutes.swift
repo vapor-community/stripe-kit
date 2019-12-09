@@ -237,7 +237,6 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
     
     public func create(customer: String,
                        applicationFeePercent: Decimal?,
-                       billing: StripeInvoiceCollectionMethod?,
                        billingCycleAnchor: Date?,
                        billingThresholds: [String: Any]?,
                        cancelAtPeriodEnd: Bool?,
