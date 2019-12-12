@@ -52,7 +52,8 @@ public protocol CustomerRoutes {
     ///
     /// - Parameter customer: The identifier of the customer to be retrieved.
     /// - Returns: A `StripeCustomer`.
-    func retrieve(customer: String) -> EventLoopFuture<StripeCustomer>
+    func retrieve(customer: String,
+                  expand: [String]?) -> EventLoopFuture<StripeCustomer>
     
     /// Updates the specified customer by setting the values of the parameters passed. Any parameters not provided will be left unchanged. For example, if you pass the source parameter, that becomes the customer’s active source (e.g., a card) to be used for all charges in the future. When you update a customer to a new valid card source by passing the source parameter: for each of the customer’s current subscriptions, if the subscription bills automatically and is in the `past_due` state, then the latest open invoice for the subscription with automatic collection enabled will be retried. This retry will not count as an automatic retry, and will not affect the next regularly scheduled payment for the invoice. Changing the default_source for a customer will not trigger this behavior. \n This request accepts mostly the same arguments as the customer creation call.
     ///
@@ -143,8 +144,10 @@ extension CustomerRoutes {
                       taxIdData: taxIdData)
     }
     
-    public func retrieve(customer: String) -> EventLoopFuture<StripeCustomer> {
-        return retrieve(customer: customer)
+    public func retrieve(customer: String,
+                         expand: [String]? = nil) -> EventLoopFuture<StripeCustomer> {
+        return retrieve(customer: customer,
+                        expand: expand)
     }
     
     public func update(customer: String,
@@ -290,8 +293,15 @@ public struct StripeCustomerRoutes: CustomerRoutes {
         return apiHandler.send(method: .POST, path: customers, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(customer: String) -> EventLoopFuture<StripeCustomer> {
-        return apiHandler.send(method: .GET, path: self.customer + customer, headers: headers)
+    public func retrieve(customer: String,
+                         expand: [String]?) -> EventLoopFuture<StripeCustomer> {
+        var body: [String: Any] = [:]
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
+        return apiHandler.send(method: .GET, path: self.customer + customer, body: .string(body.queryParameters), headers: headers)
     }
     
     public func update(customer: String,
