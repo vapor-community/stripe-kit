@@ -42,19 +42,21 @@ public struct StripeDefaultAPIHandler: StripeAPIHandler {
     private let httpClient: HTTPClient
     private let apiKey: String
     private let decoder = JSONDecoder()
+    private let eventLoop: EventLoop
 
-    init(httpClient: HTTPClient, apiKey: String) {
+    init(httpClient: HTTPClient, eventLoop: EventLoop, apiKey: String) {
         self.httpClient = httpClient
+        self.eventLoop = eventLoop
         self.apiKey = apiKey
         decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
     
     public func send<SM: StripeModel>(method: HTTPMethod,
-                               path: String,
-                               query: String = "",
-                               body: HTTPClient.Body = .string(""),
-                               headers: HTTPHeaders = [:]) -> EventLoopFuture<SM> {
+                                      path: String,
+                                      query: String = "",
+                                      body: HTTPClient.Body = .string(""),
+                                      headers: HTTPHeaders = [:]) -> EventLoopFuture<SM> {
         
         var _headers: HTTPHeaders = ["Stripe-Version": "2019-11-05",
                                      "Authorization": "Bearer \(apiKey)",
@@ -64,7 +66,7 @@ public struct StripeDefaultAPIHandler: StripeAPIHandler {
         do {
             let request = try HTTPClient.Request(url: "\(path)?\(query)", method: method, headers: _headers, body: body)
             
-            return httpClient.execute(request: request).flatMap { response in
+            return httpClient.execute(request: request, eventLoop: .delegate(on: self.eventLoop)).flatMap { response in
                 guard var byteBuffer = response.body else {
                     fatalError("Response body from Stripe is missing! This should never happen.")
                 }
@@ -72,17 +74,16 @@ public struct StripeDefaultAPIHandler: StripeAPIHandler {
                 
                 do {
                     guard response.status == .ok else {
-                        return self.httpClient.eventLoopGroup.next().makeFailedFuture(try self.decoder.decode(StripeError.self, from: responseData))
+                        return self.eventLoop.makeFailedFuture(try self.decoder.decode(StripeError.self, from: responseData))
                     }
-                    return self.httpClient.eventLoopGroup.next().makeSucceededFuture(try self.decoder.decode(SM.self, from: responseData))
+                    return self.eventLoop.makeSucceededFuture(try self.decoder.decode(SM.self, from: responseData))
 
                 } catch {
-                    return self.httpClient.eventLoopGroup.next().makeFailedFuture(error)
+                    return self.eventLoop.makeFailedFuture(error)
                 }
             }
-            
         } catch {
-            return httpClient.eventLoopGroup.next().makeFailedFuture(error)
+            return self.eventLoop.makeFailedFuture(error)
         }
     }
 }

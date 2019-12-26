@@ -92,11 +92,12 @@ public final class StripeClient {
     public var reportRuns: ReportRunRoutes
     public var reportTypes: ReportTypeRoutes
     
-    private let client: HTTPClient
-    
-    public init(eventLoop: EventLoopGroup, apiKey: String) {
-        client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
-        let handler = StripeDefaultAPIHandler(httpClient: client, apiKey: apiKey)
+    /// Returns a StripeClient used to interact with the Stripe APIs.
+    /// - Parameter httpClient: An `HTTPClient`used to communicate wiith the Stripe API
+    /// - Parameter eventLoop: An `EventLoop` used to return an `EventLoopFuture` on.
+    /// - Parameter apiKey: A Stripe API key.
+    public init(httpClient: HTTPClient, eventLoop: EventLoop, apiKey: String) {
+        let handler = StripeDefaultAPIHandler(httpClient: httpClient, eventLoop: eventLoop, apiKey: apiKey)
         
         balances = StripeBalanceRoutes(apiHandler: handler)
         balanceTransactions = StripeBalanceTransactionRoutes(apiHandler: handler)
@@ -169,9 +170,5 @@ public final class StripeClient {
         
         reportRuns = StripeReportRunRoutes(apiHandler: handler)
         reportTypes = StripeReportTypeRoutes(apiHandler: handler)
-    }
-    
-    deinit {
-        try? client.syncShutdown()
     }
 }
