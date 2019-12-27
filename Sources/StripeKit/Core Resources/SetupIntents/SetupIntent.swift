@@ -20,7 +20,7 @@ public struct StripeSetupIntent: StripeModel {
     /// The client secret of this SetupIntent. Used for client-side retrieval using a publishable key. The client secret can be used to complete payment setup from your frontend. It should not be stored, logged, embedded in URLs, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.
     public var clientSecret: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// ID of the Customer this SetupIntent belongs to, if one exists. If present, payment methods used with this SetupIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this SetupIntent.
     public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.

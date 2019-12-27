@@ -20,7 +20,7 @@ public struct StripeIssuingCard: StripeModel {
     /// The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object to which the card belongs.
     public var cardholder: StripeCardholder?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// The expiration month of the card.

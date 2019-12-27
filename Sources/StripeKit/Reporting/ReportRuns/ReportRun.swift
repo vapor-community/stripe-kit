@@ -14,7 +14,7 @@ public struct StripeReportRun: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// If something should go wrong during the run, a message about the failure (populated when `status=failed`).
     public var error: String?
     /// Always true: reports can only be run on live-mode data.

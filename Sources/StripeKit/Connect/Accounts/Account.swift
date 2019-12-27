@@ -27,7 +27,7 @@ public struct StripeConnectAccount: StripeModel {
     /// The account’s country.
     public var country: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code representing the default currency for the account. This must be a currency that Stripe supports in the account’s country.
     public var defaultCurrency: StripeCurrency?
     /// Whether account details have been submitted. Standard accounts cannot receive payouts before this is true.
@@ -238,7 +238,7 @@ public struct StripeConnectAccountLoginLink: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The URL for the login link.
     public var url: String?
 }

@@ -21,7 +21,7 @@ public struct StripeRefund: StripeModel {
     /// ID of the charge that was refunded.
     public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// An arbitrary string attached to the object. Often useful for displaying to users. (Available on non-card refunds only)

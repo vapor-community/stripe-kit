@@ -22,7 +22,7 @@ public struct StripePerson: StripeModel {
     /// The Kanji variation of the person’s address (Japan only).
     public var addressKanji: StripeAddressKanji?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The Persons date of birth.
     public var dob: StripePersonDOB?
     /// The person's email address.

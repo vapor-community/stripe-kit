@@ -17,7 +17,7 @@ public struct StripeApplicationFeeRefund: StripeModel {
     /// Balance transaction that describes the impact on your account balance.
     public var balanceTransaction: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// ID of the application fee that was refunded.

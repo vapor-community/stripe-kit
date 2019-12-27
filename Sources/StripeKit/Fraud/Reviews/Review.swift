@@ -20,7 +20,7 @@ public struct StripeReview: StripeModel {
     /// The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
     public var closedReason: StripeReviewClosedReason?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The IP address where the payment originated.
     public var ipAddress: String?
     /// Information related to the location of the payment. Note that this information is an approximation and attempts to locate the nearest population center - it should not be used to determine a specific address.

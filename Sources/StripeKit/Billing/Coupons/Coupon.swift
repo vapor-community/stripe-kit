@@ -17,7 +17,7 @@ public struct StripeCoupon: StripeModel {
     /// Amount (in the `currency` specified) that will be taken off the subtotal of any invoices for this customer.
     public var amountOff: Int?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// If amount_off has been set, the three-letter ISO code for the currency of the amount to take off.
     public var currency: StripeCurrency?
     /// One of `forever`, `once`, and `repeating`. Describes how long a customer who applies this coupon will get the discount.

@@ -14,7 +14,7 @@ public struct StripeValueListItem: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The name or email address of the user who added this item to the value list.
     public var createdBy: String?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

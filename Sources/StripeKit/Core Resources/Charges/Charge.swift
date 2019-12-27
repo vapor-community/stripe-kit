@@ -31,7 +31,7 @@ public struct StripeCharge: StripeModel {
     /// If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
     public var captured: Bool?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// ID of the customer this charge is for if one exists.
