@@ -116,7 +116,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 * [x] Charges
 * [x] Customers
 * [x] Disputes  
-* [ ] Events
+* [x] Events
 * [x] Files
 * [x] File Links
 * [x] Mandates
@@ -148,6 +148,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 * [x] Products
 * [x] Subscriptions
 * [x] Subscription items
+* [ ] Subscription Schedule
 * [x] Tax Rates
 * [x] Usage Records
 ---
