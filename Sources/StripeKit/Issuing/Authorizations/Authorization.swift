@@ -28,7 +28,7 @@ public struct StripeAuthorization: StripeModel {
     /// The cardholder to whom this authorization belongs.
     public var cardholder: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The amount the authorization is expected to be in held_currency. When Stripe holds funds from you, this is the amount reserved for the authorization. This will be 0 when the object is created, and increase after it has been approved. For multi-currency transactions, held_amount can be used to determine the expected exchange rate.
     public var heldAmount: Int?
     /// The currency of the held amount. This will always be the card currency.
@@ -93,7 +93,7 @@ public struct StripeAuthorizationRequestHistory: StripeModel {
     /// The currency that was presented to the cardholder for the authorization. Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var authorizedCurrency: StripeCurrency?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The amount Stripe held from your account to fund the authorization, if the request was approved
     public var heldAmount: Int?
     /// The currency of the held amount

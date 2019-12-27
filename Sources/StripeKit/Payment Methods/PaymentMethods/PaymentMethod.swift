@@ -18,7 +18,7 @@ public struct StripePaymentMethod: StripeModel {
     /// If this is a `card` PaymentMethod, this hash contains details about the card.
     public var card: StripePaymentMethodCard?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
     public var customer: String?
     /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.

@@ -18,7 +18,7 @@ public struct StripeEarlyFraudWarning: StripeModel {
     /// ID of the charge this early fraud warning is for, optionally expanded.
     public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The type of fraud labelled by the issuer. One of `card_never_received`, `fraudulent_card_application`, `made_with_counterfeit_card`, `made_with_lost_card`, `made_with_stolen_card`, `misc`, `unauthorized_use_of_card`.
     public var fraudType: StripeEarlyFraudWarningFraudType?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.

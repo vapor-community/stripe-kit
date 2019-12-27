@@ -16,7 +16,7 @@ public struct StripeValueList: StripeModel {
     /// The name of the value list for use in rules.
     public var alias: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The name or email address of the user who added this item to the value list.
     public var createdBy: String?
     /// The type of items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, `or case_sensitive_string`.

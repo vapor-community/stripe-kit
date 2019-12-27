@@ -23,7 +23,7 @@ public struct StripeTransaction: StripeModel {
     /// The cardholder to whom this transaction belongs.
     public var cardholder: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     ///

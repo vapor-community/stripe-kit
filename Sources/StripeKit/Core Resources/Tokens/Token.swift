@@ -21,7 +21,7 @@ public struct StripeToken: StripeModel {
     /// IP address of the client that generated the token.
     public var clientIp: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Type of the token: `account`, `bank_account`, `card`, or `pii`.

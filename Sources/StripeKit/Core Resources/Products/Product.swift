@@ -21,7 +21,7 @@ public struct StripeProduct: StripeModel {
     /// A short one-line description of the product, meant to be displayable to the customer. Only applicable to products of `type=good`.
     public var caption: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// An array of connect application identifiers that cannot purchase this product. Only applicable to products of `type=good`.
     public var deactivateOn: [String]?
     /// The product’s description, meant to be displayable to the customer. Only applicable to products of `type=good`.

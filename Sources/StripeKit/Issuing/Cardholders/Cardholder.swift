@@ -20,7 +20,7 @@ public struct StripeCardholder: StripeModel {
     /// Additional information about a business_entity cardholder.
     public var company: StripeCardholderCompany?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The cardholder’s email address.
     public var email: String?
     /// Additional information about an individual cardholder.

@@ -16,7 +16,7 @@ public struct StripeTaxID: StripeModel {
     /// Two-letter ISO code representing the country of the tax ID.
     public var country: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// ID of the customer.
     public var customer: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.

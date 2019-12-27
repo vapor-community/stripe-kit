@@ -14,7 +14,7 @@ public struct StripeScheduledQueryRun: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// When the query was run, Sigma contained a snapshot of your Stripe data at this time.
     public var dataLoadTime: Date?
     /// If the query run was not successful, this field contains information about the failure.

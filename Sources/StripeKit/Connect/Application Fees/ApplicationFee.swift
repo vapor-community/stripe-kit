@@ -25,7 +25,7 @@ public struct StripeApplicationFee: StripeModel {
     /// ID of the charge that the application fee was taken from.
     public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
