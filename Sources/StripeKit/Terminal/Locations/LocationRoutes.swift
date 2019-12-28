@@ -14,8 +14,9 @@ public protocol LocationRoutes {
     /// - Parameters:
     ///   - address: The full address of the location.
     ///   - displayName: A name for the location.
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     /// - Returns: A `StripeLocation`.
-    func create(address: [String: Any], displayName: String) -> EventLoopFuture<StripeLocation>
+    func create(address: [String: Any], displayName: String, metadata: [String: String]?) -> EventLoopFuture<StripeLocation>
     
     /// Retrieves a Location object.
     ///
@@ -29,8 +30,9 @@ public protocol LocationRoutes {
     ///   - location: The identifier of the location to be updated.
     ///   - address: The full address of the location.
     ///   - displayName: A name for the location.
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     /// - Returns: A `StripeLocation`.
-    func update(location: String, address: [String: Any]?, displayName: String?) -> EventLoopFuture<StripeLocation>
+    func update(location: String, address: [String: Any]?, displayName: String?, metadata: [String: String]?) -> EventLoopFuture<StripeLocation>
     
     /// Deletes a Location object.
     ///
@@ -49,16 +51,16 @@ public protocol LocationRoutes {
 }
 
 extension LocationRoutes {
-    func create(address: [String: Any], displayName: String) -> EventLoopFuture<StripeLocation> {
-        return create(address: address, displayName: displayName)
+    func create(address: [String: Any], displayName: String, metadata: [String: String]? = nil) -> EventLoopFuture<StripeLocation> {
+        return create(address: address, displayName: displayName, metadata: metadata)
     }
     
     func retrieve(location: String) -> EventLoopFuture<StripeLocation> {
         return retrieve(location: location)
     }
     
-    func update(location: String, address: [String: Any]? = nil, displayName: String? = nil) -> EventLoopFuture<StripeLocation> {
-        return update(location: location, address: address, displayName: displayName)
+    func update(location: String, address: [String: Any]? = nil, displayName: String? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeLocation> {
+        return update(location: location, address: address, displayName: displayName, metadata: metadata)
     }
     
     func delete(location: String) -> EventLoopFuture<StripeLocation> {
@@ -80,9 +82,13 @@ public struct StripeLocationRoutes: LocationRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(address: [String: Any], displayName: String) -> EventLoopFuture<StripeLocation> {
+    public func create(address: [String: Any], displayName: String, metadata: [String: String]? = nil) -> EventLoopFuture<StripeLocation> {
         var body: [String: Any] = ["display_name": displayName]
         address.forEach { body["address[\($0)]"] = $1 }
+        
+        if let metadata = metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
         
         return apiHandler.send(method: .POST, path: terminallocations, body: .string(body.queryParameters), headers: headers)
     }
@@ -91,7 +97,7 @@ public struct StripeLocationRoutes: LocationRoutes {
         return apiHandler.send(method: .GET, path: "\(terminallocations)/\(location)", headers: headers)
     }
     
-    public func update(location: String, address: [String: Any]?, displayName: String?) -> EventLoopFuture<StripeLocation> {
+    public func update(location: String, address: [String: Any]?, displayName: String?, metadata: [String: String]? = nil) -> EventLoopFuture<StripeLocation> {
         var body: [String: Any] = [:]
         if let address = address {
             address.forEach { body["address[\($0)]"] = $1 }
@@ -99,6 +105,10 @@ public struct StripeLocationRoutes: LocationRoutes {
         
         if let displayName = displayName {
             body["display_name"] = displayName
+        }
+        
+        if let metadata = metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
         return apiHandler.send(method: .POST, path: "\(terminallocations)/\(location)", body: .string(body.queryParameters), headers: headers)
