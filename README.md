@@ -198,7 +198,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 * [x] Report Types
 ---
 ### Webhooks
-* [ ] Webhook Endpoints
+* [x] Webhook Endpoints
 
 
 ## TODO At some point

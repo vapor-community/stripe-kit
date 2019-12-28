@@ -93,6 +93,9 @@ public final class StripeClient {
     public var reportRuns: ReportRunRoutes
     public var reportTypes: ReportTypeRoutes
     
+    // MARK: - WEBHOOKS
+    public var webhookEndpoints: WebhookEndpointRoutes
+    
     /// Returns a StripeClient used to interact with the Stripe APIs.
     /// - Parameter httpClient: An `HTTPClient`used to communicate wiith the Stripe API
     /// - Parameter eventLoop: An `EventLoop` used to return an `EventLoopFuture` on.
@@ -172,5 +175,7 @@ public final class StripeClient {
         
         reportRuns = StripeReportRunRoutes(apiHandler: handler)
         reportTypes = StripeReportTypeRoutes(apiHandler: handler)
+        
+        webhookEndpoints = StripeWebhookEndpointRoutes(apiHandler: handler)
     }
 }
