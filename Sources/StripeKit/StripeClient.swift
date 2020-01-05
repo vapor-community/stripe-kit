@@ -46,6 +46,7 @@ public final class StripeClient {
     public var plans: PlanRoutes
     public var subscriptions: SubscriptionRoutes
     public var subscriptionItems: SubscriptionItemRoutes
+    public var subscriptionSchedules: SubscriptionScheduleRoutes
     public var taxRates: TaxRateRoutes
     public var usageRecords: UsageRecordRoutes
     
@@ -136,6 +137,7 @@ public final class StripeClient {
         plans = StripePlanRoutes(apiHandler: handler)
         subscriptions = StripeSubscriptionRoutes(apiHandler: handler)
         subscriptionItems = StripeSubscriptionItemRoutes(apiHandler: handler)
+        subscriptionSchedules = StripeSubscriptionScheduleRoutes(apiHandler: handler)
         taxRates = StripeTaxRateRoutes(apiHandler: handler)
         usageRecords = StripeUsageRecordRoutes(apiHandler: handler)
         
