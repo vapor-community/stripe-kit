@@ -5,7 +5,7 @@
 ### StripeKit is a Swift package used to communicate with the [Stripe](https://stripe.com) API for Server Side Swift Apps.
 
 ## Current supported version
-Version **5.0.0** of StripeKit supports the Stripe API version of **[2019-12-03](https://stripe.com/docs/upgrades#2019-11-05)**. 
+Version **5.0.0** of StripeKit supports the Stripe API version of **[2019-12-03](https://stripe.com/docs/upgrades#2019-12-03)**. 
 **You can check the releases page to use a version of StripeKit that meets your needs.**
 
 ## Installation
