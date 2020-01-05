@@ -109,7 +109,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 ~~~
 
 ## Vapor Integration
-To use Stripe with Vapor 4.x, add a simple extension on `Request`.
+To use StripeKit with Vapor 4.x, add a simple extension on `Request`.
 ~~~swift
 extension Request {
     public var stripe: StripeClient {
