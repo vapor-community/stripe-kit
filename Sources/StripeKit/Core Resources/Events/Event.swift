@@ -77,6 +77,7 @@ public enum StripeEventObject: StripeModel {
     case setupIntent(StripeSetupIntent)
     case scheduledQueryRun(StripeScheduledQueryRun)
     case sku(StripeSKU)
+    case subscriptionSchedule(StripeSubscriptionSchedule)
     case taxRate(StripeTaxRate)
     case topup(StripeTopUp)
     case transfer(StripeTransfer)
@@ -168,6 +169,8 @@ public enum StripeEventObject: StripeModel {
             self = try .scheduledQueryRun(StripeScheduledQueryRun(from: decoder))
         case "sku":
             self = try .sku(StripeSKU(from: decoder))
+        case "subscription_schedule":
+            self = try .subscriptionSchedule(StripeSubscriptionSchedule(from: decoder))
         case "tax_rate":
             self = try .taxRate(StripeTaxRate(from: decoder))
         case "topup":
@@ -450,6 +453,20 @@ public enum StripeEventType: String, StripeModel {
     case sourceTransactionCreated = "source.transaction.created"
     /// Occurs whenever a source transaction is updated.
     case sourceTransactionUpdated = "source.transaction.updated"
+    /// Occurs whenever a subscription schedule is canceled due to the underlying subscription being canceled because of delinquency.
+    case subscriptionScheduleAborted = "subscription_schedule.aborted"
+    /// Occurs whenever a subscription schedule is canceled.
+    case subscriptionScheduleCanceled = "subscription_schedule.canceled"
+    /// Occurs whenever a subscription schedule is completed.
+    case subscriptionScheduleCompleted = "subscription_schedule.completed"
+    /// Occurs whenever a subscription schedule is created.
+    case subscriptionScheduleCreated = "subscription_schedule.created"
+    /// Occurs whenever a subscription schedule is expiring.
+    case subscriptionScheduleExpiring = "subscription_schedule.expiring"
+    /// Occurs whenever a subscription schedule is released.
+    case subscriptionScheduleReleased = "subscription_schedule.released"
+    /// Occurs whenever a subscription schedule is updated.
+    case subscriptionScheduleUpdated = "subscription_schedule.updated"
     /// Occurs whenever a new tax rate is created.
     case taxRateCreated = "tax_rate.created"
     /// Occurs whenever a tax rate is updated.
