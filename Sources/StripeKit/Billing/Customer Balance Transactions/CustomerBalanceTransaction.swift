@@ -16,7 +16,7 @@ public struct StripeCustomerBalanceTransaction: StripeModel {
     /// The amount of the transaction. A negative value is a credit for the customer’s balance, and a positive value is a debit to the customer’s balance.
     public var amount: Int?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The ID of the credit note (if any) related to the transaction.
     public var creditNote: String?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.

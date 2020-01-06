@@ -20,7 +20,7 @@ public struct StripeTransfer: StripeModel {
     /// Balance transaction that describes the impact of this transfer on your account balance.
     public var balanceTransaction: String?
     /// Time that this record of the transfer was first created.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// An arbitrary string attached to the object. Often useful for displaying to users.

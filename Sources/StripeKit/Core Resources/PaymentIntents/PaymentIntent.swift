@@ -36,7 +36,7 @@ public struct StripePaymentIntent: StripeModel {
     /// Confirmation method of this PaymentIntent, one of `manual` or `automatic`.
     public var confirmationMethod: StripePaymentIntentConfirmationMethod?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// ID of the Customer this PaymentIntent is for if one exists.

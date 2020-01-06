@@ -16,7 +16,7 @@ public struct StripeIssuingDispute: StripeModel {
     /// Disputed amount. Usually the amount of the `disputed_transaction`, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
     public var amount: Int?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// The currency the disputed_transaction was made in.
     public var currency: StripeCurrency?
     /// The transaction being disputed.

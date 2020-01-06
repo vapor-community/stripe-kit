@@ -14,7 +14,7 @@ public struct StripeFileLink: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Whether this link is already expired.
     public var expired: Bool?
     /// Time at which the link expires.

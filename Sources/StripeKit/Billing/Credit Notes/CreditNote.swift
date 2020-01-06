@@ -16,7 +16,7 @@ public struct StripeCreditNote: StripeModel {
     /// The integer amount in cents representing the total amount of the credit note.
     public var amount: Int?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// ID of the customer.

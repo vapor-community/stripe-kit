@@ -21,7 +21,7 @@ public struct StripeDispute: StripeModel {
     /// ID of the charge that was disputed.
     public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// Evidence provided to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review.

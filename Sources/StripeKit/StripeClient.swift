@@ -15,6 +15,7 @@ public final class StripeClient {
     public var charges: ChargeRoutes
     public var customers: CustomerRoutes
     public var disputes: DisputeRoutes
+    public var events: EventRoutes
     public var files: FileRoutes
     public var fileLinks: FileLinkRoutes
     public var mandates: MandateRoutes
@@ -45,6 +46,7 @@ public final class StripeClient {
     public var plans: PlanRoutes
     public var subscriptions: SubscriptionRoutes
     public var subscriptionItems: SubscriptionItemRoutes
+    public var subscriptionSchedules: SubscriptionScheduleRoutes
     public var taxRates: TaxRateRoutes
     public var usageRecords: UsageRecordRoutes
     
@@ -92,6 +94,9 @@ public final class StripeClient {
     public var reportRuns: ReportRunRoutes
     public var reportTypes: ReportTypeRoutes
     
+    // MARK: - WEBHOOKS
+    public var webhookEndpoints: WebhookEndpointRoutes
+    
     /// Returns a StripeClient used to interact with the Stripe APIs.
     /// - Parameter httpClient: An `HTTPClient`used to communicate wiith the Stripe API
     /// - Parameter eventLoop: An `EventLoop` used to return an `EventLoopFuture` on.
@@ -104,6 +109,7 @@ public final class StripeClient {
         charges = StripeChargeRoutes(apiHandler: handler)
         customers = StripeCustomerRoutes(apiHandler: handler)
         disputes = StripeDisputeRoutes(apiHandler: handler)
+        events = StripeEventRoutes(apiHandler: handler)
         files = StripeFileRoutes(apiHandler: handler)
         fileLinks = StripeFileLinkRoutes(apiHandler: handler)
         mandates = StripeMandateRoutes(apiHandler: handler)
@@ -131,6 +137,7 @@ public final class StripeClient {
         plans = StripePlanRoutes(apiHandler: handler)
         subscriptions = StripeSubscriptionRoutes(apiHandler: handler)
         subscriptionItems = StripeSubscriptionItemRoutes(apiHandler: handler)
+        subscriptionSchedules = StripeSubscriptionScheduleRoutes(apiHandler: handler)
         taxRates = StripeTaxRateRoutes(apiHandler: handler)
         usageRecords = StripeUsageRecordRoutes(apiHandler: handler)
         
@@ -170,5 +177,7 @@ public final class StripeClient {
         
         reportRuns = StripeReportRunRoutes(apiHandler: handler)
         reportTypes = StripeReportTypeRoutes(apiHandler: handler)
+        
+        webhookEndpoints = StripeWebhookEndpointRoutes(apiHandler: handler)
     }
 }

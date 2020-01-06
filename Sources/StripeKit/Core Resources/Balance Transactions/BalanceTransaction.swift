@@ -19,7 +19,7 @@ public struct StripeBalanceTransaction: StripeModel {
     /// The date the transaction’s net funds will become available in the Stripe balance.
     public var availableOn: Date?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// An arbitrary string attached to the object. Often useful for displaying to users.

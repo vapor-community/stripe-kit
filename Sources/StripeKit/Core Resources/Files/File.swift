@@ -14,7 +14,7 @@ public struct StripeFile: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date?
+    public var created: Date
     /// A filename for the file, suitable for saving to a filesystem.
     public var filename: String?
     /// A list of file links.
