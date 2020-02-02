@@ -21,7 +21,7 @@ public protocol RefundRoutes {
     ///   - refundApplicationFee: Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. /n An application fee can be refunded only by the application that created the charge.
     ///   - reverseTransfer: Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). /n A transfer can be reversed only by the application that created the charge.
     /// - Returns: A `StripeRefund`.
-    func create(charge: String,
+    func create(charge: String?,
                 amount: Int?,
                 metadata: [String: String]?,
                 paymentIntent: String?,
@@ -54,7 +54,7 @@ public protocol RefundRoutes {
 }
 
 extension RefundRoutes {
-    public func create(charge: String,
+    public func create(charge: String? = nil,
                        amount: Int? = nil,
                        metadata: [String: String]? = nil,
                        paymentIntent: String? = nil,
@@ -93,7 +93,7 @@ public struct StripeRefundRoutes: RefundRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(charge: String,
+    public func create(charge: String?,
                        amount: Int?,
                        metadata: [String: String]?,
                        paymentIntent: String?,
@@ -102,7 +102,9 @@ public struct StripeRefundRoutes: RefundRoutes {
                        reverseTransfer: Bool?) -> EventLoopFuture<StripeRefund> {
         var body: [String: Any] = [:]
         
-        body["charge"] = charge
+        if let charge = charge {
+            body["charge"] = charge
+        }
         
         if let amount = amount {
             body["amount"] = amount
