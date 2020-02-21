@@ -97,12 +97,14 @@ public final class StripeClient {
     // MARK: - WEBHOOKS
     public var webhookEndpoints: WebhookEndpointRoutes
     
+    var handler: StripeDefaultAPIHandler
+    
     /// Returns a StripeClient used to interact with the Stripe APIs.
     /// - Parameter httpClient: An `HTTPClient`used to communicate wiith the Stripe API
     /// - Parameter eventLoop: An `EventLoop` used to return an `EventLoopFuture` on.
     /// - Parameter apiKey: A Stripe API key.
     public init(httpClient: HTTPClient, eventLoop: EventLoop, apiKey: String) {
-        let handler = StripeDefaultAPIHandler(httpClient: httpClient, eventLoop: eventLoop, apiKey: apiKey)
+        handler = StripeDefaultAPIHandler(httpClient: httpClient, eventLoop: eventLoop, apiKey: apiKey)
         
         balances = StripeBalanceRoutes(apiHandler: handler)
         balanceTransactions = StripeBalanceTransactionRoutes(apiHandler: handler)
@@ -179,5 +181,12 @@ public final class StripeClient {
         reportTypes = StripeReportTypeRoutes(apiHandler: handler)
         
         webhookEndpoints = StripeWebhookEndpointRoutes(apiHandler: handler)
+    }
+    
+    /// Hop to a new eventloop to execute requests on.
+    /// - Parameter eventLoop: The eventloop to execute requests on.
+    public func hopped(to eventLoop: EventLoop) -> StripeClient {
+        handler.eventLoop = eventLoop
+        return self
     }
 }

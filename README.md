@@ -112,8 +112,18 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 To use StripeKit with Vapor 4.x, add a simple extension on `Request`.
 ~~~swift
 extension Request {
+    private struct StripeKey: StorageKey {
+        typealias Value = StripeClient
+    }
+    
     public var stripe: StripeClient {
-        return StripeClient(httpClient: self.application.client.http, eventLoop: self.eventLoop, apiKey: "STRIPE_API_KEY")
+        if let existing = application.storage[StripeKey.self] {
+            return existing.hopped(to: self.eventLoop)
+        } else {
+            let new = StripeClient(httpClient: self.application.client.http, eventLoop: self.eventLoop, apiKey: "STRIPE_API_KEY")
+            self.application.storage[StripeKey.self] = new
+            return new
+        }
     }
 }
 
