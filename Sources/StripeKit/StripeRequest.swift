@@ -38,11 +38,11 @@ extension StripeAPIHandler {
     }
 }
 
-public struct StripeDefaultAPIHandler: StripeAPIHandler {
+struct StripeDefaultAPIHandler: StripeAPIHandler {
     private let httpClient: HTTPClient
     private let apiKey: String
     private let decoder = JSONDecoder()
-    private let eventLoop: EventLoop
+    var eventLoop: EventLoop
 
     init(httpClient: HTTPClient, eventLoop: EventLoop, apiKey: String) {
         self.httpClient = httpClient
