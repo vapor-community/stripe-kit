@@ -97,7 +97,7 @@ public final class StripeClient {
     // MARK: - WEBHOOKS
     public var webhookEndpoints: WebhookEndpointRoutes
     
-    var handler: StripeAPIHandler
+    var handler: StripeDefaultAPIHandler
     
     /// Returns a StripeClient used to interact with the Stripe APIs.
     /// - Parameter httpClient: An `HTTPClient`used to communicate wiith the Stripe API
