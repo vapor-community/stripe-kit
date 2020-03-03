@@ -212,7 +212,7 @@ public struct StripeCardRoutes: CardRoutes {
         return apiHandler.send(method: .DELETE, path: "\(cards)/\(customer)/sources/\(id)", headers: headers)
     }
     
-    public func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeBankAccountList> {
+    public func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeCardList> {
         var queryParams = "object=card"
         if let filter = filter {
             queryParams = "&" + filter.queryParameters
