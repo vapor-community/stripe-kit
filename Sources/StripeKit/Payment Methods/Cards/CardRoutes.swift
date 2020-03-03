@@ -123,7 +123,7 @@ public struct StripeCardRoutes: CardRoutes {
     public var headers: HTTPHeaders = [:]
     
     private let apiHandler: StripeAPIHandler
-    private let cards = APIBase +  APIVersion + "customer"
+    private let cards = APIBase +  APIVersion + "customers"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
