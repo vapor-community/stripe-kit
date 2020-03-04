@@ -67,11 +67,11 @@ struct StripeDefaultAPIHandler: StripeAPIHandler {
             let request = try HTTPClient.Request(url: "\(path)?\(query)", method: method, headers: _headers, body: body)
             
             return httpClient.execute(request: request, eventLoop: .delegate(on: self.eventLoop)).flatMap { response in
-                guard var byteBuffer = response.body else {
+                guard let byteBuffer = response.body else {
                     fatalError("Response body from Stripe is missing! This should never happen.")
                 }
-                let responseData = byteBuffer.readData(length: byteBuffer.readableBytes)!
-                
+                let responseData = Data(byteBuffer.readableBytesView)
+
                 do {
                     guard response.status == .ok else {
                         return self.eventLoop.makeFailedFuture(try self.decoder.decode(StripeError.self, from: responseData))
