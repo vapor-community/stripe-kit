@@ -28,15 +28,6 @@ public struct StripeEvent: StripeModel {
     public var request: StripeEventRequest?
     /// Description of the event (e.g., invoice.created or charge.refunded).
     public var type: StripeEventType?
-
-	public enum CodingKeys: String, CodingKey {
-        case id, object, account
-        case apiVersion = "api_version"
-        case created, data, livemode
-        case pendingWebhooks = "pending_webhooks"
-		case request, type
-    }
-
 }
 
 public struct StripeEventData: StripeModel {

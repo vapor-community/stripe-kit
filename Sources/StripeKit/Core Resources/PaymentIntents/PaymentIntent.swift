@@ -79,42 +79,6 @@ public struct StripePaymentIntent: StripeModel {
     public var transferData: [String: String]?
     /// A string that identifies the resulting payment as part of a group. See the PaymentIntents Connect usage guide for details.
     public var transferGroup: String?
-	
-	public enum CodingKeys: String, CodingKey {
-		case id
-		case object
-		case amount
-		case amountCapturable = "amount_capturable"
-		case amountReceived = "amount_received"
-		case application
-		case applicationFeeAmount = "application_fee_amount"
-		case canceledAt = "canceled_at"
-		case cancellationReason = "cancellation_reason"
-		case captureMethod = "capture_method"
-		case charges
-		case clientSecret = "client_secret"
-		case confirmationMethod = "confirmation_method"
-		case created
-		case currency
-		case customer
-		case description
-		case invoice
-		case lastPaymentError = "last_payment_error"
-		case livemode
-		case metadata
-		case nextAction = "next_action"
-		case onBehalfOn = "on_behalf_of"
-		case paymentMethod = "payment_method"
-		case paymentMethodTypes = "payment_method_types"
-		case receiptEmail = "receipt_email"
-		case review
-		case setupFutureUsage = "setup_future_usage"
-		case shipping
-		case statementDescriptor = "statement_descriptor"
-		case status
-		case transferData = "transfer_data"
-		case transferGroup = "transfer_group"
-	}
 }
 
 public enum StripePaymentIntentCancellationReason: String, StripeModel {
