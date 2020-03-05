@@ -171,11 +171,6 @@ public struct StripeChargesList: StripeModel {
     /// The URL where this list can be accessed.
     public var url: String?
     public var data: [StripeCharge]?
-    
-    public enum CodingKeys: String, CodingKey {
-        case object, url, data
-        case hasMore = "has_more"
-    }
 }
 
 public struct StripeChargePaymentDetails: StripeModel {

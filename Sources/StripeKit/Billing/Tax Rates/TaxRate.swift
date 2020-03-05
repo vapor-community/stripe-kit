@@ -38,9 +38,4 @@ public struct StripeTaxRateList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeTaxRate]?
-    
-    public enum CodingKeys: String, CodingKey {
-        case object, url, data
-        case hasMore = "has_more"
-    }
 }

@@ -40,9 +40,4 @@ public struct StripeEarlyFraudWarningList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeEarlyFraudWarning]?
-    
-    public enum CodingKeys: String, CodingKey {
-        case object, url, data
-        case hasMore = "has_more"
-    }
 }

@@ -38,9 +38,4 @@ public struct StripeReaderList: StripeModel {
     public var data: [StripeReader]?
     public var hasMore: Bool?
     public var url: String?
-    
-    public enum CodingKeys: String, CodingKey {
-        case object, url, data
-        case hasMore = "has_more"
-    }
 }

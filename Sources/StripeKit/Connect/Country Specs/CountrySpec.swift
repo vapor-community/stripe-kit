@@ -31,11 +31,6 @@ public struct StripeCountrySpecList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeCountrySpec]?
-    
-    public enum CodingKeys: String, CodingKey {
-        case object, url, data
-        case hasMore = "has_more"
-    }
 }
 
 public struct StripeCountrySpecVerificationFields: StripeModel {
