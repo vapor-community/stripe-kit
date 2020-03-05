@@ -38,6 +38,11 @@ public struct StripeIssuingDisputeList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeIssuingDispute]?
+    
+    public enum CodingKeys: String, CodingKey {
+        case object, url, data
+        case hasMore = "has_more"
+    }
 }
 
 public struct StripeIssuingDisputeEvidence: StripeModel {

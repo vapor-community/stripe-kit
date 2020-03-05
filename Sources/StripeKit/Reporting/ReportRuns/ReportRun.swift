@@ -59,4 +59,9 @@ public struct StripeReportRunList: StripeModel {
     public var data: [StripeReportRun]?
     public var hasMore: Bool?
     public var url: String?
+    
+    public enum CodingKeys: String, CodingKey {
+        case object, url, data
+        case hasMore = "has_more"
+    }
 }

@@ -193,4 +193,9 @@ public struct StripePaymentMethodList: StripeModel {
     public var data: [StripePaymentMethod]?
     public var hasMore: Bool?
     public var url: String?
+    
+    public enum CodingKeys: String, CodingKey {
+        case object, url, data
+        case hasMore = "has_more"
+    }
 }

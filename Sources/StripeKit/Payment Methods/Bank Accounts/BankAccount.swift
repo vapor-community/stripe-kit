@@ -49,6 +49,11 @@ public struct StripeBankAccountList: StripeModel {
     public var hasMore: Bool?
     /// The URL where this list can be accessed.
     public var url: String?
+    
+    public enum CodingKeys: String, CodingKey {
+        case object, url, data
+        case hasMore = "has_more"
+    }
 }
 
 public enum StripeBankAccountStatus: String, StripeModel {

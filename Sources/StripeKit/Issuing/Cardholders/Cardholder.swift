@@ -127,4 +127,9 @@ public struct StripeCardholderList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeCardholder]?
+    
+    public enum CodingKeys: String, CodingKey {
+        case object, url, data
+        case hasMore = "has_more"
+    }
 }

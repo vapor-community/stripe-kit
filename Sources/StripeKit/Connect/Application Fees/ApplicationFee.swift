@@ -43,4 +43,9 @@ public struct StripeApplicationFeeList: StripeModel {
     public var hasMore: Bool
     public var url: String?
     public var data: [StripeApplicationFee]?
+    
+    public enum CodingKeys: String, CodingKey {
+        case object, url, data
+        case hasMore = "has_more"
+    }
 }
