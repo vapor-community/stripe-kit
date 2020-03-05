@@ -96,6 +96,46 @@ public struct StripeCharge: StripeModel {
     public var transferData: StripeChargeTransferData?
     /// A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
     public var transferGroup: String?
+	
+	public enum CodingKeys: String, CodingKey {
+		case id
+		case object
+		case amount
+		case amountRefunded = "amount_refunded"
+		case application
+		case applicationFee = "application_fee"
+		case applicationFeeAmount = "application_fee_amount"
+		case balanceTransaction = "balance_transaction"
+		case captured
+		case created
+		case currency
+		case customer
+		case description
+		case dispute
+		case failureCode = "failure_code"
+		case failureMessage = "failure_message"
+		case fraudDetails = "fraud_details"
+		case invoice
+		case livemode
+		case metadata
+		case onBehalfOf = "on_behalf_of"
+		case order
+		case outcome
+		case paid
+		case paymentIntent = "payment_intent"
+		case receiptEmail = "receipt_email"
+		case receiptNumber = "receipt_number"
+		case refunded
+		case refunds
+		case review
+		case shipping
+		case sourceTransfer = "source_transfer"
+		case statementDescriptor = "statement_descriptor"
+		case status
+		case transfer
+		case transferData = "transfer_data"
+		case transferGroup = "transfer_group"
+	}
 }
 
 public struct StripeChargeFraudDetails: StripeModel {

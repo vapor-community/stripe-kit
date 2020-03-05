@@ -18,6 +18,14 @@ public struct StripeBalance: StripeModel {
     public var livemode: Bool?
     /// Funds that are not yet available in the balance, due to the 7-day rolling pay cycle. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
     public var pending: [StripeBalanceAmount]?
+	
+	public enum CodingKeys: String, CodingKey {
+        case object
+        case available
+        case connectReserved = "connect_reserved"
+        case livemode
+        case pending
+    }
 }
 
 public struct StripeBalanceAmount: StripeModel {
