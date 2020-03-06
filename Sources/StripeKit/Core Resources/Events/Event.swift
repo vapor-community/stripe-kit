@@ -285,6 +285,10 @@ public enum StripeEventType: String, StripeModel {
     case customerSubscriptionCreated = "customer.subscription.created"
     /// Occurs whenever a customer's subscription ends.
     case customerSubscriptionDeleted = "customer.subscription.deleted"
+    /// Occurs whenever a customer's subscription's pending update is applied, and the subscription is updated.
+    case customerSubscriptionPendingUpdateApplied = "customer.subscription.pending_update_applied"
+    /// Occurs whenever a customer's subscription's pending update expires before the related invoice is paid.
+    case customerSubscriptionPendingUpdateExpired = "customer.subscription.pending_update_expired"
     /// Occurs three days before a subscription's trial period is scheduled to end, or when a trial is ended immediately (using trial_end=now).
     case customerSubscriptionTrialWillEnd = "customer.subscription.trial_will_end"
     /// Occurs whenever a subscription changes (e.g., switching from one plan to another, or changing the status from trial to active).

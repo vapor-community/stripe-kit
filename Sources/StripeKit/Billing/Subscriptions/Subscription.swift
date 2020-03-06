@@ -62,6 +62,8 @@ public struct StripeSubscription: StripeModel {
     public var pendingInvoiceItemInterval: StripeSubscriptionPendingInvoiceInterval?
     /// You can use this SetupIntent to collect user authentication when creating a subscription without immediate payment or updating a subscription’s payment method, allowing you to optimize for off-session payments. Learn more in the SCA Migration Guide.
     public var pendingSetupIntent: String?
+    /// If specified, [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates) that will be applied to the subscription once the`latest_invoice` has been paid.
+    public var pendingUpdate: StripeSubscriptionPendingUpdate?
     /// Hash describing the plan the customer is subscribed to. Only set if the subscription contains a single plan.
     public var plan: StripePlan?
     /// The quantity of the plan to which the customer is subscribed. For example, if your plan is $10/user/month, and your customer has 5 users, you could pass 5 as the quantity to have the customer charged $50 (5 x $10) monthly. Only set if the subscription contains a single plan.
@@ -115,4 +117,17 @@ public struct StripeSubscriptionInvoiceCustomerBalanceSettings: StripeModel {
 public enum StripeSubscriptionPaymentBehavior: String, StripeModel {
     case allowComplete = "allow_complete"
     case errorIfIncomplete = "error_if_complete"
+}
+
+public struct StripeSubscriptionPendingUpdate: StripeModel {
+    /// If the update is applied, determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
+    public var billingCycleAnchor: Date?
+    /// The point after which the changes reflected by this update will be discarded and no longer applied.
+    public var expiresAt: Date?
+    /// List of subscription items, each with an attached plan, that will be set if the update is applied.
+    public var subscriptionItems: [StripeSubscriptionItem]?
+    /// Unix timestamp representing the end of the trial period the customer will get before being charged for the first time, if the update is applied.
+    public var trialEnd: Date?
+    /// Indicates if a plan’s `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
+    public var trialFromPlan: Bool?
 }
