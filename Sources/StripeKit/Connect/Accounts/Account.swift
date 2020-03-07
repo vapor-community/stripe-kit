@@ -119,17 +119,34 @@ public struct StripeConnectAccountCompany: StripeModel {
     public var ownersProvided: Bool?
     /// The company’s phone number (used for verification).
     public var phone: String?
+    /// The category identifying the legal structure of the company or legal entity.
+    public var structure: StripeConnectAccountCompanyStructure?
     /// Whether the company’s business ID number was provided.
     public var taxIdProvided: Bool?
     /// The jurisdiction in which the tax_id is registered (Germany-based companies only).
     public var taxIdRegistrar: String?
     /// Whether the company’s business VAT number was provided.
     public var vatIdProvided: Bool?
-    public var verification: StripePersonVerification?
+    /// Information on the verification state of the company.
+    public var verification: StripeConnectAccountCompanyVerification?
 }
 
 public struct StripeConnectAccountCompanyVerification: StripeModel {
     public var document: StripePersonVerificationDocument?
+}
+
+public enum StripeConnectAccountCompanyStructure: String, StripeModel {
+    case governmentInstrumentality = "government_instrumentality"
+    case governmentalUnit = "governmental_unit"
+    case incorporatedNonProfit = "incorporated_non_profit"
+    case multiMemberLlc = "multi_member_llc"
+    case privateCorporation = "private_corporation"
+    case privatePartnership = "private_partnership"
+    case publicCorporation = "public_corporation"
+    case publicPartnership = "public_partnership"
+    case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
+    case unincorporatedAssociation = "unincorporated_association"
+    case unincorporatedNonProfit = "unincorporated_non_profit"
 }
 
 public struct StripeConnectAccountRequirmenets: StripeModel {
