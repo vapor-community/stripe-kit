@@ -4,15 +4,14 @@
 
 ### StripeKit is a Swift package used to communicate with the [Stripe](https://stripe.com) API for Server Side Swift Apps.
 
-## Current supported version
-Version **5.0.0** of StripeKit supports the Stripe API version of **[2019-12-03](https://stripe.com/docs/upgrades#2019-12-03)**. 
-**You can check the releases page to use a version of StripeKit that meets your needs.**
+## Version support
+**You can check the [CHANGELOG](https://github.com/vapor-community/stripe-kit/blob/master/CHANGELOG.md) to see which version of StripeKit meets your needs.**
 
 ## Installation
 To start using StripeKit, in your `Package.swift`, add the following
 
 ~~~~swift
-.package(url: "https://github.com/vapor-community/stripekit.git", from: "5.0.0")
+.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "6.0.0")
 ~~~~
 
 ## Using the API
@@ -109,30 +108,7 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
 ~~~
 
 ## Vapor Integration
-To use StripeKit with Vapor 4.x, add a simple extension on `Request`.
-~~~swift
-extension Request {
-    private struct StripeKey: StorageKey {
-        typealias Value = StripeClient
-    }
-    
-    public var stripe: StripeClient {
-        if let existing = application.storage[StripeKey.self] {
-            return existing.hopped(to: self.eventLoop)
-        } else {
-            let new = StripeClient(httpClient: self.application.client.http, eventLoop: self.eventLoop, apiKey: "STRIPE_API_KEY")
-            self.application.storage[StripeKey.self] = new
-            return new
-        }
-    }
-}
-
-// Later...
-
-func charge(req: Request) -> EventLoopFuture<Response> {
-    return req.stripe.charge(...)
-}
-~~~
+See the [Vapor helper library](https://github.com/vapor-community/stripe) to use StripeKit with Vapor.
 
 ## Whats Implemented
 
