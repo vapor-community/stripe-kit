@@ -50,6 +50,10 @@ public protocol SessionRoutes {
     /// - Returns: A `StripeSession`.
     func retrieve(id: String) -> EventLoopFuture<StripeSession>
     
+    /// Returns a list of Checkout Sessions.
+    /// - Parameter filter: A dictionary that will be used for the [query parameters.](https://stripe.com/docs/api/checkout/sessions/list?lang=curl)
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeSessionList>
+    
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
@@ -89,6 +93,10 @@ extension SessionRoutes {
     
     public func retrieve(id: String) -> EventLoopFuture<StripeSession> {
         return retrieve(id: id)
+    }
+    
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSessionList> {
+        listAll(filter: filter)
     }
 }
 
@@ -174,5 +182,14 @@ public struct StripeSessionRoutes: SessionRoutes {
     
     public func retrieve(id: String) -> EventLoopFuture<StripeSession> {
         return apiHandler.send(method: .GET, path: "\(sessions)/\(id)", headers: headers)
+    }
+    
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSessionList> {
+        var queryParams = ""
+        if let filter = filter {
+            queryParams = filter.queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: sessions, query: queryParams, headers: headers)
     }
 }

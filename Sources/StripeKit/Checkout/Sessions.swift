@@ -5,7 +5,7 @@
 //  Created by Andrew Edwards on 5/4/19.
 //
 
-/// The [Session Object](https://stripe.com/docs/api/checkout/sessions/object).
+/// The [Session Object.](https://stripe.com/docs/api/checkout/sessions/object)
 public struct StripeSession: StripeModel {
     /// Unique identifier for the object. Used to pass to redirectToCheckout in Stripe.js.
     public var id: String
@@ -43,6 +43,13 @@ public struct StripeSession: StripeModel {
     public var subscription: String?
     /// The URL the customer will be directed to after the payment or subscription creation is successful.
     public var successUrl: String?
+}
+
+public struct StripeSessionList: StripeModel {
+    public var object: String
+    public var hasMore: Bool?
+    public var url: String?
+    public var data: [StripeSession]?
 }
 
 public enum StripeSessionBillingAddressCollection: String, StripeModel {
