@@ -103,11 +103,13 @@ public struct StripeIssuingCardShipping: StripeModel {
     /// Shipping address.
     public var address: StripeAddress?
     /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-    public var carrier: String?
+    public var carrier: StripeIssuingCardShippingCarrier?
     /// A unix timestamp representing a best estimate of when the card will be delivered.
     public var eta: Date?
     /// Recipient name.
     public var name: String?
+    /// Shipment speed.
+    public var speed: StripeIssuingCardShippingSpeed?
     /// The delivery status of the card. One of `pending`, `shipped`, `delivered`, `returned`, `failure`, or `canceled`.
     public var status: StripeIssuingCardShippingStatus?
     /// A tracking number for a card shipment.
@@ -116,6 +118,11 @@ public struct StripeIssuingCardShipping: StripeModel {
     public var trackingUrl: String?
     /// One of `bulk` or `individual`. Bulk shipments will be grouped and mailed together, while individual ones will not.
     public var type: StripeIssuingCardShippingType?
+}
+
+public enum StripeIssuingCardShippingCarrier: String, StripeModel {
+    case fedex
+    case usps
 }
 
 public enum StripeIssuingCardShippingStatus: String, StripeModel {
@@ -130,6 +137,15 @@ public enum StripeIssuingCardShippingStatus: String, StripeModel {
 public enum StripeIssuingCardShippingType: String, StripeModel {
     case bulk
     case individual
+}
+
+public enum StripeIssuingCardShippingSpeed: String, StripeModel {
+    /// Cards arrive in 2-6 business days.
+    case standard
+    /// Cards arrive in 2 business days.
+    case express
+    /// Cards arrive in 1 business day.
+    case overnight
 }
 
 public enum StripeIssuingCardStatus: String, StripeModel {
