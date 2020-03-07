@@ -101,7 +101,7 @@ public enum StripeSubscriptionScheduleStatus: String, StripeModel {
     case canceled
 }
 
-public enum StripeSubscriptionSchedulePhaseProrationBehavior: StripeModel {
+public enum StripeSubscriptionSchedulePhaseProrationBehavior: String, StripeModel {
     case createProrations = "create_prorations"
     case none
 }
