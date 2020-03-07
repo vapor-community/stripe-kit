@@ -38,6 +38,8 @@ public struct StripeCustomer: StripeModel {
     public var invoiceSettings: StripeCustomerInvoiceSettings?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
+    /// The suffix of the customer’s next invoice number, e.g., 0001.
+    public var nextInvoiceSequence: Int?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// The customers full name or business name.

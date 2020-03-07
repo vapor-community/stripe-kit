@@ -20,6 +20,7 @@ public protocol CustomerRoutes {
     ///   - email: Customer’s email address. It’s displayed alongside the customer in your dashboard and can be useful for searching and tracking. This may be up to 512 characters. This will be unset if you POST an empty value.
     ///   - invoicePrefix: The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
     ///   - invoiceSettings: Default invoice settings for this customer.
+    ///   - nextInvoiceSequence: The sequence to be used on the customer’s next invoice. Defaults to 1.
     ///   - metadata: A set of key-value pairs that you can attach to a customer object. It can be useful for storing additional information about the customer in a structured format.
     ///   - name: The customer’s full name or business name.
     ///   - paymentMethod: ID of the PaymentMethod to attach to the customer
@@ -37,6 +38,7 @@ public protocol CustomerRoutes {
                 email: String?,
                 invoicePrefix: String?,
                 invoiceSettings: [String: Any]?,
+                nextInvoiceSequence: Int?,
                 metadata: [String: String]?,
                 name: String?,
                 paymentMethod: String?,
@@ -66,6 +68,7 @@ public protocol CustomerRoutes {
     ///   - email: Customer’s email address. It’s displayed alongside the customer in your dashboard and can be useful for searching and tracking. This may be up to 512 characters. This will be unset if you POST an empty value.
     ///   - invoicePrefix: The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
     ///   - invoiceSettings: Default invoice settings for this customer.
+    ///   - nextInvoiceSequence: The sequence to be used on the customer’s next invoice. Defaults to 1.
     ///   - metadata: A set of key-value pairs that you can attach to a customer object. It can be useful for storing additional information about the customer in a structured format.
     ///   - name: The customer’s full name or business name.
     ///   - phone: The customer’s phone number.
@@ -83,6 +86,7 @@ public protocol CustomerRoutes {
                 email: String?,
                 invoicePrefix: String?,
                 invoiceSettings: [String: Any]?,
+                nextInvoiceSequence: Int?,
                 metadata: [String: String]?,
                 name: String?,
                 phone: String?,
@@ -116,6 +120,7 @@ extension CustomerRoutes {
                        email: String? = nil,
                        invoicePrefix: String? = nil,
                        invoiceSettings: [String: Any]? = nil,
+                       nextInvoiceSequence: Int? = nil,
                        metadata: [String: String]? = nil,
                        name: String? = nil,
                        paymentMethod: String? = nil,
@@ -132,6 +137,7 @@ extension CustomerRoutes {
                       email: email,
                       invoicePrefix: invoicePrefix,
                       invoiceSettings: invoiceSettings,
+                      nextInvoiceSequence: nextInvoiceSequence,
                       metadata: metadata,
                       name: name,
                       paymentMethod: paymentMethod,
@@ -156,6 +162,7 @@ extension CustomerRoutes {
                        email: String? = nil,
                        invoicePrefix: String? = nil,
                        invoiceSettings: [String: Any]? = nil,
+                       nextInvoiceSequence: Int? = nil,
                        metadata: [String: String]? = nil,
                        name: String? = nil,
                        phone: String? = nil,
@@ -172,6 +179,7 @@ extension CustomerRoutes {
                       email: email,
                       invoicePrefix: invoicePrefix,
                       invoiceSettings: invoiceSettings,
+                      nextInvoiceSequence: nextInvoiceSequence,
                       metadata: metadata,
                       name: name,
                       phone: phone,
@@ -208,6 +216,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
                        email: String?,
                        invoicePrefix: String?,
                        invoiceSettings: [String: Any]?,
+                       nextInvoiceSequence: Int?,
                        metadata: [String: String]?,
                        name: String?,
                        paymentMethod: String?,
@@ -245,6 +254,10 @@ public struct StripeCustomerRoutes: CustomerRoutes {
         
         if let invoiceSettings = invoiceSettings {
             invoiceSettings.forEach { body["invoice_settings[\($0)]"] = $1 }
+        }
+        
+        if let nextInvoiceSequence = nextInvoiceSequence {
+            body["next_invoice_sequence"] = nextInvoiceSequence
         }
         
         if let metadata = metadata {
@@ -303,6 +316,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
                        email: String?,
                        invoicePrefix: String?,
                        invoiceSettings: [String: Any]?,
+                       nextInvoiceSequence: Int?,
                        metadata: [String: String]?,
                        name: String?,
                        phone: String?,
@@ -342,6 +356,10 @@ public struct StripeCustomerRoutes: CustomerRoutes {
         
         if let invoiceSettings = invoiceSettings {
             invoiceSettings.forEach { body["invoice_settings[\($0)]"] = $1 }
+        }
+        
+        if let nextInvoiceSequence = nextInvoiceSequence {
+            body["next_invoice_sequence"] = nextInvoiceSequence
         }
         
         if let metadata = metadata {
