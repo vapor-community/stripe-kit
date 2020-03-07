@@ -130,6 +130,8 @@ public struct StripeAuthorizationVerificationData: StripeModel {
     public var authentication: StripeAuthorizationVerificationDataAuthorization?
     /// One of `match`, `mismatch`, or `not_provided`.
     public var cvcCheck: StripeAuthorizationVerificationDataCheck?
+    /// One of `match`, `mismatch`, or `not_provided`.
+    public var expiryCheck: StripeAuthorizationVerificationDataCheck?
 }
 
 public enum StripeAuthorizationVerificationDataCheck: String, StripeModel {
