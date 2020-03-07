@@ -21,6 +21,7 @@ public protocol SessionRoutes {
     ///   - customerEmail: If provided, this value will be used when the Customer object is created. If not provided, customers will be asked to enter their email address. Use this parameter to prefill customer data if you already have an email on file. To access information about the customer once a session is complete, use the customer field.
     ///   - lineItems: A list of items the customer is purchasing. Use this parameter for one-time payments. To create subscriptions, use subscription_data.items.
     ///   - locale: The IETF language tag of the locale Checkout is displayed in. If blank or auto, the browser’s locale is used. Supported values are auto, da, de, en, es, fi, fr, it, ja, nb, nl, pl, pt, sv, or zh.
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - mode: The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
     ///   - paymentIntentData: A subset of parameters to be passed to PaymentIntent creation.
     ///   - setupIntentData: A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
@@ -36,6 +37,7 @@ public protocol SessionRoutes {
                 customerEmail: String?,
                 lineItems: [String: Any]?,
                 locale: StripeSessionLocale?,
+                metadata: [String: String]?,
                 mode: StripeSessionMode?,
                 paymentIntentData: [String: Any]?,
                 setupIntentData: [String: Any]?,
@@ -62,6 +64,7 @@ extension SessionRoutes {
                        customerEmail: String? = nil,
                        lineItems: [String: Any]? = nil,
                        locale: StripeSessionLocale? = nil,
+                       metadata: [String: String]? = nil,
                        mode: StripeSessionMode? = nil,
                        paymentIntentData: [String: Any]? = nil,
                        setupIntentData: [String: Any]? = nil,
@@ -76,6 +79,7 @@ extension SessionRoutes {
                       customerEmail: customerEmail,
                       lineItems: lineItems,
                       locale: locale,
+                      metadata: metadata,
                       mode: mode,
                       paymentIntentData: paymentIntentData,
                       setupIntentData: setupIntentData,
@@ -107,6 +111,7 @@ public struct StripeSessionRoutes: SessionRoutes {
                        customerEmail: String?,
                        lineItems: [String: Any]?,
                        locale: StripeSessionLocale?,
+                       metadata: [String: String]?,
                        mode: StripeSessionMode?,
                        paymentIntentData: [String: Any]?,
                        setupIntentData: [String: Any]?,
@@ -138,6 +143,10 @@ public struct StripeSessionRoutes: SessionRoutes {
         
         if let locale = locale {
             body["locale"] = locale.rawValue
+        }
+        
+        if let metadata = metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
         if let mode = mode {
