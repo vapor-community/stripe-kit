@@ -175,7 +175,7 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
     public func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeBankAccountList> {
         var queryParams = "object=bank_account"
         if let filter = filter {
-            queryParams = "&" + filter.queryParameters
+            queryParams += "&" + filter.queryParameters
         }
         
         return apiHandler.send(method: .GET, path: "\(bankaccounts)/\(customer)/sources", query: queryParams, headers: headers)
