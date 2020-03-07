@@ -85,6 +85,8 @@ public struct StripeSubscriptionSchedulePhase: StripeModel {
     public var invoiceSettings: StripeSubscriptionScheduleInvoiceSettings?
     /// Plans to subscribe during this phase of the subscription schedule.
     public var plans: [StripePlan]?
+    /// Controls whether or not the subscription schedule will prorate when transitioning to this phase. Values are `create_prorations` and `none`.
+    public var prorationBehavior: StripeSubscriptionSchedulePhaseProrationBehavior?
     /// The start of this phase of the subscription schedule.
     public var startDate: Date?
     /// When the trial ends within the phase.
@@ -97,6 +99,11 @@ public enum StripeSubscriptionScheduleStatus: String, StripeModel {
     case completed
     case released
     case canceled
+}
+
+public enum StripeSubscriptionSchedulePhaseProrationBehavior: StripeModel {
+    case createProrations = "create_prorations"
+    case none
 }
 
 public struct StripeSubscriptionScheduleList: StripeModel {
