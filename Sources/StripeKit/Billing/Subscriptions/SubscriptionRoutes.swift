@@ -31,6 +31,7 @@ public protocol SubscriptionRoutes {
     ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if its first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
     ///   - pendingInvoiceItemInterval: Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
     ///   - prorate: Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
+    ///   - prorationBehavior: Determines how to handle prorations resulting from the `billing_cycle_anchor`. Valid values are `create_prorations` or `none`. Passing `create_prorations` will cause proration invoice items to be created when applicable. Prorations can be disabled by passing `none`. If no value is passed, the default is `create_prorations`.
     ///   - trialEnd: Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value now can be provided to end the customer’s trial immediately. Can be at most two years from `billing_cycle_anchor`.
     ///   - trialFromPlan: Indicates if a plan’s trial_period_days should be applied to the subscription. Setting trial_end per subscription is preferred, and this defaults to false. Setting this flag to true together with trial_end is not allowed.
     ///   - trialPeriodDays: Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan.
@@ -52,6 +53,7 @@ public protocol SubscriptionRoutes {
                 paymentBehavior: StripeSubscriptionPaymentBehavior?,
                 pendingInvoiceItemInterval: [String: Any]?,
                 prorate: Bool?,
+                prorationBehavior: StripeSubscriptionProrationBehavior?,
                 trialEnd: Any?,
                 trialFromPlan: Bool?,
                 trialPeriodDays: Int?) -> EventLoopFuture<StripeSubscription>
@@ -82,6 +84,7 @@ public protocol SubscriptionRoutes {
     ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if its first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
     ///   - pendingInvoiceItemInterval: Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
     ///   - prorate: Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
+    ///   - prorationBehavior: Determines how to handle prorations when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s quantity changes. Valid values are `create_prorations`, `none`, or `always_invoice`. Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under certain conditions. In order to always invoice immediately for prorations, pass `always_invoice`. Prorations can be disabled by passing `none`.
     ///   - prorationDate: If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](https://stripe.com/docs/api/subscriptions/update#retrieve_customer_invoice) endpoint. It can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
     ///   - trialEnd: Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer’s trial immediately. Can be at most two years from `billing_cycle_anchor`.
     ///   - trialFromPlan: Indicates if a plan’s `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to true together with `trial_end` is not allowed.
@@ -103,11 +106,12 @@ public protocol SubscriptionRoutes {
                 paymentBehavior: StripeSubscriptionPaymentBehavior?,
                 pendingInvoiceItemInterval: [String: Any]?,
                 prorate: Bool?,
+                prorationBehavior: StripeSubscriptionProrationBehavior?,
                 prorationDate: Date?,
                 trialEnd: Any?,
                 trialFromPlan: Bool?) -> EventLoopFuture<StripeSubscription>
     
-    /// Cancels a customer’s subscription immediately. The customer will not be charged again for the subscription. /n Note, however, that any pending invoice items that you’ve created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api/subscriptions/cancel#delete_invoiceitem). If you’ve set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed. /n By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
+    /// Cancels a customer’s subscription immediately. The customer will not be charged again for the subscription. /n Note, however, that any pending invoice items that you’ve created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api/subscriptions/cancel#delete_invoiceitem) . If you’ve set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed. /n By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
 
     ///
     /// - Parameters:
@@ -145,6 +149,7 @@ extension SubscriptionRoutes {
                        paymentBehavior: StripeSubscriptionPaymentBehavior? = nil,
                        pendingInvoiceItemInterval: [String: Any]? = nil,
                        prorate: Bool? = nil,
+                       prorationBehavior: StripeSubscriptionProrationBehavior? = nil,
                        trialEnd: Any? = nil,
                        trialFromPlan: Bool? = nil,
                        trialPeriodDays: Int? = nil) -> EventLoopFuture<StripeSubscription> {
@@ -165,6 +170,7 @@ extension SubscriptionRoutes {
                           paymentBehavior: paymentBehavior,
                           pendingInvoiceItemInterval: pendingInvoiceItemInterval,
                           prorate: prorate,
+                          prorationBehavior: prorationBehavior,
                           trialEnd: trialEnd,
                           trialFromPlan: trialFromPlan,
                           trialPeriodDays: trialPeriodDays)
@@ -191,6 +197,7 @@ extension SubscriptionRoutes {
                        paymentBehavior: StripeSubscriptionPaymentBehavior? = nil,
                        pendingInvoiceItemInterval: [String: Any]? = nil,
                        prorate: Bool? = nil,
+                       prorationBehavior: StripeSubscriptionProrationBehavior? = nil,
                        prorationDate: Date? = nil,
                        trialEnd: Any? = nil,
                        trialFromPlan: Bool? = nil) -> EventLoopFuture<StripeSubscription> {
@@ -211,6 +218,7 @@ extension SubscriptionRoutes {
                           paymentBehavior: paymentBehavior,
                           pendingInvoiceItemInterval: pendingInvoiceItemInterval,
                           prorate: prorate,
+                          prorationBehavior: prorationBehavior,
                           prorationDate: prorationDate,
                           trialEnd: trialEnd,
                           trialFromPlan: trialFromPlan)
@@ -252,6 +260,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        paymentBehavior: StripeSubscriptionPaymentBehavior?,
                        pendingInvoiceItemInterval: [String: Any]?,
                        prorate: Bool?,
+                       prorationBehavior: StripeSubscriptionProrationBehavior?,
                        trialEnd: Any?,
                        trialFromPlan: Bool?,
                        trialPeriodDays: Int?) -> EventLoopFuture<StripeSubscription> {
@@ -318,6 +327,10 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
             body["prorate"] = prorate
         }
         
+        if let prorationBehavior = prorationBehavior {
+            body["proration_behavior"] = prorationBehavior.rawValue
+        }
+        
         if let trialEnd = trialEnd as? Date {
             body["trial_end"] = Int(trialEnd.timeIntervalSince1970)
         }
@@ -358,6 +371,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        paymentBehavior: StripeSubscriptionPaymentBehavior?,
                        pendingInvoiceItemInterval: [String: Any]?,
                        prorate: Bool?,
+                       prorationBehavior: StripeSubscriptionPaymentBehavior?,
                        prorationDate: Date?,
                        trialEnd: Any?,
                        trialFromPlan: Bool?) -> EventLoopFuture<StripeSubscription> {
@@ -425,6 +439,10 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
         
         if let prorate = prorate {
             body["prorate"] = prorate
+        }
+        
+        if let prorationBehavior = prorationBehavior {
+            body["proration_behavior"] = prorationBehavior.rawValue
         }
         
         if let prorationDate = prorationDate {

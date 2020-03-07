@@ -119,6 +119,11 @@ public enum StripeSubscriptionPaymentBehavior: String, StripeModel {
     case errorIfIncomplete = "error_if_complete"
 }
 
+public enum StripeSubscriptionProrationBehavior: String, StripeModel {
+    case createProrations = "create_prorations"
+    case none
+}
+
 public struct StripeSubscriptionPendingUpdate: StripeModel {
     /// If the update is applied, determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
     public var billingCycleAnchor: Date?
