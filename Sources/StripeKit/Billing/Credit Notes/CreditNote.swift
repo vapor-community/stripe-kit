@@ -23,8 +23,12 @@ public struct StripeCreditNote: StripeModel {
     public var customer: String?
     /// Customer balance transaction related to this credit note.
     public var customerBalanceTransaction: String?
+    /// The integer amount in cents representing the amount of the discount that was credited.
+    public var discountAmount: Int?
     /// ID of the invoice.
     public var invoice: String?
+    /// Line items that make up the credit note
+    public var lines: StripeCreditNoteLineItemList?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Customer-facing text that appears on the credit note PDF.
@@ -33,6 +37,8 @@ public struct StripeCreditNote: StripeModel {
     public var metadata: [String: String]?
     /// A unique number that identifies this particular credit note and appears on the PDF of the credit note and its associated invoice.
     public var number: String?
+    /// Amount that was credited outside of Stripe.
+    public var outOfBandAmount: Int?
     /// The link to download the PDF of the credit note.
     public var pdf: String?
     /// Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
@@ -41,6 +47,12 @@ public struct StripeCreditNote: StripeModel {
     public var refund: String?
     /// Status of this credit note, one of issued or void. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
     public var status: StripeCreditNoteStatus?
+    /// The integer amount in `cents` representing the amount of the credit note, excluding tax and discount.
+    public var subtotal: Int?
+    /// The aggregate amounts calculated per tax rate for all line items.
+    public var taxAmounts: [StripeInvoiceTotalTaxAmount]?
+    /// The integer amount in `cents` representing the total amount of the credit note, including tax and discount.
+    public var total: Int?
     /// Type of this credit note, one of `post_payment` or `pre_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
     public var type: StripeCreditNoteType?
     /// The time that the credit note was voided.

@@ -215,7 +215,7 @@ public struct StripeCardRoutes: CardRoutes {
     public func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeCardList> {
         var queryParams = "object=card"
         if let filter = filter {
-            queryParams = "&" + filter.queryParameters
+            queryParams += "&" + filter.queryParameters
         }
         
         return apiHandler.send(method: .GET, path: "\(cards)/\(customer)/sources", query: queryParams, headers: headers)

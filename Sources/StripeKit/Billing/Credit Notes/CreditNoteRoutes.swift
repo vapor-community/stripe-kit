@@ -14,6 +14,8 @@ public protocol CreditNoteRoutes {
     /// - Parameters:
     ///   - amount: The integer amount in cents representing the total amount of the credit note.
     ///   - invoice: ID of the invoice.
+    ///   - lines: Line items that make up the credit note.
+    ///   - outOfBandAmount: The integer amount in `cents` representing the amount that is credited outside of Stripe.
     ///   - creditAmount: The integer amount in cents representing the amount to credit the customer’s balance, which will be automatically applied to their next invoice.
     ///   - memo: The credit note’s memo appears on the credit note PDF. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -23,6 +25,8 @@ public protocol CreditNoteRoutes {
     /// - Returns: A `StripeCreditNote`.
     func create(amount: Int,
                 invoice: String,
+                lines: [[String: Any]]?,
+                outOfBandAmount: Int?,
                 creditAmount: Int?,
                 memo: String?,
                 metadata: [String: String]?,
@@ -31,17 +35,22 @@ public protocol CreditNoteRoutes {
                 refundAmount: Int?) -> EventLoopFuture<StripeCreditNote>
     
     /// Get a preview of a credit note without creating it.
-    /// - Parameter invoice: ID of the invoice.
-    /// - Parameter amount: The integer amount in cents representing the total amount of the credit note.
-    /// - Parameter creditAmount: The integer amount in cents representing the amount to credit the customer’s balance, which will be automatically applied to their next invoice.
-    /// - Parameter memo: The credit note’s memo appears on the credit note PDF. This will be unset if you POST an empty value.
-    /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    /// - Parameter reason: Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
-    /// - Parameter refund: ID of an existing refund to link this credit note to.
-    /// - Parameter refundAmount: The integer amount in cents representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
+    /// - Parameters:
+    ///   - invoice: ID of the invoice.
+    ///   - lines: Line items that make up the credit note.
+    ///   - amount: The integer amount in cents representing the total amount of the credit note.
+    ///   - creditAmount: The integer amount in cents representing the amount to credit the customer’s balance, which will be automatically applie  to their next invoice.
+    ///   - outOfBandAmount: The integer amount in `cents` representing the amount that is credited outside of Stripe.
+    ///   - memo: The credit note’s memo appears on the credit note PDF. This will be unset if you POST an empty value.
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object   a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to   `metadata`.
+    ///   - reason: Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or   `product_unsatisfactory`
+    ///   - refund: ID of an existing refund to link this credit note to.
+    ///   - refundAmount: The integer amount in cents representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
     func preview(invoice: String,
+                 lines: [[String: Any]]?,
                  amount: Int?,
                  creditAmount: Int?,
+                 outOfBandAmount: Int?,
                  memo: String?,
                  metadata: [String: String]?,
                  reason: StripeCreditNoteReason?,
@@ -63,16 +72,27 @@ public protocol CreditNoteRoutes {
     /// - Returns: A `StripeCreditNote`.
     func update(id: String, memo: String?, metadata: [String: String]?) -> EventLoopFuture<StripeCreditNote>
     
-    /// Marks a credit note as void. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
+    /// When retrieving a credit note, you’ll get a lines property containing the the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+    /// - Parameters:
+    ///   - id: The id of the credit note.
+    ///   - filter: A dictionary that will be used for the [query parameters.](https://stripe.com/docs/api/credit_notes/lines?lang=curl)
+    func retrieveLineItems(id: String, filter: [String: Any]?) -> EventLoopFuture<StripeCreditNoteLineItemList>
+    
+    /// When retrieving a credit note preview, you’ll get a lines property containing the first handful of those items. This URL you can retrieve the full (paginated) list of line items.
+    /// - Parameters:
+    ///   - id: ID of the invoice.
+    ///   - filter: A dictionary that will be used for the [query parameters.](https://stripe.com/docs/api/credit_notes/preview_lines?lang=curl)
+    func retrievePreviewLineItems(invoice: String, filter: [String: Any]?) -> EventLoopFuture<StripeCreditNoteLineItemList>
+    
+    
+    /// Marks a credit note as void. Learn more about [voiding credit notes.](https://stripe.com/docs/billing/invoices/credit-notes#voiding)
     ///
     /// - Parameter id: ID of the credit note object to void.
-    /// - Returns: A `StripeCreditNote`.
     func void(id: String) -> EventLoopFuture<StripeCreditNote>
     
     /// Returns a list of credit notes.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/credit_notes/list)
-    /// - Returns: A `StripeCreditNoteList`.
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCreditNoteList>
     
     /// Headers to send with the request.
@@ -82,6 +102,8 @@ public protocol CreditNoteRoutes {
 extension CreditNoteRoutes {
     public func create(amount: Int,
                        invoice: String,
+                       lines: [[String: Any]]? = nil,
+                       outOfBandAmount: Int? = nil,
                        creditAmount: Int? = nil,
                        memo: String? = nil,
                        metadata: [String: String]? = nil,
@@ -89,26 +111,32 @@ extension CreditNoteRoutes {
                        refund: String? = nil,
                        refundAmount: Int? = nil) -> EventLoopFuture<StripeCreditNote> {
         return create(amount: amount,
-                          invoice: invoice,
-                          creditAmount: creditAmount,
-                          memo: memo,
-                          metadata: metadata,
-                          reason: reason,
-                          refund: refund,
-                          refundAmount: refundAmount)
+                      invoice: invoice,
+                      lines: lines,
+                      outOfBandAmount: outOfBandAmount,
+                      creditAmount: creditAmount,
+                      memo: memo,
+                      metadata: metadata,
+                      reason: reason,
+                      refund: refund,
+                      refundAmount: refundAmount)
     }
     
     public func preview(invoice: String,
+                        lines: [[String: Any]]?,
                         amount: Int? = nil,
                         creditAmount: Int? = nil,
+                        outOfBandAmount: Int? = nil,
                         memo: String? = nil,
                         metadata: [String: String]? = nil,
                         reason: StripeCreditNoteReason? = nil,
                         refund: String? = nil,
                         refundAmount: Int? = nil) -> EventLoopFuture<StripeCreditNote> {
         return preview(invoice: invoice,
+                       lines: lines,
                        amount: amount,
                        creditAmount: creditAmount,
+                       outOfBandAmount: outOfBandAmount,
                        memo: memo,
                        metadata: metadata,
                        reason: reason,
@@ -122,6 +150,14 @@ extension CreditNoteRoutes {
     
     public func update(id: String, memo: String? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeCreditNote> {
         return update(id: id, memo: memo, metadata: metadata)
+    }
+    
+    public func retrieveLineItems(id: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeCreditNoteLineItemList> {
+        retrieveLineItems(id: id, filter: filter)
+    }
+    
+    public func retrievePreviewLineItems(invoice: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeCreditNoteLineItemList> {
+        retrievePreviewLineItems(invoice: invoice, filter: filter)
     }
     
     public func void(id: String) -> EventLoopFuture<StripeCreditNote> {
@@ -145,6 +181,8 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
     
     public func create(amount: Int,
                        invoice: String,
+                       lines: [[String: Any]]?,
+                       outOfBandAmount: Int?,
                        creditAmount: Int?,
                        memo: String?,
                        metadata: [String: String]?,
@@ -153,6 +191,14 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
                        refundAmount: Int?) -> EventLoopFuture<StripeCreditNote> {
         var body: [String: Any] = ["amount": amount,
                                    "invoice": invoice]
+        
+        if let lines = lines {
+            body["lines"] = lines
+        }
+        
+        if let outOfBandAmount = outOfBandAmount {
+            body["out_of_band_amount"] = outOfBandAmount
+        }
         
         if let creditAmount = creditAmount {
             body["credit_amount"] = creditAmount
@@ -182,8 +228,10 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
     }
     
     public func preview(invoice: String,
+                        lines: [[String: Any]]?,
                         amount: Int?,
                         creditAmount: Int?,
+                        outOfBandAmount: Int?,
                         memo: String?,
                         metadata: [String: String]?,
                         reason: StripeCreditNoteReason?,
@@ -195,8 +243,16 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             body["amount"] = amount
         }
         
+        if let lines = lines {
+            body["lines"] = lines
+        }
+        
         if let creditAmount = creditAmount {
             body["credit_amount"] = creditAmount
+        }
+        
+        if let outOfBandAmount = outOfBandAmount {
+            body["out_of_band_amount"] = outOfBandAmount
         }
         
         if let memo = memo {
@@ -238,6 +294,24 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
         }
         
         return apiHandler.send(method: .POST, path: "\(creditnotes)/\(id)", body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func retrieveLineItems(id: String, filter: [String: Any]?) -> EventLoopFuture<StripeCreditNoteLineItemList> {
+        var queryParams = ""
+        if let filter = filter {
+            queryParams += filter.queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(creditnotes)/\(id)/lines", query: queryParams, headers: headers)
+    }
+    
+    public func retrievePreviewLineItems(invoice: String, filter: [String: Any]?) -> EventLoopFuture<StripeCreditNoteLineItemList> {
+        var queryParams = "invoice=\(invoice)"
+        if let filter = filter {
+            queryParams += "&" + filter.queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(creditnotes)/preview/lines", query: queryParams, headers: headers)
     }
     
     public func void(id: String) -> EventLoopFuture<StripeCreditNote> {
