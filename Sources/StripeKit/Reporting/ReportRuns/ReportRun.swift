@@ -46,6 +46,8 @@ public struct StripeReportRunParameters: StripeModel {
     public var payout: String?
     /// Category of balance transactions to be included in the report run.
     public var reportingCategory: String?
+    /// Defaults to Etc/UTC. The output timezone for all timestamps in the report. A list of possible time zone values is maintained at the IANA Time Zone Database. Has no effect on `interval_start` or `interval_end`.
+    public var timezone: String?
 }
 
 public enum StripeReportRunStatus: String, StripeModel {
