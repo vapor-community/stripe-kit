@@ -38,6 +38,7 @@ public enum StripeFilePurpose: String, StripeModel {
     case identityDocument = "identity_document"
     case pciDocument = "pci_document"
     case taxDocumentUserUpload = "tax_document_user_upload"
+    case additionalVerification = "additional_verification"
 }
 
 public enum StripeFileType: String, StripeModel {
