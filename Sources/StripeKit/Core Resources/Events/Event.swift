@@ -371,6 +371,8 @@ public enum StripeEventType: String, StripeModel {
     case paymentIntentCreated = "payment_intent.created"
     /// Occurs when a PaymentIntent has failed the attempt to create a source or a payment.
     case paymentIntentPaymentFailed = "payment_intent.payment_failed"
+    /// Occurs when a PaymentIntent has started processing.
+    case paymentIntentProcessing = "payment_intent.processing"
     /// Occurs when a PaymentIntent has been successfully fulfilled.
     case paymentIntentSucceeded = "payment_intent.succeeded"
     /// Occurs whenever a new payment method is attached to a customer.
