@@ -17,6 +17,8 @@ public struct StripeWebhook: StripeModel {
     public var apiVersion: String?
     /// The ID of the associated Connect application.
     public var application: String?
+    /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+    public var metadata: [String: String]?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The list of events to enable for this endpoint. `['*']` indicates that all events are enabled, except those that require explicit selection.
