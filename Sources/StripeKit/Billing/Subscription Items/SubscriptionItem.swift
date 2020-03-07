@@ -42,6 +42,12 @@ public enum StripeSubscriptionItemPaymentBehavior: String, StripeModel {
     case errorIfIncomplete = "error_if_incomplete"
 }
 
+public enum StripeSubscriptionItemProrationBehavior: String, StripeModel {
+    case createProrations = "create_prorations"
+    case alwaysInvoice = "always_invoice"
+    case none
+}
+
 public struct StripeSubscriptionItemList: StripeModel {
     public var object: String
     public var hasMore: Bool
