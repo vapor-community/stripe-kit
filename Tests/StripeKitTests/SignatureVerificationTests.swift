@@ -3,20 +3,8 @@ import XCTest
 import Crypto
 
 class SignatureVerificationTests: XCTestCase {
-    var jsonData: Data!
-    var secret: String!
-    
-    override func setUp() {
-        super.setUp()
-        
-        let json = [
-            "key": "value"
-        ]
-        
-        jsonData = try! JSONEncoder().encode(json)
-        
-        secret = "SECRET"
-    }
+    var jsonData: Data = try! JSONEncoder().encode(["key": "value"])
+    var secret: String = "SECRET"
     
     func testVerificationWithSingleSignature() throws {
         let timestamp = String(Date().addingTimeInterval(-60).timeIntervalSince1970)
