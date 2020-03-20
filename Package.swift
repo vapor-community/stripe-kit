@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "StripeKit", targets: ["StripeKit"])
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-server/async-http-client.git", .exact("1.1.0")),
+        .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.1.0"),
         .package(url: "https://github.com/apple/swift-crypto.git", from: "1.0.0")
     ],
     targets: [
