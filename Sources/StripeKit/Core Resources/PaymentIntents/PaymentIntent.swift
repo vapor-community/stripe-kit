@@ -76,9 +76,14 @@ public struct StripePaymentIntent: StripeModel {
     /// Status of this PaymentIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `requires_capture`, `canceled`, or `succeeded`.
     public var status: StripePaymentIntentStatus?
     /// The data with which to automatically create a Transfer when the payment is finalized. See the PaymentIntents Connect usage guide for details.
-    public var transferData: [String: String]?
+    public var transferData: TransferData?
     /// A string that identifies the resulting payment as part of a group. See the PaymentIntents Connect usage guide for details.
     public var transferGroup: String?
+}
+
+public struct TransferData: StripeModel {
+	var destination: String?
+	var amount: Int?
 }
 
 public enum StripePaymentIntentCancellationReason: String, StripeModel {
