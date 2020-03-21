@@ -82,7 +82,9 @@ public struct StripePaymentIntent: StripeModel {
 }
 
 public struct StripePaymentIntentTransferData: StripeModel {
+	/// Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the smallest currency unit
 	var destination: String?
+	/// The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to upon payment success.
 	var amount: Int?
 }
 
