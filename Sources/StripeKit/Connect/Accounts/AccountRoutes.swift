@@ -297,7 +297,7 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        requestedCapabilities: [String]?,
                        settings: [String: Any]?,
                        tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount> {
-        var body = [String: Any]()
+		var body: [String: Any] = [:]
 			
 		if let requestedCapabilities = requestedCapabilities {
 			body["requested_capabilities"] = requestedCapabilities
