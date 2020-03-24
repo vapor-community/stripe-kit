@@ -79,7 +79,7 @@ public protocol AccountRoutes {
                 externalAccount: Any?,
                 individual: [String: Any]?,
                 metadata: [String: String]?,
-                requestedCapabilities: [String],
+                requestedCapabilities: [String]?,
                 settings: [String: Any]?,
                 tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount>
     
@@ -164,7 +164,7 @@ extension AccountRoutes {
                        externalAccount: Any? = nil,
                        individual: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
-                       requestedCapabilities: [String],
+                       requestedCapabilities: [String]? = nil,
                        settings: [String: Any]? = nil,
                        tosAcceptance: [String: Any]? = nil) -> EventLoopFuture<StripeConnectAccount> {
         return update(account: account,
@@ -294,10 +294,14 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        externalAccount: Any?,
                        individual: [String: Any]?,
                        metadata: [String: String]?,
-                       requestedCapabilities: [String],
+                       requestedCapabilities: [String]?,
                        settings: [String: Any]?,
                        tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount> {
-        var body: [String: Any] = ["requested_capabilities": requestedCapabilities]
+		var body: [String: Any] = [:]
+			
+		if let requestedCapabilities = requestedCapabilities {
+			body["requested_capabilities"] = requestedCapabilities
+		}
         
         if let accountToken = accountToken {
             body["account_token"] = accountToken
