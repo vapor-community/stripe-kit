@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.1.0 - 2020-03-26
+
+* [#68](https://github.com/vapor-community/stripe-kit/pull/68) Fixed type mispatch for `StripeSubscriptionProrationBehavior` on subscription update route.
+
+* [#67](https://github.com/vapor-community/stripe-kit/pull/67) Added support for webhooks signature validation.
+
+* [#65](https://github.com/vapor-community/stripe-kit/pull/65) 
+    * Made `requestedCapabilities` `Optional` on connect accounts.
+    * Added `StripePaymentIntentTransferData` type for `transferData` on `StripePaymentIntent`.
+
 ## 6.0.0 - 2020-03-07
 Major version release for new API version `2020-03-02`
 
