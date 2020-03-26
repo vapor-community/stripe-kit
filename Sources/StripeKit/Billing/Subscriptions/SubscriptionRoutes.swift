@@ -371,7 +371,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        paymentBehavior: StripeSubscriptionPaymentBehavior?,
                        pendingInvoiceItemInterval: [String: Any]?,
                        prorate: Bool?,
-                       prorationBehavior: StripeSubscriptionPaymentBehavior?,
+                       prorationBehavior: StripeSubscriptionProrationBehavior?,
                        prorationDate: Date?,
                        trialEnd: Any?,
                        trialFromPlan: Bool?) -> EventLoopFuture<StripeSubscription> {
