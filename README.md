@@ -201,7 +201,7 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 ---
 ### Webhooks
 * [x] Webhook Endpoints
-
+* [x] Signature Verification
 
 ## TODO At some point
 * [ ] [Object expansion](https://stripe.com/docs/api/expanding_objects)
