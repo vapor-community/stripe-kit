@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "StripeKit",
+    name: "stripe-kit",
     platforms: [
         .macOS(.v10_15)
     ],
