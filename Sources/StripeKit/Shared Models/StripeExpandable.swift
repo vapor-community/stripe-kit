@@ -13,6 +13,7 @@ public class Expandable<Model: StripeModel>: StripeModel {
     private enum ExpandableState {
         case unexpanded(String)
         case expanded(Model)
+        case empty
     }
     
     required public init(from decoder: Decoder) throws {
@@ -21,7 +22,7 @@ public class Expandable<Model: StripeModel>: StripeModel {
         } catch DecodingError.typeMismatch(_, _) {
             _state = try .expanded(Model(from: decoder))
         } catch {
-            throw error
+            _state = .empty
         }
     }
     
@@ -33,6 +34,7 @@ public class Expandable<Model: StripeModel>: StripeModel {
             try id.encode(to: encoder)
         case let .expanded(model):
             try model.encode(to: encoder)
+        default: break
         }
     }
     
@@ -40,14 +42,14 @@ public class Expandable<Model: StripeModel>: StripeModel {
         switch _state {
         case .unexpanded(let id):
             return id
-        case .expanded(_):
+        case .expanded(_), .empty:
             return nil
         }
     }
         
     public var projectedValue: Model? {
         switch _state {
-        case .unexpanded(_):
+        case .unexpanded(_), .empty:
             return nil
         case .expanded(let model):
             return model
