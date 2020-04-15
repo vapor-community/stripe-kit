@@ -20,13 +20,13 @@ public struct StripeCreditNote: StripeModel {
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// ID of the customer.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// Customer balance transaction related to this credit note.
-    public var customerBalanceTransaction: String?
+    @Expandable<StripeCustomerBalanceTransaction> public var customerBalanceTransaction: String?
     /// The integer amount in cents representing the amount of the discount that was credited.
     public var discountAmount: Int?
     /// ID of the invoice.
-    public var invoice: String?
+    @Expandable<StripeInvoice> public var invoice: String?
     /// Line items that make up the credit note
     public var lines: StripeCreditNoteLineItemList?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
@@ -44,7 +44,7 @@ public struct StripeCreditNote: StripeModel {
     /// Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
     public var reason: StripeCreditNoteReason?
     /// Refund related to this credit note.
-    public var refund: String?
+    @Expandable<StripeRefund> public var refund: String?
     /// Status of this credit note, one of issued or void. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
     public var status: StripeCreditNoteStatus?
     /// The integer amount in `cents` representing the amount of the credit note, excluding tax and discount.

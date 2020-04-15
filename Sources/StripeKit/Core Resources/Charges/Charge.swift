@@ -21,11 +21,11 @@ public struct StripeCharge: StripeModel {
     /// ID of the Connect application that created the charge.
     public var application: String?
     /// The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
-    public var applicationFee: String?
+    @Expandable<StripeApplicationFee> public var applicationFee: String?
     /// The amount of the application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
     public var applicationFeeAmount: Int?
     /// ID of the balance transaction that describes the impact of this charge on your account balance (not including refunds or disputes).
-    public var balanceTransaction: String?
+    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
     /// Billing information associated with the payment method at the time of the transaction.
     public var billingDetails: StripeBillingDetails?
     /// If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
@@ -35,7 +35,7 @@ public struct StripeCharge: StripeModel {
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// ID of the customer this charge is for if one exists.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Details about the dispute if the charge has been disputed.
@@ -49,21 +49,21 @@ public struct StripeCharge: StripeModel {
     /// Information on fraud assessments for the charge.
     public var fraudDetails: StripeChargeFraudDetails?
     /// ID of the invoice this charge is for if one exists.
-    public var invoice: String?
+    @Expandable<StripeInvoice> public var invoice: String?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
-    public var onBehalfOf: String?
+    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
     /// ID of the order this charge is for if one exists.
-    public var order: String?
+    @Expandable<StripeOrder> public var order: String?
     /// Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
     public var outcome: StripeChargeOutcome?
     /// `true` if the charge succeeded, or was successfully authorized for later capture.
     public var paid: Bool?
     /// ID of the PaymentIntent associated with this charge, if one exists.
-    public var paymentIntent: String?
+    @Expandable<StripePaymentIntent> public var paymentIntent: String?
     /// ID of the payment method used in this charge.
     public var paymentMethod: String?
     /// Details about the payment method at the time of the transaction.
@@ -79,11 +79,11 @@ public struct StripeCharge: StripeModel {
     /// A list of refunds that have been applied to the charge.
     public var refunds: StripeRefundsList
     /// ID of the review associated with this charge if one exists.
-    public var review: String?
+    @Expandable<StripeReview> public var review: String?
     /// Shipping information for the charge.
     public var shipping: StripeShippingLabel?
     /// The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
-    public var sourceTransfer: String?
+    @Expandable<StripeTransfer> public var sourceTransfer: String?
     /// Extra information about a charge. This will appear on your customer’s credit card statement. It must contain at least one letter.
     public var statementDescriptor: String?
     /// Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
@@ -91,7 +91,7 @@ public struct StripeCharge: StripeModel {
     /// The status of the payment is either `succeeded`, `pending`, or `failed`.
     public var status: StripeChargeStatus?
     /// ID of the transfer to the `destination` account (only applicable if the charge was created using the `destination` parameter).
-    public var transfer: String?
+    @Expandable<StripeTransfer> public var transfer: String?
     /// An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
     public var transferData: StripeChargeTransferData?
     /// A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.

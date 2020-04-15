@@ -35,7 +35,7 @@ public struct StripeInvoice: StripeModel {
     /// Indicates the reason why the invoice was created. `subscription_cycle` indicates an invoice created by a subscription advancing into a new period. `subscription_create` indicates an invoice created due to creating a subscription. `subscription_update` indicates an invoice created due to updating a subscription. `subscription` is set for all old invoices to indicate either a change to a subscription or a period advancement. `manual` is set for all invoices unrelated to a subscription (for example: created via the invoice editor). The `upcoming` value is reserved for simulated invoices per the upcoming invoice endpoint. `subscription_threshold` indicates an invoice created due to a billing threshold being reached.
     public var billingReason: StripeInvoiceBillingReason?
     /// ID of the latest charge generated for this invoice, if any.
-    public var charge: String?
+    @Expandable<StripeCharge> public var charge: String?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions.
     public var collectionMethod: StripeInvoiceCollectionMethod?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.

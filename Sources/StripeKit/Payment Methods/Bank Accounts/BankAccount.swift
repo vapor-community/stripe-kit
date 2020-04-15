@@ -13,7 +13,7 @@ public struct StripeBankAccount: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The account this bank account belongs to.
-    public var account: String?
+    @Expandable<StripeConnectAccount> public var account: String?
     /// The name of the person or business that owns the bank account.
     public var accountHolderName: String?
     /// The type of entity that holds the account. This can be either `individual` or `company`.
@@ -25,7 +25,7 @@ public struct StripeBankAccount: StripeModel {
     /// Three-letter ISO code for the currency paid out to the bank account.
     public var currency: StripeCurrency?
     /// The customer that this bank account belongs to.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// Whether this bank account is the default external account for its currency.
     public var defaultForCurrency: Bool?
     /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.

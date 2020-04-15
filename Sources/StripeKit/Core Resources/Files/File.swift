@@ -1,5 +1,5 @@
 //
-//  FileUpload.swift
+//  File.swift
 //  Stripe
 //
 //  Created by Andrew Edwards on 9/15/18.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// The [File Object](https://stripe.com/docs/api/files/object).
+/// The [File Object](https://stripe.com/docs/api/files/object)
 public struct StripeFile: StripeModel {
     /// Unique identifier for the object.
     public var id: String

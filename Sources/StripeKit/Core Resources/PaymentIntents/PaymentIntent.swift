@@ -40,11 +40,11 @@ public struct StripePaymentIntent: StripeModel {
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// ID of the Customer this PaymentIntent is for if one exists.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// ID of the invoice that created this PaymentIntent, if it exists.
-    public var invoice: String?
+    @Expandable<StripeInvoice> public var invoice: String?
     /// The payment error encountered in the previous PaymentIntent confirmation.
     public var lastPaymentError: StripeError?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -54,9 +54,9 @@ public struct StripePaymentIntent: StripeModel {
     /// If present, this property tells you what actions you need to take in order for your customer to fulfill a payment using the provided source.
     public var nextAction: StripePaymentIntentNextAction?
     /// The account (if any) for which the funds of the PaymentIntent are intended. See the PaymentIntents Connect usage guide for details.
-    public var onBehalfOn: String?
+    @Expandable<StripeConnectAccount> public var onBehalfOn: String?
     /// ID of the payment method used in this PaymentIntent.
-    public var paymentMethod: String?
+    @Expandable<StripePaymentMethod> public var paymentMethod: String?
     /// Payment-method-specific configuration for this PaymentIntent.
     public var paymentMethodOptions: StripePaymentIntentPaymentMethodOptions?
     /// The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
@@ -64,7 +64,7 @@ public struct StripePaymentIntent: StripeModel {
     /// Email address that the receipt for the resulting payment will be sent to.
     public var receiptEmail: String?
     /// ID of the review associated with this PaymentIntent, if any.
-    public var review: String?
+    @Expandable<StripeReview> public var review: String?
     /// Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use on_session if you intend to only reuse the payment method when your customer is present in your checkout flow. Use off_session if your customer may or may not be in your checkout flow. For more, learn to save card details after a payment. Stripe uses setup_future_usage to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using off_session will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer.
     public var setupFutureUsage: String?
     /// Shipping information for this PaymentIntent.
