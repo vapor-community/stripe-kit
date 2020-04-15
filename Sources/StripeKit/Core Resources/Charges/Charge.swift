@@ -345,7 +345,7 @@ public struct StripeChargePaymentDetailsCardPresent: StripeModel {
 public enum StripeChargePaymentDetailsCardPresentReadMethod: String, StripeModel {
     case contactEmv = "contact_emv"
     case contactlessEmv = "contactless_emv"
-    case magneticStrripeFallback = "magnetic_stripe_fallback"
+    case magneticStripeFallback = "magnetic_stripe_fallback"
     case magneticStripeTrack2 = "magnetic_stripe_track2"
     case contactlessMagstripeMode = "contactless_magstripe_mode"
 }
@@ -411,7 +411,7 @@ public enum StripeChargePaymentDetailsIdealBank: String, StripeModel {
     case regiobank
     case snsBank = "sns_bank"
     case triodosBank = "triodos_bank"
-    case vanLanschot = "van_laschot"
+    case vanLanschot = "van_lanschot"
 }
 
 public struct StripeChargePaymentDetailsMultibanco: StripeModel {
