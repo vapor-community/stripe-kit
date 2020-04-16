@@ -22,7 +22,7 @@ public struct StripeSubscriptionSchedule: StripeModel {
     /// Object representing the start and end dates for the current phase of the subscription schedule, if it is active.
     public var currentPhase: StripeSubscriptionScheduleCurrentPhase?
     /// ID of the customer who owns the subscription schedule.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// Object representing the subscription schedule’s default settings.
     public var defaultSettings: StripeSubscriptionScheduleDefaultSettings?
     /// Behavior of the subscription schedule and underlying subscription when it ends.
@@ -40,7 +40,7 @@ public struct StripeSubscriptionSchedule: StripeModel {
     /// The present status of the subscription schedule. Possible values are not_started, active, completed, released, and canceled. You can read more about the different states in our behavior guide.
     public var status: StripeSubscriptionScheduleStatus?
     /// ID of the subscription managed by the subscription schedule.
-    public var subscription: String?
+    @Expandable<StripeSubscription> public var subscription: String?
 }
 
 public struct StripeSubscriptionScheduleCurrentPhase: StripeModel {

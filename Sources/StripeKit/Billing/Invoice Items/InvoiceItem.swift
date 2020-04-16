@@ -19,7 +19,7 @@ public struct StripeInvoiceItem: StripeModel {
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// The ID of the customer who will be billed when this invoice item is billed.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var date: Date?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
@@ -27,7 +27,7 @@ public struct StripeInvoiceItem: StripeModel {
     /// If true, discounts will apply to this invoice item. Always false for prorations.
     public var discountable: Bool?
     /// The ID of the invoice this invoice item belongs to.
-    public var invoice: String?
+    @Expandable<StripeInvoice> public var invoice: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -41,7 +41,7 @@ public struct StripeInvoiceItem: StripeModel {
     /// Quantity of units for the invoice item. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.
     public var quantity: Int?
     /// The subscription that this invoice item has been created for, if any.
-    public var subscription: String?
+    @Expandable<StripeSubscription> public var subscription: String?
     /// The subscription item that this invoice item has been created for, if any.
     public var subscriptionItem: String?
     /// The tax rates which apply to the invoice item. When set, the default_tax_rates on the invoice do not apply to this invoice item.

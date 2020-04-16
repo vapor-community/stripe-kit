@@ -25,9 +25,9 @@ public struct StripeOrderReturn: StripeModel {
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// The order that this return includes items from.
-    public var order: String?
+    @Expandable<StripeOrder> public var order: String?
     /// The ID of the refund issued for this return.
-    public var refund: String?
+    @Expandable<StripeRefund> public var refund: String?
 }
 
 public struct StripeOrderReturnList: StripeModel {

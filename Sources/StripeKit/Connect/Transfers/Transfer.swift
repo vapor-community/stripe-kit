@@ -18,7 +18,7 @@ public struct StripeTransfer: StripeModel {
     /// Amount in cents reversed (can be less than the amount attribute on the transfer if a partial reversal was issued).
     public var amountReversed: Int?
     /// Balance transaction that describes the impact of this transfer on your account balance.
-    public var balanceTransaction: String?
+    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
     /// Time that this record of the transfer was first created.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
@@ -26,9 +26,10 @@ public struct StripeTransfer: StripeModel {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// ID of the Stripe account the transfer was sent to.
-    public var destination: String?
+    @Expandable<StripeConnectAccount> public var destination: String?
     /// If the destination is a Stripe account, this will be the ID of the payment that the destination account received for the transfer.
-    public var destinationPayment: String?
+    // Charge used here https://github.com/stripe/stripe-dotnet/blob/8fc1398369ed461816002a65bfc87f1b5860d76a/src/Stripe.net/Entities/Transfers/Transfer.cs#L81
+    @Expandable<StripeCharge> public var destinationPayment: String?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// A set of key-value pairs that you can attach to a transfer object. It can be useful for storing additional information about the transfer in a structured format.
@@ -38,7 +39,7 @@ public struct StripeTransfer: StripeModel {
     /// Whether the transfer has been fully reversed. If the transfer is only partially reversed, this attribute will still be false.
     public var reversed: Bool?
     /// ID of the charge or payment that was used to fund the transfer. If null, the transfer was funded from the available balance.
-    public var sourceTransaction: String?
+    @Expandable<StripeCharge> public var sourceTransaction: String?
     /// The source balance this transfer came from. One of `card` or `bank_account`.
     public var sourceType: StripeTransferSourceType?
     /// A string that identifies this transaction as part of a group. See the Connect documentation for details.

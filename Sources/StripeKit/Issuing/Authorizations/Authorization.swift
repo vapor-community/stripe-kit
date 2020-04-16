@@ -23,21 +23,19 @@ public struct StripeAuthorization: StripeModel {
     public var authorizedCurrency: StripeCurrency?
     /// array, contains: balance_transaction object
     public var balanceTransactions: [StripeBalanceTransaction]?
-    ///
+    /// Card associated with this authorization.
     public var card: StripeIssuingCard?
     /// The cardholder to whom this authorization belongs.
-    public var cardholder: String?
+    @Expandable<StripeCardholder> public var cardholder: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The amount the authorization is expected to be in held_currency. When Stripe holds funds from you, this is the amount reserved for the authorization. This will be 0 when the object is created, and increase after it has been approved. For multi-currency transactions, held_amount can be used to determine the expected exchange rate.
     public var heldAmount: Int?
     /// The currency of the held amount. This will always be the card currency.
     public var heldCurrency: StripeCurrency?
-    ///
-    public var isHeldAmountControllable: Bool?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
-    ///
+    /// Details about the merchant (grocery store, e-commerce website, etc.) where the card authorization happened.
     public var merchantData: StripeAuthorizationMerchantData?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
@@ -45,13 +43,13 @@ public struct StripeAuthorization: StripeModel {
     public var pendingAuthorizedAmount: Int?
     /// The additional amount Stripe will hold if the authorization is approved. This field will only be non-zero during an `issuing.authorization.request` webhook.
     public var pendingHeldAmount: Int?
-    ///
+    /// History of every time the authorization was approved/denied (whether approved/denied by you directly or by Stripe based on your `spending_controls`). If the merchant changes the authorization by performing an incremental authorization or partial capture, you can look at this field to see the previous states of the authorization.
     public var requestHistory: [StripeAuthorizationRequestHistory]?
     /// One of `pending`, `reversed`, or `closed`.
     public var status: StripeAuthorizationStatus?
-    ///
+    /// List of transactions associated with this authorization.
     public var transactions: [StripeTransaction]?
-    ///
+    /// Verifications that Stripe performed on information that the cardholder provided to the merchant.
     public var verificationData: StripeAuthorizationVerificationData?
     /// What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
     public var walletProvider: StripeAuthorizationWalletProvider?

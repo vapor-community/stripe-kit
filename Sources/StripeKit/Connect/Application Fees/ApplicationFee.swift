@@ -13,17 +13,18 @@ public struct StripeApplicationFee: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// ID of the Stripe account this fee was taken from.
-    public var account: String?
+    @Expandable<StripeConnectAccount> public var account: String?
     /// Amount earned, in cents.
     public var amount: Int?
     /// Amount in cents refunded (can be less than the amount attribute on the fee if a partial refund was issued)
     public var amountRefunded: Int?
     /// ID of the Connect application that earned the fee.
+    // TODO: - Implement Application (see stripe .net)
     public var application: String?
     /// Balance transaction that describes the impact of this collected application fee on your account balance (not including refunds).
-    public var balanceTransaction: String?
+    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
     /// ID of the charge that the application fee was taken from.
-    public var charge: String?
+    @Expandable<StripeCharge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
@@ -31,6 +32,7 @@ public struct StripeApplicationFee: StripeModel {
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// ID of the corresponding charge on the platform account, if this fee was the result of a charge using the destination parameter.
+    // TODO: - Use @DynamicExpandable<[TypeA, TypeB]>
     public var originatingTransaction: String?
     /// Whether the fee has been fully refunded. If the fee is only partially refunded, this attribute will still be false.
     public var refunded: Bool?

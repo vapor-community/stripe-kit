@@ -17,6 +17,7 @@ public struct StripeOrderItem: StripeModel {
     /// Description of the line item, meant to be displayable to the user (e.g., `"Express shipping"`).
     public var description: String?
     /// The ID of the associated object for this line item. Expandable if not null (e.g., expandable to a SKU).
+    // TODO: - Use @DynamicExpandable
     public var parent: String?
     /// A positive integer representing the number of instances of `parent` that are included in this order item. Applicable/present only if `type` is `sku`.
     public var quantity: Int?

@@ -37,8 +37,10 @@ public struct StripeIssuingCard: StripeModel {
     public var name: String?
     /// Metadata about the PIN on the card.
     public var pin: StripeIssuingCardPin?
+    /// The latest card that replaces this card, if any.
+    @Expandable<StripeIssuingCard> public var replacedBy: String?
     /// The card this card replaces, if any.
-    public var replacementFor: String?
+    @Expandable<StripeIssuingCard> public var replacementFor: String?
     /// Why the card that this card replaces (if any) needed to be replaced. One of damage, expiration, loss, or theft.
     public var replacementReason: StripeIssuingCardReplacementReason?
     /// Where and how the card will be shipped.

@@ -15,7 +15,7 @@ public struct StripeTopUp: StripeModel {
     /// Amount transferred.
     public var amount: Int?
     /// ID of the balance transaction that describes the impact of this top-up on your account balance. May not be specified depending on status of top-up.
-    public var balanceTransaction: String?
+    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
