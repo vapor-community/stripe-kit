@@ -15,16 +15,21 @@ public protocol CustomerTaxIDRoutes {
     ///   - customer: ID of the customer.
     ///   - type: Type of the tax ID, one of `eu_vat`, `nz_gst`, or `au_abn`
     ///   - value: Value of the tax ID.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeTaxID`.
-    func create(customer: String, type: StripeTaxIDType, value: String) -> EventLoopFuture<StripeTaxID>
+    func create(customer: String,
+                type: StripeTaxIDType,
+                value: String,
+                expand: [String]?) -> EventLoopFuture<StripeTaxID>
     
     /// Retrieves the TaxID object with the given identifier.
     ///
     /// - Parameters:
     ///   - id: Unique identifier of the TaxID object to retrieve.
     ///   - customer: ID of the customer.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeTaxID`.
-    func retrieve(id: String, customer: String) -> EventLoopFuture<StripeTaxID>
+    func retrieve(id: String, customer: String, expand: [String]?) -> EventLoopFuture<StripeTaxID>
     
     /// Deletes an existing TaxID object.
     ///
@@ -56,15 +61,23 @@ public struct StripeCustomerTaxIDRoutes: CustomerTaxIDRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(customer: String, type: StripeTaxIDType, value: String) -> EventLoopFuture<StripeTaxID> {
-        let body: [String: Any] = ["type": type.rawValue,
+    public func create(customer: String, type: StripeTaxIDType, value: String, expand: [String]?) -> EventLoopFuture<StripeTaxID> {
+        var body: [String: Any] = ["type": type.rawValue,
                                    "value": value]
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
         
         return apiHandler.send(method: .POST, path: "\(taxids)/\(customer)/tax_ids", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String, customer: String) -> EventLoopFuture<StripeTaxID> {
-        return apiHandler.send(method: .GET, path: "\(taxids)/\(customer)/tax_ids/\(id)", headers: headers)
+    public func retrieve(id: String, customer: String, expand: [String]?) -> EventLoopFuture<StripeTaxID> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        return apiHandler.send(method: .GET, path: "\(taxids)/\(customer)/tax_ids/\(id)", query: queryParams, headers: headers)
     }
     
     public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {

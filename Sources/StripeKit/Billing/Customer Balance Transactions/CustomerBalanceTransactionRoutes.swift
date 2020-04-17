@@ -126,7 +126,7 @@ public struct StripeCustomerBalanceTransactionRoutes: CustomerBalanceTransaction
         if let expand = expand {
             queryParams += ["expand": expand].queryParameters
         }
-        apiHandler.send(method: .GET, path: "\(customerbalancetransactions)/\(customer)/balance_transactions/\(transaction)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(customerbalancetransactions)/\(customer)/balance_transactions/\(transaction)", query: queryParams, headers: headers)
     }
     
     public func update(customer: String,
