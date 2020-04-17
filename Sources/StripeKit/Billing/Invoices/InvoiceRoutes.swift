@@ -29,6 +29,7 @@ public protocol InvoiceRoutes {
     ///   - metadata:
     ///   - statementDescriptor: Extra information about a charge for the customer’s credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item’s product’s `statement_descriptor`.
     ///   - subscription: The ID of the subscription to invoice, if any. If not set, the created invoice will include all pending invoice items for the customer. If set, the created invoice will only include pending invoice items for that subscription and pending invoice items not associated with any subscription. The subscription’s billing cycle and regular subscription events won’t be affected.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
     func create(customer: String,
                 applicationFeeAmount: Int?,
@@ -44,13 +45,16 @@ public protocol InvoiceRoutes {
                 footer: String?,
                 metadata: [String: String]?,
                 statementDescriptor: String?,
-                subscription: String?) -> EventLoopFuture<StripeInvoice>
+                subscription: String?,
+                expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// Retrieves the invoice with the given ID.
     ///
-    /// - Parameter invoice: The identifier of the desired invoice.
+    /// - Parameters:
+    ///   - invoice: The identifier of the desired invoice.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func retrieve(invoice: String) -> EventLoopFuture<StripeInvoice>
+    func retrieve(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// Draft invoices are fully editable. Once an invoice is [finalized](https://stripe.com/docs/billing/invoices/workflow#finalized), monetary values, as well as `billing`, become uneditable.
     ///
@@ -69,6 +73,7 @@ public protocol InvoiceRoutes {
     ///   - footer: Footer to be displayed on the invoice. This will be unset if you POST an empty value.
     ///   - metadata:
     ///   - statementDescriptor: Extra information about a charge for the customer’s credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item’s product’s `statement_descriptor`.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
     func update(invoice: String,
                 applicationFeeAmount: Int?,
@@ -83,7 +88,8 @@ public protocol InvoiceRoutes {
                 dueDate: Date?,
                 footer: String?,
                 metadata: [String: String]?,
-                statementDescriptor: String?) -> EventLoopFuture<StripeInvoice>
+                statementDescriptor: String?,
+                expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api/invoices/delete#void_invoice).
     ///
@@ -96,8 +102,9 @@ public protocol InvoiceRoutes {
     /// - Parameters:
     ///   - invoice: The invoice to be finalized, it must have `status=draft`.
     ///   - autoAdvance: Controls whether Stripe will perform automatic collection of the invoice. When false, the invoice’s state will not automatically advance without an explicit action.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func finalize(invoice: String, autoAdvance: Bool?) -> EventLoopFuture<StripeInvoice>
+    func finalize(invoice: String, autoAdvance: Bool?, expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// Stripe automatically creates and then attempts to collect payment on invoices for customers on subscriptions according to your subscriptions settings. However, if you’d like to attempt payment on an invoice out of the normal collection schedule or for some other reason, you can do so.
     ///
@@ -107,30 +114,38 @@ public protocol InvoiceRoutes {
     ///   - paidOutOfBand: Boolean representing whether an invoice is paid outside of Stripe. This will result in no charge being made.
     ///   - paymentMethod: A PaymentMethod to be charged. The PaymentMethod must be the ID of a PaymentMethod belonging to the customer associated with the invoice being paid.
     ///   - source: A payment source to be charged. The source must be the ID of a source belonging to the customer associated with the invoice being paid.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
     func pay(invoice: String,
              forgive: Bool?,
              paidOutOfBand: Bool?,
              paymentMethod: String?,
-             source: String?) -> EventLoopFuture<StripeInvoice>
+             source: String?,
+             expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// Stripe will automatically send invoices to customers according to your subscriptions settings. However, if you’d like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email. /n Requests made in test-mode result in no emails being sent, despite sending an invoice.sent event.
     ///
-    /// - Parameter invoice: The invoice you would like to send. The billing mode for this invoice must be `send_invoice`.
+    /// - Parameters:
+    ///   - invoice: The invoice you would like to send. The billing mode for this invoice must be `send_invoice`.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func send(invoice: String) -> EventLoopFuture<StripeInvoice>
+    func send(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://stripe.com/docs/api/invoices/void#delete_invoice), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
     ///
-    /// - Parameter invoice: ID of invoice to void. It must be finalized.
+    /// - Parameters:
+    ///   - invoice: ID of invoice to void. It must be finalized.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func void(invoice: String) -> EventLoopFuture<StripeInvoice>
+    func void(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
     ///
-    /// - Parameter invoice: The identifier of the invoice to be marked as uncollectible. The invoice must be `open`.
+    /// - Parameters:
+    ///   - invoice: The identifier of the invoice to be marked as uncollectible. The invoice must be `open`.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func markUncollectible(invoice: String) -> EventLoopFuture<StripeInvoice>
+    func markUncollectible(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// When retrieving an invoice, you’ll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
     ///
@@ -177,26 +192,28 @@ extension InvoiceRoutes {
                        footer: String? = nil,
                        metadata: [String: String]? = nil,
                        statementDescriptor: String? = nil,
-                       subscription: String? = nil) -> EventLoopFuture<StripeInvoice> {
+                       subscription: String? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
         return create(customer: customer,
-                          applicationFeeAmount: applicationFeeAmount,
-                          autoAdvance: autoAdvance,
-                          collectionMethod: collectionMethod,
-                          customFields: customFields,
-                          daysUntilDue: daysUntilDue,
-                          defaultPaymentMethod: defaultPaymentMethod,
-                          defaultSource: defaultSource,
-                          defaultTaxRates: defaultTaxRates,
-                          description: description,
-                          dueDate: dueDate,
-                          footer: footer,
-                          metadata: metadata,
-                          statementDescriptor: statementDescriptor,
-                          subscription: subscription)
+                      applicationFeeAmount: applicationFeeAmount,
+                      autoAdvance: autoAdvance,
+                      collectionMethod: collectionMethod,
+                      customFields: customFields,
+                      daysUntilDue: daysUntilDue,
+                      defaultPaymentMethod: defaultPaymentMethod,
+                      defaultSource: defaultSource,
+                      defaultTaxRates: defaultTaxRates,
+                      description: description,
+                      dueDate: dueDate,
+                      footer: footer,
+                      metadata: metadata,
+                      statementDescriptor: statementDescriptor,
+                      subscription: subscription,
+                      expand: expand)
     }
     
-    public func retrieve(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return retrieve(invoice: invoice)
+    public func retrieve(invoice: String, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+        return retrieve(invoice: invoice, expand: expand)
     }
     
     public func update(invoice: String,
@@ -212,53 +229,57 @@ extension InvoiceRoutes {
                        dueDate: Date? = nil,
                        footer: String? = nil,
                        metadata: [String: String]? = nil,
-                       statementDescriptor: String? = nil) -> EventLoopFuture<StripeInvoice> {
+                       statementDescriptor: String? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
         return update(invoice: invoice,
-                          applicationFeeAmount: applicationFeeAmount,
-                          autoAdvance: autoAdvance,
-                          collectionMethod: collectionMethod,
-                          customFields: customFields,
-                          daysUntilDue: daysUntilDue,
-                          defaultPaymentMethod: defaultPaymentMethod,
-                          defaultSource: defaultSource,
-                          defaultTaxRates: defaultTaxRates,
-                          description: description,
-                          dueDate: dueDate,
-                          footer: footer,
-                          metadata: metadata,
-                          statementDescriptor: statementDescriptor)
+                      applicationFeeAmount: applicationFeeAmount,
+                      autoAdvance: autoAdvance,
+                      collectionMethod: collectionMethod,
+                      customFields: customFields,
+                      daysUntilDue: daysUntilDue,
+                      defaultPaymentMethod: defaultPaymentMethod,
+                      defaultSource: defaultSource,
+                      defaultTaxRates: defaultTaxRates,
+                      description: description,
+                      dueDate: dueDate,
+                      footer: footer,
+                      metadata: metadata,
+                      statementDescriptor: statementDescriptor,
+                      expand: expand)
     }
     
     public func delete(invoice: String) -> EventLoopFuture<StripeDeletedObject> {
         return delete(invoice: invoice)
     }
     
-    public func finalize(invoice: String, autoAdvance: Bool? = nil) -> EventLoopFuture<StripeInvoice> {
-        return finalize(invoice: invoice, autoAdvance: autoAdvance)
+    public func finalize(invoice: String, autoAdvance: Bool? = nil, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+        return finalize(invoice: invoice, autoAdvance: autoAdvance, expand: expand)
     }
     
     public func pay(invoice: String,
                     forgive: Bool? = nil,
                     paidOutOfBand: Bool? = nil,
                     paymentMethod: String? = nil,
-                    source: String? = nil) -> EventLoopFuture<StripeInvoice> {
+                    source: String? = nil,
+                    expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
         return pay(invoice: invoice,
-                       forgive: forgive,
-                       paidOutOfBand: paidOutOfBand,
-                       paymentMethod: paymentMethod,
-                       source: source)
+                   forgive: forgive,
+                   paidOutOfBand: paidOutOfBand,
+                   paymentMethod: paymentMethod,
+                   source: source,
+                   expand: expand)
     }
     
-    public func send(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return send(invoice: invoice)
+    public func send(invoice: String, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+        return send(invoice: invoice, expand: expand)
     }
     
-    public func void(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return void(invoice: invoice)
+    public func void(invoice: String, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+        return void(invoice: invoice, expand: expand)
     }
     
-    public func markUncollectible(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return markUncollectible(invoice: invoice)
+    public func markUncollectible(invoice: String, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+        return markUncollectible(invoice: invoice, expand: expand)
     }
     
     public func retrieveLineItems(invoice: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeInvoiceLineItemList> {
@@ -301,7 +322,8 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                        footer: String?,
                        metadata: [String: String]?,
                        statementDescriptor: String?,
-                       subscription: String?) -> EventLoopFuture<StripeInvoice> {
+                       subscription: String?,
+                       expand: [String]?) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         body["customer"] = customer
@@ -362,11 +384,20 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["subscription"] = subscription
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: invoices, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return apiHandler.send(method: .GET, path: "\(invoices)/\(invoice)")
+    public func retrieve(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(invoices)/\(invoice)", query: queryParams)
     }
     
     public func update(invoice: String,
@@ -382,7 +413,8 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                        dueDate: Date?,
                        footer: String?,
                        metadata: [String: String]?,
-                       statementDescriptor: String?) -> EventLoopFuture<StripeInvoice> {
+                       statementDescriptor: String?,
+                       expand: [String]?) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         if let applicationFeeAmount = applicationFeeAmount {
@@ -437,6 +469,10 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["statement_descriptor"] = statementDescriptor
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)", body: .string(body.queryParameters), headers: headers)
     }
     
@@ -444,11 +480,15 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .DELETE, path: "\(invoices)/\(invoice)", headers: headers)
     }
     
-    public func finalize(invoice: String, autoAdvance: Bool?) -> EventLoopFuture<StripeInvoice> {
+    public func finalize(invoice: String, autoAdvance: Bool?, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         if let autoAdvance = autoAdvance {
             body["auto_advance"] = autoAdvance
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/finalize", body: .string(body.queryParameters), headers: headers)
@@ -458,7 +498,8 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                     forgive: Bool?,
                     paidOutOfBand: Bool?,
                     paymentMethod: String?,
-                    source: String?) -> EventLoopFuture<StripeInvoice> {
+                    source: String?,
+                    expand: [String]?) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         if let forgive = forgive {
@@ -477,19 +518,41 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["source"] = source
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/pay", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func send(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/send", headers: headers)
+    public func send(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+        var body: [String: Any] = [:]
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/send", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func void(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/void", headers: headers)
+    public func void(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+        var body: [String: Any] = [:]
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/void", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func markUncollectible(invoice: String) -> EventLoopFuture<StripeInvoice> {
-        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/mark_uncollectible", headers: headers)
+    public func markUncollectible(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+        var body: [String: Any] = [:]
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/mark_uncollectible", body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieveLineItems(invoice: String, filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceLineItemList> {
