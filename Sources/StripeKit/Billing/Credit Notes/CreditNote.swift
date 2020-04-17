@@ -10,7 +10,7 @@ import Foundation
 /// The [Credit Note Object](https://stripe.com/docs/api/credit_notes/object).
 public struct StripeCreditNote: StripeModel {
     /// Unique identifier for the object.
-    public var id: String
+    public var id: String?
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The integer amount in cents representing the total amount of the credit note.
