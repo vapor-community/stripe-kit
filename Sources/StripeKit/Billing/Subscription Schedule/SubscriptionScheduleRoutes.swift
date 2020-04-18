@@ -18,17 +18,21 @@ public protocol SubscriptionScheduleRoutes {
     /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     /// - Parameter phases: List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
     /// - Parameter startDate: When the subscription schedule starts. We recommend using `now` so that it starts the subscription immediately. You can also use a Unix timestamp to backdate the subscription so that it starts on a past date, or set a future date for the subscription to start on. When you backdate, the `billing_cycle_anchor` of the subscription is equivalent to the `start_date`.
+    /// - Parameter expand: An array of properties to expand.
     func create(customer: String?,
                 defaultSettings: [String: Any]?,
                 endBehavior: String?,
                 fromSubscription: Bool?,
                 metadata: [String: String]?,
                 phases: [[String: Any]]?,
-                startDate: Date?) -> EventLoopFuture<StripeSubscriptionSchedule>
+                startDate: Date?,
+                expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule>
     
     /// Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
-    /// - Parameter schedule: The identifier of the subscription schedule to be retrieved.
-    func retrieve(schedule: String) -> EventLoopFuture<StripeSubscriptionSchedule>
+    /// - Parameters:
+    ///   - schedule: The identifier of the subscription schedule to be retrieved.
+    ///   - expand: An array of properties to expand.
+    func retrieve(schedule: String, expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule>
     
     /// Updates an existing subscription schedule.
     /// - Parameter schedule: The identifier of the subscription schedule to be updated.
@@ -37,26 +41,32 @@ public protocol SubscriptionScheduleRoutes {
     /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     /// - Parameter phases: List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
     /// - Parameter prorate: If the update changes the current phase, indicates if the changes should be prorated. Defaults to true.
+    /// - Parameter expand: An array of properties to expand.
     func update(schedule: String,
                 defaultSettings: [String: Any]?,
                 endBehavior: String?,
                 metadata: [String: String]?,
                 phases: [[String: Any]]?,
-                prorate: Bool?) -> EventLoopFuture<StripeSubscriptionSchedule>
+                prorate: Bool?,
+                expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule>
     
     /// Cancels a subscription schedule and its associated subscription immediately (if the subscription schedule has an active subscription). A subscription schedule can only be canceled if its status is `not_started` or `active`.
     /// - Parameter schedule: The identifier of the subscription schedule to be canceled.
     /// - Parameter invoiceNow: If the subscription schedule is `active`, indicates whether or not to generate a final invoice that contains any un-invoiced metered usage and new/pending proration invoice items. Defaults to `true`.
     /// - Parameter prorate: If the subscription schedule is `active`, indicates if the cancellation should be prorated. Defaults to `true`.
+    /// - Parameter expand: An array of properties to expand.
     func cancel(schedule: String,
                 invoiceNow: Bool?,
-                prorate: Bool?) -> EventLoopFuture<StripeSubscriptionSchedule>
+                prorate: Bool?,
+                expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule>
     
     /// Releases the subscription schedule immediately, which will stop scheduling of its phases, but leave any existing subscription in place. A schedule can only be released if its status is `not_started` or `active`. If the subscription schedule is currently associated with a subscription, releasing it will remove its `subscription` property and set the subscription’s ID to the `released_subscription` property.
     /// - Parameter schedule: The identifier of the subscription schedule to be released.
     /// - Parameter preserveCancelDate: Keep any cancellation on the subscription that the schedule has set
+    /// - Parameter expand: An array of properties to expand.
     func release(schedule: String,
-                 preserveCancelDate: Bool?) -> EventLoopFuture<StripeSubscriptionSchedule>
+                 preserveCancelDate: Bool?,
+                 expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule>
     
     /// Retrieves the list of your subscription schedules.
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/subscription_schedules/list)
@@ -73,18 +83,20 @@ extension SubscriptionScheduleRoutes {
                        fromSubscription: Bool? = nil,
                        metadata: [String: String]? = nil,
                        phases: [[String: Any]]? = nil,
-                       startDate: Date? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
+                       startDate: Date? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
         return create(customer: customer,
                       defaultSettings: defaultSettings,
                       endBehavior: endBehavior,
                       fromSubscription: fromSubscription,
                       metadata: metadata,
                       phases: phases,
-                      startDate: startDate)
+                      startDate: startDate,
+                      expand: expand)
     }
     
-    public func retrieve(schedule: String) -> EventLoopFuture<StripeSubscriptionSchedule> {
-        return retrieve(schedule: schedule)
+    public func retrieve(schedule: String, expand: [String]? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
+        return retrieve(schedule: schedule, expand: expand)
     }
     
     public func update(schedule: String,
@@ -92,24 +104,33 @@ extension SubscriptionScheduleRoutes {
                        endBehavior: String? = nil,
                        metadata: [String: String]? = nil,
                        phases: [[String: Any]]? = nil,
-                       prorate: Bool? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
+                       prorate: Bool? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
         return update(schedule: schedule,
                       defaultSettings: defaultSettings,
                       endBehavior: endBehavior,
                       metadata: metadata,
                       phases: phases,
-                      prorate: prorate)
+                      prorate: prorate,
+                      expand: expand)
     }
     
     public func cancel(schedule: String,
                        invoiceNow: Bool? = nil,
-                       prorate: Bool? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
-        return cancel(schedule: schedule, invoiceNow: invoiceNow, prorate: prorate)
+                       prorate: Bool? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
+        return cancel(schedule: schedule,
+                      invoiceNow: invoiceNow,
+                      prorate: prorate,
+                      expand: expand)
     }
     
     public func release(schedule: String,
-                        preserveCancelDate: Bool? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
-        return release(schedule: schedule, preserveCancelDate: preserveCancelDate)
+                        preserveCancelDate: Bool? = nil,
+                        expand: [String]? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
+        return release(schedule: schedule,
+                       preserveCancelDate: preserveCancelDate,
+                       expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSubscriptionScheduleList> {
@@ -133,7 +154,8 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
                        fromSubscription: Bool?,
                        metadata: [String: String]?,
                        phases: [[String: Any]]?,
-                       startDate: Date?) -> EventLoopFuture<StripeSubscriptionSchedule> {
+                       startDate: Date?,
+                       expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule> {
         var body: [String: Any] = [:]
         
         if let customer = customer {
@@ -164,11 +186,20 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
             body["start_date"] = Int(startDate.timeIntervalSince1970)
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: subscriptionschedules, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(schedule: String) -> EventLoopFuture<StripeSubscriptionSchedule> {
-        return apiHandler.send(method: .GET, path: "\(subscriptionschedules)/\(schedule)", headers: headers)
+    public func retrieve(schedule: String, expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(subscriptionschedules)/\(schedule)", query: queryParams, headers: headers)
     }
     
     public func update(schedule: String,
@@ -176,7 +207,8 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
                        endBehavior: String?,
                        metadata: [String: String]?,
                        phases: [[String: Any]]?,
-                       prorate: Bool?) -> EventLoopFuture<StripeSubscriptionSchedule> {
+                       prorate: Bool?,
+                       expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule> {
         var body: [String: Any] = [:]
         
         if let defaultSettings = defaultSettings {
@@ -198,12 +230,18 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
         if let prorate = prorate {
             body["prorate"] = prorate
         }
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(subscriptionschedules)/\(schedule)", body: .string(body.queryParameters), headers: headers)
     }
     
     public func cancel(schedule: String,
                        invoiceNow: Bool?,
-                       prorate: Bool?) -> EventLoopFuture<StripeSubscriptionSchedule> {
+                       prorate: Bool?,
+                       expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule> {
         var body: [String: Any] = [:]
         
         if let invoiceNow = invoiceNow {
@@ -214,14 +252,22 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
             body["prorate"] = prorate
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(subscriptionschedules)/\(schedule)/cancel", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func release(schedule: String, preserveCancelDate: Bool?) -> EventLoopFuture<StripeSubscriptionSchedule> {
+    public func release(schedule: String, preserveCancelDate: Bool?, expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule> {
         var body: [String: Any] = [:]
         
         if let preserveCancelDate = preserveCancelDate {
             body["preserve_cancel_date"] = preserveCancelDate
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(subscriptionschedules)/\(schedule)/release", body: .string(body.queryParameters), headers: headers)
