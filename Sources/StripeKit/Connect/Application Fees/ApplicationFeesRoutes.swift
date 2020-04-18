@@ -11,9 +11,11 @@ import NIOHTTP1
 public protocol ApplicationFeesRoutes {
     /// Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
     ///
-    /// - Parameter fee: The identifier of the fee to be retrieved.
+    /// - Parameters:
+    ///   - fee: The identifier of the fee to be retrieved.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeApplicationFee`.
-    func retrieve(fee: String) -> EventLoopFuture<StripeApplicationFee>
+    func retrieve(fee: String, expand: [String]?) -> EventLoopFuture<StripeApplicationFee>
     
     /// Returns a list of application fees you’ve previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
     ///
@@ -26,8 +28,8 @@ public protocol ApplicationFeesRoutes {
 }
 
 extension ApplicationFeesRoutes {
-    public func retrieve(fee: String) -> EventLoopFuture<StripeApplicationFee> {
-        return retrieve(fee: fee)
+    public func retrieve(fee: String, expand: [String]? = nil) -> EventLoopFuture<StripeApplicationFee> {
+        return retrieve(fee: fee, expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeApplicationFeeList> {
@@ -45,8 +47,12 @@ public struct StripeApplicationFeeRoutes: ApplicationFeesRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(fee: String) -> EventLoopFuture<StripeApplicationFee> {
-        return apiHandler.send(method: .GET, path: "\(applicationfees)/\(fee)", headers: headers)
+    public func retrieve(fee: String, expand: [String]?) -> EventLoopFuture<StripeApplicationFee> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        return apiHandler.send(method: .GET, path: "\(applicationfees)/\(fee)", query: queryParams, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeApplicationFeeList> {

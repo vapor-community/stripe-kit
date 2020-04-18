@@ -11,13 +11,16 @@ import NIOHTTP1
 public protocol CapabilitiesRoutes {
     
     /// Retrieves information about the specified Account Capability.
-    /// - Parameter capability: The ID of an account capability to retrieve.
-    func retrieve(capability: String) -> EventLoopFuture<StripeCapability>
+    /// - Parameters:
+    ///   - capability: The ID of an account capability to retrieve.
+    ///   - expand: An array of properties to expand.
+    func retrieve(capability: String, expand: [String]?) -> EventLoopFuture<StripeCapability>
     
     /// Updates an existing Account Capability.
     /// - Parameter capability: The ID of an account capability to update.
     /// - Parameter requested: Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
-    func update(capability: String, requested: Bool?) -> EventLoopFuture<StripeCapability>
+    /// - Parameter expand: An array of properties to expand.
+    func update(capability: String, requested: Bool?, expand: [String]?) -> EventLoopFuture<StripeCapability>
     
     /// Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
     /// - Parameter account: The ID of the connect account.
@@ -28,12 +31,12 @@ public protocol CapabilitiesRoutes {
 }
 
 extension CapabilitiesRoutes {
-    public func retrieve(capability: String) -> EventLoopFuture<StripeCapability> {
-        return retrieve(capability: capability)
+    public func retrieve(capability: String, expand: [String]?) -> EventLoopFuture<StripeCapability> {
+        return retrieve(capability: capability, expand: expand)
     }
     
-    public func update(capability: String, requested: Bool? = nil) -> EventLoopFuture<StripeCapability> {
-        return update(capability: capability, requested: requested)
+    public func update(capability: String, requested: Bool? = nil, expand: [String]? = nil) -> EventLoopFuture<StripeCapability> {
+        return update(capability: capability, requested: requested, expand: expand)
     }
     
     public func listAll(account: String) -> EventLoopFuture<StripeCapabilitiesList> {
@@ -51,15 +54,25 @@ public struct StripeCapabilitiesRoutes: CapabilitiesRoutes {
         self.apiHandler = apiHandler
     }
 
-    public func retrieve(capability: String) -> EventLoopFuture<StripeCapability> {
-        return apiHandler.send(method: .GET, path: "\(capabilities)/\(capability)/capabilities/card_payments", headers: headers)
+    public func retrieve(capability: String, expand: [String]?) -> EventLoopFuture<StripeCapability> {
+        var queryParams = ""
+        
+        if let expand = expand {
+            queryParams += ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(capabilities)/\(capability)/capabilities/card_payments", query: queryParams, headers: headers)
     }
     
-    public func update(capability: String, requested: Bool?) -> EventLoopFuture<StripeCapability> {
+    public func update(capability: String, requested: Bool?, expand: [String]?) -> EventLoopFuture<StripeCapability> {
         var body: [String: Any] = [:]
         
         if let requested = requested {
             body["requested"] = requested
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(capabilities)/\(capability)/capabilities/card_payments", body: .string(body.queryParameters), headers: headers)

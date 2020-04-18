@@ -20,6 +20,7 @@ public protocol TransferRoutes {
     ///   - sourceTransaction: You can use this parameter to transfer funds from a charge before they are added to your available balance. A pending balance will transfer immediately but the funds will not become available until the original charge becomes available. See the Connect documentation for details.
     ///   - sourceType: The source balance to use for this transfer. One of `bank_account` or `card`. For most users, this will default to `card`.
     ///   - transferGroup: A string that identifies this transaction as part of a group. See the Connect documentation for details.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeTransfer`.
     func create(amount: Int,
                 currency: StripeCurrency,
@@ -28,13 +29,15 @@ public protocol TransferRoutes {
                 metadata: [String: String]?,
                 sourceTransaction: String?,
                 sourceType: StripeTransferSourceType?,
-                transferGroup: String?) -> EventLoopFuture<StripeTransfer>
+                transferGroup: String?,
+                expand: [String]?) -> EventLoopFuture<StripeTransfer>
     
     /// Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
     ///
     /// - Parameter transfer: The identifier of the transfer to be retrieved.
+    /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripeTransfer`.
-    func retrieve(transfer: String) -> EventLoopFuture<StripeTransfer>
+    func retrieve(transfer: String, expand: [String]?) -> EventLoopFuture<StripeTransfer>
     
     /// Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     /// This request accepts only metadata as an argument.
@@ -43,8 +46,12 @@ public protocol TransferRoutes {
     ///   - transfer: The ID of the transfer to be updated.
     ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeTransfer`.
-    func update(transfer: String, description: String?, metadata: [String: String]?) -> EventLoopFuture<StripeTransfer>
+    func update(transfer: String,
+                description: String?,
+                metadata: [String: String]?,
+                expand: [String]?) -> EventLoopFuture<StripeTransfer>
     
     /// Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
     ///
@@ -64,7 +71,8 @@ extension TransferRoutes {
                        metadata: [String: String]? = nil,
                        sourceTransaction: String? = nil,
                        sourceType: StripeTransferSourceType? = nil,
-                       transferGroup: String? = nil) -> EventLoopFuture<StripeTransfer> {
+                       transferGroup: String? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeTransfer> {
         return create(amount: amount,
                       currency: currency,
                       destination: destination,
@@ -72,17 +80,22 @@ extension TransferRoutes {
                       metadata: metadata,
                       sourceTransaction: sourceTransaction,
                       sourceType: sourceType,
-                      transferGroup: transferGroup)
+                      transferGroup: transferGroup,
+                      expand: expand)
     }
     
-    public func retrieve(transfer: String) -> EventLoopFuture<StripeTransfer> {
-        return retrieve(transfer: transfer)
+    public func retrieve(transfer: String, expand: [String]? = nil) -> EventLoopFuture<StripeTransfer> {
+        return retrieve(transfer: transfer, expand: expand)
     }
     
     public func update(transfer: String,
                        description: String? = nil,
-                       metadata: [String: String]? = nil) -> EventLoopFuture<StripeTransfer> {
-        return update(transfer: transfer, description: description, metadata: metadata)
+                       metadata: [String: String]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeTransfer> {
+        return update(transfer: transfer,
+                      description: description,
+                      metadata: metadata,
+                      expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTransferList> {
@@ -107,7 +120,8 @@ public struct StripeTransferRoutes: TransferRoutes {
                        metadata: [String: String]?,
                        sourceTransaction: String?,
                        sourceType: StripeTransferSourceType?,
-                       transferGroup: String?) -> EventLoopFuture<StripeTransfer> {
+                       transferGroup: String?,
+                       expand: [String]?) -> EventLoopFuture<StripeTransfer> {
         var body: [String: Any] = ["amount": amount,
                                    "currency": currency.rawValue,
                                    "destination": destination]
@@ -132,14 +146,25 @@ public struct StripeTransferRoutes: TransferRoutes {
             body["transfer_group"] = transferGroup
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: transfers, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(transfer: String) -> EventLoopFuture<StripeTransfer> {
-        return apiHandler.send(method: .GET, path: "\(transfers)/\(transfer)", headers: headers)
+    public func retrieve(transfer: String, expand: [String]?) -> EventLoopFuture<StripeTransfer> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        return apiHandler.send(method: .GET, path: "\(transfers)/\(transfer)", query: queryParams, headers: headers)
     }
     
-    public func update(transfer: String, description: String?, metadata: [String: String]?) -> EventLoopFuture<StripeTransfer> {
+    public func update(transfer: String,
+                       description: String?,
+                       metadata: [String: String]?,
+                       expand: [String]?) -> EventLoopFuture<StripeTransfer> {
         var body: [String: Any] = [:]
         
         if let description = description {
@@ -148,6 +173,10 @@ public struct StripeTransferRoutes: TransferRoutes {
         
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(transfers)/\(transfer)", body: .string(body.queryParameters), headers: headers)
