@@ -13,8 +13,9 @@ public protocol OrderReturnRoutes {
     /// Retrieves the details of an existing order return. Supply the unique order ID from either an order return creation request or the order return list, and Stripe will return the corresponding order information.
     ///
     /// - Parameter id: The identifier of the order return to be retrieved.
+    /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripeOrderReturn`.
-    func retrieve(id: String) -> EventLoopFuture<StripeOrderReturn>
+    func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeOrderReturn>
     
     /// Returns a list of your order returns. The returns are returned sorted by creation date, with the most recently created return appearing first.
     ///
@@ -27,8 +28,8 @@ public protocol OrderReturnRoutes {
 }
 
 extension OrderReturnRoutes {
-    public func retrieve(id: String) -> EventLoopFuture<StripeOrderReturn> {
-        return retrieve(id: id)
+    public func retrieve(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeOrderReturn> {
+        return retrieve(id: id, expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeOrderReturnList> {
@@ -46,8 +47,12 @@ public struct StripeOrderReturnRoutes: OrderReturnRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeOrderReturn> {
-        return apiHandler.send(method: .GET, path: "\(orderreturns)/\(id)", headers: headers)
+    public func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeOrderReturn> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        return apiHandler.send(method: .GET, path: "\(orderreturns)/\(id)", query: queryParams, headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeOrderReturnList> {
