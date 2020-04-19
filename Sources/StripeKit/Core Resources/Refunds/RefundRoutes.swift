@@ -20,6 +20,7 @@ public protocol RefundRoutes {
     ///   - reason: String indicating the reason for the refund. If set, possible values are `duplicate`, `fraudulent`, and `requested_by_customer`. If you believe the charge to be fraudulent, specifying `fraudulent` as the reason will add the associated card and email to your blocklists, and will also help us improve our fraud detection algorithms.
     ///   - refundApplicationFee: Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. /n An application fee can be refunded only by the application that created the charge.
     ///   - reverseTransfer: Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). /n A transfer can be reversed only by the application that created the charge.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeRefund`.
     func create(charge: String?,
                 amount: Int?,
@@ -27,21 +28,25 @@ public protocol RefundRoutes {
                 paymentIntent: String?,
                 reason: StripeRefundReason?,
                 refundApplicationFee: Bool?,
-                reverseTransfer: Bool?) -> EventLoopFuture<StripeRefund>
+                reverseTransfer: Bool?,
+                expand: [String]?) -> EventLoopFuture<StripeRefund>
     
     /// Retrieves the details of an existing refund.
     ///
-    /// - Parameter refund: ID of refund to retrieve.
+    /// - Parameters:
+    ///   - refund: ID of refund to retrieve.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeRefund`.
-    func retrieve(refund: String) -> EventLoopFuture<StripeRefund>
+    func retrieve(refund: String, expand: [String]?) -> EventLoopFuture<StripeRefund>
     
     /// Updates the specified refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged. /n This request only accepts metadata as an argument.
     ///
     /// - Parameters:
     ///   - refund: ID of refund to update.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeRefund`.
-    func update(refund: String, metadata: [String: String]?) -> EventLoopFuture<StripeRefund>
+    func update(refund: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeRefund>
     
     /// Returns a list of all refunds you’ve previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
     ///
@@ -60,22 +65,26 @@ extension RefundRoutes {
                        paymentIntent: String? = nil,
                        reason: StripeRefundReason? = nil,
                        refundApplicationFee: Bool? = nil,
-                       reverseTransfer: Bool? = nil) -> EventLoopFuture<StripeRefund> {
+                       reverseTransfer: Bool? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeRefund> {
         return create(charge: charge,
                       amount: amount,
                       metadata: metadata,
                       paymentIntent: paymentIntent,
                       reason: reason,
                       refundApplicationFee: refundApplicationFee,
-                      reverseTransfer: reverseTransfer)
+                      reverseTransfer: reverseTransfer,
+                      expand: expand)
     }
     
-    public func retrieve(refund: String) -> EventLoopFuture<StripeRefund> {
-        return retrieve(refund: refund)
+    public func retrieve(refund: String, expand: [String]? = nil) -> EventLoopFuture<StripeRefund> {
+        return retrieve(refund: refund, expand: expand)
     }
     
-    public func update(refund: String, metadata: [String: String]? = nil) -> EventLoopFuture<StripeRefund> {
-        return update(refund: refund, metadata: metadata)
+    public func update(refund: String,
+                       metadata: [String: String]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeRefund> {
+        return update(refund: refund, metadata: metadata, expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeRefundsList> {
@@ -99,7 +108,8 @@ public struct StripeRefundRoutes: RefundRoutes {
                        paymentIntent: String?,
                        reason: StripeRefundReason?,
                        refundApplicationFee: Bool?,
-                       reverseTransfer: Bool?) -> EventLoopFuture<StripeRefund> {
+                       reverseTransfer: Bool?,
+                       expand: [String]?) -> EventLoopFuture<StripeRefund> {
         var body: [String: Any] = [:]
         
         if let charge = charge {
@@ -130,18 +140,31 @@ public struct StripeRefundRoutes: RefundRoutes {
             body["reverse_transfer"] = reverseTransfer
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: refunds, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(refund: String) -> EventLoopFuture<StripeRefund> {
-        return apiHandler.send(method: .GET, path: "\(refunds)/\(refund)", headers: headers)
+    public func retrieve(refund: String, expand: [String]?) -> EventLoopFuture<StripeRefund> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(refunds)/\(refund)", query: queryParams, headers: headers)
     }
     
-    public func update(refund: String, metadata: [String: String]?) -> EventLoopFuture<StripeRefund> {
+    public func update(refund: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeRefund> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(refunds)/\(refund)", body: .string(body.queryParameters), headers: headers)
