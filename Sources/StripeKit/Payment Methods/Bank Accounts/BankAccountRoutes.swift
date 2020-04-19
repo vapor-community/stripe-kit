@@ -15,16 +15,21 @@ public protocol BankAccountRoutes {
     ///   - customer: The ID of the customer to attach this source to.
     ///   - source: Either a token, like the ones returned by Stripe.js, or a dictionary containing a user’s bank account details (with the options shown below).
     ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the bank account in a structured format.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeBankAccount`.
-    func create(customer: String, source: Any, metadata: [String: String]?) -> EventLoopFuture<StripeBankAccount>
+    func create(customer: String,
+                source: Any,
+                metadata: [String: String]?,
+                expand: [String]?) -> EventLoopFuture<StripeBankAccount>
     
     /// By default, you can see the 10 most recent sources stored on a Customer directly on the object, but you can also retrieve details about a specific bank account stored on the Stripe account.
     ///
     /// - Parameters:
     ///   - id: ID of bank account to retrieve.
     ///   - customer: The ID of the customer this source belongs to.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeBankAccount`.
-    func retrieve(id: String, customer: String) -> EventLoopFuture<StripeBankAccount>
+    func retrieve(id: String, customer: String, expand: [String]?) -> EventLoopFuture<StripeBankAccount>
     
     /// Updates the `account_holder_name`, `account_holder_type`, and `metadata` of a bank account belonging to a customer. Other bank account details are not editable, by design.
     ///
@@ -34,12 +39,14 @@ public protocol BankAccountRoutes {
     ///   - accountHolderName: The name of the person or business that owns the bank account.
     ///   - accountHolderType: The type of entity that holds the account. This can be either `individual` or `company`.
     ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the bank account in a structured format.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeBankAccount`.
     func update(id: String,
                 customer: String,
                 accountHolderName: String?,
                 accountHolderType: StripeBankAccountHolderType?,
-                metadata: [String: String]?) -> EventLoopFuture<StripeBankAccount>
+                metadata: [String: String]?,
+                expand: [String]?) -> EventLoopFuture<StripeBankAccount>
     
     /// A customer's bank account must first be verified before it can be charged. Stripe supports instant verification using Plaid for many of the most popular banks. If your customer's bank is not supported or you do not wish to integrate with Plaid, you must manually verify the customer's bank account using the API.
     ///
@@ -47,8 +54,9 @@ public protocol BankAccountRoutes {
     ///   - id: The ID of the source to be verified.
     ///   - customer: The ID of the customer this source belongs to.
     ///   - amounts: Two positive integers, in cents, equal to the values of the microdeposits sent to the bank account.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeBankAccount`.
-    func verify(id: String, customer: String, amounts: [Int]?) -> EventLoopFuture<StripeBankAccount>
+    func verify(id: String, customer: String, amounts: [Int]?, expand: [String]?) -> EventLoopFuture<StripeBankAccount>
     
     /// You can delete bank accounts from a Customer.
     ///
@@ -71,28 +79,36 @@ public protocol BankAccountRoutes {
 }
 
 extension BankAccountRoutes {
-    public func create(customer: String, source: Any, metadata: [String: String]? = nil) -> EventLoopFuture<StripeBankAccount> {
-        return create(customer: customer, source: source, metadata: metadata)
+    public func create(customer: String,
+                       source: Any,
+                       metadata: [String: String]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeBankAccount> {
+        return create(customer: customer, source: source, metadata: metadata, expand: expand)
     }
     
-    public func retrieve(id: String, customer: String) -> EventLoopFuture<StripeBankAccount> {
-        return retrieve(id: id, customer: customer)
+    public func retrieve(id: String, customer: String, expand: [String]? = nil) -> EventLoopFuture<StripeBankAccount> {
+        return retrieve(id: id, customer: customer, expand: expand)
     }
     
     public func update(id: String,
                        customer: String,
                        accountHolderName: String? = nil,
                        accountHolderType: StripeBankAccountHolderType? = nil,
-                       metadata: [String: String]? = nil) -> EventLoopFuture<StripeBankAccount> {
+                       metadata: [String: String]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeBankAccount> {
         return update(id: id,
-                          customer: customer,
-                          accountHolderName: accountHolderName,
-                          accountHolderType: accountHolderType,
-                          metadata: metadata)
+                      customer: customer,
+                      accountHolderName: accountHolderName,
+                      accountHolderType: accountHolderType,
+                      metadata: metadata,
+                      expand: expand)
     }
     
-    public func verify(id: String, customer: String, amounts: [Int]? = nil) -> EventLoopFuture<StripeBankAccount> {
-        return verify(id: id, customer: customer, amounts: amounts)
+    public func verify(id: String,
+                       customer: String,
+                       amounts: [Int]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeBankAccount> {
+        return verify(id: id, customer: customer, amounts: amounts, expand: expand)
     }
     
     public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
@@ -114,7 +130,7 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(customer: String, source: Any, metadata: [String: String]?) -> EventLoopFuture<StripeBankAccount> {
+    public func create(customer: String, source: Any, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeBankAccount> {
         var body: [String: Any] = [:]
         
         if let source = source as? String {
@@ -129,18 +145,27 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String, customer: String) -> EventLoopFuture<StripeBankAccount> {
-        return apiHandler.send(method: .GET, path: "\(bankaccounts)/\(customer)/sources/\(id)", headers: headers)
+    public func retrieve(id: String, customer: String, expand: [String]?) -> EventLoopFuture<StripeBankAccount> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        return apiHandler.send(method: .GET, path: "\(bankaccounts)/\(customer)/sources/\(id)", query: queryParams, headers: headers)
     }
     
     public func update(id: String,
                        customer: String,
                        accountHolderName: String?,
                        accountHolderType: StripeBankAccountHolderType?,
-                       metadata: [String: String]?) -> EventLoopFuture<StripeBankAccount> {
+                       metadata: [String: String]?,
+                       expand: [String]?) -> EventLoopFuture<StripeBankAccount> {
         var body: [String: Any] = [:]
         
         if let accountHolderName = accountHolderName {
@@ -155,14 +180,22 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func verify(id: String, customer: String, amounts: [Int]?) -> EventLoopFuture<StripeBankAccount> {
+    public func verify(id: String, customer: String, amounts: [Int]?, expand: [String]?) -> EventLoopFuture<StripeBankAccount> {
         var body: [String: Any] = [:]
         
         if let amounts = amounts {
             body["amounts"] = amounts
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources/\(id)/verify", body: .string(body.queryParameters), headers: headers)

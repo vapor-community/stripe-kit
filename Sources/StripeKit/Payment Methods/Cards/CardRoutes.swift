@@ -15,16 +15,18 @@ public protocol CardRoutes {
     ///   - customer: The ID of the customer to attach this source to.
     ///   - source:A token, like the ones returned by Stripe.js. Stripe will automatically validate the card.
     ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the card in a structured format.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCard`.
-    func create(customer: String, source: Any, metadata: [String: String]?) -> EventLoopFuture<StripeCard>
+    func create(customer: String, source: Any, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeCard>
     
     /// You can always see the 10 most recent cards directly on a customer; this method lets you retrieve details about a specific card stored on the customer.
     ///
     /// - Parameters:
     ///   - id: ID of card to retrieve.
     ///   - customer: The ID of the customer this source belongs to.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCard`.
-    func retrieve(id: String, customer: String) -> EventLoopFuture<StripeCard>
+    func retrieve(id: String, customer: String, expand: [String]?) -> EventLoopFuture<StripeCard>
     
     /// If you need to update only some card details, like the billing address or expiration date, you can do so without having to re-enter the full card details. Also, Stripe works directly with card networks so that your customers can continue using your service without interruption. /n When you update a card, Stripe will automatically validate the card.
     ///
@@ -41,6 +43,7 @@ public protocol CardRoutes {
     ///   - expYear: Four digit number representing the card’s expiration year.
     ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the bank account in a structured format.
     ///   - name: Cardholder name. This will be unset if you POST an empty value.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCard`.
     func update(id: String,
                 customer: String,
@@ -53,7 +56,8 @@ public protocol CardRoutes {
                 expMonth: Int?,
                 expYear: Int?,
                 metadata: [String: String]?,
-                name: String?) -> EventLoopFuture<StripeCard>
+                name: String?,
+                expand: [String]?) -> EventLoopFuture<StripeCard>
     
     /// You can delete cards accounts from a Customer. /n If you delete a card that is currently the default source, then the most recently added source will become the new default. If you delete a card that is the last remaining source on the customer, then the `default_source` attribute will become null. /n For recipients: if you delete the default card, then the most recently added card will become the new default. If you delete the last remaining card on a recipient, then the `default_card` attribute will become null. /n Note that for cards belonging to customers, you might want to prevent customers on paid subscriptions from deleting all cards on file, so that there is at least one default card for the next invoice payment attempt.
     ///
@@ -76,12 +80,15 @@ public protocol CardRoutes {
 }
 
 extension CardRoutes {
-    public func create(customer: String, source: Any, metadata: [String: String]? = nil) -> EventLoopFuture<StripeCard> {
-        return create(customer: customer, source: source, metadata: metadata)
+    public func create(customer: String,
+                       source: Any,
+                       metadata: [String: String]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeCard> {
+        return create(customer: customer, source: source, metadata: metadata, expand: expand)
     }
     
-    public func retrieve(id: String, customer: String) -> EventLoopFuture<StripeCard> {
-        return retrieve(id: id, customer: customer)
+    public func retrieve(id: String, customer: String, expand: [String]? = nil) -> EventLoopFuture<StripeCard> {
+        return retrieve(id: id, customer: customer, expand: expand)
     }
     
     public func update(id: String,
@@ -95,19 +102,21 @@ extension CardRoutes {
                        expMonth: Int? = nil,
                        expYear: Int? = nil,
                        metadata: [String: String]? = nil,
-                       name: String? = nil) -> EventLoopFuture<StripeCard> {
+                       name: String? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeCard> {
         return update(id: id,
-                          customer: customer,
-                          addressCity: addressCity,
-                          addressCountry: addressCountry,
-                          addressLine1: addressLine1,
-                          addressLine2: addressLine2,
-                          addressState: addressState,
-                          addressZip: addressZip,
-                          expMonth: expMonth,
-                          expYear: expYear,
-                          metadata: metadata,
-                          name: name)
+                      customer: customer,
+                      addressCity: addressCity,
+                      addressCountry: addressCountry,
+                      addressLine1: addressLine1,
+                      addressLine2: addressLine2,
+                      addressState: addressState,
+                      addressZip: addressZip,
+                      expMonth: expMonth,
+                      expYear: expYear,
+                      metadata: metadata,
+                      name: name,
+                      expand: expand)
     }
     
     public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
@@ -129,7 +138,7 @@ public struct StripeCardRoutes: CardRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(customer: String, source: Any, metadata: [String: String]?) -> EventLoopFuture<StripeCard> {
+    public func create(customer: String, source: Any, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeCard> {
         var body: [String: Any] = [:]
         
         if let source = source as? String {
@@ -144,11 +153,20 @@ public struct StripeCardRoutes: CardRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String, customer: String) -> EventLoopFuture<StripeCard> {
-        return apiHandler.send(method: .GET, path: "\(cards)/\(customer)/sources/\(id)", headers: headers)
+    public func retrieve(id: String, customer: String, expand: [String]?) -> EventLoopFuture<StripeCard> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(cards)/\(customer)/sources/\(id)", query: queryParams, headers: headers)
     }
     
     public func update(id: String,
@@ -162,7 +180,8 @@ public struct StripeCardRoutes: CardRoutes {
                        expMonth: Int?,
                        expYear: Int?,
                        metadata: [String: String]?,
-                       name: String?) -> EventLoopFuture<StripeCard> {
+                       name: String?,
+                       expand: [String]?) -> EventLoopFuture<StripeCard> {
         var body: [String: Any] = [:]
         
         if let addressCity = addressCity {
@@ -203,6 +222,10 @@ public struct StripeCardRoutes: CardRoutes {
         
         if let name = name {
             body["name"] = name
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources/\(id)", body: .string(body.queryParameters), headers: headers)
