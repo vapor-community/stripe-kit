@@ -12,15 +12,16 @@ public protocol MandateRoutes {
     
     /// Retrieves a Mandate object
     /// - Parameter mandate: ID of the Mandate to retrieve.
-    func retrieve(mandate: String) -> EventLoopFuture<StripeMandate>
+    /// - Parameter expand: An array of porperties to expand.
+    func retrieve(mandate: String, expand: [String]?) -> EventLoopFuture<StripeMandate>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
 extension MandateRoutes {
-    func retrieve(mandate: String) -> EventLoopFuture<StripeMandate> {
-        return retrieve(mandate: mandate)
+    func retrieve(mandate: String, expand: [String]? = nil) -> EventLoopFuture<StripeMandate> {
+        return retrieve(mandate: mandate, expand: expand)
     }
 }
 
@@ -34,7 +35,12 @@ public struct StripeMandateRoutes: MandateRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(mandate: String) -> EventLoopFuture<StripeMandate> {
-        return apiHandler.send(method: .GET, path: "\(self.mandate)/\(mandate)", headers: headers)
+    public func retrieve(mandate: String, expand: [String]?) -> EventLoopFuture<StripeMandate> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(self.mandate)/\(mandate)", query: queryParams, headers: headers)
     }
 }
