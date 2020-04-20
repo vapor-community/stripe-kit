@@ -28,8 +28,7 @@ public struct StripePayout: StripeModel {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// ID of the bank account or card the payout was sent to.
-    // TODO: - Make a new @Expandable type for just these 2? Or a new proeprty wrapper with 2 or more genenric things?
-    public var destination: String?
+    @DynamicExpandable<StripeCard, StripeBankAccount> public var destination: String?
     /// If the payout failed or was canceled, this will be the ID of the balance transaction that reversed the initial balance transaction, and puts the funds from the failed payout back in your balance.
     @Expandable<StripeBalanceTransaction> public var failureBalanceTransaction: String?
     /// Error code explaining reason for payout failure if available. See Types of payout failures for a list of failure codes.

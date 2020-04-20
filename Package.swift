@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.2
 import PackageDescription
 
 let package = Package(
@@ -14,7 +14,12 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-crypto.git", from: "1.0.0")
     ],
     targets: [
-        .target(name: "StripeKit", dependencies: ["AsyncHTTPClient", "Crypto"]),
-        .testTarget(name: "StripeKitTests", dependencies: ["AsyncHTTPClient", "StripeKit"])
+        .target(name: "StripeKit", dependencies: [
+            .product(name: "AsyncHTTPClient", package: "async-http-client"),
+            .product(name: "Crypto", package: "swift-crypto"),
+        ]),
+        .testTarget(name: "StripeKitTests", dependencies: [
+            .target(name: "StripeKit")
+        ])
     ]
 )
