@@ -13,14 +13,10 @@ public struct StripeIssuingCard: StripeModel {
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
-    /// Spending rules that give you some control over how your cards can be used. Refer to our authorizations documentation for more details.
-    public var authorizationControls: StripeIssuingCardAuthorizationControls?
-    /// The brand of the card.
-    public var brand: StripeCardBrand?
+    /// The reason why the card was canceled.
+    public var cencellationReason: StripeIssuingCardCancellationReason?
     /// The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object to which the card belongs.
     public var cardholder: StripeCardholder?
-    /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// The expiration month of the card.
@@ -29,14 +25,22 @@ public struct StripeIssuingCard: StripeModel {
     public var expYear: Int?
     /// The last 4 digits of the card number.
     public var last4: String?
-    /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
-    public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    /// The name of the cardholder, printed on the card.
-    public var name: String?
-    /// Metadata about the PIN on the card.
-    public var pin: StripeIssuingCardPin?
+    /// Whether authorizations can be approved on this card.
+    public var status: StripeIssuingCardStatus?
+    /// The type of the card.
+    public var type: StripeIssuingCardType?
+    /// The brand of the card.
+    public var brand: StripeCardBrand?
+    /// Time at which the object was created. Measured in seconds since the Unix epoch.
+    public var created: Date
+    /// The card’s CVC. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with the expand parameter. Additionally, it’s only available via the “Retrieve a card” endpoint, not via “List all cards” or any other endpoint.
+    public var cvc: String?
+    /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
+    public var livemode: Bool?
+    /// The full unredacted card number. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with the expand parameter. Additionally, it’s only available via the “Retrieve a card” endpoint, not via “List all cards” or any other endpoint.
+    public var number: String?
     /// The latest card that replaces this card, if any.
     @Expandable<StripeIssuingCard> public var replacedBy: String?
     /// The card this card replaces, if any.
@@ -45,20 +49,8 @@ public struct StripeIssuingCard: StripeModel {
     public var replacementReason: StripeIssuingCardReplacementReason?
     /// Where and how the card will be shipped.
     public var shipping: StripeIssuingCardShipping?
-    /// One of `active`, `inactive`, `canceled`, `lost`, `stolen`, or `pending`.
-    public var status: StripeIssuingCardStatus?
-    /// One of virtual or physical.
-    public var type: StripeIssuingCardType?
-}
-
-public struct StripeIssuingCardPin: StripeModel {
-    /// The status of the pin. One of `blocked` or `active`.
-    public var status: StripeIssuingCardPinStatus?
-}
-
-public enum StripeIssuingCardPinStatus: String, StripeModel {
-    case blocked
-    case active
+    /// Spending rules that give you some control over how this card can be used. Refer to our authorizations documentation for more details.
+    public var spendingControls: StripeIssuingCardSpendingControls?
 }
 
 public struct StripeIssuingCardList: StripeModel {
@@ -68,37 +60,26 @@ public struct StripeIssuingCardList: StripeModel {
     public var data: [StripeIssuingCard]?
 }
 
-public struct StripeIssuingCardDetails: StripeModel {
-    public var object: String
-    public var card: StripeIssuingCard?
-    public var cvc: String?
-    public var expMonth: Int?
-    public var expYear: Int?
-    public var number: String?
-}
-
-public struct StripeIssuingCardAuthorizationControls: StripeModel {
+public struct StripeIssuingCardSpendingControls: StripeModel {
     /// Array of strings containing categories of authorizations permitted on this card.
     public var allowedCategories: [String]?
     /// Array of strings containing categories of authorizations to always decline on this card.
     public var blockedCategories: [String]?
-    /// The currency of the card. See max_amount
-    public var currency: StripeCurrency?
-    /// Maximum amount allowed per authorization on this card, in the currency of the card. Authorization amounts in a different currency will be converted to the card’s currency when evaluating this control.
-    public var maxAmount: Int?
-    /// Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
-    public var maxApprovals: Int?
     /// Limit the spending with rules based on time intervals and categories.
-    public var spendingLimits: [StripeCardholderAuthorizationControlSpendingLimit]?
+    public var spendingLimits: [StripeCardholderSpendingControlSpendingLimit]?
     /// Currency for the amounts within spending_limits. Locked to the currency of the card.
     public var spendingLimitsCurrency: StripeCurrency?
 }
 
 public enum StripeIssuingCardReplacementReason: String, StripeModel {
-    case damage
-    case expiration
-    case loss
-    case theft
+    /// The card was lost. This status is only valid if the card it replaces is marked as lost.
+    case lost
+    /// The card was stolen. This status is only valid if the card it replaces is marked as stolen.
+    case stolen
+    /// The physical card has been damaged and cannot be used at terminals.
+    case damaged
+    /// The expiration date has passed or is imminent.
+    case expired
 }
 
 public struct StripeIssuingCardShipping: StripeModel {
@@ -151,15 +132,24 @@ public enum StripeIssuingCardShippingSpeed: String, StripeModel {
 }
 
 public enum StripeIssuingCardStatus: String, StripeModel {
+    /// The card can approve authorizations.
     case active
+    /// The card will decline authorizations with the `card_inactive` reason.
     case inactive
+    /// The card will decline authorization, and no authorization object will be recorded. This status is permanent.
     case canceled
-    case lost
-    case stolen
-    case pending
 }
 
 public enum StripeIssuingCardType: String, StripeModel {
+    /// No physical card will be printed. The card can be used online and can be added to digital wallets.
     case virtual
+    /// A physical card will be printed and shipped. It can be used at physical terminals.
     case physical
+}
+
+public enum StripeIssuingCardCancellationReason: String, StripeModel {
+    /// The card was lost.
+    case lost
+    /// The card was stolen.
+    case stolen
 }

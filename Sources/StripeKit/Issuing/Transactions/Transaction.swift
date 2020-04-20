@@ -26,8 +26,6 @@ public struct StripeTransaction: StripeModel {
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
-    ///
-    public var dispute: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// The amount that the merchant will receive, denominated in `merchant_currency`. It will be different from `amount` if the merchant is taking payment in a different currency.
@@ -38,7 +36,7 @@ public struct StripeTransaction: StripeModel {
     public var merchantData: StripeAuthorizationMerchantData?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    /// One of `capture`, `refund`, `cash_withdrawal`, `refund_reversal`, `dispute`, or   `dispute_loss`.
+    /// The nature of the transaction.
     public var type: StripeTransactionType?
 }
 
@@ -50,10 +48,8 @@ public struct StripeTransactionList: StripeModel {
 }
 
 public enum StripeTransactionType: String, StripeModel {
+    /// Funds were captured by the acquirer. amount will be negative as funds are moving out of your balance. Not all captures will be linked to an authorization, as acquirers can force capture in some cases.
     case capture
+    /// An acquirer initiated a refund. This transaction might not be linked to an original capture, for example credits are original transactions. amount will be positive for refunds and negative for refund reversals.
     case refund
-    case cashWithdrawal = "cash_withdrawal"
-    case refundReversal = "refund_reversal"
-    case dispute
-    case disputeLoss = "dispute_loss"
 }
