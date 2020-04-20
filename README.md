@@ -1,5 +1,5 @@
 # StripeKit
-![](https://img.shields.io/badge/Swift-5-lightgrey.svg?style=svg)
+![](https://img.shields.io/badge/Swift-5.2-lightgrey.svg?style=svg)
 ![](https://img.shields.io/badge/SwiftNio-2-lightgrey.svg?style=svg)
 
 ### StripeKit is a Swift package used to communicate with the [Stripe](https://stripe.com) API for Server Side Swift Apps.
@@ -31,7 +31,7 @@ For example to use the `charges` API, the stripeclient has a property to access 
 ~~~~swift
  stripe.charges.create(amount: 2500,
                        currency: .usd,
-		       description: "A server written in swift.",
+		               description: "A server written in swift.",
                        source: "tok_visa").flatMap { (charge) -> EventLoopFuture<Void> in
                           if charge.status == .succeeded {
                               print("New servers are on the way 🚀")
@@ -40,6 +40,83 @@ For example to use the `charges` API, the stripeclient has a property to access 
                           }
             }
 ~~~~
+
+## Expandable objects
+
+StripeKit supports [expandable objects](https://stripe.com/docs/api/expanding_objects) via 2 property wrappers:
+
+`@Expandable` and `@DynamicExpandable`
+
+All API routes that can return expanded objects have an extra parameter `expand: [String]?` that allows specifying which objects to expand. 
+
+### Usage with `@Expandable`:
+1. Expanding a single field.
+```swift
+// Expanding a customer from creating a `PaymentIntent`.
+stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer"])
+.flatMap { paymentIntent in
+// Accessing the expanded `StripeCustomer` object   
+ paymentIntent.$customer.email
+...
+}
+```
+
+2. Expanding multiple fields.
+```swift
+// Expanding a customer and payment method from creating a `PaymentIntent`.
+stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer", "paymentMethod"])
+.flatMap { paymentIntent in
+// Accessing the expanded `StripeCustomer` object   
+ paymentIntent.$customer?.email // "stripe@example.com"
+// Accessing the expanded `StripePaymentMethod` object
+ paymentIntent.$paymentMethod?.card?.last4 // "1234"
+ ...
+}
+```
+
+3. Expanding nested fields.
+```swift
+// Expanding a payment method and its nested customer from creating a `PaymentIntent`.
+stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["paymentMethod.customer"])
+.flatMap { paymentIntent in
+// Accessing the expanded `StripePaymentMethod` object
+ paymentIntent.$paymentMethod?.card?.last4 // "1234"
+// Accessing the nested expanded `StripeCustomer` object   
+ paymentIntent.$paymentMethod?.$customer?.email // "stripe@example.com"
+ ...
+}
+```
+
+4. Usage with list all. 
+> Note: For list operations [expanded fields must start with `data`](https://stripe.com/docs/api/expanding_objects?lang=curl)
+```swift
+// Expanding a customer from listing all `PaymentIntent`s.
+stripeclient.paymentIntents.listAll(filter: ["expand": ["data.customer"...]])
+.flatMap { list in
+ // Accessing the first `StripePaymentIntent`'s expanded `StripeCustomer` property
+  list.data?.first?.$customer?.email // "stripe@example.com"
+}
+```
+
+### Usage with `@DynamicExpandable`:
+
+Some objects in stripe can be expanded into different objects.
+For example:
+
+A `StripeApplicationFee` has an `originatingTransaction` property that can be expanded into either a [charge or a transfer](https://stripe.com/docs/api/application_fees/object#application_fee_object-originating_transaction).
+
+When expanding it you can specify which object you expect by doing the following:
+
+```swift
+stripeclient.applicationFees.retrieve(fee: "fee_1234", expand: ["originatingTransaction"])
+.flatMap { applicationfee in 
+    // Access the originatingTransaction as a StripeCharge
+    applicationfee.$originatingTransaction(as: StripeCharge.self)?.amount // 2500
+    ...
+    // Access the originatingTransaction as a StripeTransfer
+    applicationfee.$originatingTransaction(as: StripeTransfer.self)?.destinstion // acc_1234
+}
+```
 
 ## Nuances with parameters and type safety
 Stripe has a habit of changing APIs and having dynamic parameters for a lot of their APIs.

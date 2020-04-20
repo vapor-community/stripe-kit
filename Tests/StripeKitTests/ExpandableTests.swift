@@ -135,5 +135,6 @@ class ExpandableTests: XCTestCase {
         let appFee = try decoder.decode(StripeApplicationFee.self, from: fee)
             
         XCTAssertNotNil(appFee.$originatingTransaction(as: StripeCharge.self))
+        XCTAssertNil(appFee.$originatingTransaction(as: StripeTransfer.self))
     }
 }
