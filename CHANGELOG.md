@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.0.0 - 2020-04-20
+* [#73](https://github.com/vapor-community/stripe-kit/pull/73) Updated Issuing API and objects to latest spec.
+
+* [#72](https://github.com/vapor-community/stripe-kit/pull/72) Added support for [Expandable objects](https://stripe.com/docs/api/expanding_objects).
+
+
 ## 6.1.0 - 2020-03-26
 
 * [#68](https://github.com/vapor-community/stripe-kit/pull/68) Fixed type mispatch for `StripeSubscriptionProrationBehavior` on subscription update route.

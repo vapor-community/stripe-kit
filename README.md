@@ -12,7 +12,7 @@
 To start using StripeKit, in your `Package.swift`, add the following
 
 ~~~~swift
-.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "6.0.0")
+.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "7.0.0")
 ~~~~
 
 ## Using the API
