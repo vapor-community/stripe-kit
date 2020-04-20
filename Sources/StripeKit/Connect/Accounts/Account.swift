@@ -184,6 +184,8 @@ public struct StripeConnectAccountSettingsBranding: StripeModel {
     public var logo: String?
     /// A CSS hex color value representing the primary branding color for this account
     public var primaryColor: String?
+    /// A CSS hex color value representing the secondary branding color for this account
+    public var secondaryColor: String?
 }
 
 public struct StripeConnectAccountSettingsCardPayments: StripeModel {
