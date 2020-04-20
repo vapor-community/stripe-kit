@@ -30,6 +30,7 @@ public protocol PlanRoutes {
     ///   - transformUsage: Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
     ///   - trialPeriodDays: Default number of trial days when subscribing a customer to this plan using `trial_from_plan=true`.
     ///   - usageType: Configures how the quantity per period should be determined, can be either `metered` or `licensed`. `licensed` will automatically bill the `quantity` set for a plan when adding it to a subscription, `metered` will aggregate the total usage based on usage records. Defaults to `licensed`.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePlan`.
     func create(id: String?,
                 currency: StripeCurrency,
@@ -47,13 +48,16 @@ public protocol PlanRoutes {
                 tiersMode: StripePlanTiersMode?,
                 transformUsage: [String: Any]?,
                 trialPeriodDays: Int?,
-                usageType: StripePlanUsageType?) -> EventLoopFuture<StripePlan>
+                usageType: StripePlanUsageType?,
+                expand: [String]?) -> EventLoopFuture<StripePlan>
     
     /// Retrieves the plan with the given ID.
     ///
-    /// - Parameter plan: The ID of the desired plan.
+    /// - Parameters:
+    ///   - plan: The ID of the desired plan.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePlan`.
-    func retrieve(plan: String) -> EventLoopFuture<StripePlan>
+    func retrieve(plan: String, expand: [String]?) -> EventLoopFuture<StripePlan>
     
     /// Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan’s ID, amount, currency, or billing cycle.
     ///
@@ -64,13 +68,15 @@ public protocol PlanRoutes {
     ///   - nickname: A brief description of the plan, hidden from customers. This will be unset if you POST an empty value.
     ///   - product: The product the plan belongs to. Note that after updating, statement descriptors and line items of the plan in active subscriptions will be affected.
     ///   - trialPeriodDays: Default number of trial days when subscribing a customer to this plan using `trial_from_plan=true`.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePlan`.
     func update(plan: String,
                 active: Bool?,
                 metadata: [String: String]?,
                 nickname: String?,
                 product: Any?,
-                trialPeriodDays: Int?) -> EventLoopFuture<StripePlan>
+                trialPeriodDays: Int?,
+                expand: [String]?) -> EventLoopFuture<StripePlan>
     
     /// Deleting plans means new subscribers can’t be added. Existing subscribers aren’t affected.
     ///
@@ -105,7 +111,8 @@ extension PlanRoutes {
                        tiersMode: StripePlanTiersMode? = nil,
                        transformUsage: [String: Any]? = nil,
                        trialPeriodDays: Int? = nil,
-                       usageType: StripePlanUsageType? = nil) -> EventLoopFuture<StripePlan> {
+                       usageType: StripePlanUsageType? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripePlan> {
         return create(id: id,
                       currency: currency,
                       interval: interval,
@@ -122,11 +129,12 @@ extension PlanRoutes {
                       tiersMode: tiersMode,
                       transformUsage: transformUsage,
                       trialPeriodDays: trialPeriodDays,
-                      usageType: usageType)
+                      usageType: usageType,
+                      expand: expand)
     }
     
-    public func retrieve(plan: String) -> EventLoopFuture<StripePlan> {
-        return retrieve(plan: plan)
+    public func retrieve(plan: String, expand: [String]? = nil) -> EventLoopFuture<StripePlan> {
+        return retrieve(plan: plan, expand: expand)
     }
     
     public func update(plan: String,
@@ -134,13 +142,15 @@ extension PlanRoutes {
                        metadata: [String: String]? = nil,
                        nickname: String? = nil,
                        product: Any? = nil,
-                       trialPeriodDays: Int? = nil) -> EventLoopFuture<StripePlan> {
+                       trialPeriodDays: Int? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripePlan> {
         return update(plan: plan,
                       active: active,
                       metadata: metadata,
                       nickname: nickname,
                       product: product,
-                      trialPeriodDays: trialPeriodDays)
+                      trialPeriodDays: trialPeriodDays,
+                      expand: expand)
     }
     
     public func delete(plan: String) -> EventLoopFuture<StripeDeletedObject> {
@@ -178,7 +188,8 @@ public struct StripePlanRoutes: PlanRoutes {
                        tiersMode: StripePlanTiersMode?,
                        transformUsage: [String: Any]?,
                        trialPeriodDays: Int?,
-                       usageType: StripePlanUsageType?) -> EventLoopFuture<StripePlan> {
+                       usageType: StripePlanUsageType?,
+                       expand: [String]?) -> EventLoopFuture<StripePlan> {
         var body: [String: Any] = ["currency": currency.rawValue,
                                    "interval": interval.rawValue]
         
@@ -241,11 +252,20 @@ public struct StripePlanRoutes: PlanRoutes {
             body["trial_period_days"] = trialperiodDays
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: plans, body: .string(body.queryParameters), headers: headers)
     }
 
-    public func retrieve(plan: String) -> EventLoopFuture<StripePlan> {
-        return apiHandler.send(method: .GET, path: "\(plans)/\(plan)", headers: headers)
+    public func retrieve(plan: String, expand: [String]?) -> EventLoopFuture<StripePlan> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(plans)/\(plan)", query: queryParams, headers: headers)
     }
     
     public func update(plan: String,
@@ -253,7 +273,8 @@ public struct StripePlanRoutes: PlanRoutes {
                        metadata: [String: String]?,
                        nickname: String?,
                        product: Any?,
-                       trialPeriodDays: Int?) -> EventLoopFuture<StripePlan> {
+                       trialPeriodDays: Int?,
+                       expand: [String]?) -> EventLoopFuture<StripePlan> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -276,6 +297,10 @@ public struct StripePlanRoutes: PlanRoutes {
         
         if let trialPeriodDays = trialPeriodDays {
             body["trial_period_days"] = trialPeriodDays
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(plans)/\(plan)", body: .string(body.queryParameters), headers: headers)

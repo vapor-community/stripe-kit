@@ -13,7 +13,7 @@ public struct StripeCapability: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The account for which the capability enables functionality.
-    public var account: String?
+    @Expandable<StripeConnectAccount> public var account: String?
     /// Whether the capability has been requested.
     public var requested: Bool?
     /// Time at which the capability was requested. Measured in seconds since the Unix epoch.

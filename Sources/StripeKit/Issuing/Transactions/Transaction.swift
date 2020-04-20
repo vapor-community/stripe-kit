@@ -15,13 +15,13 @@ public struct StripeTransaction: StripeModel {
     /// The amount of this transaction in your currency. This is the amount that your balance will be updated by.
     public var amount: Int?
     /// The Authorization object that led to this transaction.
-    public var authorization: String?
-    ///
-    public var balanceTransaction: String?
+    @Expandable<StripeAuthorization> public var authorization: String?
+    /// ID of the balance transaction associated with this transaction.
+    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
     /// The card used to make this transaction.
-    public var card: String?
+    @Expandable<StripeIssuingCard> public var card: String?
     /// The cardholder to whom this transaction belongs.
-    public var cardholder: String?
+    @Expandable<StripeCardholder> public var cardholder: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.

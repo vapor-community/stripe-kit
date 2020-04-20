@@ -23,6 +23,7 @@ public protocol SKURoutes {
     ///   - image: The URL of an image for this SKU, meant to be displayable to the customer.
     ///   - metadata: A set of key-value pairs that you can attach to a SKU object. It can be useful for storing additional information about the SKU in a structured format.
     ///   - packageDimensions: The dimensions of this SKU for shipping purposes.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeSKU`.
     func create(id: String?,
                 currency: StripeCurrency,
@@ -33,13 +34,16 @@ public protocol SKURoutes {
                 attributes: [String]?,
                 image: String?,
                 metadata: [String: String]?,
-                packageDimensions: [String: Any]?) -> EventLoopFuture<StripeSKU>
+                packageDimensions: [String: Any]?,
+                expand: [String]?) -> EventLoopFuture<StripeSKU>
     
     /// Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
     ///
-    /// - Parameter id: The identifier of the SKU to be retrieved.
+    /// - Parameters:
+    ///   - id: The identifier of the SKU to be retrieved.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeSKU`.
-    func retrieve(id: String) -> EventLoopFuture<StripeSKU>
+    func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSKU>
     
     /// Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     /// Note that a SKU’s `attributes` are not editable. Instead, you would need to deactivate the existing SKU and create a new one with the new attribute values.
@@ -55,6 +59,7 @@ public protocol SKURoutes {
     ///   - packageDimensions: The dimensions of this SKU for shipping purposes.
     ///   - price: The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
     ///   - product: The ID of the product that this SKU should belong to. The product must exist, have the same set of attribute names as the SKU’s current product, and be of type good.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeSKU`.
     func update(id: String,
                 active: Bool?,
@@ -65,7 +70,8 @@ public protocol SKURoutes {
                 metadata: [String: String]?,
                 packageDimensions: [String: Any]?,
                 price: Int?,
-                product: String?) -> EventLoopFuture<StripeSKU>
+                product: String?,
+                expand: [String]?) -> EventLoopFuture<StripeSKU>
     
     /// Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
     ///
@@ -93,7 +99,8 @@ extension SKURoutes {
                        attributes: [String]? = nil,
                        image: String? = nil,
                        metadata: [String: String]? = nil,
-                       packageDimensions: [String: Any]? = nil) -> EventLoopFuture<StripeSKU> {
+                       packageDimensions: [String: Any]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeSKU> {
         return create(id: id,
                       currency: currency,
                       inventory: inventory,
@@ -103,11 +110,12 @@ extension SKURoutes {
                       attributes: attributes,
                       image: image,
                       metadata: metadata,
-                      packageDimensions: packageDimensions)
+                      packageDimensions: packageDimensions,
+                      expand: expand)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeSKU> {
-        return retrieve(id: id)
+    public func retrieve(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeSKU> {
+        return retrieve(id: id, expand: expand)
     }
     
     public func update(id: String,
@@ -119,7 +127,8 @@ extension SKURoutes {
                        metadata: [String: String]? = nil,
                        packageDimensions: [String: Any]? = nil,
                        price: Int? = nil,
-                       product: String? = nil) -> EventLoopFuture<StripeSKU> {
+                       product: String? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeSKU> {
         return update(id: id,
                       active: active,
                       attributes: attributes,
@@ -129,7 +138,8 @@ extension SKURoutes {
                       metadata: metadata,
                       packageDimensions: packageDimensions,
                       price: price,
-                      product: product)
+                      product: product,
+                      expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSKUList> {
@@ -160,7 +170,8 @@ public struct StripeSKURoutes: SKURoutes {
                        attributes: [String]?,
                        image: String?,
                        metadata: [String: String]?,
-                       packageDimensions: [String: Any]?) -> EventLoopFuture<StripeSKU> {
+                       packageDimensions: [String: Any]?,
+                       expand: [String]?) -> EventLoopFuture<StripeSKU> {
         var body: [String: Any] = ["currency": currency.rawValue,
                                    "price": price,
                                    "product": product]
@@ -187,11 +198,20 @@ public struct StripeSKURoutes: SKURoutes {
             packageDimensions.forEach { body["package_dimensions[\($0)]"] = $1 }
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: skus, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeSKU> {
-        return apiHandler.send(method: .GET, path: "\(skus)/\(id)", headers: headers)
+    public func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSKU> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(skus)/\(id)", query: queryParams, headers: headers)
     }
     
     public func update(id: String,
@@ -203,7 +223,8 @@ public struct StripeSKURoutes: SKURoutes {
                        metadata: [String: String]?,
                        packageDimensions: [String: Any]?,
                        price: Int?,
-                       product: String?) -> EventLoopFuture<StripeSKU> {
+                       product: String?,
+                       expand: [String]?) -> EventLoopFuture<StripeSKU> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -236,6 +257,10 @@ public struct StripeSKURoutes: SKURoutes {
         
         if let product = product {
             body["product"] = product
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(skus)/\(id)", body: .string(body.queryParameters), headers: headers)

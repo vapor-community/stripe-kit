@@ -16,23 +16,23 @@ public struct StripeOrder: StripeModel {
     public var object: String
     /// A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the order.
     public var amount: Int?
-    ///
+    /// The total amount that was returned to the customer.
     public var amountReturned: Int?
     /// ID of the Connect Application that created the order.
     public var application: String?
-    ///
+    /// A fee in cents that will be applied to the order and transferred to the application owner’s Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees documentation.
     public var applicationFee: Int?
     /// The ID of the payment used to pay for the order. Present if the order status is `paid`, `fulfilled`, or `refunded`.
-    public var charge: String?
+    @Expandable<StripeCharge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// The customer used for the order.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// The email address of the customer placing the order.
     public var email: String?
-    ///
+    /// External coupon code to load for this order.
     public var externalCouponCode: String?
     /// List of items constituting the order. An order can have up to 25 items.
     public var items: [StripeOrderItem]?
@@ -40,7 +40,7 @@ public struct StripeOrder: StripeModel {
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    ///
+    /// A list of returns that have taken place for this order.
     public var returns: StripeOrderReturnList?
     /// The shipping method that is currently selected for this order, if any. If present, it is equal to one of the ids of shipping methods in the shipping_methods array. At order creation time, if there are multiple shipping methods, Stripe will automatically selected the first method.
     public var selectedShippingMethod: String?
@@ -52,7 +52,7 @@ public struct StripeOrder: StripeModel {
     public var status: StripeOrderStatus?
     /// The timestamps at which the order status was updated.
     public var statusTransitions: StripeOrderStatusTransitions?
-    ///
+    /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
     public var updated: Date?
     /// The user’s order ID if it is different from the Stripe order ID.
     public var upstreamId: String?

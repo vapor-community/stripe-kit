@@ -23,7 +23,7 @@ public struct StripeCustomer: StripeModel {
     /// Three-letter ISO code for the currency the customer can be charged in for recurring billing purposes.
     public var currency: StripeCurrency?
     /// ID of the default payment source for the customer.
-    public var defaultSource: String?
+    @Expandable<StripeSource> public var defaultSource: String?
     /// When the customer’s latest invoice is billed by charging automatically, delinquent is true if the invoice’s latest charge is failed. When the customer’s latest invoice is billed by sending an invoice, delinquent is true if the invoice is not paid by its due date.
     public var delinquent: Bool?
     /// An arbitrary string attached to the object. Often useful for displaying to users.

@@ -18,7 +18,7 @@ public struct StripeTaxID: StripeModel {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// ID of the customer.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Type of the tax ID, one of `eu_vat`, `nz_gst`, `au_abn`, or `unknown`

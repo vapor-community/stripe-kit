@@ -28,6 +28,7 @@ public protocol ChargeRoutes {
     ///   - statementDescriptorSuffix: Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
     ///   - transferData: An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
     ///   - transferGroup: A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#grouping-transactions).
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCharge`.
     func create(amount: Int,
                 currency: StripeCurrency,
@@ -43,13 +44,15 @@ public protocol ChargeRoutes {
                 statementDescriptor: String?,
                 statementDescriptorSuffix: String?,
                 transferData: [String: Any]?,
-                transferGroup: String?) -> EventLoopFuture<StripeCharge>
+                transferGroup: String?,
+                expand: [String]?) -> EventLoopFuture<StripeCharge>
     
     /// Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
     ///
     /// - Parameter charge: The identifier of the charge to be retrieved.
+    /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripeCharge`.
-    func retrieve(charge: String) -> EventLoopFuture<StripeCharge>
+    func retrieve(charge: String, expand: [String]?) -> EventLoopFuture<StripeCharge>
     
     /// Updates the specified charge by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -62,6 +65,7 @@ public protocol ChargeRoutes {
     ///   - receiptEmail: This is the email address that the receipt for this charge will be sent to. If this field is updated, then a new email receipt will be sent to the updated address. This will be unset if you POST an empty value.
     ///   - shipping: Shipping information for the charge. Helps prevent fraud on charges for physical goods.
     ///   - transferGroup: A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCharge`.
     func update(charge: String,
                 customer: String?,
@@ -70,7 +74,8 @@ public protocol ChargeRoutes {
                 metadata: [String: String]?,
                 receiptEmail: String?,
                 shipping: [String: Any]?,
-                transferGroup: String?) -> EventLoopFuture<StripeCharge>
+                transferGroup: String?,
+                expand: [String]?) -> EventLoopFuture<StripeCharge>
     
     /// Capture the payment of an existing, uncaptured, charge. This is the second half of the two-step payment flow, where first you [created a charge](https://stripe.com/docs/api/charges/capture#create_charge) with the capture option set to false. \n Uncaptured payments expire exactly seven days after they are created. If they are not captured by that point in time, they will be marked as refunded and will no longer be capturable.
     ///
@@ -83,6 +88,7 @@ public protocol ChargeRoutes {
     ///   - statementDescriptorSuffix: Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
     ///   - transferData: An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
     ///   - transferGroup: A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCharge`.
     func capture(charge: String,
                  amount: Int?,
@@ -91,7 +97,8 @@ public protocol ChargeRoutes {
                  statementDescriptor: String?,
                  statementDescriptorSuffix: String?,
                  transferData: [String: Any]?,
-                 transferGroup: String?) -> EventLoopFuture<StripeCharge>
+                 transferGroup: String?,
+                 expand: [String]?) -> EventLoopFuture<StripeCharge>
     
     /// Returns a list of charges you’ve previously created. The charges are returned in sorted order, with the most recent charges appearing first.
     ///
@@ -118,26 +125,28 @@ extension ChargeRoutes {
                        statementDescriptor: String? = nil,
                        statementDescriptorSuffix: String? = nil,
                        transferData: [String: Any]? = nil,
-                       transferGroup: String? = nil) -> EventLoopFuture<StripeCharge> {
+                       transferGroup: String? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeCharge> {
         return create(amount: amount,
-                          currency: currency,
-                          applicationFeeAmount: applicationFeeAmount,
-                          capture: capture,
-                          customer: customer,
-                          description: description,
-                          metadata: metadata,
-                          onBehalfOf: onBehalfOf,
-                          receiptEmail: receiptEmail,
-                          shipping: shipping,
-                          source: source,
-                          statementDescriptor: statementDescriptor,
-                          statementDescriptorSuffix: statementDescriptorSuffix,
-                          transferData: transferData,
-                          transferGroup: transferGroup)
+                      currency: currency,
+                      applicationFeeAmount: applicationFeeAmount,
+                      capture: capture,
+                      customer: customer,
+                      description: description,
+                      metadata: metadata,
+                      onBehalfOf: onBehalfOf,
+                      receiptEmail: receiptEmail,
+                      shipping: shipping,
+                      source: source,
+                      statementDescriptor: statementDescriptor,
+                      statementDescriptorSuffix: statementDescriptorSuffix,
+                      transferData: transferData,
+                      transferGroup: transferGroup,
+                      expand: expand)
     }
     
-    public func retrieve(charge: String) -> EventLoopFuture<StripeCharge> {
-        return retrieve(charge: charge)
+    public func retrieve(charge: String, expand: [String]? = nil) -> EventLoopFuture<StripeCharge> {
+        return retrieve(charge: charge, expand: expand)
     }
     
     public func update(charge chargeId: String,
@@ -147,15 +156,17 @@ extension ChargeRoutes {
                        metadata: [String: String]? = nil,
                        receiptEmail: String? = nil,
                        shipping: [String: Any]? = nil,
-                       transferGroup: String? = nil) -> EventLoopFuture<StripeCharge> {
+                       transferGroup: String? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeCharge> {
         return update(charge: chargeId,
-                          customer: customer,
-                          description: description,
-                          fraudDetails: fraudDetails,
-                          metadata: metadata,
-                          receiptEmail: receiptEmail,
-                          shipping: shipping,
-                          transferGroup: transferGroup)
+                      customer: customer,
+                      description: description,
+                      fraudDetails: fraudDetails,
+                      metadata: metadata,
+                      receiptEmail: receiptEmail,
+                      shipping: shipping,
+                      transferGroup: transferGroup,
+                      expand: expand)
     }
     
     public func capture(charge: String,
@@ -165,15 +176,17 @@ extension ChargeRoutes {
                         statementDescriptor: String? = nil,
                         statementDescriptorSuffix: String? = nil,
                         transferData: [String: Any]? = nil,
-                        transferGroup: String? = nil) -> EventLoopFuture<StripeCharge> {
+                        transferGroup: String? = nil,
+                        expand: [String]? = nil) -> EventLoopFuture<StripeCharge> {
         return capture(charge: charge,
-                           amount: amount,
-                           applicationFeeAmount: applicationFeeAmount,
-                           receiptEmail: receiptEmail,
-                           statementDescriptor: statementDescriptor,
-                           statementDescriptorSuffix: statementDescriptorSuffix,
-                           transferData: transferData,
-                           transferGroup: transferGroup)
+                       amount: amount,
+                       applicationFeeAmount: applicationFeeAmount,
+                       receiptEmail: receiptEmail,
+                       statementDescriptor: statementDescriptor,
+                       statementDescriptorSuffix: statementDescriptorSuffix,
+                       transferData: transferData,
+                       transferGroup: transferGroup,
+                       expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeChargesList> {
@@ -206,7 +219,8 @@ public struct StripeChargeRoutes: ChargeRoutes {
                        statementDescriptor: String?,
                        statementDescriptorSuffix: String?,
                        transferData: [String: Any]?,
-                       transferGroup: String?) -> EventLoopFuture<StripeCharge> {
+                       transferGroup: String?,
+                       expand: [String]?) -> EventLoopFuture<StripeCharge> {
         var body: [String: Any] = ["amount": amount, "currency": currency.rawValue]
         if let applicationFeeAmount = applicationFeeAmount {
             body["application_fee_amount"] = applicationFeeAmount
@@ -264,11 +278,19 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["transfer_group"] = transferGroup
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: charge, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(charge: String) -> EventLoopFuture<StripeCharge> {
-        return apiHandler.send(method: .GET, path: charges + charge, headers: headers)
+    public func retrieve(charge: String, expand: [String]?) -> EventLoopFuture<StripeCharge> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        return apiHandler.send(method: .GET, path: charges + charge, query: queryParams, headers: headers)
     }
     
     public func update(charge: String,
@@ -278,7 +300,8 @@ public struct StripeChargeRoutes: ChargeRoutes {
                        metadata: [String: String]?,
                        receiptEmail: String?,
                        shipping: [String: Any]?,
-                       transferGroup: String?) -> EventLoopFuture<StripeCharge> {
+                       transferGroup: String?,
+                       expand: [String]?) -> EventLoopFuture<StripeCharge> {
         var body: [String: Any] = [:]
         
         if let customer = customer {
@@ -309,6 +332,10 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["transfer_group"] = transferGroup
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: charges + charge, body: .string(body.queryParameters), headers: headers)
     }
     
@@ -319,7 +346,8 @@ public struct StripeChargeRoutes: ChargeRoutes {
                         statementDescriptor: String?,
                         statementDescriptorSuffix: String?,
                         transferData: [String: Any]?,
-                        transferGroup: String?) -> EventLoopFuture<StripeCharge> {
+                        transferGroup: String?,
+                        expand: [String]?) -> EventLoopFuture<StripeCharge> {
         var body: [String: Any] = [:]
         
         if let amount = amount {
@@ -348,6 +376,10 @@ public struct StripeChargeRoutes: ChargeRoutes {
         
         if let transferGroup = transferGroup {
             body["transfer_group"] = transferGroup
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: charges + charge + "/capture", body: .string(body.queryParameters), headers: headers)

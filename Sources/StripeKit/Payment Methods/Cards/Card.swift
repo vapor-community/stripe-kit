@@ -13,7 +13,7 @@ public struct StripeCard: StripeModel {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The account this card belongs to. This attribute will not be in the card object if the card belongs to a customer or recipient instead.
-    public var account: String?
+    @Expandable<StripeConnectAccount> public var account: String?
     /// City/District/Suburb/Town/Village.
     public var addressCity: String?
     /// Billing address country, if provided when creating card.
@@ -39,7 +39,7 @@ public struct StripeCard: StripeModel {
     /// Three-letter ISO code for currency. Only applicable on accounts (not customers or recipients). The card can be used as a transfer destination for funds in this currency.
     public var currency: StripeCurrency?
     /// The customer that this card belongs to. This attribute will not be in the card object if the card belongs to an account or recipient instead.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
     public var cvcCheck: StripeCardValidationCheck?
     /// Whether this card is the default external account for its currency.

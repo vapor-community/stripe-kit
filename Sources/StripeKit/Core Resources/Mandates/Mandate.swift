@@ -19,7 +19,7 @@ public struct StripeMandate: StripeModel {
     /// If this is a multi_use mandate, this hash contains details about the mandate.
     public var multiUse: String?
     /// ID of the payment method associated with this mandate.
-    public var paymentMethod: String?
+    @Expandable<StripePaymentMethod> public var paymentMethod: String?
     /// Additional mandate information specific to the payment method type.
     public var paymentMethodDetails: StripeMandatePaymentMethodDetails?
     /// If this is a single_use mandate, this hash contains details about the mandate.

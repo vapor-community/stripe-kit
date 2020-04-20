@@ -22,6 +22,7 @@ public protocol CreditNoteRoutes {
     ///   - reason: Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
     ///   - refund: ID of an existing refund to link this credit note to.
     ///   - refundAmount: The integer amount in cents representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCreditNote`.
     func create(amount: Int,
                 invoice: String,
@@ -32,7 +33,8 @@ public protocol CreditNoteRoutes {
                 metadata: [String: String]?,
                 reason: StripeCreditNoteReason?,
                 refund: String?,
-                refundAmount: Int?) -> EventLoopFuture<StripeCreditNote>
+                refundAmount: Int?,
+                expand: [String]?) -> EventLoopFuture<StripeCreditNote>
     
     /// Get a preview of a credit note without creating it.
     /// - Parameters:
@@ -46,6 +48,7 @@ public protocol CreditNoteRoutes {
     ///   - reason: Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or   `product_unsatisfactory`
     ///   - refund: ID of an existing refund to link this credit note to.
     ///   - refundAmount: The integer amount in cents representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
+    ///   - expand: An array of properties to expand.
     func preview(invoice: String,
                  lines: [[String: Any]]?,
                  amount: Int?,
@@ -55,13 +58,16 @@ public protocol CreditNoteRoutes {
                  metadata: [String: String]?,
                  reason: StripeCreditNoteReason?,
                  refund: String?,
-                 refundAmount: Int?) -> EventLoopFuture<StripeCreditNote>
+                 refundAmount: Int?,
+                 expand: [String]?) -> EventLoopFuture<StripeCreditNote>
     
     /// Retrieves the credit note object with the given identifier.
     ///
-    /// - Parameter id: ID of the credit note object to retrieve.
+    /// - Parameters:
+    ///   - id: ID of the credit note object to retrieve.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCreditNote`.
-    func retrieve(id: String) -> EventLoopFuture<StripeCreditNote>
+    func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeCreditNote>
     
     /// Updates an existing credit note.
     ///
@@ -69,8 +75,9 @@ public protocol CreditNoteRoutes {
     ///   - id: ID of the credit note object to update.
     ///   - memo: Credit note memo. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCreditNote`.
-    func update(id: String, memo: String?, metadata: [String: String]?) -> EventLoopFuture<StripeCreditNote>
+    func update(id: String, memo: String?, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeCreditNote>
     
     /// When retrieving a credit note, you’ll get a lines property containing the the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
     /// - Parameters:
@@ -87,8 +94,10 @@ public protocol CreditNoteRoutes {
     
     /// Marks a credit note as void. Learn more about [voiding credit notes.](https://stripe.com/docs/billing/invoices/credit-notes#voiding)
     ///
-    /// - Parameter id: ID of the credit note object to void.
-    func void(id: String) -> EventLoopFuture<StripeCreditNote>
+    /// - Parameters:
+    ///   - id: ID of the credit note object to void.
+    ///   - expand: An array of properties to expand.
+    func void(id: String, expand: [String]?) -> EventLoopFuture<StripeCreditNote>
     
     /// Returns a list of credit notes.
     ///
@@ -109,7 +118,8 @@ extension CreditNoteRoutes {
                        metadata: [String: String]? = nil,
                        reason: StripeCreditNoteReason? = nil,
                        refund: String? = nil,
-                       refundAmount: Int? = nil) -> EventLoopFuture<StripeCreditNote> {
+                       refundAmount: Int? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeCreditNote> {
         return create(amount: amount,
                       invoice: invoice,
                       lines: lines,
@@ -119,7 +129,8 @@ extension CreditNoteRoutes {
                       metadata: metadata,
                       reason: reason,
                       refund: refund,
-                      refundAmount: refundAmount)
+                      refundAmount: refundAmount,
+                      expand: expand)
     }
     
     public func preview(invoice: String,
@@ -131,7 +142,8 @@ extension CreditNoteRoutes {
                         metadata: [String: String]? = nil,
                         reason: StripeCreditNoteReason? = nil,
                         refund: String? = nil,
-                        refundAmount: Int? = nil) -> EventLoopFuture<StripeCreditNote> {
+                        refundAmount: Int? = nil,
+                        expand: [String]? = nil) -> EventLoopFuture<StripeCreditNote> {
         return preview(invoice: invoice,
                        lines: lines,
                        amount: amount,
@@ -141,15 +153,19 @@ extension CreditNoteRoutes {
                        metadata: metadata,
                        reason: reason,
                        refund: refund,
-                       refundAmount: refundAmount)
+                       refundAmount: refundAmount,
+                       expand: expand)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeCreditNote> {
-        return retrieve(id: id)
+    public func retrieve(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeCreditNote> {
+        return retrieve(id: id, expand: expand)
     }
     
-    public func update(id: String, memo: String? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeCreditNote> {
-        return update(id: id, memo: memo, metadata: metadata)
+    public func update(id: String,
+                       memo: String? = nil,
+                       metadata: [String: String]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeCreditNote> {
+        return update(id: id, memo: memo, metadata: metadata, expand: expand)
     }
     
     public func retrieveLineItems(id: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeCreditNoteLineItemList> {
@@ -160,8 +176,8 @@ extension CreditNoteRoutes {
         retrievePreviewLineItems(invoice: invoice, filter: filter)
     }
     
-    public func void(id: String) -> EventLoopFuture<StripeCreditNote> {
-        return void(id: id)
+    public func void(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeCreditNote> {
+        return void(id: id, expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeCreditNoteList> {
@@ -188,7 +204,8 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
                        metadata: [String: String]?,
                        reason: StripeCreditNoteReason?,
                        refund: String?,
-                       refundAmount: Int?) -> EventLoopFuture<StripeCreditNote> {
+                       refundAmount: Int?,
+                       expand: [String]?) -> EventLoopFuture<StripeCreditNote> {
         var body: [String: Any] = ["amount": amount,
                                    "invoice": invoice]
         
@@ -224,6 +241,10 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             body["refund_amount"] = refundAmount
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: creditnotes, body: .string(body.queryParameters), headers: headers)
     }
     
@@ -236,7 +257,8 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
                         metadata: [String: String]?,
                         reason: StripeCreditNoteReason?,
                         refund: String?,
-                        refundAmount: Int?) -> EventLoopFuture<StripeCreditNote> {
+                        refundAmount: Int?,
+                        expand: [String]?) -> EventLoopFuture<StripeCreditNote> {
         var body: [String: Any] = ["invoice": invoice]
         
         if let amount = amount {
@@ -275,14 +297,25 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             body["refund_amount"] = refundAmount
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(creditnotes)/preview", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeCreditNote> {
-        return apiHandler.send(method: .GET, path: "\(creditnotes)/\(id)", headers: headers)
+    public func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeCreditNote> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams += ["expand": expand].queryParameters
+        }
+        return apiHandler.send(method: .GET, path: "\(creditnotes)/\(id)", query: queryParams, headers: headers)
     }
     
-    public func update(id: String, memo: String?, metadata: [String: String]?) -> EventLoopFuture<StripeCreditNote> {
+    public func update(id: String,
+                       memo: String?,
+                       metadata: [String: String]?,
+                       expand: [String]?) -> EventLoopFuture<StripeCreditNote> {
         var body: [String: Any] = [:]
         
         if let memo = memo {
@@ -291,6 +324,10 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
         
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: "\(creditnotes)/\(id)", body: .string(body.queryParameters), headers: headers)
@@ -314,8 +351,14 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
         return apiHandler.send(method: .GET, path: "\(creditnotes)/preview/lines", query: queryParams, headers: headers)
     }
     
-    public func void(id: String) -> EventLoopFuture<StripeCreditNote> {
-        return apiHandler.send(method: .POST, path: "\(creditnotes)/\(id)/void", headers: headers)
+    public func void(id: String, expand: [String]?) -> EventLoopFuture<StripeCreditNote> {
+        var body: [String: Any] = [:]
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
+        return apiHandler.send(method: .POST, path: "\(creditnotes)/\(id)/void", body: .string(body.queryParameters), headers: headers)
     }
     
     public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCreditNoteList> {

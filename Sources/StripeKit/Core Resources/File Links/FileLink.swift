@@ -20,7 +20,7 @@ public struct StripeFileLink: StripeModel {
     /// Time at which the link expires.
     public var expiresAt: Date?
     /// The file object this link points to.
-    public var file: String?
+    @Expandable<StripeFile> public var file: String?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

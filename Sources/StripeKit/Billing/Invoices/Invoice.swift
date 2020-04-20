@@ -35,7 +35,7 @@ public struct StripeInvoice: StripeModel {
     /// Indicates the reason why the invoice was created. `subscription_cycle` indicates an invoice created by a subscription advancing into a new period. `subscription_create` indicates an invoice created due to creating a subscription. `subscription_update` indicates an invoice created due to updating a subscription. `subscription` is set for all old invoices to indicate either a change to a subscription or a period advancement. `manual` is set for all invoices unrelated to a subscription (for example: created via the invoice editor). The `upcoming` value is reserved for simulated invoices per the upcoming invoice endpoint. `subscription_threshold` indicates an invoice created due to a billing threshold being reached.
     public var billingReason: StripeInvoiceBillingReason?
     /// ID of the latest charge generated for this invoice, if any.
-    public var charge: String?
+    @Expandable<StripeCharge> public var charge: String?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions.
     public var collectionMethod: StripeInvoiceCollectionMethod?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -44,7 +44,7 @@ public struct StripeInvoice: StripeModel {
     public var currency: StripeCurrency?
     /// Custom fields displayed on the invoice.
     public var customFields: [[String: String]]?
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// The customer’s address. Until the invoice is finalized, this field will equal customer.address. Once the invoice is finalized, this field will no longer be updated.
     public var customerAddress: StripeAddress?
     /// The customer’s email. Until the invoice is finalized, this field will equal customer.email. Once the invoice is finalized, this field will no longer be updated.
@@ -60,9 +60,9 @@ public struct StripeInvoice: StripeModel {
     /// The customer’s tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as customer.tax_ids. Once the invoice is finalized, this field will no longer be updated.
     public var customerTaxIds: [StripeInvoiceCustomerTaxId]?
     /// ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription’s default payment method, if any, or to the default payment method in the customer’s invoice settings.
-    public var defaultPaymentMethod: String?
+    @Expandable<StripePaymentMethod> public var defaultPaymentMethod: String?
     /// ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription’s default source, if any, or to the customer’s default source.
-    public var defaultSource: String?
+    @Expandable<StripeSource> public var defaultSource: String?
     /// The tax rates applied to this invoice, if any.
     public var defaultTaxRates: [StripeTaxRate]?
     /// An arbitrary string attached to the object. Often useful for displaying to users. Referenced as ‘memo’ in the Dashboard.
@@ -91,7 +91,7 @@ public struct StripeInvoice: StripeModel {
     /// Whether payment was successfully collected for this invoice. An invoice can be paid (most commonly) with a charge or with credit from the customer’s account balance.
     public var paid: Bool?
     /// The PaymentIntent associated with this invoice. The PaymentIntent is generated when the invoice is finalized, and can then be used to pay the invoice. Note that voiding an invoice will cancel the PaymentIntent.
-    public var paymentIntent: String?
+    @Expandable<StripePaymentIntent> public var paymentIntent: String?
     /// End of the usage period during which invoice items were added to this invoice.
     public var periodEnd: Date?
     /// Start of the usage period during which invoice items were added to this invoice.
@@ -110,7 +110,7 @@ public struct StripeInvoice: StripeModel {
     public var status: StripeInvoiceStatus?
     public var statusTransitions: StripeInvoiceStatusTransitions?
     /// The subscription that this invoice was prepared for, if any.
-    public var subscription: String?
+    @Expandable<StripeSubscription> public var subscription: String?
     /// Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
     public var subscriptionProrationDate: Int?
     /// Total of all subscriptions, invoice items, and prorations on the invoice before any discount is applied.

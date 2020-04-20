@@ -17,9 +17,9 @@ public struct StripeRefund: StripeModel {
     /// Amount, in cents.
     public var amount: Int?
     /// Balance transaction that describes the impact on your account balance.
-    public var balanceTransaction: String?
+    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
     /// ID of the charge that was refunded.
-    public var charge: String?
+    @Expandable<StripeCharge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
@@ -27,23 +27,23 @@ public struct StripeRefund: StripeModel {
     /// An arbitrary string attached to the object. Often useful for displaying to users. (Available on non-card refunds only)
     public var description: String?
     /// If the refund failed, this balance transaction describes the adjustment made on your account balance that reverses the initial balance transaction.
-    public var failureBalanceTransaction: String?
+    @Expandable<StripeBalanceTransaction> public var failureBalanceTransaction: String?
     /// If the refund failed, the reason for refund failure if known. Possible values are `lost_or_stolen_card`, `expired_or_canceled_card`, or `unknown`.
     public var failureReason: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// ID of the PaymentIntent that was refunded.
-    public var paymentIntent: String?
+    @Expandable<StripePaymentIntent> public var paymentIntent: String?
     /// Reason for the refund. If set, possible values are `duplicate`, `fraudulent`, and `requested_by_customer`.
     public var reason: StripeRefundReason?
     /// This is the transaction number that appears on email receipts sent for this refund.
     public var receiptNumber: String?
     /// The transfer reversal that is associated with the refund. Only present if the charge came from another Stripe account. See the Connect documentation for details.
-    public var sourceTransferReversal: String?
+    @Expandable<StripeTransferReversal> public var sourceTransferReversal: String?
     /// Status of the refund. For credit card refunds, this can be `pending`, `succeeded`, or `failed`. For other types of refunds, it can be `pending`, `succeeded`, `failed`, or `canceled`. Refer to our refunds documentation for more details.
     public var status: StripeRefundStatus?
     /// If the accompanying transfer was reversed, the transfer reversal object. Only applicable if the charge was created using the destination parameter.
-    public var transferReversal: String?
+    @Expandable<StripeTransferReversal> public var transferReversal: String?
 }
 
 public enum StripeRefundFailureReason: String, StripeModel {

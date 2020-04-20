@@ -20,7 +20,7 @@ public struct StripePaymentMethod: StripeModel {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
     public var ideal: StripePaymentMethodIdeal?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

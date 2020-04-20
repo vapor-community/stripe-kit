@@ -16,7 +16,7 @@ public struct StripeReview: StripeModel {
     /// The ZIP or postal code of the card used, if applicable.
     public var billingZip: String?
     /// The charge associated with this review.
-    public var charge: String?
+    @Expandable<StripeCharge> public var charge: String?
     /// The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
     public var closedReason: StripeReviewClosedReason?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -32,7 +32,7 @@ public struct StripeReview: StripeModel {
     /// The reason the review was opened. One of rule or manual.
     public var openedReason: StripeReviewOpenedReason?
     /// The PaymentIntent ID associated with this review, if one exists.
-    public var paymentIntent: String?
+    @Expandable<StripePaymentIntent> public var paymentIntent: String?
     /// The reason the review is currently open or closed. One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
     public var reason: StripeReviewReason?
     /// Information related to the browsing session of the user who initiated the payment.

@@ -27,6 +27,7 @@ public protocol SessionRoutes {
     ///   - setupIntentData: A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. submit_type can only be specified on Checkout Sessions in payment mode, but not Checkout Sessions in subscription or setup mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation.
+    ///   - expand: An array of propertiies to expand.
     /// - Returns: A `StripeSession`.
     func create(cancelUrl: String,
                 paymentMethodTypes: [StripePaymentMethodType],
@@ -42,13 +43,16 @@ public protocol SessionRoutes {
                 paymentIntentData: [String: Any]?,
                 setupIntentData: [String: Any]?,
                 submitType: StripeSessionSubmitType?,
-                subscriptionData: [String: Any]?) -> EventLoopFuture<StripeSession>
+                subscriptionData: [String: Any]?,
+                expand: [String]?) -> EventLoopFuture<StripeSession>
     
     /// Retrieves a Session object.
     ///
-    /// - Parameter id: The ID of the Checkout Session.
+    /// - Parameters:
+    ///   - id: The ID of the Checkout Session.
+    ///   - expand: An aray of properties to expand.
     /// - Returns: A `StripeSession`.
-    func retrieve(id: String) -> EventLoopFuture<StripeSession>
+    func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSession>
     
     /// Returns a list of Checkout Sessions.
     /// - Parameter filter: A dictionary that will be used for the [query parameters.](https://stripe.com/docs/api/checkout/sessions/list?lang=curl)
@@ -73,7 +77,8 @@ extension SessionRoutes {
                        paymentIntentData: [String: Any]? = nil,
                        setupIntentData: [String: Any]? = nil,
                        submitType: StripeSessionSubmitType? = nil,
-                       subscriptionData: [String: Any]? = nil) -> EventLoopFuture<StripeSession> {
+                       subscriptionData: [String: Any]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeSession> {
         return create(cancelUrl: cancelUrl,
                       paymentMethodTypes: paymentMethodTypes,
                       successUrl: successUrl,
@@ -88,11 +93,12 @@ extension SessionRoutes {
                       paymentIntentData: paymentIntentData,
                       setupIntentData: setupIntentData,
                       submitType: submitType,
-                      subscriptionData: subscriptionData)
+                      subscriptionData: subscriptionData,
+                      expand: expand)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeSession> {
-        return retrieve(id: id)
+    public func retrieve(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeSession> {
+        return retrieve(id: id, expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSessionList> {
@@ -124,7 +130,8 @@ public struct StripeSessionRoutes: SessionRoutes {
                        paymentIntentData: [String: Any]?,
                        setupIntentData: [String: Any]?,
                        submitType: StripeSessionSubmitType?,
-                       subscriptionData: [String: Any]?) -> EventLoopFuture<StripeSession> {
+                       subscriptionData: [String: Any]?,
+                       expand: [String]?) -> EventLoopFuture<StripeSession> {
         var body: [String: Any] = ["cancel_url": cancelUrl,
                                    "payment_method_types": paymentMethodTypes.map { $0.rawValue },
                                    "success_url": successUrl]
@@ -177,11 +184,20 @@ public struct StripeSessionRoutes: SessionRoutes {
             subscriptionData.forEach { body["subscription_data[\($0)]"] = $1 }
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: sessions, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeSession> {
-        return apiHandler.send(method: .GET, path: "\(sessions)/\(id)", headers: headers)
+    public func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSession> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(sessions)/\(id)", query: queryParams, headers: headers)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSessionList> {

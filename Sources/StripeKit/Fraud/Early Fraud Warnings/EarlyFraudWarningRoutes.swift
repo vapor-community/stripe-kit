@@ -12,7 +12,8 @@ public protocol EarlyFraudWarningRoutes {
     
     /// Retrieves the details of an early fraud warning that has previously been created.
     /// - Parameter earlyFraudWarning: The identifier of the early fraud warning to be retrieved.
-    func retrieve(earlyFraudWarning: String) -> EventLoopFuture<StripeEarlyFraudWarning>
+    /// - Parameter expand: An array of properties to expand.
+    func retrieve(earlyFraudWarning: String, expand: [String]?) -> EventLoopFuture<StripeEarlyFraudWarning>
     
     /// Returns a list of early fraud warnings.
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/radar/early_fraud_warnings/list).
@@ -23,8 +24,8 @@ public protocol EarlyFraudWarningRoutes {
 }
 
 extension EarlyFraudWarningRoutes {
-    public func retrieve(earlyFraudWarning: String) -> EventLoopFuture<StripeEarlyFraudWarning> {
-        return retrieve(earlyFraudWarning: earlyFraudWarning)
+    public func retrieve(earlyFraudWarning: String, expand: [String]? = nil) -> EventLoopFuture<StripeEarlyFraudWarning> {
+        return retrieve(earlyFraudWarning: earlyFraudWarning, expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeEarlyFraudWarningList> {
@@ -42,8 +43,13 @@ public struct StripeEarlyFraudWarningRoutes: EarlyFraudWarningRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(earlyFraudWarning: String) -> EventLoopFuture<StripeEarlyFraudWarning> {
-        return apiHandler.send(method: .GET, path: "\(earlyfraudwarnings)/\(earlyFraudWarning)", headers: headers)
+    public func retrieve(earlyFraudWarning: String, expand: [String]?) -> EventLoopFuture<StripeEarlyFraudWarning> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(earlyfraudwarnings)/\(earlyFraudWarning)", query: queryParams, headers: headers)
     }
     
     public func listAll(filter: [String : Any]? = nil) -> EventLoopFuture<StripeEarlyFraudWarningList> {

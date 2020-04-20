@@ -16,14 +16,20 @@ public protocol FileLinkRoutes {
     ///   - file: The ID of the file. The file’s `purpose` must be one of the following: `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
     ///   - expiresAt: A future timestamp after which the link will no longer be usable.
     ///   - metadata: Set of key-value pairs that you can attach to an object.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeFileLink`.
-    func create(file: String, expiresAt: Date?, metadata: [String: String]?) -> EventLoopFuture<StripeFileLink>
+    func create(file: String,
+                expiresAt: Date?,
+                metadata: [String: String]?,
+                expand: [String]?) -> EventLoopFuture<StripeFileLink>
     
     /// Retrieves the file link with the given ID.
     ///
-    /// - Parameter link: The identifier of the file link to be retrieved.
+    /// - Parameters:
+    ///   - link: The identifier of the file link to be retrieved.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeFileLink`.
-    func retrieve(link: String) -> EventLoopFuture<StripeFileLink>
+    func retrieve(link: String, expand: [String]?) -> EventLoopFuture<StripeFileLink>
     
     /// Updates an existing file link object. Expired links can no longer be updated
     ///
@@ -31,8 +37,12 @@ public protocol FileLinkRoutes {
     ///   - link: The ID of the file link.
     ///   - expiresAt: A future timestamp after which the link will no longer be usable, or `now` to expire the link immediately.
     ///   - metadata: Set of key-value pairs that you can attach to an object.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeFileLink`.
-    func update(link: String, expiresAt: Any?, metadata: [String: String]?) -> EventLoopFuture<StripeFileLink>
+    func update(link: String,
+                expiresAt: Any?,
+                metadata: [String: String]?,
+                expand: [String]?) -> EventLoopFuture<StripeFileLink>
     
     
     /// Returns a list of file links.
@@ -46,16 +56,28 @@ public protocol FileLinkRoutes {
 }
 
 extension FileLinkRoutes {
-    public func create(file: String, expiresAt: Date? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeFileLink> {
-        return create(file: file, expiresAt: expiresAt, metadata: metadata)
+    public func create(file: String,
+                       expiresAt: Date? = nil,
+                       metadata: [String: String]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeFileLink> {
+        return create(file: file,
+                      expiresAt: expiresAt,
+                      metadata: metadata,
+                      expand: expand)
     }
     
-    public func retrieve(link: String) -> EventLoopFuture<StripeFileLink> {
-        return retrieve(link: link)
+    public func retrieve(link: String, expand: [String]? = nil) -> EventLoopFuture<StripeFileLink> {
+        return retrieve(link: link, expand: expand)
     }
     
-    public func update(link: String, expiresAt: Any? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeFileLink> {
-        return update(link: link, expiresAt: expiresAt, metadata: metadata)
+    public func update(link: String,
+                       expiresAt: Any? = nil,
+                       metadata: [String: String]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripeFileLink> {
+        return update(link: link,
+                      expiresAt: expiresAt,
+                      metadata: metadata,
+                      expand: expand)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeFileLinkList> {
@@ -73,7 +95,10 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(file: String, expiresAt: Date?, metadata: [String: String]?) -> EventLoopFuture<StripeFileLink> {
+    public func create(file: String,
+                       expiresAt: Date?,
+                       metadata: [String: String]?,
+                       expand: [String]?) -> EventLoopFuture<StripeFileLink> {
         var body: [String: Any] = [:]
         if let expiresAt = expiresAt {
             body["expires_at"] = Int(expiresAt.timeIntervalSince1970)
@@ -82,14 +107,27 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: filelinks, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(link: String) -> EventLoopFuture<StripeFileLink> {
-        return apiHandler.send(method: .GET, path: "\(filelinks)/\(link)", headers: headers)
+    public func retrieve(link: String, expand: [String]?) -> EventLoopFuture<StripeFileLink> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(filelinks)/\(link)", query: queryParams, headers: headers)
     }
     
-    public func update(link: String, expiresAt: Any?, metadata: [String: String]?) -> EventLoopFuture<StripeFileLink> {
+    public func update(link: String,
+                       expiresAt: Any?,
+                       metadata: [String: String]?,
+                       expand: [String]?) -> EventLoopFuture<StripeFileLink> {
         var body: [String: Any] = [:]
         
         if let expiresAt = expiresAt as? Date {
@@ -103,6 +141,11 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(filelinks)/\(link)", body: .string(body.queryParameters), headers: headers)
     }
     

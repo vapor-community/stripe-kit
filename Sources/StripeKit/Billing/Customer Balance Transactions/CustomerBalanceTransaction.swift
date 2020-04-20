@@ -18,17 +18,17 @@ public struct StripeCustomerBalanceTransaction: StripeModel {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The ID of the credit note (if any) related to the transaction.
-    public var creditNote: String?
+    @Expandable<StripeCreditNote> public var creditNote: String?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
     /// The ID of the customer the transaction belongs to.
-    public var customer: String?
+    @Expandable<StripeCustomer> public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// The customer’s balance after the transaction was applied. A negative value decreases the amount due on the customer’s next invoice. A positive value increases the amount due on the customer’s next invoice.
     public var endingBalance: Int?
     /// The ID of the invoice (if any) related to the transaction.
-    public var invoice: String?
+    @Expandable<StripeInvoice> public var invoice: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

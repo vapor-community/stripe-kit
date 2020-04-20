@@ -39,7 +39,7 @@ public struct StripePlan: StripeModel {
     /// A brief description of the plan, hidden from customers.
     public var nickname: String?
     /// The product whose pricing this plan determines.
-    public var product: String?
+    @Expandable<StripeProduct> public var product: String?
     /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
     public var tiers: [StripePlanTier]?
     /// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price, in `graduated` tiering pricing can successively change as the quantity grows.

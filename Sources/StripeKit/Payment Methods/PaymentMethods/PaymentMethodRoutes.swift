@@ -18,19 +18,23 @@ public protocol PaymentMethodRoutes {
     ///   - ideal: If this is an ideal PaymentMethod, this hash contains details about the iDEAL payment method.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     ///   - sepaDebit: If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentMethod`.
     func create(type: StripePaymentMethodType,
                 billingDetails: [String: Any]?,
                 card: [String: Any]?,
                 ideal: [String: Any]?,
                 metadata: [String: String]?,
-                sepaDebit: [String: Any]?) -> EventLoopFuture<StripePaymentMethod>
+                sepaDebit: [String: Any]?,
+                expand: [String]?) -> EventLoopFuture<StripePaymentMethod>
     
     /// Retrieves a PaymentMethod object.
     ///
-    /// - Parameter paymentMethod: The ID of the PaymentMethod.
+    /// - Parameters:
+    ///   - paymentMethod: The ID of the PaymentMethod.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentMethod`.
-    func retrieve(paymentMethod: String) -> EventLoopFuture<StripePaymentMethod>
+    func retrieve(paymentMethod: String, expand: [String]?) -> EventLoopFuture<StripePaymentMethod>
     
     /// Updates a PaymentMethod object. A PaymentMethod must be attached a customer to be updated.
     ///
@@ -40,12 +44,14 @@ public protocol PaymentMethodRoutes {
     ///   - card: If this is a `card` PaymentMethod, this hash contains the user’s card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When creating with a card number, you must meet the requirements for PCI compliance. We strongly recommend using Stripe.js instead of interacting with this API directly.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     ///   - sepaDebit: If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentMethod`.
     func update(paymentMethod: String,
                 billingDetails: [String: Any]?,
                 card: [String: Any]?,
                 metadata: [String: String]?,
-                sepaDebit: [String: Any]?) -> EventLoopFuture<StripePaymentMethod>
+                sepaDebit: [String: Any]?,
+                expand: [String]?) -> EventLoopFuture<StripePaymentMethod>
     
     /// Returns a list of PaymentMethods for a given Customer
     ///
@@ -63,14 +69,17 @@ public protocol PaymentMethodRoutes {
     /// - Parameters:
     ///   - paymentMethod: The PaymentMethod to attach to the customer.
     ///   - customer: The ID of the customer to which to attach the PaymentMethod.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentMethod`.
-    func attach(paymentMethod: String, customer: String) -> EventLoopFuture<StripePaymentMethod>
+    func attach(paymentMethod: String, customer: String, expand: [String]?) -> EventLoopFuture<StripePaymentMethod>
     
     /// Detaches a PaymentMethod object from a Customer.
     ///
-    /// - Parameter paymentMethod: The PaymentMethod to detach from the customer.
+    /// - Parameters:
+    ///   - paymentMethod: The PaymentMethod to detach from the customer.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentMethod`.
-    func detach(paymentMethod: String) -> EventLoopFuture<StripePaymentMethod>
+    func detach(paymentMethod: String, expand: [String]?) -> EventLoopFuture<StripePaymentMethod>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -82,29 +91,33 @@ extension PaymentMethodRoutes {
                        card: [String: Any]? = nil,
                        ideal: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
-                       sepaDebit: [String: Any]? = nil) -> EventLoopFuture<StripePaymentMethod> {
+                       sepaDebit: [String: Any]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
         return create(type: type,
                       billingDetails: billingDetails,
                       card: card,
                       ideal: ideal,
                       metadata: metadata,
-                      sepaDebit: sepaDebit)
+                      sepaDebit: sepaDebit,
+                      expand: expand)
     }
     
-    public func retrieve(paymentMethod: String) -> EventLoopFuture<StripePaymentMethod> {
-        return retrieve(paymentMethod: paymentMethod)
+    public func retrieve(paymentMethod: String, expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
+        return retrieve(paymentMethod: paymentMethod, expand: expand)
     }
     
     public func update(paymentMethod: String,
                        billingDetails: [String: Any]? = nil,
                        card: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
-                       sepaDebit: [String: Any]? = nil) -> EventLoopFuture<StripePaymentMethod> {
+                       sepaDebit: [String: Any]? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
         return update(paymentMethod: paymentMethod,
                       billingDetails: billingDetails,
                       card: card,
                       metadata: metadata,
-                      sepaDebit: sepaDebit)
+                      sepaDebit: sepaDebit,
+                      expand: expand)
     }
     
     public func listAll(customer: String,
@@ -115,12 +128,12 @@ extension PaymentMethodRoutes {
                            filter: filter)
     }
     
-    public func attach(paymentMethod: String, customer: String) -> EventLoopFuture<StripePaymentMethod> {
-        return attach(paymentMethod: paymentMethod, customer: customer)
+    public func attach(paymentMethod: String, customer: String, expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
+        return attach(paymentMethod: paymentMethod, customer: customer, expand: expand)
     }
     
-    public func detach(paymentMethod: String) -> EventLoopFuture<StripePaymentMethod> {
-        return detach(paymentMethod: paymentMethod)
+    public func detach(paymentMethod: String, expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
+        return detach(paymentMethod: paymentMethod, expand: expand)
     }
 }
 
@@ -139,7 +152,8 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
                        card: [String: Any]?,
                        ideal: [String: Any]?,
                        metadata: [String: String]?,
-                       sepaDebit: [String: Any]?) -> EventLoopFuture<StripePaymentMethod> {
+                       sepaDebit: [String: Any]?,
+                       expand: [String]?) -> EventLoopFuture<StripePaymentMethod> {
         var body: [String: Any] = ["type": type.rawValue]
         
         if let billingDetails = billingDetails {
@@ -162,18 +176,28 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
             sepaDebit.forEach { body["sepa_debit[\($0)]"] = $1 }
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: paymentmethods, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(paymentMethod: String) -> EventLoopFuture<StripePaymentMethod> {
-        return apiHandler.send(method: .GET, path: "\(paymentmethods)/\(paymentMethod)", headers: headers)
+    public func retrieve(paymentMethod: String, expand: [String]?) -> EventLoopFuture<StripePaymentMethod> {
+        var queryParams = ""
+        if let expand = expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(paymentmethods)/\(paymentMethod)", query: queryParams, headers: headers)
     }
     
     public func update(paymentMethod: String,
                        billingDetails: [String: Any]?,
                        card: [String: Any]?,
                        metadata: [String: String]?,
-                       sepaDebit: [String: Any]?) -> EventLoopFuture<StripePaymentMethod> {
+                       sepaDebit: [String: Any]?,
+                       expand: [String]?) -> EventLoopFuture<StripePaymentMethod> {
         var body: [String: Any] = [:]
         
         if let billingDetails = billingDetails {
@@ -192,6 +216,10 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
             sepaDebit.forEach { body["sepa_debit[\($0)]"] = $1 }
         }
         
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)", body: .string(body.queryParameters), headers: headers)
     }
     
@@ -204,12 +232,23 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
         return apiHandler.send(method: .GET, path: paymentmethods, query: queryParams, headers: headers)
     }
     
-    public func attach(paymentMethod: String, customer: String) -> EventLoopFuture<StripePaymentMethod> {
-        let body: [String: Any] = ["customer": customer]
+    public func attach(paymentMethod: String, customer: String, expand: [String]?) -> EventLoopFuture<StripePaymentMethod> {
+        var body: [String: Any] = ["customer": customer]
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
         return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)/attach", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func detach(paymentMethod: String) -> EventLoopFuture<StripePaymentMethod> {
-        return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)/detach", headers: headers)
+    public func detach(paymentMethod: String, expand: [String]?) -> EventLoopFuture<StripePaymentMethod> {
+        var body: [String: Any] = [:]
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
+        return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)/detach", body: .string(body.queryParameters), headers: headers)
     }
 }
