@@ -13,15 +13,13 @@ public struct StripeAuthorization: StripeModel {
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
+    /// The total amount that was authorized or rejected. This amount is in the card’s currency and in the smallest currency unit.
+    public var amount: Int?
     /// Whether the authorization has been approved.
     public var approved: Bool?
     /// How the card details were provided. One of `chip`, `contactless`, `keyed_in`, `online`, or `swipe`.
     public var authorizationMethod: StripeAuthorizationMethod?
-    /// The amount that has been authorized. This will be `0` when the object is created, and increase after it has been approved.
-    public var authorizedAmount: Int?
-    /// The currency that was presented to the cardholder for the authorization. Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var authorizedCurrency: StripeCurrency?
-    /// array, contains: balance_transaction object
+    /// List of balance transactions associated with this authorization.
     public var balanceTransactions: [StripeBalanceTransaction]?
     /// Card associated with this authorization.
     public var card: StripeIssuingCard?
@@ -29,30 +27,43 @@ public struct StripeAuthorization: StripeModel {
     @Expandable<StripeCardholder> public var cardholder: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
-    /// The amount the authorization is expected to be in held_currency. When Stripe holds funds from you, this is the amount reserved for the authorization. This will be 0 when the object is created, and increase after it has been approved. For multi-currency transactions, held_amount can be used to determine the expected exchange rate.
-    public var heldAmount: Int?
-    /// The currency of the held amount. This will always be the card currency.
-    public var heldCurrency: StripeCurrency?
+    /// Three-letter ISO currency code. Must be a supported currency.
+    public var currency: StripeCurrency?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
+    /// The total amount that was authorized or rejected. This amount is in the `merchant_currency` and in the smallest currency unit.
+    public var merchantAmount: Int?
+    /// The currency that was presented to the cardholder for the authorization. Three-letter ISO currency code, in lowercase. Must be a supported currency.
+    public var merchantCurrency: StripeCurrency?
     /// Details about the merchant (grocery store, e-commerce website, etc.) where the card authorization happened.
     public var merchantData: StripeAuthorizationMerchantData?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    /// The amount the user is requesting to be authorized. This field will only be non-zero during an `issuing.authorization.request` webhook.
-    public var pendingAuthorizedAmount: Int?
-    /// The additional amount Stripe will hold if the authorization is approved. This field will only be non-zero during an `issuing.authorization.request` webhook.
-    public var pendingHeldAmount: Int?
+    /// The pending authorization request. This field will only be non-null during an `issuing_authorization.request` webhook.
+    public var pendingRequest: StripeAuthorizationPendingRequest?
     /// History of every time the authorization was approved/denied (whether approved/denied by you directly or by Stripe based on your `spending_controls`). If the merchant changes the authorization by performing an incremental authorization or partial capture, you can look at this field to see the previous states of the authorization.
     public var requestHistory: [StripeAuthorizationRequestHistory]?
-    /// One of `pending`, `reversed`, or `closed`.
+    /// The current status of the authorization in its lifecycle.
     public var status: StripeAuthorizationStatus?
     /// List of transactions associated with this authorization.
     public var transactions: [StripeTransaction]?
     /// Verifications that Stripe performed on information that the cardholder provided to the merchant.
     public var verificationData: StripeAuthorizationVerificationData?
     /// What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
-    public var walletProvider: StripeAuthorizationWalletProvider?
+    public var wallet: StripeAuthorizationWallet?
+}
+
+public struct StripeAuthorizationPendingRequest: StripeModel {
+    /// The additional amount Stripe will hold if the authorization is approved, in the card’s currency and in the smallest currency unit.
+    public var amount: Int?
+    /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
+    public var currency: StripeCurrency?
+    /// If set true, you may provide amount to control how much to hold for the authorization.
+    public var isAmountControllable: Bool?
+    /// The amount the merchant is requesting to be authorized in the merchant_currency. The amount is in the smallest currency unit.
+    public var merchantAmount: Int?
+    /// The local currency the merchant is requesting to authorize.
+    public var merchantCurrency: StripeCurrency?
 }
 
 public enum StripeAuthorizationMethod: String, StripeModel {
@@ -64,7 +75,7 @@ public enum StripeAuthorizationMethod: String, StripeModel {
 }
 
 public struct StripeAuthorizationMerchantData: StripeModel {
-    // TODO: - Make an enum once it's solidified.
+    // TODO: - Make an enum once it's solidified. https://stripe.com/docs/issuing/merchant-categories
     /// A categorization of the seller’s type of business. See our merchant categories guide for a list of possible values.
     public var category: String?
     /// City where the seller is located
@@ -79,8 +90,6 @@ public struct StripeAuthorizationMerchantData: StripeModel {
     public var postalCode: String?
     /// State where the seller is located
     public var state: String?
-    /// The url an online purchase was made from
-    public var url: String?
 }
 
 public struct StripeAuthorizationRequestHistory: StripeModel {
@@ -145,7 +154,7 @@ public enum StripeAuthorizationVerificationDataAuthorization: String, StripeMode
     case success
 }
 
-public enum StripeAuthorizationWalletProvider: String, StripeModel {
+public enum StripeAuthorizationWallet: String, StripeModel {
     case applePay = "apple_pay"
     case googlePay = "google_pay"
     case samsungPay = "samsung_pay"
