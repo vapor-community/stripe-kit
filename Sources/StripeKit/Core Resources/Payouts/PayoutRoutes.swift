@@ -66,15 +66,15 @@ public protocol PayoutRoutes {
 }
 
 extension PayoutRoutes {
-    func create(amount: Int,
-                currency: StripeCurrency,
-                description: String? = nil,
-                destination: String? = nil,
-                metadata: [String: String]? = nil,
-                method: StripePayoutMethod? = nil,
-                sourceType: StripePayoutSourceType? = nil,
-                statementDescriptor: String? = nil,
-                expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+    public func create(amount: Int,
+                       currency: StripeCurrency,
+                       description: String? = nil,
+                       destination: String? = nil,
+                       metadata: [String: String]? = nil,
+                       method: StripePayoutMethod? = nil,
+                       sourceType: StripePayoutSourceType? = nil,
+                       statementDescriptor: String? = nil,
+                       expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
         return create(amount: amount,
                       currency: currency,
                       description: description,
@@ -86,19 +86,19 @@ extension PayoutRoutes {
                       expand: expand)
     }
     
-    func retrieve(payout: String, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+    public func retrieve(payout: String, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
         return retrieve(payout: payout, expand: expand)
     }
     
-    func update(payout: String, metadata: [String: String]? = nil, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+    public func update(payout: String, metadata: [String: String]? = nil, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
         return update(payout: payout, metadata: metadata, expand: expand)
     }
     
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePayoutsList> {
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePayoutsList> {
         return listAll(filter: filter)
     }
     
-    func cancel(payout: String, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+    public func cancel(payout: String, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
         return cancel(payout: payout, expand: expand)
     }
 }
