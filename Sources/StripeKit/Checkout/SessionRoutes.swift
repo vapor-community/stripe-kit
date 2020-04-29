@@ -36,7 +36,7 @@ public protocol SessionRoutes {
                 clientReferenceId: String?,
                 customer: String?,
                 customerEmail: String?,
-                lineItems: [String: Any]?,
+                lineItems: [[String: Any]]?,
                 locale: StripeSessionLocale?,
                 metadata: [String: String]?,
                 mode: StripeSessionMode?,
@@ -70,7 +70,7 @@ extension SessionRoutes {
                        clientReferenceId: String? = nil,
                        customer: String? = nil,
                        customerEmail: String? = nil,
-                       lineItems: [String: Any]? = nil,
+                       lineItems: [[String: Any]]? = nil,
                        locale: StripeSessionLocale? = nil,
                        metadata: [String: String]? = nil,
                        mode: StripeSessionMode? = nil,
@@ -123,7 +123,7 @@ public struct StripeSessionRoutes: SessionRoutes {
                        clientReferenceId: String?,
                        customer: String?,
                        customerEmail: String?,
-                       lineItems: [String: Any]?,
+                       lineItems: [[String: Any]]?,
                        locale: StripeSessionLocale?,
                        metadata: [String: String]?,
                        mode: StripeSessionMode?,
@@ -153,7 +153,7 @@ public struct StripeSessionRoutes: SessionRoutes {
         }
         
         if let lineItems = lineItems {
-            lineItems.forEach { body["line_items[\($0)]"] = $1 }
+            body["line_items"] = lineItems
         }
         
         if let locale = locale {

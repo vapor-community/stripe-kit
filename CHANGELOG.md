@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.0.1 - 2020-04-28
+* [#75](https://github.com/vapor-community/stripe-kit/pull/75) 
+    * Made payout routes public.
+    * Fixed `line_items` paramater type on checkout session routes.
+
 ## 7.0.0 - 2020-04-20
 * [#73](https://github.com/vapor-community/stripe-kit/pull/73) Updated Issuing API and objects to latest spec.
 
