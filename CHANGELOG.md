@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.2 - 2020-04-30
+* [#77](https://github.com/vapor-community/stripe-kit/pull/77) Add fix for missing field on `@Expandable` properties.
+
 ## 7.0.1 - 2020-04-28
 * [#75](https://github.com/vapor-community/stripe-kit/pull/75) 
     * Made payout routes public.
