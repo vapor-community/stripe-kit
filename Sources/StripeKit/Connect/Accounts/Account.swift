@@ -43,7 +43,7 @@ public struct StripeConnectAccount: StripeModel {
     /// Whether Stripe can send payouts to this account.
     public var payoutsEnabled: Bool?
     /// Information about the requirements for the account, including what information needs to be collected, and by when.
-    public var requirements: StripeConnectAccountRequirmenets?
+    public var requirements: StripeConnectAccountRequirements?
     /// Account options for customizing how the account functions within Stripe.
     public var settings: StripeConnectAccountSettings?
     /// Details on the [acceptance of the Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance)
@@ -81,15 +81,27 @@ public struct StripeConnectAccountBusinessProfile: StripeModel {
 public enum StripeConnectAccountBusinessType: String, StripeModel {
     case individual
     case company
+    case nonProfit = "non_profit"
+    case governmentEntity = "government_entity"
 }
 
 public struct StripeConnectAccountCapablities: StripeModel {
+    /// The status of the BECS Direct Debit (AU) payments capability of the account, or whether the account can directly process BECS Direct Debit (AU) charges.
+    public var auBecsDebitPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the Bacs Direct Debits payments capability of the account, or whether the account can directly process Bacs Direct Debits charges.
+    public var bacsDebitPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the card issuing capability of the account, or whether you can use Issuing to distribute funds on cards
     public var cardIssuing: StripeConnectAccountCapabilitiesStatus?
     /// The status of the card payments capability of the account, or whether the account can directly process credit and debit card charges.
     public var cardPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the JCB payments capability of the account, or whether the account (Japan only) can directly process JCB credit card charges in JPY currency.
+    public var jcbPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the legacy payments capability of the account.
     public var legacyPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the tax reporting 1099-K (US) capability of the account.
+    public var taxReportingUs1099K: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the tax reporting 1099-MISC (US) capability of the account.
+    public var taxReportingUs1099Misc: StripeConnectAccountCapabilitiesStatus?
     /// The status of the transfers capability of the account, or whether your platform can transfer funds to the account.
     public var transfers: StripeConnectAccountCapabilitiesStatus?
 }
@@ -109,6 +121,8 @@ public struct StripeConnectAccountCompany: StripeModel {
     public var addressKanji: StripeAddressKanji?
     /// Whether the company’s directors have been provided. This Boolean will be `true` if you’ve manually indicated that all directors are provided via the `directors_provided` parameter.
     public var directorsProvided: Bool?
+    /// Whether the company’s executives have been provided. This Boolean will be `true` if you’ve manually indicated that all executives are provided via the `executives_provided` parameter, or if Stripe determined that sufficient executives were provided.
+    public var executivesProvided: Bool?
     /// The company’s legal name.
     public var name: String?
     /// The Kana variation of the company's legal name (Japan only).
@@ -132,39 +146,173 @@ public struct StripeConnectAccountCompany: StripeModel {
 }
 
 public struct StripeConnectAccountCompanyVerification: StripeModel {
-    public var document: StripePersonVerificationDocument?
+    /// A document for the company.
+    public var document: StripeConnectAccountCompanyVerificationDocument?
+}
+
+public struct StripeConnectAccountCompanyVerificationDocument: StripeModel {
+    /// The back of a document returned by a file upload with a `purpose` value of `additional_verification`.
+    @Expandable<StripeFile> public var back: String?
+    /// A user-displayable string describing the verification state of this document.
+    public var details: String?
+    /// One of `document_corrupt`, `document_expired`, `document_failed_copy`, `document_failed_greyscale`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_not_readable`, `document_not_uploaded`, `document_type_not_supported`, or `document_too_large`. A machine-readable code specifying the verification state for this document.
+    public var detailsCode: StripePersonVerificationDocumentDetailsCode?
+    /// The front of a document returned by a file upload with a `purpose` value of `additional_verification`.
+    @Expandable<StripeFile> public var front: String?
+}
+
+public enum StripeConnectAccountCompanyVerificationDocumentDetailsCode: String, StripeModel {
+    case documentCorrupt = "document_corrupt"
+    case documentExpired = "document_expired"
+    case documentFailedCopy = "document_failed_copy"
+    case documentFailedGreyscale = "document_failed_greyscale"
+    case documentFailedOther = "document_failed_other"
+    case documentFailedTestMode = "document_failed_test_mode"
+    case documentFraudulent = "document_fraudulent"
+    case documentIncomplete = "document_incomplete"
+    case documentInvalid = "document_invalid"
+    case documentManipulated = "document_manipulated"
+    case documentNotReadable = "document_not_readable"
+    case documentNotUploaded = "document_not_uploaded"
+    case documentTypeNotSupported = "document_type_not_supported"
+    case documentTooLarge = "document_too_large"
 }
 
 public enum StripeConnectAccountCompanyStructure: String, StripeModel {
     case governmentInstrumentality = "government_instrumentality"
     case governmentalUnit = "governmental_unit"
     case incorporatedNonProfit = "incorporated_non_profit"
+    case limitedLiabilityPartnership = "limited_liability_partnership"
     case multiMemberLlc = "multi_member_llc"
+    case privateCompany = "private_company"
     case privateCorporation = "private_corporation"
     case privatePartnership = "private_partnership"
+    case publicCompany = "public_company"
     case publicCorporation = "public_corporation"
     case publicPartnership = "public_partnership"
+    case singleMemberLlc = "single_member_llc"
+    case soleProprietorship = "sole_proprietorship"
     case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
     case unincorporatedAssociation = "unincorporated_association"
     case unincorporatedNonProfit = "unincorporated_non_profit"
 }
 
-public struct StripeConnectAccountRequirmenets: StripeModel {
-    /// The date the fields in currently_due must be collected by to keep payouts enabled for the account. These fields might block payouts sooner if the next threshold is reached before these fields are collected.
+public struct StripeConnectAccountRequirements: StripeModel {
+    /// The date the fields in `currently_due` must be collected by to keep payouts enabled for the account. These fields might block payouts sooner if the next threshold is reached before these fields are collected.
     public var currentDeadline: Date?
-    /// The fields that need to be collected to keep the account enabled. If not collected by the current_deadline, these fields appear in past_due as well, and the account is disabled.
+    /// The fields that need to be collected to keep the account enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
     public var currentlyDue: [String]?
-    /// If the account is disabled, this string describes why the account can’t create charges or receive payouts. Can be requirements.past_due, requirements.pending_verification, rejected.fraud, rejected.terms_of_service, rejected.listed, rejected.other, listed, under_review, or other.
-    public var disabledReason: String?
-    /// The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in currently_due as well, and the current_deadline is set.
+    /// If the account is disabled, this string describes why the account can’t create charges or receive payouts. Can be `requirements.past_due`, `requirements.pending_verification`, `rejected.fraud`, `rejected.terms_of_service`, `rejected.listed`, `rejected.other`, `listed`, `under_review`, or `other`.
+    public var disabledReason: StripeConnectAccountRequirementsDisabledReason?
+    /// The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
+    public var errors: [StripeConnectAccountRequirementsError]?
+    /// The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
     public var eventuallyDue: [String]?
     /// The fields that weren’t collected by the current_deadline. These fields need to be collected to re-enable the account.
     public var pastDue: [String]?
-    /// Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to currently_due or past_due.
+    /// Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
     public var pendingVerification: [String]?
 }
 
+public enum StripeConnectAccountRequirementsDisabledReason: String, StripeModel {
+    case requirementsPastDue = "requirements.past_due"
+    case requirementsPendingVerification = "requirements.pending_verification"
+    case rejectedFraud = "rejected.fraud"
+    case rejectedTermsOfService = "rejected.terms_of_service"
+    case rejectedListed = "rejected.listed"
+    case rejectedOther = "rejected.other"
+    case listed
+    case underReview = "under_review"
+    case other
+}
+
+public struct StripeConnectAccountRequirementsError: StripeModel {
+    /// The code for the type of error.
+    public var code: StripeConnectAccountRequirementsErrorCode?
+}
+
+public enum StripeConnectAccountRequirementsErrorCode: String, StripeModel {
+    /// The combination of the city, state, and postal code in the provided address could not be validated.
+    case invalidAddressCityStatePostalCode = "invalid_address_city_state_postal_code"
+    /// The street name and/or number for the provided address could not be validated.
+    case invalidStreetAddress = "invalid_street_address"
+    /// An invalid value was provided for the related field. This is a general error code.
+    case invalidValueOther = "invalid_value_other"
+    /// The address on the document did not match the address on the account. Upload a document with a matching address or update the address on the account.
+    case verificationDocumentAddressMismatch = "verification_document_address_mismatch"
+    /// The company address was missing on the document. Upload a document that includes the address.
+    case verificationDocumentAddressMissing = "verification_document_address_missing"
+    /// The uploaded file for the document was invalid or corrupt. Upload a new file of the document.
+    case verificationDocumentCorrupt = "verification_document_corrupt"
+    /// The provided document was from an unsupported country.
+    case verificationDocumentCountryNotSupported = "verification_document_country_not_supported"
+    /// The date of birth (DOB) on the document did not match the DOB on the account. Upload a document with a matching DOB or update the DOB on the account.
+    case verificationDocumentDobMismatch = "verification_document_dob_mismatch"
+    /// The same type of document was used twice. Two unique types of documents are required for verification. Upload two different documents.
+    case verificationDocumentDuplicateType = "verification_document_duplicate_type"
+    /// The document could not be used for verification because it has expired. If it’s an identity document, its expiration date must be after the date the document was submitted. If it’s an address document, the issue date must be within the last six months.
+    case verificationDocumentExpired = "verification_document_expired"
+    /// The document could not be verified because it was detected as a copy (e.g., photo or scan). Upload the original document.
+    case verificationDocumentFailedCopy = "verification_document_failed_copy"
+    /// The document could not be used for verification because it was in greyscale. Upload a color copy of the document.
+    case verificationDocumentFailedGreyscale = "verification_document_failed_greyscale"
+    /// The document could not be verified for an unknown reason. Ensure that the document follows the [guidelines for document uploads](https://stripe.com/docs/connect/identity-verification-api#acceptable-verification-documents) .
+    case verificationDocumentFailedOther = "verification_document_failed_other"
+    /// A test data helper was supplied to simulate verification failure. Refer to the documentation for [test file tokens](https://stripe.com/docs/connect/testing#test-file-tokens) .
+    case verificationDocumentFailedTestMode = "verification_document_failed_test_mode"
+    /// The document was identified as altered or falsified.
+    case verificationDocumentFraudulent = "verification_document_fraudulent"
+    /// The company ID number on the account could not be verified. Correct any errors in the ID number field or upload a document that includes the ID number.
+    case verificationDocumentIdNumberMismatch = "verification_document_id_number_mismatch"
+    /// The company ID number was missing on the document. Upload a document that includes the ID number.
+    case verificationDocumentIdNumberMissing = "verification_document_id_number_missing"
+    /// The document was cropped or missing important information. Upload a complete scan of the document.
+    case verificationDocumentIncomplete = "verification_document_incomplete"
+    /// The uploaded file was not one of the valid document types. Ensure that the document follows the [guidelines for document uploads](https://stripe.com/docs/connect/identity-verification-api#acceptable-verification-documents) .
+    case verificationDocumentInvalid = "verification_document_invalid"
+    /// The document was identified as altered or falsified.
+    case verificationDocumentManipulated = "verification_document_manipulated"
+    /// The uploaded file was missing the back of the document. Upload a complete scan of the document.
+    case verificationDocumentMissingBack = "verification_document_missing_back"
+    /// The uploaded file was missing the front of the document. Upload a complete scan of the document.
+    case verificationDocumentMissingFront = "verification_document_missing_front"
+    /// The name on the document did not match the name on the account. Upload a document with a matching name or update the name on the account.
+    case verificationDocumentNameMismatch = "verification_document_name_mismatch"
+    /// The company name was missing on the document. Upload a document that includes the company name.
+    case verificationDocumentNameMissing = "verification_document_name_missing"
+    /// The nationality on the document did not match the person’s stated nationality. Update the person’s stated nationality, or upload a document that matches it.
+    case verificationDocumentNationalityMismatch = "verification_document_nationality_mismatch"
+    /// The document could not be read. Ensure that the document follows the [guidelines for document uploads](https://stripe.com/docs/connect/identity-verification-api#acceptable-verification-documents) .
+    case verificationDocumentNotReadable = "verification_document_not_readable"
+    /// No document was uploaded. Upload the document again.
+    case verificationDocumentNotUploaded = "verification_document_not_uploaded"
+    /// The document was identified as altered or falsified
+    case verificationDocumentPhotoMismatch = "verification_document_photo_mismatch"
+    /// The uploaded file exceeded the 10 MB size limit. Resize the document and upload the new file.
+    case verificationDocumentTooLarge = "verification_document_too_large"
+    /// The provided document type was not accepted. Ensure that the document follows the [guidelines for document uploads](https://stripe.com/docs/connect/identity-verification-api#acceptable-verification-documents) .
+    case verificationDocumentTypeNotSupported = "verification_document_type_not_supported"
+    /// The address on the account could not be verified. Correct any errors in the address field or upload a document that includes the address.
+    case verificationFailedAddressMatch = "verification_failed_address_match"
+    /// The Importer Exporter Code (IEC) number could not be verified. Correct any errors in the company’s IEC number field. (India only)
+    case verificationFailedBusinessIecNumber = "verification_failed_business_iec_number"
+    /// The document could not be verified. Upload a document that includes the company name, ID number, and address fields.
+    case verificationFailedDocumentMatch = "verification_failed_document_match"
+    /// The company ID number on the account could not be verified. Correct any errors in the ID number field or upload a document that includes the ID number.
+    case verificationFailedIdNumberMatch = "verification_failed_id_number_match"
+    /// The person’s keyed-in identity information could not be verified. Correct any errors or upload a document that matches the identity fields (e.g., name and date of birth) entered.
+    case verificationFailedKeyedIdentity = "verification_failed_keyed_identity"
+    /// The keyed-in information on the account could not be verified. Correct any errors in the company name, ID number, or address fields. You can also upload a document that includes those fields.
+    case verificationFailedKeyedMatch = "verification_failed_keyed_match"
+    /// The company name on the account could not be verified. Correct any errors in the company name field or upload a document that includes the company name.
+    case verificationFailedNameMatch = "verification_failed_name_match"
+    /// Verification failed for an unknown reason. Correct any errors and resubmit the required fields.
+    case verificationFailedOther = "verification_failed_other"
+}
+
 public struct StripeConnectAccountSettings: StripeModel {
+    /// Settings specific to Bacs Direct Debit on the account.
+    public var bacsDebitPayments: StripeConnectAccountSettingsBacsDebitPayments?
     /// Settings used to apply the account’s branding to email receipts, invoices, Checkout, and other products.
     public var branding: StripeConnectAccountSettingsBranding?
     /// Settings specific to card charging on the account.
@@ -177,11 +325,16 @@ public struct StripeConnectAccountSettings: StripeModel {
     public var payouts: StripeConnectAccountSettingsPayouts?
 }
 
+public struct StripeConnectAccountSettingsBacsDebitPayments: StripeModel {
+    /// The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this will appear on the mandate, and as the statement descriptor.
+    public var displayName: String?
+}
+
 public struct StripeConnectAccountSettingsBranding: StripeModel {
     /// (ID of a file upload) An icon for the account. Must be square and at least 128px x 128px.
-    public var icon: String?
+    @Expandable<StripeFile> public var icon: String?
     /// (ID of a file upload) A logo for the account that will be used in Checkout instead of the icon and without the account’s name next to it if provided. Must be at least 128px x 128px.
-    public var logo: String?
+    @Expandable<StripeFile> public var logo: String?
     /// A CSS hex color value representing the primary branding color for this account
     public var primaryColor: String?
     /// A CSS hex color value representing the secondary branding color for this account
@@ -205,7 +358,7 @@ public struct StripeConnectAccountSettingsCardPaymentsDeclineOn: StripeModel {
 public struct StripeConnectAccountSettingsDashboard: StripeModel {
     /// The display name for this account. This is used on the Stripe Dashboard to differentiate between accounts.
     public var displayName: String?
-    /// The timezone used in the Stripe Dashboard for this account. A list of possible time zone values is maintained at the IANA Time Zone Database.
+    /// The timezone used in the Stripe Dashboard for this account. A list of possible time zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones) .
     public var timezone: String?
 }
 
