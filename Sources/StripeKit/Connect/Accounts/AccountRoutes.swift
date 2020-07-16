@@ -21,7 +21,7 @@ public protocol AccountRoutes {
     ///   - accountToken: An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
     ///   - businessProfile: Non-essential business information about the account
     ///   - businessType: The business type. Can be `individual` or `company`.
-    ///   - company: Information about the company or business. This field is null unless `business_type` is set to `company`.
+    ///   - company: Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
     ///   - defaultCurrency: Three-letter ISO currency code representing the default currency for the account. This must be a currency that Stripe supports in the account’s country.
     ///   - externalAccount: A card or bank account to attach to the account. You can provide either a token, like the ones returned by Stripe.js, or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation. By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
     ///   - individual: Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
@@ -59,7 +59,7 @@ public protocol AccountRoutes {
     ///   - accountToken: An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
     ///   - businessProfile: Non-essential business information about the account
     ///   - businessType: The business type. Can be `individual` or `company`.
-    ///   - company: Information about the company or business. This field is null unless `business_type` is set to `company`.
+    ///   - company: Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
     ///   - defaultCurrency: Three-letter ISO currency code representing the default currency for the account. This must be a currency that Stripe supports in the account’s country.
     ///   - email: Email address of the account representative. For Standard accounts, this is used to ask them to claim their Stripe account. For Custom accounts, this only makes the account easier to identify to platforms; Stripe does not email the account representative.
     ///   - externalAccount: A card or bank account to attach to the account. You can provide either a token, like the ones returned by Stripe.js, or a dictionary, as documented in the `external_account` parameter for bank account creation.
