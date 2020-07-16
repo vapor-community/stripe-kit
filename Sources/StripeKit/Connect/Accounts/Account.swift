@@ -54,7 +54,7 @@ public struct StripeConnectAccount: StripeModel {
 
 public struct StripeConnectAccountList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeConnectAccount]?
 }

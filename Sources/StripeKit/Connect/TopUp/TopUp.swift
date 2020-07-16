@@ -52,7 +52,7 @@ public enum StripeTopUpStatus: String, StripeModel {
 
 public struct StripeTopUpList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeTopUp]?
 }

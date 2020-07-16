@@ -32,7 +32,7 @@ public struct StripeOrderReturn: StripeModel {
 
 public struct StripeOrderReturnList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeOrderReturn]?
 }

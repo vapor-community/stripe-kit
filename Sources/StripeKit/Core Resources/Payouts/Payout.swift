@@ -92,7 +92,7 @@ public enum StripePayoutType: String, StripeModel {
 
 public struct StripePayoutsList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripePayout]?
 }

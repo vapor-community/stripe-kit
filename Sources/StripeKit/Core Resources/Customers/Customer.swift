@@ -84,7 +84,7 @@ public enum StripeCustomerTaxExempt: String, StripeModel {
 
 public struct StripeCustomerList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeCustomer]?
 }

@@ -33,7 +33,7 @@ public struct StripeTransferReversal: StripeModel {
 
 public struct StripeTransferReversalList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeTransferReversal]?
 }

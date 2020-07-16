@@ -104,7 +104,7 @@ public enum StripePlanUsageType: String, StripeModel {
 
 public struct StripePlanList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripePlan]?
 }

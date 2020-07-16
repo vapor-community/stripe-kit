@@ -106,7 +106,7 @@ public enum StripeSubscriptionStatus: String, StripeModel {
 
 public struct StripeSubscriptionList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeSubscription]?
 }

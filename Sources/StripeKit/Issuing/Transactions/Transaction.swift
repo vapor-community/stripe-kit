@@ -42,7 +42,7 @@ public struct StripeTransaction: StripeModel {
 
 public struct StripeTransactionList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeTransaction]?
 }

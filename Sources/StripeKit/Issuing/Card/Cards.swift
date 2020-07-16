@@ -55,7 +55,7 @@ public struct StripeIssuingCard: StripeModel {
 
 public struct StripeIssuingCardList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeIssuingCard]?
 }

@@ -503,7 +503,7 @@ public enum StripeEventType: String, StripeModel {
 
 public struct StripeEventList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeEvent]?
 }

@@ -162,7 +162,7 @@ public enum StripePersonVerificationStatus: String, StripeModel {
 
 public struct StripePersonsList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripePerson]?
 }
