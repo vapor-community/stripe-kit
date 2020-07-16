@@ -63,7 +63,7 @@ public enum StripeInvoiceLineItemType: String, StripeModel {
 
 public struct StripeInvoiceLineItemList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeInvoiceLineItem]?
 }

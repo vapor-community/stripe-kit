@@ -162,7 +162,7 @@ public enum StripeAuthorizationWallet: String, StripeModel {
 
 public struct StripeAuthorizationList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeAuthorization]?
 }

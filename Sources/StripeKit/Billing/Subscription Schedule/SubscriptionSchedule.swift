@@ -108,7 +108,7 @@ public enum StripeSubscriptionSchedulePhaseProrationBehavior: String, StripeMode
 
 public struct StripeSubscriptionScheduleList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeSubscriptionSchedule]?
 }
