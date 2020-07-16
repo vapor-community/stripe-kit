@@ -12,14 +12,15 @@ import Foundation
 public protocol AccountLinkRoutes {
     
     /// Creates an AccountLink object that returns a single-use Stripe URL that the user can redirect their user to in order to take them through the Connect Onboarding flow.
-    /// - Parameter account: The identifier of the account to create an account link for.
-    /// - Parameter failureUrl: The URL that the user will be redirected to if the account link is no longer valid.
-    /// - Parameter successUrl: The URL that the user will be redirected to upon leaving or completing the linked flow successfully.
-    /// - Parameter type: The type of account link the user is requesting. Possible values are `custom_account_verification` or `custom_account_update`.
-    /// - Parameter collect: The information the platform wants to collect from users up-front. Possible values are `currently_due` and `eventually_due`.
+    /// - Parameters:
+    ///  - account: The identifier of the account to create an account link for.
+    ///  - refreshUrl: The URL that the user will be redirected to if the account link is no longer valid. Your refresh_url should trigger a method on your server to create a new account link using this API, with the same parameters, and redirect the user to the new account link.
+    ///  - returnUrl: The URL that the user will be redirected to upon leaving or completing the linked flow.
+    ///  - type: The type of account link the user is requesting. Possible values are `custom_account_verification` or `custom_account_update`.
+    ///  - collect: The information the platform wants to collect from users up-front. Possible values are `currently_due` and `eventually_due`.
     func create(account: String,
-                failureUrl: String,
-                successUrl: String,
+                refreshUrl: String,
+                returnUrl: String,
                 type: AccountLinkCreationType,
                 collect: AccountLinkCreationCollectType?) -> EventLoopFuture<AccountLink>
     
@@ -38,13 +39,13 @@ public struct StripeAccountLinkRoutes: AccountLinkRoutes {
     }
     
     public func create(account: String,
-                       failureUrl: String,
-                       successUrl: String,
+                       refreshUrl: String,
+                       returnUrl: String,
                        type: AccountLinkCreationType,
                        collect: AccountLinkCreationCollectType?) -> EventLoopFuture<AccountLink> {
         var body: [String: Any] = ["account": account,
-                                   "failure_url": failureUrl,
-                                   "success_url": successUrl,
+                                   "refresh_url": refreshUrl,
+                                   "success_url": returnUrl,
                                    "type": type.rawValue]
         
         if let collect = collect {

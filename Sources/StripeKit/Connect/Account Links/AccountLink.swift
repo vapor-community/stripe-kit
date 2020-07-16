@@ -20,7 +20,9 @@ public struct AccountLink: StripeModel {
 }
 
 public enum AccountLinkCreationType: String, StripeModel {
+    /// Provides a form for inputting outstanding requirements. Send the user to the form in this mode to just collect the new information you need.
     case customAccountVerification = "custom_account_verification"
+    /// Displays the fields that are already populated on the account object, and allows your user to edit previously provided information. Consider framing this as “edit my profile” or “update my verification information”.
     case customAccountUpdate = "custom_account_update"
 }
 
