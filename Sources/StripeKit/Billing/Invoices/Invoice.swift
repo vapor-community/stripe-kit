@@ -30,7 +30,7 @@ public struct StripeInvoice: StripeModel {
     public var attemptCount: Int?
     /// Whether an attempt has been made to pay the invoice. An invoice is not attempted until 1 hour after the `invoice.created` webhook, for example, so you might not want to display that invoice as unpaid to your users.
     public var attempted: Bool?
-    ///Controls whether Stripe will perform automatic collection of the invoice. When `false`, the invoice’s state will not automatically advance without an explicit action.
+    /// Controls whether Stripe will perform automatic collection of the invoice. When `false`, the invoice’s state will not automatically advance without an explicit action.
     public var autoAdvance: Bool?
     /// Indicates the reason why the invoice was created. `subscription_cycle` indicates an invoice created by a subscription advancing into a new period. `subscription_create` indicates an invoice created due to creating a subscription. `subscription_update` indicates an invoice created due to updating a subscription. `subscription` is set for all old invoices to indicate either a change to a subscription or a period advancement. `manual` is set for all invoices unrelated to a subscription (for example: created via the invoice editor). The `upcoming` value is reserved for simulated invoices per the upcoming invoice endpoint. `subscription_threshold` indicates an invoice created due to a billing threshold being reached.
     public var billingReason: StripeInvoiceBillingReason?
