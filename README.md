@@ -115,7 +115,7 @@ stripeclient.applicationFees.retrieve(fee: "fee_1234", expand: ["originatingTran
     applicationfee.$originatingTransaction(as: StripeCharge.self)?.amount // 2500
     ...
     // Access the originatingTransaction as a StripeTransfer
-    applicationfee.$originatingTransaction(as: StripeTransfer.self)?.destinstion // acc_1234
+    applicationfee.$originatingTransaction(as: StripeTransfer.self)?.destination // acc_1234
 }
 ```
 
