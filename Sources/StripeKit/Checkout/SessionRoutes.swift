@@ -13,7 +13,7 @@ public protocol SessionRoutes {
     ///
     /// - Parameters:
     ///   - cancelUrl: The URL the customer will be directed to if they decide to cancel payment and return to your website.
-    ///   - paymentMethodTypes: A list of the types of payment methods (e.g. card) this Checkout Session is allowed to accept. The only supported value today is `card`.
+    ///   - paymentMethodTypes: A list of the types of payment methods (e.g., `card`) this Checkout session can accept. Read more about the supported payment methods and their requirements in our payment method details guide. If multiple payment methods are passed, Checkout will dynamically reorder them to prioritize the most relevant payment methods based on the customer’s location and other characteristics.
     ///   - successUrl: The URL the customer will be directed to after the payment or subscription creation is successful.
     ///   - billingAddressCollection: Specify whether Checkout should collect the customer’s billing address. If set to `required`, Checkout will always collect the customer’s billing address. If left blank or set to `auto` Checkout will only collect the billing address when necessary.
     ///   - clientReferenceId: A unique string to reference the Checkout Session. This can be a customer ID, a cart ID, or similar, and can be used to reconcile the session with your internal systems.
@@ -30,7 +30,7 @@ public protocol SessionRoutes {
     ///   - expand: An array of propertiies to expand.
     /// - Returns: A `StripeSession`.
     func create(cancelUrl: String,
-                paymentMethodTypes: [StripePaymentMethodType],
+                paymentMethodTypes: [StripeSessionPaymentMethodType],
                 successUrl: String,
                 billingAddressCollection: StripeSessionBillingAddressCollection?,
                 clientReferenceId: String?,
@@ -55,8 +55,15 @@ public protocol SessionRoutes {
     func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSession>
     
     /// Returns a list of Checkout Sessions.
-    /// - Parameter filter: A dictionary that will be used for the [query parameters.](https://stripe.com/docs/api/checkout/sessions/list?lang=curl)
+    /// - Parameter filter: A dictionary that will be used for the [query parameters.](https://stripe.com/docs/api/checkout/sessions/list)
     func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeSessionList>
+    
+    
+    /// Returns a list of ine items for a Checkout Session.
+    /// - Parameters:
+    ///   - session: The ID of the checkout session
+    ///   - filter: A dictionary that will be used for the [query parameters.](https://stripe.com/docs/api/checkout/sessions/line_items)
+    func retrieveLineItems(session: String, filter: [String: Any]?) -> EventLoopFuture<StripeSessionLineItemList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -64,7 +71,7 @@ public protocol SessionRoutes {
 
 extension SessionRoutes {
     public func create(cancelUrl: String,
-                       paymentMethodTypes: [StripePaymentMethodType],
+                       paymentMethodTypes: [StripeSessionPaymentMethodType],
                        successUrl: String,
                        billingAddressCollection: StripeSessionBillingAddressCollection? = nil,
                        clientReferenceId: String? = nil,
@@ -104,6 +111,10 @@ extension SessionRoutes {
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSessionList> {
         listAll(filter: filter)
     }
+    
+    public func retrieveLineItems(session: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeSessionLineItemList> {
+        retrieveLineItems(session: session, filter: filter)
+    }
 }
 
 public struct StripeSessionRoutes: SessionRoutes {
@@ -117,7 +128,7 @@ public struct StripeSessionRoutes: SessionRoutes {
     }
     
     public func create(cancelUrl: String,
-                       paymentMethodTypes: [StripePaymentMethodType],
+                       paymentMethodTypes: [StripeSessionPaymentMethodType],
                        successUrl: String,
                        billingAddressCollection: StripeSessionBillingAddressCollection?,
                        clientReferenceId: String?,
@@ -207,5 +218,14 @@ public struct StripeSessionRoutes: SessionRoutes {
         }
         
         return apiHandler.send(method: .GET, path: sessions, query: queryParams, headers: headers)
+    }
+    
+    public func retrieveLineItems(session: String, filter: [String: Any]?) -> EventLoopFuture<StripeSessionLineItemList> {
+        var queryParams = ""
+        if let filter = filter {
+            queryParams = filter.queryParameters
+        }
+        
+        return apiHandler.send(method: .GET, path: "\(sessions)/\(session)/line_items", query: queryParams, headers: headers)
     }
 }
