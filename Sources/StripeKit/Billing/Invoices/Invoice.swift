@@ -25,12 +25,12 @@ public struct StripeInvoice: StripeModel {
     /// The amount remaining, in cents, that is due.
     public var amountRemanining: Int?
     /// The fee in cents that will be applied to the invoice and transferred to the application owner’s Stripe account when the invoice is paid.
-    public var applicationFee: Int?
+    public var applicationFeeAmount: Int?
     /// Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule.
     public var attemptCount: Int?
     /// Whether an attempt has been made to pay the invoice. An invoice is not attempted until 1 hour after the `invoice.created` webhook, for example, so you might not want to display that invoice as unpaid to your users.
     public var attempted: Bool?
-    ///Controls whether Stripe will perform automatic collection of the invoice. When false, the invoice’s state will not automatically advance without an explicit action.
+    /// Controls whether Stripe will perform automatic collection of the invoice. When `false`, the invoice’s state will not automatically advance without an explicit action.
     public var autoAdvance: Bool?
     /// Indicates the reason why the invoice was created. `subscription_cycle` indicates an invoice created by a subscription advancing into a new period. `subscription_create` indicates an invoice created due to creating a subscription. `subscription_update` indicates an invoice created due to updating a subscription. `subscription` is set for all old invoices to indicate either a change to a subscription or a period advancement. `manual` is set for all invoices unrelated to a subscription (for example: created via the invoice editor). The `upcoming` value is reserved for simulated invoices per the upcoming invoice endpoint. `subscription_threshold` indicates an invoice created due to a billing threshold being reached.
     public var billingReason: StripeInvoiceBillingReason?
@@ -67,6 +67,7 @@ public struct StripeInvoice: StripeModel {
     public var defaultTaxRates: [StripeTaxRate]?
     /// An arbitrary string attached to the object. Often useful for displaying to users. Referenced as ‘memo’ in the Dashboard.
     public var description: String?
+    /// Describes the current discount applied to this invoice, if there is one.
     public var discount: StripeDiscount?
     /// The date on which payment for this invoice is due. This value will be `null` for invoices where `billing=charge_automatically`.
     public var dueDate: Date?
@@ -108,6 +109,7 @@ public struct StripeInvoice: StripeModel {
     public var statementDescriptor: String?
     /// The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
     public var status: StripeInvoiceStatus?
+    /// The timestamps at which the invoice status was updated.
     public var statusTransitions: StripeInvoiceStatusTransitions?
     /// The subscription that this invoice was prepared for, if any.
     @Expandable<StripeSubscription> public var subscription: String?
@@ -123,6 +125,8 @@ public struct StripeInvoice: StripeModel {
     public var total: Int?
     /// The aggregate amounts calculated per tax rate for all line items.
     public var totalTaxAmounts: [StripeInvoiceTotalTaxAmount]?
+    /// The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
+    public var transferData: StripeInvoiceTransferData?
     /// The time at which webhooks for this invoice were successfully delivered (if the invoice had no webhooks to deliver, this will match `created`). Invoice payment is delayed until webhooks are delivered, or until all webhook delivery attempts have been exhausted.
     public var webhooksDeliveredAt: Date?
 }
@@ -189,6 +193,13 @@ public struct StripeInvoiceTotalTaxAmount: StripeModel {
     public var inclusive: Bool?
     /// The tax rate that was applied to get this tax amount.
     public var taxRate: String?
+}
+
+public struct StripeInvoiceTransferData: StripeModel {
+    /// The amount in cents that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
+    public var amount: Int?
+    /// The account where funds from the payment will be transferred to upon payment success.
+    @Expandable<StripeConnectAccount> public var destination: String?
 }
 
 public struct StripeInvoiceList: StripeModel {
