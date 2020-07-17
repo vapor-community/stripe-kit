@@ -20,18 +20,20 @@ public protocol PaymentIntentsRoutes {
     ///   - confirmationMethod: One of `automatic` (default) or `manual`. /n When the confirmation method is `automatic`, a PaymentIntent can be confirmed using a publishable key. After `next_actions` are handled, no additional confirmation is required to complete the payment. /n When the confirmation method is` manual`, all payment attempts must be made using a secret key. The PaymentIntent will return to the `requires_confirmation` state after handling `next_actions`, and requires your server to initiate each payment attempt with an explicit confirmation. Read the expanded documentation to learn more about manual confirmation.
     ///   - customer: ID of the customer this PaymentIntent is for if one exists.
     ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. This will be unset if you POST an empty value.
+    ///   - errorOnRequiresAction: Set to true to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions, like saving cards without authentication. This parameter can only be used with `confirm=true`.
     ///   - mandate: ID of the mandate to be used for this payment. This parameter can only be used with confirm=true.
     ///   - mandateData: This hash contains details about the Mandate to create. This parameter can only be used with confirm=true.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     ///   - offSession: Set to true to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and charge them later. This parameter can only be used with confirm=true.
     ///   - onBehalfOf: The Stripe account ID for which these funds are intended. For details, see the PaymentIntents Connect usage guide.
     ///   - paymentMethod: ID of the payment method to attach to this PaymentIntent.
+    ///   - paymentMethodData: If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the `payment_method` property on the PaymentIntent.
     ///   - paymentMethodOptions: Payment-method-specific configuration for this PaymentIntent.
-    ///   - paymentMethodTypes: The list of payment method types that this PaymentIntent is allowed to use. If this is not provided, defaults to `[“card”]`. Valid payment method types include: `card` and `card_present`.
+    ///   - paymentMethodTypes: The list of payment method types that this PaymentIntent is allowed to use. If this is not provided, defaults to `[“card”]`. Valid payment method types include: `card` and `ideal`.
     ///   - receiptEmail: Email address that the receipt for the resulting payment will be sent to.
     ///   - returnUrl: The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method’s app or site. If you’d prefer to redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with confirm=true.
     ///   - savePaymentMethod: Set to `true` to save the PaymentIntent’s payment method (either `source` or `payment_method`) to the associated customer. If the payment method is already attached, this parameter does nothing. This parameter defaults to `false` and applies to the payment method passed in the same request or the current payment method attached to the PaymentIntent and must be specified again if a new payment method is added.
-    ///   - setupFutureUsage: Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use on_session if you intend to only reuse the payment method when your customer is present in your checkout flow. Use off_session if your customer may or may not be in your checkout flow. For more, learn to save card details after a payment. Stripe uses setup_future_usage to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using off_session will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer.
+    ///   - setupFutureUsage: Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. For more, learn to save card details after a payment. Stripe uses setup_future_usage to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using off_session will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer.
     ///   - shipping: Shipping information for this PaymentIntent.
     ///   - statementDescriptor: For non-card charges, you can use this value as the complete description that appears on your customers’ statements. Must contain at least one letter, maximum 22 characters.
     ///   - statementDescriptorSuffix: Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
@@ -48,18 +50,20 @@ public protocol PaymentIntentsRoutes {
                 confirmationMethod: StripePaymentIntentConfirmationMethod?,
                 customer: String?,
                 description: String?,
+                errorOnRequiresAction: Bool?,
                 mandate: String?,
                 mandateData: [String: Any]?,
                 metadata: [String: String]?,
                 offSession: Bool?,
                 onBehalfOf: String?,
                 paymentMethod: String?,
+                paymentMethodData: [String: Any]?,
                 paymentMethodOptions: [String: Any]?,
                 paymentMethodTypes: [String]?,
                 receiptEmail: String?,
                 returnUrl: String?,
                 savePaymentMethod: Bool?,
-                setupFutureUsage: String?,
+                setupFutureUsage: StripePaymentIntentSetupFutureUsage?,
                 shipping: [String: Any]?,
                 statementDescriptor: String?,
                 statementDescriptorSuffix: String?,
@@ -86,10 +90,11 @@ public protocol PaymentIntentsRoutes {
     ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     ///   - paymentMethod: ID of the payment method to attach to this PaymentIntent.
+    ///   - paymentMethodData: If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the `payment_method` property on the PaymentIntent.
     ///   - paymentMethodTypes: The list of payment method types that this PaymentIntent is allowed to use. If this is not provided, defaults to `[“card”]`. Valid payment method types include: `card` and `card_present`.
     ///   - receiptEmail: Email address that the receipt for the resulting payment will be sent to.
     ///   - savePaymentMethod: Set to `true` to save the PaymentIntent’s payment method (either `source` or `payment_method`) to the associated customer. If the payment method is already attached, this parameter does nothing. This parameter defaults to `false` and applies to the payment method passed in the same request or the current payment method attached to the PaymentIntent and must be specified again if a new payment method is added.
-    ///   - setupFutureUsage: Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use on_session if you intend to only reuse the payment method when your customer is present in your checkout flow. Use off_session if your customer may or may not be in your checkout flow. Stripe uses setup_future_usage to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using off_session will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer. If setup_future_usage is already set and you are performing a request using a publishable key, you may only update the value from on_session to off_session.
+    ///   - setupFutureUsage: Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer. If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
     ///   - shipping: Shipping information for this PaymentIntent.
     ///   - source: ID of the Source object to attach to this PaymentIntent.
     ///   - statementDescriptor: For non-card charges, you can use this value as the complete description that appears on your customers’ statements. Must contain at least one letter, maximum 22 characters.
@@ -106,10 +111,11 @@ public protocol PaymentIntentsRoutes {
                 description: String?,
                 metadata: [String: String]?,
                 paymentMethod: String?,
+                paymentMethodData: [String: Any]?,
                 paymentMethodTypes: [String]?,
                 receiptEmail: String?,
                 savePaymentMethod: Bool?,
-                setupFutureUsage: String?,
+                setupFutureUsage: StripePaymentIntentSetupFutureUsage?,
                 shipping: [String: Any]?,
                 statementDescriptor: String?,
                 statementDescriptorSuffix: String?,
@@ -121,31 +127,35 @@ public protocol PaymentIntentsRoutes {
     ///
     /// - Parameters:
     ///   - intent: The identifier of the paymentintent to be confirmed.
+    ///   - errorOnRequiresAction: Set to true to fail the payment attempt if the PaymentIntent transitions into requires_action. This parameter is intended for simpler integrations that do not handle customer actions, like saving cards without authentication.
     ///   - mandate: ID of the mandate to be used for this payment.
     ///   - mandateData: This hash contains details about the Mandate to create.
     ///   - offSession: Set to true to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and charge them later.
     ///   - paymentMethod: ID of the payment method to attach to this PaymentIntent.
+    ///   - paymentMethodData: If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the `payment_method` property on the PaymentIntent.
     ///   - paymentMethodOptions: Payment-method-specific configuration for this PaymentIntent.
     ///   - paymentMethodTypes: The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
     ///   - receiptEmail: Email address that the receipt for the resulting payment will be sent to.
     ///   - returnUrl: The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method’s app or site. If you’d prefer to redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter is only used for cards and other redirect-based payment methods.
     ///   - savePaymentMethod: Set to `true` to save the PaymentIntent’s payment method (either `source` or `payment_method`) to the associated customer. If the payment method is already attached, this parameter does nothing. This parameter defaults to `false` and applies to the payment method passed in the same request or the current payment method attached to the PaymentIntent and must be specified again if a new payment method is added.
-    ///   - setupFutureUsage: Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use on_session if you intend to only reuse the payment method when your customer is present in your checkout flow. Use off_session if your customer may or may not be in your checkout flow. Stripe uses setup_future_usage to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using off_session will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer. If setup_future_usage is already set and you are performing a request using a publishable key, you may only update the value from on_session to off_session.
+    ///   - setupFutureUsage: Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer. If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
     ///   - shipping: Shipping information for this PaymentIntent.
     ///   - useStripeSDK: Set to true only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentIntent`.
     func confirm(intent: String,
+                 errorOnRequiresAction: Bool?,
                  mandate: String?,
                  mandateData: [String: Any]?,
                  offSession: Bool?,
                  paymentMethod: String?,
+                 paymentMethodData: [String: Any]?,
                  paymentMethodOptions: [String: Any]?,
                  paymentMethodTypes: [String]?,
                  receiptEmail: String?,
                  returnUrl: String?,
                  savePaymentMethod: Bool?,
-                 setupFutureUsage: String?,
+                 setupFutureUsage: StripePaymentIntentSetupFutureUsage?,
                  shipping: [String: Any]?,
                  useStripeSDK: Bool?,
                  expand: [String]?) -> EventLoopFuture<StripePaymentIntent>
@@ -198,18 +208,20 @@ extension PaymentIntentsRoutes {
                        confirmationMethod: StripePaymentIntentConfirmationMethod? = nil,
                        customer: String? = nil,
                        description: String? = nil,
+                       errorOnRequiresAction: Bool? = nil,
                        mandate: String? = nil,
                        mandateData: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
                        offSession: Bool? = nil,
                        onBehalfOf: String? = nil,
                        paymentMethod: String? = nil,
+                       paymentMethodData: [String: Any]? = nil,
                        paymentMethodOptions: [String: Any]? = nil,
                        paymentMethodTypes: [String]? = nil,
                        receiptEmail: String? = nil,
                        returnUrl: String? = nil,
                        savePaymentMethod: Bool? = nil,
-                       setupFutureUsage: String? = nil,
+                       setupFutureUsage: StripePaymentIntentSetupFutureUsage? = nil,
                        shipping: [String: Any]? = nil,
                        statementDescriptor: String? = nil,
                        statementDescriptorSuffix: String? = nil,
@@ -225,12 +237,14 @@ extension PaymentIntentsRoutes {
                       confirmationMethod: confirmationMethod,
                       customer: customer,
                       description: description,
+                      errorOnRequiresAction: errorOnRequiresAction,
                       mandate: mandate,
                       mandateData: mandateData,
                       metadata: metadata,
                       offSession: offSession,
                       onBehalfOf: onBehalfOf,
                       paymentMethod: paymentMethod,
+                      paymentMethodData: paymentMethodData,
                       paymentMethodOptions: paymentMethodOptions,
                       paymentMethodTypes: paymentMethodTypes,
                       receiptEmail: receiptEmail,
@@ -258,10 +272,11 @@ extension PaymentIntentsRoutes {
                        description: String? = nil,
                        metadata: [String: String]? = nil,
                        paymentMethod: String? = nil,
+                       paymentMethodData: [String: Any]? = nil,
                        paymentMethodTypes: [String]? = nil,
                        receiptEmail: String? = nil,
                        savePaymentMethod: Bool? = nil,
-                       setupFutureUsage: String? = nil,
+                       setupFutureUsage: StripePaymentIntentSetupFutureUsage? = nil,
                        shipping: [String: Any]? = nil,
                        statementDescriptor: String? = nil,
                        statementDescriptorSuffix: String? = nil,
@@ -276,6 +291,7 @@ extension PaymentIntentsRoutes {
                       description: description,
                       metadata: metadata,
                       paymentMethod: paymentMethod,
+                      paymentMethodData: paymentMethodData,
                       paymentMethodTypes: paymentMethodTypes,
                       receiptEmail: receiptEmail,
                       savePaymentMethod: savePaymentMethod,
@@ -289,24 +305,28 @@ extension PaymentIntentsRoutes {
     }
     
     public func confirm(intent: String,
+                        errorOnRequiresAction: Bool? = nil,
                         mandate: String? = nil,
                         mandateData: [String: Any]? = nil,
                         offSession: Bool? = nil,
                         paymentMethod: String? = nil,
+                        paymentMethodData: [String: Any]? = nil,
                         paymentMethodOptions: [String: Any]? = nil,
                         paymentMethodTypes: [String]? = nil,
                         receiptEmail: String? = nil,
                         returnUrl: String? = nil,
                         savePaymentMethod: Bool? = nil,
-                        setupFutureUsage: String? = nil,
+                        setupFutureUsage: StripePaymentIntentSetupFutureUsage? = nil,
                         shipping: [String: Any]? = nil,
                         useStripeSDK: Bool? = nil,
                         expand: [String]? = nil) -> EventLoopFuture<StripePaymentIntent> {
         return confirm(intent: intent,
+                       errorOnRequiresAction: errorOnRequiresAction,
                        mandate: mandate,
                        mandateData: mandateData,
                        offSession: offSession,
                        paymentMethod: paymentMethod,
+                       paymentMethodData: paymentMethodData,
                        paymentMethodOptions: paymentMethodOptions,
                        paymentMethodTypes: paymentMethodTypes,
                        receiptEmail: receiptEmail,
@@ -363,18 +383,20 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
                        confirmationMethod: StripePaymentIntentConfirmationMethod?,
                        customer: String?,
                        description: String?,
+                       errorOnRequiresAction: Bool?,
                        mandate: String?,
                        mandateData: [String: Any]?,
                        metadata: [String: String]?,
                        offSession: Bool?,
                        onBehalfOf: String?,
                        paymentMethod: String?,
+                       paymentMethodData: [String: Any]?,
                        paymentMethodOptions: [String: Any]?,
                        paymentMethodTypes: [String]?,
                        receiptEmail: String?,
                        returnUrl: String?,
                        savePaymentMethod: Bool?,
-                       setupFutureUsage: String?,
+                       setupFutureUsage: StripePaymentIntentSetupFutureUsage?,
                        shipping: [String: Any]?,
                        statementDescriptor: String?,
                        statementDescriptorSuffix: String?,
@@ -409,6 +431,10 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["description"] = description
         }
         
+        if let errorOnRequiresAction = errorOnRequiresAction {
+            body["error_on_requires_action"] = errorOnRequiresAction
+        }
+        
         if let mandate = mandate {
             body["mandate"] = mandate
         }
@@ -433,6 +459,10 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["payment_method"] = paymentMethod
         }
         
+        if let paymentMethodData = paymentMethodData {
+            paymentMethodData.forEach { body["payment_method_data[\($0)]"] = $1 }
+        }
+        
         if let paymentMethodOptions = paymentMethodOptions {
             paymentMethodOptions.forEach { body["payment_method_options[\($0)]"] = $1 }
         }
@@ -454,7 +484,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
         }
         
         if let setupFutureUsage = setupFutureUsage {
-            body["setup_future_usage"] = setupFutureUsage
+            body["setup_future_usage"] = setupFutureUsage.rawValue
         }
         
         if let shipping = shipping {
@@ -504,10 +534,11 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
                        description: String?,
                        metadata: [String: String]?,
                        paymentMethod: String?,
+                       paymentMethodData: [String: Any]?,
                        paymentMethodTypes: [String]?,
                        receiptEmail: String?,
                        savePaymentMethod: Bool?,
-                       setupFutureUsage: String?,
+                       setupFutureUsage: StripePaymentIntentSetupFutureUsage?,
                        shipping: [String: Any]?,
                        statementDescriptor: String?,
                        statementDescriptorSuffix: String?,
@@ -544,6 +575,10 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["payment_method"] = paymentMethod
         }
         
+        if let paymentMethodData = paymentMethodData {
+            paymentMethodData.forEach { body["payment_method_data[\($0)]"] = $1 }
+        }
+        
         if let paymentMethodTypes = paymentMethodTypes {
             body["payment_method_types"] = paymentMethodTypes
         }
@@ -557,7 +592,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
         }
         
         if let setupFutureUsage = setupFutureUsage {
-            body["setup_future_usage"] = setupFutureUsage
+            body["setup_future_usage"] = setupFutureUsage.rawValue
         }
         
         if let shipping = shipping {
@@ -588,20 +623,26 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
     }
     
     public func confirm(intent: String,
+                        errorOnRequiresAction: Bool?,
                         mandate: String?,
                         mandateData: [String: Any]?,
                         offSession: Bool?,
                         paymentMethod: String?,
+                        paymentMethodData: [String: Any]?,
                         paymentMethodOptions: [String: Any]?,
                         paymentMethodTypes: [String]?,
                         receiptEmail: String?,
                         returnUrl: String?,
                         savePaymentMethod: Bool?,
-                        setupFutureUsage: String?,
+                        setupFutureUsage: StripePaymentIntentSetupFutureUsage?,
                         shipping: [String: Any]?,
                         useStripeSDK: Bool?,
                         expand: [String]?) -> EventLoopFuture<StripePaymentIntent> {
         var body: [String: Any] = [:]
+        
+        if let errorOnRequiresAction = errorOnRequiresAction {
+            body["error_on_requires_action"] = errorOnRequiresAction
+        }
         
         if let mandate = mandate {
             body["mandate"] = mandate
@@ -617,6 +658,10 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
         
         if let paymentMethod = paymentMethod {
             body["payment_method"] = paymentMethod
+        }
+        
+        if let paymentMethodData = paymentMethodData {
+            paymentMethodData.forEach { body["payment_method_data[\($0)]"] = $1 }
         }
         
         if let paymentMethodOptions = paymentMethodOptions {
@@ -640,7 +685,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
         }
         
         if let setupFutureUsage = setupFutureUsage {
-            body["setup_future_usage"] = setupFutureUsage
+            body["setup_future_usage"] = setupFutureUsage.rawValue
         }
         
         if let shipping = shipping {
