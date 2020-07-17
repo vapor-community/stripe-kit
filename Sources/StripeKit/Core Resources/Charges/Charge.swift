@@ -180,6 +180,10 @@ public struct StripeChargePaymentDetails: StripeModel {
     public var achDebit: StripeChargePaymentDetailsACHDebit?
     /// If this is a `alipay` payment, this hash contains a snapshot of the transaction specific details of the `alipay` payment method.
     public var alipay: StripeChargePaymentDetailsAlipay?
+    /// If this is a `au_becs_debit` payment, this hash contains a snapshot of the transaction specific details of the `au_becs_debit` payment method.
+    public var auBecsDebit: StripeChargePaymentDetailsAuBecsDebit?
+    /// If this is a `bacs_debit` payment, this hash contains a snapshot of the transaction specific details of the bacs_debit payment method.
+    public var bacsDebit: StripeChargePaymentDetailsBacsDebit?
     /// If this is a `bancontact` payment, this hash contains a snapshot of the transaction specific details of the `bancontact` payment method.
     public var bancontact: StripeChargePaymentDetailsBancontact?
     /// If this is a `card` payment, this hash contains a snapshot of the transaction specific details of the `card` payment method.
@@ -188,16 +192,23 @@ public struct StripeChargePaymentDetails: StripeModel {
     public var cardPresent: StripeChargePaymentDetailsCardPresent?
     /// If this is a `eps` payment, this hash contains a snapshot of the transaction specific details of the `eps` payment method.
     public var eps: StripeChargePaymentDetailsEPS?
+    /// If this is a `fpx` payment, this hash contains a snapshot of the transaction specific details of the `fpx` payment method.
+    public var fpx: StripeChargePaymentDetailsFpx?
     /// If this is a `giropay` payment, this hash contains a snapshot of the transaction specific details of the `giropay` payment method.
     public var giropay: StripeChargePaymentDetailsGiropay?
     /// If this is a `ideal` payment, this hash contains a snapshot of the transaction specific details of the `ideal` payment method.
     public var ideal: StripeChargePaymentDetailsIdeal?
+    /// If this is a `interac_present` payment, this hash contains a snapshot of the transaction specific details of the `interac_present` payment method.
+    public var interacPresent: StripeChargePaymentDetailsInteracPresent?
     /// If this is a klarna payment, this hash contains a snapshot of the transaction specific details of the klarna payment method.
     public var klarna: StripeChargePaymentDetailsKlarna?
     /// If this is a `multibanco` payment, this hash contains a snapshot of the transaction specific details of the `multibanco` payment method.
     public var multibanco: StripeChargePaymentDetailsMultibanco?
     /// If this is a `p24` payment, this hash contains a snapshot of the transaction specific details of the `p24` payment method.
     public var p24: StripeChargePaymentDetailsP24?
+    /// If this is a `sepa_debit` payment, this hash contains a snapshot of the transaction specific details of the `sepa_debit` payment method.
+    public var sepaDebit: StripeChargePaymentDetailsSepaDebit?
+    
     /// If this is a `sofort` payment, this hash contains a snapshot of the transaction specific details of the `sofort` payment method
     public var sofort: StripeChargePaymentDetailsSofort?
     /// If this is a `stripe_account` payment, this hash contains a snapshot of the transaction specific details of the `stripe_account` payment method
@@ -240,7 +251,32 @@ public enum StripeChargePaymentDetailsACHDebitAccountHolderType: String, StripeM
 }
 
 public struct StripeChargePaymentDetailsAlipay: StripeModel {
-    // https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-alipay
+    /// Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
+    public var fingerprint: String?
+    /// Transaction ID of this particular Alipay transaction.
+    public var transactionId: String?
+}
+
+public struct StripeChargePaymentDetailsAuBecsDebit: StripeModel {
+    /// Bank-State-Branch number of the bank account.
+    public var bsbNumber: String?
+    /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+    public var fingerprint: String?
+    /// Last four digits of the bank account number.
+    public var last4: String?
+    /// ID of the mandate used to make this payment.
+    public var mandate: String?
+}
+
+public struct StripeChargePaymentDetailsBacsDebit: StripeModel {
+    /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+    public var fingerprint: String?
+    /// Last four digits of the bank account number.
+    public var last4: String?
+    /// ID of the mandate used to make this payment.
+    public var mandate: String?
+    /// Sort code of the bank account. (e.g., `10-20-30`)
+    public var sortCode: String?
 }
 
 public struct StripeChargePaymentDetailsBancontact: StripeModel {
@@ -374,6 +410,36 @@ public struct StripeChargePaymentDetailsEPS: StripeModel {
     public var verifiedName: String?
 }
 
+public struct StripeChargePaymentDetailsFpx: StripeModel {
+    /// The customer’s bank. Can be one of `affin_bank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, or `pb_enterprise`.
+    public var bank: StripeChargePaymentDetailsFpxBank?
+    /// Unique transaction id generated by FPX for every request from the merchant
+    public var transactionId: String?
+}
+
+public enum StripeChargePaymentDetailsFpxBank: String, StripeModel {
+    case affinBank = "affin_bank"
+    case allianceBank = "alliance_bank"
+    case ambank
+    case bankIslam = "bank_islam"
+    case bankMuamalat = "bank_muamalat"
+    case bankRakyat = "bank_rakyat"
+    case bsn
+    case cimb
+    case hongLeongBank = "hong_leong_bank"
+    case hsbc
+    case kfh
+    case maybank2u
+    case ocbc
+    case publicBank = "public_bank"
+    case rhb
+    case standardChartered = "standard_chartered"
+    case uob
+    case deutscheBank = "deutsche_bank"
+    case maybank2e
+    case pbEnterprise = "pb_enterprise"
+}
+
 public struct StripeChargePaymentDetailsGiropay: StripeModel {
     /// Bank code of bank associated with the bank account.
     public var bankCode: String?
@@ -394,6 +460,68 @@ public struct StripeChargePaymentDetailsIdeal: StripeModel {
     public var ibanLast4: String?
     /// Owner’s verified full name. Values are verified or provided by iDEAL directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var verifiedName: String?
+}
+
+public struct StripeChargePaymentDetailsInteracPresent: StripeModel {
+    /// Card brand. Can be `interac`, `mastercard` or `visa`.
+    public var brand: StripeChargePaymentDetailsInteracPresentBrand?
+    /// The cardholder name as read from the card, in ISO 7813 format. May include alphanumeric characters, special characters and first/last name separator (`/`).
+    public var cardholderName: String?
+    /// Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you’ve collected.
+    public var country: String?
+    /// Authorization response cryptogram.
+    public var emvAuthData: String?
+    /// Two-digit number representing the card’s expiration month.
+    public var expMonth: Int?
+    /// Four-digit number representing the card’s expiration year.
+    public var expYear: Int?
+    /// Uniquely identifies this particular card number. You can use this attribute to check whether two customers who’ve signed up with you are using the same card number,for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
+    public var fingerprint: String?
+    /// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+    public var funding: StripeCardFundingType?
+    /// ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
+    public var generatedCard: String?
+    /// The last four digits of the card.
+    public var last4: String?
+    /// Identifies which network this charge was processed on. Can be amex, cartes_bancaires, diners, discover, interac, jcb, mastercard, unionpay, visa, or unknown.
+    public var network: StripePaymentMethodCardNetwork?
+    /// How were card details read in this transaction. Can be `contact_emv`, `contactless_emv`, `magnetic_stripe_fallback`, `magnetic_stripe_track2`, or `contactless_magstripe_mode`
+    public var readMethod: StripeChargePaymentDetailsInteracPresentReadMethod?
+    /// A collection of fields required to be displayed on receipts. Only required for EMV transactions.
+    public var receipt: StripeChargePaymentDetailsInteracPresentReceipt?
+}
+
+public enum StripeChargePaymentDetailsInteracPresentBrand: String, StripeModel {
+    case interac
+    case mastercard
+    case visa
+}
+
+public enum StripeChargePaymentDetailsInteracPresentReadMethod: String, StripeModel {
+    case contactEmv = "contact_emv"
+    case contactlessEmv = "contactless_emv"
+    case magneticStripeFallback = "magnetic_stripe_fallback"
+    case magneticStripeTrack2 = "magnetic_stripe_track2"
+    case contactlessMagstripeMode = "contactless_magstripe_mode"
+}
+
+public struct StripeChargePaymentDetailsInteracPresentReceipt: StripeModel {
+    /// EMV tag 9F26, cryptogram generated by the integrated circuit chip.
+    public var applicationCryptogram: String?
+    /// Mnenomic of the Application Identifier.
+    public var applicationPreferredName: String?
+    /// Identifier for this transaction.
+    public var authorizationCode: String?
+    /// EMV tag 8A. A code returned by the card issuer.
+    public var authorizationResponseCode: String?
+    /// How the cardholder verified ownership of the card.
+    public var cardholderVerificationMethod: String?
+    /// EMV tag 84. Similar to the application identifier stored on the integrated circuit chip.
+    public var dedicatedFileName: String?
+    /// The outcome of a series of EMV functions performed by the card reader.
+    public var terminalVerificationResults: String?
+    /// An indication of various EMV functions performed during the transaction.
+    public var transactionStatusInformation: String?
 }
 
 public struct StripeChargePaymentDetailsKlarna: StripeModel {
@@ -428,6 +556,21 @@ public struct StripeChargePaymentDetailsP24: StripeModel {
     public var verifiedName: String?
 }
 
+public struct StripeChargePaymentDetailsSepaDebit: StripeModel {
+    /// Bank code of bank associated with the bank account.
+    public var bankCode: String?
+    /// Branch code of bank associated with the bank account.
+    public var branchCode: String?
+    /// Two-letter ISO code representing the country the bank account is located in.
+    public var country: String?
+    /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+    public var fingerprint: String?
+    /// Last four characters of the IBAN.
+    public var last4: String?
+    /// ID of the mandate used to make this payment.
+    public var mandate: String?
+}
+
 public struct StripeChargePaymentDetailsSofort: StripeModel {
     /// Bank code of bank associated with the bank account.
     public var bankCode: String?
@@ -451,12 +594,14 @@ public enum StripeChargePaymentDetailsType: String, StripeModel {
     case achCreditTransfer = "ach_credit_transfer"
     case achDebit = "ach_debit"
     case alipay
+    case auBecsDebit = "au_becs_debit"
     case bancontact
     case card
     case cardPresent = "card_present"
     case eps
     case giropay
     case ideal
+    case klarna
     case multibanco
     case p24
     case sepaDebit = "sepa_debit"
