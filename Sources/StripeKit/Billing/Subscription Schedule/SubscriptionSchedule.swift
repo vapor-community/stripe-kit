@@ -121,7 +121,6 @@ public enum StripeSubscriptionScheduleBillingCycleAnchor: String, StripeModel {
     case automatic
 }
 
-
 public enum StripeSubscriptionScheduleStatus: String, StripeModel {
     case notStarted = "not_started"
     case active
