@@ -22,6 +22,7 @@ public struct StripeSubscriptionItem: StripeModel {
     public var metadata: [String: String]?
     /// Hash describing the plan the customer is subscribed to.
     public var plan: StripePlan?
+    // TODO: - Price
     /// The quantity of the plan to which the customer should be subscribed.
     public var quantity: Int?
     /// The `subscription` this `subscription_item` belongs to.

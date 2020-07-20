@@ -26,7 +26,7 @@ public struct StripeSubscriptionSchedule: StripeModel {
     /// Object representing the subscription schedule’s default settings.
     public var defaultSettings: StripeSubscriptionScheduleDefaultSettings?
     /// Behavior of the subscription schedule and underlying subscription when it ends.
-    public var endBehavior: String?
+    public var endBehavior: StripeSubscriptionScheduleEndBehavior?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -44,21 +44,30 @@ public struct StripeSubscriptionSchedule: StripeModel {
 }
 
 public struct StripeSubscriptionScheduleCurrentPhase: StripeModel {
-    /// timestamp
+    /// The end of this phase of the subscription schedule.
     public var endDate: Date?
-    /// timestamp
+    /// The start of this phase of the subscription schedule.
     public var startDate: Date?
 }
 
 public struct StripeSubscriptionScheduleDefaultSettings: StripeModel {
+    /// Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle documentation.
+    public var billingCycleAnchor: StripeSubscriptionScheduleBillingCycleAnchor?
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
     public var billingThresholds: StripeSubscriptionBillingThresholds?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
     public var collectionMethod: StripeInvoiceCollectionMethod?
     /// ID of the default payment method for the subscription schedule. If not set, invoices will use the default payment method in the customer’s invoice settings.
-    public var defaultPaymentMethod: String?
+    @Expandable<StripePaymentMethod> public var defaultPaymentMethod: String?
     /// The subscription schedule’s default invoice settings.
     public var invoiceSettings: StripeSubscriptionScheduleInvoiceSettings?
+    /// The account (if any) the subscription’s payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription’s invoices.
+    public var transferData: StripeSubscriptionTransferData?
+}
+
+public enum StripeSubscriptionScheduleEndBehavior: String, StripeModel {
+    case release
+    case cancel
 }
 
 public struct StripeSubscriptionScheduleInvoiceSettings: StripeModel {
@@ -67,17 +76,21 @@ public struct StripeSubscriptionScheduleInvoiceSettings: StripeModel {
 }
 
 public struct StripeSubscriptionSchedulePhase: StripeModel {
+    /// A list of prices and quantities that will generate invoice items appended to the first invoice for this phase.
+    public var addInvoiceItems: [StripeSubscriptionSchedulePhaseAddInvoiceItem]?
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner’s Stripe account during this phase of the schedule.
     public var applicationFeePercent: Decimal?
+    /// Possible values are `phase_start` or `automatic`. If phase_start then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If automatic then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle documentation.
+    public var billingCycleAnchor: StripeSubscriptionScheduleBillingCycleAnchor?
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
     public var billingThresholds: StripeSubscriptionBillingThresholds?
-    /// Either charge_automatically, or send_invoice. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
+    /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
     public var collectionMethod: StripeInvoiceCollectionMethod?
     /// ID of the coupon to use during this phase of the subscription schedule.
-    public var coupon: String?
+    @Expandable<StripeCoupon> public var coupon: String?
     /// ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer’s invoice settings.
-    public var defaultPaymentMethod: String?
-    ///
+    @Expandable<StripePaymentMethod> public var defaultPaymentMethod: String?
+    /// The default tax rates to apply to the subscription during this phase of the subscription schedule.
     public var defaultTaxRates: [StripeTaxRate]?
     /// The end of this phase of the subscription schedule.
     public var endDate: Date?
@@ -89,9 +102,25 @@ public struct StripeSubscriptionSchedulePhase: StripeModel {
     public var prorationBehavior: StripeSubscriptionSchedulePhaseProrationBehavior?
     /// The start of this phase of the subscription schedule.
     public var startDate: Date?
+    /// The account (if any) the subscription’s payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription’s invoices.
+    public var transferData: StripeSubscriptionTransferData?
     /// When the trial ends within the phase.
     public var trialEnd: Date?
 }
+
+public struct StripeSubscriptionSchedulePhaseAddInvoiceItem: StripeModel {
+    // TODO: - Price
+    /// ID of the price used to generate the invoice item.
+    public var price: String?
+    /// The quantity of the invoice item.
+    public var quantity: Int?
+}
+
+public enum StripeSubscriptionScheduleBillingCycleAnchor: String, StripeModel {
+    case phaseStart = "phase_start"
+    case automatic
+}
+
 
 public enum StripeSubscriptionScheduleStatus: String, StripeModel {
     case notStarted = "not_started"
