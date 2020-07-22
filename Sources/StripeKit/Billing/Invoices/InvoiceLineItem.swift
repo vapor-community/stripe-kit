@@ -32,7 +32,8 @@ public struct StripeInvoiceLineItem: StripeModel {
     public var period: StripeInvoiceLineItemPeriod?
     /// The plan of the subscription, if the line item is a subscription or a proration.
     public var plan: StripePlan?
-    // TODO: - Price
+    /// The price of the line item.
+    public var price: StripePrice?
     /// Whether this is a proration.
     public var proration: Bool?
     /// The quantity of the subscription, if the line item is a subscription or a proration.

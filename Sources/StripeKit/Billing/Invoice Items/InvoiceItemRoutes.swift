@@ -21,6 +21,8 @@ public protocol InvoiceItemRoutes {
     ///   - invoice: The ID of an existing invoice to add this invoice item to. When left blank, the invoice item will be added to the next upcoming scheduled invoice. This is useful when adding invoice items in response to an invoice.created webhook. You can only add invoice items to draft invoices.
     ///   - metadata: A set of key-value pairs that you can attach to an invoice item object. It can be useful for storing additional information about the invoice item in a structured format.
     ///   - period: The period associated with this invoice item.
+    ///   - price: The ID of the price object.
+    ///   - priceData: Data used to generate a new price object inline.
     ///   - quantity: Non-negative integer. The quantity of units for the invoice item.
     ///   - subscription: The ID of a subscription to add this invoice item to. When left blank, the invoice item will be be added to the next upcoming scheduled invoice. When set, scheduled invoices for subscriptions other than the specified subscription will ignore the invoice item. Use this when you want to express that an invoice item has been accrued within the context of a particular subscription.
     ///   - taxRates: The tax rates which apply to the invoice item. When set, the default_tax_rates on the invoice do not apply to this invoice item.
@@ -36,6 +38,8 @@ public protocol InvoiceItemRoutes {
                 invoice: String?,
                 metadata: [String: String]?,
                 period: [String: Any]?,
+                price: String?,
+                priceData: [String: Any]?,
                 quantity: Int?,
                 subscription: String?,
                 taxRates: [String]?,
@@ -60,6 +64,8 @@ public protocol InvoiceItemRoutes {
     ///   - discountable: Controls whether discounts apply to this invoice item. Defaults to false for prorations or negative invoice items, and true for all other invoice items. Cannot be set to true for prorations.
     ///   - metadata: A set of key-value pairs that you can attach to an invoice item object. It can be useful for storing additional information about the invoice item in a structured format.
     ///   - period: The period associated with this invoice item.
+    ///   - price: The ID of the price object.
+    ///   - priceData: Data used to generate a new price object inline.
     ///   - quantity: Non-negative integer. The quantity of units for the invoice item.
     ///   - taxRates: The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
     ///   - unitAmount: The integer unit amount in cents of the charge to be applied to the upcoming invoice. This `unit_amount` will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer’s account, pass a negative `unit_amount`.
@@ -72,6 +78,8 @@ public protocol InvoiceItemRoutes {
                 discountable: Bool?,
                 metadata: [String: String]?,
                 period: [String: Any]?,
+                price: String?,
+                priceData: [String: Any]?,
                 quantity: Int?,
                 taxRates: [String]?,
                 unitAmount: Int?,
@@ -103,6 +111,8 @@ extension InvoiceItemRoutes {
                        invoice: String? = nil,
                        metadata: [String: String]? = nil,
                        period: [String: Any]? = nil,
+                       price: String? = nil,
+                       priceData: [String: Any]? = nil,
                        quantity: Int? = nil,
                        subscription: String? = nil,
                        taxRates: [String]? = nil,
@@ -117,6 +127,8 @@ extension InvoiceItemRoutes {
                           invoice: invoice,
                           metadata: metadata,
                           period: period,
+                          price: price,
+                          priceData: priceData,
                           quantity: quantity,
                           subscription: subscription,
                           taxRates: taxRates,
@@ -135,6 +147,8 @@ extension InvoiceItemRoutes {
                        discountable: Bool? = nil,
                        metadata: [String: String]? = nil,
                        period: [String: Any]? = nil,
+                       price: String? = nil,
+                       priceData: [String: Any]? = nil,
                        quantity: Int? = nil,
                        taxRates: [String]? = nil,
                        unitAmount: Int? = nil,
@@ -146,6 +160,8 @@ extension InvoiceItemRoutes {
                           discountable: discountable,
                           metadata: metadata,
                           period: period,
+                          price: price,
+                          priceData: priceData,
                           quantity: quantity,
                           taxRates: taxRates,
                           unitAmount: unitAmount,
@@ -180,6 +196,8 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
                        invoice: String?,
                        metadata: [String: String]?,
                        period: [String: Any]?,
+                       price: String?,
+                       priceData: [String: Any]?,
                        quantity: Int?,
                        subscription: String?,
                        taxRates: [String]?,
@@ -211,6 +229,14 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
         
         if let period = period {
             period.forEach { body["period[\($0)]"] = $1 }
+        }
+        
+        if let price = price {
+            body["price"] = price
+        }
+        
+        if let priceData = priceData {
+            priceData.forEach { body["price_data[\($0)]"] = $1 }
         }
         
         if let quantity = quantity {
@@ -255,6 +281,8 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
                        discountable: Bool?,
                        metadata: [String: String]?,
                        period: [String: Any]?,
+                       price: String?,
+                       priceData: [String: Any]?,
                        quantity: Int?,
                        taxRates: [String]?,
                        unitAmount: Int?,
@@ -280,6 +308,14 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
         
         if let period = period {
             period.forEach { body["period[\($0)]"] = $1 }
+        }
+        
+        if let price = price {
+            body["price"] = price
+        }
+        
+        if let priceData = priceData {
+            priceData.forEach { body["price_data[\($0)]"] = $1 }
         }
         
         if let quantity = quantity {
