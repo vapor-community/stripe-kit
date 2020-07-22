@@ -109,9 +109,8 @@ public struct StripeSubscriptionSchedulePhase: StripeModel {
 }
 
 public struct StripeSubscriptionSchedulePhaseAddInvoiceItem: StripeModel {
-    // TODO: - Price
     /// ID of the price used to generate the invoice item.
-    public var price: String?
+    @Expandable<StripePrice> public var price: String?
     /// The quantity of the invoice item.
     public var quantity: Int?
 }

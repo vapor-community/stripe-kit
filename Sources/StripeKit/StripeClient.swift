@@ -23,6 +23,7 @@ public final class StripeClient {
     public var setupIntents: SetupIntentsRoutes
     public var payouts: PayoutRoutes
     public var products: ProductRoutes
+    public var prices: PriceRoutes
     public var refunds: RefundRoutes
     public var tokens: TokenRoutes
     
@@ -119,6 +120,7 @@ public final class StripeClient {
         setupIntents = StripeSetupIntentsRoutes(apiHandler: handler)
         payouts = StripePayoutRoutes(apiHandler: handler)
         products = StripeProductRoutes(apiHandler: handler)
+        prices = StripePriceRoutes(apiHandler: handler)
         refunds = StripeRefundRoutes(apiHandler: handler)
         tokens = StripeTokenRoutes(apiHandler: handler)
         

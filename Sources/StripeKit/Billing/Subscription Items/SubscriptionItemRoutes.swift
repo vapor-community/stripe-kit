@@ -9,7 +9,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
-// TODO: - Price
+
 public protocol SubscriptionItemRoutes {
     /// Adds a new item to an existing subscription. No existing items will be changed or replaced.
     ///
@@ -19,17 +19,21 @@ public protocol SubscriptionItemRoutes {
     ///   - billingThresholds: Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the SCA Migration Guide for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the changelog to learn more.
+    ///   - price: The ID of the price object.
+    ///   - priceData: Data used to generate a new price object inline.
     ///   - prorate: Flag indicating whether to prorate switching plans during a billing cycle.
     ///   - prorationBehavior: Determines how to handle prorations when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`. Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under certain conditions. In order to always invoice immediately for prorations, pass `always_invoice`. Prorations can be disabled by passing `none`.
     ///   - prorationDate: If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the upcoming invoice endpoint.
     ///   - quantity: The quantity you’d like to apply to the subscription item you’re creating.
-    ///   - taxRates: The tax rates which apply to this subscription_item. When set, the default_tax_rates on the subscription do not apply to this subscription_item.
+    ///   - taxRates: The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
     /// - Returns: A `StripeSubscriptionItem`.
     func create(plan: String,
                 subscription: String,
                 billingThresholds: [String: Any]?,
                 metadata: [String: String]?,
                 paymentBehavior: StripeSubscriptionItemPaymentBehavior?,
+                price: String?,
+                priceData: [String: Any]?,
                 prorate: Bool?,
                 prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                 prorationDate: Date?,
@@ -48,18 +52,24 @@ public protocol SubscriptionItemRoutes {
     ///   - item: The identifier of the subscription item to modify.
     ///   - billingThresholds: Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+    ///   - offSession: Indicates if a customer is on or off-session while an invoice payment is attempted.
+    ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the SCA Migration Guide for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the changelog to learn more.
+    ///   - price: The ID of the price object.
+    ///   - priceData: Data used to generate a new price object inline.
     ///   - plan: The identifier of the new plan for this subscription item.
     ///   - prorate: Flag indicating whether to prorate switching plans during a billing cycle.
     ///   - prorationBehavior:Determines how to handle prorations when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`. Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under certain conditions. In order to always invoice immediately for prorations, pass `always_invoice`. Prorations can be disabled by passing `none`.
     ///   - prorationDate: If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the upcoming invoice endpoint.
     ///   - quantity: The quantity you’d like to apply to the subscription item you’re creating.
-    ///   - taxRates: The tax rates which apply to this subscription_item. When set, the default_tax_rates on the subscription do not apply to this subscription_item.
+    ///   - taxRates: The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
     /// - Returns: A `StripeSubscriptionItem`.
     func update(item: String,
                 billingThresholds: [String: Any]?,
                 metadata: [String: String]?,
                 offSession: Bool?,
                 paymentBehavior: StripeSubscriptionItemPaymentBehavior?,
+                price: String?,
+                priceData: [String: Any]?,
                 plan: String?,
                 prorate: Bool?,
                 prorationBehavior: StripeSubscriptionItemProrationBehavior?,
@@ -72,10 +82,13 @@ public protocol SubscriptionItemRoutes {
     /// - Parameters:
     ///   - item: The identifier of the subscription item to delete.
     ///   - clearUsage: Delete all usage for the given subscription item. Allowed only when the current plan’s `usage_type` is `metered`.
-    ///   - prorate: Flag indicating whether to prorate switching plans during a billing cycle.
+    ///   - prorationBehavior: Determines how to handle prorations when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`. Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under certain conditions. In order to always invoice immediately for prorations, pass `always_invoice`. Prorations can be disabled by passing `none`.
     ///   - prorationDate: If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the upcoming invoice endpoint.
     /// - Returns: A `StripeSubscriptionItem`.
-    func delete(item: String, clearUsage: Bool?, prorate: Bool?, prorationDate: Date?) -> EventLoopFuture<StripeSubscriptionItem>
+    func delete(item: String,
+                clearUsage: Bool?,
+                prorationBehavior: StripeSubscriptionItemProrationBehavior?,
+                prorationDate: Date?) -> EventLoopFuture<StripeSubscriptionItem>
     
     /// Returns a list of your subscription items for a given subscription.
     ///
@@ -95,6 +108,8 @@ extension SubscriptionItemRoutes {
                        billingThresholds: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
                        paymentBehavior: StripeSubscriptionItemPaymentBehavior? = nil,
+                       price: String? = nil,
+                       priceData: [String: Any]? = nil,
                        prorate: Bool? = nil,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior? = nil,
                        prorationDate: Date? = nil,
@@ -105,6 +120,8 @@ extension SubscriptionItemRoutes {
                       billingThresholds: billingThresholds,
                       metadata: metadata,
                       paymentBehavior: paymentBehavior,
+                      price: price,
+                      priceData: priceData,
                       prorate: prorate,
                       prorationBehavior: prorationBehavior,
                       prorationDate: prorationDate,
@@ -121,6 +138,8 @@ extension SubscriptionItemRoutes {
                        metadata: [String: String]? = nil,
                        offSession: Bool? = nil,
                        paymentBehavior: StripeSubscriptionItemPaymentBehavior? = nil,
+                       price: String? = nil,
+                       priceData: [String: Any]? = nil,
                        plan: String? = nil,
                        prorate: Bool? = nil,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior? = nil,
@@ -132,6 +151,8 @@ extension SubscriptionItemRoutes {
                       metadata: metadata,
                       offSession: offSession,
                       paymentBehavior: paymentBehavior,
+                      price: price,
+                      priceData: priceData,
                       plan: plan,
                       prorate: prorate,
                       prorationBehavior: prorationBehavior,
@@ -142,12 +163,12 @@ extension SubscriptionItemRoutes {
     
     public func delete(item: String,
                        clearUsage: Bool? = nil,
-                       prorate: Bool? = nil,
+                       prorationBehavior: StripeSubscriptionItemProrationBehavior? = nil,
                        prorationDate: Date? = nil) -> EventLoopFuture<StripeSubscriptionItem> {
         return delete(item: item,
-                          clearUsage: clearUsage,
-                          prorate: prorate,
-                          prorationDate: prorationDate)
+                      clearUsage: clearUsage,
+                      prorationBehavior: prorationBehavior,
+                      prorationDate: prorationDate)
     }
     
     public func listAll(subscription: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeSubscriptionItemList> {
@@ -170,6 +191,8 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
                        billingThresholds: [String: Any]?,
                        metadata: [String: String]?,
                        paymentBehavior: StripeSubscriptionItemPaymentBehavior?,
+                       price: String?,
+                       priceData: [String: Any]?,
                        prorate: Bool?,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                        prorationDate: Date?,
@@ -184,6 +207,14 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
         
         if let paymentBehavior = paymentBehavior {
             body["payment_behavior"] = paymentBehavior
+        }
+        
+        if let price = price {
+            body["price"] = price
+        }
+        
+        if let priceData = priceData {
+            priceData.forEach { body["price_data[\($0)]"] = $1 }
         }
         
         if let metadata = metadata {
@@ -222,6 +253,8 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
                        metadata: [String: String]?,
                        offSession: Bool?,
                        paymentBehavior: StripeSubscriptionItemPaymentBehavior?,
+                       price: String?,
+                       priceData: [String: Any]?,
                        plan: String?,
                        prorate: Bool?,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior?,
@@ -244,6 +277,14 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
         
         if let paymentBehavior = paymentBehavior {
             body["payment_behavior"] = paymentBehavior
+        }
+        
+        if let price = price {
+            body["price"] = price
+        }
+        
+        if let priceData = priceData {
+            priceData.forEach { body["price_data[\($0)]"] = $1 }
         }
         
         if let plan = plan {
@@ -275,16 +316,16 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
     
     public func delete(item: String,
                        clearUsage: Bool?,
-                       prorate: Bool?,
+                       prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                        prorationDate: Date?) -> EventLoopFuture<StripeSubscriptionItem> {
         var body: [String: Any] = [:]
-
-        if let prorate = prorate {
-            body["prorate"] = prorate
-        }
         
         if let clearUsage = clearUsage {
             body["clear_usage"] = clearUsage
+        }
+        
+        if let prorationBehavior = prorationBehavior {
+            body["proration_behavior"] = prorationBehavior.rawValue
         }
         
         if let prorationDate = prorationDate {
