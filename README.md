@@ -125,7 +125,7 @@ To accomadate for these changes, certain routes that take arguments that are `ha
 
 For example consider the Connect account API. 
 
-~~~~swift
+```swift
 // We define a custom dictionary to represent the paramaters stripe requires.
 // This allows us to avoid having to add updates to the library when a paramater or structure changes.
 let individual: [String: Any] = ["address": ["city": "New York",
@@ -156,11 +156,11 @@ let tosDictionary: [String: Any] = ["date": Int(Date().timeIntervalSince1970), "
 				  tosAcceptance: tosDictionary).flatMap { connectAccount in
 					print("New Stripe Connect account ID: \(connectAccount.id)")			
 				}
-~~~~
+```
 
 ## Authentication via the Stripe-Account header
 The first, preferred, authentication option is to use your (the platform account’s) secret key and pass a `Stripe-Account` header identifying the connected account for which the request is being made. The example request performs a refund of a  charge on behalf of a connected account:
-~~~swift
+```swift
    stripe.refunds.headers.add(name: "Stripe-Account", value: "acc_12345")
    stripe.refunds.create(charge: "ch_12345", reason: .requestedByCustomer)
 ~~~
@@ -183,7 +183,32 @@ None of the API calls throw errors. Instead each route returns a successful `Eve
   .flatMapError { error in
      print("Stripe error \(error.message)")
   }
-~~~
+```
+
+## Webhooks
+The webhooks API is available to use in a typesafe way to pull out entities. Here's an example of listening for the payment intent webhook.
+```swift
+func handleStripeWebhooks(req: Request) throws -> EventLoopFuture<HTTPResponse> {
+
+    let signature = req.headers["Stripe-Signature"]
+
+    try StripeClient.verifySignature(payload: req.body, header: signature, secret: "whsec_1234") 
+    // Stripe dates come back from the Stripe API as epoch and the StripeModels convert these into swift `Date` types.
+    // Use a date decoding stragetdy to successfully parse out the `created` property.
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .secondsSince1970
+    
+    let event = try decoder.decode(StripeEvent.self, from: req.bodyData)
+    
+    switch (event.type, event.data?.object) {
+    case (.paymentIntentSucceeded, .paymentIntent(let paymentIntent)):
+        print("Payment capture method: \(paymentIntent.captureMethod?.rawValue)")
+        return eventLoop.makeSucceededFuture(HTTPResponse(status: .ok))
+        
+    default: return eventLoop.makeSucceededFuture(HTTPResponse(status: .ok))
+    }
+}
+```
 
 ## Vapor Integration
 See the [Vapor helper library](https://github.com/vapor-community/stripe) to use StripeKit with Vapor.

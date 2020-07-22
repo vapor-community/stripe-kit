@@ -1,5 +1,26 @@
 # Changelog
 
+## 8.0.0 - 2020-07-21
+* [#98](https://github.com/vapor-community/stripe-kit/pull/98) Added support for the `Price`s API.
+
+* [#97](https://github.com/vapor-community/stripe-kit/pull/97) Updated `Subscription`s.
+
+* [#96](https://github.com/vapor-community/stripe-kit/pull/96) Updated `Invoice`s.
+
+* [#95](https://github.com/vapor-community/stripe-kit/pull/95) Updated `Issuing` `Transactions`.
+
+* [#94](https://github.com/vapor-community/stripe-kit/pull/94) Updated `PaymentIntent`s.
+
+* [#93](https://github.com/vapor-community/stripe-kit/pull/93) Added new `PaymentMethod` types and updated `Charge`s.
+
+* [#91](https://github.com/vapor-community/stripe-kit/pull/91) Added line items for checkout sessions.
+
+* [#90](https://github.com/vapor-community/stripe-kit/pull/90) Updated `AccountLink`s.
+
+* [#89](https://github.com/vapor-community/stripe-kit/pull/89) Updated `ConnectAccount` and `Person` entities.
+
+* [#88](https://github.com/vapor-community/stripe-kit/pull/88) Mark `hasMore` properties on Lists as optional.
+
 ## 7.0.2 - 2020-04-30
 * [#77](https://github.com/vapor-community/stripe-kit/pull/77) Add fix for missing field on `@Expandable` properties.
 
@@ -56,4 +77,3 @@ Major version release for new API version `2020-03-02`
 * [#38](https://github.com/vapor-community/stripe-kit/pull/38) Adds support for `Subscription` pending updates.
 
 * [#36](https://github.com/vapor-community/stripe-kit/pull/36) Fixed a typo in card routes. Return the correct type for listing all cards.
-
