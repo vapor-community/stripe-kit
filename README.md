@@ -203,6 +203,7 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] PaymentIntents
 * [x] SetupIntents
 * [x] Payouts
+* [x] Prices
 * [x] Products
 * [x] Refunds
 * [x] Tokens
