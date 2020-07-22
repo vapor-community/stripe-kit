@@ -21,7 +21,7 @@ public protocol SubscriptionScheduleRoutes {
     /// - Parameter expand: An array of properties to expand.
     func create(customer: String?,
                 defaultSettings: [String: Any]?,
-                endBehavior: String?,
+                endBehavior: StripeSubscriptionScheduleEndBehavior?,
                 fromSubscription: Bool?,
                 metadata: [String: String]?,
                 phases: [[String: Any]]?,
@@ -37,17 +37,17 @@ public protocol SubscriptionScheduleRoutes {
     /// Updates an existing subscription schedule.
     /// - Parameter schedule: The identifier of the subscription schedule to be updated.
     /// - Parameter defaultSettings: Object representing the subscription schedule’s default settings.
-    /// - Parameter endBehavior: Configures how the subscription schedule behaves when it ends. Possible values are release or cancel with the default being release. release will end the subscription schedule and keep the underlying subscription running.cancel will end the subscription schedule and cancel the underlying subscription.
+    /// - Parameter endBehavior: Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
     /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     /// - Parameter phases: List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
-    /// - Parameter prorate: If the update changes the current phase, indicates if the changes should be prorated. Defaults to true.
+    /// - Parameter prorationBehavior: If the update changes the current phase, indicates if the changes should be prorated. Defaults to true.
     /// - Parameter expand: An array of properties to expand.
     func update(schedule: String,
                 defaultSettings: [String: Any]?,
-                endBehavior: String?,
+                endBehavior: StripeSubscriptionScheduleEndBehavior?,
                 metadata: [String: String]?,
                 phases: [[String: Any]]?,
-                prorate: Bool?,
+                prorationBehavior: StripeSubscriptionSchedulePhaseProrationBehavior?,
                 expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule>
     
     /// Cancels a subscription schedule and its associated subscription immediately (if the subscription schedule has an active subscription). A subscription schedule can only be canceled if its status is `not_started` or `active`.
@@ -79,7 +79,7 @@ public protocol SubscriptionScheduleRoutes {
 extension SubscriptionScheduleRoutes {
     public func create(customer: String? = nil,
                        defaultSettings: [String: Any]? = nil,
-                       endBehavior: String? = nil,
+                       endBehavior: StripeSubscriptionScheduleEndBehavior? = nil,
                        fromSubscription: Bool? = nil,
                        metadata: [String: String]? = nil,
                        phases: [[String: Any]]? = nil,
@@ -101,17 +101,17 @@ extension SubscriptionScheduleRoutes {
     
     public func update(schedule: String,
                        defaultSettings: [String: Any]? = nil,
-                       endBehavior: String? = nil,
+                       endBehavior: StripeSubscriptionScheduleEndBehavior? = nil,
                        metadata: [String: String]? = nil,
                        phases: [[String: Any]]? = nil,
-                       prorate: Bool? = nil,
+                       prorationBehavior: StripeSubscriptionSchedulePhaseProrationBehavior? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeSubscriptionSchedule> {
         return update(schedule: schedule,
                       defaultSettings: defaultSettings,
                       endBehavior: endBehavior,
                       metadata: metadata,
                       phases: phases,
-                      prorate: prorate,
+                      prorationBehavior: prorationBehavior,
                       expand: expand)
     }
     
@@ -150,7 +150,7 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
     
     public func create(customer: String?,
                        defaultSettings: [String: Any]?,
-                       endBehavior: String?,
+                       endBehavior: StripeSubscriptionScheduleEndBehavior?,
                        fromSubscription: Bool?,
                        metadata: [String: String]?,
                        phases: [[String: Any]]?,
@@ -167,7 +167,7 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
         }
         
         if let endBehavior = endBehavior {
-            body["end_behavior"] = endBehavior
+            body["end_behavior"] = endBehavior.rawValue
         }
         
         if let fromSubscription = fromSubscription {
@@ -204,10 +204,10 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
     
     public func update(schedule: String,
                        defaultSettings: [String: Any]?,
-                       endBehavior: String?,
+                       endBehavior: StripeSubscriptionScheduleEndBehavior?,
                        metadata: [String: String]?,
                        phases: [[String: Any]]?,
-                       prorate: Bool?,
+                       prorationBehavior: StripeSubscriptionSchedulePhaseProrationBehavior?,
                        expand: [String]?) -> EventLoopFuture<StripeSubscriptionSchedule> {
         var body: [String: Any] = [:]
         
@@ -216,7 +216,7 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
         }
         
         if let endBehavior = endBehavior {
-            body["end_behavior"] = endBehavior
+            body["end_behavior"] = endBehavior.rawValue
         }
                 
         if let metadata = metadata {
@@ -227,8 +227,8 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
             body["phases"] = phases
         }
         
-        if let prorate = prorate {
-            body["prorate"] = prorate
+        if let prorationBehavior = prorationBehavior {
+            body["proration_behavior"] = prorationBehavior.rawValue
         }
         
         if let expand = expand {

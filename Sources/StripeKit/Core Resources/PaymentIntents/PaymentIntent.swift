@@ -65,8 +65,8 @@ public struct StripePaymentIntent: StripeModel {
     public var receiptEmail: String?
     /// ID of the review associated with this PaymentIntent, if any.
     @Expandable<StripeReview> public var review: String?
-    /// Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use on_session if you intend to only reuse the payment method when your customer is present in your checkout flow. Use off_session if your customer may or may not be in your checkout flow. For more, learn to save card details after a payment. Stripe uses setup_future_usage to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using off_session will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer.
-    public var setupFutureUsage: String?
+    /// Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. For more, learn to save card details after a payment. Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using off_session will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer.
+    public var setupFutureUsage: StripePaymentIntentSetupFutureUsage?
     /// Shipping information for this PaymentIntent.
     public var shipping: StripeShippingLabel?
     /// For non-card charges, you can use this value as the complete description that appears on your customers’ statements. Must contain at least one letter, maximum 22 characters.
@@ -81,11 +81,16 @@ public struct StripePaymentIntent: StripeModel {
     public var transferGroup: String?
 }
 
+public enum StripePaymentIntentSetupFutureUsage: String, StripeModel {
+    case onSession = "on_session"
+    case offSession = "off_session"
+}
+
 public struct StripePaymentIntentTransferData: StripeModel {
-	/// Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the smallest currency unit
-	public var destination: String?
-	/// The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to upon payment success.
-	public var amount: Int?
+	/// Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or equivalent in charge currency. The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+    public var amount: Int?
+    /// The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to upon payment success.
+    public var destination: String?
 }
 
 public enum StripePaymentIntentCancellationReason: String, StripeModel {
@@ -93,15 +98,21 @@ public enum StripePaymentIntentCancellationReason: String, StripeModel {
     case fraudulent
     case requestedByCustomer = "requested_by_customer"
     case failedInvoice = "failed_invoice"
+    case voidInvoice = "void_invoice"
+    case automatic
 }
 
 public enum StripePaymentIntentCaptureMethod: String, StripeModel {
+    /// (Default) Stripe automatically captures funds when the customer authorizes the payment.
     case automatic
+    /// Place a hold on the funds when the customer authorizes the payment, but don’t capture the funds until later. (Not all payment methods support this.)
     case manual
 }
 
 public enum StripePaymentIntentConfirmationMethod: String, StripeModel {
+    /// (Default) PaymentIntent can be confirmed using a publishable key. After `next_action`s are handled, no additional confirmation is required to complete the payment.
     case automatic
+    /// All payment attempts must be made using a secret key. The PaymentIntent returns to the `requires_confirmation` state after handling `next_action`s, and requires your server to initiate each payment attempt with an explicit confirmation.
     case manual
 }
 
@@ -147,13 +158,22 @@ public struct StripePaymentIntentsList: StripeModel {
 }
 
 public struct StripePaymentIntentPaymentMethodOptions: StripeModel {
+    /// If the PaymentIntent’s `payment_method_types` includes `bancontact`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var bancontact: StripePaymentIntentPaymentMethodOptionsBancontact?
     /// If the PaymentIntent’s `payment_method_types` includes `card`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var card: StripePaymentIntentPaymentMethodOptionsCard?
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsBancontact: StripeModel {
+    /// Preferred language of the Bancontact authorization page that the customer is redirected to.
+    public var preferredLanguage: String?
 }
 
 public struct StripePaymentIntentPaymentMethodOptionsCard: StripeModel {
     /// Installment details for this payment (Mexico only). For more information, see the installments integration guide.
     public var installments: StripePaymentIntentPaymentMethodOptionsCardInstallments?
+    /// Selected network to process this PaymentIntent on. Depends on the available networks of the card attached to the PaymentIntent. Can be only set confirm-time.
+    public var network: String?
     /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and other requirements. However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on manually requesting 3D Secure for more information on how this configuration interacts with Radar and our SCA Engine.
     public var requestThreeDSecure: String?
 }

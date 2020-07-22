@@ -69,6 +69,7 @@ public enum StripeEventObject: StripeModel {
     case payout(StripePayout)
     case person(StripePerson)
     case plan(StripePlan)
+    case price(StripePrice)
     case product(StripeProduct)
     case earlyFraudWarniing(StripeEarlyFraudWarning)
     case reportRun(StripeReportRun)
@@ -153,6 +154,8 @@ public enum StripeEventObject: StripeModel {
             self = try .person(StripePerson(from: decoder))
         case "plan":
             self = try .plan(StripePlan(from: decoder))
+        case "price":
+            self = try .price(StripePrice(from: decoder))
         case "product":
             self = try .product(StripeProduct(from: decoder))
         case "radar.early_fraud_warning":
@@ -365,7 +368,7 @@ public enum StripeEventType: String, StripeModel {
     case orderUpdated = "order.updated"
     /// Occurs whenever an order return is created.
     case orderReturnCreated = "order_return.created"
-    /// Occurs when a PaymentIntent has funds to be captured. Check the amount_capturable property on the PaymentIntent to determine the amount that can be captured. You may capture the PaymentIntent with an amount_to_capture value up to the specified amount. Learn more about capturing PaymentIntents.
+    /// Occurs when a PaymentIntent has funds to be captured. Check the `amount_capturable` property on the PaymentIntent to determine the amount that can be captured. You may capture the PaymentIntent with an `amount_to_capture` value up to the specified amount. Learn more about capturing PaymentIntents.
     case paymentIntentAmountCapturableUpdated = "payment_intent.amount_capturable_updated"
     /// Occurs when a new PaymentIntent is created.
     case paymentIntentCreated = "payment_intent.created"
@@ -405,6 +408,12 @@ public enum StripeEventType: String, StripeModel {
     case planDeleted = "plan.deleted"
     /// Occurs whenever a plan is updated.
     case planUpdated = "plan.updated"
+    /// Occurs whenever a price is created.
+    case priceCreated = "price.created"
+    /// Occurs whenever a price is deleted.
+    case priceDeleted = "price.deleted"
+    /// Occurs whenever a price is updated.
+    case priceUpdated = "price.updated"
     /// Occurs whenever a product is created.
     case productCreated = "product.created"
     /// Occurs whenever a product is deleted.
@@ -503,7 +512,7 @@ public enum StripeEventType: String, StripeModel {
 
 public struct StripeEventList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeEvent]?
 }

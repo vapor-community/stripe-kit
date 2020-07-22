@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [Subscription Object](https://stripe.com/docs/api/subscriptions/object).
+/// The [Subscription Object](https://stripe.com/docs/api/subscriptions/object)
 public struct StripeSubscription: StripeModel {
     /// Unique identifier for the object.
     public var id: String
@@ -22,6 +22,8 @@ public struct StripeSubscription: StripeModel {
     public var billingThresholds: StripeSubscriptionBillingThresholds?
     /// If the subscription has been canceled with the `at_period_end` flag set to `true`, `cancel_at_period_end` on the subscription will be `true`. You can use this attribute to determine whether a subscription that has a status of active is scheduled to be canceled at the end of the current period.
     public var cancelAtPeriodEnd: Bool?
+    /// A date in the future at which the subscription will automatically get canceled
+    public var cancelAt: Date?
     /// If the subscription has been canceled, the date of that cancellation. If the subscription was canceled with `cancel_at_period_end`, `canceled_at` will still reflect the date of the initial cancellation request, not the end of the subscription period when the subscription is automatically moved to a canceled state.
     public var canceledAt: Date?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
@@ -58,6 +60,8 @@ public struct StripeSubscription: StripeModel {
     public var metadata: [String: String]?
     /// Specifies the approximate timestamp on which any pending invoice items will be billed according to the schedule provided at pending_invoice_item_interval.
     public var nextPendingInvoiceItemInvoice: Date?
+    /// If specified, payment collection for this subscription will be paused.
+    public var pauseCollection: StripeSubscriptionPauseCollection?
     /// Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling Create an invoice for the given subscription at the specified interval.
     public var pendingInvoiceItemInterval: StripeSubscriptionPendingInvoiceInterval?
     /// You can use this SetupIntent to collect user authentication when creating a subscription without immediate payment or updating a subscription’s payment method, allowing you to optimize for off-session payments. Learn more in the SCA Migration Guide.
@@ -72,8 +76,10 @@ public struct StripeSubscription: StripeModel {
     @Expandable<StripeSubscriptionSchedule> public var schedule: String?
     /// Date when the subscription was first created. The date might differ from the `created` date due to backdating.
     public var startDate: Date?
-    /// Possible values are incomplete, incomplete_expired, trialing, active, past_due, canceled, or unpaid. /n For billing=charge_automatically a subscription moves into incomplete if the initial payment attempt fails. A subscription in this state can only have metadata and default_source updated. Once the first invoice is paid, the subscription moves into an active state. If the first invoice is not paid within 23 hours, the subscription transitions to incomplete_expired. This is a terminal state, the open invoice will be voided and no further invoices will be generated. /n A subscription that is currently in a trial period is trialing and moves to active when the trial period is over. /n If subscription billing=charge_automatically it becomes past_due when payment to renew it fails and canceled or unpaid (depending on your subscriptions settings) when Stripe has exhausted all payment retry attempts. /n If subscription billing=send_invoice it becomes past_due when its invoice is not paid by the due date, and canceled or unpaid if it is still not paid by an additional deadline after that. Note that when a subscription has a status of unpaid, no subsequent invoices will be attempted (invoices will be created, but then immediately automatically closed). After receiving updated payment information from a customer, you may choose to reopen and pay their closed invoices.
+    /// Possible values are `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `canceled`, or `unpaid`. For `collection_method=charge_automatically` a subscription moves into `incomplete` if the initial payment attempt fails. A subscription in this state can only have metadata and `default_source` updated. Once the first invoice is paid, the subscription moves into an active state. If the first invoice is not paid within 23 hours, the subscription transitions to `incomplete_expired`. This is a terminal state, the open invoice will be voided and no further invoices will be generated. A subscription that is currently in a trial period is trialing and moves to active when the trial period is over. If subscription `collection_method=charge_automatically` it becomes `past_due` when payment to renew it fails and canceled or unpaid (depending on your subscriptions settings) when Stripe has exhausted all payment retry attempts. If subscription `collection_method=send_invoice` it becomes `past_due` when its invoice is not paid by the due date, and `canceled` or `unpaid` if it is still not paid by an additional deadline after that. Note that when a subscription has a status of `unpaid`, no subsequent invoices will be attempted (invoices will be created, but then immediately automatically closed). After receiving updated payment information from a customer, you may choose to reopen and pay their closed invoices.
     public var status: StripeSubscriptionStatus?
+    /// The account (if any) the subscription’s payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription’s invoices.
+    public var transferData: StripeSubscriptionTransferData?
     /// If the subscription has a trial, the end of that trial.
     public var trialEnd: Date?
     /// If the subscription has a trial, the beginning of that trial.
@@ -106,7 +112,7 @@ public enum StripeSubscriptionStatus: String, StripeModel {
 
 public struct StripeSubscriptionList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeSubscription]?
 }
@@ -119,6 +125,7 @@ public struct StripeSubscriptionInvoiceCustomerBalanceSettings: StripeModel {
 public enum StripeSubscriptionPaymentBehavior: String, StripeModel {
     case allowComplete = "allow_complete"
     case errorIfIncomplete = "error_if_complete"
+    case pendingIfComplete = "pending_if_complete"
 }
 
 public enum StripeSubscriptionProrationBehavior: String, StripeModel {
@@ -137,4 +144,24 @@ public struct StripeSubscriptionPendingUpdate: StripeModel {
     public var trialEnd: Date?
     /// Indicates if a plan’s `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
     public var trialFromPlan: Bool?
+}
+
+public struct StripeSubscriptionPauseCollection: StripeModel {
+    /// The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+    public var behavior: StripeSubscriptionPauseCollectionBehavior?
+    /// The time after which the subscription will resume collecting payments.
+    public var resumesAt: Date?
+}
+
+public enum StripeSubscriptionPauseCollectionBehavior: String, StripeModel {
+    case keepAsDraft = "keep_as_draft"
+    case markUncollectible = "mark_uncollectible"
+    case void
+}
+
+public struct StripeSubscriptionTransferData: StripeModel {
+    /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+    public var amountPercent: Int?
+    /// The account where funds from the payment will be transferred to upon payment success.
+    @Expandable<StripeConnectAccount> public var destination: String?
 }

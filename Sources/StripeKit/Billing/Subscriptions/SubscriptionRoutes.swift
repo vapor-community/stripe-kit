@@ -14,10 +14,13 @@ public protocol SubscriptionRoutes {
     /// Creates a new subscription on an existing customer.
     ///
     /// - Parameters:
-    ///   - customer: The identifier of the customer to subscribe.
+    ///   - customer: The identifier of the customer to subscribe
+    ///   - addInvoiceItems: A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
     ///   - applicationFeePercent: A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner’s Stripe account. The request must be made with an OAuth key in order to set an application fee percentage. For more information, see the application fees documentation.
+    ///   - backdateStartDate: For new subscriptions, a past timestamp to backdate the subscription’s start date to. If set, the first invoice will contain a proration for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
     ///   - billingCycleAnchor: A future timestamp to anchor the subscription’s [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
     ///   - billingThresholds: Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+    ///   - cancelAt: A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using proration_behavior. If set during a future period, this will always cause a proration for that period.
     ///   - cancelAtPeriodEnd: Boolean indicating whether this subscription should cancel at the end of the current period.
     ///   - collectionMethod: Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
     ///   - coupon: The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription. This will be unset if you POST an empty value.
@@ -28,19 +31,23 @@ public protocol SubscriptionRoutes {
     ///   - items: List of subscription items, each with an attached plan.
     ///   - metadata: A set of key-value pairs that you can attach to a Subscription object. It can be useful for storing additional information about the subscription in a structured format.
     ///   - offSession: Indicates if a customer is on or off-session while an invoice payment is attempted.
-    ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if its first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
+    ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if its first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more. `pending_if_incomplete` is only used with updates and cannot be passed when creating a subscription.
     ///   - pendingInvoiceItemInterval: Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
     ///   - prorate: Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
     ///   - prorationBehavior: Determines how to handle prorations resulting from the `billing_cycle_anchor`. Valid values are `create_prorations` or `none`. Passing `create_prorations` will cause proration invoice items to be created when applicable. Prorations can be disabled by passing `none`. If no value is passed, the default is `create_prorations`.
-    ///   - trialEnd: Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value now can be provided to end the customer’s trial immediately. Can be at most two years from `billing_cycle_anchor`.
-    ///   - trialFromPlan: Indicates if a plan’s trial_period_days should be applied to the subscription. Setting trial_end per subscription is preferred, and this defaults to false. Setting this flag to true together with trial_end is not allowed.
+    ///   - transferData: If specified, the funds from the subscription’s invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
+    ///   - trialEnd: Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, `trial_end` will override the default trial period of the plan the customer is being subscribed to. The special value now can be provided to end the customer’s trial immediately. Can be at most two years from `billing_cycle_anchor`.
+    ///   - trialFromPlan: Indicates if a plan’s `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to false. Setting this flag to true together with `trial_end` is not allowed.
     ///   - trialPeriodDays: Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeSubscription`.
     func create(customer: String,
+                addInvoiceItems: [[String: Any]]?,
                 applicationFeePercent: Decimal?,
+                backdateStartDate: Date?,
                 billingCycleAnchor: Date?,
                 billingThresholds: [String: Any]?,
+                cancelAt: Date?,
                 cancelAtPeriodEnd: Bool?,
                 collectionMethod: StripeInvoiceCollectionMethod?,
                 coupon: String?,
@@ -55,6 +62,7 @@ public protocol SubscriptionRoutes {
                 pendingInvoiceItemInterval: [String: Any]?,
                 prorate: Bool?,
                 prorationBehavior: StripeSubscriptionProrationBehavior?,
+                transferData: [String: Any]?,
                 trialEnd: Any?,
                 trialFromPlan: Bool?,
                 trialPeriodDays: Int?,
@@ -72,9 +80,11 @@ public protocol SubscriptionRoutes {
     ///
     /// - Parameters:
     ///   - subscription: The ID of the subscription to update.
+    ///   - addInvoiceItems: A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
     ///   - applicationFeePercent: A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner’s Stripe account. The request must be made with an OAuth key in order to set an application fee percentage. For more information, see the application fees documentation.
     ///   - billingCycleAnchor: Either `now` or `unchanged`. Setting the value to now resets the subscription’s billing cycle anchor to the current time. For more information, see the billing cycle documentation.
     ///   - billingThresholds: Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+    ///   - cancelAt: A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using proration_behavior. If set during a future period, this will always cause a proration for that period.
     ///   - cancelAtPeriodEnd: Boolean indicating whether this subscription should cancel at the end of the current period.
     ///   - collectionMethod: Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
     ///   - coupon: The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription. This will be unset if you POST an empty value.
@@ -85,19 +95,23 @@ public protocol SubscriptionRoutes {
     ///   - items: List of subscription items, each with an attached plan.
     ///   - metadata: A set of key-value pairs that you can attach to a subscription object. This can be useful for storing additional information about the subscription in a structured format.
     ///   - offSession: Indicates if a customer is on or off-session while an invoice payment is attempted.
+    ///   - pauseCollection: If specified, payment collection for this subscription will be paused.
     ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if its first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
     ///   - pendingInvoiceItemInterval: Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
     ///   - prorate: Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
     ///   - prorationBehavior: Determines how to handle prorations when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s quantity changes. Valid values are `create_prorations`, `none`, or `always_invoice`. Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under certain conditions. In order to always invoice immediately for prorations, pass `always_invoice`. Prorations can be disabled by passing `none`.
     ///   - prorationDate: If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](https://stripe.com/docs/api/subscriptions/update#retrieve_customer_invoice) endpoint. It can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
-    ///   - trialEnd: Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer’s trial immediately. Can be at most two years from `billing_cycle_anchor`.
+    ///   - transferData: If specified, the funds from the subscription’s invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
+    ///   - trialEnd: Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, `trial_end` will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer’s trial immediately. Can be at most two years from `billing_cycle_anchor`.
     ///   - trialFromPlan: Indicates if a plan’s `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to true together with `trial_end` is not allowed.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeSubscription`.
     func update(subscription: String,
+                addInvoiceItems: [[String: Any]]?,
                 applicationFeePercent: Decimal?,
                 billingCycleAnchor: String?,
                 billingThresholds: [String: Any]?,
+                cancelAt: Date?,
                 cancelAtPeriodEnd: Bool?,
                 collectionMethod: StripeInvoiceCollectionMethod?,
                 coupon: String?,
@@ -108,11 +122,13 @@ public protocol SubscriptionRoutes {
                 items: [[String: Any]]?,
                 metadata: [String: String]?,
                 offSession: Bool?,
+                pauseCollection: [String: Any]?,
                 paymentBehavior: StripeSubscriptionPaymentBehavior?,
                 pendingInvoiceItemInterval: [String: Any]?,
                 prorate: Bool?,
                 prorationBehavior: StripeSubscriptionProrationBehavior?,
                 prorationDate: Date?,
+                transferData: [String: Any]?,
                 trialEnd: Any?,
                 trialFromPlan: Bool?,
                 expand: [String]?) -> EventLoopFuture<StripeSubscription>
@@ -143,9 +159,12 @@ public protocol SubscriptionRoutes {
 
 extension SubscriptionRoutes {
     public func create(customer: String,
+                       addInvoiceItems: [[String: Any]]? = nil,
                        applicationFeePercent: Decimal? = nil,
+                       backdateStartDate: Date? = nil,
                        billingCycleAnchor: Date? = nil,
                        billingThresholds: [String: Any]? = nil,
+                       cancelAt: Date? = nil,
                        cancelAtPeriodEnd: Bool? = nil,
                        collectionMethod: StripeInvoiceCollectionMethod? = nil,
                        coupon: String? = nil,
@@ -160,14 +179,18 @@ extension SubscriptionRoutes {
                        pendingInvoiceItemInterval: [String: Any]? = nil,
                        prorate: Bool? = nil,
                        prorationBehavior: StripeSubscriptionProrationBehavior? = nil,
+                       transferData: [String: Any]? = nil,
                        trialEnd: Any? = nil,
                        trialFromPlan: Bool? = nil,
                        trialPeriodDays: Int? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeSubscription> {
         return create(customer: customer,
+                      addInvoiceItems: addInvoiceItems,
                       applicationFeePercent: applicationFeePercent,
+                      backdateStartDate: backdateStartDate,
                       billingCycleAnchor: billingCycleAnchor,
                       billingThresholds: billingThresholds,
+                      cancelAt: cancelAt,
                       cancelAtPeriodEnd: cancelAtPeriodEnd,
                       collectionMethod: collectionMethod,
                       coupon: coupon,
@@ -182,6 +205,7 @@ extension SubscriptionRoutes {
                       pendingInvoiceItemInterval: pendingInvoiceItemInterval,
                       prorate: prorate,
                       prorationBehavior: prorationBehavior,
+                      transferData: transferData,
                       trialEnd: trialEnd,
                       trialFromPlan: trialFromPlan,
                       trialPeriodDays: trialPeriodDays,
@@ -193,9 +217,11 @@ extension SubscriptionRoutes {
     }
     
     public func update(subscription: String,
+                       addInvoiceItems: [[String: Any]]? = nil,
                        applicationFeePercent: Decimal? = nil,
                        billingCycleAnchor: String? = nil,
                        billingThresholds: [String: Any]? = nil,
+                       cancelAt: Date? = nil,
                        cancelAtPeriodEnd: Bool? = nil,
                        collectionMethod: StripeInvoiceCollectionMethod? = nil,
                        coupon: String? = nil,
@@ -206,18 +232,22 @@ extension SubscriptionRoutes {
                        items: [[String: Any]]? = nil,
                        metadata: [String: String]? = nil,
                        offSession: Bool? = nil,
+                       pauseCollection: [String: Any]? = nil,
                        paymentBehavior: StripeSubscriptionPaymentBehavior? = nil,
                        pendingInvoiceItemInterval: [String: Any]? = nil,
                        prorate: Bool? = nil,
                        prorationBehavior: StripeSubscriptionProrationBehavior? = nil,
                        prorationDate: Date? = nil,
+                       transferData: [String: Any]? = nil,
                        trialEnd: Any? = nil,
                        trialFromPlan: Bool? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeSubscription> {
         return update(subscription: subscription,
+                      addInvoiceItems: addInvoiceItems,
                       applicationFeePercent: applicationFeePercent,
                       billingCycleAnchor: billingCycleAnchor,
                       billingThresholds: billingThresholds,
+                      cancelAt: cancelAt,
                       cancelAtPeriodEnd: cancelAtPeriodEnd,
                       collectionMethod: collectionMethod,
                       coupon: coupon,
@@ -228,11 +258,13 @@ extension SubscriptionRoutes {
                       items: items,
                       metadata: metadata,
                       offSession: offSession,
+                      pauseCollection: pauseCollection,
                       paymentBehavior: paymentBehavior,
                       pendingInvoiceItemInterval: pendingInvoiceItemInterval,
                       prorate: prorate,
                       prorationBehavior: prorationBehavior,
                       prorationDate: prorationDate,
+                      transferData: transferData,
                       trialEnd: trialEnd,
                       trialFromPlan: trialFromPlan,
                       expand: expand)
@@ -264,9 +296,12 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
     }
     
     public func create(customer: String,
+                       addInvoiceItems: [[String: Any]]?,
                        applicationFeePercent: Decimal?,
+                       backdateStartDate: Date?,
                        billingCycleAnchor: Date?,
                        billingThresholds: [String: Any]?,
+                       cancelAt: Date?,
                        cancelAtPeriodEnd: Bool?,
                        collectionMethod: StripeInvoiceCollectionMethod?,
                        coupon: String?,
@@ -281,6 +316,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        pendingInvoiceItemInterval: [String: Any]?,
                        prorate: Bool?,
                        prorationBehavior: StripeSubscriptionProrationBehavior?,
+                       transferData: [String: Any]?,
                        trialEnd: Any?,
                        trialFromPlan: Bool?,
                        trialPeriodDays: Int?,
@@ -288,8 +324,16 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
         var body: [String: Any] = ["customer": customer,
                                    "items": items]
         
+        if let addInvoiceItems = addInvoiceItems {
+            body["add_invoice_items"] = addInvoiceItems
+        }
+        
         if let applicationFeePercent = applicationFeePercent {
             body["application_fee_percent"] = applicationFeePercent
+        }
+        
+        if let backdateStartDate = backdateStartDate {
+            body["backdate_start_date"] = Int(backdateStartDate.timeIntervalSince1970)
         }
         
         if let billingCycleAnchor = billingCycleAnchor {
@@ -298,6 +342,10 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
         
         if let billingThresholds = billingThresholds {
             billingThresholds.forEach { body["billing_thresholds[\($0)]"] = $1 }
+        }
+        
+        if let cancelAt = cancelAt {
+            body["cancel_at"] = Int(cancelAt.timeIntervalSince1970)
         }
         
         if let cancelAtPeriodEnd = cancelAtPeriodEnd {
@@ -352,6 +400,10 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
             body["proration_behavior"] = prorationBehavior.rawValue
         }
         
+        if let transferData = transferData {
+            transferData.forEach { body["transfer_data[\($0)]"] = $1 }
+        }
+        
         if let trialEnd = trialEnd as? Date {
             body["trial_end"] = Int(trialEnd.timeIntervalSince1970)
         }
@@ -384,9 +436,11 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
     }
     
     public func update(subscription: String,
+                       addInvoiceItems: [[String: Any]]?,
                        applicationFeePercent: Decimal?,
                        billingCycleAnchor: String?,
                        billingThresholds: [String: Any]?,
+                       cancelAt: Date?,
                        cancelAtPeriodEnd: Bool?,
                        collectionMethod: StripeInvoiceCollectionMethod?,
                        coupon: String?,
@@ -397,15 +451,21 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        items: [[String: Any]]?,
                        metadata: [String: String]?,
                        offSession: Bool?,
+                       pauseCollection: [String: Any]?,
                        paymentBehavior: StripeSubscriptionPaymentBehavior?,
                        pendingInvoiceItemInterval: [String: Any]?,
                        prorate: Bool?,
                        prorationBehavior: StripeSubscriptionProrationBehavior?,
                        prorationDate: Date?,
+                       transferData: [String: Any]?,
                        trialEnd: Any?,
                        trialFromPlan: Bool?,
                        expand: [String]?) -> EventLoopFuture<StripeSubscription> {
         var body: [String: Any] = [:]
+        
+        if let addInvoiceItems = addInvoiceItems {
+            body["add_invoice_items"] = addInvoiceItems
+        }
         
         if let applicationFeePercent = applicationFeePercent {
             body["application_fee_percent"] = applicationFeePercent
@@ -417,6 +477,10 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
         
         if let billingThresholds = billingThresholds {
             billingThresholds.forEach { body["billing_thresholds[\($0)]"] = $1 }
+        }
+        
+        if let cancelAt = cancelAt {
+            body["cancel_at"] = Int(cancelAt.timeIntervalSince1970)
         }
         
         if let cancelAtPeriodEnd = cancelAtPeriodEnd {
@@ -459,6 +523,10 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
             body["off_session"] = offSession
         }
         
+        if let pauseCollection = pauseCollection {
+            pauseCollection.forEach { body["pause_collection[\($0)]"] = $1 }
+        }
+        
         if let paymentBehavior = paymentBehavior {
             body["payment_behavior"] = paymentBehavior.rawValue
         }
@@ -477,6 +545,10 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
         
         if let prorationDate = prorationDate {
             body["proration_date"] = Int(prorationDate.timeIntervalSince1970)
+        }
+        
+        if let transferData = transferData {
+            transferData.forEach { body["transfer_data[\($0)]"] = $1 }
         }
         
         if let trialEnd = trialEnd as? Date {

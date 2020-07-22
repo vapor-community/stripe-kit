@@ -29,6 +29,7 @@ public protocol InvoiceRoutes {
     ///   - metadata:
     ///   - statementDescriptor: Extra information about a charge for the customer’s credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item’s product’s `statement_descriptor`.
     ///   - subscription: The ID of the subscription to invoice, if any. If not set, the created invoice will include all pending invoice items for the customer. If set, the created invoice will only include pending invoice items for that subscription and pending invoice items not associated with any subscription. The subscription’s billing cycle and regular subscription events won’t be affected.
+    ///   - transferData: If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice’s charge.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
     func create(customer: String,
@@ -46,6 +47,7 @@ public protocol InvoiceRoutes {
                 metadata: [String: String]?,
                 statementDescriptor: String?,
                 subscription: String?,
+                transferData: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// Retrieves the invoice with the given ID.
@@ -73,6 +75,7 @@ public protocol InvoiceRoutes {
     ///   - footer: Footer to be displayed on the invoice. This will be unset if you POST an empty value.
     ///   - metadata:
     ///   - statementDescriptor: Extra information about a charge for the customer’s credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item’s product’s `statement_descriptor`.
+    ///   - transferData: If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice’s charge. This will be unset if you POST an empty value.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
     func update(invoice: String,
@@ -89,6 +92,7 @@ public protocol InvoiceRoutes {
                 footer: String?,
                 metadata: [String: String]?,
                 statementDescriptor: String?,
+                transferData: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripeInvoice>
     
     /// Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api/invoices/delete#void_invoice).
@@ -193,6 +197,7 @@ extension InvoiceRoutes {
                        metadata: [String: String]? = nil,
                        statementDescriptor: String? = nil,
                        subscription: String? = nil,
+                       transferData: [String: Any]? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
         return create(customer: customer,
                       applicationFeeAmount: applicationFeeAmount,
@@ -209,6 +214,7 @@ extension InvoiceRoutes {
                       metadata: metadata,
                       statementDescriptor: statementDescriptor,
                       subscription: subscription,
+                      transferData: transferData,
                       expand: expand)
     }
     
@@ -230,6 +236,7 @@ extension InvoiceRoutes {
                        footer: String? = nil,
                        metadata: [String: String]? = nil,
                        statementDescriptor: String? = nil,
+                       transferData: [String: Any]? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
         return update(invoice: invoice,
                       applicationFeeAmount: applicationFeeAmount,
@@ -245,6 +252,7 @@ extension InvoiceRoutes {
                       footer: footer,
                       metadata: metadata,
                       statementDescriptor: statementDescriptor,
+                      transferData: transferData,
                       expand: expand)
     }
     
@@ -323,6 +331,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                        metadata: [String: String]?,
                        statementDescriptor: String?,
                        subscription: String?,
+                       transferData: [String: Any]?,
                        expand: [String]?) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
@@ -384,6 +393,10 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["subscription"] = subscription
         }
         
+        if let transferData = transferData {
+            transferData.forEach { body["transfer_data[\($0)]"] = $1 }
+        }
+        
         if let expand = expand {
             body["expand"] = expand
         }
@@ -414,6 +427,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                        footer: String?,
                        metadata: [String: String]?,
                        statementDescriptor: String?,
+                       transferData: [String: Any]?,
                        expand: [String]?) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
@@ -467,6 +481,10 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         
         if let statementDescriptor = statementDescriptor {
             body["statement_descriptor"] = statementDescriptor
+        }
+        
+        if let transferData = transferData {
+            transferData.forEach { body["transfer_data[\($0)]"] = $1 }
         }
         
         if let expand = expand {

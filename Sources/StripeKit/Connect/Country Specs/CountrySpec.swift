@@ -28,7 +28,7 @@ public struct StripeCountrySpec: StripeModel {
 
 public struct StripeCountrySpecList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeCountrySpec]?
 }

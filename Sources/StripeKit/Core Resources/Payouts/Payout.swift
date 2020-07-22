@@ -11,7 +11,7 @@ import Foundation
 public struct StripePayout: StripeModel {
     /// Unique identifier for the object.
     public var id: String
-    /// /// String representing the object’s type. Objects of the same type share the same value.
+    /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Amount (in cents) to be transferred to your bank account or debit card.
     public var amount: Int?
@@ -92,7 +92,7 @@ public enum StripePayoutType: String, StripeModel {
 
 public struct StripePayoutsList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripePayout]?
 }

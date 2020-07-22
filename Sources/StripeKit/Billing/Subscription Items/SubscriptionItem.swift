@@ -22,6 +22,8 @@ public struct StripeSubscriptionItem: StripeModel {
     public var metadata: [String: String]?
     /// Hash describing the plan the customer is subscribed to.
     public var plan: StripePlan?
+    /// The price the customer is subscribed to.
+    public var price: StripePrice?
     /// The quantity of the plan to which the customer should be subscribed.
     public var quantity: Int?
     /// The `subscription` this `subscription_item` belongs to.
@@ -50,7 +52,7 @@ public enum StripeSubscriptionItemProrationBehavior: String, StripeModel {
 
 public struct StripeSubscriptionItemList: StripeModel {
     public var object: String
-    public var hasMore: Bool
+    public var hasMore: Bool?
     public var url: String?
     public var data: [StripeSubscriptionItem]?
 }
