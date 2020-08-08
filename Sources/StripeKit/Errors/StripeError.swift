@@ -323,7 +323,7 @@ public enum StripeDeclineCode: String, StripeModel {
     case tryAgainLater = "try_again_later"
     /// The customer has exceeded the balance or credit limit available on their card.
     case withdrawalCountLimitExceeded = "withdrawal_count_limit_exceeded"
-	/// Stripe is in test mode
+	/// The request was in test mode, but used a non test (live) card. For a list of valid test cards, visit: https://stripe.com/docs/testing.
 	case testModeLiveCard = "test_mode_live_card"
     
     public var nextSteps: String {
