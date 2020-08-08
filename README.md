@@ -194,9 +194,10 @@ func handleStripeWebhooks(req: Request) throws -> EventLoopFuture<HTTPResponse> 
 
     try StripeClient.verifySignature(payload: req.body, header: signature, secret: "whsec_1234") 
     // Stripe dates come back from the Stripe API as epoch and the StripeModels convert these into swift `Date` types.
-    // Use a date decoding stragetdy to successfully parse out the `created` property.
+    // Use a date and key decoding strategy to successfully parse out the `created` property and snake case strpe properties. 
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .secondsSince1970
+    decoder.keyDecodingStrategy = .convertFromSnakeCase
     
     let event = try decoder.decode(StripeEvent.self, from: req.bodyData)
     
