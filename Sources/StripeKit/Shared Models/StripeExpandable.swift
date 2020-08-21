@@ -108,7 +108,7 @@ public class DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
         
     public var projectedValue: DynamicExpandable<A,B> { self }
     
-    func callAsFunction<T: StripeModel>(as type: T.Type) -> T? {
+    public func callAsFunction<T: StripeModel>(as type: T.Type) -> T? {
         switch _state {
         case .unexpanded(_), .empty:
             return nil
