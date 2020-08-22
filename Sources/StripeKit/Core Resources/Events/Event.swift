@@ -318,6 +318,8 @@ public enum StripeEventType: String, StripeModel {
     case invoicePaymentFailed = "invoice.payment_failed"
     /// Occurs whenever an invoice payment attempt succeeds.
     case invoicePaymentSucceeded = "invoice.payment_succeeded"
+    /// Occurs whenever an invoice payment attempt succeeds or an invoice is marked as paid out-of-band.
+    case invoicePaid = "invoice.paid"
     /// Occurs whenever an invoice email is sent out.
     case invoiceSent = "invoice.sent"
     /// Occurs X number of days before a subscription is scheduled to create an invoice that is automatically charged—where X is determined by your subscriptions settings. Note: The received Invoice object will not have an invoice ID.
