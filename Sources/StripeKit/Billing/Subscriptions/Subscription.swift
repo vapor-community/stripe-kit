@@ -130,6 +130,7 @@ public enum StripeSubscriptionPaymentBehavior: String, StripeModel {
 
 public enum StripeSubscriptionProrationBehavior: String, StripeModel {
     case createProrations = "create_prorations"
+    case alwaysInvoice = "always_invoice"
     case none
 }
 
