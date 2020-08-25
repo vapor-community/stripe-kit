@@ -125,7 +125,7 @@ public struct StripeSubscriptionInvoiceCustomerBalanceSettings: StripeModel {
 public enum StripeSubscriptionPaymentBehavior: String, StripeModel {
     case allowComplete = "allow_complete"
     case errorIfIncomplete = "error_if_complete"
-    case pendingIfComplete = "pending_if_complete"
+    case pendingIfIncomplete = "pending_if_incomplete"
 }
 
 public enum StripeSubscriptionProrationBehavior: String, StripeModel {
