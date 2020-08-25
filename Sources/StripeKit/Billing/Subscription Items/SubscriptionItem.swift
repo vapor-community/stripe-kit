@@ -42,6 +42,8 @@ public enum StripeSubscriptionItemPaymentBehavior: String, StripeModel {
     case allowIncomplete = "allow_incomplete"
     /// Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid.
     case errorIfIncomplete = "error_if_incomplete"
+    ///  Use pending_if_incomplete to update the subscription using pending updates.
+    case pendingIfIncomplete = "pending_if_incomplete"
 }
 
 public enum StripeSubscriptionItemProrationBehavior: String, StripeModel {
