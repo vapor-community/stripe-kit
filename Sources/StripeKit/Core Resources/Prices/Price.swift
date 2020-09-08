@@ -42,7 +42,73 @@ public struct StripePrice: StripeModel {
     /// Apply a transformation to the reported usage or set quantity before computing the amount billed. Cannot be combined with `tiers`.
     public var transformQuantity: StripePriceTransformQuantity?
     /// The unit amount in cents to be charged, represented as a decimal string with at most 12 decimal places.
-    public var unitAmountDecimal: String?
+    public var unitAmountDecimal: Decimal?
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try values.decode(String.self, forKey: .id)
+        self.object = try values.decode(String.self, forKey: .object)
+        self.active = try values.decodeIfPresent(Bool.self, forKey: .active)
+        self.currency = try values.decodeIfPresent(StripeCurrency.self, forKey: .currency)
+        self.metadata = try values.decodeIfPresent([String: String].self, forKey: .metadata)
+        self._product = try values.decode(Expandable<StripeProduct>.self, forKey: .product)
+        self.recurring = try values.decodeIfPresent(StripePriceRecurring.self, forKey: .recurring)
+        self.type = try values.decodeIfPresent(StripePriceType.self, forKey: .type)
+        self.unitAmount = try values.decodeIfPresent(Int.self, forKey: .unitAmount)
+        self.billingScheme = try values.decodeIfPresent(StripePriceBillingScheme.self, forKey: .billingScheme)
+        self.created = try values.decode(Date.self, forKey: .created)
+        self.livemode = try values.decodeIfPresent(Bool.self, forKey: .livemode)
+        self.lookupKey = try values.decodeIfPresent(String.self, forKey: .lookupKey)
+        self.tiers = try values.decodeIfPresent([StripePriceTier].self, forKey: .tiers)
+        self.tiersMode = try values.decodeIfPresent(StripePriceTierMode.self, forKey: .tiersMode)
+        self.transformQuantity = try values.decodeIfPresent(StripePriceTransformQuantity.self, forKey: .transformQuantity)
+        let unitAmountDecimalString = try values.decodeIfPresent(String.self, forKey: .unitAmountDecimal)
+        self.unitAmountDecimal = Decimal(string: unitAmountDecimalString ?? "")
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(object, forKey: .object)
+        try container.encode(active, forKey: .active)
+        try container.encode(currency, forKey: .currency)
+        try container.encode(metadata, forKey: .metadata)
+        try container.encode(product, forKey: .product)
+        try container.encode(recurring, forKey: .recurring)
+        try container.encode(type, forKey: .type)
+        try container.encode(unitAmount, forKey: .unitAmount)
+        try container.encode(billingScheme, forKey: .billingScheme)
+        try container.encode(created, forKey: .created)
+        try container.encode(livemode, forKey: .livemode)
+        try container.encode(lookupKey, forKey: .lookupKey)
+        try container.encode(tiers, forKey: .tiers)
+        try container.encode(tiersMode, forKey: .tiersMode)
+        try container.encode(transformQuantity, forKey: .transformQuantity)
+        if let decimal = unitAmountDecimal {
+            let decimalString = "\(decimal)"
+            try container.encode(decimalString, forKey: .unitAmountDecimal)
+        }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case object
+        case active
+        case currency
+        case metadata
+        case product
+        case recurring
+        case type
+        case unitAmount
+        case billingScheme
+        case created
+        case livemode
+        case lookupKey
+        case tiers
+        case tiersMode
+        case transformQuantity
+        case unitAmountDecimal
+    }
 }
 
 public struct StripePriceRecurring: StripeModel {
