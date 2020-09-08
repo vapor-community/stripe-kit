@@ -42,7 +42,7 @@ public struct StripePrice: StripeModel {
     /// Apply a transformation to the reported usage or set quantity before computing the amount billed. Cannot be combined with `tiers`.
     public var transformQuantity: StripePriceTransformQuantity?
     /// The unit amount in cents to be charged, represented as a decimal string with at most 12 decimal places.
-    public var unitAmountDecimal: Decimal?
+    public var unitAmountDecimal: String?
 }
 
 public struct StripePriceRecurring: StripeModel {
