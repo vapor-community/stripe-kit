@@ -41,7 +41,10 @@ public protocol AccountRoutes {
                 externalAccount: Any?,
                 individual: [String: Any]?,
                 metadata: [String: String]?,
-                requestedCapabilities: [String],
+                /// - Remark: Changes for Invoice Hero
+                //requestedCapabilities: [String],
+                capabilities: [StripeConnectAccountCapability : [String:Bool]],
+                ///
                 settings: [String: Any]?,
                 tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount>
     
@@ -79,7 +82,10 @@ public protocol AccountRoutes {
                 externalAccount: Any?,
                 individual: [String: Any]?,
                 metadata: [String: String]?,
-                requestedCapabilities: [String]?,
+                /// - Remark: Changes for Invoice Hero
+                //requestedCapabilities: [String]?,
+                capabilities: [StripeConnectAccountCapability : [String:Bool]]?,
+                ///
                 settings: [String: Any]?,
                 tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount>
     
@@ -131,7 +137,10 @@ extension AccountRoutes {
                        externalAccount: Any? = nil,
                        individual: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
-                       requestedCapabilities: [String],
+                       /// - Remark: Changes for Invoice Hero
+                       //requestedCapabilities: [String],
+                       capabilities: [StripeConnectAccountCapability : [String:Bool]],
+                       ///
                        settings: [String: Any]? = nil,
                        tosAcceptance: [String: Any]? = nil) -> EventLoopFuture<StripeConnectAccount> {
         return create(type: type,
@@ -145,7 +154,10 @@ extension AccountRoutes {
                       externalAccount: externalAccount,
                       individual: individual,
                       metadata: metadata,
-                      requestedCapabilities: requestedCapabilities,
+                      /// - Remark: Changes for Invoice Hero
+                      //requestedCapabilities: requestedCapabilities,
+                      capabilities: capabilities,
+                      ///
                       settings: settings,
                       tosAcceptance: tosAcceptance)
     }
@@ -164,6 +176,10 @@ extension AccountRoutes {
                        externalAccount: Any? = nil,
                        individual: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
+                       /// - Remark: Changes for Invoice Hero
+                       //requestedCapabilities: [String]? = nil,
+                       capabilities: [StripeConnectAccountCapability : [String:Bool]]? = nil,
+                       ///
                        requestedCapabilities: [String]? = nil,
                        settings: [String: Any]? = nil,
                        tosAcceptance: [String: Any]? = nil) -> EventLoopFuture<StripeConnectAccount> {
@@ -177,7 +193,9 @@ extension AccountRoutes {
                       externalAccount: externalAccount,
                       individual: individual,
                       metadata: metadata,
-                      requestedCapabilities: requestedCapabilities,
+                      /// - Remark: Changes for Invoice Hero
+                      //requestedCapabilities: requestedCapabilities,
+                      capabilities: capabilities,
                       settings: settings,
                       tosAcceptance: tosAcceptance)
     }
@@ -221,11 +239,14 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        externalAccount: Any?,
                        individual: [String: Any]?,
                        metadata: [String: String]?,
-                       requestedCapabilities: [String],
+                       /// - Remark: Changes for Invoice Hero
+                       //requestedCapabilities: [String],
+                       capabilities: [StripeConnectAccountCapability : [String:Bool]],
+                       ///
                        settings: [String: Any]?,
                        tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount> {
         var body: [String: Any] = ["type": type.rawValue,
-                                   "requested_capabilities": requestedCapabilities]
+                                   "capabilities": capabilities]
         
         if let country = country {
             body["country"] = country
@@ -294,13 +315,16 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        externalAccount: Any?,
                        individual: [String: Any]?,
                        metadata: [String: String]?,
-                       requestedCapabilities: [String]?,
+                       /// - Remark: Changes for Invoice Hero
+                       //requestedCapabilities: [String]?,
+                       capabilities: [StripeConnectAccountCapability : [String:Bool]]?,
+                       ///
                        settings: [String: Any]?,
                        tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount> {
 		var body: [String: Any] = [:]
 			
-		if let requestedCapabilities = requestedCapabilities {
-			body["requested_capabilities"] = requestedCapabilities
+		if let capabilities = capabilities {
+			body["capabilities"] = capabilities
 		}
         
         if let accountToken = accountToken {

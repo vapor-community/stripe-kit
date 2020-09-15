@@ -24,6 +24,7 @@ public enum AccountLinkCreationType: String, StripeModel {
     case customAccountVerification = "custom_account_verification"
     /// Displays the fields that are already populated on the account object, and allows your user to edit previously provided information. Consider framing this as “edit my profile” or “update my verification information”.
     case customAccountUpdate = "custom_account_update"
+    case standardAccountOnboarding = "account_onboarding"
 }
 
 public enum AccountLinkCreationCollectType: String, StripeModel {

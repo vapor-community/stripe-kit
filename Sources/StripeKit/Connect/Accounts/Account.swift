@@ -112,6 +112,18 @@ public enum StripeConnectAccountCapabilitiesStatus: String, StripeModel {
     case pending
 }
 
+
+
+
+/// - Note: These are specific to Invoice Hero
+public enum StripeConnectAccountCapability: StripeModel {
+    case cardPayments = "card_payments"
+    case transfers = "transfers"
+}
+///
+
+
+
 public struct StripeConnectAccountCompany: StripeModel {
     /// The company’s primary address.
     public var address: StripeAddress?
