@@ -26,6 +26,7 @@ public protocol SourceRoutes {
     ///   - statementDescriptor: An arbitrary string to be displayed on your customer’s statement. As an example, if your website is `RunClub` and the item you’re charging for is a race ticket, you may want to specify a `statement_descriptor` of `RunClub 5K race ticket.` While many payment types will display this information, some may not display it at all.
     ///   - token: An optional token used to create the source. When passed, token properties will override source parameters.
     ///   - usage: Either `reusable` or `single_use`. Whether this source should be reusable or not. Some source types may or may not be reusable by construction, while others may leave the option at creation. If an incompatible value is passed, an error will be returned.
+    ///   - sources: Optional parameters used for creating the source. Will be overridden if a token is passed instead.
     /// - Returns: A `StripeSource`.
     func create(type: StripeSourceType,
                 amount: Int?,
@@ -39,7 +40,8 @@ public protocol SourceRoutes {
                 sourceOrder: [String: Any]?,
                 statementDescriptor: String?,
                 token: String?,
-                usage: StripeSourceUsage?) -> EventLoopFuture<StripeSource>
+                usage: StripeSourceUsage?,
+                sources: [String: Any]?) -> EventLoopFuture<StripeSource>
     
     /// Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
     ///
@@ -99,20 +101,22 @@ extension SourceRoutes {
                        sourceOrder: [String: Any]? = nil,
                        statementDescriptor: String? = nil,
                        token: String? = nil,
-                       usage: StripeSourceUsage? = nil) -> EventLoopFuture<StripeSource> {
+                       usage: StripeSourceUsage? = nil,
+                       sources: [String: Any]? = nil) -> EventLoopFuture<StripeSource> {
         return create(type: type,
-                          amount: amount,
-                          currency: currency,
-                          flow: flow,
-                          mandate: mandate,
-                          metadata: metadata,
-                          owner: owner,
-                          receiver: receiver,
-                          redirect: redirect,
-                          sourceOrder: sourceOrder,
-                          statementDescriptor: statementDescriptor,
-                          token: token,
-                          usage: usage)
+                      amount: amount,
+                      currency: currency,
+                      flow: flow,
+                      mandate: mandate,
+                      metadata: metadata,
+                      owner: owner,
+                      receiver: receiver,
+                      redirect: redirect,
+                      sourceOrder: sourceOrder,
+                      statementDescriptor: statementDescriptor,
+                      token: token,
+                      usage: usage,
+                      sources: sources)
     }
     
     public func retrieve(source: String, clientSecret: String? = nil) -> EventLoopFuture<StripeSource> {
@@ -165,7 +169,8 @@ public struct StripeSourceRoutes: SourceRoutes {
                        sourceOrder: [String: Any]?,
                        statementDescriptor: String?,
                        token: String?,
-                       usage: StripeSourceUsage?) -> EventLoopFuture<StripeSource> {
+                       usage: StripeSourceUsage?,
+                       sources: [String: Any]?) -> EventLoopFuture<StripeSource> {
         var body: [String: Any] = ["type": type.rawValue]
         
         if let currency = currency {
@@ -212,7 +217,11 @@ public struct StripeSourceRoutes: SourceRoutes {
             body["usage"] = usage
         }
         
-        return apiHandler.send(method: .POST, path: sources, body: .string(body.queryParameters), headers: headers)
+        if let sources = sources {
+            sources.forEach { body["\($0)"] = $1}
+        }
+        
+        return apiHandler.send(method: .POST, path: self.sources, body: .string(body.queryParameters), headers: headers)
     }
     
     public func retrieve(source: String, clientSecret: String?) -> EventLoopFuture<StripeSource> {

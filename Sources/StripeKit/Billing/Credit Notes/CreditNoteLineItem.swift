@@ -34,7 +34,7 @@ public struct StripeCreditNoteLineItem: StripeModel {
     /// The cost of each unit of product being credited.
     public var unitAmount: Int?
     /// Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
-    public var unitAmountDecimal: Decimal?
+    public var unitAmountDecimal: String?
 }
 
 public enum StripeCreditNoteLineItemType: String, StripeModel {
