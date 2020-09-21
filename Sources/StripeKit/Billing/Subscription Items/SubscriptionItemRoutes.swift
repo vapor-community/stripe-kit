@@ -21,7 +21,6 @@ public protocol SubscriptionItemRoutes {
     ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the SCA Migration Guide for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the changelog to learn more.
     ///   - price: The ID of the price object.
     ///   - priceData: Data used to generate a new price object inline.
-    ///   - prorate: Flag indicating whether to prorate switching plans during a billing cycle.
     ///   - prorationBehavior: Determines how to handle prorations when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`. Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under certain conditions. In order to always invoice immediately for prorations, pass `always_invoice`. Prorations can be disabled by passing `none`.
     ///   - prorationDate: If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the upcoming invoice endpoint.
     ///   - quantity: The quantity you’d like to apply to the subscription item you’re creating.
@@ -34,7 +33,6 @@ public protocol SubscriptionItemRoutes {
                 paymentBehavior: StripeSubscriptionItemPaymentBehavior?,
                 price: String?,
                 priceData: [String: Any]?,
-                prorate: Bool?,
                 prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                 prorationDate: Date?,
                 quantity: Int?,
@@ -57,7 +55,6 @@ public protocol SubscriptionItemRoutes {
     ///   - price: The ID of the price object.
     ///   - priceData: Data used to generate a new price object inline.
     ///   - plan: The identifier of the new plan for this subscription item.
-    ///   - prorate: Flag indicating whether to prorate switching plans during a billing cycle.
     ///   - prorationBehavior:Determines how to handle prorations when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`. Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under certain conditions. In order to always invoice immediately for prorations, pass `always_invoice`. Prorations can be disabled by passing `none`.
     ///   - prorationDate: If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the upcoming invoice endpoint.
     ///   - quantity: The quantity you’d like to apply to the subscription item you’re creating.
@@ -71,7 +68,6 @@ public protocol SubscriptionItemRoutes {
                 price: String?,
                 priceData: [String: Any]?,
                 plan: String?,
-                prorate: Bool?,
                 prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                 prorationDate: Date?,
                 quantity: Int?,
@@ -110,7 +106,6 @@ extension SubscriptionItemRoutes {
                        paymentBehavior: StripeSubscriptionItemPaymentBehavior? = nil,
                        price: String? = nil,
                        priceData: [String: Any]? = nil,
-                       prorate: Bool? = nil,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior? = nil,
                        prorationDate: Date? = nil,
                        quantity: Int? = nil,
@@ -122,7 +117,6 @@ extension SubscriptionItemRoutes {
                       paymentBehavior: paymentBehavior,
                       price: price,
                       priceData: priceData,
-                      prorate: prorate,
                       prorationBehavior: prorationBehavior,
                       prorationDate: prorationDate,
                       quantity: quantity,
@@ -141,7 +135,6 @@ extension SubscriptionItemRoutes {
                        price: String? = nil,
                        priceData: [String: Any]? = nil,
                        plan: String? = nil,
-                       prorate: Bool? = nil,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior? = nil,
                        prorationDate: Date? = nil,
                        quantity: Int? = nil,
@@ -154,7 +147,6 @@ extension SubscriptionItemRoutes {
                       price: price,
                       priceData: priceData,
                       plan: plan,
-                      prorate: prorate,
                       prorationBehavior: prorationBehavior,
                       prorationDate: prorationDate,
                       quantity: quantity,
@@ -193,7 +185,6 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
                        paymentBehavior: StripeSubscriptionItemPaymentBehavior?,
                        price: String?,
                        priceData: [String: Any]?,
-                       prorate: Bool?,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                        prorationDate: Date?,
                        quantity: Int?,
@@ -220,11 +211,7 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
-        
-        if let prorate = prorate {
-            body["prorate"] = prorate
-        }
-        
+                
         if let prorationBehavior = prorationBehavior {
             body["proration_behavior"] = prorationBehavior.rawValue
         }
@@ -256,7 +243,6 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
                        price: String?,
                        priceData: [String: Any]?,
                        plan: String?,
-                       prorate: Bool?,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                        prorationDate: Date?,
                        quantity: Int?,
@@ -289,10 +275,6 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
         
         if let plan = plan {
             body["plan"] = plan
-        }
-
-        if let prorate = prorate {
-            body["prorate"] = prorate
         }
         
         if let prorationBehavior = prorationBehavior {
@@ -341,6 +323,6 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
             queryParams += "&" + filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: subscirptionitems, query: queryParams)
+        return apiHandler.send(method: .GET, path: subscirptionitems, query: queryParams, headers: headers)
     }
 }

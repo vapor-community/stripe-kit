@@ -38,10 +38,12 @@ public struct StripeSubscriptionItemBillingThresholds: StripeModel {
 }
 
 public enum StripeSubscriptionItemPaymentBehavior: String, StripeModel {
-    /// Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice.
+    /// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid.
     case allowIncomplete = "allow_incomplete"
     /// Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid.
     case errorIfIncomplete = "error_if_incomplete"
+    /// Use `pending_if_incomplete` to update the subscription using pending updates. When you use `pending_if_incomplete` you can only pass the parameters supported by pending updates.
+    case pendingIfIncomplete = "pending_if_incomplete"
 }
 
 public enum StripeSubscriptionItemProrationBehavior: String, StripeModel {
