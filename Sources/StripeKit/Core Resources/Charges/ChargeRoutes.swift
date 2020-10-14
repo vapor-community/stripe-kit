@@ -391,6 +391,6 @@ public struct StripeChargeRoutes: ChargeRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: charges, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: String(charges.dropLast()), query: queryParams, headers: headers)
     }
 }
