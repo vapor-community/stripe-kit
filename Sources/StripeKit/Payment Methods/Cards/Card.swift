@@ -62,7 +62,7 @@ public struct StripeCard: StripeModel {
     public var name: String?
     /// The recipient that this card belongs to. This attribute will not be in the card object if the card belongs to a customer or account instead.
     public var recipient: String?
-    /// If the card number is tokenized, this is the method that was used. Can be `apple_pay` or `google_pay`.
+    /// If the card number is tokenized, this is the method that was used. Can be `android_pay` (includes Google Pay), `apple_pay`, `masterpass`, `visa_checkout`, or null.
     public var tokenizationMethod: StripeCardTokenizedMethod?
 }
 
@@ -103,6 +103,8 @@ public enum StripeCardFundingType: String, StripeModel {
 }
 
 public enum StripeCardTokenizedMethod: String, StripeModel {
-    case applePay = "apple_pay"
     case androidPay = "android_pay"
+    case applePay = "apple_pay"
+    case masterpass
+    case visaCheckout = "visa_checkout"
 }

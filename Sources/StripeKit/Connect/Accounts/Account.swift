@@ -16,7 +16,7 @@ public struct StripeConnectAccount: StripeModel {
     public var object: String
     /// Optional information related to the business.
     public var businessProfile: StripeConnectAccountBusinessProfile?
-    /// The business type. Can be `individual` or `company`.
+    /// The business type.
     public var businessType: StripeConnectAccountBusinessType?
     /// A hash containing the set of capabilities that was requested for this account and their associated states. Keys may be `account`, `card_issuing`, `card_payments`, `cross_border_payouts_recipient`, `giropay`, `ideal`, `klarna`, `legacy_payments`, `masterpass`, `payouts`, `platform_payments`, `sofort`, or `visa_checkout`. Values may be active, inactive, or pending.
     public var capabilities: StripeConnectAccountCapablities?
@@ -90,14 +90,34 @@ public struct StripeConnectAccountCapablities: StripeModel {
     public var auBecsDebitPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the Bacs Direct Debits payments capability of the account, or whether the account can directly process Bacs Direct Debits charges.
     public var bacsDebitPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the Bancontact payments capability of the account, or whether the account can directly process Bancontact charges.
+    public var bancontactPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the card issuing capability of the account, or whether you can use Issuing to distribute funds on cards
     public var cardIssuing: StripeConnectAccountCapabilitiesStatus?
     /// The status of the card payments capability of the account, or whether the account can directly process credit and debit card charges.
     public var cardPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the Cartes Bancaires payments capability of the account, or whether the account can directly process Cartes Bancaires card charges in EUR currency.
+    public var cartesBancairesPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the EPS payments capability of the account, or whether the account can directly process EPS charges.
+    public var epsPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the FPX payments capability of the account, or whether the account can directly process FPX charges.
+    public var fpxPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the giropay payments capability of the account, or whether the account can directly process giropay charges.
+    public var giropayPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the iDEAL payments capability of the account, or whether the account can directly process iDEAL charges.
+    public var idealPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the JCB payments capability of the account, or whether the account (Japan only) can directly process JCB credit card charges in JPY currency.
     public var jcbPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the legacy payments capability of the account.
     public var legacyPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
+    public var oxxoPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the P24 payments capability of the account, or whether the account can directly process P24 charges.
+    public var p24Payments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
+    public var sepaDebitPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the Sofort payments capability of the account, or whether the account can directly process Sofort charges.
+    public var sofortPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the tax reporting 1099-K (US) capability of the account.
     public var taxReportingUs1099K: StripeConnectAccountCapabilitiesStatus?
     /// The status of the tax reporting 1099-MISC (US) capability of the account.
@@ -229,6 +249,10 @@ public enum StripeConnectAccountRequirementsDisabledReason: String, StripeModel 
 public struct StripeConnectAccountRequirementsError: StripeModel {
     /// The code for the type of error.
     public var code: StripeConnectAccountRequirementsErrorCode?
+    /// An informative message that indicates the error type and provides additional details about the error.
+    public var reason: String?
+    /// The specific user onboarding requirement field (in the requirements hash) that needs to be resolved.
+    public var requirement: String?
 }
 
 public enum StripeConnectAccountRequirementsErrorCode: String, StripeModel {
@@ -270,6 +294,8 @@ public enum StripeConnectAccountRequirementsErrorCode: String, StripeModel {
     case verificationDocumentIncomplete = "verification_document_incomplete"
     /// The uploaded file was not one of the valid document types. Ensure that the document follows the [guidelines for document uploads](https://stripe.com/docs/connect/identity-verification-api#acceptable-verification-documents) .
     case verificationDocumentInvalid = "verification_document_invalid"
+    /// The issue or expiry date is missing on the document. Upload a document that includes the issue and expiry dates.
+    case verificationDocumentIssueOrExpiryDateMissing = "verification_document_issue_or_expiry_date_missing"
     /// The document was identified as altered or falsified.
     case verificationDocumentManipulated = "verification_document_manipulated"
     /// The uploaded file was missing the back of the document. Upload a complete scan of the document.
@@ -306,6 +332,8 @@ public enum StripeConnectAccountRequirementsErrorCode: String, StripeModel {
     case verificationFailedKeyedMatch = "verification_failed_keyed_match"
     /// The company name on the account could not be verified. Correct any errors in the company name field or upload a document that includes the company name.
     case verificationFailedNameMatch = "verification_failed_name_match"
+    /// The tax ID on the account was not recognized by the IRS. Refer to the support article for newly-issued tax ID numbers.
+    case verificationFailedTaxIdNotIssued = "verification_failed_tax_id_not_issued"
     /// Verification failed for an unknown reason. Correct any errors and resubmit the required fields.
     case verificationFailedOther = "verification_failed_other"
 }
@@ -398,6 +426,8 @@ public struct StripeConnectAccountTOSAcceptance: StripeModel {
     public var ip: String?
     /// The user agent of the browser from which the Stripe Services Agreement was accepted by the account representative
     public var userAgent: String?
+    /// The user’s service agreement type
+    public var serviceAgreement: String?
 }
 
 public enum StripeConnectAccountType: String, StripeModel {

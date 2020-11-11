@@ -15,6 +15,8 @@ public struct StripeAuthorization: StripeModel {
     public var object: String
     /// The total amount that was authorized or rejected. This amount is in the card’s currency and in the smallest currency unit.
     public var amount: Int?
+    /// Detailed breakdown of amount components. These amounts are denominated in currency and in the smallest currency unit.
+    public var amountDetails: StripeAuthorizationAmountDetails?
     /// Whether the authorization has been approved.
     public var approved: Bool?
     /// How the card details were provided. One of `chip`, `contactless`, `keyed_in`, `online`, or `swipe`.
@@ -51,6 +53,11 @@ public struct StripeAuthorization: StripeModel {
     public var verificationData: StripeAuthorizationVerificationData?
     /// What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
     public var wallet: StripeAuthorizationWallet?
+}
+
+public struct StripeAuthorizationAmountDetails: StripeModel {
+    /// The fee charged by the ATM for the cash withdrawal.
+    public var atmFee: Int?
 }
 
 public struct StripeAuthorizationPendingRequest: StripeModel {

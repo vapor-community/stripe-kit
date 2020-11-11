@@ -26,6 +26,7 @@ public protocol CustomerRoutes {
     ///   - paymentMethod: ID of the PaymentMethod to attach to the customer
     ///   - phone: The customer’s phone number.
     ///   - preferredLocales: Customer’s preferred languages, ordered by preference.
+    ///   - promotionCode: The API ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
     ///   - shipping: The customer’s shipping information. Appears on invoices emailed to this customer.
     ///   - source: The source can be a Token or a Source, as returned by Elements. You must provide a source if the customer does not already have a valid source attached, and you are subscribing the customer to be charged automatically for a plan that is not free. \n Passing source will create a new source object, make it the customer default source, and delete the old customer default if one exists. If you want to add an additional source, instead use the card creation API to add the card and then the customer update API to set it as the default. \n Whenever you attach a card to a customer, Stripe will automatically validate the card.
     ///   - taxExempt: The customer’s tax exemption. One of none, exempt, or reverse.
@@ -45,6 +46,7 @@ public protocol CustomerRoutes {
                 paymentMethod: String?,
                 phone: String?,
                 preferredLocales: [String]?,
+                promotionCode: String?,
                 shipping: [String: Any]?,
                 source: Any?,
                 taxExempt: StripeCustomerTaxExempt?,
@@ -76,6 +78,7 @@ public protocol CustomerRoutes {
     ///   - name: The customer’s full name or business name.
     ///   - phone: The customer’s phone number.
     ///   - preferredLocales: Customer’s preferred languages, ordered by preference.
+    ///   - promotionCode: The API ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
     ///   - shipping: The customer’s shipping information. Appears on invoices emailed to this customer.
     ///   - source: The source can be a Token or a Source, as returned by Elements. You must provide a source if the customer does not already have a valid source attached, and you are subscribing the customer to be charged automatically for a plan that is not free. \n Passing source will create a new source object, make it the customer default source, and delete the old customer default if one exists. If you want to add an additional source, instead use the card creation API to add the card and then the customer update API to set it as the default. \n Whenever you attach a card to a customer, Stripe will automatically validate the card.
     ///   - taxExempt: The customer’s tax exemption. One of none, exempt, or reverse.
@@ -95,6 +98,7 @@ public protocol CustomerRoutes {
                 name: String?,
                 phone: String?,
                 preferredLocales: [String]?,
+                promotionCode: String?,
                 shipping: [String: Any]?,
                 source: Any?,
                 taxExempt: StripeCustomerTaxExempt?,
@@ -131,6 +135,7 @@ extension CustomerRoutes {
                        paymentMethod: String? = nil,
                        phone: String? = nil,
                        preferredLocales: [String]? = nil,
+                       promotionCode: String? = nil,
                        shipping: [String: Any]? = nil,
                        source: Any? = nil,
                        taxExempt: StripeCustomerTaxExempt? = nil,
@@ -149,6 +154,7 @@ extension CustomerRoutes {
                       paymentMethod: paymentMethod,
                       phone: phone,
                       preferredLocales: preferredLocales,
+                      promotionCode: promotionCode,
                       shipping: shipping,
                       source: source,
                       taxExempt: taxExempt,
@@ -174,6 +180,7 @@ extension CustomerRoutes {
                        name: String? = nil,
                        phone: String? = nil,
                        preferredLocales: [String]? = nil,
+                       promotionCode: String? = nil,
                        shipping: [String: Any]? = nil,
                        source: Any? = nil,
                        taxExempt: StripeCustomerTaxExempt? = nil,
@@ -192,6 +199,7 @@ extension CustomerRoutes {
                       name: name,
                       phone: phone,
                       preferredLocales: preferredLocales,
+                      promotionCode: promotionCode,
                       shipping: shipping,
                       source: source,
                       taxExempt: taxExempt,
@@ -231,6 +239,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
                        paymentMethod: String?,
                        phone: String?,
                        preferredLocales: [String]?,
+                       promotionCode: String?,
                        shipping: [String: Any]?,
                        source: Any?,
                        taxExempt: StripeCustomerTaxExempt?,
@@ -290,6 +299,10 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             body["preferred_locales"] = preferredLocales
         }
         
+        if let promotionCode = promotionCode {
+            body["promotion_code"] = promotionCode
+        }
+        
         if let shipping = shipping {
             shipping.forEach { body["shipping[\($0)]"] = $1 }
         }
@@ -340,6 +353,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
                        name: String?,
                        phone: String?,
                        preferredLocales: [String]?,
+                       promotionCode: String?,
                        shipping: [String: Any]?,
                        source: Any?,
                        taxExempt: StripeCustomerTaxExempt?,
@@ -396,6 +410,10 @@ public struct StripeCustomerRoutes: CustomerRoutes {
         
         if let preferredLocales = preferredLocales {
             body["preferred_locales"] = preferredLocales
+        }
+        
+        if let promotionCode = promotionCode {
+            body["promotion_code"] = promotionCode
         }
         
         if let shipping = shipping {

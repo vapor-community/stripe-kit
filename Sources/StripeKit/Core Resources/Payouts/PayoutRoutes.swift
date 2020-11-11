@@ -61,6 +61,12 @@ public protocol PayoutRoutes {
     /// - Returns: A `StripePayout`.
     func cancel(payout: String, expand: [String]?) -> EventLoopFuture<StripePayout>
     
+    /// Reverses a payout by debiting the destination bank account. Only payouts for connected accounts to US bank accounts may be reversed at this time. If the payout is in the pending status, `/v1/payouts/:id/cancel` should be used instead. By requesting a reversal via `/v1/payouts/:id/reverse`, you confirm that the authorized signatory of the selected bank account has authorized the debit on the bank account and that no other authorization is required.
+    /// - Parameters:
+    ///   - payout: The identifier of the payout to be reversed.
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    func reverse(payout: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripePayout>
+    
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
@@ -100,6 +106,10 @@ extension PayoutRoutes {
     
     public func cancel(payout: String, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
         return cancel(payout: payout, expand: expand)
+    }
+    
+    public func reverse(payout: String, metadata: [String: String]? = nil, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+        return reverse(payout: payout, metadata: metadata, expand: expand)
     }
 }
 
@@ -197,5 +207,19 @@ public struct StripePayoutRoutes: PayoutRoutes {
         }
         
         return apiHandler.send(method: .POST, path: "\(payouts)/\(payout)/cancel", body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func reverse(payout: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripePayout> {
+        var body: [String: Any] = [:]
+        
+        if let metadata = metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
+        }
+        
+        return apiHandler.send(method: .POST, path: "\(payouts)/\(payout)/reverse", body: .string(body.queryParameters), headers: headers)
     }
 }

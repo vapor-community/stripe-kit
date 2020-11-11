@@ -41,6 +41,8 @@ public struct StripeSession: StripeModel {
     @Expandable<StripePaymentIntent> public var paymentIntent: String?
     /// A list of the types of payment methods (e.g. card) this Checkout Session is allowed to accept.
     public var paymentMethodTypes: [StripeSessionPaymentMethodType]?
+    /// The payment status of the Checkout Session, one of paid, unpaid, or no_payment_required. You can use this value to decide when to fulfill your customer’s order.
+    public var paymentStatus: StripeSessionPaymentStatus?
     /// The ID of the SetupIntent for Checkout Sessions in setup mode.
     @Expandable<StripeSetupIntent> public var setupIntent: String?
     /// Shipping information for this Checkout Session.
@@ -193,4 +195,13 @@ public struct StripeSessionTotalDetailsBreakdown: StripeModel {
     public var discounts: [StripeSessionLineItemDiscount]?
     /// The aggregated line item tax amounts by rate.
     public var taxes: [StripeSessionLineItemTax]?
+}
+
+public enum StripeSessionPaymentStatus: String, StripeModel {
+    /// The payment funds are available in your account.
+    case paid
+    /// The payment funds are not yet available in your account.
+    case unpaid
+    /// The Checkout Session is in setup mode and doesn’t require a payment at this time.
+    case noPaymentRequired = "no_payment_required"
 }

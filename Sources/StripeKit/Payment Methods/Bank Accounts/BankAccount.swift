@@ -18,6 +18,8 @@ public struct StripeBankAccount: StripeModel {
     public var accountHolderName: String?
     /// The type of entity that holds the account. This can be either `individual` or `company`.
     public var accountHolderType: StripeBankAccountHolderType?
+    /// A set of available payout methods for this bank account. Only values from this set should be passed as the `method` when creating a payout.
+    public var availablePayoutMethods: [String]?
     /// Name of the bank associated with the routing number (e.g., WELLS FARGO).
     public var bankName: String?
     /// Two-letter ISO code representing the country the bank account is located in.
@@ -30,7 +32,7 @@ public struct StripeBankAccount: StripeModel {
     public var defaultForCurrency: Bool?
     /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
     public var fingerprint: String?
-    /// /// The last four digits of the bank account.
+    /// The last four digits of the bank account.
     public var last4: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?

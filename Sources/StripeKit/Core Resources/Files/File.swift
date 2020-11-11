@@ -15,6 +15,8 @@ public struct StripeFile: StripeModel {
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
+    /// The time at which the file expires and is no longer available in epoch seconds.
+    public var expiresAt: Date?
     /// A filename for the file, suitable for saving to a filesystem.
     public var filename: String?
     /// A list of file links.
@@ -32,13 +34,14 @@ public struct StripeFile: StripeModel {
 }
 
 public enum StripeFilePurpose: String, StripeModel {
+    case additionalVerification = "additional_verification"
+    case businessIcon = "business_icon"
     case businessLogo = "business_logo"
     case customerSignature = "customer_signature"
     case disputeEvidence = "dispute_evidence"
     case identityDocument = "identity_document"
     case pciDocument = "pci_document"
     case taxDocumentUserUpload = "tax_document_user_upload"
-    case additionalVerification = "additional_verification"
 }
 
 public enum StripeFileType: String, StripeModel {

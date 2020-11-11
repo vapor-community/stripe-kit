@@ -14,6 +14,8 @@ public struct StripeTransaction: StripeModel {
     public var object: String
     /// The amount of this transaction in your currency. This is the amount that your balance will be updated by.
     public var amount: Int?
+    /// Detailed breakdown of amount components. These amounts are denominated in currency and in the smallest currency unit.
+    public var amountDetails: StripeTransactionAmountDetails?
     /// The Authorization object that led to this transaction.
     @Expandable<StripeAuthorization> public var authorization: String?
     /// ID of the balance transaction associated with this transaction.
@@ -40,6 +42,11 @@ public struct StripeTransaction: StripeModel {
     public var type: StripeTransactionType?
     /// Additional purchase information that is optionally provided by the merchant. This field is not included by default. To include it in the response, expand the `purchase_details` field.
     public var purchaseDetails: StripeTransactionPurchaseDetails?
+}
+
+public struct StripeTransactionAmountDetails: StripeModel {
+    /// The fee charged by the ATM for the cash withdrawal.
+    public var atmFee: Int?
 }
 
 public struct StripeTransactionList: StripeModel {

@@ -21,6 +21,7 @@ public final class StripeClient {
     public var mandates: MandateRoutes
     public var paymentIntents: PaymentIntentsRoutes
     public var setupIntents: SetupIntentsRoutes
+    public var setupAttempts: SetupAttemptRoutes
     public var payouts: PayoutRoutes
     public var products: ProductRoutes
     public var prices: PriceRoutes
@@ -45,6 +46,7 @@ public final class StripeClient {
     public var invoices: InvoiceRoutes
     public var invoiceItems: InvoiceItemRoutes
     public var plans: PlanRoutes
+    public var promotionCodes: PromotionCodesRoutes
     public var subscriptions: SubscriptionRoutes
     public var subscriptionItems: SubscriptionItemRoutes
     public var subscriptionSchedules: SubscriptionScheduleRoutes
@@ -118,6 +120,7 @@ public final class StripeClient {
         mandates = StripeMandateRoutes(apiHandler: handler)
         paymentIntents = StripePaymentIntentsRoutes(apiHandler: handler)
         setupIntents = StripeSetupIntentsRoutes(apiHandler: handler)
+        setupAttempts = StripeSetupAttemptRoutes(apiHandler: handler)
         payouts = StripePayoutRoutes(apiHandler: handler)
         products = StripeProductRoutes(apiHandler: handler)
         prices = StripePriceRoutes(apiHandler: handler)
@@ -139,6 +142,7 @@ public final class StripeClient {
         invoices = StripeInvoiceRoutes(apiHandler: handler)
         invoiceItems = StripeInvoiceItemRoutes(apiHandler: handler)
         plans = StripePlanRoutes(apiHandler: handler)
+        promotionCodes = StripePromotionCodesRoutes(apiHandler: handler)
         subscriptions = StripeSubscriptionRoutes(apiHandler: handler)
         subscriptionItems = StripeSubscriptionItemRoutes(apiHandler: handler)
         subscriptionSchedules = StripeSubscriptionScheduleRoutes(apiHandler: handler)
