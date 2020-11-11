@@ -26,7 +26,7 @@ public protocol AccountRoutes {
     ///   - externalAccount: A card or bank account to attach to the account. You can provide either a token, like the ones returned by Stripe.js, or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation. By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
     ///   - individual: Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
     ///   - metadata: A set of key-value pairs that you can attach to an `Account` object. This can be useful for storing additional information about the account in a structured format.
-    ///   - requestedCapabilities: The set of capabilities you want to unlock for this account (US only). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive. This will be unset if you POST an empty value.
+    ///   - capabilities: Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
     ///   - settings: Options for customizing how the account functions within Stripe.
     ///   - tosAcceptance: Details on the account’s acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
     /// - Returns: A `StripeConnectAccount`.
@@ -41,7 +41,7 @@ public protocol AccountRoutes {
                 externalAccount: Any?,
                 individual: [String: Any]?,
                 metadata: [String: String]?,
-                requestedCapabilities: [String],
+                capabilities: [String: Any],
                 settings: [String: Any]?,
                 tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount>
     
@@ -65,7 +65,7 @@ public protocol AccountRoutes {
     ///   - externalAccount: A card or bank account to attach to the account. You can provide either a token, like the ones returned by Stripe.js, or a dictionary, as documented in the `external_account` parameter for bank account creation.
     ///   - individual: Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
     ///   - metadata: A set of key-value pairs that you can attach to an `Account` object. This can be useful for storing additional information about the account in a structured format.
-    ///   - requestedCapabilities: The set of capabilities you want to unlock for this account (US only). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive. This will be unset if you POST an empty value.
+    ///   - capabilities: The set of capabilities you want to unlock for this account (US only). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive. This will be unset if you POST an empty value.
     ///   - settings: Options for customizing how the account functions within Stripe.
     ///   - tosAcceptance: Details on the account’s acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
     /// - Returns: A `StripeConnectAccount`.
@@ -79,7 +79,7 @@ public protocol AccountRoutes {
                 externalAccount: Any?,
                 individual: [String: Any]?,
                 metadata: [String: String]?,
-                requestedCapabilities: [String]?,
+                capabilities: [String: Any]?,
                 settings: [String: Any]?,
                 tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount>
     
@@ -131,7 +131,7 @@ extension AccountRoutes {
                        externalAccount: Any? = nil,
                        individual: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
-                       requestedCapabilities: [String],
+                       capabilities: [String: Any],
                        settings: [String: Any]? = nil,
                        tosAcceptance: [String: Any]? = nil) -> EventLoopFuture<StripeConnectAccount> {
         return create(type: type,
@@ -145,7 +145,7 @@ extension AccountRoutes {
                       externalAccount: externalAccount,
                       individual: individual,
                       metadata: metadata,
-                      requestedCapabilities: requestedCapabilities,
+                      capabilities: capabilities,
                       settings: settings,
                       tosAcceptance: tosAcceptance)
     }
@@ -164,7 +164,7 @@ extension AccountRoutes {
                        externalAccount: Any? = nil,
                        individual: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
-                       requestedCapabilities: [String]? = nil,
+                       capabilities: [String: Any]? = nil,
                        settings: [String: Any]? = nil,
                        tosAcceptance: [String: Any]? = nil) -> EventLoopFuture<StripeConnectAccount> {
         return update(account: account,
@@ -177,7 +177,7 @@ extension AccountRoutes {
                       externalAccount: externalAccount,
                       individual: individual,
                       metadata: metadata,
-                      requestedCapabilities: requestedCapabilities,
+                      capabilities: capabilities,
                       settings: settings,
                       tosAcceptance: tosAcceptance)
     }
@@ -221,11 +221,11 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        externalAccount: Any?,
                        individual: [String: Any]?,
                        metadata: [String: String]?,
-                       requestedCapabilities: [String],
+                       capabilities: [String: Any],
                        settings: [String: Any]?,
                        tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount> {
         var body: [String: Any] = ["type": type.rawValue,
-                                   "requested_capabilities": requestedCapabilities]
+                                   "capabilities": capabilities]
         
         if let country = country {
             body["country"] = country
@@ -294,13 +294,13 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        externalAccount: Any?,
                        individual: [String: Any]?,
                        metadata: [String: String]?,
-                       requestedCapabilities: [String]?,
+                       capabilities: [String: Any]?,
                        settings: [String: Any]?,
                        tosAcceptance: [String: Any]?) -> EventLoopFuture<StripeConnectAccount> {
 		var body: [String: Any] = [:]
 			
-		if let requestedCapabilities = requestedCapabilities {
-			body["requested_capabilities"] = requestedCapabilities
+		if let capabilities = capabilities {
+            capabilities.forEach { body["capabilities[\($0)]"] = $1}
 		}
         
         if let accountToken = accountToken {

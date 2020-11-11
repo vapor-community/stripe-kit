@@ -13,6 +13,8 @@ public struct StripePaymentMethod: StripeModel {
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
+    /// If this is an Alipay PaymentMethod, this hash contains details about the Alipay payment method.
+    public var alipay: StripePaymentMethodAlipay?
     /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
     public var auBecsDebit: StripePaymentMethodAuBecsDebit?
     /// If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -41,12 +43,20 @@ public struct StripePaymentMethod: StripeModel {
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
+    /// If this is an oxxo PaymentMethod, this hash contains details about the OXXO payment method.
+    public var oxxo: StripePaymentMethodOXXO?
     /// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
     public var p24: StripePaymentMethodP24?
     /// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
     public var sepaDebit: StripePaymentMethodSepaDebit?
+    /// If this is a sofort PaymentMethod, this hash contains details about the SOFORT payment method.
+    public var sofort: StripePaymentMethodSofort?
     /// The type of the PaymentMethod, one of `card` or `card_present`. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
     public var type: StripePaymentMethodType?
+}
+
+public struct StripePaymentMethodAlipay: StripeModel {
+    // https://stripe.com/docs/api/payment_methods/object#payment_method_object-alipay
 }
 
 public struct StripePaymentMethodAuBecsDebit: StripeModel {
@@ -204,6 +214,7 @@ public struct StripePaymentMethodCardWalletVisaCheckout: StripeModel {
 }
 
 public enum StripePaymentMethodType: String, StripeModel {
+    case alipay
     case auBecsDebit = "au_becs_debit"
     case bacsDebit = "bacs_debit"
     case bancontact
@@ -212,8 +223,10 @@ public enum StripePaymentMethodType: String, StripeModel {
     case fpx
     case giropay
     case ideal
+    case oxxo
     case p24
     case sepaDebit = "sepa_debit"
+    case sofort
 }
 
 public struct StripePaymentMethodCardPresent: StripeModel {
@@ -254,8 +267,17 @@ public struct StripePaymentMethodGiropay: StripeModel {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-giropay
 }
 
+public struct StripePaymentMethodOXXO: StripeModel {
+    // https://stripe.com/docs/api/payment_methods/object#payment_method_object-oxxo
+}
+
 public struct StripePaymentMethodP24: StripeModel {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-p24
+}
+
+public struct StripePaymentMethodSofort: StripeModel {
+    /// Two-letter ISO code representing the country the bank account is located in.
+    public var country: String?
 }
     
 public struct StripePaymentMethodSepaDebit: StripeModel {

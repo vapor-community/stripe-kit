@@ -14,6 +14,7 @@ public protocol PaymentMethodRoutes {
     /// - Parameters:
     ///   - type: The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type. Required unless `payment_method` is specified (see the Shared PaymentMethods guide)
     ///   - billingDetails: Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+    ///   - alipay: If this is an Alipay PaymentMethod, this hash contains details about the Alipay payment method.
     ///   - auBecsDebit: If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
     ///   - bacsDebit: If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
     ///   - bancontact: If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
@@ -23,12 +24,15 @@ public protocol PaymentMethodRoutes {
     ///   - p24: If this is an `p24` PaymentMethod, this hash contains details about the P24 payment method.
     ///   - card: If this is a `card` PaymentMethod, this hash contains the user’s card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When creating with a card number, you must meet the requirements for PCI compliance. We strongly recommend using Stripe.js instead of interacting with this API directly.
     ///   - ideal: If this is an ideal PaymentMethod, this hash contains details about the iDEAL payment method.
+    ///   - oxxo: If this is an oxxo PaymentMethod, this hash contains details about the OXXO payment method.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     ///   - sepaDebit: If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+    ///   - sofort: If this is a sofort PaymentMethod, this hash contains details about the SOFORT payment method.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentMethod`.
     func create(type: StripePaymentMethodType,
                 billingDetails: [String: Any]?,
+                alipay: [String: Any]?,
                 auBecsDebit: [String: Any]?,
                 bacsDebit: [String: Any]?,
                 bancontact: [String: Any]?,
@@ -38,8 +42,10 @@ public protocol PaymentMethodRoutes {
                 p24: [String: Any]?,
                 card: [String: Any]?,
                 ideal: [String: Any]?,
+                oxxo: [String: Any]?,
                 metadata: [String: String]?,
                 sepaDebit: [String: Any]?,
+                sofort: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripePaymentMethod>
     
     /// Retrieves a PaymentMethod object.
@@ -100,6 +106,7 @@ public protocol PaymentMethodRoutes {
 extension PaymentMethodRoutes {
     public func create(type: StripePaymentMethodType,
                        billingDetails: [String: Any]? = nil,
+                       alipay: [String: Any]? = nil,
                        auBecsDebit: [String: Any]? = nil,
                        bacsDebit: [String: Any]? = nil,
                        bancontact: [String: Any]? = nil,
@@ -109,11 +116,14 @@ extension PaymentMethodRoutes {
                        p24: [String: Any]? = nil,
                        card: [String: Any]? = nil,
                        ideal: [String: Any]? = nil,
+                       oxxo: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
                        sepaDebit: [String: Any]? = nil,
+                       sofort: [String: Any]? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
         return create(type: type,
                       billingDetails: billingDetails,
+                      alipay: alipay,
                       auBecsDebit: auBecsDebit,
                       bacsDebit: bacsDebit,
                       bancontact: bancontact,
@@ -123,8 +133,10 @@ extension PaymentMethodRoutes {
                       p24: p24,
                       card: card,
                       ideal: ideal,
+                      oxxo: oxxo,
                       metadata: metadata,
                       sepaDebit: sepaDebit,
+                      sofort: sofort,
                       expand: expand)
     }
     
@@ -173,6 +185,7 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
     
     public func create(type: StripePaymentMethodType,
                        billingDetails: [String: Any]?,
+                       alipay: [String: Any]?,
                        auBecsDebit: [String: Any]?,
                        bacsDebit: [String: Any]?,
                        bancontact: [String: Any]?,
@@ -182,13 +195,19 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
                        p24: [String: Any]?,
                        card: [String: Any]?,
                        ideal: [String: Any]?,
+                       oxxo: [String: Any]?,
                        metadata: [String: String]?,
                        sepaDebit: [String: Any]?,
+                       sofort: [String: Any]?,
                        expand: [String]?) -> EventLoopFuture<StripePaymentMethod> {
         var body: [String: Any] = ["type": type.rawValue]
         
         if let billingDetails = billingDetails {
             billingDetails.forEach { body["billing_details[\($0)]"] = $1 }
+        }
+        
+        if let alipay = alipay {
+            alipay.forEach { body["alipay[\($0)]"] = $1 }
         }
         
         if let auBecsDebit = auBecsDebit {
@@ -227,12 +246,20 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
             ideal.forEach { body["ideal[\($0)]"] = $1 }
         }
         
+        if let oxxo = oxxo {
+            oxxo.forEach { body["oxxo[\($0)]"] = $1 }
+        }
+        
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
 
         if let sepaDebit = sepaDebit {
             sepaDebit.forEach { body["sepa_debit[\($0)]"] = $1 }
+        }
+        
+        if let sofort = sofort {
+            sofort.forEach { body["sofort[\($0)]"] = $1 }
         }
         
         if let expand = expand {

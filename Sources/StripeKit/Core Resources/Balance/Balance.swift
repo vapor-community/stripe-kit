@@ -14,10 +14,19 @@ public struct StripeBalance: StripeModel {
     public var available: [StripeBalanceAmount]?
     /// Funds held due to negative balances on connected Custom accounts. The connect reserve balance for each currency and payment type can be found in the `source_types` property.
     public var connectReserved: [StripeBalanceAmount]?
+    /// Funds that can be paid out using Instant Payouts.
+    public var instantAvailable: [StripeBalanceAmount]?
+    /// Funds that can be spent on your Issued Cards.
+    public var issuing: StripeBalanceIssuing?
     ///Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// Funds that are not yet available in the balance, due to the 7-day rolling pay cycle. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
     public var pending: [StripeBalanceAmount]?
+}
+
+public struct StripeBalanceIssuing: StripeModel {
+    /// Funds that are available for use.
+    public var available: [StripeBalanceAmount]?
 }
 
 public struct StripeBalanceAmount: StripeModel {
@@ -34,4 +43,6 @@ public struct StripeBalanceAmountSourceType: StripeModel {
     public var bankAccount: Int?
     /// Amount for card.
     public var card: Int?
+    /// Amount for FPX.
+    public var fpx: Int?
 }

@@ -16,6 +16,8 @@ public struct StripeCharge: StripeModel {
     public var object: String
     /// A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency) representing how much to charge. The minimum amount is $0.50 US or [equivalent in charge currency](https://support.stripe.com/questions/what-is-the-minimum-amount-i-can-charge-with-stripe).
     public var amount: Int?
+    /// Amount in cents captured (can be less than the amount attribute on the charge if a partial capture was made).
+    public var amountCaptured: Int?
     /// Amount in cents refunded (can be less than the amount attribute on the charge if a partial refund was issued).
     public var amountRefunded: Int?
     /// ID of the Connect application that created the charge.
@@ -28,6 +30,8 @@ public struct StripeCharge: StripeModel {
     @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
     /// Billing information associated with the payment method at the time of the transaction.
     public var billingDetails: StripeBillingDetails?
+    /// The full statement descriptor that is passed to card networks, and that is displayed on your customers’ credit card and bank statements. Allows you to see what the statement descriptor looks like after the static and dynamic portions are combined.
+    public var calculatedStatementDescriptor: String?
     /// If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
     public var captured: Bool?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.

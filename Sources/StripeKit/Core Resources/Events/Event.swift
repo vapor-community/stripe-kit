@@ -308,6 +308,8 @@ public enum StripeEventType: String, StripeModel {
     case invoiceCreated = "invoice.created"
     /// Occurs whenever a draft invoice is deleted.
     case invoiceDeleted = "invoice.deleted"
+    /// Occurs whenever a draft invoice cannot be finalized. See the invoice’s last finalization error for details.
+    case invoiceFinalizationFailed = "invoice.finalization_failed"
     /// Occurs whenever a draft invoice is finalized and updated to be an open invoice.
     case invoiceFinalized = "invoice.finalized"
     /// Occurs whenever an invoice is marked uncollectible.
@@ -378,12 +380,14 @@ public enum StripeEventType: String, StripeModel {
     case paymentIntentPaymentFailed = "payment_intent.payment_failed"
     /// Occurs when a PaymentIntent has started processing.
     case paymentIntentProcessing = "payment_intent.processing"
+    /// Occurs when a PaymentIntent transitions to requires_action state
+    case paymentIntentRequiresAction = "payment_intent.requires_action"
     /// Occurs when a PaymentIntent has been successfully fulfilled.
     case paymentIntentSucceeded = "payment_intent.succeeded"
     /// Occurs whenever a new payment method is attached to a customer.
     case paymentMethodAttached = "payment_method.attached"
     /// Occurs whenever a card payment method's details are automatically updated by the network.
-    case paymentMethodCardAutomaticallyUpdated = "payment_method.card_automatically_updated"
+    case paymentMethodAutomaticallyUpdated = "payment_method.automatically_updated"
     /// Occurs whenever a payment method is detached from a customer.
     case paymentMethodDetached = "payment_method.detached"
     /// Occurs whenever a payment method is updated via the PaymentMethod update API.
@@ -444,6 +448,8 @@ public enum StripeEventType: String, StripeModel {
     case reviewOpened = "review.opened"
     /// Occurs when a new SetupIntent is created.
     case setupIntentCreated = "setup_intent.created"
+    /// Occurs when a SetupIntent is in requires_action state.
+    case setupIntentRequiresAction = "setup_intent.requires_action"
     /// Occurs when a SetupIntent has failed the attempt to setup a payment method.
     case setupIntentSetupFailed = "setup_intent.setup_failed"
     /// Occurs when an SetupIntent has successfully setup a payment method.

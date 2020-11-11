@@ -54,19 +54,20 @@ public struct StripeDisputeEvidenceDetails: StripeModel {
 }
 
 public enum StripeDisputeReason: String, StripeModel {
+    case bankCannotProcess = "bank_cannot_process"
+    case checkReturned = "check_returned"
+    case creditNotProcessed = "credit_not_processed"
+    case customerInitiated = "customer_initiated"
+    case debitNotAuthorized = "debit_not_authorized"
     case duplicate
     case fraudulent
-    case subscriptionCanceled = "subscription_canceled"
-    case productUnacceptable = "product_unacceptable"
-    case productNotReceived = "product_not_received"
-    case unrecognized
-    case creditNotProcessed = "credit_not_processed"
     case general
     case incorrectAccountDetails = "incorrect_account_details"
     case insufficientFunds = "insufficient_funds"
-    case bankCannotProcess = "bank_cannot_process"
-    case debitNotAuthorized = "debit_not_authorized"
-    case customerInitiated = "customer_initiated"
+    case productNotReceived = "product_not_received"
+    case productUnacceptable = "product_unacceptable"
+    case subscriptionCanceled = "subscription_canceled"
+    case unrecognized
 }
 
 public enum StripeDisputeStatus: String, StripeModel {

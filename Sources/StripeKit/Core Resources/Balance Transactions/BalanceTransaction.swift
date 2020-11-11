@@ -24,7 +24,8 @@ public struct StripeBalanceTransaction: StripeModel {
     public var currency: StripeCurrency?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
-    public var exchangeRate: Decimal?
+    /// The exchange rate used, if applicable, for this transaction. Specifically, if money was converted from currency A to currency B, then the `amount` in currency A, times `exchange_rate`, would be the amount in currency B. For example, suppose you charged a customer 10.00 EUR. Then the PaymentIntent’s `amount` would be `1000` and `currency` would be `eur`. Suppose this was converted into 12.34 USD in your Stripe account. Then the BalanceTransaction’s `amount` would be `1234`, `currency` would be `usd`, and `exchange_rate` would be `1.234`.
+    public var exchangeRate: String?
     /// Fees (in cents) paid for this transaction.
     public var fee: Int?
     /// Detailed breakdown of fees (in cents) paid for this transaction.
@@ -42,6 +43,7 @@ public struct StripeBalanceTransaction: StripeModel {
 public struct StripeBalanceTransactionFeeDetails: StripeModel {
     /// Amount of the fee, in cents.
     public var amount: Int?
+    /// ID of the Connect application that earned the fee.
     public var application: String?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
@@ -66,16 +68,22 @@ public enum StripeBalanceTransactionType: String, StripeModel {
     case adjustment
     case advance
     case advanceFunding = "advance_funding"
+    case anticipationRepayment = "anticipation_repayment"
     case applicationFee = "application_fee"
     case applicationFeeRefund = "application_fee_refund"
     case charge
     case connectCollectionTransfer = "connect_collection_transfer"
+    case contribution
     case issuingAuthorizationHold = "issuing_authorization_hold"
     case issuingAuthorizationRelease = "issuing_authorization_release"
+    case issuingDispute = "issuing_dispute"
     case issuingTransaction = "issuing_transaction"
     case payment
     case paymentFailureRefund = "payment_failure_refund"
     case paymentRefund = "payment_refund"
+    case payout
+    case payoutCancel = "payout_cancel"
+    case payoutFailure = "payout_failure"
     case refund
     case refundFailure = "refund_failure"
     case reserveTransaction = "reserve_transaction"
