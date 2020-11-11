@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.0.0 - 2020-11-10
+* [#122](https://github.com/vapor-community/stripe-kit/pull/112) Updated to latest 2020-08-27 API version.
+
 ## 8.0.0 - 2020-07-21
 * [#98](https://github.com/vapor-community/stripe-kit/pull/98) Added support for the `Price`s API.
 
