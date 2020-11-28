@@ -228,6 +228,7 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] Mandates
 * [x] PaymentIntents
 * [x] SetupIntents
+* [x] SetupAttempts
 * [x] Payouts
 * [x] Prices
 * [x] Products
@@ -247,11 +248,13 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] Coupons
 * [x] Credit Notes
 * [x] Customer Balance Transactions
+* [x] Customer Portal
 * [x] Customer Tax IDs
 * [x] Discounts
 * [x] Invoices
 * [x] Invoice Items
 * [x] Plans
+* [x] Promotion Codes
 * [x] Products
 * [x] Subscriptions
 * [x] Subscription items

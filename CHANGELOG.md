@@ -1,7 +1,10 @@
 # Changelog
 
+## 10.1.0 - 2020-11-28
+* [#113](https://github.com/vapor-community/stripe-kit/pull/113) Added support for [Customer Portal](https://stripe.com/docs/api/customer_portal) API.
+
 ## 10.0.0 - 2020-11-10
-* [#122](https://github.com/vapor-community/stripe-kit/pull/112) Updated to latest 2020-08-27 API version.
+* [#112](https://github.com/vapor-community/stripe-kit/pull/112) Updated to latest 2020-08-27 API version.
 
 ## 8.0.0 - 2020-07-21
 * [#98](https://github.com/vapor-community/stripe-kit/pull/98) Added support for the `Price`s API.
