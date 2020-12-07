@@ -75,9 +75,9 @@ public protocol PaymentIntentsRoutes {
     /// Retrieves the details of a PaymentIntent that has previously been created.
     ///
     /// - Parameter id: The identifier of the paymentintent to be retrieved.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter clientSecret: The client secret to use if required.
     /// - Returns: A `StripePaymentIntent`.
-    func retrieve(intent: String, clientSecret: String?, expand: [String]?) -> EventLoopFuture<StripePaymentIntent>
+    func retrieve(intent: String, clientSecret: String?) -> EventLoopFuture<StripePaymentIntent>
     
     /// Updates a PaymentIntent object.
     ///
@@ -260,8 +260,8 @@ extension PaymentIntentsRoutes {
                       expand: expand)
     }
     
-    public func retrieve(intent: String, clientSecret: String? = nil, expand: [String]? = nil) -> EventLoopFuture<StripePaymentIntent> {
-        return retrieve(intent: intent, clientSecret: clientSecret, expand: expand)
+    public func retrieve(intent: String, clientSecret: String? = nil) -> EventLoopFuture<StripePaymentIntent> {
+        return retrieve(intent: intent, clientSecret: clientSecret)
     }
     
     public func update(intent: String,
