@@ -54,7 +54,7 @@ extension StripeClient {
         
         let timeDifference = Date().timeIntervalSince(Date(timeIntervalSince1970: time))
         
-        if tolerance > 0 && timeDifference > tolerance || timeDifference < 0 {
+        if tolerance > 0 && timeDifference > tolerance {
             throw StripeSignatureError.timestampNotTolerated
         }
     }
