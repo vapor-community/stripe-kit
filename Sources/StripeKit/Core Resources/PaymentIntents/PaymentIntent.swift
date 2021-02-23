@@ -158,10 +158,24 @@ public struct StripePaymentIntentsList: StripeModel {
 }
 
 public struct StripePaymentIntentPaymentMethodOptions: StripeModel {
+    /// If the PaymentIntent’s `payment_method_types` includes `alipay`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var alipay: StripePaymentIntentPaymentMethodOptionsAlipay?
     /// If the PaymentIntent’s `payment_method_types` includes `bancontact`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var bancontact: StripePaymentIntentPaymentMethodOptionsBancontact?
     /// If the PaymentIntent’s `payment_method_types` includes `card`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var card: StripePaymentIntentPaymentMethodOptionsCard?
+    /// If the PaymentIntent’s `payment_method_types` includes `oxxo`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var oxxo: StripePaymentIntentPaymentMethodOptionsOXXO?
+    /// If the PaymentIntent’s `payment_method_types` includes `p24`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var p24: StripePaymentIntentPaymentMethodOptionsP24?
+    /// If the PaymentIntent’s `payment_method_types` includes `sepa_debit`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var sepaDebit: StripePaymentIntentPaymentMethodOptionsSepaDebit?
+    /// If the PaymentIntent’s `payment_method_types` includes `sofort`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var sofort: StripePaymentIntentPaymentMethodOptionsSofort?
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsAlipay: StripeModel {
+    
 }
 
 public struct StripePaymentIntentPaymentMethodOptionsBancontact: StripeModel {
@@ -186,4 +200,25 @@ public struct StripePaymentIntentPaymentMethodOptionsCardInstallments: StripeMod
     public var enabled: Bool?
     /// Installment plan selected for this PaymentIntent.
     public var plan: StripeChargePaymentDetailsCardInstallmentPlan?
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsOXXO: StripeModel {
+    /// The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set `expires_after_days` to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
+    public var expiresAfterDays: Int?
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsP24: StripeModel {
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsSepaDebit: StripeModel {
+    /// Additional fields for Mandate creation
+    public var mandateOptions: StripePaymentIntentPaymentMethodOptionsSepaDebitMandateOptions?
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsSepaDebitMandateOptions: StripeModel {
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsSofort: StripeModel {
+    /// Preferred language of the SOFORT authorization page that the customer is redirected to.
+    public var preferredLanguage: String?
 }
