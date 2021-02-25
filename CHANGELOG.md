@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.0.0 - 2021-02-25
+* [#118](https://github.com/vapor-community/stripe-kit/pull/118) ⚠️ Breaking changes ⚠️ Multiple API updates and new support for [Customer portal configuration](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal)
+
 ## 10.1.0 - 2020-11-28
 * [#113](https://github.com/vapor-community/stripe-kit/pull/113) Added support for [Customer Portal](https://stripe.com/docs/api/customer_portal) API.
 
