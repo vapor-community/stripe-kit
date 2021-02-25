@@ -22,11 +22,14 @@ public protocol InvoiceRoutes {
     ///   - daysUntilDue: The number of days from when the invoice is created until it is due. Valid only for invoices where `billing=send_invoice`.
     ///   - defaultPaymentMethod: ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription’s default payment method, if any, or to the default payment method in the customer’s invoice settings.
     ///   - defaultSource: ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription’s default source, if any, or to the customer’s default source.
-    ///   - defaultTaxRates:
-    ///   - description:
+    ///   - defaultTaxRates: The tax rates that will apply to any line item that does not have `tax_rates` set.
+    ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. Referenced as ‘memo’ in the Dashboard.
+    ///   - discounts: The coupons to redeem into discounts for the invoice. If not specified, inherits the discount from the invoice’s customer. Pass an empty string to avoid inheriting any discounts.
     ///   - dueDate: The date on which payment for this invoice is due. Valid only for invoices where `billing=send_invoice`.
     ///   - footer: Footer to be displayed on the invoice. This will be unset if you POST an empty value.
-    ///   - metadata:
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    ///   - onBehalfOf: The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the Invoices with Connect documentation for details.
+    ///   - paymentSettings: Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
     ///   - statementDescriptor: Extra information about a charge for the customer’s credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item’s product’s `statement_descriptor`.
     ///   - subscription: The ID of the subscription to invoice, if any. If not set, the created invoice will include all pending invoice items for the customer. If set, the created invoice will only include pending invoice items for that subscription and pending invoice items not associated with any subscription. The subscription’s billing cycle and regular subscription events won’t be affected.
     ///   - transferData: If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice’s charge.
@@ -42,9 +45,12 @@ public protocol InvoiceRoutes {
                 defaultSource: String?,
                 defaultTaxRates: [[String: Any]]?,
                 description: String?,
+                discounts: [[String: Any]]?,
                 dueDate: Date?,
                 footer: String?,
                 metadata: [String: String]?,
+                onBehalfOf: String?,
+                paymentSettings: [String: Any]?,
                 statementDescriptor: String?,
                 subscription: String?,
                 transferData: [String: Any]?,
@@ -69,11 +75,13 @@ public protocol InvoiceRoutes {
     ///   - daysUntilDue: The number of days from which the invoice is created until it is due. Only valid for invoices where billing=send_invoice. This field can only be updated on draft invoices.
     ///   - defaultPaymentMethod: ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription’s default payment method, if any, or to the default payment method in the customer’s invoice settings.
     ///   - defaultSource: ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription’s default source, if any, or to the customer’s default source.
-    ///   - defaultTaxRates:
-    ///   - description:
+    ///   - defaultTaxRates: The tax rates that will apply to any line item that does not have `tax_rates` set. Pass an empty string to remove previously-defined tax rates.
+    ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. Referenced as ‘memo’ in the Dashboard.
     ///   - dueDate: The date on which payment for this invoice is due. Only valid for invoices where `billing=send_invoice`. This field can only be updated on draft invoices.
     ///   - footer: Footer to be displayed on the invoice. This will be unset if you POST an empty value.
-    ///   - metadata:
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    ///   - onBehalfOf: The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the Invoices with Connect documentation for details.
+    ///   - paymentSettings: Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
     ///   - statementDescriptor: Extra information about a charge for the customer’s credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item’s product’s `statement_descriptor`.
     ///   - transferData: If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice’s charge. This will be unset if you POST an empty value.
     ///   - expand: An array of properties to expand.
@@ -88,9 +96,12 @@ public protocol InvoiceRoutes {
                 defaultSource: String?,
                 defaultTaxRates: [[String: Any]]?,
                 description: String?,
+                discounts: [[String: Any]]?,
                 dueDate: Date?,
                 footer: String?,
                 metadata: [String: String]?,
+                onBehalfOf: String?,
+                paymentSettings: [String: Any]?,
                 statementDescriptor: String?,
                 transferData: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripeInvoice>
@@ -115,6 +126,7 @@ public protocol InvoiceRoutes {
     /// - Parameters:
     ///   - invoice: ID of invoice to pay.
     ///   - forgive: In cases where the source used to pay the invoice has insufficient funds, passing `forgive=true` controls whether a charge should be attempted for the full amount available on the source, up to the amount to fully pay the invoice. This effectively forgives the difference between the amount available on the source and the amount due. /n Passing `forgive=false` will fail the charge if the source hasn’t been pre-funded with the right amount. An example for this case is with ACH Credit Transfers and wires: if the amount wired is less than the amount due by a small amount, you might want to forgive the difference.
+    ///   - offSession: Indicates if a customer is on or off-session while an invoice payment is attempted. Defaults to `true` (off-session).
     ///   - paidOutOfBand: Boolean representing whether an invoice is paid outside of Stripe. This will result in no charge being made.
     ///   - paymentMethod: A PaymentMethod to be charged. The PaymentMethod must be the ID of a PaymentMethod belonging to the customer associated with the invoice being paid.
     ///   - source: A payment source to be charged. The source must be the ID of a source belonging to the customer associated with the invoice being paid.
@@ -122,6 +134,7 @@ public protocol InvoiceRoutes {
     /// - Returns: A `StripeInvoice`.
     func pay(invoice: String,
              forgive: Bool?,
+             offSession: Bool?,
              paidOutOfBand: Bool?,
              paymentMethod: String?,
              source: String?,
@@ -192,9 +205,12 @@ extension InvoiceRoutes {
                        defaultSource: String? = nil,
                        defaultTaxRates: [[String: Any]]? = nil,
                        description: String? = nil,
+                       discounts: [[String: Any]]? = nil,
                        dueDate: Date? = nil,
                        footer: String? = nil,
                        metadata: [String: String]? = nil,
+                       onBehalfOf: String? = nil,
+                       paymentSettings: [String: Any]? = nil,
                        statementDescriptor: String? = nil,
                        subscription: String? = nil,
                        transferData: [String: Any]? = nil,
@@ -209,9 +225,12 @@ extension InvoiceRoutes {
                       defaultSource: defaultSource,
                       defaultTaxRates: defaultTaxRates,
                       description: description,
+                      discounts: discounts,
                       dueDate: dueDate,
                       footer: footer,
                       metadata: metadata,
+                      onBehalfOf: onBehalfOf,
+                      paymentSettings: paymentSettings,
                       statementDescriptor: statementDescriptor,
                       subscription: subscription,
                       transferData: transferData,
@@ -232,9 +251,12 @@ extension InvoiceRoutes {
                        defaultSource: String? = nil,
                        defaultTaxRates: [[String: Any]]? = nil,
                        description: String? = nil,
+                       discounts: [[String: Any]]? = nil,
                        dueDate: Date? = nil,
                        footer: String? = nil,
                        metadata: [String: String]? = nil,
+                       onBehalfOf: String? = nil,
+                       paymentSettings: [String: Any]? = nil,
                        statementDescriptor: String? = nil,
                        transferData: [String: Any]? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
@@ -248,9 +270,12 @@ extension InvoiceRoutes {
                       defaultSource: defaultSource,
                       defaultTaxRates: defaultTaxRates,
                       description: description,
+                      discounts: discounts,
                       dueDate: dueDate,
                       footer: footer,
                       metadata: metadata,
+                      onBehalfOf: onBehalfOf,
+                      paymentSettings: paymentSettings,
                       statementDescriptor: statementDescriptor,
                       transferData: transferData,
                       expand: expand)
@@ -266,12 +291,14 @@ extension InvoiceRoutes {
     
     public func pay(invoice: String,
                     forgive: Bool? = nil,
+                    offSession: Bool? = nil,
                     paidOutOfBand: Bool? = nil,
                     paymentMethod: String? = nil,
                     source: String? = nil,
                     expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
         return pay(invoice: invoice,
                    forgive: forgive,
+                   offSession: offSession,
                    paidOutOfBand: paidOutOfBand,
                    paymentMethod: paymentMethod,
                    source: source,
@@ -326,9 +353,12 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                        defaultSource: String?,
                        defaultTaxRates: [[String: Any]]?,
                        description: String?,
+                       discounts: [[String: Any]]?,
                        dueDate: Date?,
                        footer: String?,
                        metadata: [String: String]?,
+                       onBehalfOf: String?,
+                       paymentSettings: [String: Any]?,
                        statementDescriptor: String?,
                        subscription: String?,
                        transferData: [String: Any]?,
@@ -373,6 +403,10 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["description"] = description
         }
         
+        if let discounts = discounts {
+            body["discounts"] = discounts
+        }
+        
         if let dueDate = dueDate {
             body["due_date"] = Int(dueDate.timeIntervalSince1970)
         }
@@ -383,6 +417,14 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let onBehalfOf = onBehalfOf {
+            body["on_behalf_of"] = onBehalfOf
+        }
+        
+        if let paymentSettings = paymentSettings {
+            paymentSettings.forEach { body["payment_settings[\($0)]"] = $1 }
         }
         
         if let statementDescriptor = statementDescriptor {
@@ -423,9 +465,12 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                        defaultSource: String?,
                        defaultTaxRates: [[String: Any]]?,
                        description: String?,
+                       discounts: [[String: Any]]?,
                        dueDate: Date?,
                        footer: String?,
                        metadata: [String: String]?,
+                       onBehalfOf: String?,
+                       paymentSettings: [String: Any]?,
                        statementDescriptor: String?,
                        transferData: [String: Any]?,
                        expand: [String]?) -> EventLoopFuture<StripeInvoice> {
@@ -467,6 +512,10 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["description"] = description
         }
         
+        if let discounts = discounts {
+            body["discounts"] = discounts
+        }
+        
         if let dueDate = dueDate {
             body["due_date"] = Int(dueDate.timeIntervalSince1970)
         }
@@ -477,6 +526,14 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let onBehalfOf = onBehalfOf {
+            body["on_behalf_of"] = onBehalfOf
+        }
+        
+        if let paymentSettings = paymentSettings {
+            paymentSettings.forEach { body["payment_settings[\($0)]"] = $1 }
         }
         
         if let statementDescriptor = statementDescriptor {
@@ -514,6 +571,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
     
     public func pay(invoice: String,
                     forgive: Bool?,
+                    offSession: Bool?,
                     paidOutOfBand: Bool?,
                     paymentMethod: String?,
                     source: String?,
@@ -522,6 +580,10 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         
         if let forgive = forgive {
             body["forgive"] = forgive
+        }
+        
+        if let offSession = offSession {
+            body["off_session"] = offSession
         }
         
         if let paidOutOfBand = paidOutOfBand {

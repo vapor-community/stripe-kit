@@ -14,6 +14,7 @@ public protocol PaymentMethodRoutes {
     /// - Parameters:
     ///   - type: The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type. Required unless `payment_method` is specified (see the Shared PaymentMethods guide)
     ///   - billingDetails: Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+    ///   - afterpayClearpay: If this is an AfterpayClearpay PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
     ///   - alipay: If this is an Alipay PaymentMethod, this hash contains details about the Alipay payment method.
     ///   - auBecsDebit: If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
     ///   - bacsDebit: If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.

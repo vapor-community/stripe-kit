@@ -30,14 +30,39 @@ public struct StripeTaxID: StripeModel {
 }
 
 public enum StripeTaxIDType: String, StripeModel {
-    case auAbn = "au_abn"
-    case chVat = "ch_vat"
-    case euVat = "eu_vat"
-    case inGst = "in_gst"
-    case mxRfc = "mx_rfc"
-    case noVat = "no_vat"
-    case nzGst = "nz_gst"
-    case zaVat = "za_vat"
+    case ae_trn
+    case au_abn
+    case br_cnpj
+    case br_cpf
+    case ca_bn
+    case ca_qst
+    case ch_vat
+    case cl_tin
+    case es_cif
+    case eu_vat
+    case gb_vat
+    case hk_br
+    case id_npwp
+    case in_gst
+    case jp_cn
+    case jp_rn
+    case kr_brn
+    case li_uid
+    case mx_rfc
+    case my_frp
+    case my_itn
+    case my_sst
+    case no_vat
+    case nz_gst
+    case ru_inn
+    case ru_kpp
+    case sa_vat
+    case sg_gst
+    case sg_uen
+    case th_vat
+    case tw_vat
+    case us_ein
+    case za_vat
     case unknown
 }
 

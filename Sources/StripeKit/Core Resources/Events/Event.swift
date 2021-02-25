@@ -47,6 +47,7 @@ public enum StripeEventObject: StripeModel {
     case dispute(StripeDispute)
     case refund(StripeRefund)
     case checkoutSession(StripeSession)
+    case configuration(StripePortalConfiguration)
     case coupon(StripeCoupon)
     case creditNote(StripeCreditNote)
     case customer(StripeCustomer)
@@ -71,6 +72,7 @@ public enum StripeEventObject: StripeModel {
     case plan(StripePlan)
     case price(StripePrice)
     case product(StripeProduct)
+    case promotionCode(StripePromotionCode)
     case earlyFraudWarniing(StripeEarlyFraudWarning)
     case reportRun(StripeReportRun)
     case reportType(StripeReportType)
@@ -90,12 +92,14 @@ public enum StripeEventObject: StripeModel {
         switch object {
         case "account":
             self = try .account(StripeConnectAccount(from: decoder))
+        case "application_fee":
+            self = try .applicationFee(StripeApplicationFee(from: decoder))
         case "card":
             self = try .card(StripeCard(from: decoder))
         case "bank_account":
             self = try .bankAccount(StripeBankAccount(from: decoder))
-        case "application_fee":
-            self = try .applicationFee(StripeApplicationFee(from: decoder))
+        case "billing_portal.configuration":
+            self = try .configuration(StripePortalConfiguration(from: decoder))
         case "fee_refund":
             self = try .applicationFeeRefund(StripeApplicationFeeRefund(from: decoder))
         case "balance":
@@ -158,6 +162,8 @@ public enum StripeEventObject: StripeModel {
             self = try .price(StripePrice(from: decoder))
         case "product":
             self = try .product(StripeProduct(from: decoder))
+        case "promotion_code":
+            self = try .promotionCode(StripePromotionCode(from: decoder))
         case "radar.early_fraud_warning":
             self = try .earlyFraudWarniing(StripeEarlyFraudWarning(from: decoder))
         case "reporting.report_run":
@@ -222,6 +228,10 @@ public enum StripeEventType: String, StripeModel {
     case applicationFeeRefundUpdated = "application_fee.refund.updated"
     /// Occurs whenever your Stripe balance has been updated (e.g., when a charge is available to be paid out). By default, Stripe automatically transfers funds in your balance to your bank account on a daily basis.
     case balanceAvailable = "balance.available"
+    /// Occurs whenever a portal configuration is created.
+    case billingPortalConfigurationCreated = "billing_portal.configuration.created"
+    /// Occurs whenever a portal configuration is updated.
+    case billingPortalConfigurationUpdated = "billing_portal.configuration.updated"
     /// Occurs whenever a capability has new requirements or a new status.
     case capabilityUpdated = "capability.updated"
     /// Occurs whenever a previously uncaptured charge is captured.
@@ -250,6 +260,10 @@ public enum StripeEventType: String, StripeModel {
     case chargeDisputeUpdated = "charge.dispute.updated"
     /// Occurs whenever a refund is updated, on selected payment methods.
     case chargeRefundUpdated = "charge.refund.updated"
+    /// Occurs when a payment intent using a delayed payment method fails.
+    case checkoutSessionAsyncPaymentFailed = "checkout.session.async_payment_failed"
+    /// Occurs when a payment intent using a delayed payment method finally succeeds.
+    case checkoutSessionAsyncPaymentSucceeded = "checkout.session.async_payment_succeeded"
     /// Occurs when a Checkout Session has been successfully completed.
     case checkoutSessionCompleted = "checkout.session.completed"
     /// Occurs whenever a coupon is created.
@@ -350,18 +364,22 @@ public enum StripeEventType: String, StripeModel {
     case issuingCardholderCreated = "issuing_cardholder.created"
     /// Occurs whenever a cardholder is updated.
     case issuingCardholderUpdated = "issuing_cardholder.updated"
+    /// Occurs whenever a dispute is won, lost or expired.
+    case issuingDisputeClosed = "issuing_dispute.closed"
     /// Occurs whenever a dispute is created.
     case issuingDisputeCreated = "issuing_dispute.created"
+    /// Occurs whenever funds are reinstated to your account for an Issuing dispute.
+    case issuingDisputeFundsReinstated = "issuing_dispute.funds_reinstated"
+    /// Occurs whenever a dispute is submitted.
+    case issuingDisputeSubmitted = "issuing_dispute.submitted"
     /// Occurs whenever a dispute is updated.
     case issuingDisputeUpdated = "issuing_dispute.updated"
-    /// Occurs whenever an issuing settlement is created.
-    case issuingSettlementCreated = "issuing_settlement.created"
-    /// Occurs whenever an issuing settlement is updated.
-    case issuingSettlementUpdated = "issuing_settlement.updated"
     /// Occurs whenever an issuing transaction is created.
     case issuingTransactionCreated = "issuing_transaction.created"
     /// Occurs whenever an issuing transaction is updated.
     case issuingTransactionUpdated = "issuing_transaction.updated"
+    /// Occurs whenever a Mandate is updated.
+    case mandateUpdated = "mandate.updated"
     /// Occurs whenever an order is created.
     case orderCreated = "order.created"
     /// Occurs whenever an order payment attempt fails.
@@ -374,6 +392,8 @@ public enum StripeEventType: String, StripeModel {
     case orderReturnCreated = "order_return.created"
     /// Occurs when a PaymentIntent has funds to be captured. Check the `amount_capturable` property on the PaymentIntent to determine the amount that can be captured. You may capture the PaymentIntent with an `amount_to_capture` value up to the specified amount. Learn more about capturing PaymentIntents.
     case paymentIntentAmountCapturableUpdated = "payment_intent.amount_capturable_updated"
+    /// Occurs when a PaymentIntent is canceled.
+    case paymentIntentCanceled = "payment_intent.canceled"
     /// Occurs when a new PaymentIntent is created.
     case paymentIntentCreated = "payment_intent.created"
     /// Occurs when a PaymentIntent has failed the attempt to create a source or a payment.
@@ -426,6 +446,10 @@ public enum StripeEventType: String, StripeModel {
     case productDeleted = "product.deleted"
     /// Occurs whenever a product is updated.
     case productUpdated = "product.updated"
+    /// Occurs whenever a promotion code is created.
+    case promotionCodeCreated = "promotion_code.created"
+    /// Occurs whenever a promotion code is updated.
+    case promotionCodeUpdated = "promotion_code.updated"
     /// Occurs whenever an early fraud warning is created.
     case radarEarlyFraudWarningCreated = "radar.early_fraud_warning.created"
     /// Occurs whenever an early fraud warning is updated.
@@ -446,6 +470,8 @@ public enum StripeEventType: String, StripeModel {
     case reviewClosed = "review.closed"
     /// Occurs whenever a review is opened.
     case reviewOpened = "review.opened"
+    /// Occurs when a SetupIntent is canceled.
+    case setupAttemptCanceled = "setup_intent.canceled"
     /// Occurs when a new SetupIntent is created.
     case setupIntentCreated = "setup_intent.created"
     /// Occurs when a SetupIntent is in requires_action state.
