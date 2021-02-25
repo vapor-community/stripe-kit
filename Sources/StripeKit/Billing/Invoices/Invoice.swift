@@ -67,8 +67,8 @@ public struct StripeInvoice: StripeModel {
     public var defaultTaxRates: [StripeTaxRate]?
     /// An arbitrary string attached to the object. Often useful for displaying to users. Referenced as ‘memo’ in the Dashboard.
     public var description: String?
-    /// Describes the current discount applied to this invoice, if there is one.
-    public var discount: StripeDiscount?
+    /// The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use expand[]=discounts to expand each discount.
+    public var discounts: [String]?
     /// The date on which payment for this invoice is due. This value will be `null` for invoices where `billing=charge_automatically`.
     public var dueDate: Date?
     /// Ending customer balance after the invoice is finalized. Invoices are finalized approximately an hour after successful webhook delivery or when payment collection is attempted for the invoice. If the invoice has not been finalized yet, this will be null.
@@ -79,6 +79,8 @@ public struct StripeInvoice: StripeModel {
     public var hostedInvoiceUrl: String?
     /// The link to download the PDF for the invoice. If the invoice has not been finalized yet, this will be null.
     public var invoicePdf: String?
+    /// The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
+    public var lastFinalizationError: StripeInvoiceLastFinalizationError?
     /// The individual line items that make up the invoice. lines is sorted as follows: invoice items in reverse chronological order, followed by the subscription, if any.
     public var lines: StripeInvoiceLineItemList?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -89,10 +91,14 @@ public struct StripeInvoice: StripeModel {
     public var nextPaymentAttempt: Date?
     /// A unique, identifying string that appears on emails sent to the customer for this invoice. This starts with the customer’s unique invoice_prefix if it is specified.
     public var number: String?
+    /// The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the Invoices with Connect documentation for details.
+    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
     /// Whether payment was successfully collected for this invoice. An invoice can be paid (most commonly) with a charge or with credit from the customer’s account balance.
     public var paid: Bool?
     /// The PaymentIntent associated with this invoice. The PaymentIntent is generated when the invoice is finalized, and can then be used to pay the invoice. Note that voiding an invoice will cancel the PaymentIntent.
     @Expandable<StripePaymentIntent> public var paymentIntent: String?
+    /// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
+    public var paymentSettings: StripeInvoicePaymentSettings?
     /// End of the usage period during which invoice items were added to this invoice.
     public var periodEnd: Date?
     /// Start of the usage period during which invoice items were added to this invoice.
@@ -123,6 +129,8 @@ public struct StripeInvoice: StripeModel {
     public var thresholdReason: StripeInvoiceThresholdReason?
     /// Total after discount.
     public var total: Int?
+    /// The aggregate amounts calculated per discount across all line items.
+    public var totalDiscountAmounts: [StripeInvoiceTotalDiscountAmount]?
     /// The aggregate amounts calculated per tax rate for all line items.
     public var totalTaxAmounts: [StripeInvoiceTotalTaxAmount]?
     /// The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
@@ -151,6 +159,52 @@ public struct StripeInvoiceCustomerTaxId: StripeModel {
     public var type: StripeTaxIDType?
     /// The value of the tax ID.
     public var value: String?
+}
+
+public struct StripeInvoiceLastFinalizationError: StripeModel {
+    /// For some errors that could be handled programmatically, a short string indicating the error code reported.
+    public var code: StripeErrorCode?
+    /// A URL to more information about the error code reported.
+    public var docUrl: String?
+    /// A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
+    public var message: String?
+    /// If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
+    public var param: String?
+    /// If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
+    public var paymentMethodType: StripePaymentMethodType?
+    /// The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`.
+    public var type: StripeErrorType?
+}
+
+public struct StripeInvoicePaymentSettings: StripeModel {
+    /// Payment-method-specific configuration to provide to the invoice’s PaymentIntent.
+    public var paymentMethodOptions: StripeInvoicePaymentSettingsPaymentMethodOptions?
+    /// The list of payment method types (e.g. card) to provide to the invoice’s PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice’s default payment method, the subscription’s default payment method, the customer’s default payment method, and your invoice template settings.
+    public var paymentMethodTypes: [StripePaymentMethodType]?
+}
+
+public struct StripeInvoicePaymentSettingsPaymentMethodOptions: StripeModel {
+    /// If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice’s PaymentIntent.
+    public var bancontact: StripeInvoicePaymentSettingsPaymentMethodOptionsBancontact?
+    /// If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice’s PaymentIntent.
+    public var card: StripeInvoicePaymentSettingsPaymentMethodOptionsCard?
+}
+
+public struct StripeInvoicePaymentSettingsPaymentMethodOptionsBancontact: StripeModel {
+    /// Preferred language of the Bancontact authorization page that the customer is redirected to.
+    public var preferredLanguage: String?
+}
+
+public struct StripeInvoicePaymentSettingsPaymentMethodOptionsCard: StripeModel {
+    /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and other requirements. However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on manually requesting 3D Secure for more information on how this configuration interacts with Radar and our SCA Engine.
+    public var requestThreeDSecure: StripeInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreedSecure?
+}
+
+public enum StripeInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreedSecure: String, StripeModel {
+    /// Triggers 3D Secure authentication only if it is required.
+    case automatic
+    /// Requires 3D Secure authentication if it is available.
+    case any
 }
 
 public enum StripeInvoiceStatus: String, StripeModel {
@@ -193,6 +247,13 @@ public struct StripeInvoiceTotalTaxAmount: StripeModel {
     public var inclusive: Bool?
     /// The tax rate that was applied to get this tax amount.
     public var taxRate: String?
+}
+
+public struct StripeInvoiceTotalDiscountAmount: StripeModel {
+    /// The amount, in cents, of the discount.
+    public var amount: Int?
+    /// The discount that was applied to get this discount amount.
+    @Expandable<StripeDiscount> public var discount: String?
 }
 
 public struct StripeInvoiceTransferData: StripeModel {

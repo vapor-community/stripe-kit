@@ -15,6 +15,8 @@ public struct StripeTaxRate: StripeModel {
     public var object: String
     /// Defaults to true. When set to false, this tax rate cannot be applied to objects in the API, but will still be applied to subscriptions and invoices that already have it set.
     public var active: Bool?
+    /// Two-letter country code.
+    public var country: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
@@ -31,6 +33,8 @@ public struct StripeTaxRate: StripeModel {
     public var metadata: [String: String]?
     /// This represents the tax rate percent out of 100.
     public var percentage: Decimal?
+    /// ISO 3166-2 subdivision code, without country prefix. For example, “NY” for New York, United States.
+    public var state: String?
 }
 
 public struct StripeTaxRateList: StripeModel {

@@ -47,6 +47,10 @@ public struct StripePerson: StripeModel {
     public var maidenName: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
+    /// The country where the person is a national.
+    public var nationality: String?
+    /// Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
+    public var politicalExposure: StripePersonPoliticalExposure?
     /// The person's phone number.
     public var phone: String?
     /// Describes the person’s relationship to the account.
@@ -71,6 +75,13 @@ public struct StripePersonDOB: StripeModel {
 public enum StripePersonGender: String, StripeModel {
     case male
     case female
+}
+
+public enum StripePersonPoliticalExposure: String, StripeModel {
+    /// The person has disclosed that they have no political exposure
+    case none
+    /// The person has disclosed that they do have political exposure
+    case existing
 }
 
 public struct StripePersonRelationship: StripeModel {

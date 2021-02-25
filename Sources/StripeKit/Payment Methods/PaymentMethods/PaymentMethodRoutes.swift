@@ -14,6 +14,7 @@ public protocol PaymentMethodRoutes {
     /// - Parameters:
     ///   - type: The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type. Required unless `payment_method` is specified (see the Shared PaymentMethods guide)
     ///   - billingDetails: Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+    ///   - afterpayClearpay: If this is an AfterpayClearpay PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
     ///   - alipay: If this is an Alipay PaymentMethod, this hash contains details about the Alipay payment method.
     ///   - auBecsDebit: If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
     ///   - bacsDebit: If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
@@ -21,6 +22,7 @@ public protocol PaymentMethodRoutes {
     ///   - eps: If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
     ///   - fpx: If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
     ///   - giropay: If this is an `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
+    ///   - grabpay: If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
     ///   - p24: If this is an `p24` PaymentMethod, this hash contains details about the P24 payment method.
     ///   - card: If this is a `card` PaymentMethod, this hash contains the user’s card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When creating with a card number, you must meet the requirements for PCI compliance. We strongly recommend using Stripe.js instead of interacting with this API directly.
     ///   - ideal: If this is an ideal PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -32,6 +34,7 @@ public protocol PaymentMethodRoutes {
     /// - Returns: A `StripePaymentMethod`.
     func create(type: StripePaymentMethodType,
                 billingDetails: [String: Any]?,
+                afterpayClearpay: [String: Any]?,
                 alipay: [String: Any]?,
                 auBecsDebit: [String: Any]?,
                 bacsDebit: [String: Any]?,
@@ -39,6 +42,7 @@ public protocol PaymentMethodRoutes {
                 eps: [String: Any]?,
                 fpx: [String: Any]?,
                 giropay: [String: Any]?,
+                grabpay: [String: Any]?,
                 p24: [String: Any]?,
                 card: [String: Any]?,
                 ideal: [String: Any]?,
@@ -106,6 +110,7 @@ public protocol PaymentMethodRoutes {
 extension PaymentMethodRoutes {
     public func create(type: StripePaymentMethodType,
                        billingDetails: [String: Any]? = nil,
+                       afterpayClearpay: [String: Any]? = nil,
                        alipay: [String: Any]? = nil,
                        auBecsDebit: [String: Any]? = nil,
                        bacsDebit: [String: Any]? = nil,
@@ -113,6 +118,7 @@ extension PaymentMethodRoutes {
                        eps: [String: Any]? = nil,
                        fpx: [String: Any]? = nil,
                        giropay: [String: Any]? = nil,
+                       grabpay: [String: Any]? = nil,
                        p24: [String: Any]? = nil,
                        card: [String: Any]? = nil,
                        ideal: [String: Any]? = nil,
@@ -123,6 +129,7 @@ extension PaymentMethodRoutes {
                        expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
         return create(type: type,
                       billingDetails: billingDetails,
+                      afterpayClearpay: afterpayClearpay,
                       alipay: alipay,
                       auBecsDebit: auBecsDebit,
                       bacsDebit: bacsDebit,
@@ -130,6 +137,7 @@ extension PaymentMethodRoutes {
                       eps: eps,
                       fpx: fpx,
                       giropay: giropay,
+                      grabpay: grabpay,
                       p24: p24,
                       card: card,
                       ideal: ideal,
@@ -185,6 +193,7 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
     
     public func create(type: StripePaymentMethodType,
                        billingDetails: [String: Any]?,
+                       afterpayClearpay: [String: Any]?,
                        alipay: [String: Any]?,
                        auBecsDebit: [String: Any]?,
                        bacsDebit: [String: Any]?,
@@ -192,6 +201,7 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
                        eps: [String: Any]?,
                        fpx: [String: Any]?,
                        giropay: [String: Any]?,
+                       grabpay: [String: Any]?,
                        p24: [String: Any]?,
                        card: [String: Any]?,
                        ideal: [String: Any]?,
@@ -204,6 +214,10 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
         
         if let billingDetails = billingDetails {
             billingDetails.forEach { body["billing_details[\($0)]"] = $1 }
+        }
+        
+        if let afterpayClearpay = afterpayClearpay {
+            afterpayClearpay.forEach { body["afterpay_clearpay[\($0)]"] = $1 }
         }
         
         if let alipay = alipay {
@@ -232,6 +246,10 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
         
         if let giropay = giropay {
             giropay.forEach { body["giropay[\($0)]"] = $1 }
+        }
+        
+        if let grabpay = grabpay {
+            grabpay.forEach { body["grabpay[\($0)]"] = $1 }
         }
         
         if let p24 = p24 {

@@ -23,6 +23,7 @@ public protocol AccountRoutes {
     ///   - businessType: The business type. Can be `individual` or `company`.
     ///   - company: Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
     ///   - defaultCurrency: Three-letter ISO currency code representing the default currency for the account. This must be a currency that Stripe supports in the account’s country.
+    ///   - documents: Documents that may be submitted to satisfy various informational requests.
     ///   - externalAccount: A card or bank account to attach to the account. You can provide either a token, like the ones returned by Stripe.js, or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation. By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
     ///   - individual: Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
     ///   - metadata: A set of key-value pairs that you can attach to an `Account` object. This can be useful for storing additional information about the account in a structured format.
@@ -38,6 +39,7 @@ public protocol AccountRoutes {
                 businessType: StripeConnectAccountBusinessType?,
                 company: [String: Any]?,
                 defaultCurrency: StripeCurrency?,
+                documents: [String: Any]?,
                 externalAccount: Any?,
                 individual: [String: Any]?,
                 metadata: [String: String]?,
@@ -61,6 +63,7 @@ public protocol AccountRoutes {
     ///   - businessType: The business type. Can be `individual` or `company`.
     ///   - company: Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
     ///   - defaultCurrency: Three-letter ISO currency code representing the default currency for the account. This must be a currency that Stripe supports in the account’s country.
+    ///   - documents: Documents that may be submitted to satisfy various informational requests.
     ///   - email: Email address of the account representative. For Standard accounts, this is used to ask them to claim their Stripe account. For Custom accounts, this only makes the account easier to identify to platforms; Stripe does not email the account representative.
     ///   - externalAccount: A card or bank account to attach to the account. You can provide either a token, like the ones returned by Stripe.js, or a dictionary, as documented in the `external_account` parameter for bank account creation.
     ///   - individual: Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
@@ -75,6 +78,7 @@ public protocol AccountRoutes {
                 businessType: StripeConnectAccountBusinessType?,
                 company: [String: Any]?,
                 defaultCurrency: StripeCurrency?,
+                documents: [String: Any]?,
                 email: String?,
                 externalAccount: Any?,
                 individual: [String: Any]?,
@@ -128,6 +132,7 @@ extension AccountRoutes {
                        businessType: StripeConnectAccountBusinessType? = nil,
                        company: [String: Any]? = nil,
                        defaultCurrency: StripeCurrency? = nil,
+                       documents: [String: Any]? = nil,
                        externalAccount: Any? = nil,
                        individual: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
@@ -142,6 +147,7 @@ extension AccountRoutes {
                       businessType: businessType,
                       company: company,
                       defaultCurrency: defaultCurrency,
+                      documents: documents,
                       externalAccount: externalAccount,
                       individual: individual,
                       metadata: metadata,
@@ -160,6 +166,7 @@ extension AccountRoutes {
                        businessType: StripeConnectAccountBusinessType? = nil,
                        company: [String: Any]? = nil,
                        defaultCurrency: StripeCurrency? = nil,
+                       documents: [String: Any]? = nil,
                        email: String? = nil,
                        externalAccount: Any? = nil,
                        individual: [String: Any]? = nil,
@@ -173,6 +180,7 @@ extension AccountRoutes {
                       businessType: businessType,
                       company: company,
                       defaultCurrency: defaultCurrency,
+                      documents: documents,
                       email: email,
                       externalAccount: externalAccount,
                       individual: individual,
@@ -218,6 +226,7 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        businessType: StripeConnectAccountBusinessType?,
                        company: [String: Any]?,
                        defaultCurrency: StripeCurrency?,
+                       documents: [String: Any]?,
                        externalAccount: Any?,
                        individual: [String: Any]?,
                        metadata: [String: String]?,
@@ -255,6 +264,10 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
             body["default_currency"] = currency.rawValue
         }
         
+        if let documents = documents {
+            documents.forEach { body["documents[\($0)]"] = $1 }
+        }
+        
         if let externalAccountToken = externalAccount as? String {
             body["external_account"] = externalAccountToken
         } else if let externalHashAccount = externalAccount as? [String: Any] {
@@ -290,6 +303,7 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
                        businessType: StripeConnectAccountBusinessType?,
                        company: [String: Any]?,
                        defaultCurrency: StripeCurrency?,
+                       documents: [String: Any]?,
                        email: String?,
                        externalAccount: Any?,
                        individual: [String: Any]?,
@@ -321,6 +335,10 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
         
         if let currency = defaultCurrency {
             body["default_currency"] = currency.rawValue
+        }
+        
+        if let documents = documents {
+            documents.forEach { body["documents[\($0)]"] = $1 }
         }
         
         if let email = email {

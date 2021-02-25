@@ -11,6 +11,8 @@ public struct StripeSession: StripeModel {
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String?
+    /// Enables user redeemable promotion codes.
+    public var allowPromotionCodes: Bool?
     /// Total of all items before discounts or taxes are applied.
     public var amountSubtotal: Int?
     /// Total of all items after discounts and taxes are applied.
@@ -25,6 +27,8 @@ public struct StripeSession: StripeModel {
     public var clientReferenceId: String?
     /// The ID of the customer for this session. A new customer will be created unless an existing customer was provided in when the session was created.
     @Expandable<StripeCustomer> public var customer: String?
+    /// The customer details including the customer’s tax exempt status and the customer’s tax IDs.
+    public var customerDetails: StripeSessionCustomerDetails?
     /// If provided, this value will be used when the Customer object is created. If not provided, customers will be asked to enter their email address. Use this parameter to prefill customer data if you already have an email on file. To access information about the customer once a session is complete, use the `customer` field.
     public var customerEmail: String?
     /// The line items purchased by the customer. This field is not included by default. To include it in the response, [expand](https://stripe.com/docs/api/expanding_objects) the `line_items` field.
@@ -69,6 +73,22 @@ public struct StripeSessionList: StripeModel {
 public enum StripeSessionBillingAddressCollection: String, StripeModel {
     case auto
     case required
+}
+
+public struct StripeSessionCustomerDetails: StripeModel {
+    /// The customer’s email at time of checkout.
+    public var email: String?
+    /// The customer’s tax exempt status at time of checkout.
+    public var taxExempt: String?
+    /// The customer’s tax IDs at time of checkout.
+    public var taxIds: [StripeSessionCustomerDetailsTaxId]
+}
+
+public struct StripeSessionCustomerDetailsTaxId: StripeModel {
+    /// The type of the tax ID.
+    public var type: StripeTaxIDType
+    /// The value of the tax ID.
+    public var value: String?
 }
 
 public struct StripeSessionLineItem: StripeModel {
@@ -150,6 +170,8 @@ public enum StripeSessionLocale: String, StripeModel {
     case sv
     case tr
     case zh
+    case zhHk = "zh-HK"
+    case zhTw = "zh-TW"
 }
 
 public enum StripeSessionMode: String, StripeModel {

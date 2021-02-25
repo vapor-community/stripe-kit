@@ -28,8 +28,10 @@ public protocol PersonRoutes {
     ///   - lastNameKanji: The Kanji variation of the person’s last name (Japan only)
     ///   - maidenName: The person’s maiden name.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    ///   - nationality: The country where the person is a national. Two-letter country code (ISO 3166-1 alpha-2), or “XX” if unavailable.
     ///   - personToken: A person token, used to securely provide details to the person.
     ///   - phone: The person’s phone number.
+    ///   - politicalExposure: Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
     ///   - relationship: The relationship that this person has with the account’s legal entity.
     ///   - ssnLast4: The last 4 digits of the person’s social security number.
     ///   - verification: The person’s verification status.
@@ -50,8 +52,10 @@ public protocol PersonRoutes {
                 lastNameKanji: String?,
                 maidenName: String?,
                 metadata: [String: String]?,
+                nationality: String?,
                 personToken: String?,
                 phone: String?,
+                politicalExposure: StripePersonPoliticalExposure?,
                 relationship: [String: Any]?,
                 ssnLast4: String?,
                 verification: [String: Any]?) -> EventLoopFuture<StripePerson>
@@ -84,8 +88,10 @@ public protocol PersonRoutes {
     ///   - lastNameKanji: The Kanji variation of the person’s last name (Japan only)
     ///   - maidenName: The person’s maiden name.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    ///   - nationality: The country where the person is a national. Two-letter country code (ISO 3166-1 alpha-2), or “XX” if unavailable.
     ///   - personToken: A person token, used to securely provide details to the person.
     ///   - phone: The person’s phone number.
+    ///   - politicalExposure: Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
     ///   - relationship: The relationship that this person has with the account’s legal entity.
     ///   - ssnLast4: The last 4 digits of the person’s social security number.
     ///   - verification: The person’s verification status.
@@ -107,8 +113,10 @@ public protocol PersonRoutes {
                 lastNameKanji: String?,
                 maidenName: String?,
                 metadata: [String: String]?,
+                nationality: String?,
                 personToken: String?,
                 phone: String?,
+                politicalExposure: StripePersonPoliticalExposure?,
                 relationship: [String: Any]?,
                 ssnLast4: String?,
                 verification: [String: Any]?) -> EventLoopFuture<StripePerson>
@@ -150,8 +158,10 @@ extension PersonRoutes {
                        lastNameKanji: String? = nil,
                        maidenName: String? = nil,
                        metadata: [String: String]? = nil,
+                       nationality: String? = nil,
                        personToken: String? = nil,
                        phone: String? = nil,
+                       politicalExposure: StripePersonPoliticalExposure? = nil,
                        relationship: [String: Any]? = nil,
                        ssnLast4: String?,
                        verification: [String: Any]? = nil) -> EventLoopFuture<StripePerson> {
@@ -171,8 +181,10 @@ extension PersonRoutes {
                       lastNameKanji: lastNameKanji,
                       maidenName: maidenName,
                       metadata: metadata,
+                      nationality: nationality,
                       personToken: personToken,
                       phone: phone,
+                      politicalExposure: politicalExposure,
                       relationship: relationship,
                       ssnLast4: ssnLast4,
                       verification: verification)
@@ -199,8 +211,10 @@ extension PersonRoutes {
                        lastNameKanji: String? = nil,
                        maidenName: String? = nil,
                        metadata: [String: String]? = nil,
+                       nationality: String? = nil,
                        personToken: String? = nil,
                        phone: String? = nil,
+                       politicalExposure: StripePersonPoliticalExposure? = nil,
                        relationship: [String: Any]? = nil,
                        ssnLast4: String? = nil,
                        verification: [String: Any]? = nil) -> EventLoopFuture<StripePerson> {
@@ -221,8 +235,10 @@ extension PersonRoutes {
                       lastNameKanji: lastNameKanji,
                       maidenName: maidenName,
                       metadata: metadata,
+                      nationality: nationality,
                       personToken: personToken,
                       phone: phone,
+                      politicalExposure: politicalExposure,
                       relationship: relationship,
                       ssnLast4: ssnLast4,
                       verification: verification)
@@ -264,8 +280,10 @@ public struct StripePersonRoutes: PersonRoutes {
                        lastNameKanji: String?,
                        maidenName: String?,
                        metadata: [String: String]?,
+                       nationality: String?,
                        personToken: String?,
                        phone: String?,
+                       politicalExposure: StripePersonPoliticalExposure?,
                        relationship: [String: Any]?,
                        ssnLast4: String?,
                        verification: [String: Any]?) -> EventLoopFuture<StripePerson> {
@@ -327,6 +345,10 @@ public struct StripePersonRoutes: PersonRoutes {
             body["maiden_name"] = maidenName
         }
         
+        if let nationality = nationality {
+            body["nationality"] = nationality
+        }
+        
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
@@ -337,6 +359,10 @@ public struct StripePersonRoutes: PersonRoutes {
         
         if let phone = phone {
             body["phone"] = phone
+        }
+        
+        if let politicalExposure = politicalExposure {
+            body["political_exposure"] = politicalExposure.rawValue
         }
         
         if let relationship = relationship {
@@ -375,8 +401,10 @@ public struct StripePersonRoutes: PersonRoutes {
                        lastNameKanji: String?,
                        maidenName: String?,
                        metadata: [String: String]?,
+                       nationality: String?,
                        personToken: String?,
                        phone: String?,
+                       politicalExposure: StripePersonPoliticalExposure?,
                        relationship: [String: Any]?,
                        ssnLast4: String?,
                        verification: [String: Any]?) -> EventLoopFuture<StripePerson> {
@@ -438,6 +466,10 @@ public struct StripePersonRoutes: PersonRoutes {
             body["maiden_name"] = maidenName
         }
         
+        if let nationality = nationality {
+            body["nationality"] = nationality
+        }
+        
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
@@ -448,6 +480,10 @@ public struct StripePersonRoutes: PersonRoutes {
         
         if let phone = phone {
             body["phone"] = phone
+        }
+        
+        if let politicalExposure = politicalExposure {
+            body["political_exposure"] = politicalExposure.rawValue
         }
         
         if let relationship = relationship {

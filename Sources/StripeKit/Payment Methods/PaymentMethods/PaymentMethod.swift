@@ -13,6 +13,8 @@ public struct StripePaymentMethod: StripeModel {
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
+    /// If this is an AfterpayClearpay PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
+    public var afterpayClearpay: StripePaymentMethodAfterpayClearpay?
     /// If this is an Alipay PaymentMethod, this hash contains details about the Alipay payment method.
     public var alipay: StripePaymentMethodAlipay?
     /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
@@ -53,6 +55,10 @@ public struct StripePaymentMethod: StripeModel {
     public var sofort: StripePaymentMethodSofort?
     /// The type of the PaymentMethod, one of `card` or `card_present`. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
     public var type: StripePaymentMethodType?
+}
+
+public struct StripePaymentMethodAfterpayClearpay: StripeModel {
+    // https://stripe.com/docs/api/payment_methods/object#payment_method_object-afterpay_clearpay
 }
 
 public struct StripePaymentMethodAlipay: StripeModel {
@@ -214,6 +220,7 @@ public struct StripePaymentMethodCardWalletVisaCheckout: StripeModel {
 }
 
 public enum StripePaymentMethodType: String, StripeModel {
+    case afterpayClearpay = "afterpay_clearpay"
     case alipay
     case auBecsDebit = "au_becs_debit"
     case bacsDebit = "bacs_debit"
@@ -222,6 +229,7 @@ public enum StripePaymentMethodType: String, StripeModel {
     case eps
     case fpx
     case giropay
+    case grabpay
     case ideal
     case oxxo
     case p24
@@ -265,6 +273,10 @@ public struct StripePaymentMethodFpx: StripeModel {
     
 public struct StripePaymentMethodGiropay: StripeModel {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-giropay
+}
+
+public struct StripePaymentMethodGrabpay: StripeModel {
+    // https://stripe.com/docs/api/payment_methods/object#payment_method_object-grabpay
 }
 
 public struct StripePaymentMethodOXXO: StripeModel {

@@ -86,6 +86,8 @@ public enum StripeConnectAccountBusinessType: String, StripeModel {
 }
 
 public struct StripeConnectAccountCapablities: StripeModel {
+    /// The status of the Afterpay Clearpay capability of the account, or whether the account can directly process Afterpay Clearpay charges.
+    public var afterpayClearpayPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the BECS Direct Debit (AU) payments capability of the account, or whether the account can directly process BECS Direct Debit (AU) charges.
     public var auBecsDebitPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the Bacs Direct Debits payments capability of the account, or whether the account can directly process Bacs Direct Debits charges.
@@ -104,6 +106,8 @@ public struct StripeConnectAccountCapablities: StripeModel {
     public var fpxPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the giropay payments capability of the account, or whether the account can directly process giropay charges.
     public var giropayPayments: StripeConnectAccountCapabilitiesStatus?
+    /// The status of the GrabPay payments capability of the account, or whether the account can directly process GrabPay charges.
+    public var grabpayPayments:StripeConnectAccountCapabilitiesStatus?
     /// The status of the iDEAL payments capability of the account, or whether the account can directly process iDEAL charges.
     public var idealPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the JCB payments capability of the account, or whether the account (Japan only) can directly process JCB credit card charges in JPY currency.

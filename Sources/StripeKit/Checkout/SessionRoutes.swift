@@ -15,16 +15,19 @@ public protocol SessionRoutes {
     ///   - cancelUrl: The URL the customer will be directed to if they decide to cancel payment and return to your website.
     ///   - paymentMethodTypes: A list of the types of payment methods (e.g., `card`) this Checkout session can accept. Read more about the supported payment methods and their requirements in our payment method details guide. If multiple payment methods are passed, Checkout will dynamically reorder them to prioritize the most relevant payment methods based on the customer’s location and other characteristics.
     ///   - successUrl: The URL the customer will be directed to after the payment or subscription creation is successful.
+    ///   - allowPromotionCodes: Enables user redeemable promotion codes.
     ///   - billingAddressCollection: Specify whether Checkout should collect the customer’s billing address. If set to `required`, Checkout will always collect the customer’s billing address. If left blank or set to `auto` Checkout will only collect the billing address when necessary.
     ///   - clientReferenceId: A unique string to reference the Checkout Session. This can be a customer ID, a cart ID, or similar, and can be used to reconcile the session with your internal systems.
     ///   - customer: ID of an existing customer paying for this session, if one exists. May only be used with line_items. Usage with subscription_data is not yet available. If blank, Checkout will create a new customer object based on information provided during the session. The email stored on the customer will be used to prefill the email field on the Checkout page. If the customer changes their email on the Checkout page, the Customer object will be updated with the new email.
     ///   - customerEmail: If provided, this value will be used when the Customer object is created. If not provided, customers will be asked to enter their email address. Use this parameter to prefill customer data if you already have an email on file. To access information about the customer once a session is complete, use the customer field.
+    ///   - discounts: The coupon or promotion code to apply to this Session. Currently, only up to one may be specified.
     ///   - lineItems: A list of items the customer is purchasing. Use this parameter for one-time payments. To create subscriptions, use subscription_data.items.
     ///   - locale: The IETF language tag of the locale Checkout is displayed in. If blank or auto, the browser’s locale is used. Supported values are auto, da, de, en, es, fi, fr, it, ja, nb, nl, pl, pt, sv, or zh.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - mode: The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
     ///   - paymentIntentData: A subset of parameters to be passed to PaymentIntent creation.
     ///   - setupIntentData: A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
+    ///   - shippingAddressCollection: When set, provides configuration for Checkout to collect a shipping address from a customer.
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. submit_type can only be specified on Checkout Sessions in payment mode, but not Checkout Sessions in subscription or setup mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation.
     ///   - expand: An array of propertiies to expand.
@@ -32,16 +35,19 @@ public protocol SessionRoutes {
     func create(cancelUrl: String,
                 paymentMethodTypes: [StripeSessionPaymentMethodType],
                 successUrl: String,
+                allowPromotionCodes: Bool?,
                 billingAddressCollection: StripeSessionBillingAddressCollection?,
                 clientReferenceId: String?,
                 customer: String?,
                 customerEmail: String?,
+                discounts: [[String: Any]]?,
                 lineItems: [[String: Any]]?,
                 locale: StripeSessionLocale?,
                 metadata: [String: String]?,
                 mode: StripeSessionMode?,
                 paymentIntentData: [String: Any]?,
                 setupIntentData: [String: Any]?,
+                shippingAddressCollection: [String: Any]?,
                 submitType: StripeSessionSubmitType?,
                 subscriptionData: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripeSession>
@@ -73,32 +79,38 @@ extension SessionRoutes {
     public func create(cancelUrl: String,
                        paymentMethodTypes: [StripeSessionPaymentMethodType],
                        successUrl: String,
+                       allowPromotionCodes: Bool? = nil,
                        billingAddressCollection: StripeSessionBillingAddressCollection? = nil,
                        clientReferenceId: String? = nil,
                        customer: String? = nil,
                        customerEmail: String? = nil,
+                       discounts: [[String: Any]]? = nil,
                        lineItems: [[String: Any]]? = nil,
                        locale: StripeSessionLocale? = nil,
                        metadata: [String: String]? = nil,
                        mode: StripeSessionMode? = nil,
                        paymentIntentData: [String: Any]? = nil,
                        setupIntentData: [String: Any]? = nil,
+                       shippingAddressCollection: [String: Any]? = nil,
                        submitType: StripeSessionSubmitType? = nil,
                        subscriptionData: [String: Any]? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeSession> {
         return create(cancelUrl: cancelUrl,
                       paymentMethodTypes: paymentMethodTypes,
                       successUrl: successUrl,
+                      allowPromotionCodes: allowPromotionCodes,
                       billingAddressCollection: billingAddressCollection,
                       clientReferenceId: clientReferenceId,
                       customer: customer,
                       customerEmail: customerEmail,
+                      discounts: discounts,
                       lineItems: lineItems,
                       locale: locale,
                       metadata: metadata,
                       mode: mode,
                       paymentIntentData: paymentIntentData,
                       setupIntentData: setupIntentData,
+                      shippingAddressCollection: shippingAddressCollection,
                       submitType: submitType,
                       subscriptionData: subscriptionData,
                       expand: expand)
@@ -130,22 +142,29 @@ public struct StripeSessionRoutes: SessionRoutes {
     public func create(cancelUrl: String,
                        paymentMethodTypes: [StripeSessionPaymentMethodType],
                        successUrl: String,
+                       allowPromotionCodes: Bool?,
                        billingAddressCollection: StripeSessionBillingAddressCollection?,
                        clientReferenceId: String?,
                        customer: String?,
                        customerEmail: String?,
+                       discounts: [[String: Any]]?,
                        lineItems: [[String: Any]]?,
                        locale: StripeSessionLocale?,
                        metadata: [String: String]?,
                        mode: StripeSessionMode?,
                        paymentIntentData: [String: Any]?,
                        setupIntentData: [String: Any]?,
+                       shippingAddressCollection: [String: Any]?,
                        submitType: StripeSessionSubmitType?,
                        subscriptionData: [String: Any]?,
                        expand: [String]?) -> EventLoopFuture<StripeSession> {
         var body: [String: Any] = ["cancel_url": cancelUrl,
                                    "payment_method_types": paymentMethodTypes.map { $0.rawValue },
                                    "success_url": successUrl]
+        
+        if let allowPromotionCodes = allowPromotionCodes {
+            body["allow_promotion_codes"] = allowPromotionCodes
+        }
         
         if let billingAddressCollection = billingAddressCollection {
             body["billing_address_collection"] = billingAddressCollection.rawValue
@@ -161,6 +180,10 @@ public struct StripeSessionRoutes: SessionRoutes {
         
         if let customerEmail = customerEmail {
             body["customer_email"] = customerEmail
+        }
+        
+        if let discounts = discounts {
+            body["discounts"] = discounts
         }
         
         if let lineItems = lineItems {
@@ -185,6 +208,10 @@ public struct StripeSessionRoutes: SessionRoutes {
         
         if let setupIntentData = setupIntentData {
             setupIntentData.forEach { body["setup_intent_data[\($0)]"] = $1 }
+        }
+        
+        if let shippingAddressCollection = shippingAddressCollection {
+            shippingAddressCollection.forEach { body["shipping_address_collection[\($0)]"] = $1 }
         }
         
         if let submitType = submitType {

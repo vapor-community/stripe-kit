@@ -41,7 +41,8 @@ public final class StripeClient {
     public var coupons: CouponRoutes
     public var creditNotes: CreditNoteRoutes
     public var customerBalanceTransactions: CustomerBalanceTransactionRoutes
-    public var customerSession: CustomerSessionRoutes
+    public var portalSession: PortalSessionRoutes
+    public var portalConfiguration: PortalConfigurationRoutes
     public var customerTaxIds: CustomerTaxIDRoutes
     public var discounts: DiscountRoutes
     public var invoices: InvoiceRoutes
@@ -138,7 +139,8 @@ public final class StripeClient {
         coupons = StripeCouponRoutes(apiHandler: handler)
         creditNotes = StripeCreditNoteRoutes(apiHandler: handler)
         customerBalanceTransactions = StripeCustomerBalanceTransactionRoutes(apiHandler: handler)
-        customerSession = StripeCustomerSessionRoutes(apiHandler: handler)
+        portalSession = StripePortalSessionRoutes(apiHandler: handler)
+        portalConfiguration = StripePortalConfigurationRoutes(apiHandler: handler)
         customerTaxIds = StripeCustomerTaxIDRoutes(apiHandler: handler)
         discounts = StripeDiscountRoutes(apiHandler: handler)
         invoices = StripeInvoiceRoutes(apiHandler: handler)
