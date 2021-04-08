@@ -48,8 +48,6 @@ public struct StripeInvoiceItem: StripeModel {
     public var subscriptionItem: String?
     /// The tax rates which apply to the invoice item. When set, the default_tax_rates on the invoice do not apply to this invoice item.
     public var taxRates: [StripeTaxRate]?
-    /// For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
-    public var unifiedProration: Bool?
     /// Unit Amount (in the currency specified) of the invoice item.
     public var unitAmount: Int?
     /// Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.

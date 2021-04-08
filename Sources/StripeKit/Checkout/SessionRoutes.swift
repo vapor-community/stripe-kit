@@ -28,6 +28,7 @@ public protocol SessionRoutes {
     ///   - paymentIntentData: A subset of parameters to be passed to PaymentIntent creation.
     ///   - setupIntentData: A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
     ///   - shippingAddressCollection: When set, provides configuration for Checkout to collect a shipping address from a customer.
+    ///   - shippingRates: The shipping rate to apply to this Session. Currently, only up to one may be specified
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. submit_type can only be specified on Checkout Sessions in payment mode, but not Checkout Sessions in subscription or setup mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation.
     ///   - expand: An array of propertiies to expand.
@@ -48,6 +49,7 @@ public protocol SessionRoutes {
                 paymentIntentData: [String: Any]?,
                 setupIntentData: [String: Any]?,
                 shippingAddressCollection: [String: Any]?,
+                shippingRates: [String]?,
                 submitType: StripeSessionSubmitType?,
                 subscriptionData: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripeSession>
@@ -92,6 +94,7 @@ extension SessionRoutes {
                        paymentIntentData: [String: Any]? = nil,
                        setupIntentData: [String: Any]? = nil,
                        shippingAddressCollection: [String: Any]? = nil,
+                       shippingRates: [String]? = nil,
                        submitType: StripeSessionSubmitType? = nil,
                        subscriptionData: [String: Any]? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeSession> {
@@ -111,6 +114,7 @@ extension SessionRoutes {
                       paymentIntentData: paymentIntentData,
                       setupIntentData: setupIntentData,
                       shippingAddressCollection: shippingAddressCollection,
+                      shippingRates: shippingRates,
                       submitType: submitType,
                       subscriptionData: subscriptionData,
                       expand: expand)
@@ -155,6 +159,7 @@ public struct StripeSessionRoutes: SessionRoutes {
                        paymentIntentData: [String: Any]?,
                        setupIntentData: [String: Any]?,
                        shippingAddressCollection: [String: Any]?,
+                       shippingRates: [String]?,
                        submitType: StripeSessionSubmitType?,
                        subscriptionData: [String: Any]?,
                        expand: [String]?) -> EventLoopFuture<StripeSession> {
@@ -212,6 +217,10 @@ public struct StripeSessionRoutes: SessionRoutes {
         
         if let shippingAddressCollection = shippingAddressCollection {
             shippingAddressCollection.forEach { body["shipping_address_collection[\($0)]"] = $1 }
+        }
+        
+        if let shippingRates = shippingRates {
+            body["shipping_rates"] = shippingRates
         }
         
         if let submitType = submitType {
