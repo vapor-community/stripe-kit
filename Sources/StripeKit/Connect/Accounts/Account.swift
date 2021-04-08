@@ -347,6 +347,8 @@ public struct StripeConnectAccountSettings: StripeModel {
     public var bacsDebitPayments: StripeConnectAccountSettingsBacsDebitPayments?
     /// Settings used to apply the account’s branding to email receipts, invoices, Checkout, and other products.
     public var branding: StripeConnectAccountSettingsBranding?
+    /// Settings specific to the account’s use of the Card Issuing product.
+    public var cardIssuing: StripeConnectAccountSettingsCardIssuing?
     /// Settings specific to card charging on the account.
     public var cardPayments: StripeConnectAccountSettingsCardPayments?
     /// Settings used to configure the account within the Stripe dashboard.
@@ -355,6 +357,8 @@ public struct StripeConnectAccountSettings: StripeModel {
     public var payments: StripeConnectAccountSettingsPayments?
     /// Settings specific to the account’s payouts.
     public var payouts: StripeConnectAccountSettingsPayouts?
+    /// Settings specific to SEPA Direct Debit on the account.
+    public var sepaDebitPayments: StripeConnectAccountSettingsSepaDebitPayments?
 }
 
 public struct StripeConnectAccountSettingsBacsDebitPayments: StripeModel {
@@ -371,6 +375,20 @@ public struct StripeConnectAccountSettingsBranding: StripeModel {
     public var primaryColor: String?
     /// A CSS hex color value representing the secondary branding color for this account
     public var secondaryColor: String?
+}
+
+public struct StripeConnectAccountSettingsCardIssuing: StripeModel {
+    /// Details on the account’s acceptance of the Stripe Issuing Terms and Disclosures.
+    public var tosAcceptance: StripeConnectAccountSettingsCardIssuingTOSAcceptance?
+}
+
+public struct StripeConnectAccountSettingsCardIssuingTOSAcceptance: StripeModel {
+    /// The Unix timestamp marking when the account representative accepted the service agreement.
+    public var date: Int?
+    /// The IP address from which the account representative accepted the service agreement.
+    public var ip: String?
+    /// The user agent of the browser from which the account representative accepted the service agreement.
+    public var userAgent: String?
 }
 
 public struct StripeConnectAccountSettingsCardPayments: StripeModel {
@@ -421,6 +439,11 @@ public struct StripeConnectAccountSettingsPayoutSchedule: StripeModel {
     public var monthlyAnchor: Int?
     /// The day of the week funds will be paid out, of the style ‘monday’, ‘tuesday’, etc. Only shown if interval is weekly.
     public var weeklyAnchor: StripeConnectAccountSettingsPayoutScheduleWeeklyAnchor?
+}
+
+public struct StripeConnectAccountSettingsSepaDebitPayments: StripeModel {
+    /// SEPA creditor identifier that identifies the company making the payment.
+    public var creditorId: String?
 }
 
 public struct StripeConnectAccountTOSAcceptance: StripeModel {

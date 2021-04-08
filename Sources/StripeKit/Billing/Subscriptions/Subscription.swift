@@ -68,10 +68,6 @@ public struct StripeSubscription: StripeModel {
     @Expandable<StripePaymentIntent> public var pendingSetupIntent: String?
     /// If specified, [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates) that will be applied to the subscription once the`latest_invoice` has been paid.
     public var pendingUpdate: StripeSubscriptionPendingUpdate?
-    /// Hash describing the plan the customer is subscribed to. Only set if the subscription contains a single plan.
-    public var plan: StripePlan?
-    /// The quantity of the plan to which the customer is subscribed. For example, if your plan is $10/user/month, and your customer has 5 users, you could pass 5 as the quantity to have the customer charged $50 (5 x $10) monthly. Only set if the subscription contains a single plan.
-    public var quantity: Int?
     /// The schedule attached to the subscription
     @Expandable<StripeSubscriptionSchedule> public var schedule: String?
     /// Date when the subscription was first created. The date might differ from the `created` date due to backdating.

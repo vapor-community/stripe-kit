@@ -206,6 +206,8 @@ public enum StripeSessionSubmitType: String, StripeModel {
 public struct StripeSessionTotalDetails: StripeModel {
     /// This is the sum of all the line item discounts.
     public var amountDiscount: Int?
+    /// This is the sum of all the line item shipping amounts.
+    public var amountShipping: Int?
     /// This is the sum of all the line item tax amounts.
     public var amountTax: Int?
     /// Breakdown of individual tax and discount amounts that add up to the totals. This field is not included by default. To include it in the response, expand the breakdown field.

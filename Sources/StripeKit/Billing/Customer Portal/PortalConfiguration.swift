@@ -50,6 +50,8 @@ public struct StripePortalConfigurationFeatures: StripeModel {
     public var paymentMethodUpdate: StripePortalConfigurationFeaturesPaymentMethodUpdate?
     /// Information about canceling subscriptions in the portal.
     public var subscriptionCancel: StripePortalConfigurationFeaturesSubscriptionCancel?
+    /// Information about pausing subscriptions in the portal.
+    public var subscriptionPause: StripePortalConfigurationFeaturesSubscriptionPause?
     /// Information about updating subscriptions in the portal.
     public var subscriptionUpdate: StripePortalConfigurationFeaturesSubscriptionUpdate?
 }
@@ -96,6 +98,11 @@ public enum StripePortalConfigurationFeaturesSubscriptionCancelMode: String, Str
     case immediately
     /// After canceling, customers can still renew subscriptions until the billing period ends.
     case atPeriodEnd = "at_period_end"
+}
+
+public struct StripePortalConfigurationFeaturesSubscriptionPause: StripeModel {
+    /// Whether the feature is enabled.
+    public var enabled: Bool?
 }
 
 public struct StripePortalConfigurationFeaturesSubscriptionUpdate: StripeModel {
