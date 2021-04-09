@@ -79,7 +79,7 @@ public struct StripeCardList: StripeModel {
 
 public enum StripeCardValidationCheck: String, StripeModel {
     case pass
-    case failed
+    case fail
     case unavailable
     case unchecked
 }
