@@ -17,7 +17,7 @@ public protocol FileRoutes {
     ///   - purpose: The purpose of the uploaded file. Possible values are `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `identity_document`, `pci_document`, or `tax_document_user_upload`.
     ///   - fileLinkData: Optional parameters to automatically create a file link for the newly created file.
     /// - Returns: A `StripeFile`.
-   mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) -> EventLoopFuture<StripeFile>
+    mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) -> EventLoopFuture<StripeFile>
     
     /// Retrieves the details of an existing file object. Supply the unique file upload ID from a file creation request, and Stripe will return the corresponding transfer information.
     ///
