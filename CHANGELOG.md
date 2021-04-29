@@ -1,5 +1,12 @@
 # Changelog
 
+## 12.0.1 - 2021-04-29
+* [#125](https://github.com/vapor-community/stripe-kit/pull/125) Added payment method models.
+
+* [#126](https://github.com/vapor-community/stripe-kit/pull/126) Fixed file create crash.
+
+* [#127](https://github.com/vapor-community/stripe-kit/pull/127) Fixed expandable null value encoding.
+
 ## 12.0.0 - 2021-04-07
 * [#120](https://github.com/vapor-community/stripe-kit/pull/118) ⚠️ Breaking changes ⚠️ Multiple API updates.
 
