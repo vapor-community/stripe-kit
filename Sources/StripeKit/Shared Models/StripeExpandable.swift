@@ -40,7 +40,9 @@ public class Expandable<Model: StripeModel>: StripeModel {
             try id.encode(to: encoder)
         case let .expanded(model):
             try model.encode(to: encoder)
-        default: break
+        default:
+            var container = encoder.singleValueContainer()
+            try container.encodeNil()
         }
     }
     
@@ -93,7 +95,9 @@ public class DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
             try id.encode(to: encoder)
         case let .expanded(model):
             try model.encode(to: encoder)
-        default: break
+        default:
+            var container = encoder.singleValueContainer()
+            try container.encodeNil()
         }
     }
     

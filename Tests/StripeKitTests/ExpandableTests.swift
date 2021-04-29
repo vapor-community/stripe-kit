@@ -133,7 +133,7 @@ class ExpandableTests: XCTestCase {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         let appFee = try decoder.decode(StripeApplicationFee.self, from: fee)
-            
+        
         XCTAssertNotNil(appFee.$originatingTransaction(as: StripeCharge.self))
         XCTAssertNil(appFee.$originatingTransaction(as: StripeTransfer.self))
     }
@@ -327,5 +327,38 @@ class ExpandableTests: XCTestCase {
         } catch {
             XCTFail(error.localizedDescription)
         }
+    }
+    
+    func testExpandable_nullEncodingDecoding() throws {
+        let session =
+"""
+       {
+         "amountTotal": 100,
+         "id": "cs_test_ffff",
+         "successUrl": "https://example.com",
+         "livemode": false,
+         "customer": null,
+         "metadata": {},
+         "totalDetails": {
+           "amountShipping": 0,
+           "amountTax": 0,
+           "amountDiscount": 0
+         },
+         "setupIntent": null,
+         "object": "checkout.session",
+         "mode": "payment",
+         "amountSubtotal": 100,
+         "paymentIntent": "pi_ffff",
+         "paymentMethodTypes": [
+           "card"
+         ],
+         "cancelUrl": "https://example.com",
+         "subscription": null,
+         "currency": "usd",
+         "paymentStatus": "unpaid"
+       }
+""".data(using: .utf8)!
+        let sess = try JSONDecoder().decode(StripeSession.self, from: session)
+        _ = try JSONDecoder().decode(StripeSession.self, from: JSONEncoder().encode(sess))
     }
 }
