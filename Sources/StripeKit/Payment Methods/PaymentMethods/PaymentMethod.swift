@@ -168,20 +168,20 @@ public struct StripePaymentMethodCardThreeDSecureUsage: StripeModel {
 public struct StripePaymentMethodCardWallet: StripeModel {
     /// If this is a `amex_express_checkout` card wallet, this hash contains details about the wallet.
     /// Stripe does not [provide any details](https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-amex_express_checkout) about possible values so this will remain nil/unimplemented.
-    public var amexExpressCheckout: String? = nil
+    public var amexExpressCheckout: StripePaymentMethodAmexExpressCheckout? = nil
     /// If this is a `apple_pay` card wallet, this hash contains details about the wallet.
     /// Stripe does not [provide any details](https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-apple_pay) about possible values so this will remain nil/unimplemented.
-    public var applePay: String? = nil
+    public var applePay: StripePaymentMethodApplePay? = nil
     /// (For tokenized numbers only.) The last four digits of the device account number.
     public var dynamicLast4: String?
     /// If this is a `google_pay` card wallet, this hash contains details about the wallet.
     /// Stripe does not [provide any details](https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-google_pay) about possible values so this will remain nil/unimplemented.
-    public var googlePay: String? = nil
+    public var googlePay: StripePaymentMethodGooglePay? = nil
     /// If this is a `masterpass` card wallet, this hash contains details about the wallet.
     public var masterpass: StripePaymentMethodCardWalletMasterPass?
     /// If this is a `samsung_pay` card wallet, this hash contains details about the wallet.
     /// Stripe does not [provide any details](https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-samsung_pay) about possible values so this will remain nil/unimplemented.
-    public var samsungPay: String? = nil
+    public var samsungPay: StripePaymentMethodSamsungPay? = nil
     /// The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
     public var type: StripePaymentMethodCardWalletType?
     /// If this is a `visa_checkout` card wallet, this hash contains details about the wallet.
@@ -285,6 +285,22 @@ public struct StripePaymentMethodOXXO: StripeModel {
 
 public struct StripePaymentMethodP24: StripeModel {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-p24
+}
+
+public struct StripePaymentMethodAmexExpressCheckout: StripeModel {
+    // https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-amex_express_checkout
+}
+
+public struct StripePaymentMethodApplePay: StripeModel {
+    // https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-apple_pay
+}
+
+public struct StripePaymentMethodGooglePay: StripeModel {
+    // https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-google_pay
+}
+
+public struct StripePaymentMethodSamsungPay: StripeModel {
+    // https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-samsung_pay
 }
 
 public struct StripePaymentMethodSofort: StripeModel {
