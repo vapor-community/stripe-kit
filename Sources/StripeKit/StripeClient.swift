@@ -199,4 +199,13 @@ public final class StripeClient {
         handler.eventLoop = eventLoop
         return self
     }
+
+    /// Hop to a new eventloop to execute requests on with a different API key.
+    /// - Parameter eventLoop: The eventloop to execute requests on.
+    /// - Parameter apiKey: The new API key to use.
+    public func hopped(to eventLoop: EventLoop, apiKey: String) -> StripeClient {
+        handler.eventLoop = eventLoop
+        handler.apiKey = apiKey
+        return self
+    }
 }

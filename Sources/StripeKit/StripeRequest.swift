@@ -11,6 +11,7 @@ import NIO
 import NIOFoundationCompat
 import NIOHTTP1
 import AsyncHTTPClient
+import Baggage
 
 internal let APIBase = "https://api.stripe.com/"
 internal let FilesAPIBase = "https://files.stripe.com/"
@@ -40,7 +41,7 @@ extension StripeAPIHandler {
 
 struct StripeDefaultAPIHandler: StripeAPIHandler {
     private let httpClient: HTTPClient
-    private let apiKey: String
+    var apiKey: String
     private let decoder = JSONDecoder()
     var eventLoop: EventLoop
 
@@ -56,7 +57,8 @@ struct StripeDefaultAPIHandler: StripeAPIHandler {
                                       path: String,
                                       query: String = "",
                                       body: HTTPClient.Body = .string(""),
-                                      headers: HTTPHeaders = [:]) -> EventLoopFuture<SM> {
+                                      headers: HTTPHeaders = [:],
+                                      context: LoggingContext) -> EventLoopFuture<SM> {
         
         var _headers: HTTPHeaders = ["Stripe-Version": "2020-08-27",
                                      "Authorization": "Bearer \(apiKey)",
@@ -66,7 +68,7 @@ struct StripeDefaultAPIHandler: StripeAPIHandler {
         do {
             let request = try HTTPClient.Request(url: "\(path)?\(query)", method: method, headers: _headers, body: body)
             
-            return httpClient.execute(request: request, eventLoop: .delegate(on: self.eventLoop)).flatMap { response in
+            return httpClient.execute(request: request, eventLoop: .delegate(on: self.eventLoop), context: context).flatMap { response in
                 guard let byteBuffer = response.body else {
                     fatalError("Response body from Stripe is missing! This should never happen.")
                 }
