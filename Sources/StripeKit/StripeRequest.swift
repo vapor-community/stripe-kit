@@ -22,7 +22,8 @@ public protocol StripeAPIHandler {
                                path: String,
                                query: String,
                                body: HTTPClient.Body,
-                               headers: HTTPHeaders) -> EventLoopFuture<SM>
+                               headers: HTTPHeaders,
+                               context: LoggingContext) -> EventLoopFuture<SM>
 }
 
 extension StripeAPIHandler {
@@ -30,12 +31,14 @@ extension StripeAPIHandler {
                                path: String,
                                query: String = "",
                                body: HTTPClient.Body = .string(""),
-                               headers: HTTPHeaders = [:]) -> EventLoopFuture<SM> {
+                               headers: HTTPHeaders = [:],
+                               context: LoggingContext) -> EventLoopFuture<SM> {
         return send(method: method,
                     path: path,
                     query: query,
                     body: body,
-                    headers: headers)
+                    headers: headers,
+                    context: context)
     }
 }
 
