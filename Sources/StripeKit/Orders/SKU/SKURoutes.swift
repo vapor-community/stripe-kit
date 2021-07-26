@@ -8,6 +8,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol SKURoutes {
     /// Creates a new SKU associated with a product.
@@ -35,7 +36,8 @@ public protocol SKURoutes {
                 image: String?,
                 metadata: [String: String]?,
                 packageDimensions: [String: Any]?,
-                expand: [String]?) -> EventLoopFuture<StripeSKU>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSKU>
     
     /// Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
     ///
@@ -43,7 +45,7 @@ public protocol SKURoutes {
     ///   - id: The identifier of the SKU to be retrieved.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeSKU`.
-    func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSKU>
+    func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSKU>
     
     /// Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     /// Note that a SKU’s `attributes` are not editable. Instead, you would need to deactivate the existing SKU and create a new one with the new attribute values.
@@ -71,19 +73,20 @@ public protocol SKURoutes {
                 packageDimensions: [String: Any]?,
                 price: Int?,
                 product: String?,
-                expand: [String]?) -> EventLoopFuture<StripeSKU>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSKU>
     
     /// Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/skus/list)
     /// - Returns: A `StripeSKUList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeSKUList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSKUList>
     
     /// Delete a SKU. Deleting a SKU is only possible until it has been used in an order.
     ///
     /// - Parameter id: The identifier of the SKU to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(id: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -100,7 +103,8 @@ extension SKURoutes {
                        image: String? = nil,
                        metadata: [String: String]? = nil,
                        packageDimensions: [String: Any]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeSKU> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSKU> {
         return create(id: id,
                       currency: currency,
                       inventory: inventory,
@@ -114,7 +118,7 @@ extension SKURoutes {
                       expand: expand)
     }
     
-    public func retrieve(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeSKU> {
+    public func retrieve(id: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSKU> {
         return retrieve(id: id, expand: expand)
     }
     
@@ -128,7 +132,8 @@ extension SKURoutes {
                        packageDimensions: [String: Any]? = nil,
                        price: Int? = nil,
                        product: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeSKU> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSKU> {
         return update(id: id,
                       active: active,
                       attributes: attributes,
@@ -142,11 +147,11 @@ extension SKURoutes {
                       expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSKUList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSKUList> {
         return listAll(filter: filter)
     }
     
-    public func delete(id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return delete(id: id)
     }
 }
@@ -171,7 +176,8 @@ public struct StripeSKURoutes: SKURoutes {
                        image: String?,
                        metadata: [String: String]?,
                        packageDimensions: [String: Any]?,
-                       expand: [String]?) -> EventLoopFuture<StripeSKU> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSKU> {
         var body: [String: Any] = ["currency": currency.rawValue,
                                    "price": price,
                                    "product": product]
@@ -205,7 +211,7 @@ public struct StripeSKURoutes: SKURoutes {
         return apiHandler.send(method: .POST, path: skus, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSKU> {
+    public func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSKU> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -224,7 +230,8 @@ public struct StripeSKURoutes: SKURoutes {
                        packageDimensions: [String: Any]?,
                        price: Int?,
                        product: String?,
-                       expand: [String]?) -> EventLoopFuture<StripeSKU> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSKU> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -266,7 +273,7 @@ public struct StripeSKURoutes: SKURoutes {
         return apiHandler.send(method: .POST, path: "\(skus)/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeSKUList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSKUList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -275,7 +282,7 @@ public struct StripeSKURoutes: SKURoutes {
         return apiHandler.send(method: .GET, path: skus, query: queryParams, headers: headers)
     }
     
-    public func delete(id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(skus)/\(id)", headers: headers)
     }
 }

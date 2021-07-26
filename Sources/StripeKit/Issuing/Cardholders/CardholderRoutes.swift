@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol CardholderRoutes {
     /// Creates a new Issuing Cardholder object that can be issued cards.
@@ -34,13 +35,14 @@ public protocol CardholderRoutes {
                 isDefault: Bool?,
                 metadata: [String: String]?,
                 phoneNumber: String?,
-                status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder>
+                status: StripeCardholderStatus?,
+                context: LoggingContext) -> EventLoopFuture<StripeCardholder>
     
     /// Retrieves an Issuing Cardholder object.
     ///
     /// - Parameter cardholder: The identifier of the cardholder to be retrieved.
     /// - Returns: A `StripeCardholder`.
-    func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder>
+    func retrieve(cardholder: String, context: LoggingContext) -> EventLoopFuture<StripeCardholder>
     
     /// Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -65,13 +67,14 @@ public protocol CardholderRoutes {
                 isDefault: Bool?,
                 metadata: [String: String]?,
                 phoneNumber: String?,
-                status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder>
+                status: StripeCardholderStatus?,
+                context: LoggingContext) -> EventLoopFuture<StripeCardholder>
     
     /// Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
     /// - Parameter filter:  A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/issuing/cardholders/list).
     /// - Returns: A `StripeAuthorizationList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeAuthorizationList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorizationList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -88,7 +91,8 @@ extension CardholderRoutes {
                 isDefault: Bool? = nil,
                 metadata: [String: String]? = nil,
                 phoneNumber: String? = nil,
-                status: StripeCardholderStatus? = nil) -> EventLoopFuture<StripeCardholder> {
+                status: StripeCardholderStatus? = nil,
+                context: LoggingContext) -> EventLoopFuture<StripeCardholder> {
         return create(billing: billing,
                       name: name,
                       type: type,
@@ -102,7 +106,7 @@ extension CardholderRoutes {
                       status: status)
     }
     
-    func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder> {
+    func retrieve(cardholder: String, context: LoggingContext) -> EventLoopFuture<StripeCardholder> {
         return retrieve(cardholder: cardholder)
     }
     
@@ -115,7 +119,8 @@ extension CardholderRoutes {
                 isDefault: Bool? = nil,
                 metadata: [String: String]? = nil,
                 phoneNumber: String? = nil,
-                status: StripeCardholderStatus? = nil) -> EventLoopFuture<StripeCardholder> {
+                status: StripeCardholderStatus? = nil,
+                context: LoggingContext) -> EventLoopFuture<StripeCardholder> {
         return update(cardholder: cardholder,
                       authorizationControls: authorizationControls,
                       billing: billing,
@@ -128,7 +133,7 @@ extension CardholderRoutes {
                       status: status)
     }
     
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeAuthorizationList> {
+    func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeAuthorizationList> {
         return listAll(filter: filter)
     }
 }
@@ -153,7 +158,8 @@ public struct StripeCardholderRoutes: CardholderRoutes {
                        isDefault: Bool?,
                        metadata: [String: String]?,
                        phoneNumber: String?,
-                       status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder> {
+                       status: StripeCardholderStatus?,
+                       context: LoggingContext) -> EventLoopFuture<StripeCardholder> {
         var body: [String: Any] = ["name": name,
                                    "type": type.rawValue]
         billing.forEach { body["billing[\($0)]"] = $1 }
@@ -193,7 +199,7 @@ public struct StripeCardholderRoutes: CardholderRoutes {
         return apiHandler.send(method: .POST, path: cardholders, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder> {
+    public func retrieve(cardholder: String, context: LoggingContext) -> EventLoopFuture<StripeCardholder> {
         return apiHandler.send(method: .GET, path: "\(cardholders)/\(cardholder)", headers: headers)
     }
     
@@ -206,7 +212,8 @@ public struct StripeCardholderRoutes: CardholderRoutes {
                        isDefault: Bool?,
                        metadata: [String: String]?,
                        phoneNumber: String?,
-                       status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder> {
+                       status: StripeCardholderStatus?,
+                       context: LoggingContext) -> EventLoopFuture<StripeCardholder> {
         var body: [String: Any] = [:]
         
         if let authorizationControls = authorizationControls {
@@ -248,7 +255,7 @@ public struct StripeCardholderRoutes: CardholderRoutes {
         return apiHandler.send(method: .POST, path: "\(cardholders)/\(cardholder)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripeAuthorizationList> {
+    public func listAll(filter: [String : Any]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorizationList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

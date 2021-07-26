@@ -8,6 +8,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol OrderRoutes {
     /// Creates a new order object.
@@ -29,7 +30,8 @@ public protocol OrderRoutes {
                 items: [[String: Any]]?,
                 metadata: [String: String]?,
                 shipping: [String: Any]?,
-                expand: [String]?) -> EventLoopFuture<StripeOrder>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeOrder>
     
     /// Retrieves the details of an existing order. Supply the unique order ID from either an order creation request or the order list, and Stripe will return the corresponding order information.
     ///
@@ -37,7 +39,7 @@ public protocol OrderRoutes {
     ///   - id: The identifier of the order to be retrieved.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeOrder`.
-    func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeOrder>
+    func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeOrder>
     
     /// Updates the specific order by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -56,7 +58,8 @@ public protocol OrderRoutes {
                 selectedShippingMethod: String?,
                 shipping: [String: Any]?,
                 status: StripeOrderStatus?,
-                expand: [String]?) -> EventLoopFuture<StripeOrder>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeOrder>
     
     /// Pay an order by providing a source to create a payment.
     ///
@@ -75,13 +78,14 @@ public protocol OrderRoutes {
              applicationFee: Int?,
              email: String?,
              metadata: [String: String]?,
-             expand: [String]?) -> EventLoopFuture<StripeOrder>
+             expand: [String]?,
+             context: LoggingContext) -> EventLoopFuture<StripeOrder>
     
     /// Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/orders/list)
     /// - Returns: A `StripeOrderList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeOrderList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeOrderList>
     
     /// Return all or part of an order. The order must have a status of paid or fulfilled before it can be returned. Once all items have been returned, the order will become canceled or returned depending on which status the order started in.
     ///
@@ -90,7 +94,7 @@ public protocol OrderRoutes {
     ///   - items: List of items to return.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeOrder`.
-    func `return`(id: String, items: [[String: Any]]?, expand: [String]?) -> EventLoopFuture<StripeOrder>
+    func `return`(id: String, items: [[String: Any]]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeOrder>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -104,7 +108,8 @@ extension OrderRoutes {
                        items: [[String: Any]]? = nil,
                        metadata: [String: String]? = nil,
                        shipping: [String: Any]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeOrder> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         return create(currency: currency,
                       coupon: coupon,
                       customer: customer,
@@ -115,7 +120,7 @@ extension OrderRoutes {
                       expand: expand)
     }
     
-    public func retrieve(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeOrder> {
+    public func retrieve(id: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         return retrieve(id: id, expand: expand)
     }
     
@@ -125,7 +130,8 @@ extension OrderRoutes {
                        selectedShippingMethod: String? = nil,
                        shipping: [String: Any]? = nil,
                        status: StripeOrderStatus? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeOrder> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         return update(id: id,
                       coupon: coupon,
                       metadata: metadata,
@@ -141,7 +147,8 @@ extension OrderRoutes {
                     applicationFee: Int? = nil,
                     email: String? = nil,
                     metadata: [String: String]? = nil,
-                    expand: [String]? = nil) -> EventLoopFuture<StripeOrder> {
+                    expand: [String]? = nil,
+                    context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         return pay(id: id,
                    customer: customer,
                    source: source,
@@ -151,11 +158,11 @@ extension OrderRoutes {
                    expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeOrderList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeOrderList> {
         return listAll(filter: filter)
     }
     
-    public func `return`(id: String, items: [[String: Any]]? = nil, expand: [String]? = nil) -> EventLoopFuture<StripeOrder> {
+    public func `return`(id: String, items: [[String: Any]]? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         return `return`(id: id, items: items, expand: expand)
     }
 }
@@ -177,7 +184,8 @@ public struct StripeOrderRoutes: OrderRoutes {
                        items: [[String: Any]]?,
                        metadata: [String: String]?,
                        shipping: [String: Any]?,
-                       expand: [String]?) -> EventLoopFuture<StripeOrder> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         var body: [String: Any] = [:]
         
         if let coupon = coupon {
@@ -211,7 +219,7 @@ public struct StripeOrderRoutes: OrderRoutes {
         return apiHandler.send(method: .POST, path: orders, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeOrder> {
+    public func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -226,7 +234,8 @@ public struct StripeOrderRoutes: OrderRoutes {
                        selectedShippingMethod: String?,
                        shipping: [String: Any]?,
                        status: StripeOrderStatus?,
-                       expand: [String]?) -> EventLoopFuture<StripeOrder> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         var body: [String: Any] = [:]
         
         if let coupon = coupon {
@@ -263,7 +272,8 @@ public struct StripeOrderRoutes: OrderRoutes {
                     connectAccount: String?,
                     email: String?,
                     metadata: [String: String]?,
-                    expand: [String]?) -> EventLoopFuture<StripeOrder> {
+                    expand: [String]?,
+                    context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         var body: [String: Any] = [:]
         
         if let customer = customer {
@@ -297,7 +307,7 @@ public struct StripeOrderRoutes: OrderRoutes {
         return apiHandler.send(method: .POST, path: "\(orders)/\(id)/pay", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeOrderList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeOrderList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -306,7 +316,7 @@ public struct StripeOrderRoutes: OrderRoutes {
         return apiHandler.send(method: .GET, path: orders, query: queryParams, headers: headers)
     }
 
-    public func `return`(id: String, items: [[String: Any]]?, expand: [String]?) -> EventLoopFuture<StripeOrder> {
+    public func `return`(id: String, items: [[String: Any]]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeOrder> {
         var body: [String: Any] = [:]
         
         if let items = items {

@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol CardRoutes {
     /// When you create a new credit card, you must specify a customer or recipient on which to create it. /n If the card’s owner has no default card, then the new card will become the default. However, if the owner already has a default, then it will not change. To change the default, you should either update the customer to have a new `default_source`, or update the recipient to have a new `default_card`.
@@ -17,7 +18,7 @@ public protocol CardRoutes {
     ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the card in a structured format.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCard`.
-    func create(customer: String, source: Any, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeCard>
+    func create(customer: String, source: Any, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCard>
     
     /// You can always see the 10 most recent cards directly on a customer; this method lets you retrieve details about a specific card stored on the customer.
     ///
@@ -26,7 +27,7 @@ public protocol CardRoutes {
     ///   - customer: The ID of the customer this source belongs to.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCard`.
-    func retrieve(id: String, customer: String, expand: [String]?) -> EventLoopFuture<StripeCard>
+    func retrieve(id: String, customer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCard>
     
     /// If you need to update only some card details, like the billing address or expiration date, you can do so without having to re-enter the full card details. Also, Stripe works directly with card networks so that your customers can continue using your service without interruption. /n When you update a card, Stripe will automatically validate the card.
     ///
@@ -57,7 +58,8 @@ public protocol CardRoutes {
                 expYear: Int?,
                 metadata: [String: String]?,
                 name: String?,
-                expand: [String]?) -> EventLoopFuture<StripeCard>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeCard>
     
     /// You can delete cards accounts from a Customer. /n If you delete a card that is currently the default source, then the most recently added source will become the new default. If you delete a card that is the last remaining source on the customer, then the `default_source` attribute will become null. /n For recipients: if you delete the default card, then the most recently added card will become the new default. If you delete the last remaining card on a recipient, then the `default_card` attribute will become null. /n Note that for cards belonging to customers, you might want to prevent customers on paid subscriptions from deleting all cards on file, so that there is at least one default card for the next invoice payment attempt.
     ///
@@ -65,7 +67,7 @@ public protocol CardRoutes {
     ///   - id: The ID of the source to be deleted.
     ///   - customer: The ID of the customer this source belongs to.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject>
     
     /// You can see a list of the cards belonging to a customer. Note that the 10 most recent sources are always available on the Customer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional cards.
     ///
@@ -73,7 +75,7 @@ public protocol CardRoutes {
     ///   - customer: The ID of the customer whose cards will be retrieved.
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/cards/list).
     /// - Returns: A `StripeCardList`.
-    func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeCardList>
+    func listAll(customer: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCardList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -83,11 +85,12 @@ extension CardRoutes {
     public func create(customer: String,
                        source: Any,
                        metadata: [String: String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeCard> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeCard> {
         return create(customer: customer, source: source, metadata: metadata, expand: expand)
     }
     
-    public func retrieve(id: String, customer: String, expand: [String]? = nil) -> EventLoopFuture<StripeCard> {
+    public func retrieve(id: String, customer: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCard> {
         return retrieve(id: id, customer: customer, expand: expand)
     }
     
@@ -103,7 +106,8 @@ extension CardRoutes {
                        expYear: Int? = nil,
                        metadata: [String: String]? = nil,
                        name: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeCard> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeCard> {
         return update(id: id,
                       customer: customer,
                       addressCity: addressCity,
@@ -119,11 +123,11 @@ extension CardRoutes {
                       expand: expand)
     }
     
-    public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return delete(id: id, customer: customer)
     }
     
-    public func listAll(customer: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeCardList> {
+    public func listAll(customer: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCardList> {
         return listAll(customer: customer, filter: filter)
     }
 }
@@ -138,7 +142,7 @@ public struct StripeCardRoutes: CardRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(customer: String, source: Any, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeCard> {
+    public func create(customer: String, source: Any, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCard> {
         var body: [String: Any] = [:]
         
         if let source = source as? String {
@@ -160,7 +164,7 @@ public struct StripeCardRoutes: CardRoutes {
         return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String, customer: String, expand: [String]?) -> EventLoopFuture<StripeCard> {
+    public func retrieve(id: String, customer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCard> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -181,7 +185,8 @@ public struct StripeCardRoutes: CardRoutes {
                        expYear: Int?,
                        metadata: [String: String]?,
                        name: String?,
-                       expand: [String]?) -> EventLoopFuture<StripeCard> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeCard> {
         var body: [String: Any] = [:]
         
         if let addressCity = addressCity {
@@ -231,11 +236,11 @@ public struct StripeCardRoutes: CardRoutes {
         return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(cards)/\(customer)/sources/\(id)", headers: headers)
     }
     
-    public func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeCardList> {
+    public func listAll(customer: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCardList> {
         var queryParams = "object=card"
         if let filter = filter {
             queryParams += "&" + filter.queryParameters

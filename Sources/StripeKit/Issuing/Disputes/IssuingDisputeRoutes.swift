@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol IssuingDisputeRoutes {
     /// Creates an Issuing Dispute object.
@@ -22,13 +23,14 @@ public protocol IssuingDisputeRoutes {
                 reason: StripeIssuingDisputeReason,
                 amount: Int?,
                 evidence: [String: Any]?,
-                metadata: [String: String]?) -> EventLoopFuture<StripeIssuingDispute>
+                metadata: [String: String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute>
     
     /// Retrieves an Issuing Dispute object.
     ///
     /// - Parameter dispute: The ID of the dispute to retrieve.
     /// - Returns: A `StripeIssuingDispute`.
-    func retrieve(dispute: String) -> EventLoopFuture<StripeIssuingDispute>
+    func retrieve(dispute: String, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute>
     
     /// Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -36,13 +38,13 @@ public protocol IssuingDisputeRoutes {
     ///   - dispute: The ID of the dispute to update.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     /// - Returns: A `StripeIssuingDispute`.
-    func update(dispute: String, metadata: [String: String]?) -> EventLoopFuture<StripeIssuingDispute>
+    func update(dispute: String, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute>
     
     /// Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/issuing/disputes/list).
     /// - Returns: A `StripeIssuingDisputeList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeIssuingDisputeList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingDisputeList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -53,7 +55,8 @@ extension IssuingDisputeRoutes {
                 reason: StripeIssuingDisputeReason,
                 amount: Int? = nil,
                 evidence: [String: Any]? = nil,
-                metadata: [String: String]? = nil) -> EventLoopFuture<StripeIssuingDispute> {
+                metadata: [String: String]? = nil,
+                context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
         return create(disputedTransaction: disputedTransaction,
                           reason: reason,
                           amount: amount,
@@ -61,15 +64,15 @@ extension IssuingDisputeRoutes {
                           metadata: metadata)
     }
     
-    func retrieve(dispute: String) -> EventLoopFuture<StripeIssuingDispute> {
+    func retrieve(dispute: String, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
         return retrieve(dispute: dispute)
     }
     
-    func update(dispute: String, metadata: [String: String]? = nil) -> EventLoopFuture<StripeIssuingDispute> {
+    func update(dispute: String, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
         return update(dispute: dispute, metadata: metadata)
     }
     
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeIssuingDisputeList> {
+    func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingDisputeList> {
         return listAll(filter: filter)
     }
 }
@@ -88,7 +91,8 @@ public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
                        reason: StripeIssuingDisputeReason,
                        amount: Int?,
                        evidence: [String: Any]?,
-                       metadata: [String: String]?) -> EventLoopFuture<StripeIssuingDispute> {
+                       metadata: [String: String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
         var body: [String: Any] = ["disputed_transaction": disputedTransaction,
                                    "reason": reason.rawValue]
         
@@ -107,11 +111,11 @@ public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
         return apiHandler.send(method: .POST, path: issuingdisputes, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(dispute: String) -> EventLoopFuture<StripeIssuingDispute> {
+    public func retrieve(dispute: String, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
         return apiHandler.send(method: .GET, path: "\(issuingdisputes)/\(dispute)", headers: headers)
     }
     
-    public func update(dispute: String, metadata: [String: String]?) -> EventLoopFuture<StripeIssuingDispute> {
+    public func update(dispute: String, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {
@@ -121,7 +125,7 @@ public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
         return apiHandler.send(method: .POST, path: "\(issuingdisputes)/\(dispute)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String : Any]? = nil) -> EventLoopFuture<StripeIssuingDisputeList> {
+    public func listAll(filter: [String : Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingDisputeList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

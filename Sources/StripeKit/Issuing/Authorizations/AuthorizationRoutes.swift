@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol AuthorizationRoutes {
     /// Retrieves an Issuing Authorization object.
@@ -14,7 +15,7 @@ public protocol AuthorizationRoutes {
     /// - Parameter authorization: The ID of the authorization to retrieve.
     /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripeAuthorization`.
-    func retrieve(authorization: String, expand: [String]?) -> EventLoopFuture<StripeAuthorization>
+    func retrieve(authorization: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorization>
     
     /// Updates the specified Issuing `Authorization` object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -23,7 +24,7 @@ public protocol AuthorizationRoutes {
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeAuthorization`.
-    func update(authorization: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeAuthorization>
+    func update(authorization: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorization>
     
     /// Approves a pending Issuing Authorization object.
     ///
@@ -36,7 +37,8 @@ public protocol AuthorizationRoutes {
     func approve(authorization: String,
                  heldAmount: Int?,
                  metadata: [String: String]?,
-                 expand: [String]?) -> EventLoopFuture<StripeAuthorization>
+                 expand: [String]?,
+                 context: LoggingContext) -> EventLoopFuture<StripeAuthorization>
     
     /// Declines a pending Issuing Authorization object.
     ///
@@ -44,42 +46,43 @@ public protocol AuthorizationRoutes {
     /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripeAuthorization`
-    func decline(authorization: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeAuthorization>
+    func decline(authorization: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorization>
     
     /// Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
     /// - Parameter filter:  A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/issuing/authorizations/list).
     /// - Returns: A `StripeAuthorizationList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeAuthorizationList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorizationList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
 extension AuthorizationRoutes {
-    func retrieve(authorization: String, expand: [String]? = nil) -> EventLoopFuture<StripeAuthorization> {
+    func retrieve(authorization: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeAuthorization> {
         return retrieve(authorization: authorization, expand: expand)
     }
     
-    func update(authorization: String, metadata: [String: String]? = nil, expand: [String]? = nil) -> EventLoopFuture<StripeAuthorization> {
+    func update(authorization: String, metadata: [String: String]? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeAuthorization> {
         return update(authorization: authorization, metadata: metadata, expand: expand)
     }
     
     func approve(authorization: String,
                  heldAmount: Int? = nil,
                  metadata: [String: String]? = nil,
-                 expand: [String]? = nil) -> EventLoopFuture<StripeAuthorization> {
+                 expand: [String]? = nil,
+                 context: LoggingContext) -> EventLoopFuture<StripeAuthorization> {
         return approve(authorization: authorization,
                        heldAmount: heldAmount,
                        metadata: metadata,
                        expand: expand)
     }
     
-    func decline(authorization: String, metadata: [String: String]? = nil, expand: [String]? = nil) -> EventLoopFuture<StripeAuthorization> {
+    func decline(authorization: String, metadata: [String: String]? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeAuthorization> {
         return decline(authorization: authorization, metadata: metadata, expand: expand)
     }
     
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeAuthorizationList> {
+    func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeAuthorizationList> {
         return listAll(filter: filter)
     }
 }
@@ -94,7 +97,7 @@ public struct StripeAuthorizationRoutes: AuthorizationRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(authorization: String, expand: [String]?) -> EventLoopFuture<StripeAuthorization> {
+    public func retrieve(authorization: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorization> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -103,7 +106,7 @@ public struct StripeAuthorizationRoutes: AuthorizationRoutes {
         return apiHandler.send(method: .GET, path: "\(authorizations)/\(authorization)", query: queryParams, headers: headers)
     }
     
-    public func update(authorization: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeAuthorization> {
+    public func update(authorization: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorization> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {
@@ -117,7 +120,7 @@ public struct StripeAuthorizationRoutes: AuthorizationRoutes {
         return apiHandler.send(method: .POST, path: "\(authorizations)/\(authorization)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func approve(authorization: String, heldAmount: Int?, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeAuthorization> {
+    public func approve(authorization: String, heldAmount: Int?, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorization> {
         var body: [String: Any] = [:]
         
         if let heldAmount = heldAmount {
@@ -135,7 +138,7 @@ public struct StripeAuthorizationRoutes: AuthorizationRoutes {
         return apiHandler.send(method: .POST, path: "\(authorizations)/\(authorization)/approve", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func decline(authorization: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripeAuthorization> {
+    public func decline(authorization: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorization> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {
@@ -149,7 +152,7 @@ public struct StripeAuthorizationRoutes: AuthorizationRoutes {
         return apiHandler.send(method: .POST, path: "\(authorizations)/\(authorization)/decline", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeAuthorizationList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorizationList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

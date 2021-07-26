@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol ReaderRoutes {
     /// Creates a new Reader object.
@@ -17,13 +18,13 @@ public protocol ReaderRoutes {
     ///   - location: The location to assign the reader to. If no location is specified, the reader will be assigned to the account’s default location.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     /// - Returns: A `StripeReader`.
-    func create(registrationCode: String, label: String?, location: String?, metadata: [String: String]?) -> EventLoopFuture<StripeReader>
+    func create(registrationCode: String, label: String?, location: String?, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeReader>
     
     /// Retrieves a Reader object.
     ///
     /// - Parameter reader: The identifier of the reader to be retrieved.
     /// - Returns: A `StripeReader`.
-    func retrieve(reader: String) -> EventLoopFuture<StripeReader>
+    func retrieve(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader>
     
     /// Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -32,42 +33,42 @@ public protocol ReaderRoutes {
     ///   - label: The new label of the reader.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     /// - Returns: A `StripeReader`.
-    func update(reader: String, label: String?, metadata: [String: String]?) -> EventLoopFuture<StripeReader>
+    func update(reader: String, label: String?, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeReader>
     
     /// Deletes a Reader object.
     ///
     /// - Parameter reader: The identifier of the reader to be deleted.
     /// - Returns: A `StripeReader`.
-    func delete(reader: String) -> EventLoopFuture<StripeReader>
+    func delete(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader>
     
     /// Returns a list of Reader objects.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/terminal/readers/list)
     /// - Returns: A `StripeReaderList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeReaderList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeReaderList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
 extension ReaderRoutes {
-    func create(registrationCode: String, label: String? = nil, location: String? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeReader> {
+    func create(registrationCode: String, label: String? = nil, location: String? = nil, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReader> {
         return create(registrationCode: registrationCode, label: label, location: location, metadata: metadata)
     }
     
-    func retrieve(reader: String) -> EventLoopFuture<StripeReader> {
+    func retrieve(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader> {
         return retrieve(reader: reader)
     }
     
-    func update(reader: String, label: String? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeReader> {
+    func update(reader: String, label: String? = nil, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReader> {
         return update(reader: reader, label: label, metadata: metadata)
     }
     
-    func delete(reader: String) -> EventLoopFuture<StripeReader> {
+    func delete(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader> {
         return delete(reader: reader)
     }
     
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeReaderList> {
+    func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReaderList> {
         return listAll(filter: filter)
     }
 }
@@ -82,7 +83,7 @@ public struct StripeReaderRoutes: ReaderRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(registrationCode: String, label: String?, location: String?, metadata: [String: String]?) -> EventLoopFuture<StripeReader> {
+    public func create(registrationCode: String, label: String?, location: String?, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeReader> {
         var body: [String: Any] = ["registration_code": registrationCode]
         
         if let label = label {
@@ -100,11 +101,11 @@ public struct StripeReaderRoutes: ReaderRoutes {
         return apiHandler.send(method: .POST, path: terminalreaders, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(reader: String) -> EventLoopFuture<StripeReader> {
+    public func retrieve(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader> {
         return apiHandler.send(method: .GET, path: "\(terminalreaders)/\(reader)", headers: headers)
     }
     
-    public func update(reader: String, label: String?, metadata: [String: String]?) -> EventLoopFuture<StripeReader> {
+    public func update(reader: String, label: String?, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeReader> {
         var body: [String: Any] = [:]
         
         if let label = label {
@@ -118,11 +119,11 @@ public struct StripeReaderRoutes: ReaderRoutes {
         return apiHandler.send(method: .POST, path: "\(terminalreaders)/\(reader)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(reader: String) -> EventLoopFuture<StripeReader> {
+    public func delete(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader> {
         return apiHandler.send(method: .DELETE, path: "\(terminalreaders)/\(reader)", headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeReaderList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeReaderList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

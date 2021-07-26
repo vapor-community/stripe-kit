@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol IssuingCardRoutes {
     /// Creates an Issuing `Card` object.
@@ -32,14 +33,15 @@ public protocol IssuingCardRoutes {
                 replacementReason: StripeIssuingCardReplacementReason?,
                 shipping: [String: Any]?,
                 status: StripeIssuingCardStatus?,
-                expand: [String]?) -> EventLoopFuture<StripeIssuingCard>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeIssuingCard>
     
     /// Retrieves an Issuing `Card` object.
     ///
     /// - Parameter card: The identifier of the card to be retrieved.
     /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripeIssuingCard`.
-    func retrieve(card: String, expand: [String]?) -> EventLoopFuture<StripeIssuingCard>
+    func retrieve(card: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingCard>
     
     /// Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -56,13 +58,14 @@ public protocol IssuingCardRoutes {
                 cancellationReason: StripeIssuingCardCancellationReason?,
                 metadata: [String: String]?,
                 status: StripeIssuingCardStatus?,
-                expand: [String]?) -> EventLoopFuture<StripeIssuingCard>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeIssuingCard>
     
     /// Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
     /// - Parameter filter:  A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/issuing/cards/list).
     /// - Returns: A `StripeIssuingCardList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeIssuingCardList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingCardList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -78,7 +81,8 @@ extension IssuingCardRoutes {
                 replacementReason: StripeIssuingCardReplacementReason? = nil,
                 shipping: [String: Any]? = nil,
                 status: StripeIssuingCardStatus? = nil,
-                expand: [String]? = nil) -> EventLoopFuture<StripeIssuingCard> {
+                expand: [String]? = nil,
+                context: LoggingContext) -> EventLoopFuture<StripeIssuingCard> {
         return create(cardholder: cardholder,
                       currency: currency,
                       type: type,
@@ -91,7 +95,7 @@ extension IssuingCardRoutes {
                       expand: expand)
     }
     
-    func retrieve(card: String, expand: [String]? = nil) -> EventLoopFuture<StripeIssuingCard> {
+    func retrieve(card: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingCard> {
         return retrieve(card: card, expand: expand)
     }
     
@@ -100,7 +104,8 @@ extension IssuingCardRoutes {
                 cancellationReason: StripeIssuingCardCancellationReason? = nil,
                 metadata: [String: String]? = nil,
                 status: StripeIssuingCardStatus? = nil,
-                expand: [String]? = nil) -> EventLoopFuture<StripeIssuingCard> {
+                expand: [String]? = nil,
+                context: LoggingContext) -> EventLoopFuture<StripeIssuingCard> {
         return update(card: card,
                       spendingControls: spendingControls,
                       cancellationReason: cancellationReason,
@@ -109,7 +114,7 @@ extension IssuingCardRoutes {
                       expand: expand)
     }
     
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeIssuingCardList> {
+    func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingCardList> {
         return listAll(filter: filter)
     }
 }
@@ -133,7 +138,8 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
                        replacementReason: StripeIssuingCardReplacementReason?,
                        shipping: [String: Any]?,
                        status: StripeIssuingCardStatus?,
-                       expand: [String]?) -> EventLoopFuture<StripeIssuingCard> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeIssuingCard> {
         var body: [String: Any] = ["cardholder": cardholder,
                                    "currency": currency.rawValue,
                                    "type": type.rawValue]
@@ -169,7 +175,7 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
         return apiHandler.send(method: .POST, path: issuingcards, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(card: String, expand: [String]?) -> EventLoopFuture<StripeIssuingCard> {
+    public func retrieve(card: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingCard> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -183,7 +189,8 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
                        cancellationReason: StripeIssuingCardCancellationReason?,
                        metadata: [String: String]?,
                        status: StripeIssuingCardStatus?,
-                       expand: [String]?) -> EventLoopFuture<StripeIssuingCard> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeIssuingCard> {
         var body: [String: Any] = [:]
         
         if let spendingControls = spendingControls {
@@ -209,7 +216,7 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
         return apiHandler.send(method: .POST, path: "\(issuingcards)/\(card)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeIssuingCardList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingCardList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

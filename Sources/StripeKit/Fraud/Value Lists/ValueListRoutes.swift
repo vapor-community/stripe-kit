@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol ValueListRoutes {
     /// Creates a new `ValueList` object, which can then be referenced in rules.
@@ -17,13 +18,13 @@ public protocol ValueListRoutes {
     ///   - itemType: Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or`case_sensitive_string`. Use string if the item type is unknown or mixed.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     /// - Returns: A`StripeValueList`.
-    func create(alias: String, name: String, itemType: StripeValueListItemType?, metadata: [String: String]?) -> EventLoopFuture<StripeValueList>
+    func create(alias: String, name: String, itemType: StripeValueListItemType?, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeValueList>
     
     /// Retrieves a `ValueList` object.
     ///
     /// - Parameter valueList: The identifier of the value list to be retrieved.
     /// - Returns: A`StripeValueList`.
-    func retrieve(valueList: String) -> EventLoopFuture<StripeValueList>
+    func retrieve(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeValueList>
     
     /// Updates a `ValueList` object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that `item_type` is immutable.
     ///
@@ -33,19 +34,19 @@ public protocol ValueListRoutes {
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - name: The human-readable name of the value list.
     /// - Returns: A`StripeValueList`.
-    func update(valueList: String, alias: String?, metadata: [String: String]?, name: String?) -> EventLoopFuture<StripeValueList>
+    func update(valueList: String, alias: String?, metadata: [String: String]?, name: String?, context: LoggingContext) -> EventLoopFuture<StripeValueList>
     
     /// Deletes a `ValueList` object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
     ///
     /// - Parameter valueList: The identifier of the value list to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(valueList: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject>
     
     /// Returns a list of `ValueList` objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/radar/value_lists/list).
     /// - Returns: A `StripeValueListList`
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeValueListList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeValueListList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -55,32 +56,34 @@ extension ValueListRoutes {
     func create(alias: String,
                 name: String,
                 itemType: StripeValueListItemType? = nil,
-                metadata: [String: String]? = nil) -> EventLoopFuture<StripeValueList> {
+                metadata: [String: String]? = nil,
+                context: LoggingContext) -> EventLoopFuture<StripeValueList> {
         return create(alias: alias,
                           name: name,
                           itemType: itemType,
                           metadata: metadata)
     }
     
-    func retrieve(valueList: String) -> EventLoopFuture<StripeValueList> {
+    func retrieve(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeValueList> {
         return retrieve(valueList: valueList)
     }
     
     func update(valueList: String,
                 alias: String? = nil,
                 metadata: [String: String]? = nil,
-                name: String? = nil) -> EventLoopFuture<StripeValueList> {
+                name: String? = nil,
+                context: LoggingContext) -> EventLoopFuture<StripeValueList> {
         return update(valueList: valueList,
                           alias: alias,
                           metadata: metadata,
                           name: name)
     }
     
-    func delete(valueList: String) -> EventLoopFuture<StripeDeletedObject> {
+    func delete(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return delete(valueList: valueList)
     }
     
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeValueListList> {
+    func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeValueListList> {
         return listAll(filter: filter)
     }
 }
@@ -98,7 +101,8 @@ public struct StripeValueListRoutes: ValueListRoutes {
     public func create(alias: String,
                        name: String,
                        itemType: StripeValueListItemType?,
-                       metadata: [String: String]?) -> EventLoopFuture<StripeValueList> {
+                       metadata: [String: String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeValueList> {
         var body: [String: Any] = ["alias": alias,
                                    "name": name]
         
@@ -113,14 +117,15 @@ public struct StripeValueListRoutes: ValueListRoutes {
         return apiHandler.send(method: .POST, path: valuelists, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(valueList: String) -> EventLoopFuture<StripeValueList> {
+    public func retrieve(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeValueList> {
         return apiHandler.send(method: .GET, path: "\(valuelists)/\(valueList)", headers: headers)
     }
     
     public func update(valueList: String,
                        alias: String?,
                        metadata: [String: String]?,
-                       name: String?) -> EventLoopFuture<StripeValueList> {
+                       name: String?,
+                       context: LoggingContext) -> EventLoopFuture<StripeValueList> {
         var body: [String: Any] = [:]
         
         if let alias = alias {
@@ -138,11 +143,11 @@ public struct StripeValueListRoutes: ValueListRoutes {
         return apiHandler.send(method: .POST, path: "\(valuelists)/\(valueList)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(valueList: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(valuelists)/\(valueList)", headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeValueListList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeValueListList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

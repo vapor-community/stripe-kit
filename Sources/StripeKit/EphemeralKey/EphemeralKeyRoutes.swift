@@ -7,21 +7,22 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol EphemeralKeyRoutes {
-    func create(customer: String, issuingCard: String?) -> EventLoopFuture<StripeEphemeralKey>
-    func delete(ephemeralKey: String) -> EventLoopFuture<StripeEphemeralKey>
+    func create(customer: String, issuingCard: String?, context: LoggingContext) -> EventLoopFuture<StripeEphemeralKey>
+    func delete(ephemeralKey: String, context: LoggingContext) -> EventLoopFuture<StripeEphemeralKey>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
 extension EphemeralKeyRoutes {
-    public func create(customer: String, issuingCard: String? = nil) -> EventLoopFuture<StripeEphemeralKey> {
+    public func create(customer: String, issuingCard: String? = nil, context: LoggingContext) -> EventLoopFuture<StripeEphemeralKey> {
         return create(customer: customer, issuingCard: issuingCard)
     }
     
-    public func delete(ephemeralKey: String) -> EventLoopFuture<StripeEphemeralKey> {
+    public func delete(ephemeralKey: String, context: LoggingContext) -> EventLoopFuture<StripeEphemeralKey> {
         return delete(ephemeralKey: ephemeralKey)
     }
 }
@@ -36,7 +37,7 @@ public struct StripeEphemeralKeyRoutes: EphemeralKeyRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(customer: String, issuingCard: String?) -> EventLoopFuture<StripeEphemeralKey> {
+    public func create(customer: String, issuingCard: String?, context: LoggingContext) -> EventLoopFuture<StripeEphemeralKey> {
         var body: [String: Any] = ["customer": customer]
         
         if let issuingCard = issuingCard {
@@ -46,7 +47,7 @@ public struct StripeEphemeralKeyRoutes: EphemeralKeyRoutes {
         return apiHandler.send(method: .POST, path: ephemeralkeys, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(ephemeralKey: String) -> EventLoopFuture<StripeEphemeralKey> {
+    public func delete(ephemeralKey: String, context: LoggingContext) -> EventLoopFuture<StripeEphemeralKey> {
         return apiHandler.send(method: .DELETE, path: "\(ephemeralkeys)/\(ephemeralKey)", headers: headers)
     }
 }

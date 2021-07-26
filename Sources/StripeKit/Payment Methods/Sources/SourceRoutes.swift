@@ -8,6 +8,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol SourceRoutes {
     /// Creates a new source object.
@@ -41,7 +42,8 @@ public protocol SourceRoutes {
                 statementDescriptor: String?,
                 token: String?,
                 usage: StripeSourceUsage?,
-                sources: [String: Any]?) -> EventLoopFuture<StripeSource>
+                sources: [String: Any]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSource>
     
     /// Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
     ///
@@ -49,7 +51,7 @@ public protocol SourceRoutes {
     /// - source: The identifier of the source to be retrieved.
     /// - clientSecret: The client secret of the source. Required if a publishable key is used to retrieve the source.
     /// - Returns: A `StripeSource`.
-    func retrieve(source: String, clientSecret: String?) -> EventLoopFuture<StripeSource>
+    func retrieve(source: String, clientSecret: String?, context: LoggingContext) -> EventLoopFuture<StripeSource>
     
     /// Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged. /n This request accepts the `metadata` and `owner` as arguments. It is also possible to update type specific information for selected payment methods. Please refer to our payment method guides for more detail.
     ///
@@ -66,7 +68,8 @@ public protocol SourceRoutes {
                 mandate: [String: Any]?,
                 metadata: [String: String]?,
                 owner: [String: Any]?,
-                sourceOrder: [String: Any]?) -> EventLoopFuture<StripeSource>
+                sourceOrder: [String: Any]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSource>
     
     /// Attaches a Source object to a Customer. The source must be in a chargeable or pending state.
     ///
@@ -74,7 +77,7 @@ public protocol SourceRoutes {
     ///   - source: The identifier of the source to be attached.
     ///   - customer: The identifier of the customer who the source will be attached to.
     /// - Returns: A `StripeSource`.
-    func attach(source: String, customer: String) -> EventLoopFuture<StripeSource>
+    func attach(source: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource>
     
     /// Detaches a Source object from a Customer. The status of a source is changed to `consumed` when it is detached and it can no longer be used to create a charge.
     ///
@@ -82,7 +85,7 @@ public protocol SourceRoutes {
     ///   - id: The identifier of the source to be detached.
     ///   - customer: The identifier of the customer the source will be detached from.
     /// - Returns: A `StripeSource`.
-    func detach(id: String, customer: String) -> EventLoopFuture<StripeSource>
+    func detach(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -102,7 +105,8 @@ extension SourceRoutes {
                        statementDescriptor: String? = nil,
                        token: String? = nil,
                        usage: StripeSourceUsage? = nil,
-                       sources: [String: Any]? = nil) -> EventLoopFuture<StripeSource> {
+                       sources: [String: Any]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSource> {
         return create(type: type,
                       amount: amount,
                       currency: currency,
@@ -119,7 +123,7 @@ extension SourceRoutes {
                       sources: sources)
     }
     
-    public func retrieve(source: String, clientSecret: String? = nil) -> EventLoopFuture<StripeSource> {
+    public func retrieve(source: String, clientSecret: String? = nil, context: LoggingContext) -> EventLoopFuture<StripeSource> {
         return retrieve(source: source, clientSecret: clientSecret)
     }
     
@@ -128,7 +132,8 @@ extension SourceRoutes {
                        mandate: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
                        owner: [String: Any]? = nil,
-                       sourceOrder: [String: Any]? = nil) -> EventLoopFuture<StripeSource> {
+                       sourceOrder: [String: Any]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSource> {
         return update(source: source,
                       amount: amount,
                       mandate: mandate,
@@ -137,11 +142,11 @@ extension SourceRoutes {
                       sourceOrder: sourceOrder)
     }
     
-    public func attach(source: String, customer: String) -> EventLoopFuture<StripeSource> {
+    public func attach(source: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource> {
         return attach(source: source, customer: customer)
     }
     
-    public func detach(id: String, customer: String) -> EventLoopFuture<StripeSource> {
+    public func detach(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource> {
         return detach(id: id, customer: customer)
     }
 }
@@ -170,7 +175,8 @@ public struct StripeSourceRoutes: SourceRoutes {
                        statementDescriptor: String?,
                        token: String?,
                        usage: StripeSourceUsage?,
-                       sources: [String: Any]?) -> EventLoopFuture<StripeSource> {
+                       sources: [String: Any]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSource> {
         var body: [String: Any] = ["type": type.rawValue]
         
         if let currency = currency {
@@ -224,7 +230,7 @@ public struct StripeSourceRoutes: SourceRoutes {
         return apiHandler.send(method: .POST, path: self.sources, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(source: String, clientSecret: String?) -> EventLoopFuture<StripeSource> {
+    public func retrieve(source: String, clientSecret: String?, context: LoggingContext) -> EventLoopFuture<StripeSource> {
         var query = ""
         if let clientSecret = clientSecret {
             query += "client_secret=\(clientSecret)"
@@ -237,7 +243,8 @@ public struct StripeSourceRoutes: SourceRoutes {
                        mandate: [String: Any]?,
                        metadata: [String: String]?,
                        owner: [String: Any]?,
-                       sourceOrder: [String: Any]?) -> EventLoopFuture<StripeSource> {
+                       sourceOrder: [String: Any]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSource> {
         var body: [String: Any] = [:]
         
         if let amount = amount {
@@ -263,12 +270,12 @@ public struct StripeSourceRoutes: SourceRoutes {
         return apiHandler.send(method: .POST, path: "\(sources)/\(source)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func attach(source: String, customer: String) -> EventLoopFuture<StripeSource> {
+    public func attach(source: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource> {
         let body: [String: Any] = ["source": source]
         return apiHandler.send(method: .POST, path: "\(customers)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func detach(id: String, customer: String) -> EventLoopFuture<StripeSource> {
+    public func detach(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource> {
         return apiHandler.send(method: .DELETE, path: "\(customers)/\(customer)/sources/\(id)", headers: headers)
     }
 }
