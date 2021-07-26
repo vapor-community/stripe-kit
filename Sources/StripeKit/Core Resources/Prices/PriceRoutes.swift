@@ -111,11 +111,12 @@ extension PriceRoutes {
                transferLookupKey: transferLookupKey,
                transformQuantity: transformQuantity,
                unitAmountDecimal: unitAmountDecimal,
-               expand: expand)
+               expand: expand,
+               context: context)
     }
     
     public func retrieve(price: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePrice> {
-        retrieve(price: price, expand: expand)
+        retrieve(price: price, expand: expand, context: context)
     }
     
     public func update(price: String,
@@ -132,11 +133,12 @@ extension PriceRoutes {
                nickname: nickname,
                lookupKey: lookupKey,
                transferLookupKey: transferLookupKey,
-               expand: expand)
+               expand: expand,
+               context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePriceList> {
-        listAll(filter: filter)
+        listAll(filter: filter, context: context)
     }
 }
 
@@ -231,7 +233,7 @@ public struct StripePriceRoutes: PriceRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: prices, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: prices, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(price: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePrice> {
@@ -240,7 +242,7 @@ public struct StripePriceRoutes: PriceRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(prices)/\(price)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(prices)/\(price)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(price: String,
@@ -274,7 +276,7 @@ public struct StripePriceRoutes: PriceRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(prices)/\(price)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(prices)/\(price)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePriceList> {
@@ -283,6 +285,6 @@ public struct StripePriceRoutes: PriceRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: prices, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: prices, query: queryParams, headers: headers, context: context)
     }
 }

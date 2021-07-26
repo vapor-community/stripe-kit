@@ -36,15 +36,15 @@ public protocol ReviewRoutes {
 
 extension ReviewRoutes {
     func approve(review: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReview> {
-        return approve(review: review, expand: expand)
+        return approve(review: review, expand: expand, context: context)
     }
     
     func retrieve(review: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReview> {
-        return retrieve(review: review, expand: expand)
+        return retrieve(review: review, expand: expand, context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext)  -> EventLoopFuture<StripeReviewList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -65,7 +65,7 @@ public struct StripeReviewRoutes: ReviewRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(reviews)\(review)/approve", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(reviews)\(review)/approve", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(review: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeReview> {
@@ -74,7 +74,7 @@ public struct StripeReviewRoutes: ReviewRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(reviews)\(review)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(reviews)\(review)", query: queryParams, headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeReviewList> {
@@ -82,6 +82,6 @@ public struct StripeReviewRoutes: ReviewRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: reviews, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: reviews, query: queryParams, headers: headers, context: context)
     }
 }

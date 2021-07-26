@@ -150,11 +150,12 @@ extension PaymentMethodRoutes {
                       metadata: metadata,
                       sepaDebit: sepaDebit,
                       sofort: sofort,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(paymentMethod: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePaymentMethod> {
-        return retrieve(paymentMethod: paymentMethod, expand: expand)
+        return retrieve(paymentMethod: paymentMethod, expand: expand, context: context)
     }
     
     public func update(paymentMethod: String,
@@ -167,7 +168,8 @@ extension PaymentMethodRoutes {
                       billingDetails: billingDetails,
                       card: card,
                       metadata: metadata,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func listAll(customer: String,
@@ -175,16 +177,17 @@ extension PaymentMethodRoutes {
                         filter: [String: Any]? = nil,
                         context: LoggingContext) -> EventLoopFuture<StripePaymentMethodList> {
         return listAll(customer: customer,
-                           type: type,
-                           filter: filter)
+                       type: type,
+                       filter: filter,
+                       context: context)
     }
     
     public func attach(paymentMethod: String, customer: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePaymentMethod> {
-        return attach(paymentMethod: paymentMethod, customer: customer, expand: expand)
+        return attach(paymentMethod: paymentMethod, customer: customer, expand: expand, context: context)
     }
     
     public func detach(paymentMethod: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePaymentMethod> {
-        return detach(paymentMethod: paymentMethod, expand: expand)
+        return detach(paymentMethod: paymentMethod, expand: expand, context: context)
     }
 }
 
@@ -292,7 +295,7 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: paymentmethods, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: paymentmethods, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(paymentMethod: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePaymentMethod> {
@@ -301,7 +304,7 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(paymentmethods)/\(paymentMethod)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(paymentmethods)/\(paymentMethod)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(paymentMethod: String,
@@ -328,7 +331,7 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(customer: String, type: StripePaymentMethodType, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePaymentMethodList> {
@@ -337,7 +340,7 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
             queryParams += "&" + filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: paymentmethods, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: paymentmethods, query: queryParams, headers: headers, context: context)
     }
     
     public func attach(paymentMethod: String, customer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePaymentMethod> {
@@ -347,7 +350,7 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)/attach", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)/attach", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func detach(paymentMethod: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePaymentMethod> {
@@ -357,6 +360,6 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)/detach", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(paymentmethods)/\(paymentMethod)/detach", body: .string(body.queryParameters), headers: headers, context: context)
     }
 }

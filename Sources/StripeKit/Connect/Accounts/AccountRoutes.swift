@@ -157,11 +157,12 @@ extension AccountRoutes {
                       metadata: metadata,
                       capabilities: capabilities,
                       settings: settings,
-                      tosAcceptance: tosAcceptance)
+                      tosAcceptance: tosAcceptance,
+                      context: context)
     }
     
     public func retrieve(account: String, context: LoggingContext) -> EventLoopFuture<StripeConnectAccount> {
-        return retrieve(account: account)
+        return retrieve(account: account, context: context)
     }
     
     public func update(account: String,
@@ -192,23 +193,24 @@ extension AccountRoutes {
                       metadata: metadata,
                       capabilities: capabilities,
                       settings: settings,
-                      tosAcceptance: tosAcceptance)
+                      tosAcceptance: tosAcceptance,
+                      context: context)
     }
     
     public func delete(account: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(account: account)
+        return delete(account: account, context: context)
     }
     
     public func reject(account: String, reason: StripeConnectAccountRejectReason, context: LoggingContext) -> EventLoopFuture<StripeConnectAccount> {
-        return reject(account: account, reason: reason)
+        return reject(account: account, reason: reason, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeConnectAccountList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
     
     public func createLoginLink(account: String, redirectUrl: String?, context: LoggingContext) -> EventLoopFuture<StripeConnectAccountLoginLink> {
-        return createLoginLink(account: account, redirectUrl: redirectUrl)
+        return createLoginLink(account: account, redirectUrl: redirectUrl, context: context)
     }
 }
 
@@ -296,11 +298,11 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
             tos.forEach { body["tos_acceptance[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: accounts, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: accounts, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(account: String, context: LoggingContext) -> EventLoopFuture<StripeConnectAccount> {
-        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)", headers: headers, context: context)
     }
     
     public func update(account: String,
@@ -374,16 +376,16 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
             tos.forEach { body["tos_acceptance[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(account: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)", headers: headers, context: context)
     }
     
     public func reject(account: String, reason: StripeConnectAccountRejectReason, context: LoggingContext) -> EventLoopFuture<StripeConnectAccount> {
         let body = ["reason": reason.rawValue]
-        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/reject", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/reject", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeConnectAccountList> {
@@ -391,7 +393,7 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: accounts, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: accounts, query: queryParams, headers: headers, context: context)
     }
     
     public func createLoginLink(account: String, redirectUrl: String?, context: LoggingContext) -> EventLoopFuture<StripeConnectAccountLoginLink> {
@@ -401,6 +403,6 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
             body["redirect_url"] = redirectUrl
         }
         
-        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/login_links")
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/login_links", context: context)
     }
 }

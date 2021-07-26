@@ -19,11 +19,11 @@ public protocol EphemeralKeyRoutes {
 
 extension EphemeralKeyRoutes {
     public func create(customer: String, issuingCard: String? = nil, context: LoggingContext) -> EventLoopFuture<StripeEphemeralKey> {
-        return create(customer: customer, issuingCard: issuingCard)
+        return create(customer: customer, issuingCard: issuingCard, context: context)
     }
     
     public func delete(ephemeralKey: String, context: LoggingContext) -> EventLoopFuture<StripeEphemeralKey> {
-        return delete(ephemeralKey: ephemeralKey)
+        return delete(ephemeralKey: ephemeralKey, context: context)
     }
 }
 
@@ -44,10 +44,10 @@ public struct StripeEphemeralKeyRoutes: EphemeralKeyRoutes {
             body["issuing_card"] = issuingCard
         }
         
-        return apiHandler.send(method: .POST, path: ephemeralkeys, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: ephemeralkeys, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(ephemeralKey: String, context: LoggingContext) -> EventLoopFuture<StripeEphemeralKey> {
-        return apiHandler.send(method: .DELETE, path: "\(ephemeralkeys)/\(ephemeralKey)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(ephemeralkeys)/\(ephemeralKey)", headers: headers, context: context)
     }
 }

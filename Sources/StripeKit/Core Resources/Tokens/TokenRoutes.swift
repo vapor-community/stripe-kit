@@ -55,27 +55,27 @@ public protocol TokenRoutes {
 
 extension TokenRoutes {
     public func create(card: Any? = nil, customer: String? = nil, context: LoggingContext) -> EventLoopFuture<StripeToken> {
-        return create(card: card, customer: customer)
+        return create(card: card, customer: customer, context: context)
     }
     
     public func create(bankAcocunt: [String: Any]? = nil, customer: String? = nil, context: LoggingContext) -> EventLoopFuture<StripeToken> {
-        return create(bankAcocunt: bankAcocunt, customer: customer)
+        return create(bankAcocunt: bankAcocunt, customer: customer, context: context)
     }
     
     public func create(pii: String, context: LoggingContext) -> EventLoopFuture<StripeToken> {
-        return create(pii: pii)
+        return create(pii: pii, context: context)
     }
     
     public func create(account: [String: Any], context: LoggingContext) -> EventLoopFuture<StripeToken> {
-        return create(account: account)
+        return create(account: account, context: context)
     }
     
     public func create(person: [String: Any], context: LoggingContext) -> EventLoopFuture<StripePerson> {
-        return create(person: person)
+        return create(person: person, context: context)
     }
     
     public func retrieve(token: String, context: LoggingContext) -> EventLoopFuture<StripeToken> {
-        return retrieve(token: token)
+        return retrieve(token: token, context: context)
     }
 }
 
@@ -104,7 +104,7 @@ public struct StripeTokenRoutes: TokenRoutes {
             body["customer"] = customer
         }
         
-        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func create(bankAcocunt: [String: Any]?, customer: String?, context: LoggingContext) -> EventLoopFuture<StripeToken> {
@@ -118,13 +118,13 @@ public struct StripeTokenRoutes: TokenRoutes {
             body["customer"] = customer
         }
         
-        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func create(pii: String, context: LoggingContext) -> EventLoopFuture<StripeToken> {
         let body: [String: Any] = ["personal_id_number": pii]
         
-        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func create(account: [String: Any], context: LoggingContext) -> EventLoopFuture<StripeToken> {
@@ -132,7 +132,7 @@ public struct StripeTokenRoutes: TokenRoutes {
         
         account.forEach { body["account[\($0)]"] = $1 }
         
-        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func create(person: [String : Any], context: LoggingContext) -> EventLoopFuture<StripePerson> {
@@ -140,10 +140,10 @@ public struct StripeTokenRoutes: TokenRoutes {
         
         person.forEach { body["person[\($0)]"] = $1 }
         
-        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(token: String, context: LoggingContext) -> EventLoopFuture<StripeToken> {
-        return apiHandler.send(method: .GET, path: "\(tokens)/\(token)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(tokens)/\(token)", headers: headers, context: context)
     }
 }

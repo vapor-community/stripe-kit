@@ -59,13 +59,14 @@ extension ValueListRoutes {
                 metadata: [String: String]? = nil,
                 context: LoggingContext) -> EventLoopFuture<StripeValueList> {
         return create(alias: alias,
-                          name: name,
-                          itemType: itemType,
-                          metadata: metadata)
+                      name: name,
+                      itemType: itemType,
+                      metadata: metadata,
+                      context: context)
     }
     
     func retrieve(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeValueList> {
-        return retrieve(valueList: valueList)
+        return retrieve(valueList: valueList, context: context)
     }
     
     func update(valueList: String,
@@ -74,17 +75,18 @@ extension ValueListRoutes {
                 name: String? = nil,
                 context: LoggingContext) -> EventLoopFuture<StripeValueList> {
         return update(valueList: valueList,
-                          alias: alias,
-                          metadata: metadata,
-                          name: name)
+                      alias: alias,
+                      metadata: metadata,
+                      name: name,
+                      context: context)
     }
     
     func delete(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(valueList: valueList)
+        return delete(valueList: valueList, context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeValueListList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -114,11 +116,11 @@ public struct StripeValueListRoutes: ValueListRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: valuelists, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: valuelists, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeValueList> {
-        return apiHandler.send(method: .GET, path: "\(valuelists)/\(valueList)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(valuelists)/\(valueList)", headers: headers, context: context)
     }
     
     public func update(valueList: String,
@@ -140,11 +142,11 @@ public struct StripeValueListRoutes: ValueListRoutes {
             body["name"] = name
         }
         
-        return apiHandler.send(method: .POST, path: "\(valuelists)/\(valueList)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(valuelists)/\(valueList)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(valueList: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(valuelists)/\(valueList)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(valuelists)/\(valueList)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeValueListList> {
@@ -152,6 +154,6 @@ public struct StripeValueListRoutes: ValueListRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: valuelists, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: valuelists, query: queryParams, headers: headers, context: context)
     }
 }

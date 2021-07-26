@@ -136,11 +136,11 @@ public protocol ExternalAccountsRoutes {
 
 extension ExternalAccountsRoutes {
     public func create(account: String, bankAccount: Any, defaultForCurrency: Bool? = nil, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeBankAccount> {
-        return create(account: account, bankAccount: bankAccount, defaultForCurrency: defaultForCurrency, metadata: metadata)
+        return create(account: account, bankAccount: bankAccount, defaultForCurrency: defaultForCurrency, metadata: metadata, context: context)
     }
     
     public func retrieve(account: String, id: String, context: LoggingContext) -> EventLoopFuture<StripeBankAccount> {
-        return retrieve(account: account, id: id)
+        return retrieve(account: account, id: id, context: context)
     }
     
     public func update(account: String,
@@ -151,27 +151,28 @@ extension ExternalAccountsRoutes {
                        metadata: [String: String]? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripeBankAccount> {
         return update(account: account,
-                          id: id,
-                          accountHolderName: accountHolderName,
-                          accountHolderType: accountHolderType,
-                          defaultForCurrency: defaultForCurrency,
-                          metadata: metadata)
+                      id: id,
+                      accountHolderName: accountHolderName,
+                      accountHolderType: accountHolderType,
+                      defaultForCurrency: defaultForCurrency,
+                      metadata: metadata,
+                      context: context)
     }
     
     public func deleteBankAccount(account: String, id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return deleteBankAccount(account: account, id: id)
+        return deleteBankAccount(account: account, id: id, context: context)
     }
     
     public func listAll(account: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeBankAccountList> {
-        return listAll(account: account, filter: filter)
+        return listAll(account: account, filter: filter, context: context)
     }
     
     public func create(account: String, card: Any, defaultForCurrency: Bool? = nil, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCard> {
-        return create(account: account, card: card, defaultForCurrency: defaultForCurrency, metadata: metadata)
+        return create(account: account, card: card, defaultForCurrency: defaultForCurrency, metadata: metadata, context: context)
     }
     
     public func retrieve(account: String, id: String, context: LoggingContext) -> EventLoopFuture<StripeCard> {
-        return retrieve(account: account, id: id)
+        return retrieve(account: account, id: id, context: context)
     }
     
     public func update(account: String,
@@ -189,26 +190,27 @@ extension ExternalAccountsRoutes {
                        name: String?,
                        context: LoggingContext) -> EventLoopFuture<StripeCard> {
         return update(account: account,
-                          id: id,
-                          addressCity: addressCity,
-                          addressCountry: addressCountry,
-                          addressLine1: addressLine1,
-                          addressLine2: addressLine2,
-                          addressState: addressState,
-                          addressZip: addressZip,
-                          defaultForCurrency: defaultForCurrency,
-                          expMonth: expMonth,
-                          expYear: expYear,
-                          metadata: metadata,
-                          name: name)
+                      id: id,
+                      addressCity: addressCity,
+                      addressCountry: addressCountry,
+                      addressLine1: addressLine1,
+                      addressLine2: addressLine2,
+                      addressState: addressState,
+                      addressZip: addressZip,
+                      defaultForCurrency: defaultForCurrency,
+                      expMonth: expMonth,
+                      expYear: expYear,
+                      metadata: metadata,
+                      name: name,
+                      context: context)
     }
     
     public func deleteCard(account: String, id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return deleteCard(account: account, id: id)
+        return deleteCard(account: account, id: id, context: context)
     }
     
     public func listAll(account: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCardList> {
-        return listAll(account: account, filter: filter)
+        return listAll(account: account, filter: filter, context: context)
     }
 }
 
@@ -239,11 +241,11 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(account: String, id: String, context: LoggingContext) -> EventLoopFuture<StripeBankAccount> {
-        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers, context: context)
     }
     
     public func update(account: String,
@@ -271,11 +273,11 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts/\(id)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts/\(id)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func deleteBankAccount(account: String, id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers, context: context)
     }
     
     public func listAll(account: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeBankAccountList> {
@@ -283,7 +285,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts", query: queryParams, headers: headers, context: context)
     }
     
     public func create(account: String, card: Any, defaultForCurrency: Bool?, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeCard> {
@@ -303,11 +305,11 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(account: String, id: String, context: LoggingContext) -> EventLoopFuture<StripeCard> {
-        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers, context: context)
     }
     
     public func update(account: String,
@@ -370,11 +372,11 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
             body["name"] = name
         }
         
-        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts/\(id)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts/\(id)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func deleteCard(account: String, id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers, context: context)
     }
     
     public func listAll(account: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCardList> {
@@ -382,6 +384,6 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts", query: queryParams, headers: headers, context: context)
     }
 }

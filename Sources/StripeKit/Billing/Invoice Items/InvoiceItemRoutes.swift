@@ -138,11 +138,12 @@ extension InvoiceItemRoutes {
                           taxRates: taxRates,
                           unitAmount: unitAmount,
                           unitAmountDecimal: unitAmountDecimal,
-                          expand: expand)
+                          expand: expand,
+                      context: context)
     }
     
     public func retrieve(invoiceItem: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoiceItem> {
-        return retrieve(invoiceItem: invoiceItem, expand: expand)
+        return retrieve(invoiceItem: invoiceItem, expand: expand, context: context)
     }
     
     public func update(invoiceItem: String,
@@ -171,15 +172,16 @@ extension InvoiceItemRoutes {
                           taxRates: taxRates,
                           unitAmount: unitAmount,
                           unitAmountDecimal: unitAmountDecimal,
-                          expand: expand)
+                          expand: expand,
+                      context: context)
     }
     
     public func delete(invoiceItem: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(invoiceItem: invoiceItem)
+        return delete(invoiceItem: invoiceItem, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoiceItemList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -269,7 +271,7 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: invoiceitems, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: invoiceitems, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(invoiceItem: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceItem> {
@@ -278,7 +280,7 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(invoiceitems)/\(invoiceItem)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(invoiceitems)/\(invoiceItem)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(invoiceItem: String,
@@ -345,11 +347,11 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(invoiceitems)/\(invoiceItem)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoiceitems)/\(invoiceItem)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(invoiceItem: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(invoiceitems)/\(invoiceItem)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(invoiceitems)/\(invoiceItem)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceItemList> {
@@ -358,6 +360,6 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: invoiceitems, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: invoiceitems, query: queryParams, headers: headers, context: context)
     }
 }

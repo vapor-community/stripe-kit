@@ -191,11 +191,12 @@ extension PersonRoutes {
                       politicalExposure: politicalExposure,
                       relationship: relationship,
                       ssnLast4: ssnLast4,
-                      verification: verification)
+                      verification: verification,
+                      context: context)
     }
     
     public func retrieve(account: String, person: String, context: LoggingContext) -> EventLoopFuture<StripePerson> {
-        return retrieve(account: account, person: person)
+        return retrieve(account: account, person: person, context: context)
     }
     
     public func update(account: String,
@@ -246,15 +247,16 @@ extension PersonRoutes {
                       politicalExposure: politicalExposure,
                       relationship: relationship,
                       ssnLast4: ssnLast4,
-                      verification: verification)
+                      verification: verification,
+                      context: context)
     }
     
     public func delete(account: String, person: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(account: account, person: person)
+        return delete(account: account, person: person, context: context)
     }
     
     public func listAll(account: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePersonsList> {
-        return listAll(account: account, filter: filter)
+        return listAll(account: account, filter: filter, context: context)
     }
 }
 
@@ -383,11 +385,11 @@ public struct StripePersonRoutes: PersonRoutes {
             verification.forEach { body["verification[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(persons)/\(account)/persons", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(persons)/\(account)/persons", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(account: String, person: String, context: LoggingContext) -> EventLoopFuture<StripePerson> {
-        return apiHandler.send(method: .GET, path: "\(persons)/\(account)/persons/\(person)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(persons)/\(account)/persons/\(person)", headers: headers, context: context)
     }
     
     public func update(account: String,
@@ -505,11 +507,11 @@ public struct StripePersonRoutes: PersonRoutes {
             verification.forEach { body["verification[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(persons)/\(account)/persons/\(person)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(persons)/\(account)/persons/\(person)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(account: String, person: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(persons)/\(account)/persons/\(person)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(persons)/\(account)/persons/\(person)", headers: headers, context: context)
     }
     
     public func listAll(account: String, filter: [String : Any]?, context: LoggingContext) -> EventLoopFuture<StripePersonsList> {
@@ -517,6 +519,6 @@ public struct StripePersonRoutes: PersonRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(persons)/\(account)/persons", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(persons)/\(account)/persons", query: queryParams, headers: headers, context: context)
     }
 }

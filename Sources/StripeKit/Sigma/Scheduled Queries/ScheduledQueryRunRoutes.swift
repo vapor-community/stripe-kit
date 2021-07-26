@@ -28,11 +28,11 @@ public protocol ScheduledQueryRunRoutes {
 
 extension ScheduledQueryRunRoutes {
     func retrieve(scheduledQueryRun: String, context: LoggingContext) -> EventLoopFuture<StripeScheduledQueryRun> {
-        return retrieve(scheduledQueryRun: scheduledQueryRun)
+        return retrieve(scheduledQueryRun: scheduledQueryRun, context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeScheduledQueryRunList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -47,7 +47,7 @@ public struct StripeScheduledQueryRunRoutes: ScheduledQueryRunRoutes {
     }
     
     public func retrieve(scheduledQueryRun: String, context: LoggingContext) -> EventLoopFuture<StripeScheduledQueryRun> {
-        return apiHandler.send(method: .GET, path: "\(scheduledqueryruns)/\(scheduledQueryRun)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(scheduledqueryruns)/\(scheduledQueryRun)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeScheduledQueryRunList> {
@@ -56,6 +56,6 @@ public struct StripeScheduledQueryRunRoutes: ScheduledQueryRunRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: scheduledqueryruns, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: scheduledqueryruns, query: queryParams, headers: headers, context: context)
     }
 }

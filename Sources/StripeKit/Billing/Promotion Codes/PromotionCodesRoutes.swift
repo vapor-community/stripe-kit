@@ -71,22 +71,23 @@ extension PromotionCodesRoutes {
                customer: customer,
                expiresAt: expiresAt,
                maxRedemptions: maxRedemptions,
-               restrictions: restrictions)
+               restrictions: restrictions,
+               context: context)
     }
     
     public func update(promotionCode: String,
                        metadata: [String: String]? = nil,
                        active: Bool? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripePromotionCode> {
-        update(promotionCode: promotionCode, metadata: metadata, active: active)
+        update(promotionCode: promotionCode, metadata: metadata, active: active, context: context)
     }
     
     public func retrieve(promotionCode: String, context: LoggingContext) -> EventLoopFuture<StripePromotionCode> {
-        retrieve(promotionCode: promotionCode)
+        retrieve(promotionCode: promotionCode, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePromotionCodeList> {
-        listAll(filter: filter)
+        listAll(filter: filter, context: context)
     }
 }
 
@@ -139,7 +140,7 @@ public struct StripePromotionCodesRoutes: PromotionCodesRoutes {
             restrictions.forEach { body["restrictions[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: promotionCodes, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: promotionCodes, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func update(promotionCode: String,
@@ -156,11 +157,11 @@ public struct StripePromotionCodesRoutes: PromotionCodesRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(promotionCodes)/\(promotionCode)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(promotionCodes)/\(promotionCode)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(promotionCode: String, context: LoggingContext) -> EventLoopFuture<StripePromotionCode> {
-        apiHandler.send(method: .GET, path: "\(promotionCodes)/\(promotionCode)", headers: headers)
+        apiHandler.send(method: .GET, path: "\(promotionCodes)/\(promotionCode)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePlanList> {
@@ -169,6 +170,6 @@ public struct StripePromotionCodesRoutes: PromotionCodesRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: promotionCodes, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: promotionCodes, query: queryParams, headers: headers, context: context)
     }
 }

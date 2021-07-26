@@ -55,7 +55,8 @@ extension PortalConfigurationRoutes {
                        context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration> {
         create(businessProfile: businessProfile,
                features: features,
-               defaultReturnUrl: defaultReturnUrl)
+               defaultReturnUrl: defaultReturnUrl,
+               context: context)
     }
     
     public func update(configuration: String,
@@ -68,15 +69,16 @@ extension PortalConfigurationRoutes {
                active: active,
                businessProfile: businessProfile,
                defaultReturnUrl: defaultReturnUrl,
-               features: features)
+               features: features,
+               context: context)
     }
     
     public func retrieve(configuration: String, context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration> {
-        retrieve(configuration: configuration)
+        retrieve(configuration: configuration, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePortalConfigurationList> {
-        listAll(filter: filter)
+        listAll(filter: filter, context: context)
     }
 }
 
@@ -104,7 +106,7 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
             body["default_return_url"] = defaultReturnUrl
         }
         
-        return apiHandler.send(method: .POST, path: portalconfiguration, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: portalconfiguration, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func update(configuration: String,
@@ -131,11 +133,11 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
             body["default_return_url"] = defaultReturnUrl
         }
         
-        return apiHandler.send(method: .POST, path: "\(portalconfiguration)/\(configuration)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(portalconfiguration)/\(configuration)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(configuration: String, context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration> {
-        return apiHandler.send(method: .GET, path: "\(portalconfiguration)/\(configuration)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(portalconfiguration)/\(configuration)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePortalConfigurationList> {
@@ -144,6 +146,6 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: portalconfiguration, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: portalconfiguration, query: queryParams, headers: headers, context: context)
     }
 }

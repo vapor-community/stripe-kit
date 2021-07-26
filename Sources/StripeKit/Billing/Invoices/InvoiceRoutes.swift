@@ -239,11 +239,12 @@ extension InvoiceRoutes {
                       statementDescriptor: statementDescriptor,
                       subscription: subscription,
                       transferData: transferData,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(invoice: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
-        return retrieve(invoice: invoice, expand: expand)
+        return retrieve(invoice: invoice, expand: expand, context: context)
     }
     
     public func update(invoice: String,
@@ -284,15 +285,16 @@ extension InvoiceRoutes {
                       paymentSettings: paymentSettings,
                       statementDescriptor: statementDescriptor,
                       transferData: transferData,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func delete(invoice: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(invoice: invoice)
+        return delete(invoice: invoice, context: context)
     }
     
     public func finalize(invoice: String, autoAdvance: Bool? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
-        return finalize(invoice: invoice, autoAdvance: autoAdvance, expand: expand)
+        return finalize(invoice: invoice, autoAdvance: autoAdvance, expand: expand, context: context)
     }
     
     public func pay(invoice: String,
@@ -309,35 +311,36 @@ extension InvoiceRoutes {
                    paidOutOfBand: paidOutOfBand,
                    paymentMethod: paymentMethod,
                    source: source,
-                   expand: expand)
+                   expand: expand,
+                   context: context)
     }
     
     public func send(invoice: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
-        return send(invoice: invoice, expand: expand)
+        return send(invoice: invoice, expand: expand, context: context)
     }
     
     public func void(invoice: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
-        return void(invoice: invoice, expand: expand)
+        return void(invoice: invoice, expand: expand, context: context)
     }
     
     public func markUncollectible(invoice: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
-        return markUncollectible(invoice: invoice, expand: expand)
+        return markUncollectible(invoice: invoice, expand: expand, context: context)
     }
     
     public func retrieveLineItems(invoice: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList> {
-        return retrieveLineItems(invoice: invoice, filter: filter)
+        return retrieveLineItems(invoice: invoice, filter: filter, context: context)
     }
     
     public func retrieveUpcomingInvoice(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
-        return retrieveUpcomingInvoice(filter: filter)
+        return retrieveUpcomingInvoice(filter: filter, context: context)
     }
     
     public func retrieveUpcomingLineItems(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList> {
-        return retrieveUpcomingLineItems(filter: filter)
+        return retrieveUpcomingLineItems(filter: filter, context: context)
     }
     
     public func listAll(filter: [String : Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoiceList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -451,7 +454,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: invoices, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: invoices, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
@@ -460,7 +463,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(invoices)/\(invoice)", query: queryParams)
+        return apiHandler.send(method: .GET, path: "\(invoices)/\(invoice)", query: queryParams, context: context)
     }
     
     public func update(invoice: String,
@@ -557,11 +560,11 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(invoice: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(invoices)/\(invoice)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(invoices)/\(invoice)", headers: headers, context: context)
     }
     
     public func finalize(invoice: String, autoAdvance: Bool?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
@@ -575,7 +578,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/finalize", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/finalize", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func pay(invoice: String,
@@ -612,7 +615,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/pay", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/pay", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func send(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
@@ -622,7 +625,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/send", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/send", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func void(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
@@ -632,7 +635,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/void", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/void", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func markUncollectible(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
@@ -642,7 +645,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/mark_uncollectible", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/mark_uncollectible", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieveLineItems(invoice: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList> {
@@ -651,7 +654,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(invoices)/\(invoice)/lines", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(invoices)/\(invoice)/lines", query: queryParams, headers: headers, context: context)
     }
     
     public func retrieveUpcomingInvoice(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
@@ -660,7 +663,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(invoices)/upcoming", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(invoices)/upcoming", query: queryParams, headers: headers, context: context)
     }
     
     public func retrieveUpcomingLineItems(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList> {
@@ -669,7 +672,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(invoices)/upcoming/lines", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(invoices)/upcoming/lines", query: queryParams, headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceList> {
@@ -678,6 +681,6 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: invoices, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: invoices, query: queryParams, headers: headers, context: context)
     }
 }

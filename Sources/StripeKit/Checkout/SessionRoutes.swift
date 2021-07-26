@@ -120,19 +120,20 @@ extension SessionRoutes {
                       shippingRates: shippingRates,
                       submitType: submitType,
                       subscriptionData: subscriptionData,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(id: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSession> {
-        return retrieve(id: id, expand: expand)
+        return retrieve(id: id, expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSessionList> {
-        listAll(filter: filter)
+        listAll(filter: filter, context: context)
     }
     
     public func retrieveLineItems(session: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSessionLineItemList> {
-        retrieveLineItems(session: session, filter: filter)
+        retrieveLineItems(session: session, filter: filter, context: context)
     }
 }
 
@@ -239,7 +240,7 @@ public struct StripeSessionRoutes: SessionRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: sessions, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: sessions, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSession> {
@@ -248,7 +249,7 @@ public struct StripeSessionRoutes: SessionRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(sessions)/\(id)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(sessions)/\(id)", query: queryParams, headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSessionList> {
@@ -257,7 +258,7 @@ public struct StripeSessionRoutes: SessionRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: sessions, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: sessions, query: queryParams, headers: headers, context: context)
     }
     
     public func retrieveLineItems(session: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSessionLineItemList> {
@@ -266,6 +267,6 @@ public struct StripeSessionRoutes: SessionRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(sessions)/\(session)/line_items", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(sessions)/\(session)/line_items", query: queryParams, headers: headers, context: context)
     }
 }

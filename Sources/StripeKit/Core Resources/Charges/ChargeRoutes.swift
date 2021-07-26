@@ -147,11 +147,12 @@ extension ChargeRoutes {
                       statementDescriptorSuffix: statementDescriptorSuffix,
                       transferData: transferData,
                       transferGroup: transferGroup,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(charge: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCharge> {
-        return retrieve(charge: charge, expand: expand)
+        return retrieve(charge: charge, expand: expand, context: context)
     }
     
     public func update(charge chargeId: String,
@@ -172,7 +173,8 @@ extension ChargeRoutes {
                       receiptEmail: receiptEmail,
                       shipping: shipping,
                       transferGroup: transferGroup,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func capture(charge: String,
@@ -193,11 +195,12 @@ extension ChargeRoutes {
                        statementDescriptorSuffix: statementDescriptorSuffix,
                        transferData: transferData,
                        transferGroup: transferGroup,
-                       expand: expand)
+                       expand: expand,
+                       context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeChargesList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -290,7 +293,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: charge, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: charge, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(charge: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCharge> {
@@ -298,7 +301,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
         }
-        return apiHandler.send(method: .GET, path: charges + charge, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: charges + charge, query: queryParams, headers: headers, context: context)
     }
     
     public func update(charge: String,
@@ -345,7 +348,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: charges + charge, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: charges + charge, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func capture(charge: String,
@@ -392,7 +395,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: charges + charge + "/capture", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: charges + charge + "/capture", body: .string(body.queryParameters), headers: headers, context: context)
     }
 
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeChargesList> {
@@ -401,6 +404,6 @@ public struct StripeChargeRoutes: ChargeRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: charge, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: charge, query: queryParams, headers: headers, context: context)
     }
 }

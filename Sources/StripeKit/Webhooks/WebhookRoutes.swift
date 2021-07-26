@@ -59,11 +59,11 @@ extension WebhookEndpointRoutes {
                 apiVersion: String? = nil,
                 connect: Bool? = nil,
                 context: LoggingContext) -> EventLoopFuture<StripeWebhook> {
-        return create(enabledEvents: enabledEvents, url: url, metadata: metadata, apiVersion: apiVersion, connect: connect)
+        return create(enabledEvents: enabledEvents, url: url, metadata: metadata, apiVersion: apiVersion, connect: connect, context: context)
     }
     
     func retrieve(webhookEndpoint: String, context: LoggingContext) -> EventLoopFuture<StripeWebhook> {
-        return retrieve(webhookEndpoint: webhookEndpoint)
+        return retrieve(webhookEndpoint: webhookEndpoint, context: context)
     }
     
     func update(webhookEndpoint: String,
@@ -72,15 +72,15 @@ extension WebhookEndpointRoutes {
                 url: String? = nil,
                 metadata: [String: String]? = nil,
                 context: LoggingContext) -> EventLoopFuture<StripeWebhook> {
-        return update(webhookEndpoint: webhookEndpoint, disabled: disabled, enabledEvents: enabledEvents, url: url, metadata: metadata)
+        return update(webhookEndpoint: webhookEndpoint, disabled: disabled, enabledEvents: enabledEvents, url: url, metadata: metadata, context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeWebhookList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
     
     func delete(webhookEndpoint: String, context: LoggingContext) -> EventLoopFuture<StripeWebhook> {
-        return delete(webhookEndpoint: webhookEndpoint)
+        return delete(webhookEndpoint: webhookEndpoint, context: context)
     }
 }
 
@@ -110,11 +110,11 @@ public struct StripeWebhookEndpointRoutes: WebhookEndpointRoutes {
             body["connect"] = connect
         }
         
-        return apiHandler.send(method: .POST, path: webhooks, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: webhooks, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(webhookEndpoint: String, context: LoggingContext) -> EventLoopFuture<StripeWebhook> {
-        return apiHandler.send(method: .GET, path: "\(webhooks)/\(webhookEndpoint)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(webhooks)/\(webhookEndpoint)", headers: headers, context: context)
     }
     
     public func update(webhookEndpoint: String,
@@ -141,7 +141,7 @@ public struct StripeWebhookEndpointRoutes: WebhookEndpointRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(webhooks)/\(webhookEndpoint)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(webhooks)/\(webhookEndpoint)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeWebhookList> {
@@ -149,11 +149,11 @@ public struct StripeWebhookEndpointRoutes: WebhookEndpointRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: webhooks, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: webhooks, query: queryParams, headers: headers, context: context)
     }
     
     public func delete(webhookEndpoint: String, context: LoggingContext) -> EventLoopFuture<StripeWebhook> {
-        return apiHandler.send(method: .DELETE, path: "\(webhooks)/\(webhookEndpoint)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(webhooks)/\(webhookEndpoint)", headers: headers, context: context)
     }
 }
 

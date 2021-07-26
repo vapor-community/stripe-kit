@@ -90,23 +90,24 @@ extension CouponRoutes {
                       metadata: metadata,
                       name: name,
                       percentOff: percentOff,
-                      redeemBy: redeemBy)
+                      redeemBy: redeemBy,
+                      context: context)
     }
     
     public func retrieve(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
-        return retrieve(coupon: coupon)
+        return retrieve(coupon: coupon, context: context)
     }
     
     public func update(coupon: String, metadata: [String: String]? = nil, name: String? = nil, context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
-        return update(coupon: coupon, metadata: metadata, name: name)
+        return update(coupon: coupon, metadata: metadata, name: name, context: context)
     }
     
     public func delete(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(coupon: coupon)
+        return delete(coupon: coupon, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCouponList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -169,11 +170,11 @@ public struct StripeCouponRoutes: CouponRoutes {
             body["redeem_by"] = Int(redeemBy.timeIntervalSince1970)
         }
 
-        return apiHandler.send(method: .POST, path: coupons, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: coupons, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
-        return apiHandler.send(method: .GET, path: "\(coupons)/\(coupon)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(coupons)/\(coupon)", headers: headers, context: context)
     }
     
     public func update(coupon: String, metadata: [String: String]?, name: String?, context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
@@ -187,11 +188,11 @@ public struct StripeCouponRoutes: CouponRoutes {
             body["name"] = name
         }
         
-        return apiHandler.send(method: .POST, path: "\(coupons)/\(coupon)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(coupons)/\(coupon)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(coupons)/\(coupon)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(coupons)/\(coupon)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCouponList> {
@@ -200,6 +201,6 @@ public struct StripeCouponRoutes: CouponRoutes {
             queryParams = filter.queryParameters
         }
 
-        return apiHandler.send(method: .GET, path: coupons, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: coupons, query: queryParams, headers: headers, context: context)
     }
 }

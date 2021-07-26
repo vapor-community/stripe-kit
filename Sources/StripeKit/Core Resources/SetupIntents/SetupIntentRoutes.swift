@@ -122,11 +122,12 @@ extension SetupIntentsRoutes {
                       returnUrl: returnUrl,
                       singleUse: singleUse,
                       usage: usage,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(intent: String, clientSecret: String? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
-        retrieve(intent: intent, clientSecret: clientSecret, expand: expand)
+        retrieve(intent: intent, clientSecret: clientSecret, expand: expand, context: context)
     }
     
     public func update(intent: String,
@@ -143,7 +144,8 @@ extension SetupIntentsRoutes {
                       metadata: metadata,
                       paymentMethod: paymentMethod,
                       paymentMethodTypes: paymentMethodTypes,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func confirm(intent: String,
@@ -158,18 +160,19 @@ extension SetupIntentsRoutes {
                        paymentMethod: paymentMethod,
                        paymentMethodOptions: paymentMethodOptions,
                        returnUrl: returnUrl,
-                       expand: expand)
+                       expand: expand,
+                       context: context)
     }
     
     public func cancel(intent: String,
                        cancellationReason: StripeSetupIntentCancellationReason? = nil,
                        expand: [String]? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
-        return cancel(intent: intent, cancellationReason: cancellationReason, expand: expand)
+        return cancel(intent: intent, cancellationReason: cancellationReason, expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSetupIntentsList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -251,7 +254,7 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: setupintents, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: setupintents, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(intent: String, clientSecret: String?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
@@ -260,7 +263,7 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(setupintents)/\(intent)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(setupintents)/\(intent)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(intent: String,
@@ -297,7 +300,7 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(setupintents)/\(intent)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(setupintents)/\(intent)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func confirm(intent: String,
@@ -329,7 +332,7 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(setupintents)/\(intent)/confirm", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(setupintents)/\(intent)/confirm", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func cancel(intent: String, cancellationReason: StripeSetupIntentCancellationReason?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
@@ -343,7 +346,7 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(setupintents)/\(intent)/cancel", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(setupintents)/\(intent)/cancel", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSetupIntentsList> {
@@ -352,7 +355,7 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: setupintents, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: setupintents, query: queryParams, headers: headers, context: context)
     }
 }
 

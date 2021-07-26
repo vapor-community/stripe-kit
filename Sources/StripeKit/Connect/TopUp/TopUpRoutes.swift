@@ -87,11 +87,12 @@ extension TopUpRoutes {
                       source: source,
                       statementDescriptor: statementDescriptor,
                       transferGroup: transferGroup,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(topup: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
-        return retrieve(topup: topup, expand: expand)
+        return retrieve(topup: topup, expand: expand, context: context)
     }
     
     public func update(topup: String,
@@ -102,15 +103,16 @@ extension TopUpRoutes {
         return update(topup: topup,
                       description: description,
                       metadata: metadata,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTopUpList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
     
     public func cancel(topup: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
-        return cancel(topup: topup, expand: expand)
+        return cancel(topup: topup, expand: expand, context: context)
     }
 }
 
@@ -160,7 +162,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: topups, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: topups, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(topup: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
@@ -169,7 +171,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(topups)/\(topup)", query: queryParams)
+        return apiHandler.send(method: .GET, path: "\(topups)/\(topup)", query: queryParams, context: context)
     }
     
     public func update(topup: String,
@@ -191,7 +193,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(topups)/\(topup)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(topups)/\(topup)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeTopUpList> {
@@ -199,7 +201,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: topups, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: topups, query: queryParams, headers: headers, context: context)
     }
     
     public func cancel(topup: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
@@ -209,6 +211,6 @@ public struct StripeTopUpRoutes: TopUpRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(topups)/\(topup)/cancel", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(topups)/\(topup)/cancel", body: .string(body.queryParameters), headers: headers, context: context)
     }
 }

@@ -55,6 +55,6 @@ public struct StripeAccountLinkRoutes: AccountLinkRoutes {
             body["collect"] = collect.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: accountlinks, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: accountlinks, body: .string(body.queryParameters), headers: headers, context: context)
     }
 }

@@ -24,11 +24,11 @@ public protocol EventRoutes {
 
 extension EventRoutes {
     func retrieve(id: String, context: LoggingContext) -> EventLoopFuture<StripeEvent> {
-        return retrieve(id: id)
+        return retrieve(id: id, context: context)
     }
     
     func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeEventList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -43,7 +43,7 @@ public struct StripeEventRoutes: EventRoutes {
     }
     
     public func retrieve(id: String, context: LoggingContext) -> EventLoopFuture<StripeEvent> {
-        return apiHandler.send(method: .GET, path: "\(events)/\(id)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(events)/\(id)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String : Any]?, context: LoggingContext) -> EventLoopFuture<StripeEventList> {
@@ -52,6 +52,6 @@ public struct StripeEventRoutes: EventRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: events, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: events, query: queryParams, headers: headers, context: context)
     }
 }

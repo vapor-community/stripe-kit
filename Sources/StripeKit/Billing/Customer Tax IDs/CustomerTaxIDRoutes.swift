@@ -71,7 +71,7 @@ public struct StripeCustomerTaxIDRoutes: CustomerTaxIDRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(taxids)/\(customer)/tax_ids", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(taxids)/\(customer)/tax_ids", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(id: String, customer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTaxID> {
@@ -79,11 +79,11 @@ public struct StripeCustomerTaxIDRoutes: CustomerTaxIDRoutes {
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(taxids)/\(customer)/tax_ids/\(id)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(taxids)/\(customer)/tax_ids/\(id)", query: queryParams, headers: headers, context: context)
     }
     
     public func delete(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(taxids)/\(customer)/tax_ids/\(id)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(taxids)/\(customer)/tax_ids/\(id)", headers: headers, context: context)
     }
     
     public func listAll(customer: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTaxIDList> {
@@ -92,6 +92,6 @@ public struct StripeCustomerTaxIDRoutes: CustomerTaxIDRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(taxids)/\(customer)/tax_ids", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(taxids)/\(customer)/tax_ids", query: queryParams, headers: headers, context: context)
     }
 }

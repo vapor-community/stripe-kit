@@ -134,7 +134,8 @@ extension CreditNoteRoutes {
                       reason: reason,
                       refund: refund,
                       refundAmount: refundAmount,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func preview(invoice: String,
@@ -159,11 +160,12 @@ extension CreditNoteRoutes {
                        reason: reason,
                        refund: refund,
                        refundAmount: refundAmount,
-                       expand: expand)
+                       expand: expand,
+                       context: context)
     }
     
     public func retrieve(id: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCreditNote> {
-        return retrieve(id: id, expand: expand)
+        return retrieve(id: id, expand: expand, context: context)
     }
     
     public func update(id: String,
@@ -171,23 +173,23 @@ extension CreditNoteRoutes {
                        metadata: [String: String]? = nil,
                        expand: [String]? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripeCreditNote> {
-        return update(id: id, memo: memo, metadata: metadata, expand: expand)
+        return update(id: id, memo: memo, metadata: metadata, expand: expand, context: context)
     }
     
     public func retrieveLineItems(id: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCreditNoteLineItemList> {
-        retrieveLineItems(id: id, filter: filter)
+        retrieveLineItems(id: id, filter: filter, context: context)
     }
     
     public func retrievePreviewLineItems(invoice: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCreditNoteLineItemList> {
-        retrievePreviewLineItems(invoice: invoice, filter: filter)
+        retrievePreviewLineItems(invoice: invoice, filter: filter, context: context)
     }
     
     public func void(id: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCreditNote> {
-        return void(id: id, expand: expand)
+        return void(id: id, expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCreditNoteList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -252,7 +254,7 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: creditnotes, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: creditnotes, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func preview(invoice: String,
@@ -309,7 +311,7 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(creditnotes)/preview", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(creditnotes)/preview", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCreditNote> {
@@ -317,7 +319,7 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
         if let expand = expand {
             queryParams += ["expand": expand].queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(creditnotes)/\(id)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(creditnotes)/\(id)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(id: String,
@@ -339,7 +341,7 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(creditnotes)/\(id)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(creditnotes)/\(id)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieveLineItems(id: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCreditNoteLineItemList> {
@@ -348,7 +350,7 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             queryParams += filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(creditnotes)/\(id)/lines", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(creditnotes)/\(id)/lines", query: queryParams, headers: headers, context: context)
     }
     
     public func retrievePreviewLineItems(invoice: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCreditNoteLineItemList> {
@@ -357,7 +359,7 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             queryParams += "&" + filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(creditnotes)/preview/lines", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(creditnotes)/preview/lines", query: queryParams, headers: headers, context: context)
     }
     
     public func void(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCreditNote> {
@@ -367,7 +369,7 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(creditnotes)/\(id)/void", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(creditnotes)/\(id)/void", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCreditNoteList> {
@@ -376,7 +378,7 @@ public struct StripeCreditNoteRoutes: CreditNoteRoutes {
             queryParams += filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: creditnotes, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: creditnotes, query: queryParams, headers: headers, context: context)
     }
 }
 

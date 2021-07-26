@@ -115,11 +115,12 @@ extension SKURoutes {
                       image: image,
                       metadata: metadata,
                       packageDimensions: packageDimensions,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(id: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSKU> {
-        return retrieve(id: id, expand: expand)
+        return retrieve(id: id, expand: expand, context: context)
     }
     
     public func update(id: String,
@@ -144,15 +145,16 @@ extension SKURoutes {
                       packageDimensions: packageDimensions,
                       price: price,
                       product: product,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSKUList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
     
     public func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(id: id)
+        return delete(id: id, context: context)
     }
 }
 
@@ -208,7 +210,7 @@ public struct StripeSKURoutes: SKURoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: skus, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: skus, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSKU> {
@@ -217,7 +219,7 @@ public struct StripeSKURoutes: SKURoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(skus)/\(id)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(skus)/\(id)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(id: String,
@@ -270,7 +272,7 @@ public struct StripeSKURoutes: SKURoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(skus)/\(id)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(skus)/\(id)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSKUList> {
@@ -279,10 +281,10 @@ public struct StripeSKURoutes: SKURoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: skus, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: skus, query: queryParams, headers: headers, context: context)
     }
     
     public func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(skus)/\(id)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(skus)/\(id)", headers: headers, context: context)
     }
 }

@@ -38,10 +38,10 @@ public struct StripeDiscountRoutes: DiscountRoutes {
     }
     
     public func delete(customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(customers)/\(customer)/discount", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(customers)/\(customer)/discount", headers: headers, context: context)
     }
     
     public func delete(subscription: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(subscriptions)/\(subscription)/discount", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(subscriptions)/\(subscription)/discount", headers: headers, context: context)
     }
 }

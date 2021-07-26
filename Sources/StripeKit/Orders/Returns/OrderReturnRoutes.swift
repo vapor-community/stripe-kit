@@ -30,11 +30,11 @@ public protocol OrderReturnRoutes {
 
 extension OrderReturnRoutes {
     public func retrieve(id: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeOrderReturn> {
-        return retrieve(id: id, expand: expand)
+        return retrieve(id: id, expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeOrderReturnList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -53,7 +53,7 @@ public struct StripeOrderReturnRoutes: OrderReturnRoutes {
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(orderreturns)/\(id)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(orderreturns)/\(id)", query: queryParams, headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeOrderReturnList> {
@@ -62,6 +62,6 @@ public struct StripeOrderReturnRoutes: OrderReturnRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: orderreturns, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: orderreturns, query: queryParams, headers: headers, context: context)
     }
 }

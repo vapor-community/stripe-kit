@@ -103,11 +103,12 @@ extension CardholderRoutes {
                       isDefault: isDefault,
                       metadata: metadata,
                       phoneNumber: phoneNumber,
-                      status: status)
+                      status: status,
+                      context: context)
     }
     
     func retrieve(cardholder: String, context: LoggingContext) -> EventLoopFuture<StripeCardholder> {
-        return retrieve(cardholder: cardholder)
+        return retrieve(cardholder: cardholder, context: context)
     }
     
     func update(cardholder: String,
@@ -130,11 +131,12 @@ extension CardholderRoutes {
                       isDefault: isDefault,
                       metadata: metadata,
                       phoneNumber: phoneNumber,
-                      status: status)
+                      status: status,
+                      context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeAuthorizationList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -196,11 +198,11 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             body["status"] = status.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: cardholders, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: cardholders, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(cardholder: String, context: LoggingContext) -> EventLoopFuture<StripeCardholder> {
-        return apiHandler.send(method: .GET, path: "\(cardholders)/\(cardholder)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(cardholders)/\(cardholder)", headers: headers, context: context)
     }
     
     public func update(cardholder: String,
@@ -252,7 +254,7 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             body["status"] = status.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: "\(cardholders)/\(cardholder)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(cardholders)/\(cardholder)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String : Any]?, context: LoggingContext) -> EventLoopFuture<StripeAuthorizationList> {
@@ -261,6 +263,6 @@ public struct StripeCardholderRoutes: CardholderRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: cardholders, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: cardholders, query: queryParams, headers: headers, context: context)
     }
 }

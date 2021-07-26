@@ -30,15 +30,15 @@ public protocol ReportRunRoutes {
 
 extension ReportRunRoutes {
     public func create(reportType: String, parameters: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReportRun> {
-        return create(reportType: reportType, parameters: parameters)
+        return create(reportType: reportType, parameters: parameters, context: context)
     }
     
     public func retrieve(reportRun: String, context: LoggingContext) -> EventLoopFuture<StripeReportRun> {
-        return retrieve(reportRun: reportRun)
+        return retrieve(reportRun: reportRun, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReportRunList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -59,11 +59,11 @@ public struct StripeReportRunRoutes: ReportRunRoutes {
             parameters.forEach { body["parameters[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: reportruns, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: reportruns, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(reportRun: String, context: LoggingContext) -> EventLoopFuture<StripeReportRun> {
-        return apiHandler.send(method: .GET, path: "\(reportruns)/\(reportRun)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(reportruns)/\(reportRun)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReportRunList> {
@@ -71,6 +71,6 @@ public struct StripeReportRunRoutes: ReportRunRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: reportruns, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: reportruns, query: queryParams, headers: headers, context: context)
     }
 }

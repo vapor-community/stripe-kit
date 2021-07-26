@@ -134,11 +134,12 @@ extension PlanRoutes {
                       transformUsage: transformUsage,
                       trialPeriodDays: trialPeriodDays,
                       usageType: usageType,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(plan: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePlan> {
-        return retrieve(plan: plan, expand: expand)
+        return retrieve(plan: plan, expand: expand, context: context)
     }
     
     public func update(plan: String,
@@ -155,15 +156,16 @@ extension PlanRoutes {
                       nickname: nickname,
                       product: product,
                       trialPeriodDays: trialPeriodDays,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func delete(plan: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(plan: plan)
+        return delete(plan: plan, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePlanList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -262,7 +264,7 @@ public struct StripePlanRoutes: PlanRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: plans, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: plans, body: .string(body.queryParameters), headers: headers, context: context)
     }
 
     public func retrieve(plan: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePlan> {
@@ -271,7 +273,7 @@ public struct StripePlanRoutes: PlanRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(plans)/\(plan)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(plans)/\(plan)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(plan: String,
@@ -310,11 +312,11 @@ public struct StripePlanRoutes: PlanRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(plans)/\(plan)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(plans)/\(plan)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(plan: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(plans)/\(plan)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(plans)/\(plan)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePlanList> {
@@ -323,6 +325,6 @@ public struct StripePlanRoutes: PlanRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: plans, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: plans, query: queryParams, headers: headers, context: context)
     }
 }

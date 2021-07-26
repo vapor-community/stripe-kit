@@ -39,7 +39,8 @@ extension PortalSessionRoutes {
                returnUrl: returnUrl,
                configuration: configuration,
                onBehalfOf: onBehalfOf,
-               expand: expand)
+               expand: expand,
+               context: context)
     }
 }
 
@@ -77,6 +78,6 @@ public struct StripePortalSessionRoutes: PortalSessionRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: sessions, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: sessions, body: .string(body.queryParameters), headers: headers, context: context)
     }
 }

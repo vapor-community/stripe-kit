@@ -71,11 +71,12 @@ extension ApplicationFeeRefundRoutes {
         return create(fee: fee,
                       amount: amount,
                       metadata: metadata,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(refund: String, fee: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeApplicationFeeRefund> {
-        return retrieve(refund: refund, fee: fee, expand: expand)
+        return retrieve(refund: refund, fee: fee, expand: expand, context: context)
     }
     
     public func update(refund: String,
@@ -86,11 +87,12 @@ extension ApplicationFeeRefundRoutes {
         return update(refund: refund,
                       fee: fee,
                       metadata: metadata,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func listAll(fee: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeApplicationFeeRefundList> {
-        return listAll(fee: fee, filter: filter)
+        return listAll(fee: fee, filter: filter, context: context)
     }
 }
 
@@ -123,7 +125,7 @@ public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(applicationfeesrefund)/\(fee)/refunds", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(applicationfeesrefund)/\(fee)/refunds", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(refund: String, fee: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeApplicationFeeRefund> {
@@ -131,7 +133,7 @@ public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(applicationfeesrefund)/\(fee)/refunds/\(refund)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(applicationfeesrefund)/\(fee)/refunds/\(refund)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(refund: String,
@@ -149,7 +151,7 @@ public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(applicationfeesrefund)/\(fee)/refunds/\(refund)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(applicationfeesrefund)/\(fee)/refunds/\(refund)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(fee: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeApplicationFeeList> {
@@ -157,6 +159,6 @@ public struct StripeApplicationFeeRefundRoutes: ApplicationFeeRefundRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(applicationfeesrefund)/\(fee)/refunds", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(applicationfeesrefund)/\(fee)/refunds", query: queryParams, headers: headers, context: context)
     }
 }

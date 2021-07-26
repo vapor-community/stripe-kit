@@ -42,19 +42,19 @@ public protocol ValueListItemRoutes {
 
 extension ValueListItemRoutes {
     func create(value: String, valueList: String, context: LoggingContext) -> EventLoopFuture<StripeValueListItem> {
-        return create(value: value, valueList: valueList)
+        return create(value: value, valueList: valueList, context: context)
     }
     
     func retrieve(item: String, context: LoggingContext) -> EventLoopFuture<StripeValueListItem> {
-        return retrieve(item: item)
+        return retrieve(item: item, context: context)
     }
     
     func delete(item: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(item: item)
+        return delete(item: item, context: context)
     }
     
     func listAll(valueList: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeValueListItemList> {
-        return listAll(valueList: valueList, filter: filter)
+        return listAll(valueList: valueList, filter: filter, context: context)
     }
 }
 
@@ -70,15 +70,15 @@ public struct StripeValueListItemRoutes: ValueListItemRoutes {
     
     public func create(value: String, valueList: String, context: LoggingContext) -> EventLoopFuture<StripeValueListItem> {
         let body = ["value": value, "value_list": valueList]
-        return apiHandler.send(method: .POST, path: valuelistitems, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: valuelistitems, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(item: String, context: LoggingContext) -> EventLoopFuture<StripeValueListItem> {
-        return apiHandler.send(method: .GET, path: "\(valuelistitems)/\(item)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(valuelistitems)/\(item)", headers: headers, context: context)
     }
     
     public func delete(item: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(valuelistitems)/\(item)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(valuelistitems)/\(item)", headers: headers, context: context)
     }
     
     public func listAll(valueList: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeValueListItemList> {
@@ -86,6 +86,6 @@ public struct StripeValueListItemRoutes: ValueListItemRoutes {
         if let filter = filter {
             queryParams += "&" + filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: valuelistitems, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: valuelistitems, query: queryParams, headers: headers, context: context)
     }
 }

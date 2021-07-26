@@ -92,11 +92,12 @@ extension TaxRateRoutes {
                       description: description,
                       jurisdiction: jurisdiction,
                       metadata: metadata,
-                      state: state)
+                      state: state,
+                      context: context)
     }
     
     public func retrieve(taxRate: String, context: LoggingContext) -> EventLoopFuture<StripeTaxRate> {
-        return retrieve(taxRate: taxRate)
+        return retrieve(taxRate: taxRate, context: context)
     }
     
     public func update(taxRate: String,
@@ -115,11 +116,12 @@ extension TaxRateRoutes {
                       displayName: displayName,
                       jurisdiction: jurisdiction,
                       metadata: metadata,
-                      state: state)
+                      state: state,
+                      context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTaxRateList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -171,11 +173,11 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
             body["state"] = state
         }
         
-        return apiHandler.send(method: .POST, path: taxrates, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: taxrates, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(taxRate: String, context: LoggingContext) -> EventLoopFuture<StripeTaxRate> {
-        return apiHandler.send(method: .GET, path: "\(taxrates)/\(taxRate)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(taxrates)/\(taxRate)", headers: headers, context: context)
     }
     
     public func update(taxRate: String,
@@ -217,7 +219,7 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
             body["state"] = state
         }
         
-        return apiHandler.send(method: .POST, path: "\(taxrates)/\(taxRate)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(taxrates)/\(taxRate)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeTaxRateList> {
@@ -226,6 +228,6 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
             queryParams += filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: taxrates, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: taxrates, query: queryParams, headers: headers, context: context)
     }
 }

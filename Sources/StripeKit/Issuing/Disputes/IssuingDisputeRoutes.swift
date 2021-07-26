@@ -61,19 +61,20 @@ extension IssuingDisputeRoutes {
                           reason: reason,
                           amount: amount,
                           evidence: evidence,
-                          metadata: metadata)
+                          metadata: metadata,
+                      context: context)
     }
     
     func retrieve(dispute: String, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
-        return retrieve(dispute: dispute)
+        return retrieve(dispute: dispute, context: context)
     }
     
     func update(dispute: String, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
-        return update(dispute: dispute, metadata: metadata)
+        return update(dispute: dispute, metadata: metadata, context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingDisputeList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -108,11 +109,11 @@ public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: issuingdisputes, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: issuingdisputes, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(dispute: String, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
-        return apiHandler.send(method: .GET, path: "\(issuingdisputes)/\(dispute)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(issuingdisputes)/\(dispute)", headers: headers, context: context)
     }
     
     public func update(dispute: String, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingDispute> {
@@ -122,7 +123,7 @@ public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(issuingdisputes)/\(dispute)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(issuingdisputes)/\(dispute)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String : Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingDisputeList> {
@@ -131,6 +132,6 @@ public struct StripeIssuingDisputeRoutes: IssuingDisputeRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: issuingdisputes, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: issuingdisputes, query: queryParams, headers: headers, context: context)
     }
 }

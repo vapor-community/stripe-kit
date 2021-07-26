@@ -46,11 +46,12 @@ extension UsageRecordRoutes {
         return create(quantity: quantity,
                       subscriptionItem: subscriptionItem,
                       timestamp: timestamp,
-                      action: action)
+                      action: action,
+                      context: context)
     }
     
     public func listAll(subscriptionItem: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeUsageRecordList> {
-        return listAll(subscriptionItem: subscriptionItem, filter: filter)
+        return listAll(subscriptionItem: subscriptionItem, filter: filter, context: context)
     }
 }
 
@@ -76,7 +77,7 @@ public struct StripeUsageRecordRoutes: UsageRecordRoutes {
             body["action"] = action
         }
         
-        return apiHandler.send(method: .POST, path: "\(subscriptionitems)/\(subscriptionItem)/usage_records", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(subscriptionitems)/\(subscriptionItem)/usage_records", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(subscriptionItem: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeUsageRecordList> {
@@ -85,6 +86,6 @@ public struct StripeUsageRecordRoutes: UsageRecordRoutes {
             queryParams += filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(subscriptionitems)/\(subscriptionItem)/usage_record_summaries", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(subscriptionitems)/\(subscriptionItem)/usage_record_summaries", query: queryParams, headers: headers, context: context)
     }
 }

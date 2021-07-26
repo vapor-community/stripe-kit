@@ -125,11 +125,12 @@ extension SubscriptionItemRoutes {
                       prorationBehavior: prorationBehavior,
                       prorationDate: prorationDate,
                       quantity: quantity,
-                      taxRates: taxRates)
+                      taxRates: taxRates,
+                      context: context)
     }
     
     public func retrieve(item: String, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
-        return retrieve(item: item)
+        return retrieve(item: item, context: context)
     }
     
     public func update(item: String,
@@ -156,7 +157,8 @@ extension SubscriptionItemRoutes {
                       prorationBehavior: prorationBehavior,
                       prorationDate: prorationDate,
                       quantity: quantity,
-                      taxRates: taxRates)
+                      taxRates: taxRates,
+                      context: context)
     }
     
     public func delete(item: String,
@@ -167,11 +169,12 @@ extension SubscriptionItemRoutes {
         return delete(item: item,
                       clearUsage: clearUsage,
                       prorationBehavior: prorationBehavior,
-                      prorationDate: prorationDate)
+                      prorationDate: prorationDate,
+                      context: context)
     }
     
     public func listAll(subscription: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItemList> {
-        return listAll(subscription: subscription, filter: filter)
+        return listAll(subscription: subscription, filter: filter, context: context)
     }
 }
 
@@ -236,11 +239,11 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
             body["tax_rates"] = taxRates
         }
         
-        return apiHandler.send(method: .POST, path: subscirptionitems, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: subscirptionitems, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(item: String, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
-        return apiHandler.send(method: .GET, path: "\(subscirptionitems)/\(item)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(subscirptionitems)/\(item)", headers: headers, context: context)
     }
     
     public func update(item: String,
@@ -302,7 +305,7 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
             body["tax_rates"] = taxRates
         }
 
-        return apiHandler.send(method: .POST, path: "\(subscirptionitems)/\(item)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(subscirptionitems)/\(item)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(item: String,
@@ -324,7 +327,7 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
             body["proration_date"] = Int(prorationDate.timeIntervalSince1970)
         }
 
-        return apiHandler.send(method: .DELETE, path: "\(subscirptionitems)/\(item)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(subscirptionitems)/\(item)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(subscription: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItemList> {
@@ -333,6 +336,6 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
             queryParams += "&" + filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: subscirptionitems, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: subscirptionitems, query: queryParams, headers: headers, context: context)
     }
 }

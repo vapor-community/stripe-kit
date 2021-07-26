@@ -38,15 +38,15 @@ public protocol TransactionRoutes {
 
 extension TransactionRoutes {
     func retrieve(transaction: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTransaction> {
-        return retrieve(transaction: transaction, expand: expand)
+        return retrieve(transaction: transaction, expand: expand, context: context)
     }
     
     func update(transaction: String, metadata: [String: String]? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTransaction> {
-        return update(transaction: transaction, metadata: metadata, expand: expand)
+        return update(transaction: transaction, metadata: metadata, expand: expand, context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTransactionList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -65,7 +65,7 @@ public struct StripeTransactionRoutes: TransactionRoutes {
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(issuingtransactions)/\(transaction)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(issuingtransactions)/\(transaction)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(transaction: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTransaction> {
@@ -79,7 +79,7 @@ public struct StripeTransactionRoutes: TransactionRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(issuingtransactions)/\(transaction)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(issuingtransactions)/\(transaction)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeTransactionList> {
@@ -88,6 +88,6 @@ public struct StripeTransactionRoutes: TransactionRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: issuingtransactions, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: issuingtransactions, query: queryParams, headers: headers, context: context)
     }
 }

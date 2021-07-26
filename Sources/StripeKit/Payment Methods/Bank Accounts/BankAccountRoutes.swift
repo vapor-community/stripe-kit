@@ -87,11 +87,11 @@ extension BankAccountRoutes {
                        metadata: [String: String]? = nil,
                        expand: [String]? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripeBankAccount> {
-        return create(customer: customer, source: source, metadata: metadata, expand: expand)
+        return create(customer: customer, source: source, metadata: metadata, expand: expand, context: context)
     }
     
     public func retrieve(id: String, customer: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeBankAccount> {
-        return retrieve(id: id, customer: customer, expand: expand)
+        return retrieve(id: id, customer: customer, expand: expand, context: context)
     }
     
     public func update(id: String,
@@ -106,7 +106,8 @@ extension BankAccountRoutes {
                       accountHolderName: accountHolderName,
                       accountHolderType: accountHolderType,
                       metadata: metadata,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func verify(id: String,
@@ -114,15 +115,15 @@ extension BankAccountRoutes {
                        amounts: [Int]? = nil,
                        expand: [String]? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripeBankAccount> {
-        return verify(id: id, customer: customer, amounts: amounts, expand: expand)
+        return verify(id: id, customer: customer, amounts: amounts, expand: expand, context: context)
     }
     
     public func delete(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(id: id, customer: customer)
+        return delete(id: id, customer: customer, context: context)
     }
     
     public func listAll(customer: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeBankAccountList> {
-        return listAll(customer: customer, filter: filter)
+        return listAll(customer: customer, filter: filter, context: context)
     }
 }
 
@@ -155,7 +156,7 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(id: String, customer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeBankAccount> {
@@ -163,7 +164,7 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(bankaccounts)/\(customer)/sources/\(id)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(bankaccounts)/\(customer)/sources/\(id)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(id: String,
@@ -191,7 +192,7 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources/\(id)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources/\(id)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func verify(id: String, customer: String, amounts: [Int]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeBankAccount> {
@@ -205,19 +206,19 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources/\(id)/verify", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources/\(id)/verify", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(bankaccounts)/\(customer)/sources/\(id)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(bankaccounts)/\(customer)/sources/\(id)", headers: headers, context: context)
     }
     
-    public func listAll(customer: String, filter: [String: Any]?, context: LoggingContextz) -> EventLoopFuture<StripeBankAccountList> {
+    public func listAll(customer: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeBankAccountList> {
         var queryParams = "object=bank_account"
         if let filter = filter {
             queryParams += "&" + filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(bankaccounts)/\(customer)/sources", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(bankaccounts)/\(customer)/sources", query: queryParams, headers: headers, context: context)
     }
 }

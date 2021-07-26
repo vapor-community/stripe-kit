@@ -30,11 +30,11 @@ public protocol ApplicationFeesRoutes {
 
 extension ApplicationFeesRoutes {
     public func retrieve(fee: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeApplicationFee> {
-        return retrieve(fee: fee, expand: expand)
+        return retrieve(fee: fee, expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeApplicationFeeList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -53,7 +53,7 @@ public struct StripeApplicationFeeRoutes: ApplicationFeesRoutes {
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(applicationfees)/\(fee)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(applicationfees)/\(fee)", query: queryParams, headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeApplicationFeeList> {
@@ -61,6 +61,6 @@ public struct StripeApplicationFeeRoutes: ApplicationFeesRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: applicationfees, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: applicationfees, query: queryParams, headers: headers, context: context)
     }
 }

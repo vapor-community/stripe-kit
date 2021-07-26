@@ -53,23 +53,23 @@ public protocol ReaderRoutes {
 
 extension ReaderRoutes {
     func create(registrationCode: String, label: String? = nil, location: String? = nil, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReader> {
-        return create(registrationCode: registrationCode, label: label, location: location, metadata: metadata)
+        return create(registrationCode: registrationCode, label: label, location: location, metadata: metadata, context: context)
     }
     
     func retrieve(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader> {
-        return retrieve(reader: reader)
+        return retrieve(reader: reader, context: context)
     }
     
     func update(reader: String, label: String? = nil, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReader> {
-        return update(reader: reader, label: label, metadata: metadata)
+        return update(reader: reader, label: label, metadata: metadata, context: context)
     }
     
     func delete(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader> {
-        return delete(reader: reader)
+        return delete(reader: reader, context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeReaderList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -98,11 +98,11 @@ public struct StripeReaderRoutes: ReaderRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: terminalreaders, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: terminalreaders, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader> {
-        return apiHandler.send(method: .GET, path: "\(terminalreaders)/\(reader)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(terminalreaders)/\(reader)", headers: headers, context: context)
     }
     
     public func update(reader: String, label: String?, metadata: [String: String]?, context: LoggingContext) -> EventLoopFuture<StripeReader> {
@@ -116,11 +116,11 @@ public struct StripeReaderRoutes: ReaderRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(terminalreaders)/\(reader)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(terminalreaders)/\(reader)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(reader: String, context: LoggingContext) -> EventLoopFuture<StripeReader> {
-        return apiHandler.send(method: .DELETE, path: "\(terminalreaders)/\(reader)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(terminalreaders)/\(reader)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeReaderList> {
@@ -129,6 +129,6 @@ public struct StripeReaderRoutes: ReaderRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: terminalreaders, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: terminalreaders, query: queryParams, headers: headers, context: context)
     }
 }

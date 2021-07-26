@@ -77,22 +77,23 @@ extension RefundRoutes {
                       reason: reason,
                       refundApplicationFee: refundApplicationFee,
                       reverseTransfer: reverseTransfer,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(refund: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeRefund> {
-        return retrieve(refund: refund, expand: expand)
+        return retrieve(refund: refund, expand: expand, context: context)
     }
     
     public func update(refund: String,
                        metadata: [String: String]? = nil,
                        expand: [String]? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripeRefund> {
-        return update(refund: refund, metadata: metadata, expand: expand)
+        return update(refund: refund, metadata: metadata, expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeRefundsList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -149,7 +150,7 @@ public struct StripeRefundRoutes: RefundRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: refunds, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: refunds, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(refund: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeRefund> {
@@ -158,7 +159,7 @@ public struct StripeRefundRoutes: RefundRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(refunds)/\(refund)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(refunds)/\(refund)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(refund: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeRefund> {
@@ -172,7 +173,7 @@ public struct StripeRefundRoutes: RefundRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(refunds)/\(refund)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(refunds)/\(refund)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeRefundsList> {
@@ -181,6 +182,6 @@ public struct StripeRefundRoutes: RefundRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: refunds, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: refunds, query: queryParams, headers: headers, context: context)
     }
 }

@@ -28,11 +28,11 @@ public protocol CountrySpecRoutes {
 
 extension CountrySpecRoutes {
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCountrySpecList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
     
     public func retrieve(country: String, context: LoggingContext) -> EventLoopFuture<StripeCountrySpec> {
-        return retrieve(country: country)
+        return retrieve(country: country, context: context)
     }
 }
 
@@ -51,10 +51,10 @@ public struct StripeCountrySpecRoutes: CountrySpecRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: countryspecs, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: countryspecs, query: queryParams, headers: headers, context: context)
     }
     
     public func retrieve(country: String, context: LoggingContext) -> EventLoopFuture<StripeCountrySpec> {
-         return apiHandler.send(method: .GET, path: "\(countryspecs)/\(country)", headers: headers)
+         return apiHandler.send(method: .GET, path: "\(countryspecs)/\(country)", headers: headers, context: context)
     }
 }

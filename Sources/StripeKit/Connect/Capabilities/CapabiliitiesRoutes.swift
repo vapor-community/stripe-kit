@@ -33,15 +33,15 @@ public protocol CapabilitiesRoutes {
 
 extension CapabilitiesRoutes {
     public func retrieve(capability: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCapability> {
-        return retrieve(capability: capability, expand: expand)
+        return retrieve(capability: capability, expand: expand, context: context)
     }
     
     public func update(capability: String, requested: Bool? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCapability> {
-        return update(capability: capability, requested: requested, expand: expand)
+        return update(capability: capability, requested: requested, expand: expand, context: context)
     }
     
     public func listAll(account: String, context: LoggingContext) -> EventLoopFuture<StripeCapabilitiesList> {
-        return listAll(account: account)
+        return listAll(account: account, context: context)
     }
 }
 
@@ -62,7 +62,7 @@ public struct StripeCapabilitiesRoutes: CapabilitiesRoutes {
             queryParams += ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(capabilities)/\(capability)/capabilities/card_payments", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(capabilities)/\(capability)/capabilities/card_payments", query: queryParams, headers: headers, context: context)
     }
     
     public func update(capability: String, requested: Bool?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCapability> {
@@ -76,10 +76,10 @@ public struct StripeCapabilitiesRoutes: CapabilitiesRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(capabilities)/\(capability)/capabilities/card_payments", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(capabilities)/\(capability)/capabilities/card_payments", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(account: String, context: LoggingContext) -> EventLoopFuture<StripeCapabilitiesList> {
-        return apiHandler.send(method: .GET, path: "\(capabilities)/\(account)/capabilities", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(capabilities)/\(account)/capabilities", headers: headers, context: context)
     }
 }

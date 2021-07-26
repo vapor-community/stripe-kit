@@ -38,15 +38,15 @@ public protocol FileRoutes {
 
 extension FileRoutes {
     public mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeFile> {
-        return create(file: file, purpose: purpose, fileLinkData: fileLinkData)
+        return create(file: file, purpose: purpose, fileLinkData: fileLinkData, context: context)
     }
     
     public func retrieve(file: String, context: LoggingContext) -> EventLoopFuture<StripeFile> {
-        return retrieve(file: file)
+        return retrieve(file: file, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeFileUploadList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -88,11 +88,11 @@ public struct StripeFileRoutes: FileRoutes {
         
         body.append("\r\n--\(boundary)--\r\n")
         
-        return apiHandler.send(method: .POST, path: filesupload, body: .data(body), headers: headers)
+        return apiHandler.send(method: .POST, path: filesupload, body: .data(body), headers: headers, context: context)
     }
     
     public func retrieve(file: String, context: LoggingContext) -> EventLoopFuture<StripeFile> {
-        return apiHandler.send(method: .GET, path: "\(files)/\(file)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(files)/\(file)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeFileUploadList> {
@@ -101,7 +101,7 @@ public struct StripeFileRoutes: FileRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: files, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: files, query: queryParams, headers: headers, context: context)
     }
 }
 

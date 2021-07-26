@@ -256,11 +256,12 @@ extension PaymentIntentsRoutes {
                       transferData: transferData,
                       transferGroup: transferGroup,
                       useStripeSDK: useStripeSDK,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(intent: String, clientSecret: String? = nil, context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
-        return retrieve(intent: intent, clientSecret: clientSecret)
+        return retrieve(intent: intent, clientSecret: clientSecret, context: context)
     }
     
     public func update(intent: String,
@@ -299,7 +300,8 @@ extension PaymentIntentsRoutes {
                       statementDescriptorSuffix: statementDescriptorSuffix,
                       transferData: transferData,
                       transferGroup: transferGroup,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func confirm(intent: String,
@@ -332,7 +334,8 @@ extension PaymentIntentsRoutes {
                        setupFutureUsage: setupFutureUsage,
                        shipping: shipping,
                        useStripeSDK: useStripeSDK,
-                       expand: expand)
+                       expand: expand,
+                       context: context)
     }
     
     public func capture(intent: String,
@@ -349,18 +352,19 @@ extension PaymentIntentsRoutes {
                        statementDescriptor: statementDescriptor,
                        statementDescriptorSuffix: statementDescriptorSuffix,
                        transferData: transferData,
-                       expand: expand)
+                       expand: expand,
+                       context: context)
     }
     
     public func cancel(intent: String,
                        cancellationReason: StripePaymentIntentCancellationReason? = nil,
                        expand: [String]? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
-        return cancel(intent: intent, cancellationReason: cancellationReason, expand: expand)
+        return cancel(intent: intent, cancellationReason: cancellationReason, expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePaymentIntentsList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -510,7 +514,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: paymentintents, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: paymentintents, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(intent: String, clientSecret: String?, context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
@@ -518,7 +522,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
         if let clientSecret = clientSecret {
             query += "client_secret=\(clientSecret)"
         }
-        return apiHandler.send(method: .GET, path: "\(paymentintents)/\(intent)", query: query)
+        return apiHandler.send(method: .GET, path: "\(paymentintents)/\(intent)", query: query, context: context)
     }
     
     public func update(intent: String,
@@ -610,7 +614,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func confirm(intent: String,
@@ -687,7 +691,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)/confirm", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)/confirm", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func capture(intent: String,
@@ -724,7 +728,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)/capture", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)/capture", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func cancel(intent: String, cancellationReason: StripePaymentIntentCancellationReason?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
@@ -738,7 +742,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)/cancel", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)/cancel", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePaymentIntentsList> {
@@ -747,6 +751,6 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: paymentintents, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: paymentintents, query: queryParams, headers: headers, context: context)
     }
 }

@@ -67,11 +67,12 @@ extension FileLinkRoutes {
         return create(file: file,
                       expiresAt: expiresAt,
                       metadata: metadata,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(link: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeFileLink> {
-        return retrieve(link: link, expand: expand)
+        return retrieve(link: link, expand: expand, context: context)
     }
     
     public func update(link: String,
@@ -82,11 +83,12 @@ extension FileLinkRoutes {
         return update(link: link,
                       expiresAt: expiresAt,
                       metadata: metadata,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeFileLinkList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -118,7 +120,7 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: filelinks, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: filelinks, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(link: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeFileLink> {
@@ -127,7 +129,7 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(filelinks)/\(link)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(filelinks)/\(link)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(link: String,
@@ -153,15 +155,15 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(filelinks)/\(link)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(filelinks)/\(link)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
-    public func listAll(filter: [String: Any]?), context: LoggingContext -> EventLoopFuture<StripeFileLinkList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeFileLinkList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: filelinks, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: filelinks, query: queryParams, headers: headers, context: context)
     }
 }

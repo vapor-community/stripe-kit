@@ -163,11 +163,12 @@ extension CustomerRoutes {
                       source: source,
                       taxExempt: taxExempt,
                       taxIdData: taxIdData,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func retrieve(customer: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCustomer> {
-        return retrieve(customer: customer, expand: expand)
+        return retrieve(customer: customer, expand: expand, context: context)
     }
     
     public func update(customer: String,
@@ -208,15 +209,16 @@ extension CustomerRoutes {
                       shipping: shipping,
                       source: source,
                       taxExempt: taxExempt,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func delete(customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(customer: customer)
+        return delete(customer: customer, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCustomerList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -333,7 +335,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: customers, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: customers, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(customer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCustomer> {
@@ -342,7 +344,7 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: self.customer + customer, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: self.customer + customer, query: queryParams, headers: headers, context: context)
     }
     
     public func update(customer: String,
@@ -443,11 +445,11 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: self.customer + customer, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: self.customer + customer, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: self.customer + customer, headers: headers)
+        return apiHandler.send(method: .DELETE, path: self.customer + customer, headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCustomerList> {
@@ -456,6 +458,6 @@ public struct StripeCustomerRoutes: CustomerRoutes {
             queryParams = filter.queryParameters
         }
 
-        return apiHandler.send(method: .GET, path: customers, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: customers, query: queryParams, headers: headers, context: context)
     }
 }

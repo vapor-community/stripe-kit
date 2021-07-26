@@ -53,23 +53,23 @@ public protocol LocationRoutes {
 
 extension LocationRoutes {
     func create(address: [String: Any], displayName: String, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeLocation> {
-        return create(address: address, displayName: displayName, metadata: metadata)
+        return create(address: address, displayName: displayName, metadata: metadata, context: context)
     }
     
     func retrieve(location: String, context: LoggingContext) -> EventLoopFuture<StripeLocation> {
-        return retrieve(location: location)
+        return retrieve(location: location, context: context)
     }
     
     func update(location: String, address: [String: Any]? = nil, displayName: String? = nil, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeLocation> {
-        return update(location: location, address: address, displayName: displayName, metadata: metadata)
+        return update(location: location, address: address, displayName: displayName, metadata: metadata, context: context)
     }
     
     func delete(location: String, context: LoggingContext) -> EventLoopFuture<StripeLocation> {
-        return delete(location: location)
+        return delete(location: location, context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeLocationList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -91,11 +91,11 @@ public struct StripeLocationRoutes: LocationRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: terminallocations, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: terminallocations, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(location: String, context: LoggingContext) -> EventLoopFuture<StripeLocation> {
-        return apiHandler.send(method: .GET, path: "\(terminallocations)/\(location)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(terminallocations)/\(location)", headers: headers, context: context)
     }
     
     public func update(location: String, address: [String: Any]?, displayName: String?, metadata: [String: String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeLocation> {
@@ -112,11 +112,11 @@ public struct StripeLocationRoutes: LocationRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(terminallocations)/\(location)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(terminallocations)/\(location)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(location: String, context: LoggingContext) -> EventLoopFuture<StripeLocation> {
-        return apiHandler.send(method: .DELETE, path: "\(terminallocations)/\(location)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(terminallocations)/\(location)", headers: headers, context: context)
     }
     
     public func listAll(filter: [String : Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeLocationList> {
@@ -125,6 +125,6 @@ public struct StripeLocationRoutes: LocationRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: terminallocations, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: terminallocations, query: queryParams, headers: headers, context: context)
     }
 }

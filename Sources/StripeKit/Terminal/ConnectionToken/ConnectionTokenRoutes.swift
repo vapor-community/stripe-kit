@@ -14,15 +14,15 @@ public protocol ConnectionTokenRoutes {
     ///
     /// - Parameter location: The id of the location that this connection token is scoped to. If specified the connection token will only be usable with readers assigned to that location, otherwise the connection token will be usable with all readers.
     /// - Returns: A `StripeConnectionToken`.
-    func create(location: String?) -> EventLoopFuture<StripeConnectionToken>
+    func create(location: String?, context: LoggingContext) -> EventLoopFuture<StripeConnectionToken>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
 extension ConnectionTokenRoutes {
-    func create(location: String? = nil) -> EventLoopFuture<StripeConnectionToken> {
-        return create(location: location)
+    func create(location: String? = nil, context: LoggingContext) -> EventLoopFuture<StripeConnectionToken> {
+        return create(location: location, context: context)
     }
 }
 
@@ -36,7 +36,7 @@ public struct StripeConnectionTokenRoutes: ConnectionTokenRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(location: String?) -> EventLoopFuture<StripeConnectionToken> {
-        return apiHandler.send(method: .POST, path: connectiontokens, headers: headers)
+    public func create(location: String?, context: LoggingContext) -> EventLoopFuture<StripeConnectionToken> {
+        return apiHandler.send(method: .POST, path: connectiontokens, headers: headers, context: context)
     }
 }

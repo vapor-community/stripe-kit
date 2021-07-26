@@ -18,7 +18,7 @@ public protocol SetupAttemptRoutes {
 
 extension SetupAttemptRoutes {
     public func listAll(setupIntent: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSetupAttemptList> {
-        listAll(setupIntent: setupIntent, filter: filter)
+        listAll(setupIntent: setupIntent, filter: filter, context: context)
     }
 }
 
@@ -37,6 +37,6 @@ public struct StripeSetupAttemptRoutes: SetupAttemptRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: "\(setupAttempts)/\(setupIntent)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(setupAttempts)/\(setupIntent)", query: queryParams, headers: headers, context: context)
     }
 }

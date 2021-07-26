@@ -26,11 +26,11 @@ public protocol EarlyFraudWarningRoutes {
 
 extension EarlyFraudWarningRoutes {
     public func retrieve(earlyFraudWarning: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeEarlyFraudWarning> {
-        return retrieve(earlyFraudWarning: earlyFraudWarning, expand: expand)
+        return retrieve(earlyFraudWarning: earlyFraudWarning, expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeEarlyFraudWarningList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -50,7 +50,7 @@ public struct StripeEarlyFraudWarningRoutes: EarlyFraudWarningRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(earlyfraudwarnings)/\(earlyFraudWarning)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(earlyfraudwarnings)/\(earlyFraudWarning)", query: queryParams, headers: headers, context: context)
     }
     
     public func listAll(filter: [String : Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeEarlyFraudWarningList> {
@@ -59,6 +59,6 @@ public struct StripeEarlyFraudWarningRoutes: EarlyFraudWarningRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: earlyfraudwarnings, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: earlyfraudwarnings, query: queryParams, headers: headers, context: context)
     }
 }

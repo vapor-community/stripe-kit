@@ -92,11 +92,12 @@ extension IssuingCardRoutes {
                       replacementReason: replacementReason,
                       shipping: shipping,
                       status: status,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     func retrieve(card: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingCard> {
-        return retrieve(card: card, expand: expand)
+        return retrieve(card: card, expand: expand, context: context)
     }
     
     func update(card: String,
@@ -111,11 +112,12 @@ extension IssuingCardRoutes {
                       cancellationReason: cancellationReason,
                       metadata: metadata,
                       status: status,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeIssuingCardList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -172,7 +174,7 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: issuingcards, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: issuingcards, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(card: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingCard> {
@@ -181,7 +183,7 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(issuingcards)/\(card)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(issuingcards)/\(card)", query: queryParams, headers: headers, context: context)
     }
 
     public func update(card: String,
@@ -213,7 +215,7 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(issuingcards)/\(card)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(issuingcards)/\(card)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeIssuingCardList> {
@@ -222,6 +224,6 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: issuingcards, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: issuingcards, query: queryParams, headers: headers, context: context)
     }
 }

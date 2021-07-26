@@ -126,11 +126,12 @@ extension ProductRoutes {
                       packageDimensions: packageDimensions,
                       shippable: shippable,
                       type: type,
-                      url: url)
+                      url: url,
+                      context: context)
     }
     
     public func retrieve(id: String, context: LoggingContext) -> EventLoopFuture<StripeProduct> {
-        return retrieve(id: id)
+        return retrieve(id: id, context: context)
     }
     
     public func update(product: String,
@@ -149,27 +150,28 @@ extension ProductRoutes {
                        url: String? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripeProduct> {
         return update(product: product,
-                          active: active,
-                          attributes: attributes,
-                          caption: caption,
-                          deactivateOn: deactivateOn,
-                          description: description,
-                          images: images,
-                          metadata: metadata,
-                          name: name,
-                          packageDimensions: packageDimensions,
-                          shippable: shippable,
-                          statementDescriptor: statementDescriptor,
-                          unitLabel: unitLabel,
-                          url: url)
+                      active: active,
+                      attributes: attributes,
+                      caption: caption,
+                      deactivateOn: deactivateOn,
+                      description: description,
+                      images: images,
+                      metadata: metadata,
+                      name: name,
+                      packageDimensions: packageDimensions,
+                      shippable: shippable,
+                      statementDescriptor: statementDescriptor,
+                      unitLabel: unitLabel,
+                      url: url,
+                      context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeProductsList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
     
     public func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(id: id)
+        return delete(id: id, context: context)
     }
 }
 
@@ -249,11 +251,11 @@ public struct StripeProductRoutes: ProductRoutes {
             body["url"] = url
         }
         
-        return apiHandler.send(method: .POST, path: products, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: products, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(id: String, context: LoggingContext) -> EventLoopFuture<StripeProduct> {
-        return apiHandler.send(method: .GET, path: "\(products)/\(id)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(products)/\(id)", headers: headers, context: context)
     }
     
     public func update(product: String,
@@ -326,7 +328,7 @@ public struct StripeProductRoutes: ProductRoutes {
             body["url"] = url
         }
 
-        return apiHandler.send(method: .POST, path: "\(products)/\(product)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(products)/\(product)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeProductsList> {
@@ -335,10 +337,10 @@ public struct StripeProductRoutes: ProductRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: products, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: products, query: queryParams, headers: headers, context: context)
     }
     
     public func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(products)/\(id)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(products)/\(id)", headers: headers, context: context)
     }
 }

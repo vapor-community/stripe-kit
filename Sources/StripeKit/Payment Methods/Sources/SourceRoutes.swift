@@ -120,11 +120,12 @@ extension SourceRoutes {
                       statementDescriptor: statementDescriptor,
                       token: token,
                       usage: usage,
-                      sources: sources)
+                      sources: sources,
+                      context: context)
     }
     
     public func retrieve(source: String, clientSecret: String? = nil, context: LoggingContext) -> EventLoopFuture<StripeSource> {
-        return retrieve(source: source, clientSecret: clientSecret)
+        return retrieve(source: source, clientSecret: clientSecret, context: context)
     }
     
     public func update(source: String,
@@ -139,15 +140,16 @@ extension SourceRoutes {
                       mandate: mandate,
                       metadata: metadata,
                       owner: owner,
-                      sourceOrder: sourceOrder)
+                      sourceOrder: sourceOrder,
+                      context: context)
     }
     
     public func attach(source: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource> {
-        return attach(source: source, customer: customer)
+        return attach(source: source, customer: customer, context: context)
     }
     
     public func detach(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource> {
-        return detach(id: id, customer: customer)
+        return detach(id: id, customer: customer, context: context)
     }
 }
 
@@ -227,7 +229,7 @@ public struct StripeSourceRoutes: SourceRoutes {
             sources.forEach { body["\($0)"] = $1}
         }
         
-        return apiHandler.send(method: .POST, path: self.sources, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: self.sources, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(source: String, clientSecret: String?, context: LoggingContext) -> EventLoopFuture<StripeSource> {
@@ -235,7 +237,7 @@ public struct StripeSourceRoutes: SourceRoutes {
         if let clientSecret = clientSecret {
             query += "client_secret=\(clientSecret)"
         }
-        return apiHandler.send(method: .GET, path: "\(sources)/\(source)", query: query, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(sources)/\(source)", query: query, headers: headers, context: context)
     }
     
     public func update(source: String,
@@ -267,15 +269,15 @@ public struct StripeSourceRoutes: SourceRoutes {
             sourceOrder.forEach { body["source_order[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(sources)/\(source)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(sources)/\(source)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func attach(source: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource> {
         let body: [String: Any] = ["source": source]
-        return apiHandler.send(method: .POST, path: "\(customers)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(customers)/\(customer)/sources", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func detach(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeSource> {
-        return apiHandler.send(method: .DELETE, path: "\(customers)/\(customer)/sources/\(id)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(customers)/\(customer)/sources/\(id)", headers: headers, context: context)
     }
 }

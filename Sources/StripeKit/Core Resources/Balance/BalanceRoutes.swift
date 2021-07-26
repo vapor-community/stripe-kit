@@ -22,7 +22,7 @@ public protocol BalanceRoutes {
 
 extension BalanceRoutes {
     public func retrieve(context: LoggingContext) -> EventLoopFuture<StripeBalance> {
-        return retrieve()
+        return retrieve(context: context)
     }
 }
 
@@ -37,6 +37,6 @@ public struct StripeBalanceRoutes: BalanceRoutes {
     }
     
     public func retrieve(context: LoggingContext) -> EventLoopFuture<StripeBalance> {
-        return apiHandler.send(method: .GET, path: balance, headers: headers)
+        return apiHandler.send(method: .GET, path: balance, headers: headers, context: context)
     }
 }

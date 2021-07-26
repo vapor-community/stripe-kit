@@ -55,7 +55,7 @@ public protocol DisputeRoutes {
 
 extension DisputeRoutes {
     public func retrieve(dispute: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeDispute> {
-        return retrieve(dispute: dispute, expand: expand)
+        return retrieve(dispute: dispute, expand: expand, context: context)
     }
     
     public func update(dispute: String,
@@ -68,15 +68,16 @@ extension DisputeRoutes {
                       evidence: evidence,
                       metadata: metadata,
                       submit: submit,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func close(dispute: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeDispute> {
-        return close(dispute: dispute, expand: expand)
+        return close(dispute: dispute, expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeDisputeList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -96,7 +97,7 @@ public struct StripeDisputeRoutes: DisputeRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(disputes)/\(dispute)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(disputes)/\(dispute)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(dispute: String,
@@ -123,7 +124,7 @@ public struct StripeDisputeRoutes: DisputeRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(disputes)/\(dispute)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(disputes)/\(dispute)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func close(dispute: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeDispute> {
@@ -133,7 +134,7 @@ public struct StripeDisputeRoutes: DisputeRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(disputes)/\(dispute)/close", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(disputes)/\(dispute)/close", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String : Any]?, context: LoggingContext) -> EventLoopFuture<StripeDisputeList> {
@@ -142,6 +143,6 @@ public struct StripeDisputeRoutes: DisputeRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: disputes, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: disputes, query: queryParams, headers: headers, context: context)
     }
 }

@@ -33,10 +33,10 @@ public struct StripeReportTypeRoutes: ReportTypeRoutes {
     }
     
     public func retrieve(reportType: String, context: LoggingContext) -> EventLoopFuture<StripeReportType> {
-        return apiHandler.send(method: .GET, path: "\(reporttypes)/\(reportType)", headers: headers)
+        return apiHandler.send(method: .GET, path: "\(reporttypes)/\(reportType)", headers: headers, context: context)
     }
     
     public func listAll(context: LoggingContext) -> EventLoopFuture<StripeReportTypeList> {
-        return apiHandler.send(method: .GET, path: reporttypes, headers: headers)
+        return apiHandler.send(method: .GET, path: reporttypes, headers: headers, context: context)
     }
 }

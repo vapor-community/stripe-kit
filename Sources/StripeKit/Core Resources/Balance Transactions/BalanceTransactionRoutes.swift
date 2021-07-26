@@ -28,11 +28,11 @@ public protocol BalanceTransactionRoutes {
 
 extension BalanceTransactionRoutes {
     public func retrieve(id: String, context: LoggingContext) -> EventLoopFuture<StripeBalanceTransaction> {
-        return retrieve(id: id)
+        return retrieve(id: id, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeBalanceTransactionList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -48,7 +48,7 @@ public struct StripeBalanceTransactionRoutes: BalanceTransactionRoutes {
     }
     
     public func retrieve(id: String, context: LoggingContext) -> EventLoopFuture<StripeBalanceTransaction> {
-        return apiHandler.send(method: .GET, path: balanceTransaction + id, headers: headers)
+        return apiHandler.send(method: .GET, path: balanceTransaction + id, headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeBalanceTransactionList> {
@@ -56,6 +56,6 @@ public struct StripeBalanceTransactionRoutes: BalanceTransactionRoutes {
         if let filter = filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: balanceTransactions, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: balanceTransactions, query: queryParams, headers: headers, context: context)
     }
 }

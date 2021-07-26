@@ -22,7 +22,7 @@ public protocol MandateRoutes {
 
 extension MandateRoutes {
     func retrieve(mandate: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeMandate> {
-        return retrieve(mandate: mandate, expand: expand)
+        return retrieve(mandate: mandate, expand: expand, context: context)
     }
 }
 
@@ -42,6 +42,6 @@ public struct StripeMandateRoutes: MandateRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(self.mandate)/\(mandate)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(self.mandate)/\(mandate)", query: queryParams, headers: headers, context: context)
     }
 }

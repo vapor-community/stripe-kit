@@ -87,11 +87,11 @@ extension CardRoutes {
                        metadata: [String: String]? = nil,
                        expand: [String]? = nil,
                        context: LoggingContext) -> EventLoopFuture<StripeCard> {
-        return create(customer: customer, source: source, metadata: metadata, expand: expand)
+        return create(customer: customer, source: source, metadata: metadata, expand: expand, context: context)
     }
     
     public func retrieve(id: String, customer: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCard> {
-        return retrieve(id: id, customer: customer, expand: expand)
+        return retrieve(id: id, customer: customer, expand: expand, context: context)
     }
     
     public func update(id: String,
@@ -120,15 +120,16 @@ extension CardRoutes {
                       expYear: expYear,
                       metadata: metadata,
                       name: name,
-                      expand: expand)
+                      expand: expand,
+                      context: context)
     }
     
     public func delete(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return delete(id: id, customer: customer)
+        return delete(id: id, customer: customer, context: context)
     }
     
     public func listAll(customer: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCardList> {
-        return listAll(customer: customer, filter: filter)
+        return listAll(customer: customer, filter: filter, context: context)
     }
 }
 
@@ -161,7 +162,7 @@ public struct StripeCardRoutes: CardRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(id: String, customer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCard> {
@@ -170,7 +171,7 @@ public struct StripeCardRoutes: CardRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(cards)/\(customer)/sources/\(id)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(cards)/\(customer)/sources/\(id)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(id: String,
@@ -233,11 +234,11 @@ public struct StripeCardRoutes: CardRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources/\(id)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(cards)/\(customer)/sources/\(id)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func delete(id: String, customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
-        return apiHandler.send(method: .DELETE, path: "\(cards)/\(customer)/sources/\(id)", headers: headers)
+        return apiHandler.send(method: .DELETE, path: "\(cards)/\(customer)/sources/\(id)", headers: headers, context: context)
     }
     
     public func listAll(customer: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCardList> {
@@ -246,6 +247,6 @@ public struct StripeCardRoutes: CardRoutes {
             queryParams += "&" + filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(cards)/\(customer)/sources", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(cards)/\(customer)/sources", query: queryParams, headers: headers, context: context)
     }
 }

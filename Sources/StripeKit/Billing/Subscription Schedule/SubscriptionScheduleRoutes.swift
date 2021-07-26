@@ -98,11 +98,11 @@ extension SubscriptionScheduleRoutes {
                       metadata: metadata,
                       phases: phases,
                       startDate: startDate,
-                      expand: expand)
+                      expand: expand, context: context)
     }
     
     public func retrieve(schedule: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionSchedule> {
-        return retrieve(schedule: schedule, expand: expand)
+        return retrieve(schedule: schedule, expand: expand, context: context)
     }
     
     public func update(schedule: String,
@@ -119,7 +119,7 @@ extension SubscriptionScheduleRoutes {
                       metadata: metadata,
                       phases: phases,
                       prorationBehavior: prorationBehavior,
-                      expand: expand)
+                      expand: expand, context: context)
     }
     
     public func cancel(schedule: String,
@@ -130,7 +130,7 @@ extension SubscriptionScheduleRoutes {
         return cancel(schedule: schedule,
                       invoiceNow: invoiceNow,
                       prorate: prorate,
-                      expand: expand)
+                      expand: expand, context: context)
     }
     
     public func release(schedule: String,
@@ -139,11 +139,11 @@ extension SubscriptionScheduleRoutes {
                         context: LoggingContext) -> EventLoopFuture<StripeSubscriptionSchedule> {
         return release(schedule: schedule,
                        preserveCancelDate: preserveCancelDate,
-                       expand: expand)
+                       expand: expand, context: context)
     }
     
     public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionScheduleList> {
-        return listAll(filter: filter)
+        return listAll(filter: filter, context: context)
     }
 }
 
@@ -200,7 +200,7 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: subscriptionschedules, body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: subscriptionschedules, body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func retrieve(schedule: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionSchedule> {
@@ -209,7 +209,7 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(subscriptionschedules)/\(schedule)", query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: "\(subscriptionschedules)/\(schedule)", query: queryParams, headers: headers, context: context)
     }
     
     public func update(schedule: String,
@@ -246,7 +246,7 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(subscriptionschedules)/\(schedule)", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(subscriptionschedules)/\(schedule)", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func cancel(schedule: String,
@@ -268,7 +268,7 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(subscriptionschedules)/\(schedule)/cancel", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(subscriptionschedules)/\(schedule)/cancel", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func release(schedule: String, preserveCancelDate: Bool?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionSchedule> {
@@ -282,7 +282,7 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(subscriptionschedules)/\(schedule)/release", body: .string(body.queryParameters), headers: headers)
+        return apiHandler.send(method: .POST, path: "\(subscriptionschedules)/\(schedule)/release", body: .string(body.queryParameters), headers: headers, context: context)
     }
     
     public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionScheduleList> {
@@ -291,6 +291,6 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: subscriptionschedules, query: queryParams, headers: headers)
+        return apiHandler.send(method: .GET, path: subscriptionschedules, query: queryParams, headers: headers, context: context)
     }
 }
