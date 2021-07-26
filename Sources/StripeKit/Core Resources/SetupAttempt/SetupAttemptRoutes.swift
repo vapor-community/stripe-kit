@@ -7,16 +7,17 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol SetupAttemptRoutes {
-    func listAll(setupIntent: String, filter: [String: Any]?) -> EventLoopFuture<StripeSetupAttemptList>
+    func listAll(setupIntent: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSetupAttemptList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
 extension SetupAttemptRoutes {
-    public func listAll(setupIntent: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeSetupAttemptList> {
+    public func listAll(setupIntent: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSetupAttemptList> {
         listAll(setupIntent: setupIntent, filter: filter)
     }
 }
@@ -31,7 +32,7 @@ public struct StripeSetupAttemptRoutes: SetupAttemptRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func listAll(setupIntent: String, filter: [String: Any]?)-> EventLoopFuture<StripeSetupAttemptList> {
+    public func listAll(setupIntent: String, filter: [String: Any]?, context: LoggingContext)-> EventLoopFuture<StripeSetupAttemptList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

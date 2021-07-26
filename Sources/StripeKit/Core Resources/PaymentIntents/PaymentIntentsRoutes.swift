@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol PaymentIntentsRoutes {
     /// Creates a PaymentIntent object.
@@ -68,14 +69,15 @@ public protocol PaymentIntentsRoutes {
                 transferData: [String: Any]?,
                 transferGroup: String?,
                 useStripeSDK: Bool?,
-                expand: [String]?) -> EventLoopFuture<StripePaymentIntent>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripePaymentIntent>
     
     /// Retrieves the details of a PaymentIntent that has previously been created.
     ///
     /// - Parameter id: The identifier of the paymentintent to be retrieved.
     /// - Parameter clientSecret: The client secret to use if required.
     /// - Returns: A `StripePaymentIntent`.
-    func retrieve(intent: String, clientSecret: String?) -> EventLoopFuture<StripePaymentIntent>
+    func retrieve(intent: String, clientSecret: String?, context: LoggingContext) -> EventLoopFuture<StripePaymentIntent>
     
     /// Updates a PaymentIntent object.
     ///
@@ -117,7 +119,8 @@ public protocol PaymentIntentsRoutes {
                 statementDescriptorSuffix: String?,
                 transferData: [String: Any]?,
                 transferGroup: String?,
-                expand: [String]?) -> EventLoopFuture<StripePaymentIntent>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripePaymentIntent>
     
     /// Confirm that your customer intends to pay with current or provided payment method. Upon confirmation, the PaymentIntent will attempt to initiate a payment. /n If the selected payment method requires additional authentication steps, the PaymentIntent will transition to the `requires_action` status and suggest additional actions via `next_action`. If payment fails, the PaymentIntent will transition to the `requires_payment_method` status. If payment succeeds, the PaymentIntent will transition to the `succeeded` status (or `requires_capture`, if `capture_method` is set to `manual`). /n If the `confirmation_method` is `automatic`, payment may be attempted using our client SDKs and the PaymentIntent’s `client_secret`. After `next_action`s are handled by the client, no additional confirmation is required to complete the payment. /n If the `confirmation_method` is `manual`, all payment attempts must be initiated using a secret key. If any actions are required for the payment, the PaymentIntent will return to the `requires_confirmation` state after those actions are completed. Your server needs to then explicitly re-confirm the PaymentIntent to initiate the next payment attempt. Read the expanded documentation to learn more about manual confirmation.
     ///
@@ -152,7 +155,8 @@ public protocol PaymentIntentsRoutes {
                  setupFutureUsage: StripePaymentIntentSetupFutureUsage?,
                  shipping: [String: Any]?,
                  useStripeSDK: Bool?,
-                 expand: [String]?) -> EventLoopFuture<StripePaymentIntent>
+                 expand: [String]?,
+                 context: LoggingContext) -> EventLoopFuture<StripePaymentIntent>
     
     /// Capture the funds of an existing uncaptured PaymentIntent when its status is `requires_capture`. /n Uncaptured PaymentIntents will be canceled exactly seven days after they are created. /n Read the expanded documentation to learn more about separate authorization and capture.
     ///
@@ -171,7 +175,8 @@ public protocol PaymentIntentsRoutes {
                  statementDescriptor: String?,
                  statementDescriptorSuffix: String?,
                  transferData: [String: Any]?,
-                 expand: [String]?) -> EventLoopFuture<StripePaymentIntent>
+                 expand: [String]?,
+                 context: LoggingContext) -> EventLoopFuture<StripePaymentIntent>
     
     ///  PaymentIntent object can be canceled when it is in one of these statuses: `requires_payment_method`, `requires_capture`, `requires_confirmation`, `requires_action`. /n Once canceled, no additional charges will be made by the PaymentIntent and any operations on the PaymentIntent will fail with an error. For PaymentIntents with `status='requires_capture'`, the remaining `amount_capturable` will automatically be refunded.
 
@@ -181,13 +186,14 @@ public protocol PaymentIntentsRoutes {
     ///   - expand: An array of properties to expand.
     func cancel(intent: String,
                 cancellationReason: StripePaymentIntentCancellationReason?,
-                expand: [String]?) -> EventLoopFuture<StripePaymentIntent>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripePaymentIntent>
     
     /// Returns a list of PaymentIntents.
     ///
     /// - Parameter filter: A dictionary that contains the filters. More info [here](https://stripe.com/docs/api/payment_intents/list).
     /// - Returns: A `StripePaymentIntentsList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePaymentIntentsList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePaymentIntentsList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -221,7 +227,8 @@ extension PaymentIntentsRoutes {
                        transferData: [String: Any]? = nil,
                        transferGroup: String? = nil,
                        useStripeSDK: Bool? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripePaymentIntent> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         return create(amount: amount,
                       currency: currency,
                       applicationFeeAmount: applicationFeeAmount,
@@ -252,7 +259,7 @@ extension PaymentIntentsRoutes {
                       expand: expand)
     }
     
-    public func retrieve(intent: String, clientSecret: String? = nil) -> EventLoopFuture<StripePaymentIntent> {
+    public func retrieve(intent: String, clientSecret: String? = nil, context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         return retrieve(intent: intent, clientSecret: clientSecret)
     }
     
@@ -273,7 +280,8 @@ extension PaymentIntentsRoutes {
                        statementDescriptorSuffix: String? = nil,
                        transferData: [String: Any]? = nil,
                        transferGroup: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripePaymentIntent> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         return update(intent: intent,
                       amount: amount,
                       applicationFeeAmount: applicationFeeAmount,
@@ -308,7 +316,8 @@ extension PaymentIntentsRoutes {
                         setupFutureUsage: StripePaymentIntentSetupFutureUsage? = nil,
                         shipping: [String: Any]? = nil,
                         useStripeSDK: Bool? = nil,
-                        expand: [String]? = nil) -> EventLoopFuture<StripePaymentIntent> {
+                        expand: [String]? = nil,
+                        context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         return confirm(intent: intent,
                        errorOnRequiresAction: errorOnRequiresAction,
                        mandate: mandate,
@@ -332,7 +341,8 @@ extension PaymentIntentsRoutes {
                         statementDescriptor: String? = nil,
                         statementDescriptorSuffix: String? = nil,
                         transferData: [String: Any]? = nil,
-                        expand: [String]? = nil) -> EventLoopFuture<StripePaymentIntent> {
+                        expand: [String]? = nil,
+                        context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         return capture(intent: intent,
                        amountToCapture: amountToCapture,
                        applicationFeeAmount: applicationFeeAmount,
@@ -344,11 +354,12 @@ extension PaymentIntentsRoutes {
     
     public func cancel(intent: String,
                        cancellationReason: StripePaymentIntentCancellationReason? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripePaymentIntent> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         return cancel(intent: intent, cancellationReason: cancellationReason, expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePaymentIntentsList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePaymentIntentsList> {
         return listAll(filter: filter)
     }
 }
@@ -390,7 +401,8 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
                        transferData: [String: Any]?,
                        transferGroup: String?,
                        useStripeSDK: Bool?,
-                       expand: [String]?) -> EventLoopFuture<StripePaymentIntent> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         var body: [String: Any] = ["amount": amount,
                                    "currency": currency.rawValue]
         
@@ -501,7 +513,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
         return apiHandler.send(method: .POST, path: paymentintents, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(intent: String, clientSecret: String?) -> EventLoopFuture<StripePaymentIntent> {
+    public func retrieve(intent: String, clientSecret: String?, context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         var query = ""
         if let clientSecret = clientSecret {
             query += "client_secret=\(clientSecret)"
@@ -526,7 +538,8 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
                        statementDescriptorSuffix: String?,
                        transferData: [String: Any]?,
                        transferGroup: String?,
-                       expand: [String]?) -> EventLoopFuture<StripePaymentIntent> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         var body: [String: Any] = [:]
         
         if let amount = amount {
@@ -614,7 +627,8 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
                         setupFutureUsage: StripePaymentIntentSetupFutureUsage?,
                         shipping: [String: Any]?,
                         useStripeSDK: Bool?,
-                        expand: [String]?) -> EventLoopFuture<StripePaymentIntent> {
+                        expand: [String]?,
+                        context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         var body: [String: Any] = [:]
         
         if let errorOnRequiresAction = errorOnRequiresAction {
@@ -682,7 +696,8 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
                         statementDescriptor: String?,
                         statementDescriptorSuffix: String?,
                         transferData: [String: Any]?,
-                        expand: [String]?) -> EventLoopFuture<StripePaymentIntent> {
+                        expand: [String]?,
+                        context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         var body: [String: Any] = [:]
         
         if let amountToCapture = amountToCapture {
@@ -712,7 +727,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
         return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)/capture", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func cancel(intent: String, cancellationReason: StripePaymentIntentCancellationReason?, expand: [String]?) -> EventLoopFuture<StripePaymentIntent> {
+    public func cancel(intent: String, cancellationReason: StripePaymentIntentCancellationReason?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePaymentIntent> {
         var body: [String: Any] = [:]
         
         if let cancellationReason = cancellationReason {
@@ -726,7 +741,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
         return apiHandler.send(method: .POST, path: "\(paymentintents)/\(intent)/cancel", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePaymentIntentsList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePaymentIntentsList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

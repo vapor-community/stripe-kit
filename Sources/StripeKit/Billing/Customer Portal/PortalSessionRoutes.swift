@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol PortalSessionRoutes {
     /// Creates a session of the customer portal.
@@ -20,7 +21,8 @@ public protocol PortalSessionRoutes {
                 returnUrl: String?,
                 configuration: [String: Any]?,
                 onBehalfOf: String?,
-                expand: [String]?) -> EventLoopFuture<StripePortalSession>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripePortalSession>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -31,7 +33,8 @@ extension PortalSessionRoutes {
                        returnUrl: String? = nil,
                        configuration: [String: Any]? = nil,
                        onBehalfOf: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripePortalSession> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePortalSession> {
         create(customer: customer,
                returnUrl: returnUrl,
                configuration: configuration,
@@ -54,7 +57,8 @@ public struct StripePortalSessionRoutes: PortalSessionRoutes {
                        returnUrl: String?,
                        configuration: [String: Any]?,
                        onBehalfOf: String?,
-                       expand: [String]?) -> EventLoopFuture<StripePortalSession> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePortalSession> {
         var body: [String: Any] = ["customer": customer]
         
         if let returnUrl = returnUrl {

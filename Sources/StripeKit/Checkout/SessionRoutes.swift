@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol SessionRoutes {
     /// Creates a Session object.
@@ -52,7 +53,8 @@ public protocol SessionRoutes {
                 shippingRates: [String]?,
                 submitType: StripeSessionSubmitType?,
                 subscriptionData: [String: Any]?,
-                expand: [String]?) -> EventLoopFuture<StripeSession>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSession>
     
     /// Retrieves a Session object.
     ///
@@ -60,18 +62,18 @@ public protocol SessionRoutes {
     ///   - id: The ID of the Checkout Session.
     ///   - expand: An aray of properties to expand.
     /// - Returns: A `StripeSession`.
-    func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSession>
+    func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSession>
     
     /// Returns a list of Checkout Sessions.
     /// - Parameter filter: A dictionary that will be used for the [query parameters.](https://stripe.com/docs/api/checkout/sessions/list)
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeSessionList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSessionList>
     
     
     /// Returns a list of ine items for a Checkout Session.
     /// - Parameters:
     ///   - session: The ID of the checkout session
     ///   - filter: A dictionary that will be used for the [query parameters.](https://stripe.com/docs/api/checkout/sessions/line_items)
-    func retrieveLineItems(session: String, filter: [String: Any]?) -> EventLoopFuture<StripeSessionLineItemList>
+    func retrieveLineItems(session: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSessionLineItemList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -97,7 +99,8 @@ extension SessionRoutes {
                        shippingRates: [String]? = nil,
                        submitType: StripeSessionSubmitType? = nil,
                        subscriptionData: [String: Any]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeSession> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSession> {
         return create(cancelUrl: cancelUrl,
                       paymentMethodTypes: paymentMethodTypes,
                       successUrl: successUrl,
@@ -120,15 +123,15 @@ extension SessionRoutes {
                       expand: expand)
     }
     
-    public func retrieve(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeSession> {
+    public func retrieve(id: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSession> {
         return retrieve(id: id, expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSessionList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSessionList> {
         listAll(filter: filter)
     }
     
-    public func retrieveLineItems(session: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeSessionLineItemList> {
+    public func retrieveLineItems(session: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSessionLineItemList> {
         retrieveLineItems(session: session, filter: filter)
     }
 }
@@ -162,7 +165,8 @@ public struct StripeSessionRoutes: SessionRoutes {
                        shippingRates: [String]?,
                        submitType: StripeSessionSubmitType?,
                        subscriptionData: [String: Any]?,
-                       expand: [String]?) -> EventLoopFuture<StripeSession> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSession> {
         var body: [String: Any] = ["cancel_url": cancelUrl,
                                    "payment_method_types": paymentMethodTypes.map { $0.rawValue },
                                    "success_url": successUrl]
@@ -238,7 +242,7 @@ public struct StripeSessionRoutes: SessionRoutes {
         return apiHandler.send(method: .POST, path: sessions, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSession> {
+    public func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSession> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -247,7 +251,7 @@ public struct StripeSessionRoutes: SessionRoutes {
         return apiHandler.send(method: .GET, path: "\(sessions)/\(id)", query: queryParams, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSessionList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSessionList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -256,7 +260,7 @@ public struct StripeSessionRoutes: SessionRoutes {
         return apiHandler.send(method: .GET, path: sessions, query: queryParams, headers: headers)
     }
     
-    public func retrieveLineItems(session: String, filter: [String: Any]?) -> EventLoopFuture<StripeSessionLineItemList> {
+    public func retrieveLineItems(session: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSessionLineItemList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

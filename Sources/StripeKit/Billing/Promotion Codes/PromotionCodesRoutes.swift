@@ -8,6 +8,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
+import Baggage
 
 public protocol PromotionCodesRoutes {
     
@@ -28,7 +29,8 @@ public protocol PromotionCodesRoutes {
                 customer: String?,
                 expiresAt: Date?,
                 maxRedemptions: Int?,
-                restrictions: [String: Any]?) -> EventLoopFuture<StripePromotionCode>
+                restrictions: [String: Any]?,
+                context: LoggingContext) -> EventLoopFuture<StripePromotionCode>
     
     /// Updates the specified promotion code by setting the values of the parameters passed. Most fields are, by design, not editable.
     /// - Parameters:
@@ -37,15 +39,16 @@ public protocol PromotionCodesRoutes {
     ///   - active: Whether the promotion code is currently active. A promotion code can only be reactivated when the coupon is still valid and the promotion code is otherwise redeemable.
     func update(promotionCode: String,
                 metadata: [String: String]?,
-                active: Bool?) -> EventLoopFuture<StripePromotionCode>
+                active: Bool?,
+                context: LoggingContext) -> EventLoopFuture<StripePromotionCode>
     
     /// Retrieves the promotion code with the given ID.
     /// - Parameter promotionCode: The identifier of the promotion code to retrieve.
-    func retrieve(promotionCode: String) -> EventLoopFuture<StripePromotionCode>
+    func retrieve(promotionCode: String, context: LoggingContext) -> EventLoopFuture<StripePromotionCode>
     
     /// Returns a list of your promotion codes.
     /// - Parameter filter: A dictionary that will be used for the query parameters.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePromotionCodeList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePromotionCodeList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -59,7 +62,8 @@ extension PromotionCodesRoutes {
                        customer: String? = nil,
                        expiresAt: Date? = nil,
                        maxRedemptions: Int? = nil,
-                       restrictions: [String: Any]? = nil) -> EventLoopFuture<StripePromotionCode> {
+                       restrictions: [String: Any]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePromotionCode> {
         create(coupon: coupon,
                code: code,
                metadata: metadata,
@@ -72,15 +76,16 @@ extension PromotionCodesRoutes {
     
     public func update(promotionCode: String,
                        metadata: [String: String]? = nil,
-                       active: Bool? = nil) -> EventLoopFuture<StripePromotionCode> {
+                       active: Bool? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePromotionCode> {
         update(promotionCode: promotionCode, metadata: metadata, active: active)
     }
     
-    public func retrieve(promotionCode: String) -> EventLoopFuture<StripePromotionCode> {
+    public func retrieve(promotionCode: String, context: LoggingContext) -> EventLoopFuture<StripePromotionCode> {
         retrieve(promotionCode: promotionCode)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePromotionCodeList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePromotionCodeList> {
         listAll(filter: filter)
     }
 }
@@ -102,7 +107,8 @@ public struct StripePromotionCodesRoutes: PromotionCodesRoutes {
                        customer: String?,
                        expiresAt: Date?,
                        maxRedemptions: Int?,
-                       restrictions: [String: Any]?) -> EventLoopFuture<StripePromotionCode> {
+                       restrictions: [String: Any]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePromotionCode> {
         var body: [String: Any] = ["coupon": coupon]
         
         if let code = code {
@@ -138,7 +144,8 @@ public struct StripePromotionCodesRoutes: PromotionCodesRoutes {
     
     public func update(promotionCode: String,
                        metadata: [String: String]?,
-                       active: Bool?) -> EventLoopFuture<StripePromotionCode> {
+                       active: Bool?,
+                       context: LoggingContext) -> EventLoopFuture<StripePromotionCode> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -152,11 +159,11 @@ public struct StripePromotionCodesRoutes: PromotionCodesRoutes {
         return apiHandler.send(method: .POST, path: "\(promotionCodes)/\(promotionCode)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(promotionCode: String) -> EventLoopFuture<StripePromotionCode> {
+    public func retrieve(promotionCode: String, context: LoggingContext) -> EventLoopFuture<StripePromotionCode> {
         apiHandler.send(method: .GET, path: "\(promotionCodes)/\(promotionCode)", headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePlanList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePlanList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

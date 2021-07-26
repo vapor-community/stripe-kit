@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol PortalConfigurationRoutes {
     /// Creates a configuration that describes the functionality and behavior of a PortalSession
@@ -16,7 +17,8 @@ public protocol PortalConfigurationRoutes {
     ///   - defaultReturnUrl: The default URL to redirect customers to when they click on the portal’s link to return to your website. This can be overriden when creating the session.
     func create(businessProfile: [String: Any],
                 features: [String: Any],
-                defaultReturnUrl: String?) -> EventLoopFuture<StripePortalConfiguration>
+                defaultReturnUrl: String?,
+                context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration>
     
     /// Updates a configuration that describes the functionality of the customer portal.
     /// - Parameters:
@@ -29,17 +31,18 @@ public protocol PortalConfigurationRoutes {
                 active: Bool?,
                 businessProfile: [String: Any]?,
                 defaultReturnUrl: String?,
-                features: [String: Any]?) -> EventLoopFuture<StripePortalConfiguration>
+                features: [String: Any]?,
+                context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration>
     
     /// Retrieves a configuration that describes the functionality of the customer portal.
     /// - Parameter configuration: The identifier of the configuration to retrieve.
-    func retrieve(configuration: String) -> EventLoopFuture<StripePortalConfiguration>
+    func retrieve(configuration: String, context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration>
     
     /// Returns a list of tax IDs for a customer.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters.
     /// - Returns: A `StripePortalConfigurationList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePortalConfigurationList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePortalConfigurationList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -48,7 +51,8 @@ public protocol PortalConfigurationRoutes {
 extension PortalConfigurationRoutes {
     public func create(businessProfile: [String: Any],
                        features: [String: Any],
-                       defaultReturnUrl: String? = nil) -> EventLoopFuture<StripePortalConfiguration> {
+                       defaultReturnUrl: String? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration> {
         create(businessProfile: businessProfile,
                features: features,
                defaultReturnUrl: defaultReturnUrl)
@@ -58,7 +62,8 @@ extension PortalConfigurationRoutes {
                        active: Bool? = nil,
                        businessProfile: [String: Any]? = nil,
                        defaultReturnUrl: String? = nil,
-                       features: [String: Any]? = nil) -> EventLoopFuture<StripePortalConfiguration> {
+                       features: [String: Any]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration> {
         update(configuration: configuration,
                active: active,
                businessProfile: businessProfile,
@@ -66,11 +71,11 @@ extension PortalConfigurationRoutes {
                features: features)
     }
     
-    public func retrieve(configuration: String) -> EventLoopFuture<StripePortalConfiguration> {
+    public func retrieve(configuration: String, context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration> {
         retrieve(configuration: configuration)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePortalConfigurationList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePortalConfigurationList> {
         listAll(filter: filter)
     }
 }
@@ -87,7 +92,8 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
     
     public func create(businessProfile: [String: Any],
                        features: [String: Any],
-                       defaultReturnUrl: String?) -> EventLoopFuture<StripePortalConfiguration> {
+                       defaultReturnUrl: String?,
+                       context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration> {
         var body: [String: Any] = [:]
         
         businessProfile.forEach { body["business_profile[\($0)]"] = $1 }
@@ -105,7 +111,8 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
                        active: Bool?,
                        businessProfile: [String: Any]?,
                        defaultReturnUrl: String?,
-                       features: [String: Any]?) -> EventLoopFuture<StripePortalConfiguration> {
+                       features: [String: Any]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -127,11 +134,11 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
         return apiHandler.send(method: .POST, path: "\(portalconfiguration)/\(configuration)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(configuration: String) -> EventLoopFuture<StripePortalConfiguration> {
+    public func retrieve(configuration: String, context: LoggingContext) -> EventLoopFuture<StripePortalConfiguration> {
         return apiHandler.send(method: .GET, path: "\(portalconfiguration)/\(configuration)", headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePortalConfigurationList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePortalConfigurationList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

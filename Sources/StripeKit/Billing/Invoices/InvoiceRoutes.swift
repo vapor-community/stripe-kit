@@ -9,6 +9,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
+import Baggage
 
 public protocol InvoiceRoutes {
     /// This endpoint creates a draft invoice for a given customer. The draft invoice created pulls in all pending invoice items on that customer, including prorations.
@@ -54,7 +55,8 @@ public protocol InvoiceRoutes {
                 statementDescriptor: String?,
                 subscription: String?,
                 transferData: [String: Any]?,
-                expand: [String]?) -> EventLoopFuture<StripeInvoice>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeInvoice>
     
     /// Retrieves the invoice with the given ID.
     ///
@@ -62,7 +64,7 @@ public protocol InvoiceRoutes {
     ///   - invoice: The identifier of the desired invoice.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func retrieve(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice>
+    func retrieve(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice>
     
     /// Draft invoices are fully editable. Once an invoice is [finalized](https://stripe.com/docs/billing/invoices/workflow#finalized), monetary values, as well as `billing`, become uneditable.
     ///
@@ -104,13 +106,14 @@ public protocol InvoiceRoutes {
                 paymentSettings: [String: Any]?,
                 statementDescriptor: String?,
                 transferData: [String: Any]?,
-                expand: [String]?) -> EventLoopFuture<StripeInvoice>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeInvoice>
     
     /// Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api/invoices/delete#void_invoice).
     ///
     /// - Parameter invoice: The identifier of the invoice to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(invoice: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(invoice: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject>
     
     /// Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you’d like to finalize a draft invoice manually, you can do so using this method.
     ///
@@ -119,7 +122,7 @@ public protocol InvoiceRoutes {
     ///   - autoAdvance: Controls whether Stripe will perform automatic collection of the invoice. When false, the invoice’s state will not automatically advance without an explicit action.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func finalize(invoice: String, autoAdvance: Bool?, expand: [String]?) -> EventLoopFuture<StripeInvoice>
+    func finalize(invoice: String, autoAdvance: Bool?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice>
     
     /// Stripe automatically creates and then attempts to collect payment on invoices for customers on subscriptions according to your subscriptions settings. However, if you’d like to attempt payment on an invoice out of the normal collection schedule or for some other reason, you can do so.
     ///
@@ -138,7 +141,8 @@ public protocol InvoiceRoutes {
              paidOutOfBand: Bool?,
              paymentMethod: String?,
              source: String?,
-             expand: [String]?) -> EventLoopFuture<StripeInvoice>
+             expand: [String]?,
+             context: LoggingContext) -> EventLoopFuture<StripeInvoice>
     
     /// Stripe will automatically send invoices to customers according to your subscriptions settings. However, if you’d like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email. /n Requests made in test-mode result in no emails being sent, despite sending an invoice.sent event.
     ///
@@ -146,7 +150,7 @@ public protocol InvoiceRoutes {
     ///   - invoice: The invoice you would like to send. The billing mode for this invoice must be `send_invoice`.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func send(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice>
+    func send(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice>
     
     /// Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://stripe.com/docs/api/invoices/void#delete_invoice), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
     ///
@@ -154,7 +158,7 @@ public protocol InvoiceRoutes {
     ///   - invoice: ID of invoice to void. It must be finalized.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func void(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice>
+    func void(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice>
     
     /// Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
     ///
@@ -162,7 +166,7 @@ public protocol InvoiceRoutes {
     ///   - invoice: The identifier of the invoice to be marked as uncollectible. The invoice must be `open`.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoice`.
-    func markUncollectible(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice>
+    func markUncollectible(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice>
     
     /// When retrieving an invoice, you’ll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
     ///
@@ -170,25 +174,25 @@ public protocol InvoiceRoutes {
     ///   - invoice: The ID of the invoice containing the lines to be retrieved.
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/invoices/invoice_lines).
     /// - Returns: A `StripeInvoiceLineItemList`.
-    func retrieveLineItems(invoice: String, filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceLineItemList>
+    func retrieveLineItems(invoice: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList>
     
     ///  At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discount that is applicable to the customer. /n Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer’s discount. /n You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass a `proration_date` parameter when doing the actual subscription update. The value passed in should be the same as the `subscription_proration_date` returned on the upcoming invoice resource. The recommended way to get only the prorations being previewed is to consider only proration line items where `period[start]` is equal to the `subscription_proration_date` on the upcoming invoice resource.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/invoices/upcoming).
     /// - Returns: A `StripeInvoice`.
-    func retrieveUpcomingInvoice(filter: [String: Any]?) -> EventLoopFuture<StripeInvoice>
+    func retrieveUpcomingInvoice(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice>
     
     /// When retrieving an upcoming invoice, you’ll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/invoices/upcoming_invoice_lines).
     /// - Returns: A `StripeInvoiceLineItemList`.
-    func retrieveUpcomingLineItems(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceLineItemList>
+    func retrieveUpcomingLineItems(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList>
     
     /// You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/invoices/list).
     /// - Returns: A `StripeInvoiceList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -214,7 +218,8 @@ extension InvoiceRoutes {
                        statementDescriptor: String? = nil,
                        subscription: String? = nil,
                        transferData: [String: Any]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         return create(customer: customer,
                       applicationFeeAmount: applicationFeeAmount,
                       autoAdvance: autoAdvance,
@@ -237,7 +242,7 @@ extension InvoiceRoutes {
                       expand: expand)
     }
     
-    public func retrieve(invoice: String, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+    public func retrieve(invoice: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         return retrieve(invoice: invoice, expand: expand)
     }
     
@@ -259,7 +264,8 @@ extension InvoiceRoutes {
                        paymentSettings: [String: Any]? = nil,
                        statementDescriptor: String? = nil,
                        transferData: [String: Any]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         return update(invoice: invoice,
                       applicationFeeAmount: applicationFeeAmount,
                       autoAdvance: autoAdvance,
@@ -281,11 +287,11 @@ extension InvoiceRoutes {
                       expand: expand)
     }
     
-    public func delete(invoice: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(invoice: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return delete(invoice: invoice)
     }
     
-    public func finalize(invoice: String, autoAdvance: Bool? = nil, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+    public func finalize(invoice: String, autoAdvance: Bool? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         return finalize(invoice: invoice, autoAdvance: autoAdvance, expand: expand)
     }
     
@@ -295,7 +301,8 @@ extension InvoiceRoutes {
                     paidOutOfBand: Bool? = nil,
                     paymentMethod: String? = nil,
                     source: String? = nil,
-                    expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+                    expand: [String]? = nil,
+                    context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         return pay(invoice: invoice,
                    forgive: forgive,
                    offSession: offSession,
@@ -305,31 +312,31 @@ extension InvoiceRoutes {
                    expand: expand)
     }
     
-    public func send(invoice: String, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+    public func send(invoice: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         return send(invoice: invoice, expand: expand)
     }
     
-    public func void(invoice: String, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+    public func void(invoice: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         return void(invoice: invoice, expand: expand)
     }
     
-    public func markUncollectible(invoice: String, expand: [String]? = nil) -> EventLoopFuture<StripeInvoice> {
+    public func markUncollectible(invoice: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         return markUncollectible(invoice: invoice, expand: expand)
     }
     
-    public func retrieveLineItems(invoice: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeInvoiceLineItemList> {
+    public func retrieveLineItems(invoice: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList> {
         return retrieveLineItems(invoice: invoice, filter: filter)
     }
     
-    public func retrieveUpcomingInvoice(filter: [String: Any]? = nil) -> EventLoopFuture<StripeInvoice> {
+    public func retrieveUpcomingInvoice(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         return retrieveUpcomingInvoice(filter: filter)
     }
     
-    public func retrieveUpcomingLineItems(filter: [String: Any]? = nil) -> EventLoopFuture<StripeInvoiceLineItemList> {
+    public func retrieveUpcomingLineItems(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList> {
         return retrieveUpcomingLineItems(filter: filter)
     }
     
-    public func listAll(filter: [String : Any]? = nil) -> EventLoopFuture<StripeInvoiceList> {
+    public func listAll(filter: [String : Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeInvoiceList> {
         return listAll(filter: filter)
     }
 }
@@ -362,7 +369,8 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                        statementDescriptor: String?,
                        subscription: String?,
                        transferData: [String: Any]?,
-                       expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         body["customer"] = customer
@@ -446,7 +454,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .POST, path: invoices, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+    public func retrieve(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -473,7 +481,8 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                        paymentSettings: [String: Any]?,
                        statementDescriptor: String?,
                        transferData: [String: Any]?,
-                       expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         if let applicationFeeAmount = applicationFeeAmount {
@@ -551,11 +560,11 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(invoice: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(invoice: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(invoices)/\(invoice)", headers: headers)
     }
     
-    public func finalize(invoice: String, autoAdvance: Bool?, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+    public func finalize(invoice: String, autoAdvance: Bool?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         if let autoAdvance = autoAdvance {
@@ -575,7 +584,8 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
                     paidOutOfBand: Bool?,
                     paymentMethod: String?,
                     source: String?,
-                    expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+                    expand: [String]?,
+                    context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         if let forgive = forgive {
@@ -605,7 +615,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/pay", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func send(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+    public func send(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         if let expand = expand {
@@ -615,7 +625,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/send", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func void(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+    public func void(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         if let expand = expand {
@@ -625,7 +635,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/void", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func markUncollectible(invoice: String, expand: [String]?) -> EventLoopFuture<StripeInvoice> {
+    public func markUncollectible(invoice: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         var body: [String: Any] = [:]
         
         if let expand = expand {
@@ -635,7 +645,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)/mark_uncollectible", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieveLineItems(invoice: String, filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceLineItemList> {
+    public func retrieveLineItems(invoice: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -644,7 +654,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .GET, path: "\(invoices)/\(invoice)/lines", query: queryParams, headers: headers)
     }
     
-    public func retrieveUpcomingInvoice(filter: [String: Any]?) -> EventLoopFuture<StripeInvoice> {
+    public func retrieveUpcomingInvoice(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoice> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -653,7 +663,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .GET, path: "\(invoices)/upcoming", query: queryParams, headers: headers)
     }
     
-    public func retrieveUpcomingLineItems(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceLineItemList> {
+    public func retrieveUpcomingLineItems(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceLineItemList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -662,7 +672,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .GET, path: "\(invoices)/upcoming/lines", query: queryParams, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeInvoiceList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeInvoiceList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

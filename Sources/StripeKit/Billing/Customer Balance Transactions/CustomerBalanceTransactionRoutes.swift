@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol CustomerBalanceTransactionRoutes {
     
@@ -22,13 +23,14 @@ public protocol CustomerBalanceTransactionRoutes {
                 customer: String,
                 description: String?,
                 metadata: [String: String]?,
-                expand: [String]?) -> EventLoopFuture<StripeCustomerBalanceTransaction>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransaction>
     
     /// Retrieves a specific transaction that updated the customer’s balance.
     /// - Parameter customer: The customer the transaction belongs to.
     /// - Parameter transaction: The transaction to retrieve.
     /// - Parameter expand: An array of properties to expand.
-    func retrieve(customer: String, transaction: String, expand: [String]?) -> EventLoopFuture<StripeCustomerBalanceTransaction>
+    func retrieve(customer: String, transaction: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransaction>
     
     /// Most customer balance transaction fields are immutable, but you may update its `description` and `metadata`.
     /// - Parameter customer: The customer the transaction belongs to.
@@ -40,12 +42,13 @@ public protocol CustomerBalanceTransactionRoutes {
                 transaction: String,
                 description: String?,
                 metadata: [String: String]?,
-                expand: [String]?) -> EventLoopFuture<StripeCustomerBalanceTransaction>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransaction>
     
     /// Returns a list of transactions that updated the customer’s balance.
     /// - Parameter customer: The customer to retrieve transactions for.
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/customer_balance_transactions/list)
-    func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeCustomerBalanceTransactionList>
+    func listAll(customer: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransactionList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -57,7 +60,8 @@ extension CustomerBalanceTransactionRoutes {
                        customer: String,
                        description: String? = nil,
                        metadata: [String: String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
         return create(amount: amount,
                       currency: currency,
                       customer: customer,
@@ -66,7 +70,7 @@ extension CustomerBalanceTransactionRoutes {
                       expand: expand)
     }
     
-    public func retrieve(customer: String, transaction: String, expand: [String]? = nil) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
+    public func retrieve(customer: String, transaction: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
         return retrieve(customer: customer, transaction: transaction, expand: expand)
     }
     
@@ -74,7 +78,8 @@ extension CustomerBalanceTransactionRoutes {
                        transaction: String,
                        description: String? = nil,
                        metadata: [String: String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
         return update(customer: customer,
                       transaction: transaction,
                       description: description,
@@ -82,7 +87,7 @@ extension CustomerBalanceTransactionRoutes {
                       expand: expand)
     }
     
-    public func listAll(customer: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeCustomerBalanceTransactionList> {
+    public func listAll(customer: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransactionList> {
         return listAll(customer: customer, filter: filter)
     }
 }
@@ -102,7 +107,8 @@ public struct StripeCustomerBalanceTransactionRoutes: CustomerBalanceTransaction
                        customer: String,
                        description: String?,
                        metadata: [String: String]?,
-                       expand: [String]?) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
         var body: [String: Any] = ["amount": amount,
                                    "currency": currency.rawValue]
         
@@ -121,7 +127,7 @@ public struct StripeCustomerBalanceTransactionRoutes: CustomerBalanceTransaction
         return apiHandler.send(method: .POST, path: "\(customerbalancetransactions)/\(customer)/balance_transactions", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(customer: String, transaction: String, expand: [String]?) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
+    public func retrieve(customer: String, transaction: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
         var queryParams = ""
         if let expand = expand {
             queryParams += ["expand": expand].queryParameters
@@ -133,7 +139,8 @@ public struct StripeCustomerBalanceTransactionRoutes: CustomerBalanceTransaction
                        transaction: String,
                        description: String?,
                        metadata: [String: String]?,
-                       expand: [String]?) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransaction> {
         var body: [String: Any] = [:]
         
         if let description = description {
@@ -151,7 +158,7 @@ public struct StripeCustomerBalanceTransactionRoutes: CustomerBalanceTransaction
         return apiHandler.send(method: .POST, path: "\(customerbalancetransactions)/\(customer)/balance_transactions/\(transaction)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(customer: String, filter: [String: Any]?) -> EventLoopFuture<StripeCustomerBalanceTransactionList> {
+    public func listAll(customer: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCustomerBalanceTransactionList> {
         var queryParams = ""
         if let filter = filter {
             queryParams += filter.queryParameters

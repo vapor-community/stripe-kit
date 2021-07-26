@@ -8,6 +8,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
+import Baggage
 
 public protocol FileLinkRoutes {
     /// Creates a new file link object.
@@ -21,7 +22,8 @@ public protocol FileLinkRoutes {
     func create(file: String,
                 expiresAt: Date?,
                 metadata: [String: String]?,
-                expand: [String]?) -> EventLoopFuture<StripeFileLink>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeFileLink>
     
     /// Retrieves the file link with the given ID.
     ///
@@ -29,7 +31,7 @@ public protocol FileLinkRoutes {
     ///   - link: The identifier of the file link to be retrieved.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeFileLink`.
-    func retrieve(link: String, expand: [String]?) -> EventLoopFuture<StripeFileLink>
+    func retrieve(link: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeFileLink>
     
     /// Updates an existing file link object. Expired links can no longer be updated
     ///
@@ -42,14 +44,15 @@ public protocol FileLinkRoutes {
     func update(link: String,
                 expiresAt: Any?,
                 metadata: [String: String]?,
-                expand: [String]?) -> EventLoopFuture<StripeFileLink>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeFileLink>
     
     
     /// Returns a list of file links.
     ///
     /// - Parameter filter: A dictionary that contains the filters. More info [here](https://stripe.com/docs/api/curl#list_file_links).
     /// - Returns: A `StripeFileLinkList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileLinkList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeFileLinkList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -59,28 +62,30 @@ extension FileLinkRoutes {
     public func create(file: String,
                        expiresAt: Date? = nil,
                        metadata: [String: String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeFileLink> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeFileLink> {
         return create(file: file,
                       expiresAt: expiresAt,
                       metadata: metadata,
                       expand: expand)
     }
     
-    public func retrieve(link: String, expand: [String]? = nil) -> EventLoopFuture<StripeFileLink> {
+    public func retrieve(link: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeFileLink> {
         return retrieve(link: link, expand: expand)
     }
     
     public func update(link: String,
                        expiresAt: Any? = nil,
                        metadata: [String: String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeFileLink> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeFileLink> {
         return update(link: link,
                       expiresAt: expiresAt,
                       metadata: metadata,
                       expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeFileLinkList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeFileLinkList> {
         return listAll(filter: filter)
     }
 }
@@ -98,7 +103,8 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
     public func create(file: String,
                        expiresAt: Date?,
                        metadata: [String: String]?,
-                       expand: [String]?) -> EventLoopFuture<StripeFileLink> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeFileLink> {
         var body: [String: Any] = [:]
         if let expiresAt = expiresAt {
             body["expires_at"] = Int(expiresAt.timeIntervalSince1970)
@@ -115,7 +121,7 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         return apiHandler.send(method: .POST, path: filelinks, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(link: String, expand: [String]?) -> EventLoopFuture<StripeFileLink> {
+    public func retrieve(link: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeFileLink> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -127,7 +133,8 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
     public func update(link: String,
                        expiresAt: Any?,
                        metadata: [String: String]?,
-                       expand: [String]?) -> EventLoopFuture<StripeFileLink> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeFileLink> {
         var body: [String: Any] = [:]
         
         if let expiresAt = expiresAt as? Date {
@@ -149,7 +156,7 @@ public struct StripeFileLinkRoutes: FileLinkRoutes {
         return apiHandler.send(method: .POST, path: "\(filelinks)/\(link)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileLinkList> {
+    public func listAll(filter: [String: Any]?), context: LoggingContext -> EventLoopFuture<StripeFileLinkList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

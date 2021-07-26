@@ -9,6 +9,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
+import Baggage
 
 public protocol SubscriptionRoutes {
     /// Creates a new subscription on an existing customer.
@@ -66,7 +67,8 @@ public protocol SubscriptionRoutes {
                 trialEnd: Any?,
                 trialFromPlan: Bool?,
                 trialPeriodDays: Int?,
-                expand: [String]?) -> EventLoopFuture<StripeSubscription>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSubscription>
     
     /// Retrieves the subscription with the given ID.
     ///
@@ -74,7 +76,7 @@ public protocol SubscriptionRoutes {
     ///   - id: ID of the subscription to retrieve.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeSubscription`.
-    func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSubscription>
+    func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSubscription>
     
     /// Updates an existing subscription to match the specified parameters. When changing plans or quantities, we will optionally prorate the price we charge next month to make up for any price changes. To preview how the proration will be calculated, use the [upcoming invoice](https://stripe.com/docs/api/subscriptions/update#upcoming_invoice) endpoint. /n By default, we prorate subscription changes. For example, if a customer signs up on May 1 for a $100 plan, she'll be billed $100 immediately. If on May 15 she switches to a $200 plan, then on June 1 she'll be billed $250 ($200 for a renewal of her subscription, plus a $50 prorating adjustment for half of the previous month's $100 difference). /n Similarly, a downgrade will generate a credit to be applied to the next invoice. We also prorate when you make quantity changes. Switching plans does not normally change the billing date or generate an immediate charge. The exception is when you're switching between different intervals (e.g., monthly to yearly): in this case, we apply a credit for the time unused on the old plan, and charge for the new plan starting right away, resetting the billing date. (However, note that if we charge for the new plan and that payment fails, the plan change will not go into effect). /n If you'd like to charge for an upgrade immediately, just pass `prorate` as `true` (as usual), and then [invoice the customer](https://stripe.com/docs/api/subscriptions/update#create_invoice) as soon as you make the subscription change. That will collect the proration adjustments into a new invoice, and Stripe will automatically attempt to collect payment on the invoice. /n If you don't want to prorate at all, set the prorate option to `false` and the customer would be billed $100 on May 1 and $200 on June 1. Similarly, if you set prorate to `false` when switching between different billing intervals (monthly to yearly, for example), we won't generate any credits for the old subscription's unused time—although we will still reset the billing date and will bill immediately for the new subscription.
     ///
@@ -131,7 +133,8 @@ public protocol SubscriptionRoutes {
                 transferData: [String: Any]?,
                 trialEnd: Any?,
                 trialFromPlan: Bool?,
-                expand: [String]?) -> EventLoopFuture<StripeSubscription>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSubscription>
     
     /// Cancels a customer’s subscription immediately. The customer will not be charged again for the subscription. /n Note, however, that any pending invoice items that you’ve created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api/subscriptions/cancel#delete_invoiceitem) . If you’ve set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed. /n By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
 
@@ -145,13 +148,14 @@ public protocol SubscriptionRoutes {
     func cancel(subscription: String,
                 invoiceNow: Bool?,
                 prorate: Bool?,
-                expand: [String]?) -> EventLoopFuture<StripeSubscription>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSubscription>
     
     /// By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/subscriptions/list)
     /// - Returns: A `StripeSubscriptionList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeSubscriptionList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -183,7 +187,8 @@ extension SubscriptionRoutes {
                        trialEnd: Any? = nil,
                        trialFromPlan: Bool? = nil,
                        trialPeriodDays: Int? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeSubscription> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscription> {
         return create(customer: customer,
                       addInvoiceItems: addInvoiceItems,
                       applicationFeePercent: applicationFeePercent,
@@ -212,7 +217,7 @@ extension SubscriptionRoutes {
                       expand: expand)
     }
     
-    public func retrieve(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeSubscription> {
+    public func retrieve(id: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSubscription> {
         return retrieve(id: id, expand: expand)
     }
     
@@ -241,7 +246,8 @@ extension SubscriptionRoutes {
                        transferData: [String: Any]? = nil,
                        trialEnd: Any? = nil,
                        trialFromPlan: Bool? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeSubscription> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscription> {
         return update(subscription: subscription,
                       addInvoiceItems: addInvoiceItems,
                       applicationFeePercent: applicationFeePercent,
@@ -273,14 +279,15 @@ extension SubscriptionRoutes {
     public func cancel(subscription: String,
                        invoiceNow: Bool? = nil,
                        prorate: Bool? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeSubscription> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscription> {
         return cancel(subscription: subscription,
                       invoiceNow: invoiceNow,
                       prorate: prorate,
                       expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSubscriptionList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionList> {
         return listAll(filter: filter)
     }
 }
@@ -320,7 +327,8 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        trialEnd: Any?,
                        trialFromPlan: Bool?,
                        trialPeriodDays: Int?,
-                       expand: [String]?) -> EventLoopFuture<StripeSubscription> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscription> {
         var body: [String: Any] = ["customer": customer,
                                    "items": items]
         
@@ -427,7 +435,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
         return apiHandler.send(method: .POST, path: subscriptions, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSubscription> {
+    public func retrieve(id: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSubscription> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -460,7 +468,8 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        transferData: [String: Any]?,
                        trialEnd: Any?,
                        trialFromPlan: Bool?,
-                       expand: [String]?) -> EventLoopFuture<StripeSubscription> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscription> {
         var body: [String: Any] = [:]
         
         if let addInvoiceItems = addInvoiceItems {
@@ -569,7 +578,8 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
     public func cancel(subscription: String,
                        invoiceNow: Bool?,
                        prorate: Bool?,
-                       expand: [String]?) -> EventLoopFuture<StripeSubscription> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscription> {
         var body: [String: Any] = [:]
         
         if let invoiceNow = invoiceNow {
@@ -587,7 +597,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
         return apiHandler.send(method: .DELETE, path: "\(subscriptions)/\(subscription)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripeSubscriptionList> {
+    public func listAll(filter: [String : Any]?, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

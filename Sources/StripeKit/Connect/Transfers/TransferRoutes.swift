@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol TransferRoutes {
     /// To send funds from your Stripe account to a connected account, you create a new transfer object. Your [Stripe balance](https://stripe.com/docs/api/transfers/create#balance) must be able to cover the transfer amount, or you’ll receive an “Insufficient Funds” error.
@@ -30,14 +31,15 @@ public protocol TransferRoutes {
                 sourceTransaction: String?,
                 sourceType: StripeTransferSourceType?,
                 transferGroup: String?,
-                expand: [String]?) -> EventLoopFuture<StripeTransfer>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeTransfer>
     
     /// Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
     ///
     /// - Parameter transfer: The identifier of the transfer to be retrieved.
     /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripeTransfer`.
-    func retrieve(transfer: String, expand: [String]?) -> EventLoopFuture<StripeTransfer>
+    func retrieve(transfer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTransfer>
     
     /// Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     /// This request accepts only metadata as an argument.
@@ -51,13 +53,14 @@ public protocol TransferRoutes {
     func update(transfer: String,
                 description: String?,
                 metadata: [String: String]?,
-                expand: [String]?) -> EventLoopFuture<StripeTransfer>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeTransfer>
     
     /// Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/transfers/list)
     /// - Returns: A `StripeTransferList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransferList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeTransferList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -72,7 +75,8 @@ extension TransferRoutes {
                        sourceTransaction: String? = nil,
                        sourceType: StripeTransferSourceType? = nil,
                        transferGroup: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeTransfer> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeTransfer> {
         return create(amount: amount,
                       currency: currency,
                       destination: destination,
@@ -84,21 +88,22 @@ extension TransferRoutes {
                       expand: expand)
     }
     
-    public func retrieve(transfer: String, expand: [String]? = nil) -> EventLoopFuture<StripeTransfer> {
+    public func retrieve(transfer: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTransfer> {
         return retrieve(transfer: transfer, expand: expand)
     }
     
     public func update(transfer: String,
                        description: String? = nil,
                        metadata: [String: String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeTransfer> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeTransfer> {
         return update(transfer: transfer,
                       description: description,
                       metadata: metadata,
                       expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTransferList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTransferList> {
         return listAll(filter: filter)
     }
 }
@@ -121,7 +126,8 @@ public struct StripeTransferRoutes: TransferRoutes {
                        sourceTransaction: String?,
                        sourceType: StripeTransferSourceType?,
                        transferGroup: String?,
-                       expand: [String]?) -> EventLoopFuture<StripeTransfer> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeTransfer> {
         var body: [String: Any] = ["amount": amount,
                                    "currency": currency.rawValue,
                                    "destination": destination]
@@ -153,7 +159,7 @@ public struct StripeTransferRoutes: TransferRoutes {
         return apiHandler.send(method: .POST, path: transfers, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(transfer: String, expand: [String]?) -> EventLoopFuture<StripeTransfer> {
+    public func retrieve(transfer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTransfer> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -164,7 +170,8 @@ public struct StripeTransferRoutes: TransferRoutes {
     public func update(transfer: String,
                        description: String?,
                        metadata: [String: String]?,
-                       expand: [String]?) -> EventLoopFuture<StripeTransfer> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeTransfer> {
         var body: [String: Any] = [:]
         
         if let description = description {
@@ -182,7 +189,7 @@ public struct StripeTransferRoutes: TransferRoutes {
         return apiHandler.send(method: .POST, path: "\(transfers)/\(transfer)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTransferList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeTransferList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

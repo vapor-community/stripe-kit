@@ -8,6 +8,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
+import Baggage
 
 public protocol PriceRoutes {
     /// Creates a new price for an existing product. The price can be recurring or one-time.
@@ -43,12 +44,13 @@ public protocol PriceRoutes {
                 transferLookupKey: String?,
                 transformQuantity: [String: Any]?,
                 unitAmountDecimal: Decimal?,
-                expand: [String]?) -> EventLoopFuture<StripePrice>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripePrice>
     
     /// Retrieves the price with the given ID.
     /// - Parameter price: The ID of the price to retrieve.
     /// - Parameter expand: An array of properties to expand.
-    func retrieve(price: String, expand: [String]?) -> EventLoopFuture<StripePrice>
+    func retrieve(price: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePrice>
     
     /// Updates the specified price by setting the values of the parameters passed. Any parameters not provided are left unchanged.
     /// - Parameters:
@@ -65,11 +67,12 @@ public protocol PriceRoutes {
                 nickname: String?,
                 lookupKey: String?,
                 transferLookupKey: String?,
-                expand: [String]?) -> EventLoopFuture<StripePrice>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripePrice>
     
     /// Returns a list of your prices.
     /// - Parameter filter: A dictionary that will be used for the query parameters.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePriceList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePriceList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -91,7 +94,8 @@ extension PriceRoutes {
                        transferLookupKey: String? = nil,
                        transformQuantity: [String: Any]? = nil,
                        unitAmountDecimal: Decimal? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripePrice> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePrice> {
         create(currency: currency,
                unitAmount: unitAmount,
                active: active,
@@ -110,7 +114,7 @@ extension PriceRoutes {
                expand: expand)
     }
     
-    public func retrieve(price: String, expand: [String]? = nil) -> EventLoopFuture<StripePrice> {
+    public func retrieve(price: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePrice> {
         retrieve(price: price, expand: expand)
     }
     
@@ -120,7 +124,8 @@ extension PriceRoutes {
                        nickname: String? = nil,
                        lookupKey: String? = nil,
                        transferLookupKey: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripePrice> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePrice> {
         update(price: price,
                active: active,
                metadata: metadata,
@@ -130,7 +135,7 @@ extension PriceRoutes {
                expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePriceList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePriceList> {
         listAll(filter: filter)
     }
 }
@@ -160,7 +165,8 @@ public struct StripePriceRoutes: PriceRoutes {
                        transferLookupKey: String?,
                        transformQuantity: [String: Any]?,
                        unitAmountDecimal: Decimal?,
-                       expand: [String]?) -> EventLoopFuture<StripePrice> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePrice> {
         var body: [String: Any] = [:]
         
         body["currency"] = currency.rawValue
@@ -228,7 +234,7 @@ public struct StripePriceRoutes: PriceRoutes {
         return apiHandler.send(method: .POST, path: prices, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(price: String, expand: [String]?) -> EventLoopFuture<StripePrice> {
+    public func retrieve(price: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePrice> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -243,7 +249,8 @@ public struct StripePriceRoutes: PriceRoutes {
                        nickname: String?,
                        lookupKey: String?,
                        transferLookupKey: String?,
-                       expand: [String]?) -> EventLoopFuture<StripePrice> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePrice> {
         
         var body: [String: Any] = [:]
         
@@ -270,7 +277,7 @@ public struct StripePriceRoutes: PriceRoutes {
         return apiHandler.send(method: .POST, path: "\(prices)/\(price)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePriceList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePriceList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

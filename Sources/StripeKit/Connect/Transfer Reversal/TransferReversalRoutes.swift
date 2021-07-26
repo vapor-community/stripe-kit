@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol TransferReversalRoutes {
     /// When you create a new reversal, you must specify a transfer to create it on.
@@ -26,7 +27,8 @@ public protocol TransferReversalRoutes {
                 description: String?,
                 metadata: [String: String]?,
                 refundApplicationFee: Bool?,
-                expand: [String]?) -> EventLoopFuture<StripeTransferReversal>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeTransferReversal>
     
     /// By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.
     ///
@@ -35,7 +37,7 @@ public protocol TransferReversalRoutes {
     ///   - reversal: ID of the transfer reversed.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeTransferReversal`.
-    func retrieve(id: String, transfer: String, expand: [String]?) -> EventLoopFuture<StripeTransferReversal>
+    func retrieve(id: String, transfer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTransferReversal>
     
     /// Updates the specified reversal by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     /// This request only accepts metadata and description as arguments.
@@ -49,7 +51,8 @@ public protocol TransferReversalRoutes {
     func update(id: String,
                 transfer: String,
                 metadata: [String: String]?,
-                expand: [String]?) -> EventLoopFuture<StripeTransferReversal>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeTransferReversal>
     
     /// You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.
     ///
@@ -57,7 +60,7 @@ public protocol TransferReversalRoutes {
     ///   - id: The ID of the transfer whose reversals will be retrieved.
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/transfer_reversals/list)
     /// - Returns: A `StripeTransferReversalList`.
-    func listAll(id: String, filter: [String: Any]?) -> EventLoopFuture<StripeTransferReversalList>
+    func listAll(id: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeTransferReversalList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -69,7 +72,8 @@ extension TransferReversalRoutes {
                        description: String? = nil,
                        metadata: [String: String]? = nil,
                        refundApplicationFee: Bool? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeTransferReversal> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeTransferReversal> {
         return create(id: id,
                       amount: amount,
                       description: description,
@@ -78,21 +82,22 @@ extension TransferReversalRoutes {
                       expand: expand)
     }
     
-    public func retrieve(id: String, transfer: String, expand: [String]? = nil) -> EventLoopFuture<StripeTransferReversal> {
+    public func retrieve(id: String, transfer: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTransferReversal> {
         return retrieve(id: id, transfer: transfer, expand: expand)
     }
     
     public func update(id: String,
                        transfer: String,
                        metadata: [String: String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeTransferReversal> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeTransferReversal> {
         return update(id: id,
                       transfer: transfer,
                       metadata: metadata,
                       expand: expand)
     }
     
-    public func listAll(id: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeTransferReversalList> {
+    public func listAll(id: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTransferReversalList> {
         return listAll(id: id, filter: filter)
     }
 }
@@ -112,7 +117,8 @@ public struct StripeTransferReversalRoutes: TransferReversalRoutes {
                        description: String?,
                        metadata: [String: String]?,
                        refundApplicationFee: Bool?,
-                       expand: [String]?) -> EventLoopFuture<StripeTransferReversal> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeTransferReversal> {
         var body: [String: Any] = [:]
         
         if let amount = amount {
@@ -138,7 +144,7 @@ public struct StripeTransferReversalRoutes: TransferReversalRoutes {
         return apiHandler.send(method: .POST, path: "\(transferreversals)/\(id)/reversals", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String, transfer: String, expand: [String]?) -> EventLoopFuture<StripeTransferReversal> {
+    public func retrieve(id: String, transfer: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTransferReversal> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -150,7 +156,8 @@ public struct StripeTransferReversalRoutes: TransferReversalRoutes {
     public func update(id: String,
                        transfer: String,
                        metadata: [String: String]?,
-                       expand: [String]?) -> EventLoopFuture<StripeTransferReversal> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeTransferReversal> {
         var body: [String: Any] = [:]
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
@@ -163,7 +170,7 @@ public struct StripeTransferReversalRoutes: TransferReversalRoutes {
         return apiHandler.send(method: .POST, path: "\(transferreversals)/\(id)/reversals/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(id: String, filter: [String: Any]?) -> EventLoopFuture<StripeTransferReversalList> {
+    public func listAll(id: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeTransferReversalList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

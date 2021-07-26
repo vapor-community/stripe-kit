@@ -8,6 +8,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
+import Baggage
 
 public protocol UsageRecordRoutes {
     /// Creates a usage record for a specified subscription item and date, and fills it with a quantity. /n Usage records provide `quantity` information that Stripe uses to track how much a customer is using your service. With usage information and the pricing model set up by the [metered billing](https://stripe.com/docs/billing/subscriptions/metered-billing) plan, Stripe helps you send accurate invoices to your customers. /n The default calculation for usage is to add up all the `quantity` values of the usage records within a billing period. You can change this default behavior with the billing plan’s `aggregate_usage` [parameter](https://stripe.com/docs/api/plans/create#create_plan-aggregate_usage). When there is more than one usage record with the same timestamp, Stripe adds the `quantity` values together. In most cases, this is the desired resolution, however, you can change this behavior with the `action` parameter. /n The default pricing model for metered billing is [per-unit pricing](https://stripe.com/docs/api/plans/object#plan_object-billing_scheme). For finer granularity, you can configure metered billing to have a [tiered pricing](https://stripe.com/docs/billing/subscriptions/tiers) model.
@@ -21,7 +22,8 @@ public protocol UsageRecordRoutes {
     func create(quantity: Int,
                 subscriptionItem: String,
                 timestamp: Date,
-                action: String?) -> EventLoopFuture<StripeUsageRecord>
+                action: String?,
+                context: LoggingContext) -> EventLoopFuture<StripeUsageRecord>
     
     /// For the specified subscription item, returns a list of summary objects. Each object in the list provides usage information that’s been summarized from multiple usage records and over a subscription billing period (e.g., 15 usage records in the billing plan’s month of September). \n The list is sorted in reverse-chronological order (newest first). The first list item represents the most current usage period that hasn’t ended yet. Since new usage records can still be added, the returned summary information for the subscription item’s ID should be seen as unstable until the subscription billing period ends.
     ///
@@ -29,7 +31,7 @@ public protocol UsageRecordRoutes {
     ///   - subscriptionItem: Only summary items for the given subscription item.
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/usage_records/subscription_item_summary_list)
     /// - Returns: A `StripeUsageRecordList`.
-    func listAll(subscriptionItem: String, filter: [String: Any]?) -> EventLoopFuture<StripeUsageRecordList>
+    func listAll(subscriptionItem: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeUsageRecordList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -39,14 +41,15 @@ extension UsageRecordRoutes {
     public func create(quantity: Int,
                        subscriptionItem: String,
                        timestamp: Date,
-                       action: String? = nil) -> EventLoopFuture<StripeUsageRecord> {
+                       action: String? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeUsageRecord> {
         return create(quantity: quantity,
                       subscriptionItem: subscriptionItem,
                       timestamp: timestamp,
                       action: action)
     }
     
-    public func listAll(subscriptionItem: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeUsageRecordList> {
+    public func listAll(subscriptionItem: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeUsageRecordList> {
         return listAll(subscriptionItem: subscriptionItem, filter: filter)
     }
 }
@@ -64,7 +67,8 @@ public struct StripeUsageRecordRoutes: UsageRecordRoutes {
     public func create(quantity: Int,
                        subscriptionItem: String,
                        timestamp: Date,
-                       action: String?) -> EventLoopFuture<StripeUsageRecord> {
+                       action: String?,
+                       context: LoggingContext) -> EventLoopFuture<StripeUsageRecord> {
         var body: [String: Any] = ["quantity": quantity,
                                    "timestamp": Int(timestamp.timeIntervalSince1970)]
         
@@ -75,7 +79,7 @@ public struct StripeUsageRecordRoutes: UsageRecordRoutes {
         return apiHandler.send(method: .POST, path: "\(subscriptionitems)/\(subscriptionItem)/usage_records", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(subscriptionItem: String, filter: [String: Any]?) -> EventLoopFuture<StripeUsageRecordList> {
+    public func listAll(subscriptionItem: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeUsageRecordList> {
         var queryParams = ""
         if let filter = filter {
             queryParams += filter.queryParameters

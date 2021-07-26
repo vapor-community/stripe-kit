@@ -9,6 +9,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
+import Baggage
 
 public protocol SubscriptionItemRoutes {
     /// Adds a new item to an existing subscription. No existing items will be changed or replaced.
@@ -36,13 +37,14 @@ public protocol SubscriptionItemRoutes {
                 prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                 prorationDate: Date?,
                 quantity: Int?,
-                taxRates: [String]?) -> EventLoopFuture<StripeSubscriptionItem>
+                taxRates: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem>
     
     /// Retrieves the invoice item with the given ID.
     ///
     /// - Parameter item: The identifier of the subscription item to retrieve.
     /// - Returns: A `StripeSubscriptionItem`.
-    func retrieve(item: String) -> EventLoopFuture<StripeSubscriptionItem>
+    func retrieve(item: String, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem>
     
     /// Updates the plan or quantity of an item on a current subscription.
     ///
@@ -71,7 +73,8 @@ public protocol SubscriptionItemRoutes {
                 prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                 prorationDate: Date?,
                 quantity: Int?,
-                taxRates: [String]?) -> EventLoopFuture<StripeSubscriptionItem>
+                taxRates: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem>
     
     /// Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
     ///
@@ -84,7 +87,8 @@ public protocol SubscriptionItemRoutes {
     func delete(item: String,
                 clearUsage: Bool?,
                 prorationBehavior: StripeSubscriptionItemProrationBehavior?,
-                prorationDate: Date?) -> EventLoopFuture<StripeSubscriptionItem>
+                prorationDate: Date?,
+                context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem>
     
     /// Returns a list of your subscription items for a given subscription.
     ///
@@ -92,7 +96,7 @@ public protocol SubscriptionItemRoutes {
     ///   - subscription: The ID of the subscription whose items will be retrieved.
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/subscription_items/list)
     /// - Returns: A `StripeSubscriptionItemList`.
-    func listAll(subscription: String, filter: [String: Any]?) -> EventLoopFuture<StripeSubscriptionItemList>
+    func listAll(subscription: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItemList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -109,7 +113,8 @@ extension SubscriptionItemRoutes {
                        prorationBehavior: StripeSubscriptionItemProrationBehavior? = nil,
                        prorationDate: Date? = nil,
                        quantity: Int? = nil,
-                       taxRates: [String]? = nil) -> EventLoopFuture<StripeSubscriptionItem> {
+                       taxRates: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
         return create(plan: plan,
                       subscription: subscription,
                       billingThresholds: billingThresholds,
@@ -123,7 +128,7 @@ extension SubscriptionItemRoutes {
                       taxRates: taxRates)
     }
     
-    public func retrieve(item: String) -> EventLoopFuture<StripeSubscriptionItem> {
+    public func retrieve(item: String, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
         return retrieve(item: item)
     }
     
@@ -138,7 +143,8 @@ extension SubscriptionItemRoutes {
                        prorationBehavior: StripeSubscriptionItemProrationBehavior? = nil,
                        prorationDate: Date? = nil,
                        quantity: Int? = nil,
-                       taxRates: [String]? = nil) -> EventLoopFuture<StripeSubscriptionItem> {
+                       taxRates: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
         return update(item: item,
                       billingThresholds: billingThresholds,
                       metadata: metadata,
@@ -156,14 +162,15 @@ extension SubscriptionItemRoutes {
     public func delete(item: String,
                        clearUsage: Bool? = nil,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior? = nil,
-                       prorationDate: Date? = nil) -> EventLoopFuture<StripeSubscriptionItem> {
+                       prorationDate: Date? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
         return delete(item: item,
                       clearUsage: clearUsage,
                       prorationBehavior: prorationBehavior,
                       prorationDate: prorationDate)
     }
     
-    public func listAll(subscription: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeSubscriptionItemList> {
+    public func listAll(subscription: String, filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItemList> {
         return listAll(subscription: subscription, filter: filter)
     }
 }
@@ -188,7 +195,8 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
                        prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                        prorationDate: Date?,
                        quantity: Int?,
-                       taxRates: [String]?) -> EventLoopFuture<StripeSubscriptionItem> {
+                       taxRates: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
         var body: [String: Any] = ["plan": plan,
                                    "subscription": subscription]
         
@@ -231,7 +239,7 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
         return apiHandler.send(method: .POST, path: subscirptionitems, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(item: String) -> EventLoopFuture<StripeSubscriptionItem> {
+    public func retrieve(item: String, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
         return apiHandler.send(method: .GET, path: "\(subscirptionitems)/\(item)", headers: headers)
     }
     
@@ -246,7 +254,8 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
                        prorationBehavior: StripeSubscriptionItemProrationBehavior?,
                        prorationDate: Date?,
                        quantity: Int?,
-                       taxRates: [String]?) -> EventLoopFuture<StripeSubscriptionItem> {
+                       taxRates: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
         var body: [String: Any] = [:]
         
         if let billingThresholds = billingThresholds {
@@ -299,7 +308,8 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
     public func delete(item: String,
                        clearUsage: Bool?,
                        prorationBehavior: StripeSubscriptionItemProrationBehavior?,
-                       prorationDate: Date?) -> EventLoopFuture<StripeSubscriptionItem> {
+                       prorationDate: Date?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItem> {
         var body: [String: Any] = [:]
         
         if let clearUsage = clearUsage {
@@ -317,7 +327,7 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
         return apiHandler.send(method: .DELETE, path: "\(subscirptionitems)/\(item)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(subscription: String, filter: [String: Any]?) -> EventLoopFuture<StripeSubscriptionItemList> {
+    public func listAll(subscription: String, filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSubscriptionItemList> {
         var queryParams = "subscription=\(subscription)"
         if let filter = filter {
             queryParams += "&" + filter.queryParameters

@@ -9,6 +9,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
+import Baggage
 
 public protocol CouponRoutes {
     /// You can create coupons easily via the [coupon management page](https://dashboard.stripe.com/coupons) of the Stripe dashboard. Coupon creation is also accessible via the API if you need to create coupons on the fly. /n A coupon has either a `percent_off` or an `amount_off` and `currency`. If you set an `amount_off`, that amount will be subtracted from any invoice’s subtotal. For example, an invoice with a subtotal of $100 will have a final total of $0 if a coupon with an `amount_off` of 20000 is applied to it and an invoice with a subtotal of $300 will have a final total of $100 if a coupon with an `amount_off` of 20000 is applied to it.
@@ -34,13 +35,14 @@ public protocol CouponRoutes {
                 metadata: [String: String]?,
                 name: String?,
                 percentOff: Int?,
-                redeemBy: Date?) -> EventLoopFuture<StripeCoupon>
+                redeemBy: Date?,
+                context: LoggingContext) -> EventLoopFuture<StripeCoupon>
     
     /// Retrieves the coupon with the given ID.
     ///
     /// - Parameter coupon: The ID of the desired coupon.
     /// - Returns: A `StripeCoupon`.
-    func retrieve(coupon: String) -> EventLoopFuture<StripeCoupon>
+    func retrieve(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeCoupon>
     
     /// Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
     ///
@@ -49,19 +51,19 @@ public protocol CouponRoutes {
     ///   - metadata: A set of key-value pairs that you can attach to a coupon object. It can be useful for storing additional information about the coupon in a structured format.
     ///   - name: Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the id is shown if name is not set.
     /// - Returns: A `StripeCoupon`.
-    func update(coupon: String, metadata: [String: String]?, name: String?) -> EventLoopFuture<StripeCoupon>
+    func update(coupon: String, metadata: [String: String]?, name: String?, context: LoggingContext) -> EventLoopFuture<StripeCoupon>
     
     /// You can delete coupons via the [coupon management page](https://dashboard.stripe.com/coupons) of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can’t redeem the coupon. You can also delete coupons via the API.
     ///
     /// - Parameter coupon: The identifier of the coupon to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject>
     
     /// Returns a list of your coupons.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/coupons/list).
     /// - Returns: A `StripeCouponList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCouponList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCouponList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -77,7 +79,8 @@ extension CouponRoutes {
                        metadata: [String: String]? = nil,
                        name: String? = nil,
                        percentOff: Int? = nil,
-                       redeemBy: Date? = nil) -> EventLoopFuture<StripeCoupon> {
+                       redeemBy: Date? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
         return create(id: id,
                       duration: duration,
                       amountOff: amountOff,
@@ -90,19 +93,19 @@ extension CouponRoutes {
                       redeemBy: redeemBy)
     }
     
-    public func retrieve(coupon: String) -> EventLoopFuture<StripeCoupon> {
+    public func retrieve(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
         return retrieve(coupon: coupon)
     }
     
-    public func update(coupon: String, metadata: [String: String]? = nil, name: String? = nil) -> EventLoopFuture<StripeCoupon> {
+    public func update(coupon: String, metadata: [String: String]? = nil, name: String? = nil, context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
         return update(coupon: coupon, metadata: metadata, name: name)
     }
     
-    public func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return delete(coupon: coupon)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeCouponList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCouponList> {
         return listAll(filter: filter)
     }
 }
@@ -126,7 +129,8 @@ public struct StripeCouponRoutes: CouponRoutes {
                        metadata: [String: String]?,
                        name: String?,
                        percentOff: Int?,
-                       redeemBy: Date?) -> EventLoopFuture<StripeCoupon> {
+                       redeemBy: Date?,
+                       context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
         var body: [String: Any] = ["duration": duration.rawValue]
         
         if let id = id {
@@ -168,11 +172,11 @@ public struct StripeCouponRoutes: CouponRoutes {
         return apiHandler.send(method: .POST, path: coupons, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(coupon: String) -> EventLoopFuture<StripeCoupon> {
+    public func retrieve(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
         return apiHandler.send(method: .GET, path: "\(coupons)/\(coupon)", headers: headers)
     }
     
-    public func update(coupon: String, metadata: [String: String]?, name: String?) -> EventLoopFuture<StripeCoupon> {
+    public func update(coupon: String, metadata: [String: String]?, name: String?, context: LoggingContext) -> EventLoopFuture<StripeCoupon> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {
@@ -186,11 +190,11 @@ public struct StripeCouponRoutes: CouponRoutes {
         return apiHandler.send(method: .POST, path: "\(coupons)/\(coupon)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(coupon: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(coupons)/\(coupon)", headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCouponList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeCouponList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

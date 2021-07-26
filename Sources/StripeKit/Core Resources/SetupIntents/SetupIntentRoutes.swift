@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol SetupIntentsRoutes {
     
@@ -36,13 +37,14 @@ public protocol SetupIntentsRoutes {
                 returnUrl: String?,
                 singleUse: [String: Any]?,
                 usage: String?,
-                expand: [String]?) -> EventLoopFuture<StripeSetupIntent>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSetupIntent>
     
     /// Retrieves the details of a SetupIntent that has previously been created.
     /// - Parameter intent: ID of the SetupIntent to retrieve.
     /// - Parameter clientSecret: The client secret of the SetupIntent. Required if a publishable key is used to retrieve the SetupIntent.
     /// - Parameter expand: An array of properties to expand.
-    func retrieve(intent: String, clientSecret: String?, expand: [String]?) -> EventLoopFuture<StripeSetupIntent>
+    func retrieve(intent: String, clientSecret: String?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSetupIntent>
     
     /// Updates a SetupIntent object.
     /// - Parameter intent: ID of the SetupIntent to retrieve.
@@ -58,7 +60,8 @@ public protocol SetupIntentsRoutes {
                 metadata: [String: String]?,
                 paymentMethod: String?,
                 paymentMethodTypes: [String]?,
-                expand: [String]?) -> EventLoopFuture<StripeSetupIntent>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeSetupIntent>
     
     /// Confirm that your customer intends to set up the current or provided payment method. For example, you would confirm a SetupIntent when a customer hits the “Save” button on a payment method management page on your website.
     /// If the selected payment method does not require any additional steps from the customer, the SetupIntent will transition to the succeeded status.
@@ -74,18 +77,19 @@ public protocol SetupIntentsRoutes {
                  paymentMethod: String?,
                  paymentMethodOptions: [String: Any]?,
                  returnUrl: String?,
-                 expand: [String]?) -> EventLoopFuture<StripeSetupIntent>
+                 expand: [String]?,
+                 context: LoggingContext) -> EventLoopFuture<StripeSetupIntent>
     
     /// A SetupIntent object can be canceled when it is in one of these statuses: `requires_payment_method`, `requires_capture`, `requires_confirmation`, `requires_action`.
     /// Once canceled, setup is abandoned and any operations on the SetupIntent will fail with an error.
     /// - Parameter intent: ID of the SetupIntent to retrieve.
     /// - Parameter cancellationReason: Reason for canceling this SetupIntent. Possible values are `abandoned`, `requested_by_customer`, or `duplicate`.
     /// - Parameter expand: An array of properties to expand.
-    func cancel(intent: String, cancellationReason: StripeSetupIntentCancellationReason?, expand: [String]?) -> EventLoopFuture<StripeSetupIntent>
+    func cancel(intent: String, cancellationReason: StripeSetupIntentCancellationReason?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSetupIntent>
     
     /// Returns a list of SetupIntents.
     /// - Parameter filter: A dictionary that contains the filters. More info [here](https://stripe.com/docs/api/setup_intents/list).
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeSetupIntentsList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeSetupIntentsList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -104,7 +108,8 @@ extension SetupIntentsRoutes {
                        returnUrl: String? = nil,
                        singleUse: [String: Any]? = nil,
                        usage: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeSetupIntent> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         return create(confirm: confirm,
                       customer: customer,
                       description: description,
@@ -120,7 +125,7 @@ extension SetupIntentsRoutes {
                       expand: expand)
     }
     
-    public func retrieve(intent: String, clientSecret: String? = nil, expand: [String]? = nil) -> EventLoopFuture<StripeSetupIntent> {
+    public func retrieve(intent: String, clientSecret: String? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         retrieve(intent: intent, clientSecret: clientSecret, expand: expand)
     }
     
@@ -130,7 +135,8 @@ extension SetupIntentsRoutes {
                        metadata: [String: String]? = nil,
                        paymentMethod: String? = nil,
                        paymentMethodTypes: [String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeSetupIntent> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         return update(intent: intent,
                       customer: customer,
                       description: description,
@@ -145,7 +151,8 @@ extension SetupIntentsRoutes {
                         paymentMethod: String? = nil,
                         paymentMethodOptions: [String: Any]? = nil,
                         returnUrl: String? = nil,
-                        expand: [String]? = nil) -> EventLoopFuture<StripeSetupIntent> {
+                        expand: [String]? = nil,
+                        context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         return confirm(intent: intent,
                        mandateData: mandateData,
                        paymentMethod: paymentMethod,
@@ -156,11 +163,12 @@ extension SetupIntentsRoutes {
     
     public func cancel(intent: String,
                        cancellationReason: StripeSetupIntentCancellationReason? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeSetupIntent> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         return cancel(intent: intent, cancellationReason: cancellationReason, expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSetupIntentsList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSetupIntentsList> {
         return listAll(filter: filter)
     }
 }
@@ -187,7 +195,8 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
                        returnUrl: String?,
                        singleUse: [String: Any]?,
                        usage: String?,
-                       expand: [String]?) -> EventLoopFuture<StripeSetupIntent> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         var body: [String: Any] = [:]
         
         if let confirm = confirm {
@@ -245,7 +254,7 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
         return apiHandler.send(method: .POST, path: setupintents, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(intent: String, clientSecret: String?, expand: [String]?) -> EventLoopFuture<StripeSetupIntent> {
+    public func retrieve(intent: String, clientSecret: String?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -260,7 +269,8 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
                        metadata: [String: String]?,
                        paymentMethod: String?,
                        paymentMethodTypes: [String]?,
-                       expand: [String]?) -> EventLoopFuture<StripeSetupIntent> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         var body: [String: Any] = [:]
         
         if let customer = customer {
@@ -295,7 +305,8 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
                         paymentMethod: String?,
                         paymentMethodOptions: [String: Any]?,
                         returnUrl: String?,
-                        expand: [String]?) -> EventLoopFuture<StripeSetupIntent> {
+                        expand: [String]?,
+                        context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         var body: [String: Any] = [:]
         
         if let mandateData = mandateData {
@@ -321,7 +332,7 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
         return apiHandler.send(method: .POST, path: "\(setupintents)/\(intent)/confirm", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func cancel(intent: String, cancellationReason: StripeSetupIntentCancellationReason?, expand: [String]?) -> EventLoopFuture<StripeSetupIntent> {
+    public func cancel(intent: String, cancellationReason: StripeSetupIntentCancellationReason?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeSetupIntent> {
         var body: [String: Any] = [:]
         
         if let cancellationReason = cancellationReason {
@@ -335,7 +346,7 @@ public struct StripeSetupIntentsRoutes: SetupIntentsRoutes {
         return apiHandler.send(method: .POST, path: "\(setupintents)/\(intent)/cancel", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeSetupIntentsList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeSetupIntentsList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

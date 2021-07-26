@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol CapabilitiesRoutes {
     
@@ -14,32 +15,32 @@ public protocol CapabilitiesRoutes {
     /// - Parameters:
     ///   - capability: The ID of an account capability to retrieve.
     ///   - expand: An array of properties to expand.
-    func retrieve(capability: String, expand: [String]?) -> EventLoopFuture<StripeCapability>
+    func retrieve(capability: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCapability>
     
     /// Updates an existing Account Capability.
     /// - Parameter capability: The ID of an account capability to update.
     /// - Parameter requested: Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
     /// - Parameter expand: An array of properties to expand.
-    func update(capability: String, requested: Bool?, expand: [String]?) -> EventLoopFuture<StripeCapability>
+    func update(capability: String, requested: Bool?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCapability>
     
     /// Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
     /// - Parameter account: The ID of the connect account.
-    func listAll(account: String) -> EventLoopFuture<StripeCapabilitiesList>
+    func listAll(account: String, context: LoggingContext) -> EventLoopFuture<StripeCapabilitiesList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
 extension CapabilitiesRoutes {
-    public func retrieve(capability: String, expand: [String]?) -> EventLoopFuture<StripeCapability> {
+    public func retrieve(capability: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCapability> {
         return retrieve(capability: capability, expand: expand)
     }
     
-    public func update(capability: String, requested: Bool? = nil, expand: [String]? = nil) -> EventLoopFuture<StripeCapability> {
+    public func update(capability: String, requested: Bool? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeCapability> {
         return update(capability: capability, requested: requested, expand: expand)
     }
     
-    public func listAll(account: String) -> EventLoopFuture<StripeCapabilitiesList> {
+    public func listAll(account: String, context: LoggingContext) -> EventLoopFuture<StripeCapabilitiesList> {
         return listAll(account: account)
     }
 }
@@ -54,7 +55,7 @@ public struct StripeCapabilitiesRoutes: CapabilitiesRoutes {
         self.apiHandler = apiHandler
     }
 
-    public func retrieve(capability: String, expand: [String]?) -> EventLoopFuture<StripeCapability> {
+    public func retrieve(capability: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCapability> {
         var queryParams = ""
         
         if let expand = expand {
@@ -64,7 +65,7 @@ public struct StripeCapabilitiesRoutes: CapabilitiesRoutes {
         return apiHandler.send(method: .GET, path: "\(capabilities)/\(capability)/capabilities/card_payments", query: queryParams, headers: headers)
     }
     
-    public func update(capability: String, requested: Bool?, expand: [String]?) -> EventLoopFuture<StripeCapability> {
+    public func update(capability: String, requested: Bool?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeCapability> {
         var body: [String: Any] = [:]
         
         if let requested = requested {
@@ -78,7 +79,7 @@ public struct StripeCapabilitiesRoutes: CapabilitiesRoutes {
         return apiHandler.send(method: .POST, path: "\(capabilities)/\(capability)/capabilities/card_payments", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(account: String) -> EventLoopFuture<StripeCapabilitiesList> {
+    public func listAll(account: String, context: LoggingContext) -> EventLoopFuture<StripeCapabilitiesList> {
         return apiHandler.send(method: .GET, path: "\(capabilities)/\(account)/capabilities", headers: headers)
     }
 }

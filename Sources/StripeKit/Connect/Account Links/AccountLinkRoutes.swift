@@ -8,6 +8,7 @@
 import NIO
 import NIOHTTP1
 import Foundation
+import Baggage
 
 public protocol AccountLinkRoutes {
     
@@ -22,7 +23,8 @@ public protocol AccountLinkRoutes {
                 refreshUrl: String,
                 returnUrl: String,
                 type: AccountLinkCreationType,
-                collect: AccountLinkCreationCollectType?) -> EventLoopFuture<AccountLink>
+                collect: AccountLinkCreationCollectType?,
+                context: LoggingContext) -> EventLoopFuture<AccountLink>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -42,7 +44,8 @@ public struct StripeAccountLinkRoutes: AccountLinkRoutes {
                        refreshUrl: String,
                        returnUrl: String,
                        type: AccountLinkCreationType,
-                       collect: AccountLinkCreationCollectType?) -> EventLoopFuture<AccountLink> {
+                       collect: AccountLinkCreationCollectType?,
+                       context: LoggingContext) -> EventLoopFuture<AccountLink> {
         var body: [String: Any] = ["account": account,
                                    "refresh_url": refreshUrl,
                                    "success_url": returnUrl,

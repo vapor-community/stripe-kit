@@ -7,19 +7,20 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol DiscountRoutes {
     /// Removes the currently applied discount on a customer.
     ///
     /// - Parameter customer: The id of the customer this discount belongs to.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(customer: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject>
     
     /// Removes the currently applied discount on a subscription.
     ///
     /// - Parameter subscription: The id of the subscription this discount was applied to.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(subscription: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(subscription: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -36,11 +37,11 @@ public struct StripeDiscountRoutes: DiscountRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func delete(customer: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(customer: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(customers)/\(customer)/discount", headers: headers)
     }
     
-    public func delete(subscription: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(subscription: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(subscriptions)/\(subscription)/discount", headers: headers)
     }
 }

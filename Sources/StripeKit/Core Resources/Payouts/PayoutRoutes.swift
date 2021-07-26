@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol PayoutRoutes {
     /// To send funds to your own bank account, you create a new payout object. Your Stripe balance must be able to cover the payout amount, or you’ll receive an “Insufficient Funds” error. /n If your API key is in test mode, money won’t actually be sent, though everything else will occur as if in live mode. /n If you are creating a manual payout on a Stripe account that uses multiple payment source types, you’ll need to specify the source type balance that the payout should draw from. The balance object details available and pending amounts by source type.
@@ -30,14 +31,15 @@ public protocol PayoutRoutes {
                 method: StripePayoutMethod?,
                 sourceType: StripePayoutSourceType?,
                 statementDescriptor: String?,
-                expand: [String]?) -> EventLoopFuture<StripePayout>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripePayout>
     
     /// Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
     ///
     /// - Parameter payout: The identifier of the payout to be retrieved.
     /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripePayout`.
-    func retrieve(payout: String, expand: [String]?) -> EventLoopFuture<StripePayout>
+    func retrieve(payout: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePayout>
     
     /// Updates the specified payout by setting the values of the parameters passed. Any parameters not provided will be left unchanged. This request accepts only the metadata as arguments.
     ///
@@ -46,26 +48,26 @@ public protocol PayoutRoutes {
     ///   - metadata: A set of key-value pairs that you can attach to a payout object. It can be useful for storing additional information about the payout in a structured format.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePayout`.
-    func update(payout: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripePayout>
+    func update(payout: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePayout>
     
     /// Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/payouts/list)
     /// - Returns: A `StripePayoutsList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePayoutsList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePayoutsList>
     
     /// A previously created payout can be canceled if it has not yet been paid out. Funds will be refunded to your available balance. You may not cancel automatic Stripe payouts.
     ///
     /// - Parameter payout: The identifier of the payout to be canceled.
     /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripePayout`.
-    func cancel(payout: String, expand: [String]?) -> EventLoopFuture<StripePayout>
+    func cancel(payout: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePayout>
     
     /// Reverses a payout by debiting the destination bank account. Only payouts for connected accounts to US bank accounts may be reversed at this time. If the payout is in the pending status, `/v1/payouts/:id/cancel` should be used instead. By requesting a reversal via `/v1/payouts/:id/reverse`, you confirm that the authorized signatory of the selected bank account has authorized the debit on the bank account and that no other authorization is required.
     /// - Parameters:
     ///   - payout: The identifier of the payout to be reversed.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
-    func reverse(payout: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripePayout>
+    func reverse(payout: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePayout>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -80,7 +82,8 @@ extension PayoutRoutes {
                        method: StripePayoutMethod? = nil,
                        sourceType: StripePayoutSourceType? = nil,
                        statementDescriptor: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePayout> {
         return create(amount: amount,
                       currency: currency,
                       description: description,
@@ -92,23 +95,23 @@ extension PayoutRoutes {
                       expand: expand)
     }
     
-    public func retrieve(payout: String, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+    public func retrieve(payout: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePayout> {
         return retrieve(payout: payout, expand: expand)
     }
     
-    public func update(payout: String, metadata: [String: String]? = nil, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+    public func update(payout: String, metadata: [String: String]? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePayout> {
         return update(payout: payout, metadata: metadata, expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePayoutsList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePayoutsList> {
         return listAll(filter: filter)
     }
     
-    public func cancel(payout: String, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+    public func cancel(payout: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePayout> {
         return cancel(payout: payout, expand: expand)
     }
     
-    public func reverse(payout: String, metadata: [String: String]? = nil, expand: [String]? = nil) -> EventLoopFuture<StripePayout> {
+    public func reverse(payout: String, metadata: [String: String]? = nil, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePayout> {
         return reverse(payout: payout, metadata: metadata, expand: expand)
     }
 }
@@ -131,7 +134,8 @@ public struct StripePayoutRoutes: PayoutRoutes {
                        method: StripePayoutMethod?,
                        sourceType: StripePayoutSourceType?,
                        statementDescriptor: String?,
-                       expand: [String]?) -> EventLoopFuture<StripePayout> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePayout> {
         var body: [String: Any] = [:]
         
         body["amount"] = amount
@@ -168,7 +172,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
         return apiHandler.send(method: .POST, path: payouts, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(payout: String, expand: [String]?) -> EventLoopFuture<StripePayout> {
+    public func retrieve(payout: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePayout> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -177,7 +181,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
         return apiHandler.send(method: .GET, path: "\(payouts)/\(payout)", query: queryParams, headers: headers)
     }
     
-    public func update(payout: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripePayout> {
+    public func update(payout: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePayout> {
         var body: [String: Any] = [:]
         if let metadata = metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
@@ -190,7 +194,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
         return apiHandler.send(method: .POST, path: "\(payouts)/\(payout)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePayoutsList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePayoutsList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -199,7 +203,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
         return apiHandler.send(method: .GET, path: payouts, query: queryParams, headers: headers)
     }
     
-    public func cancel(payout: String, expand: [String]?) -> EventLoopFuture<StripePayout> {
+    public func cancel(payout: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePayout> {
         var body: [String: Any] = [:]
         
         if let expand = expand {
@@ -209,7 +213,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
         return apiHandler.send(method: .POST, path: "\(payouts)/\(payout)/cancel", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func reverse(payout: String, metadata: [String: String]?, expand: [String]?) -> EventLoopFuture<StripePayout> {
+    public func reverse(payout: String, metadata: [String: String]?, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePayout> {
         var body: [String: Any] = [:]
         
         if let metadata = metadata {

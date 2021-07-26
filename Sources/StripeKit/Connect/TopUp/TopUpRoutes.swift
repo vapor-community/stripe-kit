@@ -7,6 +7,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol TopUpRoutes {
     /// Top up the balance of an account
@@ -28,14 +29,15 @@ public protocol TopUpRoutes {
                 source: String?,
                 statementDescriptor: String?,
                 transferGroup: String?,
-                expand: [String]?) -> EventLoopFuture<StripeTopUp>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeTopUp>
     
     /// Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
     ///
     /// - Parameter topup: The ID of the top-up to retrieve.
     /// - Parameter expand: An array of properties to expand.
     /// - Returns: A `StripeTopUp`.
-    func retrieve(topup: String, expand: [String]?) -> EventLoopFuture<StripeTopUp>
+    func retrieve(topup: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTopUp>
     
     /// Updates the metadata of a top-up. Other top-up details are not editable by design.
     ///
@@ -48,20 +50,21 @@ public protocol TopUpRoutes {
     func update(topup: String,
                 description: String?,
                 metadata: [String: String]?,
-                expand: [String]?) -> EventLoopFuture<StripeTopUp>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripeTopUp>
     
     /// Returns a list of top-ups.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/topups/list).
     /// - Returns: A `StripeTopUpList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTopUpList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeTopUpList>
     
     /// Cancels a top-up. Only pending top-ups can be canceled.
     ///
     /// - Parameter topup: The ID of the top-up to cancel.
     /// - Parameter expand: An array of properties to expand.
     /// - Returns: A canceled `StripeTopUp`.
-    func cancel(topup: String, expand: [String]?) -> EventLoopFuture<StripeTopUp>
+    func cancel(topup: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTopUp>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -75,7 +78,8 @@ extension TopUpRoutes {
                        source: String? = nil,
                        statementDescriptor: String? = nil,
                        transferGroup: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeTopUp> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
         return create(amount: amount,
                       currency: currency,
                       description: description,
@@ -86,25 +90,26 @@ extension TopUpRoutes {
                       expand: expand)
     }
     
-    public func retrieve(topup: String, expand: [String]? = nil) -> EventLoopFuture<StripeTopUp> {
+    public func retrieve(topup: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
         return retrieve(topup: topup, expand: expand)
     }
     
     public func update(topup: String,
                        description: String? = nil,
                        metadata: [String: String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeTopUp> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
         return update(topup: topup,
                       description: description,
                       metadata: metadata,
                       expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTopUpList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTopUpList> {
         return listAll(filter: filter)
     }
     
-    public func cancel(topup: String, expand: [String]? = nil) -> EventLoopFuture<StripeTopUp> {
+    public func cancel(topup: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
         return cancel(topup: topup, expand: expand)
     }
 }
@@ -126,7 +131,8 @@ public struct StripeTopUpRoutes: TopUpRoutes {
                        source: String?,
                        statementDescriptor: String?,
                        transferGroup: String?,
-                       expand: [String]?) -> EventLoopFuture<StripeTopUp> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
         var body: [String: Any] = ["amount": amount,
                                    "currency": currency.rawValue]
         
@@ -157,7 +163,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
         return apiHandler.send(method: .POST, path: topups, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(topup: String, expand: [String]?) -> EventLoopFuture<StripeTopUp> {
+    public func retrieve(topup: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -169,7 +175,8 @@ public struct StripeTopUpRoutes: TopUpRoutes {
     public func update(topup: String,
                        description: String?,
                        metadata: [String: String]?,
-                       expand: [String]?) -> EventLoopFuture<StripeTopUp> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
         var body: [String: Any] = [:]
         
         if let description = description {
@@ -187,7 +194,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
         return apiHandler.send(method: .POST, path: "\(topups)/\(topup)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTopUpList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeTopUpList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -195,7 +202,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
         return apiHandler.send(method: .GET, path: topups, query: queryParams, headers: headers)
     }
     
-    public func cancel(topup: String, expand: [String]?) -> EventLoopFuture<StripeTopUp> {
+    public func cancel(topup: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripeTopUp> {
         var body: [String: Any] = [:]
         
         if let expand = expand {

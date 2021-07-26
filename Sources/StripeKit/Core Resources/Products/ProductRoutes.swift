@@ -8,6 +8,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol ProductRoutes {
     /// Creates a new product object. To create a product for use with subscriptions, see [Subscriptions Products](https://stripe.com/docs/api/products/create#create_service_product).
@@ -39,13 +40,14 @@ public protocol ProductRoutes {
                 packageDimensions: [String: Any]?,
                 shippable: Bool?,
                 type: StripeProductType?,
-                url: String?) -> EventLoopFuture<StripeProduct>
+                url: String?,
+                context: LoggingContext) -> EventLoopFuture<StripeProduct>
     
     /// Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
     ///
     /// - Parameter id: The identifier of the product to be retrieved.
     /// - Returns: A `StripeProduct`.
-    func retrieve(id: String) -> EventLoopFuture<StripeProduct>
+    func retrieve(id: String, context: LoggingContext) -> EventLoopFuture<StripeProduct>
     
     /// Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged. /n Note that a product’s `attributes` are not editable. Instead, you would need to deactivate the existing product and create a new one with the new attribute values.
     ///
@@ -78,19 +80,20 @@ public protocol ProductRoutes {
                 shippable: Bool?,
                 statementDescriptor: String?,
                 unitLabel: String?,
-                url: String?) -> EventLoopFuture<StripeProduct>
+                url: String?,
+                context: LoggingContext) -> EventLoopFuture<StripeProduct>
     
     /// Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/products/list)
     /// - Returns: A `StripeProductsList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeProductsList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeProductsList>
     
     /// Delete a product. Deleting a product with `type=good` is only possible if it has no SKUs associated with it. Deleting a product with `type=service` is only possible if it has no plans associated with it.
     ///
     /// - Parameter id: The ID of the product to delete.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(id: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -109,7 +112,8 @@ extension ProductRoutes {
                        packageDimensions: [String: Any]? = nil,
                        shippable: Bool? = nil,
                        type: StripeProductType? = nil,
-                       url: String? = nil) -> EventLoopFuture<StripeProduct> {
+                       url: String? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeProduct> {
         return create(id: id,
                       name: name,
                       active: active,
@@ -125,7 +129,7 @@ extension ProductRoutes {
                       url: url)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeProduct> {
+    public func retrieve(id: String, context: LoggingContext) -> EventLoopFuture<StripeProduct> {
         return retrieve(id: id)
     }
     
@@ -142,7 +146,8 @@ extension ProductRoutes {
                        shippable: Bool? = nil,
                        statementDescriptor: String? = nil,
                        unitLabel: String? = nil,
-                       url: String? = nil) -> EventLoopFuture<StripeProduct> {
+                       url: String? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripeProduct> {
         return update(product: product,
                           active: active,
                           attributes: attributes,
@@ -159,11 +164,11 @@ extension ProductRoutes {
                           url: url)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeProductsList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripeProductsList> {
         return listAll(filter: filter)
     }
     
-    public func delete(id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return delete(id: id)
     }
 }
@@ -190,7 +195,8 @@ public struct StripeProductRoutes: ProductRoutes {
                        packageDimensions: [String: Any]?,
                        shippable: Bool?,
                        type: StripeProductType?,
-                       url: String?) -> EventLoopFuture<StripeProduct> {
+                       url: String?,
+                       context: LoggingContext) -> EventLoopFuture<StripeProduct> {
         var body: [String: Any] = [:]
         
         body["name"] = name
@@ -246,7 +252,7 @@ public struct StripeProductRoutes: ProductRoutes {
         return apiHandler.send(method: .POST, path: products, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeProduct> {
+    public func retrieve(id: String, context: LoggingContext) -> EventLoopFuture<StripeProduct> {
         return apiHandler.send(method: .GET, path: "\(products)/\(id)", headers: headers)
     }
     
@@ -263,7 +269,8 @@ public struct StripeProductRoutes: ProductRoutes {
                        shippable: Bool?,
                        statementDescriptor: String?,
                        unitLabel: String?,
-                       url: String?) -> EventLoopFuture<StripeProduct> {
+                       url: String?,
+                       context: LoggingContext) -> EventLoopFuture<StripeProduct> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -322,7 +329,7 @@ public struct StripeProductRoutes: ProductRoutes {
         return apiHandler.send(method: .POST, path: "\(products)/\(product)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeProductsList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripeProductsList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -331,7 +338,7 @@ public struct StripeProductRoutes: ProductRoutes {
         return apiHandler.send(method: .GET, path: products, query: queryParams, headers: headers)
     }
     
-    public func delete(id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(products)/\(id)", headers: headers)
     }
 }

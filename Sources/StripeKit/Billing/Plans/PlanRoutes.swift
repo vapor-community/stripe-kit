@@ -8,6 +8,7 @@
 
 import NIO
 import NIOHTTP1
+import Baggage
 
 public protocol PlanRoutes {
     /// You can create plans using the API, or in the Stripe Dashboard.
@@ -49,7 +50,8 @@ public protocol PlanRoutes {
                 transformUsage: [String: Any]?,
                 trialPeriodDays: Int?,
                 usageType: StripePlanUsageType?,
-                expand: [String]?) -> EventLoopFuture<StripePlan>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripePlan>
     
     /// Retrieves the plan with the given ID.
     ///
@@ -57,7 +59,7 @@ public protocol PlanRoutes {
     ///   - plan: The ID of the desired plan.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePlan`.
-    func retrieve(plan: String, expand: [String]?) -> EventLoopFuture<StripePlan>
+    func retrieve(plan: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePlan>
     
     /// Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan’s ID, amount, currency, or billing cycle.
     ///
@@ -76,19 +78,20 @@ public protocol PlanRoutes {
                 nickname: String?,
                 product: Any?,
                 trialPeriodDays: Int?,
-                expand: [String]?) -> EventLoopFuture<StripePlan>
+                expand: [String]?,
+                context: LoggingContext) -> EventLoopFuture<StripePlan>
     
     /// Deleting plans means new subscribers can’t be added. Existing subscribers aren’t affected.
     ///
     /// - Parameter plan: The identifier of the plan to be deleted.
     /// - Returns: A `StripeDeletedObject`
-    func delete(plan: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(plan: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject>
     
     /// Returns a list of your plans.
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/plans/list)
     /// - Returns: A `StripePlanList`
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePlanList>
+    func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePlanList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -112,7 +115,8 @@ extension PlanRoutes {
                        transformUsage: [String: Any]? = nil,
                        trialPeriodDays: Int? = nil,
                        usageType: StripePlanUsageType? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripePlan> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePlan> {
         return create(id: id,
                       currency: currency,
                       interval: interval,
@@ -133,7 +137,7 @@ extension PlanRoutes {
                       expand: expand)
     }
     
-    public func retrieve(plan: String, expand: [String]? = nil) -> EventLoopFuture<StripePlan> {
+    public func retrieve(plan: String, expand: [String]? = nil, context: LoggingContext) -> EventLoopFuture<StripePlan> {
         return retrieve(plan: plan, expand: expand)
     }
     
@@ -143,7 +147,8 @@ extension PlanRoutes {
                        nickname: String? = nil,
                        product: Any? = nil,
                        trialPeriodDays: Int? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripePlan> {
+                       expand: [String]? = nil,
+                       context: LoggingContext) -> EventLoopFuture<StripePlan> {
         return update(plan: plan,
                       active: active,
                       metadata: metadata,
@@ -153,11 +158,11 @@ extension PlanRoutes {
                       expand: expand)
     }
     
-    public func delete(plan: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(plan: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return delete(plan: plan)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePlanList> {
+    public func listAll(filter: [String: Any]? = nil, context: LoggingContext) -> EventLoopFuture<StripePlanList> {
         return listAll(filter: filter)
     }
 }
@@ -189,7 +194,8 @@ public struct StripePlanRoutes: PlanRoutes {
                        transformUsage: [String: Any]?,
                        trialPeriodDays: Int?,
                        usageType: StripePlanUsageType?,
-                       expand: [String]?) -> EventLoopFuture<StripePlan> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePlan> {
         var body: [String: Any] = ["currency": currency.rawValue,
                                    "interval": interval.rawValue]
         
@@ -259,7 +265,7 @@ public struct StripePlanRoutes: PlanRoutes {
         return apiHandler.send(method: .POST, path: plans, body: .string(body.queryParameters), headers: headers)
     }
 
-    public func retrieve(plan: String, expand: [String]?) -> EventLoopFuture<StripePlan> {
+    public func retrieve(plan: String, expand: [String]?, context: LoggingContext) -> EventLoopFuture<StripePlan> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -274,7 +280,8 @@ public struct StripePlanRoutes: PlanRoutes {
                        nickname: String?,
                        product: Any?,
                        trialPeriodDays: Int?,
-                       expand: [String]?) -> EventLoopFuture<StripePlan> {
+                       expand: [String]?,
+                       context: LoggingContext) -> EventLoopFuture<StripePlan> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -306,11 +313,11 @@ public struct StripePlanRoutes: PlanRoutes {
         return apiHandler.send(method: .POST, path: "\(plans)/\(plan)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(plan: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(plan: String, context: LoggingContext) -> EventLoopFuture<StripeDeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(plans)/\(plan)", headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePlanList> {
+    public func listAll(filter: [String: Any]?, context: LoggingContext) -> EventLoopFuture<StripePlanList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
