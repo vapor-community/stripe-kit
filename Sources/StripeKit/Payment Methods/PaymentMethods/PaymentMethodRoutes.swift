@@ -14,11 +14,13 @@ public protocol PaymentMethodRoutes {
     /// - Parameters:
     ///   - type: The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type. Required unless `payment_method` is specified (see the Shared PaymentMethods guide)
     ///   - billingDetails: Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+    ///   - acssDebit: If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
     ///   - afterpayClearpay: If this is an AfterpayClearpay PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
     ///   - alipay: If this is an Alipay PaymentMethod, this hash contains details about the Alipay payment method.
     ///   - auBecsDebit: If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
     ///   - bacsDebit: If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
     ///   - bancontact: If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
+    ///   - boleto: If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
     ///   - eps: If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
     ///   - fpx: If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
     ///   - giropay: If this is an `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
@@ -30,15 +32,18 @@ public protocol PaymentMethodRoutes {
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     ///   - sepaDebit: If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
     ///   - sofort: If this is a sofort PaymentMethod, this hash contains details about the SOFORT payment method.
+    ///   - wechatPay: If this is a `wechat_pay` PaymentMethod, this hash contains details about the `wechat_pay` payment method.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentMethod`.
     func create(type: StripePaymentMethodType,
                 billingDetails: [String: Any]?,
+                acssDebit: [String: Any]?,
                 afterpayClearpay: [String: Any]?,
                 alipay: [String: Any]?,
                 auBecsDebit: [String: Any]?,
                 bacsDebit: [String: Any]?,
                 bancontact: [String: Any]?,
+                boleto: [String: Any]?,
                 eps: [String: Any]?,
                 fpx: [String: Any]?,
                 giropay: [String: Any]?,
@@ -50,6 +55,7 @@ public protocol PaymentMethodRoutes {
                 metadata: [String: String]?,
                 sepaDebit: [String: Any]?,
                 sofort: [String: Any]?,
+                wechatPay: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripePaymentMethod>
     
     /// Retrieves a PaymentMethod object.
@@ -110,11 +116,13 @@ public protocol PaymentMethodRoutes {
 extension PaymentMethodRoutes {
     public func create(type: StripePaymentMethodType,
                        billingDetails: [String: Any]? = nil,
+                       acssDebit: [String: Any]? = nil,
                        afterpayClearpay: [String: Any]? = nil,
                        alipay: [String: Any]? = nil,
                        auBecsDebit: [String: Any]? = nil,
                        bacsDebit: [String: Any]? = nil,
                        bancontact: [String: Any]? = nil,
+                       boleto: [String: Any]? = nil,
                        eps: [String: Any]? = nil,
                        fpx: [String: Any]? = nil,
                        giropay: [String: Any]? = nil,
@@ -126,14 +134,17 @@ extension PaymentMethodRoutes {
                        metadata: [String: String]? = nil,
                        sepaDebit: [String: Any]? = nil,
                        sofort: [String: Any]? = nil,
+                       wechatPay: [String: Any]? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
         return create(type: type,
                       billingDetails: billingDetails,
+                      acssDebit: acssDebit,
                       afterpayClearpay: afterpayClearpay,
                       alipay: alipay,
                       auBecsDebit: auBecsDebit,
                       bacsDebit: bacsDebit,
                       bancontact: bancontact,
+                      boleto: boleto,
                       eps: eps,
                       fpx: fpx,
                       giropay: giropay,
@@ -145,6 +156,7 @@ extension PaymentMethodRoutes {
                       metadata: metadata,
                       sepaDebit: sepaDebit,
                       sofort: sofort,
+                      wechatPay: wechatPay,
                       expand: expand)
     }
     
@@ -167,9 +179,7 @@ extension PaymentMethodRoutes {
     public func listAll(customer: String,
                         type: StripePaymentMethodType,
                         filter: [String: Any]? = nil) -> EventLoopFuture<StripePaymentMethodList> {
-        return listAll(customer: customer,
-                           type: type,
-                           filter: filter)
+        return listAll(customer: customer, type: type, filter: filter)
     }
     
     public func attach(paymentMethod: String, customer: String, expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
@@ -193,11 +203,13 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
     
     public func create(type: StripePaymentMethodType,
                        billingDetails: [String: Any]?,
+                       acssDebit: [String: Any]?,
                        afterpayClearpay: [String: Any]?,
                        alipay: [String: Any]?,
                        auBecsDebit: [String: Any]?,
                        bacsDebit: [String: Any]?,
                        bancontact: [String: Any]?,
+                       boleto: [String: Any]?,
                        eps: [String: Any]?,
                        fpx: [String: Any]?,
                        giropay: [String: Any]?,
@@ -209,11 +221,16 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
                        metadata: [String: String]?,
                        sepaDebit: [String: Any]?,
                        sofort: [String: Any]?,
+                       wechatPay: [String: Any]?,
                        expand: [String]?) -> EventLoopFuture<StripePaymentMethod> {
         var body: [String: Any] = ["type": type.rawValue]
         
         if let billingDetails = billingDetails {
             billingDetails.forEach { body["billing_details[\($0)]"] = $1 }
+        }
+        
+        if let acssDebit = acssDebit {
+            acssDebit.forEach { body["acss_debit[\($0)]"] = $1 }
         }
         
         if let afterpayClearpay = afterpayClearpay {
@@ -234,6 +251,10 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
         
         if let bancontact = bancontact {
             bancontact.forEach { body["bancontact[\($0)]"] = $1 }
+        }
+        
+        if let boleto = boleto {
+            boleto.forEach { body["boleto[\($0)]"] = $1 }
         }
         
         if let eps = eps {
@@ -278,6 +299,10 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
         
         if let sofort = sofort {
             sofort.forEach { body["sofort[\($0)]"] = $1 }
+        }
+        
+        if let wechatPay = wechatPay {
+            wechatPay.forEach { body["wechat_pay[\($0)]"] = $1 }
         }
         
         if let expand = expand {

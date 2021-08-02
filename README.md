@@ -12,7 +12,7 @@
 To start using StripeKit, in your `Package.swift`, add the following
 
 ~~~~swift
-.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "12.0.0")
+.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "13.0.0")
 ~~~~
 
 ## Using the API
@@ -230,8 +230,6 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] SetupIntents
 * [x] SetupAttempts
 * [x] Payouts
-* [x] Prices
-* [x] Products
 * [x] Refunds
 * [x] Tokens
 ---
@@ -241,25 +239,30 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] Cards
 * [x] Sources
 ---
+### Products
+* [x] Products
+* [x] Prices
+* [x] Coupons
+* [x] Promotion Codes
+* [x] Discounts
+* [x] Tax Rates
+---
 ### Checkout
 * [x] Sessions
 ---
 ### Billing
-* [x] Coupons
 * [x] Credit Notes
 * [x] Customer Balance Transactions
 * [x] Customer Portal
 * [x] Customer Tax IDs
-* [x] Discounts
 * [x] Invoices
 * [x] Invoice Items
 * [x] Plans
-* [x] Promotion Codes
-* [x] Products
+* [x] Quotes
+* [x] Quote Line Items
 * [x] Subscriptions
 * [x] Subscription items
 * [x] Subscription Schedule
-* [x] Tax Rates
 * [x] Usage Records
 ---
 ### Connect
@@ -306,6 +309,10 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 ### Reporting
 * [x] Report Runs
 * [x] Report Types
+---
+### Identity
+* [x] VerificationSessions
+* [x] VerificationReports
 ---
 ### Webhooks
 * [x] Webhook Endpoints

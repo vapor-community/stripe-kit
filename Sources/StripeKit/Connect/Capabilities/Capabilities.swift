@@ -16,6 +16,8 @@ public struct StripeCapability: StripeModel {
     @Expandable<StripeConnectAccount> public var account: String?
     /// Whether the capability has been requested.
     public var requested: Bool?
+    ///
+    public var requirements: StripeCapabilitiesRequirements?
     /// Time at which the capability was requested. Measured in seconds since the Unix epoch.
     public var requestedAt: Date?
     /// The status of the capability. Can be active, inactive, pending, or unrequested.
@@ -23,17 +25,24 @@ public struct StripeCapability: StripeModel {
 }
 
 public struct StripeCapabilitiesRequirements: StripeModel {
-    /// The date the fields in `currently_due` must be collected by to keep the capability enabled for the account.
+    /// Date by which the fields in `currently_due` must be collected to keep the capability enabled for the account. These fields may disable the capability sooner if the next threshold is reached before they are collected.
     public var currentDeadline: Date?
-    /// The fields that need to be collected to keep the capability enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the capability is disabled.
+    /// Fields that need to be collected to keep the capability enabled. If not collected by `current_deadline`, these fields appear in `past_due` as well, and the capability is disabled.
     public var currentlyDue: [String]?
-    /// If the capability is disabled, this string describes why. Possible values are `requirement.fields_needed`, `pending.onboarding`, `pending.review`, `rejected_fraud`, or `rejected.other`.
+    /// If the capability is disabled, this string describes why. Can be `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.listed`, `rejected.terms_of_service`, `rejected.other`, `under_review`, or `other`.
+    ///
+    /// `rejected.unsupported_business` means that the account’s business is not supported by the capability. For example, payment methods may restrict the businesses they support in their terms of service:
+    /// - [Adterpay Clearpay's terms of service](https://stripe.com/afterpay-clearpay/legal#restricted-businesses)
+    ///
+    /// If you believe that the rejection is in error, please contact support@stripe.com for assistance.
     public var disabledReason: String?
-    /// The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
+    /// Fields that are `currently_due` and need to be collected again because validation or verification failed.
+    public var errors: [StripeConnectAccountRequirementsError]?
+    /// Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
     public var eventuallyDue: [String]?
-    /// The fields that weren’t collected by the `current_deadline`. These fields need to be collected to enable the capability for the account.
+    /// Fields that weren’t collected by `current_deadline`. These fields need to be collected to enable the capability on the account.
     public var pastDue: [String]?
-    /// Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
+    /// Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
     public var pendingVerification: [String]?
 }
 

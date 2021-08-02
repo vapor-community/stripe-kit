@@ -1,5 +1,11 @@
 # Changelog
 
+## 13.0.0 - 2021-08-01
+* [#133](https://github.com/vapor-community/stripe-kit/pull/133) 
+    * ⚠️ Breaking changes ⚠️ Multiple API updates.
+    * Adds support for `Quotes` and `QuoteLineItems`
+    * Adds support for `VerificationSessions` and `VerificationReports`
+
 ## 12.0.2 - 2021-04-29
 * [#125](https://github.com/vapor-community/stripe-kit/pull/125) Added payment method models.
 

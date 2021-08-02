@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// The [Tax Rate Object](https://stripe.com/docs/api/tax_rates/object).
+/// The [Tax Rate Object](https://stripe.com/docs/api/tax_rates/object)
 public struct StripeTaxRate: StripeModel {
     /// Unique identifier for the object.
     public var id: String
@@ -35,6 +35,13 @@ public struct StripeTaxRate: StripeModel {
     public var percentage: Decimal?
     /// ISO 3166-2 subdivision code, without country prefix. For example, “NY” for New York, United States.
     public var state: String?
+    /// The high-level tax type, such as `vat` or `sales_tax`.
+    public var taxType: StripeTaxRateTaxType?
+}
+
+public enum StripeTaxRateTaxType: String, StripeModel {
+    case vat
+    case salesTax = "sales_tax"
 }
 
 public struct StripeTaxRateList: StripeModel {

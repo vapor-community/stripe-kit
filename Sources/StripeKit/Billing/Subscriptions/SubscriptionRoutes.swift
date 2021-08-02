@@ -31,6 +31,7 @@ public protocol SubscriptionRoutes {
     ///   - items: List of subscription items, each with an attached plan.
     ///   - metadata: A set of key-value pairs that you can attach to a Subscription object. It can be useful for storing additional information about the subscription in a structured format.
     ///   - offSession: Indicates if a customer is on or off-session while an invoice payment is attempted.
+    ///   - paymentSettings: Payment settings to pass to invoices created by the subscription.
     ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if its first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more. `pending_if_incomplete` is only used with updates and cannot be passed when creating a subscription.
     ///   - pendingInvoiceItemInterval: Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
     ///   - promotionCode: The API ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
@@ -58,6 +59,7 @@ public protocol SubscriptionRoutes {
                 items: [[String: Any]],
                 metadata: [String: String]?,
                 offSession: Bool?,
+                paymentSettings: [String: Any]?,
                 paymentBehavior: StripeSubscriptionPaymentBehavior?,
                 pendingInvoiceItemInterval: [String: Any]?,
                 promotionCode: String?,
@@ -95,6 +97,7 @@ public protocol SubscriptionRoutes {
     ///   - items: List of subscription items, each with an attached plan.
     ///   - metadata: A set of key-value pairs that you can attach to a subscription object. This can be useful for storing additional information about the subscription in a structured format.
     ///   - offSession: Indicates if a customer is on or off-session while an invoice payment is attempted.
+    ///   - paymentSettings: Payment settings to pass to invoices created by the subscription.
     ///   - pauseCollection: If specified, payment collection for this subscription will be paused.
     ///   - paymentBehavior: Use `allow_incomplete` to create subscriptions with `status=incomplete` if its first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription’s invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior. Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
     ///   - pendingInvoiceItemInterval: Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
@@ -122,6 +125,7 @@ public protocol SubscriptionRoutes {
                 items: [[String: Any]]?,
                 metadata: [String: String]?,
                 offSession: Bool?,
+                paymentSettings: [String: Any]?,
                 pauseCollection: [String: Any]?,
                 paymentBehavior: StripeSubscriptionPaymentBehavior?,
                 pendingInvoiceItemInterval: [String: Any]?,
@@ -175,6 +179,7 @@ extension SubscriptionRoutes {
                        items: [[String: Any]],
                        metadata: [String: String]? = nil,
                        offSession: Bool? = nil,
+                       paymentSettings: [String: Any]? = nil,
                        paymentBehavior: StripeSubscriptionPaymentBehavior? = nil,
                        pendingInvoiceItemInterval: [String: Any]? = nil,
                        promotionCode: String? = nil,
@@ -201,6 +206,7 @@ extension SubscriptionRoutes {
                       items: items,
                       metadata: metadata,
                       offSession: offSession,
+                      paymentSettings: paymentSettings,
                       paymentBehavior: paymentBehavior,
                       pendingInvoiceItemInterval: pendingInvoiceItemInterval,
                       promotionCode: promotionCode,
@@ -232,6 +238,7 @@ extension SubscriptionRoutes {
                        items: [[String: Any]]? = nil,
                        metadata: [String: String]? = nil,
                        offSession: Bool? = nil,
+                       paymentSettings: [String: Any]? = nil,
                        pauseCollection: [String: Any]? = nil,
                        paymentBehavior: StripeSubscriptionPaymentBehavior? = nil,
                        pendingInvoiceItemInterval: [String: Any]? = nil,
@@ -258,6 +265,7 @@ extension SubscriptionRoutes {
                       items: items,
                       metadata: metadata,
                       offSession: offSession,
+                      paymentSettings: paymentSettings,
                       pauseCollection: pauseCollection,
                       paymentBehavior: paymentBehavior,
                       pendingInvoiceItemInterval: pendingInvoiceItemInterval,
@@ -312,6 +320,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        items: [[String: Any]],
                        metadata: [String: String]?,
                        offSession: Bool?,
+                       paymentSettings: [String: Any]?,
                        paymentBehavior: StripeSubscriptionPaymentBehavior?,
                        pendingInvoiceItemInterval: [String: Any]?,
                        promotionCode: String?,
@@ -384,6 +393,10 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
             body["off_session"] = offSession
         }
         
+        if let paymentSettings = paymentSettings {
+            paymentSettings.forEach { body["payment_settings[\($0)]"] = $1 }
+        }
+        
         if let paymentBehavior = paymentBehavior {
             body["payment_behavior"] = paymentBehavior.rawValue
         }
@@ -451,6 +464,7 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
                        items: [[String: Any]]?,
                        metadata: [String: String]?,
                        offSession: Bool?,
+                       paymentSettings: [String: Any]?,
                        pauseCollection: [String: Any]?,
                        paymentBehavior: StripeSubscriptionPaymentBehavior?,
                        pendingInvoiceItemInterval: [String: Any]?,
@@ -521,6 +535,10 @@ public struct StripeSubscriptionRoutes: SubscriptionRoutes {
         
         if let offSession = offSession {
             body["off_session"] = offSession
+        }
+        
+        if let paymentSettings = paymentSettings {
+            paymentSettings.forEach { body["payment_settings[\($0)]"] = $1 }
         }
         
         if let pauseCollection = pauseCollection {

@@ -42,6 +42,8 @@ public struct StripeTransaction: StripeModel {
     public var type: StripeTransactionType?
     /// Additional purchase information that is optionally provided by the merchant. This field is not included by default. To include it in the response, expand the `purchase_details` field.
     public var purchaseDetails: StripeTransactionPurchaseDetails?
+    /// The digital wallet used for this transaction. One of `apple_pay`, `google_pay`, or `samsung_pay`.
+    public var wallet: StripeTransactionWallet?
 }
 
 public struct StripeTransactionAmountDetails: StripeModel {
@@ -144,4 +146,10 @@ public struct StripeTransactionPurchaseDetailsReceipt: StripeModel {
     public var total: Int?
     /// The unit cost of the item in cents.
     public var unitCost: Int?
+}
+
+public enum StripeTransactionWallet: String, StripeModel {
+    case applePay = "apple_pay"
+    case googlePay = "google_pay"
+    case samsungPay = "samsung_pay"
 }

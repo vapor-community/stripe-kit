@@ -22,6 +22,7 @@ public protocol TaxRateRoutes {
     ///   - jurisdiction: The jurisdiction for the tax rate.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - state: ISO 3166-2 subdivision code, without country prefix. For example, “NY” for New York, United States.
+    ///   - taxType: The high-level tax type, such as `vat` or `sales_tax`.
     /// - Returns: A `StripeTaxRate`.
     func create(displayName: String,
                 inclusive: Bool,
@@ -31,7 +32,8 @@ public protocol TaxRateRoutes {
                 description: String?,
                 jurisdiction: String?,
                 metadata: [String: String]?,
-                state: String?) -> EventLoopFuture<StripeTaxRate>
+                state: String?,
+                taxType: StripeTaxRateTaxType?) -> EventLoopFuture<StripeTaxRate>
     
     /// Retrieves a tax rate with the given ID
     ///
@@ -50,6 +52,7 @@ public protocol TaxRateRoutes {
     ///   - jurisdiction: The jurisdiction for the tax rate. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - state: ISO 3166-2 subdivision code, without country prefix. For example, “NY” for New York, United States.
+    ///   - taxType: The high-level tax type, such as `vat` or `sales_tax`.
     /// - Returns: A `StripeTaxRate`.
     func update(taxRate: String,
                 active: Bool?,
@@ -58,7 +61,8 @@ public protocol TaxRateRoutes {
                 displayName: String?,
                 jurisdiction: String?,
                 metadata: [String: String]?,
-                state: String?) -> EventLoopFuture<StripeTaxRate>
+                state: String?,
+                taxType: StripeTaxRateTaxType?) -> EventLoopFuture<StripeTaxRate>
     
     /// Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
     ///
@@ -79,7 +83,8 @@ extension TaxRateRoutes {
                        description: String? = nil,
                        jurisdiction: String? = nil,
                        metadata: [String: String]? = nil,
-                       state: String? = nil) -> EventLoopFuture<StripeTaxRate> {
+                       state: String? = nil,
+                       taxType: StripeTaxRateTaxType? = nil) -> EventLoopFuture<StripeTaxRate> {
         return create(displayName: displayName,
                       inclusive: inclusive,
                       percentage: percentage,
@@ -88,7 +93,8 @@ extension TaxRateRoutes {
                       description: description,
                       jurisdiction: jurisdiction,
                       metadata: metadata,
-                      state: state)
+                      state: state,
+                      taxType: taxType)
     }
     
     public func retrieve(taxRate: String) -> EventLoopFuture<StripeTaxRate> {
@@ -102,7 +108,8 @@ extension TaxRateRoutes {
                        displayName: String? = nil,
                        jurisdiction: String? = nil,
                        metadata: [String: String]? = nil,
-                       state: String? = nil) -> EventLoopFuture<StripeTaxRate> {
+                       state: String? = nil,
+                       taxType: StripeTaxRateTaxType? = nil) -> EventLoopFuture<StripeTaxRate> {
         return update(taxRate: taxRate,
                       active: active,
                       country: country,
@@ -110,7 +117,8 @@ extension TaxRateRoutes {
                       displayName: displayName,
                       jurisdiction: jurisdiction,
                       metadata: metadata,
-                      state: state)
+                      state: state,
+                      taxType: taxType)
     }
     
     public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTaxRateList> {
@@ -136,7 +144,8 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
                        description: String?,
                        jurisdiction: String?,
                        metadata: [String: String]?,
-                       state: String?) -> EventLoopFuture<StripeTaxRate> {
+                       state: String?,
+                       taxType: StripeTaxRateTaxType?) -> EventLoopFuture<StripeTaxRate> {
         var body: [String: Any] = ["display_name": displayName,
                                    "inclusive": inclusive,
                                    "percentage": percentage]
@@ -165,6 +174,10 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
             body["state"] = state
         }
         
+        if let taxType = taxType {
+            body["tax_type"] = taxType.rawValue
+        }
+        
         return apiHandler.send(method: .POST, path: taxrates, body: .string(body.queryParameters), headers: headers)
     }
     
@@ -179,7 +192,8 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
                        displayName: String?,
                        jurisdiction: String?,
                        metadata: [String: String]?,
-                       state: String?) -> EventLoopFuture<StripeTaxRate> {
+                       state: String?,
+                       taxType: StripeTaxRateTaxType?) -> EventLoopFuture<StripeTaxRate> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -208,6 +222,10 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
         
         if let state = state {
             body["state"] = state
+        }
+        
+        if let taxType = taxType {
+            body["tax_type"] = taxType.rawValue
         }
         
         return apiHandler.send(method: .POST, path: "\(taxrates)/\(taxRate)", body: .string(body.queryParameters), headers: headers)

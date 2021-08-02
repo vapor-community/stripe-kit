@@ -18,19 +18,22 @@ public protocol SessionRoutes {
     ///   - allowPromotionCodes: Enables user redeemable promotion codes.
     ///   - billingAddressCollection: Specify whether Checkout should collect the customer’s billing address. If set to `required`, Checkout will always collect the customer’s billing address. If left blank or set to `auto` Checkout will only collect the billing address when necessary.
     ///   - clientReferenceId: A unique string to reference the Checkout Session. This can be a customer ID, a cart ID, or similar, and can be used to reconcile the session with your internal systems.
-    ///   - customer: ID of an existing customer paying for this session, if one exists. May only be used with line_items. Usage with subscription_data is not yet available. If blank, Checkout will create a new customer object based on information provided during the session. The email stored on the customer will be used to prefill the email field on the Checkout page. If the customer changes their email on the Checkout page, the Customer object will be updated with the new email.
+    ///   - customer: ID of an existing customer paying for this session, if one exists. May only be used with `line_items`. Usage with `subscription_data` is not yet available. If blank, Checkout will create a new customer object based on information provided during the session. The email stored on the customer will be used to prefill the email field on the Checkout page. If the customer changes their email on the Checkout page, the Customer object will be updated with the new email.
     ///   - customerEmail: If provided, this value will be used when the Customer object is created. If not provided, customers will be asked to enter their email address. Use this parameter to prefill customer data if you already have an email on file. To access information about the customer once a session is complete, use the customer field.
+    ///   - customerUpdate: Controls what fields on Customer can be updated by the Checkout Session. Can only be provided when customer is provided.
     ///   - discounts: The coupon or promotion code to apply to this Session. Currently, only up to one may be specified.
     ///   - lineItems: A list of items the customer is purchasing. Use this parameter for one-time payments. To create subscriptions, use subscription_data.items.
     ///   - locale: The IETF language tag of the locale Checkout is displayed in. If blank or auto, the browser’s locale is used. Supported values are auto, da, de, en, es, fi, fr, it, ja, nb, nl, pl, pt, sv, or zh.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - mode: The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
     ///   - paymentIntentData: A subset of parameters to be passed to PaymentIntent creation.
+    ///   - paymentMethodOptions: Payment-method-specific configuration.
     ///   - setupIntentData: A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
     ///   - shippingAddressCollection: When set, provides configuration for Checkout to collect a shipping address from a customer.
     ///   - shippingRates: The shipping rate to apply to this Session. Currently, only up to one may be specified
-    ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. submit_type can only be specified on Checkout Sessions in payment mode, but not Checkout Sessions in subscription or setup mode. Supported values are `auto`, `book`, `donate`, or `pay`.
+    ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in payment mode, but not Checkout Sessions in subscription or setup mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation.
+    ///   - taxIdCollection: Controls tax ID collection settings for the session.
     ///   - expand: An array of propertiies to expand.
     /// - Returns: A `StripeSession`.
     func create(cancelUrl: String,
@@ -41,17 +44,20 @@ public protocol SessionRoutes {
                 clientReferenceId: String?,
                 customer: String?,
                 customerEmail: String?,
+                customerUpdate: [String: Any]?,
                 discounts: [[String: Any]]?,
                 lineItems: [[String: Any]]?,
                 locale: StripeSessionLocale?,
                 metadata: [String: String]?,
                 mode: StripeSessionMode?,
                 paymentIntentData: [String: Any]?,
+                paymentMethodOptions: [String: Any]?,
                 setupIntentData: [String: Any]?,
                 shippingAddressCollection: [String: Any]?,
                 shippingRates: [String]?,
                 submitType: StripeSessionSubmitType?,
                 subscriptionData: [String: Any]?,
+                taxIdCollection: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripeSession>
     
     /// Retrieves a Session object.
@@ -86,17 +92,20 @@ extension SessionRoutes {
                        clientReferenceId: String? = nil,
                        customer: String? = nil,
                        customerEmail: String? = nil,
+                       customerUpdate: [String: Any]? = nil,
                        discounts: [[String: Any]]? = nil,
                        lineItems: [[String: Any]]? = nil,
                        locale: StripeSessionLocale? = nil,
                        metadata: [String: String]? = nil,
                        mode: StripeSessionMode? = nil,
                        paymentIntentData: [String: Any]? = nil,
+                       paymentMethodOptions: [String: Any]? = nil,
                        setupIntentData: [String: Any]? = nil,
                        shippingAddressCollection: [String: Any]? = nil,
                        shippingRates: [String]? = nil,
                        submitType: StripeSessionSubmitType? = nil,
                        subscriptionData: [String: Any]? = nil,
+                       taxIdCollection: [String: Any]? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeSession> {
         return create(cancelUrl: cancelUrl,
                       paymentMethodTypes: paymentMethodTypes,
@@ -106,17 +115,20 @@ extension SessionRoutes {
                       clientReferenceId: clientReferenceId,
                       customer: customer,
                       customerEmail: customerEmail,
+                      customerUpdate: customerUpdate,
                       discounts: discounts,
                       lineItems: lineItems,
                       locale: locale,
                       metadata: metadata,
                       mode: mode,
                       paymentIntentData: paymentIntentData,
+                      paymentMethodOptions: paymentMethodOptions,
                       setupIntentData: setupIntentData,
                       shippingAddressCollection: shippingAddressCollection,
                       shippingRates: shippingRates,
                       submitType: submitType,
                       subscriptionData: subscriptionData,
+                      taxIdCollection: taxIdCollection,
                       expand: expand)
     }
     
@@ -151,17 +163,20 @@ public struct StripeSessionRoutes: SessionRoutes {
                        clientReferenceId: String?,
                        customer: String?,
                        customerEmail: String?,
+                       customerUpdate: [String: Any]?,
                        discounts: [[String: Any]]?,
                        lineItems: [[String: Any]]?,
                        locale: StripeSessionLocale?,
                        metadata: [String: String]?,
                        mode: StripeSessionMode?,
                        paymentIntentData: [String: Any]?,
+                       paymentMethodOptions: [String: Any]?,
                        setupIntentData: [String: Any]?,
                        shippingAddressCollection: [String: Any]?,
                        shippingRates: [String]?,
                        submitType: StripeSessionSubmitType?,
                        subscriptionData: [String: Any]?,
+                       taxIdCollection: [String: Any]?,
                        expand: [String]?) -> EventLoopFuture<StripeSession> {
         var body: [String: Any] = ["cancel_url": cancelUrl,
                                    "payment_method_types": paymentMethodTypes.map { $0.rawValue },
@@ -185,6 +200,10 @@ public struct StripeSessionRoutes: SessionRoutes {
         
         if let customerEmail = customerEmail {
             body["customer_email"] = customerEmail
+        }
+        
+        if let customerUpdate = customerUpdate {
+            customerUpdate.forEach { body["customer_update[\($0)]"] = $1 }
         }
         
         if let discounts = discounts {
@@ -211,6 +230,10 @@ public struct StripeSessionRoutes: SessionRoutes {
             paymentIntentData.forEach { body["payment_intent_data[\($0)]"] = $1 }
         }
         
+        if let paymentMethodOptions = paymentMethodOptions {
+            paymentMethodOptions.forEach { body["payment_method_options[\($0)]"] = $1 }
+        }
+        
         if let setupIntentData = setupIntentData {
             setupIntentData.forEach { body["setup_intent_data[\($0)]"] = $1 }
         }
@@ -229,6 +252,10 @@ public struct StripeSessionRoutes: SessionRoutes {
         
         if let subscriptionData = subscriptionData {
             subscriptionData.forEach { body["subscription_data[\($0)]"] = $1 }
+        }
+        
+        if let taxIdCollection = taxIdCollection {
+            taxIdCollection.forEach { body["tax_id_collection[\($0)]"] = $1 }
         }
         
         if let expand = expand {
