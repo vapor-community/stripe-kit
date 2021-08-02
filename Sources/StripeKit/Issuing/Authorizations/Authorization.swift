@@ -82,9 +82,11 @@ public enum StripeAuthorizationMethod: String, StripeModel {
 }
 
 public struct StripeAuthorizationMerchantData: StripeModel {
-    // TODO: - Make an enum once it's solidified. https://stripe.com/docs/issuing/merchant-categories
+    // TODO: - Make this an enum once it's solidified. https://stripe.com/docs/issuing/merchant-categories
     /// A categorization of the seller’s type of business. See our merchant categories guide for a list of possible values.
     public var category: String?
+    /// The merchant category code for the seller’s business
+    public var categoryCode: String?
     /// City where the seller is located
     public var city: String?
     /// Country where the seller is located

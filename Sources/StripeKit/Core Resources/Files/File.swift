@@ -21,7 +21,7 @@ public struct StripeFile: StripeModel {
     public var filename: String?
     /// A list of file links.
     public var links: StripeFileLinkList?
-    /// The purpose of the file. Possible values are `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `identity_document`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
+    /// The [purpose](https://stripe.com/docs/file-upload#uploading-a-file) of the uploaded file.
     public var purpose: StripeFilePurpose?
     /// The size in bytes of the file upload object.
     public var size: Int?

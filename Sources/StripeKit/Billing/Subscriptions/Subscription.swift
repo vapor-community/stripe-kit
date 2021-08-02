@@ -42,7 +42,7 @@ public struct StripeSubscription: StripeModel {
     @Expandable<StripePaymentMethod> public var defaultPaymentMethod: String?
     /// ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If not set, defaults to the customer’s default source.
     @Expandable<StripeSource> public var defaultSource: String?
-    /// The tax rates that will apply to any subscription item that does not have tax_rates set. Invoices created will have their default_tax_rates populated from the subscription.
+    /// The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
     public var defaultTaxRates: [StripeTaxRate]?
     /// Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis.
     public var discount: StripeDiscount?
@@ -58,10 +58,12 @@ public struct StripeSubscription: StripeModel {
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    /// Specifies the approximate timestamp on which any pending invoice items will be billed according to the schedule provided at pending_invoice_item_interval.
+    /// Specifies the approximate timestamp on which any pending invoice items will be billed according to the schedule provided at `pending_invoice_item_interval`.
     public var nextPendingInvoiceItemInvoice: Date?
     /// If specified, payment collection for this subscription will be paused.
     public var pauseCollection: StripeSubscriptionPauseCollection?
+    /// Payment settings passed on to invoices created by the subscription.
+    public var paymentSettings: StripeSubscriptionPaymentSettings?
     /// Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling Create an invoice for the given subscription at the specified interval.
     public var pendingInvoiceItemInterval: StripeSubscriptionPendingInvoiceInterval?
     /// You can use this SetupIntent to collect user authentication when creating a subscription without immediate payment or updating a subscription’s payment method, allowing you to optimize for off-session payments. Learn more in the SCA Migration Guide.
@@ -72,7 +74,15 @@ public struct StripeSubscription: StripeModel {
     @Expandable<StripeSubscriptionSchedule> public var schedule: String?
     /// Date when the subscription was first created. The date might differ from the `created` date due to backdating.
     public var startDate: Date?
-    /// Possible values are `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `canceled`, or `unpaid`. For `collection_method=charge_automatically` a subscription moves into `incomplete` if the initial payment attempt fails. A subscription in this state can only have metadata and `default_source` updated. Once the first invoice is paid, the subscription moves into an active state. If the first invoice is not paid within 23 hours, the subscription transitions to `incomplete_expired`. This is a terminal state, the open invoice will be voided and no further invoices will be generated. A subscription that is currently in a trial period is trialing and moves to active when the trial period is over. If subscription `collection_method=charge_automatically` it becomes `past_due` when payment to renew it fails and canceled or unpaid (depending on your subscriptions settings) when Stripe has exhausted all payment retry attempts. If subscription `collection_method=send_invoice` it becomes `past_due` when its invoice is not paid by the due date, and `canceled` or `unpaid` if it is still not paid by an additional deadline after that. Note that when a subscription has a status of `unpaid`, no subsequent invoices will be attempted (invoices will be created, but then immediately automatically closed). After receiving updated payment information from a customer, you may choose to reopen and pay their closed invoices.
+    /// Possible values are `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `canceled`, or `unpaid`.
+    ///
+    /// For `collection_method=charge_automatically` a subscription moves into `incomplete` if the initial payment attempt fails. A subscription in this state can only have metadata and `default_source` updated. Once the first invoice is paid, the subscription moves into an active state. If the first invoice is not paid within 23 hours, the subscription transitions to `incomplete_expired`. This is a terminal state, the open invoice will be voided and no further invoices will be generated.
+    ///
+    /// A subscription that is currently in a trial period is trialing and moves to active when the trial period is over.
+    ///
+    /// If subscription `collection_method=charge_automatically` it becomes `past_due` when payment to renew it fails and canceled or unpaid (depending on your subscriptions settings) when Stripe has exhausted all payment retry attempts.
+    ///
+    /// If subscription `collection_method=send_invoice` it becomes `past_due` when its invoice is not paid by the due date, and `canceled` or `unpaid` if it is still not paid by an additional deadline after that. Note that when a subscription has a status of `unpaid`, no subsequent invoices will be attempted (invoices will be created, but then immediately automatically closed). After receiving updated payment information from a customer, you may choose to reopen and pay their closed invoices.
     public var status: StripeSubscriptionStatus?
     /// The account (if any) the subscription’s payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription’s invoices.
     public var transferData: StripeSubscriptionTransferData?
@@ -87,6 +97,55 @@ public struct StripeSubscriptionBillingThresholds: StripeModel {
     public var amountGte: Int?
     /// Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
     public var resetBillingCycleAnchor: Bool?
+}
+
+public struct StripeSubscriptionPaymentSettings: StripeModel {
+    /// Payment-method-specific configuration to provide to invoices created by the subscription.
+    public var paymentMethodOptions: StripeSubscriptionPaymentSettingsPaymentMethodOptions?
+    /// The list of payment method types to provide to every invoice created by the subscription. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice’s default payment method, the subscription’s default payment method, the customer’s default payment method, and your invoice template settings.
+    public var paymentMethodTypes: [SubscriptionPaymentSettingsPaymentMethodType]?
+}
+
+public struct StripeSubscriptionPaymentSettingsPaymentMethodOptions: StripeModel {
+    /// This sub-hash contains details about the Bancontact payment method options to pass to invoices created by the subscription.
+    public var bancontact: StripeSubscriptionPaymentSettingsPaymentMethodOptionsBancontact?
+    /// This sub-hash contains details about the Card payment method options to pass to invoices created by the subscription.
+    public var card: StripeSubscriptionPaymentSettingsPaymentMethodOptionsCard?
+}
+
+public struct StripeSubscriptionPaymentSettingsPaymentMethodOptionsBancontact: StripeModel {
+    /// Preferred language of the Bancontact authorization page that the customer is redirected to.
+    public var preferredLanguage: String?
+}
+
+public struct StripeSubscriptionPaymentSettingsPaymentMethodOptionsCard: StripeModel {
+    /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and other requirements. However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on manually requesting 3D Secure for more information on how this configuration interacts with Radar and our SCA Engine.
+    public var requestThreeDSecure: StripeSubscriptionPaymentSettingsPaymentMethodOptionsCardRequestThreedSecure?
+}
+
+public enum StripeSubscriptionPaymentSettingsPaymentMethodOptionsCardRequestThreedSecure: String, StripeModel {
+    /// Triggers 3D Secure authentication only if it is required.
+    case automatic
+    /// Requires 3D Secure authentication if it is available.
+    case any
+}
+
+public enum SubscriptionPaymentSettingsPaymentMethodType: String, StripeModel {
+    case achCreditTransfer = "ach_transfer_credit"
+    case achDebit = "ach_debit"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case boleto
+    case card
+    case eps
+    case fpx
+    case giropay
+    case ideal
+    case p24
+    case sepaDebit = "sepa_debit"
+    case sofort
+    case wechatPay = "wechat_pay"
 }
 
 public struct StripeSubscriptionPendingInvoiceInterval: StripeModel {
@@ -125,6 +184,8 @@ public enum StripeSubscriptionPaymentBehavior: String, StripeModel {
     case errorIfIncomplete = "error_if_incomplete"
     /// Use `pending_if_incomplete` to update the subscription using pending updates. When you use `pending_if_incomplete` you can only pass the parameters supported by pending updates.
     case pendingIfIncomplete = "pending_if_incomplete"
+    /// Use `default_incomplete` to create Subscriptions with `status=incomplete` when the first invoice requires payment, otherwise start as active. Subscriptions transition to `status=active` when successfully confirming the payment intent on the first invoice. This allows simpler management of scenarios where additional user actions are needed to pay a subscription’s invoice. Such as failed payments, SCA regulation, or collecting a mandate for a bank debit payment method. If the payment intent is not confirmed within 23 hours subscriptions transition to `status=incomplete_expired`, which is a terminal state.
+    case defaultIncomplete = "default_incomplete"
 }
 
 public enum StripeSubscriptionProrationBehavior: String, StripeModel {

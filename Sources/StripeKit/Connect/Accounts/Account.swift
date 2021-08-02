@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// The [Account Object](https://stripe.com/docs/api/accounts/object).
+/// The [Account Object](https://stripe.com/docs/api/accounts/object)
 public struct StripeConnectAccount: StripeModel {
     /// Unique identifier for the object.
     public var id: String
@@ -22,6 +22,8 @@ public struct StripeConnectAccount: StripeModel {
     public var capabilities: StripeConnectAccountCapablities?
     /// Whether the account can create live charges.
     public var chargesEnabled: Bool?
+    /// The controller of the account. This field is only available for Standard accounts.
+    public var controller: StripeConnectAccountController?
     /// Information about the company or business. This field is null unless business_type is set to company.
     public var company: StripeConnectAccountCompany?
     /// The account’s country.
@@ -86,6 +88,8 @@ public enum StripeConnectAccountBusinessType: String, StripeModel {
 }
 
 public struct StripeConnectAccountCapablities: StripeModel {
+    /// The status of the ACSS Direct Debits payments capability of the account, or whether the account can directly process ACSS Direct Debits charges.
+    public var acssDebitPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the Afterpay Clearpay capability of the account, or whether the account can directly process Afterpay Clearpay charges.
     public var afterpayClearpayPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the BECS Direct Debit (AU) payments capability of the account, or whether the account can directly process BECS Direct Debit (AU) charges.
@@ -134,6 +138,18 @@ public enum StripeConnectAccountCapabilitiesStatus: String, StripeModel {
     case active
     case inactive
     case pending
+}
+
+public struct StripeConnectAccountController: StripeModel {
+    /// `true` if the Connect application retrieving the resource controls the account and can therefore exercise platform controls. Otherwise, this field is null.
+    public var isController: Bool?
+    /// The controller type. Can be `application`, if a Connect application controls the account, or `account`, if the account controls itself.
+    public var type: StripeConnectAccountControllerType?
+}
+
+public enum StripeConnectAccountControllerType: String, StripeModel {
+    case application
+    case account
 }
 
 public struct StripeConnectAccountCompany: StripeModel {
@@ -222,19 +238,19 @@ public enum StripeConnectAccountCompanyStructure: String, StripeModel {
 }
 
 public struct StripeConnectAccountRequirements: StripeModel {
-    /// The date the fields in `currently_due` must be collected by to keep payouts enabled for the account. These fields might block payouts sooner if the next threshold is reached before these fields are collected.
+    /// Date by which the fields in `currently_due` must be collected to keep the account enabled. These fields may disable the account sooner if the next threshold is reached before they are collected.
     public var currentDeadline: Date?
-    /// The fields that need to be collected to keep the account enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
+    /// Fields that need to be collected to keep the account enabled. If not collected by `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
     public var currentlyDue: [String]?
-    /// If the account is disabled, this string describes why the account can’t create charges or receive payouts. Can be `requirements.past_due`, `requirements.pending_verification`, `rejected.fraud`, `rejected.terms_of_service`, `rejected.listed`, `rejected.other`, `listed`, `under_review`, or `other`.
+    /// If the account is disabled, this string describes why. Can be `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.listed`, `rejected.terms_of_service`, `rejected.other`, `under_review`, or `other`.
     public var disabledReason: StripeConnectAccountRequirementsDisabledReason?
-    /// The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
+    /// Fields that are `currently_due` and need to be collected again because validation or verification failed.
     public var errors: [StripeConnectAccountRequirementsError]?
-    /// The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
+    /// Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
     public var eventuallyDue: [String]?
-    /// The fields that weren’t collected by the current_deadline. These fields need to be collected to re-enable the account.
+    /// Fields that weren’t collected by `current_deadline`. These fields need to be collected to enable the account.
     public var pastDue: [String]?
-    /// Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
+    /// Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
     public var pendingVerification: [String]?
 }
 
@@ -340,6 +356,12 @@ public enum StripeConnectAccountRequirementsErrorCode: String, StripeModel {
     case verificationFailedTaxIdNotIssued = "verification_failed_tax_id_not_issued"
     /// Verification failed for an unknown reason. Correct any errors and resubmit the required fields.
     case verificationFailedOther = "verification_failed_other"
+    /// We have identified owners that haven’t been added on the account. Add any missing owners to the account.
+    case verificationMissingOwners = "verification_missing_owners"
+    /// We have identified executives that haven’t been added on the account. Add any missing executives to the account.
+    case verificationMissingExecutives = "verification_missing_executives"
+    /// We have identified holding companies with significant percentage ownership. Upload a Memorandum of Association for each of the holding companies.
+    case verificationRequiresAdditionalMemorandumOfAssociations = "verification_requires_additional_memorandum_of_associations"
 }
 
 public struct StripeConnectAccountSettings: StripeModel {

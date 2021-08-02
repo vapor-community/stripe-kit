@@ -38,9 +38,19 @@ public protocol TokenRoutes {
     /// - Returns: A `StripeToken`.
     func create(account: [String: Any]) -> EventLoopFuture<StripeToken>
     
-    /// Creates a single-use token that represents the details for a person. Use this when creating or updating persons associated with a Connect account. See the documentation to learn more. Person tokens may be created only in live mode, with your application’s publishable key. Your application’s secret key may be used to create person tokens only in test mode.
+    /// Creates a single-use token that represents the details for a person. Use this when creating or updating persons associated with a Connect account. See the documentation to learn more.
+    ///
+    /// Person tokens may be created only in live mode, with your application’s publishable key. Your application’s secret key may be used to create person tokens only in test mode.
     /// - Parameter person: Information for the person this token will represent.
-    func create(person: [String: Any]) -> EventLoopFuture<StripePerson>
+    /// - Returns: A `StripeToken`.
+    func create(person: [String: Any]) -> EventLoopFuture<StripeToken>
+    
+    /// Creates a single-use token that represents an updated CVC value to be used for CVC re-collection. This token can be used when confirming a card payment using a saved card on a PaymentIntent with `confirmation_method`: manual.
+    ///
+    /// For most cases, use our JavaScript library instead of using the API. For a `PaymentIntent` with `confirmation_method: automatic`, use our recommended payments integration without tokenizing the CVC value.
+    /// - Parameter cvcUpdate: The CVC value, in string form.
+    /// - Returns: A `StripeToken`.
+    func create(cvcUpdate: String) -> EventLoopFuture<StripeToken>
     
     /// Retrieves the token with the given ID.
     ///
@@ -54,27 +64,31 @@ public protocol TokenRoutes {
 
 extension TokenRoutes {
     public func create(card: Any? = nil, customer: String? = nil) -> EventLoopFuture<StripeToken> {
-        return create(card: card, customer: customer)
+        create(card: card, customer: customer)
     }
     
     public func create(bankAcocunt: [String: Any]? = nil, customer: String? = nil) -> EventLoopFuture<StripeToken> {
-        return create(bankAcocunt: bankAcocunt, customer: customer)
+        create(bankAcocunt: bankAcocunt, customer: customer)
     }
     
     public func create(pii: String) -> EventLoopFuture<StripeToken> {
-        return create(pii: pii)
+        create(pii: pii)
     }
     
     public func create(account: [String: Any]) -> EventLoopFuture<StripeToken> {
-        return create(account: account)
+        create(account: account)
     }
     
-    public func create(person: [String: Any]) -> EventLoopFuture<StripePerson> {
-        return create(person: person)
+    public func create(person: [String: Any]) -> EventLoopFuture<StripeToken> {
+        create(person: person)
     }
     
     public func retrieve(token: String) -> EventLoopFuture<StripeToken> {
-        return retrieve(token: token)
+        retrieve(token: token)
+    }
+    
+    public func create(cvcUpdate: String) -> EventLoopFuture<StripeToken> {
+        create(cvcUpdate: cvcUpdate)
     }
 }
 
@@ -134,7 +148,7 @@ public struct StripeTokenRoutes: TokenRoutes {
         return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func create(person: [String : Any]) -> EventLoopFuture<StripePerson> {
+    public func create(person: [String : Any]) -> EventLoopFuture<StripeToken> {
         var body: [String: Any] = [:]
         
         person.forEach { body["person[\($0)]"] = $1 }
@@ -143,6 +157,12 @@ public struct StripeTokenRoutes: TokenRoutes {
     }
     
     public func retrieve(token: String) -> EventLoopFuture<StripeToken> {
-        return apiHandler.send(method: .GET, path: "\(tokens)/\(token)", headers: headers)
+        apiHandler.send(method: .GET, path: "\(tokens)/\(token)", headers: headers)
+    }
+    
+    public func create(cvcUpdate: String) -> EventLoopFuture<StripeToken> {
+        let body: [String: Any] = ["cvc_update": ["cvc": cvcUpdate]]
+        
+        return apiHandler.send(method: .POST, path: tokens, body: .string(body.queryParameters), headers: headers)
     }
 }

@@ -54,6 +54,8 @@ public final class StripeClient {
     public var subscriptionSchedules: SubscriptionScheduleRoutes
     public var taxRates: TaxRateRoutes
     public var usageRecords: UsageRecordRoutes
+    public var quoteLineItems: QuoteLineItemRoutes
+    public var quotes: QuoteRoutes
     
     // MARK: - CONNECT
     public var connectAccounts: AccountRoutes
@@ -98,6 +100,10 @@ public final class StripeClient {
     // MARK: - REPORTING
     public var reportRuns: ReportRunRoutes
     public var reportTypes: ReportTypeRoutes
+    
+    // MARK: - IDENTITY
+    public var verificationSessions: VerificationSessionRoutes
+    public var verificationReports: VerificationReportRoutes
     
     // MARK: - WEBHOOKS
     public var webhookEndpoints: WebhookEndpointRoutes
@@ -152,6 +158,8 @@ public final class StripeClient {
         subscriptionSchedules = StripeSubscriptionScheduleRoutes(apiHandler: handler)
         taxRates = StripeTaxRateRoutes(apiHandler: handler)
         usageRecords = StripeUsageRecordRoutes(apiHandler: handler)
+        quoteLineItems = StripeQuoteLineItemRoutes(apiHandler: handler)
+        quotes = StripeQuoteRoutes(apiHandler: handler)
         
         connectAccounts = StripeConnectAccountRoutes(apiHandler: handler)
         accountLinks = StripeAccountLinkRoutes(apiHandler: handler)
@@ -189,6 +197,9 @@ public final class StripeClient {
         
         reportRuns = StripeReportRunRoutes(apiHandler: handler)
         reportTypes = StripeReportTypeRoutes(apiHandler: handler)
+        
+        verificationSessions = StripeVerificationSessionRoutes(apiHandler: handler)
+        verificationReports = StripeVerificationReportRoutes(apiHandler: handler)
         
         webhookEndpoints = StripeWebhookEndpointRoutes(apiHandler: handler)
     }

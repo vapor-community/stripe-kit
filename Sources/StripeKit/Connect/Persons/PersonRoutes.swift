@@ -16,6 +16,7 @@ public protocol PersonRoutes {
     ///   - address: The person’s address.
     ///   - addressKana: The Kana variation of the person’s address (Japan only).
     ///   - addressKanji: The Kanji variation of the person’s address (Japan only).
+    ///   - documents: Documents that may be submitted to satisfy various informational requests.
     ///   - dob: The person’s date of birth.
     ///   - email: The person’s email address.
     ///   - firstName: The person’s first name.
@@ -40,6 +41,7 @@ public protocol PersonRoutes {
                 address: [String: Any]?,
                 addressKana: [String: Any]?,
                 addressKanji: [String: Any]?,
+                documents: [String: Any]?,
                 dob: [String: Any]?,
                 email: String?,
                 firstName: String?,
@@ -76,6 +78,7 @@ public protocol PersonRoutes {
     ///   - address: The person’s address.
     ///   - addressKana: The Kana variation of the person’s address (Japan only).
     ///   - addressKanji: The Kanji variation of the person’s address (Japan only).
+    ///   - documents: Documents that may be submitted to satisfy various informational requests.
     ///   - dob: The person’s date of birth.
     ///   - email: The person’s email address.
     ///   - firstName: The person’s first name.
@@ -101,6 +104,7 @@ public protocol PersonRoutes {
                 address: [String: Any]?,
                 addressKana: [String: Any]?,
                 addressKanji: [String: Any]?,
+                documents: [String: Any]?,
                 dob: [String: Any]?,
                 email: String?,
                 firstName: String?,
@@ -146,6 +150,7 @@ extension PersonRoutes {
                        address: [String: Any]? = nil,
                        addressKana: [String: Any]? = nil,
                        addressKanji: [String: Any]? = nil,
+                       documents: [String: Any]? = nil,
                        dob: [String: Any]? = nil,
                        email: String? = nil,
                        firstName: String? = nil,
@@ -169,6 +174,7 @@ extension PersonRoutes {
                       address: address,
                       addressKana: addressKana,
                       addressKanji: addressKanji,
+                      documents: documents,
                       dob: dob,
                       email: email,
                       firstName: firstName,
@@ -199,6 +205,7 @@ extension PersonRoutes {
                        address: [String: Any]? = nil,
                        addressKana: [String: Any]? = nil,
                        addressKanji: [String: Any]? = nil,
+                       documents: [String: Any]? = nil,
                        dob: [String: Any]? = nil,
                        email: String? = nil,
                        firstName: String? = nil,
@@ -223,6 +230,7 @@ extension PersonRoutes {
                       address: address,
                       addressKana: addressKana,
                       addressKanji: addressKanji,
+                      documents: documents,
                       dob: dob,
                       email: email,
                       firstName: firstName,
@@ -268,6 +276,7 @@ public struct StripePersonRoutes: PersonRoutes {
                        address: [String: Any]?,
                        addressKana: [String: Any]?,
                        addressKanji: [String: Any]?,
+                       documents: [String: Any]?,
                        dob: [String: Any]?,
                        email: String?,
                        firstName: String?,
@@ -299,6 +308,10 @@ public struct StripePersonRoutes: PersonRoutes {
         
         if let addressKanji = addressKanji {
             addressKanji.forEach { body["address_kanji[\($0)]"] = $1 }
+        }
+        
+        if let documents = documents {
+            documents.forEach { body["documents[\($0)]"] = $1 }
         }
         
         if let dob = dob {
@@ -389,6 +402,7 @@ public struct StripePersonRoutes: PersonRoutes {
                        address: [String: Any]?,
                        addressKana: [String: Any]?,
                        addressKanji: [String: Any]?,
+                       documents: [String: Any]?,
                        dob: [String: Any]?,
                        email: String?,
                        firstName: String?,
@@ -420,6 +434,10 @@ public struct StripePersonRoutes: PersonRoutes {
         
         if let addressKanji = addressKanji {
             addressKanji.forEach { body["address_kanji[\($0)]"] = $1 }
+        }
+        
+        if let documents = documents {
+            documents.forEach { body["documents[\($0)]"] = $1 }
         }
         
         if let dob = dob {

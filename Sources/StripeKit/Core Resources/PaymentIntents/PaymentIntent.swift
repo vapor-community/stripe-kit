@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// The [PaymentIntent Object](https://stripe.com/docs/api/payment_intents/object).
+/// The [PaymentIntent Object](https://stripe.com/docs/api/payment_intents/object)
 public struct StripePaymentIntent: StripeModel {
     /// Unique identifier for the object.
     public var id: String
@@ -65,7 +65,7 @@ public struct StripePaymentIntent: StripeModel {
     public var receiptEmail: String?
     /// ID of the review associated with this PaymentIntent, if any.
     @Expandable<StripeReview> public var review: String?
-    /// Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. For more, learn to save card details after a payment. Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using off_session will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer.
+    /// Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. For more, learn to save card details after a payment. Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer.
     public var setupFutureUsage: StripePaymentIntentSetupFutureUsage?
     /// Shipping information for this PaymentIntent.
     public var shipping: StripeShippingLabel?
@@ -117,10 +117,55 @@ public enum StripePaymentIntentConfirmationMethod: String, StripeModel {
 }
 
 public struct StripePaymentIntentNextAction: StripeModel {
+    /// Contains instructions for authenticating a payment by redirecting your customer to Alipay App or website.
+    public var alipayHandleRedirect: StripePaymentIntentNextActionAlipayHandleRedirect?
+    /// Contains Boleto details necessary for the customer to complete the payment.
+    public var boletoDisplaydetails: StripePaymentIntentNextActionBoletoDisplayDetails?
+    /// Contains OXXO details necessary for the customer to complete the payment.
+    public var oxxoDisplayDetails: StripePaymentIntentNextActionOXXODisplayDetails?
     /// Contains instructions for authenticating a payment by redirecting your customer to another page or application.
     public var redirectToUrl: StripePaymentIntentNextActionRedirectToUrl?
-    /// Type of the next action to perform, one of `redirect_to_url` or `use_stripe_sdk`.
+    /// Type of the next action to perform, one of `redirect_to_url` or `use_stripe_sdk`, `alipay_handle_redirect`, or `oxxo_display_details`.
     public var type: StripePaymentIntentNextActionType?
+    /// Contains details describing microdeposits verification flow.
+    public var verifyWithMicrodeposits: StripePaymentIntentNextActionVerifyWithMicrodeposits?
+    /// The field that contains Wechat Pay QR code info
+    public var wechatPayDisplayQrCode: StripePaymentIntentNextActionWechatPayQRCode?
+    /// Info required for android app to app redirect
+    public var wechatPayRedirectToAndroidApp: StripePaymentIntentNextActionWechatPayAndroidApp?
+    /// Info required for iOS app to app redirect
+    public var wechatPayRedirectToIosApp: StripePaymentIntentNextActionWechatPayIOSApp?
+}
+
+public struct StripePaymentIntentNextActionAlipayHandleRedirect: StripeModel {
+    /// The native data to be used with Alipay SDK you must redirect your customer to in order to authenticate the payment in an Android App.
+    public var nativeData: String?
+    /// The native URL you must redirect your customer to in order to authenticate the payment in an iOS App.
+    public var nativeUrl: String?
+    /// If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
+    public var returnUrl: String?
+    /// The URL you must redirect your customer to in order to authenticate the payment.
+    public var url: String?
+}
+
+public struct StripePaymentIntentNextActionBoletoDisplayDetails: StripeModel {
+    /// The timestamp after which the boleto expires.
+    public var expiresAt: Date?
+    /// The URL to the hosted boleto voucher page, which allows customers to view the boleto voucher.
+    public var hostedVoucherUrl: String?
+    /// The boleto number.
+    public var number: String?
+    /// The URL to the downloadable boleto voucher PDF.
+    public var pdf: String?
+}
+
+public struct StripePaymentIntentNextActionOXXODisplayDetails: StripeModel {
+    /// The timestamp after which the OXXO voucher expires.
+    public var expiresAfter: Date?
+    /// The URL for the hosted OXXO voucher page, which allows customers to view and print an OXXO voucher.
+    public var hostedVoucherUrl: String?
+    /// OXXO reference number.
+    public var number: String?
 }
 
 public struct StripePaymentIntentNextActionRedirectToUrl: StripeModel {
@@ -128,16 +173,49 @@ public struct StripePaymentIntentNextActionRedirectToUrl: StripeModel {
     public var returnUrl: String?
     /// The URL you must redirect your customer to in order to authenticate the payment.
     public var url: String?
-    /**
-     https://stripe.com/docs/api/payment_intents/object#payment_intent_object-next_action-use_stripe_sdk
-     Stripe .net doesn't implement the `use_stripe_sdk` property (probably due to its dynamic nature) so neither am I :)
-     https://github.com/stripe/stripe-dotnet/blob/master/src/Stripe.net/Entities/PaymentIntents/PaymentIntentNextAction.cs
-     */
 }
 
 public enum StripePaymentIntentNextActionType: String, StripeModel {
     case redirectToUrl = "redirect_to_url"
     case useStripeSDK = "use_stripe_sdk"
+    case alipayHandleRedirect = "alipay_handle_redirect"
+    case oxxoDisplayDetails = "oxxo_display_details"
+}
+
+public struct StripePaymentIntentNextActionVerifyWithMicrodeposits: StripeModel {
+    /// The timestamp when the microdeposits are expected to land.
+    public var arrivalDate: Date?
+    /// The URL for the hosted verification page, which allows customers to verify their bank account.
+    public var hostedVerificationUrl: String?
+}
+
+public struct StripePaymentIntentNextActionWechatPayQRCode: StripeModel {
+    /// The data being used to generate QR code
+    public var data: String?
+    /// The base64 image data for a pre-generated QR code
+    public var imageDataUrl: String?
+}
+
+public struct StripePaymentIntentNextActionWechatPayAndroidApp: StripeModel {
+    /// `app_id` is the APP ID registered on WeChat open platform
+    public var appId: String?
+    /// `nonce_str` is a random string
+    public var nonceStr: String?
+    /// Package is static value
+    public var package: String?
+    /// A unique merchant ID assigned by Wechat Pay
+    public var partnerId: String?
+    /// A unique trading ID assigned by Wechat Pay
+    public var prepayId: String?
+    /// A signature
+    public var sign: String?
+    /// Specifies the current time in epoch format
+    public var timestamp: String?
+}
+
+public struct StripePaymentIntentNextActionWechatPayIOSApp: StripeModel {
+    /// An universal link that redirect to Wechat Pay APP
+    public var nativeUrl: String?
 }
 
 public enum StripePaymentIntentStatus: String, StripeModel {
@@ -158,12 +236,22 @@ public struct StripePaymentIntentsList: StripeModel {
 }
 
 public struct StripePaymentIntentPaymentMethodOptions: StripeModel {
+    /// If the PaymentIntent’s `payment_method_types` includes `acss_debit`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var acssDebit: StripePaymentIntentPaymentMethodOptionsAcssDebit?
+    /// If the PaymentIntent’s `payment_method_types` includes `afterpay_clearpay`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var afterpayClearpay: StripePaymentIntentPaymentMethodOptionsAfterpayClearpay?
     /// If the PaymentIntent’s `payment_method_types` includes `alipay`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var alipay: StripePaymentIntentPaymentMethodOptionsAlipay?
     /// If the PaymentIntent’s `payment_method_types` includes `bancontact`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var bancontact: StripePaymentIntentPaymentMethodOptionsBancontact?
+    /// If the PaymentIntent’s `payment_method_types` includes `boleto`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var boleto: StripePaymentIntentPaymentMethodOptionsBoleto?
     /// If the PaymentIntent’s `payment_method_types` includes `card`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var card: StripePaymentIntentPaymentMethodOptionsCard?
+    /// If the PaymentIntent’s `payment_method_types` includes `card_present`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var cardPresent: StripePaymentIntentPaymentMethodOptionsCardPresent?
+    /// If the PaymentIntent’s `payment_method_types` includes `ideal`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var ideal: StripePaymentIntentPaymentMethodOptionsIdeal?
     /// If the PaymentIntent’s `payment_method_types` includes `oxxo`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var oxxo: StripePaymentIntentPaymentMethodOptionsOXXO?
     /// If the PaymentIntent’s `payment_method_types` includes `p24`, this hash contains the configurations that will be applied to each payment attempt of that type.
@@ -172,15 +260,70 @@ public struct StripePaymentIntentPaymentMethodOptions: StripeModel {
     public var sepaDebit: StripePaymentIntentPaymentMethodOptionsSepaDebit?
     /// If the PaymentIntent’s `payment_method_types` includes `sofort`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var sofort: StripePaymentIntentPaymentMethodOptionsSofort?
+    /// If the PaymentIntent’s `payment_method_types` includes `wechat_pay`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var wechatPay: StripePaymentIntentPaymentMethodOptionsWechatPay?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsAlipay: StripeModel {
-    
+public struct StripePaymentIntentPaymentMethodOptionsAcssDebit: StripeModel {
+    /// Additional fields for Mandate creation
+    public var mandateOptions: StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptions?
+    /// Bank account verification method.
+    public var verificationMethod: StripePaymentIntentPaymentMethodOptionsAcssDebitVerificationMethod?
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptions: StripeModel {
+    /// A URL for custom mandate text
+    public var customMandateUrl: String?
+    /// Description of the interval. Only required if `payment_schedule` parmeter is `interval` or `combined`.
+    public var intervalDescription: String?
+    /// Payment schedule for the mandate.
+    public var paymentSchedule: StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule?
+    /// Transaction type of the mandate.
+    public var transactionType: StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
+}
+
+public enum StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, StripeModel {
+    /// Payments are initiated at a regular pre-defined interval
+    case interval
+    /// Payments are initiated sporadically
+    case sporadic
+    /// Payments can be initiated at a pre-defined interval or sporadically
+    case combined
+}
+
+public enum StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, StripeModel {
+    /// Payments are initiated at a regular pre-defined interval
+    case interval
+    /// Payments are initiated sporadically
+    case sporadic
+    /// Payments can be initiated at a pre-defined interval or sporadically
+    case combined
+}
+
+public enum StripePaymentIntentPaymentMethodOptionsAcssDebitVerificationMethod: String, StripeModel {
+    /// Instant verification with fallback to microdeposits.
+    case automatic
+    /// Instant verification.
+    case instant
+    /// Verification using microdeposits.
+    case microdeposits
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsAlipay: StripeModel {}
+
+public struct StripePaymentIntentPaymentMethodOptionsAfterpayClearpay: StripeModel {
+    /// Order identifier shown to the merchant in Afterpay’s online portal. We recommend using a value that helps you answer any questions a customer might have about the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+    public var reference: String?
 }
 
 public struct StripePaymentIntentPaymentMethodOptionsBancontact: StripeModel {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: String?
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsBoleto: StripeModel {
+    /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set `expires_after_days` to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
+    public var expiresAfterDays: Int?
 }
 
 public struct StripePaymentIntentPaymentMethodOptionsCard: StripeModel {
@@ -202,23 +345,41 @@ public struct StripePaymentIntentPaymentMethodOptionsCardInstallments: StripeMod
     public var plan: StripeChargePaymentDetailsCardInstallmentPlan?
 }
 
+public struct StripePaymentIntentPaymentMethodOptionsCardPresent: StripeModel {}
+
+public struct StripePaymentIntentPaymentMethodOptionsIdeal: StripeModel {}
+
 public struct StripePaymentIntentPaymentMethodOptionsOXXO: StripeModel {
     /// The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set `expires_after_days` to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
     public var expiresAfterDays: Int?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsP24: StripeModel {
-}
+public struct StripePaymentIntentPaymentMethodOptionsP24: StripeModel {}
 
 public struct StripePaymentIntentPaymentMethodOptionsSepaDebit: StripeModel {
     /// Additional fields for Mandate creation
     public var mandateOptions: StripePaymentIntentPaymentMethodOptionsSepaDebitMandateOptions?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsSepaDebitMandateOptions: StripeModel {
-}
+public struct StripePaymentIntentPaymentMethodOptionsSepaDebitMandateOptions: StripeModel {}
 
 public struct StripePaymentIntentPaymentMethodOptionsSofort: StripeModel {
     /// Preferred language of the SOFORT authorization page that the customer is redirected to.
     public var preferredLanguage: String?
+}
+
+public struct StripePaymentIntentPaymentMethodOptionsWechatPay: StripeModel {
+    /// The app ID registered with WeChat Pay. Only required when client is ios or android.
+    public var appId: String?
+    /// The client type that the end customer will pay from
+    public var client: StripePaymentIntentPaymentMethodOptionsWechatPayClient?
+}
+
+public enum StripePaymentIntentPaymentMethodOptionsWechatPayClient: String, StripeModel {
+    /// The end customer will pay from web browser
+    case web
+    /// The end customer will pay from an iOS app
+    case ios
+    /// The end customer will pay from an Android app
+    case android
 }

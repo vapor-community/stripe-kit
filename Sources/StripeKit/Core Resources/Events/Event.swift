@@ -74,6 +74,7 @@ public enum StripeEventObject: StripeModel {
     case product(StripeProduct)
     case promotionCode(StripePromotionCode)
     case earlyFraudWarniing(StripeEarlyFraudWarning)
+    case quote(StripeQuote)
     case reportRun(StripeReportRun)
     case reportType(StripeReportType)
     case review(StripeReview)
@@ -84,6 +85,7 @@ public enum StripeEventObject: StripeModel {
     case taxRate(StripeTaxRate)
     case topup(StripeTopUp)
     case transfer(StripeTransfer)
+    case verificationSession(StripeVerificationSession)
     
     public init(from decoder: Decoder) throws {
         let object = try decoder
@@ -128,6 +130,8 @@ public enum StripeEventObject: StripeModel {
             self = try .taxId(StripeTaxID(from: decoder))
         case "file":
             self = try .file(StripeFile(from: decoder))
+        case "identity.verification_session":
+            self = try .verificationSession(StripeVerificationSession(from: decoder))
         case "invoice":
             self = try .invoice(StripeInvoice(from: decoder))
         case "invoiceitem":
@@ -166,6 +170,8 @@ public enum StripeEventObject: StripeModel {
             self = try .promotionCode(StripePromotionCode(from: decoder))
         case "radar.early_fraud_warning":
             self = try .earlyFraudWarniing(StripeEarlyFraudWarning(from: decoder))
+        case "quote":
+            self = try .quote(StripeQuote(from: decoder))
         case "reporting.report_run":
             self = try .reportRun(StripeReportRun(from: decoder))
         case "reporting.report_type":
@@ -318,6 +324,18 @@ public enum StripeEventType: String, StripeModel {
     case customerTaxIdUpdated = "customer.tax_id.updated"
     /// Occurs whenever a new Stripe-generated file is available for your account.
     case fileCreated = "file.created"
+    /// Occurs whenever a VerificationSession is canceled
+    case identityVerificationSessionCanceled = "identity.verification_session.canceled"
+    /// Occurs whenever a VerificationSession is created
+    case identityVerificationSessionCreated = "identity.verification_session.created"
+    /// Occurs whenever a VerificationSession transitions to processing
+    case identityVerificationSessionProcessing = "identity.verification_session.processing"
+    /// Occurs whenever a VerificationSession is redacted. You must create a webhook endpoint which explicitly subscribes to this event type to access it. Webhook endpoints which subscribe to all events will not include this event type.
+    case identityVerificationSessionRedacted = "identity.verification_session.redacted"
+    /// Occurs whenever a VerificationSession transitions to require user input
+    case identityVerificationSessionRequiresInput = "identity.verification_session.requires_input"
+    /// Occurs whenever a VerificationSession transitions to verified
+    case identityVerificationSessionVerified = "identity.verification_session.verified"
     /// Occurs whenever a new invoice is created. To learn how webhooks can be used with this event, and how they can affect it, see Using Webhooks with Subscriptions.
     case invoiceCreated = "invoice.created"
     /// Occurs whenever a draft invoice is deleted.
@@ -450,6 +468,14 @@ public enum StripeEventType: String, StripeModel {
     case promotionCodeCreated = "promotion_code.created"
     /// Occurs whenever a promotion code is updated.
     case promotionCodeUpdated = "promotion_code.updated"
+    /// Occurs whenever a quote is accepted.
+    case quoteAccepted = "quote.accepted"
+    /// Occurs whenever a quote is canceled.
+    case quoteCanceled = "quote.canceled"
+    /// Occurs whenever a quote is created.
+    case quoteCreated = "quote.created"
+    /// Occurs whenever a quote is finalized.
+    case quoteFinalized = "quote.finalized"
     /// Occurs whenever an early fraud warning is created.
     case radarEarlyFraudWarningCreated = "radar.early_fraud_warning.created"
     /// Occurs whenever an early fraud warning is updated.

@@ -35,7 +35,7 @@ public struct StripePerson: StripeModel {
     public var firstNameKanji: String?
     /// The person’s gender (International regulations require either “male” or “female”).
     public var gender: StripePersonGender?
-    /// Whether the person’s id_number was provided.
+    /// Whether the person’s `id_number` was provided.
     public var idNumberProvided: Bool?
     /// The person's last name.
     public var lastName: String?
@@ -102,7 +102,7 @@ public struct StripePersonRelationship: StripeModel {
 public struct StripePersonRequirements: StripeModel {
     /// Fields that need to be collected to keep the person’s account enabled. If not collected by the account’s `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
     public var currentlyDue: [String]?
-    /// The fields that are currently_due and need to be collected again because validation or verification failed for some reason.
+    /// The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
     public var errors: [StripePersonRequirementsError]?
     /// Fields that need to be collected assuming all volume thresholds are reached. As fields are needed, they are moved to `currently_due` and the account’s `current_deadline` is set.
     public var eventuallyDue: [String]?

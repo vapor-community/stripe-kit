@@ -9,3 +9,4 @@
 import Foundation
 
 public protocol StripeModel: Codable {}
+extension Data: StripeModel {}

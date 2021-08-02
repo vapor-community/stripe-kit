@@ -14,6 +14,8 @@ public struct StripeBankAccount: StripeModel {
     public var object: String
     /// The account this bank account belongs to.
     @Expandable<StripeConnectAccount> public var account: String?
+    /// The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
+    public var accountType: String?
     /// The name of the person or business that owns the bank account.
     public var accountHolderName: String?
     /// The type of entity that holds the account. This can be either `individual` or `company`.

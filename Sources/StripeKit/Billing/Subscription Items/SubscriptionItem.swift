@@ -44,6 +44,9 @@ public enum StripeSubscriptionItemPaymentBehavior: String, StripeModel {
     case errorIfIncomplete = "error_if_incomplete"
     /// Use `pending_if_incomplete` to update the subscription using pending updates. When you use `pending_if_incomplete` you can only pass the parameters supported by pending updates.
     case pendingIfIncomplete = "pending_if_incomplete"
+    /// Use `default_incomplete` to transition the subscription to `status=past_due` when payment is required and await explicit confirmation of the invoice’s payment intent. This allows simpler management of scenarios where additional user actions are needed to pay a subscription’s invoice. Such as failed payments, SCA regulation, or collecting a mandate for a bank debit payment method.
+    case defaultIncomplete = "default_incomplete"
+    
 }
 
 public enum StripeSubscriptionItemProrationBehavior: String, StripeModel {

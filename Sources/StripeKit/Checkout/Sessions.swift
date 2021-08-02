@@ -27,7 +27,7 @@ public struct StripeSession: StripeModel {
     public var clientReferenceId: String?
     /// The ID of the customer for this session. A new customer will be created unless an existing customer was provided in when the session was created.
     @Expandable<StripeCustomer> public var customer: String?
-    /// The customer details including the customer’s tax exempt status and the customer’s tax IDs.
+    /// The customer details including the customer’s tax exempt status and the customer’s tax IDs. Only present on Sessions in `payment` or `subscription` mode.
     public var customerDetails: StripeSessionCustomerDetails?
     /// If provided, this value will be used when the Customer object is created. If not provided, customers will be asked to enter their email address. Use this parameter to prefill customer data if you already have an email on file. To access information about the customer once a session is complete, use the `customer` field.
     public var customerEmail: String?
@@ -43,9 +43,11 @@ public struct StripeSession: StripeModel {
     public var mode: StripeSessionMode?
     /// The ID of the PaymentIntent created if SKUs or line items were provided.
     @Expandable<StripePaymentIntent> public var paymentIntent: String?
+    /// Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
+    public var paymentMethodOptions: StripeSessionPaymentMethodOptions?
     /// A list of the types of payment methods (e.g. card) this Checkout Session is allowed to accept.
     public var paymentMethodTypes: [StripeSessionPaymentMethodType]?
-    /// The payment status of the Checkout Session, one of paid, unpaid, or no_payment_required. You can use this value to decide when to fulfill your customer’s order.
+    /// The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`. You can use this value to decide when to fulfill your customer’s order.
     public var paymentStatus: StripeSessionPaymentStatus?
     /// The ID of the SetupIntent for Checkout Sessions in setup mode.
     @Expandable<StripeSetupIntent> public var setupIntent: String?
@@ -59,8 +61,12 @@ public struct StripeSession: StripeModel {
     @Expandable<StripeSubscription> public var subscription: String?
     /// The URL the customer will be directed to after the payment or subscription creation is successful.
     public var successUrl: String?
+    /// Details on the state of tax ID collection for the session.
+    public var taxIdCollection: StripeSessionTaxIdCollection?
     /// Tax and discount details for the computed total amount.
     public var totalDetails: StripeSessionTotalDetails?
+    /// The URL to the Checkout Session.
+    public var url: String?
 }
 
 public struct StripeSessionList: StripeModel {
@@ -180,7 +186,77 @@ public enum StripeSessionMode: String, StripeModel {
     case subscription
 }
 
+public struct StripeSessionPaymentMethodOptions: StripeModel {
+    /// If the Checkout Session’s `payment_method_types` includes `acss_debit`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var acssDebit: StripeSessionPaymentMethodOptionsAcssDebit?
+    /// If the Checkout Session’s `payment_method_types` includes boleto, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var boleto: StripeSessionPaymentMethodOptionsBoleto?
+    /// If the Checkout Session’s `payment_method_types` includes oxxo, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var oxxo: StripeSessionPaymentMethodOptionsOXXO?
+}
+
+public struct StripeSessionPaymentMethodOptionsAcssDebit: StripeModel {
+    /// Currency supported by the bank account. Returned when the Session is in `setup` mode.
+    public var currency: StripeSessionPaymentMethodOptionsAcssDebitCurrency?
+    /// Additional fields for Mandate creation
+    public var mandateOptions: StripeSessionPaymentMethodOptionsAcssDebitMandateOptions?
+    /// Bank account verification method.
+    public var verificationMethod: StripeSessionPaymentMethodOptionsAcssDebitVerificationMethod?
+}
+
+public enum StripeSessionPaymentMethodOptionsAcssDebitCurrency: String, StripeModel {
+    case cad
+    case usd
+}
+
+public struct StripeSessionPaymentMethodOptionsAcssDebitMandateOptions: StripeModel {
+    /// A URL for custom mandate text
+    public var customMandateUrl: String?
+    /// Description of the interval. Only required if `payment_schedule` parmeter is `interval` or `combined`.
+    public var intervalDescription: String?
+    /// Payment schedule for the mandate.
+    public var paymentSchedule: StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule?
+    /// Transaction type of the mandate.
+    public var transactionType: StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
+}
+
+public enum StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, StripeModel {
+    /// Payments are initiated at a regular pre-defined interval
+    case interval
+    /// Payments are initiated sporadically
+    case sporadic
+    /// Payments can be initiated at a pre-defined interval or sporadically
+    case combined
+}
+
+public enum StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, StripeModel {
+    /// Transaction are made for personal reasons
+    case personal
+    /// Transactions are made for business reasons
+    case business
+}
+
+public enum StripeSessionPaymentMethodOptionsAcssDebitVerificationMethod: String, StripeModel {
+    /// Instant verification with fallback to microdeposits.
+    case automatic
+    /// Instant verification.
+    case instant
+    /// Verification using microdeposits.
+    case microdeposits
+}
+
+public struct StripeSessionPaymentMethodOptionsBoleto: StripeModel {
+    /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set  `expires_after_days` to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
+    public var expiresAfterDays: Int?
+}
+
+public struct StripeSessionPaymentMethodOptionsOXXO: StripeModel {
+    /// The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set `expires_after_days` to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
+    public var expiresAfterDays: Int?
+}
+
 public enum StripeSessionPaymentMethodType: String, StripeModel {
+    case alipay
     case card
     case ideal
     case fpx
@@ -189,6 +265,14 @@ public enum StripeSessionPaymentMethodType: String, StripeModel {
     case giropay
     case p24
     case eps
+    case sofort
+    case sepaDebit = "sepa_debit"
+    case grabpay
+    case afterpayClearpay = "afterpay_clearpay"
+    case acssDebit = "acss_debit"
+    case wechatPay = "wechat_pay"
+    case boleto
+    case oxxo
 }
 
 public struct StripeSessionShippingAddressCollection: StripeModel {
@@ -228,4 +312,9 @@ public enum StripeSessionPaymentStatus: String, StripeModel {
     case unpaid
     /// The Checkout Session is in setup mode and doesn’t require a payment at this time.
     case noPaymentRequired = "no_payment_required"
+}
+
+public struct StripeSessionTaxIdCollection: StripeModel {
+    /// Indicates whether tax ID collection is enabled for the session
+    public var enabled: Bool?
 }
