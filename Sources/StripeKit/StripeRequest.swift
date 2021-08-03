@@ -42,7 +42,7 @@ extension StripeAPIHandler {
     }
 }
 
-struct StripeDefaultAPIHandler: StripeAPIHandler {
+final class StripeDefaultAPIHandler: StripeAPIHandler {
     private let httpClient: HTTPClient
     var apiKey: String
     private let decoder = JSONDecoder()
