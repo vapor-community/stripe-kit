@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.1.0 - 2021-08-17
+* [#134](https://github.com/vapor-community/stripe-kit/pull/134)
+    * Added support for cloning a payment method.
+
 ## 13.0.0 - 2021-08-01
 * [#133](https://github.com/vapor-community/stripe-kit/pull/133) 
     * ⚠️ Breaking changes ⚠️ Multiple API updates.

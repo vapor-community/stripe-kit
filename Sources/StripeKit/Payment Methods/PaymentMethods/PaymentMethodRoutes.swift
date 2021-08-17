@@ -58,6 +58,15 @@ public protocol PaymentMethodRoutes {
                 wechatPay: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripePaymentMethod>
     
+    /// Clones a payment method to a connect account from the platform account.
+    ///
+    /// It is possible to clone PaymentMethods to connected accounts without previously attaching them to Customers. However, note that the original PaymentMethod will be consumed, since PaymentMethods that aren’t attached to Customers can only be used once.
+    /// - Parameters:
+    ///  - paymentMethod: The id of the payment method to clone.
+    ///  - customer: The id of trhe customer this payment method beelongs to. You must provide the Customer ID in the request when cloning PaymentMethods that are attached to Customers for security purposes
+    /// - Returns: A `StripePaymentMethod`.
+    func clone(paymentMethod: String, customer: String?) -> EventLoopFuture<StripePaymentMethod>
+    
     /// Retrieves a PaymentMethod object.
     ///
     /// - Parameters:
@@ -158,6 +167,10 @@ extension PaymentMethodRoutes {
                       sofort: sofort,
                       wechatPay: wechatPay,
                       expand: expand)
+    }
+    
+    public func clone(paymentMethod: String, customer: String? = nil) -> EventLoopFuture<StripePaymentMethod> {
+        clone(paymentMethod: paymentMethod, customer: customer)
     }
     
     public func retrieve(paymentMethod: String, expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
@@ -307,6 +320,15 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
         
         if let expand = expand {
             body["expand"] = expand
+        }
+        
+        return apiHandler.send(method: .POST, path: paymentmethods, body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func clone(paymentMethod: String, customer: String?) -> EventLoopFuture<StripePaymentMethod> {
+        var body: [String: Any] = ["payment_method": paymentMethod]
+        if let customer = customer {
+            body["customer"] = customer
         }
         
         return apiHandler.send(method: .POST, path: paymentmethods, body: .string(body.queryParameters), headers: headers)
