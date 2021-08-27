@@ -64,8 +64,9 @@ public protocol PaymentMethodRoutes {
     /// - Parameters:
     ///  - paymentMethod: The id of the payment method to clone.
     ///  - customer: The id of trhe customer this payment method beelongs to. You must provide the Customer ID in the request when cloning PaymentMethods that are attached to Customers for security purposes
+    ///  - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentMethod`.
-    func clone(paymentMethod: String, customer: String?) -> EventLoopFuture<StripePaymentMethod>
+    func clone(paymentMethod: String, customer: String?, expand: [String]?) -> EventLoopFuture<StripePaymentMethod>
     
     /// Retrieves a PaymentMethod object.
     ///
@@ -169,8 +170,8 @@ extension PaymentMethodRoutes {
                       expand: expand)
     }
     
-    public func clone(paymentMethod: String, customer: String? = nil) -> EventLoopFuture<StripePaymentMethod> {
-        clone(paymentMethod: paymentMethod, customer: customer)
+    public func clone(paymentMethod: String, customer: String? = nil, expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
+        clone(paymentMethod: paymentMethod, customer: customer, expand: expand)
     }
     
     public func retrieve(paymentMethod: String, expand: [String]? = nil) -> EventLoopFuture<StripePaymentMethod> {
@@ -325,10 +326,14 @@ public struct StripePaymentMethodRoutes: PaymentMethodRoutes {
         return apiHandler.send(method: .POST, path: paymentmethods, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func clone(paymentMethod: String, customer: String?) -> EventLoopFuture<StripePaymentMethod> {
+    public func clone(paymentMethod: String, customer: String?, expand: [String]?) -> EventLoopFuture<StripePaymentMethod> {
         var body: [String: Any] = ["payment_method": paymentMethod]
         if let customer = customer {
             body["customer"] = customer
+        }
+        
+        if let expand = expand {
+            body["expand"] = expand
         }
         
         return apiHandler.send(method: .POST, path: paymentmethods, body: .string(body.queryParameters), headers: headers)
