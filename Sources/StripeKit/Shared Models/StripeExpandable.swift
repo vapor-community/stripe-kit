@@ -9,7 +9,7 @@ import Foundation
 
 extension KeyedDecodingContainer {
     func decode<T>(_ type: T.Type, forKey key: Self.Key) throws -> T where T : Decodable {
-        return try decodeIfPresent(type, forKey: key) ?? T(from: self.superDecoder())
+       return try decodeIfPresent(type, forKey: key) ?? T(from: self.superDecoder(forKey: key))
     }
 }
 
