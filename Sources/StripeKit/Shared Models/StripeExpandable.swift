@@ -11,6 +11,10 @@ extension KeyedDecodingContainer {
     public func decode<U>(_ type: Expandable<U>.Type, forKey key: Self.Key) throws -> Expandable<U> where U: StripeModel {
        return try decodeIfPresent(type, forKey: key) ?? Expandable<U>()
     }
+    
+    public func decode<U,D>(_ type: DynamicExpandable<U,D>.Type, forKey key: Self.Key) throws -> DynamicExpandable<U,D> where U: StripeModel, D: StripeModel {
+       return try decodeIfPresent(type, forKey: key) ?? DynamicExpandable<U,D>()
+    }
 }
 
 @propertyWrapper
@@ -86,6 +90,10 @@ public class DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
         case empty
     }
 
+    required public init() {
+        self._state = .empty
+    }
+    
     required public init(from decoder: Decoder) throws {
         do {
             _state = try .unexpanded(String(from: decoder))
@@ -103,13 +111,14 @@ public class DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
     private var _state: ExpandableState
 
     public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        
         switch _state {
         case let .unexpanded(id):
             try id.encode(to: encoder)
         case let .expanded(model):
             try model.encode(to: encoder)
         default:
-            var container = encoder.singleValueContainer()
             try container.encodeNil()
         }
     }
