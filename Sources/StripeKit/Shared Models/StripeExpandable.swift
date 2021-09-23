@@ -26,11 +26,11 @@ public struct Expandable<Model: StripeModel>: StripeModel {
         case empty
     }
     
-    required public init() {
+    public init() {
         self._state = .empty
     }
     
-    required public init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let codingPath = decoder.codingPath
         do {
             let container = try decoder.singleValueContainer()
@@ -90,11 +90,11 @@ public struct DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
         case empty
     }
 
-    required public init() {
+    public init() {
         self._state = .empty
     }
     
-    required public init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let codingPath = decoder.codingPath
         do {
             let container = try decoder.singleValueContainer()
