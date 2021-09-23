@@ -1,5 +1,12 @@
 # Changelog
 
+## 14.0.0 - 2021-09-23
+* [#137](https://github.com/vapor-community/stripe-kit/pull/137) 
+    * Fixes expandable properties not decoding properly on swift 5.5
+    * Adds better CI for Tests.
+* [#138](https://github.com/vapor-community/stripe-kit/pull/138)
+    * Makes StripeSessionCustomerDetails.taxIds optional.
+
 ## 13.2.0 - 2021-08-27
 * [#136](https://github.com/vapor-community/stripe-kit/pull/136)
     * Added expand parameter for cloning a payment method.
