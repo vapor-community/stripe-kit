@@ -115,9 +115,9 @@ public class DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
         
         switch _state {
         case let .unexpanded(id):
-            try id.encode(to: encoder)
+            try container.encode(id)
         case let .expanded(model):
-            try model.encode(to: encoder)
+            try container.encode(model)
         default:
             try container.encodeNil()
         }
