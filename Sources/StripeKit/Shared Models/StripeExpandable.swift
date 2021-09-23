@@ -18,11 +18,11 @@ extension KeyedDecodingContainer {
 }
 
 @propertyWrapper
-public class Expandable<Model: StripeModel>: StripeModel {
+public struct Expandable<Model: StripeModel>: StripeModel {
     
     private enum ExpandableState {
         case unexpanded(String)
-        case expanded(Model)
+        indirect case expanded(Model)
         case empty
     }
     
@@ -83,10 +83,10 @@ public class Expandable<Model: StripeModel>: StripeModel {
 }
 
 @propertyWrapper
-public class DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
+public struct DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
     private enum ExpandableState {
         case unexpanded(String)
-        case expanded(StripeModel)
+        indirect case expanded(StripeModel)
         case empty
     }
 
