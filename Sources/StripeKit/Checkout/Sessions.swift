@@ -87,7 +87,7 @@ public struct StripeSessionCustomerDetails: StripeModel {
     /// The customer’s tax exempt status at time of checkout.
     public var taxExempt: String?
     /// The customer’s tax IDs at time of checkout.
-    public var taxIds: [StripeSessionCustomerDetailsTaxId]
+    public var taxIds: [StripeSessionCustomerDetailsTaxId]?
 }
 
 public struct StripeSessionCustomerDetailsTaxId: StripeModel {
