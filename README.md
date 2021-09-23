@@ -12,7 +12,7 @@
 To start using StripeKit, in your `Package.swift`, add the following
 
 ~~~~swift
-.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "13.0.0")
+.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "14.0.0")
 ~~~~
 
 ## Using the API
@@ -163,12 +163,12 @@ The first, preferred, authentication option is to use your (the platform account
 ```swift
    stripe.refunds.headers.add(name: "Stripe-Account", value: "acc_12345")
    stripe.refunds.create(charge: "ch_12345", reason: .requestedByCustomer)
-~~~
+```
 **NOTE:** The modified headers will remain on the route instance _(refunds in this case)_ of the `StripeClient` if a reference to it is held. If you're accessing the StripeClient in the scope of a function, the headers will not be retained.
 
 ## Error Handling
 None of the API calls throw errors. Instead each route returns a successful `EventLoopFuture` or a failed `EventLoopFuture`.
-~~~swift
+```swift
  stripe.charges.create(amount: 2500,
                        currency: .usd,
 		       description: "A server written in swift.",
