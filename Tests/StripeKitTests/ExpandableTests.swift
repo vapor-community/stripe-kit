@@ -322,42 +322,37 @@ class ExpandableTests: XCTestCase {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        do {
-           _ = try decoder.decode(StripeEventData.self, from: objectMissingExpandableTransferFieldOnCharge)
-        } catch {
-            XCTFail(error.localizedDescription)
-        }
+       _ = try decoder.decode(StripeEventData.self, from: objectMissingExpandableTransferFieldOnCharge)
     }
     
     func testExpandable_nullEncodingDecoding() throws {
-        let session =
-"""
-       {
-         "amountTotal": 100,
-         "id": "cs_test_ffff",
-         "successUrl": "https://example.com",
-         "livemode": false,
-         "customer": null,
-         "metadata": {},
-         "totalDetails": {
-           "amountShipping": 0,
-           "amountTax": 0,
-           "amountDiscount": 0
-         },
-         "setupIntent": null,
-         "object": "checkout.session",
-         "mode": "payment",
-         "amountSubtotal": 100,
-         "paymentIntent": "pi_ffff",
-         "paymentMethodTypes": [
-           "card"
-         ],
-         "cancelUrl": "https://example.com",
-         "subscription": null,
-         "currency": "usd",
-         "paymentStatus": "unpaid"
-       }
-""".data(using: .utf8)!
+        let session = """
+        {
+          "amountTotal": 100,
+          "id": "cs_test_ffff",
+          "successUrl": "https://example.com",
+          "livemode": false,
+          "customer": null,
+          "metadata": {},
+          "totalDetails": {
+            "amountShipping": 0,
+            "amountTax": 0,
+            "amountDiscount": 0
+          },
+          "setupIntent": null,
+          "object": "checkout.session",
+          "mode": "payment",
+          "amountSubtotal": 100,
+          "paymentIntent": "pi_ffff",
+          "paymentMethodTypes": [
+            "card"
+          ],
+          "cancelUrl": "https://example.com",
+          "subscription": null,
+          "currency": "usd",
+          "paymentStatus": "unpaid"
+        }
+        """.data(using: .utf8)!
         let sess = try JSONDecoder().decode(StripeSession.self, from: session)
         _ = try JSONDecoder().decode(StripeSession.self, from: JSONEncoder().encode(sess))
     }

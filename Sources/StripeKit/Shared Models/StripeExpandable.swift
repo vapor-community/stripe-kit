@@ -8,8 +8,12 @@
 import Foundation
 
 extension KeyedDecodingContainer {
-    func decode<T>(_ type: T.Type, forKey key: Self.Key) throws -> T where T : Decodable {
-        return try decodeIfPresent(type, forKey: key) ?? T(from: self.superDecoder())
+    public func decode<U>(_ type: Expandable<U>.Type, forKey key: Self.Key) throws -> Expandable<U> where U: StripeModel {
+       return try decodeIfPresent(type, forKey: key) ?? Expandable<U>()
+    }
+    
+    public func decode<U,D>(_ type: DynamicExpandable<U,D>.Type, forKey key: Self.Key) throws -> DynamicExpandable<U,D> where U: StripeModel, D: StripeModel {
+       return try decodeIfPresent(type, forKey: key) ?? DynamicExpandable<U,D>()
     }
 }
 
@@ -22,12 +26,24 @@ public class Expandable<Model: StripeModel>: StripeModel {
         case empty
     }
     
+    required public init() {
+        self._state = .empty
+    }
+    
     required public init(from decoder: Decoder) throws {
+        let codingPath = decoder.codingPath
         do {
-            _state = try .unexpanded(String(from: decoder))
-        } catch DecodingError.typeMismatch(_, _) {
-            _state = try .expanded(Model(from: decoder))
-        } catch {
+            let container = try decoder.singleValueContainer()
+            do {
+                if container.decodeNil() {
+                    _state = .empty
+                } else {
+                    _state = .unexpanded(try container.decode(String.self))
+                }
+            } catch DecodingError.typeMismatch(let type, _) where type is String.Type {
+                _state = .expanded(try container.decode(Model.self))
+            }
+        } catch DecodingError.keyNotFound(_, let context) where context.codingPath.count == codingPath.count {
             _state = .empty
         }
     }
@@ -35,13 +51,14 @@ public class Expandable<Model: StripeModel>: StripeModel {
     private var _state: ExpandableState
     
     public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+
         switch _state {
         case let .unexpanded(id):
-            try id.encode(to: encoder)
+            try container.encode(id)
         case let .expanded(model):
-            try model.encode(to: encoder)
+            try container.encode(model)
         default:
-            var container = encoder.singleValueContainer()
             try container.encodeNil()
         }
     }
@@ -73,30 +90,49 @@ public class DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
         case empty
     }
 
+    required public init() {
+        self._state = .empty
+    }
+    
     required public init(from decoder: Decoder) throws {
+        let codingPath = decoder.codingPath
         do {
-            _state = try .unexpanded(String(from: decoder))
-        } catch DecodingError.typeMismatch(_, _) {
+            let container = try decoder.singleValueContainer()
             do {
-                _state = try .expanded(A(from: decoder))
-            } catch {
-                _state = try .expanded(B(from: decoder))
+                if container.decodeNil() {
+                    _state = .empty
+                } else {
+                    _state = .unexpanded(try container.decode(String.self))
+                }
+            } catch DecodingError.typeMismatch(let type, _) where type is String.Type {
+                do {
+                    _state = .expanded(try container.decode(A.self))
+                } catch { // can't catch a specific error here, any particular B might partially decode as A
+                    _state = .expanded(try container.decode(B.self))
+                }
             }
-        } catch {
+        } catch DecodingError.keyNotFound(_, let context) where context.codingPath.count == codingPath.count {
             _state = .empty
         }
     }
-    
+
     private var _state: ExpandableState
 
     public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        
         switch _state {
         case let .unexpanded(id):
-            try id.encode(to: encoder)
+            try container.encode(id)
         case let .expanded(model):
-            try model.encode(to: encoder)
+            if let a = model as? A {
+                try container.encode(a)
+            } else if let b = model as? B {
+                try container.encode(b)
+            } else {
+                preconditionFailure("Invalid model storage")
+            }
         default:
-            var container = encoder.singleValueContainer()
             try container.encodeNil()
         }
     }
