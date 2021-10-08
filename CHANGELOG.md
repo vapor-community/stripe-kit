@@ -1,5 +1,8 @@
 # Changelog
 
+## 15.0.0 - 2021-10-08
+* [#140](https://github.com/vapor-community/stripe-kit/pull/140) Makes `created` on `ConnectAccount` optional.
+
 ## 14.0.0 - 2021-09-23
 * [#137](https://github.com/vapor-community/stripe-kit/pull/137) 
     * Fixes expandable properties not decoding properly on swift 5.5
