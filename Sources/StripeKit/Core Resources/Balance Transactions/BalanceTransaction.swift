@@ -25,7 +25,7 @@ public struct StripeBalanceTransaction: StripeModel {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// The exchange rate used, if applicable, for this transaction. Specifically, if money was converted from currency A to currency B, then the `amount` in currency A, times `exchange_rate`, would be the amount in currency B. For example, suppose you charged a customer 10.00 EUR. Then the PaymentIntent’s `amount` would be `1000` and `currency` would be `eur`. Suppose this was converted into 12.34 USD in your Stripe account. Then the BalanceTransaction’s `amount` would be `1234`, `currency` would be `usd`, and `exchange_rate` would be `1.234`.
-    public var exchangeRate: String?
+    public var exchangeRate: Double?
     /// Fees (in cents) paid for this transaction.
     public var fee: Int?
     /// Detailed breakdown of fees (in cents) paid for this transaction.
