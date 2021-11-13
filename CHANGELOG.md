@@ -1,5 +1,8 @@
 # Changelog
 
+## 15.0.1 - 2021-11-13
+* [#141](https://github.com/vapor-community/stripe-kit/pull/141) Fixes exchange rate decoding type.
+
 ## 15.0.0 - 2021-10-08
 * [#140](https://github.com/vapor-community/stripe-kit/pull/140) Makes `created` on `ConnectAccount` optional.
 
