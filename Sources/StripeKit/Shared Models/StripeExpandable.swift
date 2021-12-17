@@ -8,6 +8,10 @@
 import Foundation
 
 extension KeyedDecodingContainer {
+//    public func decode<U>(_ type: ExpandableCollection<[U]>.Type, forKey key: Self.Key) throws -> ExpandableCollection<[U]> where U: StripeModel {
+//       return try decodeIfPresent(type, forKey: key) ?? ExpandableCollection<[U]>()
+//    }
+    
     public func decode<U>(_ type: Expandable<U>.Type, forKey key: Self.Key) throws -> Expandable<U> where U: StripeModel {
        return try decodeIfPresent(type, forKey: key) ?? Expandable<U>()
     }
@@ -161,3 +165,67 @@ public struct DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
         }
     }
 }
+
+//@propertyWrapper
+//public struct ExpandableCollection<[Model]>: StripeModel {
+//    private enum ExpandableState {
+//        case unexpanded([String])
+//        indirect case expanded([StripeModel])
+//        case empty
+//    }
+//
+//    public init() {
+//        self._state = .empty
+//    }
+//    
+//    public init(from decoder: Decoder) throws {
+//        let codingPath = decoder.codingPath
+//        do {
+//            var container = try decoder.unkeyedContainer()
+//            do {
+//                if try container.decodeNil() {
+//                    _state = .empty
+//                } else {
+//                    _state = .unexpanded(try container.decode([String].self))
+//                }
+//            } catch DecodingError.typeMismatch(let type, _) where type is [String].Type {
+//                _state = .expanded(try container.decode([Model].self))
+//            }
+//        } catch DecodingError.keyNotFound(_, let context) where context.codingPath.count == codingPath.count {
+//            _state = .empty
+//        }
+//    }
+//    
+//    private var _state: ExpandableState
+//    
+//    public func encode(to encoder: Encoder) throws {
+//        var container = encoder.unkeyedContainer()
+//
+//        switch _state {
+//        case let .unexpanded(ids):
+//            try container.encode(ids)
+//        case let .expanded(models):
+//            try container.encode(models)
+//        default:
+//            try container.encodeNil()
+//        }
+//    }
+//    
+//    public var wrappedValue: [String]? {
+//        switch _state {
+//        case .unexpanded(let ids):
+//            return ids
+//        case .expanded(_), .empty:
+//            return nil
+//        }
+//    }
+//        
+//    public var projectedValue: [Model]? {
+//        switch _state {
+//        case .unexpanded(_), .empty:
+//            return nil
+//        case .expanded(let models):
+//            return models
+//        }
+//    }
+//}

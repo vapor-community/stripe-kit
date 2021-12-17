@@ -45,6 +45,8 @@ public struct StripeSession: StripeModel {
     @Expandable<StripePaymentIntent> public var paymentIntent: String?
     /// Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
     public var paymentMethodOptions: StripeSessionPaymentMethodOptions?
+    /// Details on the state of phone number collection for the session.
+    public var phoneNumberCOllection: StripeSessionPhoneNumberCollection?
     /// A list of the types of payment methods (e.g. card) this Checkout Session is allowed to accept.
     public var paymentMethodTypes: [StripeSessionPaymentMethodType]?
     /// The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`. You can use this value to decide when to fulfill your customer’s order.
@@ -55,8 +57,14 @@ public struct StripeSession: StripeModel {
     public var shipping: StripeShippingLabel?
     /// When set, provides configuration for Checkout to collect a shipping address from a customer.
     public var shippingAddressCollection: StripeSessionShippingAddressCollection?
+    /// The shipping rate options applied to this Session.
+    public var shipppingOptions: [StripeSessionShippingOption]?
+    /// The ID of the ShippingRate for Checkout Sessions in payment mode.
+    @Expandable<StripeShippingRate> public var shippingRate: String?
     /// Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in `payment` mode, but not Checkout Sessions in `subscription` or `setup` mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     public var submitType: StripeSessionSubmitType?
+    /// The status of the Checkout Session, one of `open`, `complete`, or `expired`.
+    public var status: StripeSessionStatus?
     /// The ID of the subscription created if one or more plans were provided.
     @Expandable<StripeSubscription> public var subscription: String?
     /// The URL the customer will be directed to after the payment or subscription creation is successful.
@@ -88,6 +96,8 @@ public struct StripeSessionCustomerDetails: StripeModel {
     public var taxExempt: String?
     /// The customer’s tax IDs at time of checkout.
     public var taxIds: [StripeSessionCustomerDetailsTaxId]?
+    /// The customer’s phone number at the time of checkout
+    public var phone: String?
 }
 
 public struct StripeSessionCustomerDetailsTaxId: StripeModel {
@@ -195,6 +205,11 @@ public struct StripeSessionPaymentMethodOptions: StripeModel {
     public var oxxo: StripeSessionPaymentMethodOptionsOXXO?
 }
 
+public struct StripeSessionPhoneNumberCollection: StripeModel {
+    /// Indicates whether phone number collection is enabled for the session
+    public var enabled: Bool
+}
+
 public struct StripeSessionPaymentMethodOptionsAcssDebit: StripeModel {
     /// Currency supported by the bank account. Returned when the Session is in `setup` mode.
     public var currency: StripeSessionPaymentMethodOptionsAcssDebitCurrency?
@@ -280,11 +295,27 @@ public struct StripeSessionShippingAddressCollection: StripeModel {
     public var allowedCountries: [String]?
 }
 
+public struct StripeSessionShippingOption: StripeModel {
+    /// A non-negative integer in cents representing how much to charge.
+    public var shippingAmount: Int?
+    /// The shipping rate.
+    @Expandable<StripeShippingRate> public var shippingRate: String?
+}
+
 public enum StripeSessionSubmitType: String, StripeModel {
     case auto
     case book
     case donate
     case pay
+}
+
+public enum StripeSessionStatus: String, Codable {
+    /// The checkout session is still in progress. Payment processing has not started
+    case open
+    /// The checkout session is complete. Payment processing may still be in progress
+    case complete
+    /// The checkout session has expired. No further processing will occur
+    case expired
 }
 
 public struct StripeSessionTotalDetails: StripeModel {

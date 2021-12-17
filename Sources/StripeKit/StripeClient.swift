@@ -23,8 +23,6 @@ public final class StripeClient {
     public var setupIntents: SetupIntentsRoutes
     public var setupAttempts: SetupAttemptRoutes
     public var payouts: PayoutRoutes
-    public var products: ProductRoutes
-    public var prices: PriceRoutes
     public var refunds: RefundRoutes
     public var tokens: TokenRoutes
     
@@ -37,22 +35,28 @@ public final class StripeClient {
     // MARK: - CHECKOUT
     public var sessions: SessionRoutes
     
-    // MARK: - BILLING
+    // MARK: - Products
+    public var products: ProductRoutes
+    public var prices: PriceRoutes
     public var coupons: CouponRoutes
+    public var promotionCodes: PromotionCodesRoutes
+    public var discounts: DiscountRoutes
+    public var taxCodes: TaxCodeRoutes
+    public var taxRates: TaxRateRoutes
+    public var shippingRates: ShippingRateRoutes
+    
+    // MARK: - BILLING
     public var creditNotes: CreditNoteRoutes
     public var customerBalanceTransactions: CustomerBalanceTransactionRoutes
     public var portalSession: PortalSessionRoutes
     public var portalConfiguration: PortalConfigurationRoutes
     public var customerTaxIds: CustomerTaxIDRoutes
-    public var discounts: DiscountRoutes
     public var invoices: InvoiceRoutes
     public var invoiceItems: InvoiceItemRoutes
     public var plans: PlanRoutes
-    public var promotionCodes: PromotionCodesRoutes
     public var subscriptions: SubscriptionRoutes
     public var subscriptionItems: SubscriptionItemRoutes
     public var subscriptionSchedules: SubscriptionScheduleRoutes
-    public var taxRates: TaxRateRoutes
     public var usageRecords: UsageRecordRoutes
     public var quoteLineItems: QuoteLineItemRoutes
     public var quotes: QuoteRoutes
@@ -130,11 +134,8 @@ public final class StripeClient {
         setupIntents = StripeSetupIntentsRoutes(apiHandler: handler)
         setupAttempts = StripeSetupAttemptRoutes(apiHandler: handler)
         payouts = StripePayoutRoutes(apiHandler: handler)
-        products = StripeProductRoutes(apiHandler: handler)
-        prices = StripePriceRoutes(apiHandler: handler)
         refunds = StripeRefundRoutes(apiHandler: handler)
         tokens = StripeTokenRoutes(apiHandler: handler)
-        
         paymentMethods = StripePaymentMethodRoutes(apiHandler: handler)
         bankAccounts = StripeBankAccountRoutes(apiHandler: handler)
         cards = StripeCardRoutes(apiHandler: handler)
@@ -142,21 +143,26 @@ public final class StripeClient {
         
         sessions = StripeSessionRoutes(apiHandler: handler)
         
+        products = StripeProductRoutes(apiHandler: handler)
+        prices = StripePriceRoutes(apiHandler: handler)
         coupons = StripeCouponRoutes(apiHandler: handler)
+        promotionCodes = StripePromotionCodesRoutes(apiHandler: handler)
+        discounts = StripeDiscountRoutes(apiHandler: handler)
+        taxCodes = StripeTaxCodeRoutes(apiHandler: handler)
+        taxRates = StripeTaxRateRoutes(apiHandler: handler)
+        shippingRates = StripeShippingRateRoutes(apiHandler: handler)
+        
         creditNotes = StripeCreditNoteRoutes(apiHandler: handler)
         customerBalanceTransactions = StripeCustomerBalanceTransactionRoutes(apiHandler: handler)
         portalSession = StripePortalSessionRoutes(apiHandler: handler)
         portalConfiguration = StripePortalConfigurationRoutes(apiHandler: handler)
         customerTaxIds = StripeCustomerTaxIDRoutes(apiHandler: handler)
-        discounts = StripeDiscountRoutes(apiHandler: handler)
         invoices = StripeInvoiceRoutes(apiHandler: handler)
         invoiceItems = StripeInvoiceItemRoutes(apiHandler: handler)
         plans = StripePlanRoutes(apiHandler: handler)
-        promotionCodes = StripePromotionCodesRoutes(apiHandler: handler)
         subscriptions = StripeSubscriptionRoutes(apiHandler: handler)
         subscriptionItems = StripeSubscriptionItemRoutes(apiHandler: handler)
         subscriptionSchedules = StripeSubscriptionScheduleRoutes(apiHandler: handler)
-        taxRates = StripeTaxRateRoutes(apiHandler: handler)
         usageRecords = StripeUsageRecordRoutes(apiHandler: handler)
         quoteLineItems = StripeQuoteLineItemRoutes(apiHandler: handler)
         quotes = StripeQuoteRoutes(apiHandler: handler)

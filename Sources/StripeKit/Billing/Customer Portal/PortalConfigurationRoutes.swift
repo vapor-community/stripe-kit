@@ -14,9 +14,11 @@ public protocol PortalConfigurationRoutes {
     ///   - businessProfile: The business information shown to customers in the portal.
     ///   - features: Information about the features available in the portal.
     ///   - defaultReturnUrl: The default URL to redirect customers to when they click on the portal’s link to return to your website. This can be overriden when creating the session.
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     func create(businessProfile: [String: Any],
                 features: [String: Any],
-                defaultReturnUrl: String?) -> EventLoopFuture<StripePortalConfiguration>
+                defaultReturnUrl: String?,
+                metadata: [String: String]?) -> EventLoopFuture<StripePortalConfiguration>
     
     /// Updates a configuration that describes the functionality of the customer portal.
     /// - Parameters:
@@ -25,11 +27,13 @@ public protocol PortalConfigurationRoutes {
     ///   - businessProfile: The business information shown to customers in the portal.
     ///   - defaultReturnUrl: The default URL to redirect customers to when they click on the portal’s link to return to your website. This can be overriden when creating the session.
     ///   - features: Information about the features available in the portal.
+    ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     func update(configuration: String,
                 active: Bool?,
                 businessProfile: [String: Any]?,
                 defaultReturnUrl: String?,
-                features: [String: Any]?) -> EventLoopFuture<StripePortalConfiguration>
+                features: [String: Any]?,
+                metadata: [String: String]?) -> EventLoopFuture<StripePortalConfiguration>
     
     /// Retrieves a configuration that describes the functionality of the customer portal.
     /// - Parameter configuration: The identifier of the configuration to retrieve.
@@ -48,22 +52,26 @@ public protocol PortalConfigurationRoutes {
 extension PortalConfigurationRoutes {
     public func create(businessProfile: [String: Any],
                        features: [String: Any],
-                       defaultReturnUrl: String? = nil) -> EventLoopFuture<StripePortalConfiguration> {
+                       defaultReturnUrl: String? = nil,
+                       metadata: [String: String]? = nil) -> EventLoopFuture<StripePortalConfiguration> {
         create(businessProfile: businessProfile,
                features: features,
-               defaultReturnUrl: defaultReturnUrl)
+               defaultReturnUrl: defaultReturnUrl,
+               metadata: metadata)
     }
     
     public func update(configuration: String,
                        active: Bool? = nil,
                        businessProfile: [String: Any]? = nil,
                        defaultReturnUrl: String? = nil,
-                       features: [String: Any]? = nil) -> EventLoopFuture<StripePortalConfiguration> {
+                       features: [String: Any]? = nil,
+                       metadata: [String: String]? = nil) -> EventLoopFuture<StripePortalConfiguration> {
         update(configuration: configuration,
                active: active,
                businessProfile: businessProfile,
                defaultReturnUrl: defaultReturnUrl,
-               features: features)
+               features: features,
+               metadata: metadata)
     }
     
     public func retrieve(configuration: String) -> EventLoopFuture<StripePortalConfiguration> {
@@ -87,7 +95,8 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
     
     public func create(businessProfile: [String: Any],
                        features: [String: Any],
-                       defaultReturnUrl: String?) -> EventLoopFuture<StripePortalConfiguration> {
+                       defaultReturnUrl: String?,
+                       metadata: [String: String]?) -> EventLoopFuture<StripePortalConfiguration> {
         var body: [String: Any] = [:]
         
         businessProfile.forEach { body["business_profile[\($0)]"] = $1 }
@@ -98,6 +107,10 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
             body["default_return_url"] = defaultReturnUrl
         }
         
+        if let metadata = metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
         return apiHandler.send(method: .POST, path: portalconfiguration, body: .string(body.queryParameters), headers: headers)
     }
     
@@ -105,7 +118,8 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
                        active: Bool?,
                        businessProfile: [String: Any]?,
                        defaultReturnUrl: String?,
-                       features: [String: Any]?) -> EventLoopFuture<StripePortalConfiguration> {
+                       features: [String: Any]?,
+                       metadata: [String: String]?) -> EventLoopFuture<StripePortalConfiguration> {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -122,6 +136,10 @@ public struct StripePortalConfigurationRoutes: PortalConfigurationRoutes {
         
         if let defaultReturnUrl = defaultReturnUrl {
             body["default_return_url"] = defaultReturnUrl
+        }
+        
+        if let metadata = metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
         return apiHandler.send(method: .POST, path: "\(portalconfiguration)/\(configuration)", body: .string(body.queryParameters), headers: headers)

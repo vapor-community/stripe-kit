@@ -24,6 +24,7 @@ public protocol ProductRoutes {
     ///   - metadata: A set of key-value pairs that you can attach to a product object. It can be useful for storing additional information about the product in a structured format. Applicable to both `service` and `good` types.
     ///   - packageDimensions: The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if `type=good`.
     ///   - shippable: Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if `type=good`.
+    ///   - taxCode: A tax code ID.
     ///   - type: The type of the product. The product is either of type `service`, which is eligible for use with Subscriptions and Plans or `good`, which is eligible for use with Orders and SKUs.
     ///   - url: A URL of a publicly-accessible webpage for this product. May only be set if `type=good`.
     /// - Returns: A `StripeProduct`.
@@ -38,6 +39,7 @@ public protocol ProductRoutes {
                 metadata: [String: String]?,
                 packageDimensions: [String: Any]?,
                 shippable: Bool?,
+                taxCode: String?,
                 type: StripeProductType?,
                 url: String?) -> EventLoopFuture<StripeProduct>
     
@@ -62,6 +64,7 @@ public protocol ProductRoutes {
     ///   - packageDimensions: The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`.
     ///   - shippable: Whether this product is shipped (i.e., physical goods). Defaults to `true`.
     ///   - statementDescriptor: An arbitrary string to be displayed on your customer’s credit card statement. This may be up to 22 characters. The statement description may not include <>”’ characters, and will appear on your customer’s statement in capital letters. Non-ASCII characters are automatically stripped. While most banks display this information consistently, some may display it incorrectly or not at all. It must contain at least one letter. May only be set if `type=service`.
+    ///   - taxCode: A tax code ID.
     ///   - unitLabel: A label that represents units of this product, such as seat(s), in Stripe and on customers’ receipts and invoices. Only available on products of `type=service`. This will be unset if you POST an empty value.
     ///   - url: A URL of a publicly-accessible webpage for this product. This will be unset if you POST an empty value.
     /// - Returns: A `StripeProduct`.
@@ -77,6 +80,7 @@ public protocol ProductRoutes {
                 packageDimensions: [String: Any]?,
                 shippable: Bool?,
                 statementDescriptor: String?,
+                taxCode: String?,
                 unitLabel: String?,
                 url: String?) -> EventLoopFuture<StripeProduct>
     
@@ -108,6 +112,7 @@ extension ProductRoutes {
                        metadata: [String: String]? = nil,
                        packageDimensions: [String: Any]? = nil,
                        shippable: Bool? = nil,
+                       taxCode: String? = nil,
                        type: StripeProductType? = nil,
                        url: String? = nil) -> EventLoopFuture<StripeProduct> {
         return create(id: id,
@@ -121,6 +126,7 @@ extension ProductRoutes {
                       metadata: metadata,
                       packageDimensions: packageDimensions,
                       shippable: shippable,
+                      taxCode: taxCode,
                       type: type,
                       url: url)
     }
@@ -141,6 +147,7 @@ extension ProductRoutes {
                        packageDimensions: [String: Any]? = nil,
                        shippable: Bool? = nil,
                        statementDescriptor: String? = nil,
+                       taxCode: String? = nil,
                        unitLabel: String? = nil,
                        url: String? = nil) -> EventLoopFuture<StripeProduct> {
         return update(product: product,
@@ -155,6 +162,7 @@ extension ProductRoutes {
                           packageDimensions: packageDimensions,
                           shippable: shippable,
                           statementDescriptor: statementDescriptor,
+                          taxCode: taxCode,
                           unitLabel: unitLabel,
                           url: url)
     }
@@ -189,6 +197,7 @@ public struct StripeProductRoutes: ProductRoutes {
                        metadata: [String: String]?,
                        packageDimensions: [String: Any]?,
                        shippable: Bool?,
+                       taxCode: String?,
                        type: StripeProductType?,
                        url: String?) -> EventLoopFuture<StripeProduct> {
         var body: [String: Any] = [:]
@@ -235,6 +244,10 @@ public struct StripeProductRoutes: ProductRoutes {
             body["shippable"] = shippable
         }
         
+        if let taxCode = taxCode {
+            body["tax_code"] = taxCode
+        }
+        
         if let type = type {
             body["type"] = type.rawValue
         }
@@ -262,6 +275,7 @@ public struct StripeProductRoutes: ProductRoutes {
                        packageDimensions: [String: Any]?,
                        shippable: Bool?,
                        statementDescriptor: String?,
+                       taxCode: String?,
                        unitLabel: String?,
                        url: String?) -> EventLoopFuture<StripeProduct> {
         var body: [String: Any] = [:]
@@ -309,6 +323,10 @@ public struct StripeProductRoutes: ProductRoutes {
         
         if let statementDescriptor = statementDescriptor {
             body["statement_descriptor"] = statementDescriptor
+        }
+        
+        if let taxCode = taxCode {
+            body["tax_code"] = taxCode
         }
         
         if let unitLabel = unitLabel {

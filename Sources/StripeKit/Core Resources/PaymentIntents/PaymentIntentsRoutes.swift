@@ -43,6 +43,7 @@ public protocol PaymentIntentsRoutes {
     /// - Returns: A `StripePaymentIntent`.
     func create(amount: Int,
                 currency: StripeCurrency,
+                automaticPaymentMethods: [String: Any]?,
                 applicationFeeAmount: Int?,
                 captureMethod: StripePaymentIntentCaptureMethod?,
                 confirm: Bool?,
@@ -196,6 +197,7 @@ public protocol PaymentIntentsRoutes {
 extension PaymentIntentsRoutes {
     public func create(amount: Int,
                        currency: StripeCurrency,
+                       automaticPaymentMethods: [String: Any]? = nil,
                        applicationFeeAmount: Int? = nil,
                        captureMethod: StripePaymentIntentCaptureMethod? = nil,
                        confirm: Bool? = nil,
@@ -224,6 +226,7 @@ extension PaymentIntentsRoutes {
                        expand: [String]? = nil) -> EventLoopFuture<StripePaymentIntent> {
         return create(amount: amount,
                       currency: currency,
+                      automaticPaymentMethods: automaticPaymentMethods,
                       applicationFeeAmount: applicationFeeAmount,
                       captureMethod: captureMethod,
                       confirm: confirm,
@@ -365,6 +368,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
     
     public func create(amount: Int,
                        currency: StripeCurrency,
+                       automaticPaymentMethods: [String: Any]?,
                        applicationFeeAmount: Int?,
                        captureMethod: StripePaymentIntentCaptureMethod?,
                        confirm: Bool?,
@@ -393,6 +397,10 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
                        expand: [String]?) -> EventLoopFuture<StripePaymentIntent> {
         var body: [String: Any] = ["amount": amount,
                                    "currency": currency.rawValue]
+        
+        if let automaticPaymentMethods = automaticPaymentMethods {
+            automaticPaymentMethods.forEach { body["automatic_payment_methods[\($0)]"] = $1 }
+        }
         
         if let applicationfeeAmount = applicationFeeAmount {
             body["application_fee_amount"] = applicationfeeAmount

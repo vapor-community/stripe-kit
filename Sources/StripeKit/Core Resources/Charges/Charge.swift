@@ -212,6 +212,9 @@ public struct StripeChargePaymentDetails: StripeModel {
     public var klarna: StripeChargePaymentDetailsKlarna?
     /// If this is a `multibanco` payment, this hash contains a snapshot of the transaction specific details of the `multibanco` payment method.
     public var multibanco: StripeChargePaymentDetailsMultibanco?
+    /// If this is a oxxo payment, this hash contains a snapshot of the transaction specific details of the oxxo payment method.
+    public var oxxo: StripeChargePaymentDetailsOXXO?
+    
     /// If this is a `p24` payment, this hash contains a snapshot of the transaction specific details of the `p24` payment method.
     public var p24: StripeChargePaymentDetailsP24?
     /// If this is a `sepa_debit` payment, this hash contains a snapshot of the transaction specific details of the `sepa_debit` payment method.
@@ -262,6 +265,8 @@ public struct StripeChargePaymentDetailsAfterpayClearpay: StripeModel {
 }
 
 public struct StripeChargePaymentDetailsAlipay: StripeModel {
+    /// Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
+    public var buyerId: String?
     /// Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
     public var fingerprint: String?
     /// Transaction ID of this particular Alipay transaction.
@@ -541,6 +546,17 @@ public struct StripeChargePaymentDetailsInteracPresentReceipt: StripeModel {
 }
 
 public struct StripeChargePaymentDetailsKlarna: StripeModel {
+    /// The Klarna payment method used for this transaction. Can be one of `pay_later`, `pay_now`, `pay_with_financing`, or `pay_in_installments`.
+    public var paymentMethodCategory: StripeChargePaymentDetailsKlarnaPaymentMethodCategory?
+    /// Preferred language of the Klarna authorization page that the customer is redirected to.
+    public var preferredLocale: String?
+}
+
+public enum StripeChargePaymentDetailsKlarnaPaymentMethodCategory: String, StripeModel {
+    case payLater = "pay_later"
+    case payNow = "pay_now"
+    case payWithFinancing = "pay_with_financing"
+    case payInInstallments = "pay_in_installments"
 }
 
 public enum StripeChargePaymentDetailsIdealBank: String, StripeModel {
@@ -563,6 +579,11 @@ public struct StripeChargePaymentDetailsMultibanco: StripeModel {
     public var entity: String?
     /// Reference number associated with this Multibanco payment.
     public var reference: String?
+}
+
+public struct StripeChargePaymentDetailsOXXO: StripeModel {
+    /// OXXO reference number
+    public var number: String?
 }
 
 public struct StripeChargePaymentDetailsP24: StripeModel {

@@ -23,6 +23,8 @@ public struct StripePaymentIntent: StripeModel {
     public var application: String?
     /// The amount of the application fee (if any) for the resulting payment. See the PaymentIntents [Connect usage guide](https://stripe.com/docs/payments/payment-intents/usage#connect) for details.
     public var applicationFeeAmount: Int?
+    /// Settings to configure compatible payment methods from the Stripe Dashboard.
+    public var automaticPaymentMethods: StripePaymentIntentAutomaticMaymentMethods?
     /// Populated when `status` is `canceled`, this is the time at which the PaymentIntent was canceled. Measured in seconds since the Unix epoch.
     public var canceledAt: Date?
     /// User-given reason for cancellation of this PaymentIntent, one of `duplicate`, `fraudulent`, `requested_by_customer`, or `failed_invoice`.
@@ -79,6 +81,11 @@ public struct StripePaymentIntent: StripeModel {
     public var transferData: StripePaymentIntentTransferData?
     /// A string that identifies the resulting payment as part of a group. See the PaymentIntents Connect usage guide for details.
     public var transferGroup: String?
+}
+
+public struct StripePaymentIntentAutomaticMaymentMethods: StripeModel {
+    /// Automatically calculates compatible payment methods
+    public var enabled: Bool?
 }
 
 public enum StripePaymentIntentSetupFutureUsage: String, StripeModel {
@@ -250,8 +257,12 @@ public struct StripePaymentIntentPaymentMethodOptions: StripeModel {
     public var card: StripePaymentIntentPaymentMethodOptionsCard?
     /// If the PaymentIntent’s `payment_method_types` includes `card_present`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var cardPresent: StripePaymentIntentPaymentMethodOptionsCardPresent?
+    /// If the PaymentIntent’s `payment_method_types` includes `giropay`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var giropay: StripePaymentIntentPaymentMethodOptionsGiropay?
     /// If the PaymentIntent’s `payment_method_types` includes `ideal`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var ideal: StripePaymentIntentPaymentMethodOptionsIdeal?
+    /// If the PaymentIntent’s `payment_method_types` includes `klarna`, this hash contains the configurations that will be applied to each payment attempt of that type.
+    public var klarna: StripePaymentIntentPaymentMethodOptionsKlarna?
     /// If the PaymentIntent’s `payment_method_types` includes `oxxo`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var oxxo: StripePaymentIntentPaymentMethodOptionsOXXO?
     /// If the PaymentIntent’s `payment_method_types` includes `p24`, this hash contains the configurations that will be applied to each payment attempt of that type.
@@ -347,7 +358,14 @@ public struct StripePaymentIntentPaymentMethodOptionsCardInstallments: StripeMod
 
 public struct StripePaymentIntentPaymentMethodOptionsCardPresent: StripeModel {}
 
+public struct StripePaymentIntentPaymentMethodOptionsGiropay: StripeModel {}
+
 public struct StripePaymentIntentPaymentMethodOptionsIdeal: StripeModel {}
+
+public struct StripePaymentIntentPaymentMethodOptionsKlarna: StripeModel {
+    /// Preferred locale of the Klarna checkout page that the customer is redirected to.
+    public var preferredLocale: String?
+}
 
 public struct StripePaymentIntentPaymentMethodOptionsOXXO: StripeModel {
     /// The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set `expires_after_days` to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.

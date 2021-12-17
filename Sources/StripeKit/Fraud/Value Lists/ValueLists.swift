@@ -19,7 +19,7 @@ public struct StripeValueList: StripeModel {
     public var created: Date
     /// The name or email address of the user who added this item to the value list.
     public var createdBy: String?
-    /// The type of items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, `or case_sensitive_string`.
+    /// The type of items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`,  `case_sensitive_string` or `customer_id`.
     public var itemType: StripeValueListItemType?
     /// List of items contained within this value list.
     public var listItems: StripeValueListItemList?
@@ -39,6 +39,7 @@ public enum StripeValueListItemType: String, StripeModel {
     case country
     case string
     case caseSensitiveString = "case_sensitive_string"
+    case customerId = "customer_id"
 }
 
 public struct StripeValueListList: StripeModel {
