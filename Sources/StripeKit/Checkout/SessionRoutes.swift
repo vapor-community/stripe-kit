@@ -28,9 +28,10 @@ public protocol SessionRoutes {
     ///   - mode: The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
     ///   - paymentIntentData: A subset of parameters to be passed to PaymentIntent creation.
     ///   - paymentMethodOptions: Payment-method-specific configuration.
+    ///   - phoneNumberCollection: Controls phone number collection settings for the session. We recommend that you review your privacy policy and check with your legal contacts before using this feature. Learn more about collecting phone numbers with Checkout.
     ///   - setupIntentData: A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
     ///   - shippingAddressCollection: When set, provides configuration for Checkout to collect a shipping address from a customer.
-    ///   - shippingRates: The shipping rate to apply to this Session. Currently, only up to one may be specified
+    ///   - shipppingOptions:The shipping rate options to apply to this Session.
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in payment mode, but not Checkout Sessions in subscription or setup mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation.
     ///   - taxIdCollection: Controls tax ID collection settings for the session.
@@ -52,13 +53,20 @@ public protocol SessionRoutes {
                 mode: StripeSessionMode?,
                 paymentIntentData: [String: Any]?,
                 paymentMethodOptions: [String: Any]?,
+                phoneNumberCollection: Bool?,
                 setupIntentData: [String: Any]?,
                 shippingAddressCollection: [String: Any]?,
-                shippingRates: [String]?,
+                shippingOptions: [[String: Any]]?,
                 submitType: StripeSessionSubmitType?,
                 subscriptionData: [String: Any]?,
                 taxIdCollection: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripeSession>
+    
+    /// A Session can be expired when it is in one of these statuses: open
+    /// After it expires, a customer can’t complete a Session and customers loading the Session see a message saying the Session is expired.
+    /// - Parameter id: The ID of the Checkout Session.
+    /// - Returns: A `StripeSession`.
+    func expire(id: String) -> EventLoopFuture<StripeSession>
     
     /// Retrieves a Session object.
     ///
@@ -100,9 +108,10 @@ extension SessionRoutes {
                        mode: StripeSessionMode? = nil,
                        paymentIntentData: [String: Any]? = nil,
                        paymentMethodOptions: [String: Any]? = nil,
+                       phoneNumberCollection: Bool? = nil,
                        setupIntentData: [String: Any]? = nil,
                        shippingAddressCollection: [String: Any]? = nil,
-                       shippingRates: [String]? = nil,
+                       shippingOptions: [[String: Any]]? = nil,
                        submitType: StripeSessionSubmitType? = nil,
                        subscriptionData: [String: Any]? = nil,
                        taxIdCollection: [String: Any]? = nil,
@@ -123,13 +132,18 @@ extension SessionRoutes {
                       mode: mode,
                       paymentIntentData: paymentIntentData,
                       paymentMethodOptions: paymentMethodOptions,
+                      phoneNumberCollection: phoneNumberCollection,
                       setupIntentData: setupIntentData,
                       shippingAddressCollection: shippingAddressCollection,
-                      shippingRates: shippingRates,
+                      shippingOptions: shippingOptions,
                       submitType: submitType,
                       subscriptionData: subscriptionData,
                       taxIdCollection: taxIdCollection,
                       expand: expand)
+    }
+    
+    public func expire(id: String) -> EventLoopFuture<StripeSession> {
+        expire(id: id)
     }
     
     public func retrieve(id: String, expand: [String]? = nil) -> EventLoopFuture<StripeSession> {
@@ -171,9 +185,10 @@ public struct StripeSessionRoutes: SessionRoutes {
                        mode: StripeSessionMode?,
                        paymentIntentData: [String: Any]?,
                        paymentMethodOptions: [String: Any]?,
+                       phoneNumberCollection: Bool?,
                        setupIntentData: [String: Any]?,
                        shippingAddressCollection: [String: Any]?,
-                       shippingRates: [String]?,
+                       shippingOptions: [[String: Any]]?,
                        submitType: StripeSessionSubmitType?,
                        subscriptionData: [String: Any]?,
                        taxIdCollection: [String: Any]?,
@@ -234,6 +249,10 @@ public struct StripeSessionRoutes: SessionRoutes {
             paymentMethodOptions.forEach { body["payment_method_options[\($0)]"] = $1 }
         }
         
+        if let phoneNumberCollection = phoneNumberCollection {
+            body["phone_number_collection[enabled]"] = phoneNumberCollection
+        }
+        
         if let setupIntentData = setupIntentData {
             setupIntentData.forEach { body["setup_intent_data[\($0)]"] = $1 }
         }
@@ -242,8 +261,8 @@ public struct StripeSessionRoutes: SessionRoutes {
             shippingAddressCollection.forEach { body["shipping_address_collection[\($0)]"] = $1 }
         }
         
-        if let shippingRates = shippingRates {
-            body["shipping_rates"] = shippingRates
+        if let shippingOptions = shippingOptions {
+            body["shipping_options"] = shippingOptions
         }
         
         if let submitType = submitType {
@@ -263,6 +282,10 @@ public struct StripeSessionRoutes: SessionRoutes {
         }
         
         return apiHandler.send(method: .POST, path: sessions, body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func expire(id: String) -> EventLoopFuture<StripeSession> {
+        apiHandler.send(method: .POST, path: "\(sessions)/\(id)/expire", headers: headers)
     }
     
     public func retrieve(id: String, expand: [String]?) -> EventLoopFuture<StripeSession> {

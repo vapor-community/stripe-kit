@@ -51,6 +51,8 @@ public struct StripeIssuingCard: StripeModel {
     public var shipping: StripeIssuingCardShipping?
     /// Spending rules that give you some control over how this card can be used. Refer to our authorizations documentation for more details.
     public var spendingControls: StripeIssuingCardSpendingControls?
+    /// Information relating to digital wallets (like Apple Pay and Google Pay).
+    public var wallets: StripeIssuingCardWallets?
 }
 
 public struct StripeIssuingCardList: StripeModel {
@@ -152,4 +154,45 @@ public enum StripeIssuingCardCancellationReason: String, StripeModel {
     case lost
     /// The card was stolen.
     case stolen
+}
+
+public struct StripeIssuingCardWallets: StripeModel {
+    /// Apple Pay Details
+    public var applePay: StripeIssuingCardWalletsApplePay?
+    /// Google Pay Details
+    public var googlePay: StripeIssuingCardWalletsGooglePay?
+    /// Unique identifier for a card used with digital wallets
+    public var primaryAccountIdentifier: String?
+}
+
+public struct StripeIssuingCardWalletsApplePay: StripeModel {
+    /// Apple Pay Eligibility
+    public var eligible: Bool?
+    /// Reason the card is ineligible for Apple Pay
+    public var ineligibleReason: StripeIssuingCardWalletsApplePayIneligibleReason?
+}
+
+public enum StripeIssuingCardWalletsApplePayIneligibleReason: String, StripeModel {
+    /// Apple Pay is not supported in the cardholder’s country.
+    case unsupportedReason = "unsupported_reason"
+    /// Apple Pay is not enabled for your account.
+    case missingAgreement = "missing_agreement"
+    /// Cardholder phone number or email required.
+    case missingCardholderContact = "missing_cardholder_contact"
+}
+
+public struct StripeIssuingCardWalletsGooglePay: StripeModel {
+    /// Google Pay Eligibility
+    public var eligible: Bool?
+    /// Reason the card is ineligible for Google Pay
+    public var ineligibleReason: StripeIssuingCardWalletsGooglePayIneligibleReason?
+}
+
+public enum StripeIssuingCardWalletsGooglePayIneligibleReason: String, StripeModel {
+    /// Google Pay is not supported in the cardholder’s country.
+    case unsupportedReason = "unsupported_reason"
+    /// Google Pay is not enabled for your account.
+    case missingAgreement = "missing_agreement"
+    /// Cardholder phone number or email required.
+    case missingCardholderContact = "missing_cardholder_contact"
 }

@@ -47,6 +47,8 @@ public struct StripePaymentMethod: StripeModel {
     public var grabpay: StripePaymentMethodGrabpay?
     /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
     public var ideal: StripePaymentMethodIdeal?
+    /// If this is a klarna PaymentMethod, this hash contains details about the Klarna payment method.
+    public var klarna: StripePaymentMethodKlarna?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -306,6 +308,12 @@ public enum StripePaymentMethodIdealBank: String, StripeModel {
     case snsBank = "sns_bank"
     case triodosBank = "triodos_bank"
     case vanLanschot = "van_lanschot"
+}
+
+public struct StripePaymentMethodKlarna: StripeModel {
+    /// The customer’s date of birth, if provided.
+    /// This field is not included by default. To include it in the response, expand the dob field.
+    public var dob: StripePersonDOB?
 }
 
 public struct StripePaymentMethodOXXO: StripeModel {

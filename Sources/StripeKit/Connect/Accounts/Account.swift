@@ -171,6 +171,8 @@ public struct StripeConnectAccountCompany: StripeModel {
     public var nameKanji: String?
     /// Whether the company’s owners have been provided. This Boolean will be `true` if you’ve manually indicated that all owners are provided via the `owners_provided` parameter, or if Stripe determined that all owners were provided. Stripe determines ownership requirements using both the number of owners provided and their total percent ownership (calculated by adding the `percent_ownership` of each owner together).
     public var ownersProvided: Bool?
+    /// This hash is used to attest that the beneficial owner information provided to Stripe is both current and correct.
+    public var ownershipDeclaration: StripeConnectAccountCompanyOwnershipDeclaration?
     /// The company’s phone number (used for verification).
     public var phone: String?
     /// The category identifying the legal structure of the company or legal entity.
@@ -185,6 +187,15 @@ public struct StripeConnectAccountCompany: StripeModel {
     public var verification: StripeConnectAccountCompanyVerification?
 }
 
+public struct StripeConnectAccountCompanyOwnershipDeclaration: StripeModel {
+    /// The Unix timestamp marking when the beneficial owner attestation was made.
+    public var date: Date?
+    /// The IP address from which the beneficial owner attestation was made.
+    public var ip: String?
+    /// The user-agent string from the browser where the beneficial owner attestation was made.
+    public var userAgent: String?
+}
+
 public struct StripeConnectAccountCompanyVerification: StripeModel {
     /// A document for the company.
     public var document: StripeConnectAccountCompanyVerificationDocument?
@@ -196,7 +207,7 @@ public struct StripeConnectAccountCompanyVerificationDocument: StripeModel {
     /// A user-displayable string describing the verification state of this document.
     public var details: String?
     /// One of `document_corrupt`, `document_expired`, `document_failed_copy`, `document_failed_greyscale`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_not_readable`, `document_not_uploaded`, `document_type_not_supported`, or `document_too_large`. A machine-readable code specifying the verification state for this document.
-    public var detailsCode: StripePersonVerificationDocumentDetailsCode?
+    public var detailsCode: StripeConnectAccountCompanyVerificationDocumentDetailsCode?
     /// The front of a document returned by a file upload with a `purpose` value of `additional_verification`.
     @Expandable<StripeFile> public var front: String?
 }
@@ -235,6 +246,10 @@ public enum StripeConnectAccountCompanyStructure: String, StripeModel {
     case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
     case unincorporatedAssociation = "unincorporated_association"
     case unincorporatedNonProfit = "unincorporated_non_profit"
+    case freeZoneLLC = "free_zone_llc"
+    case soleEstablishment = "sole_establishment"
+    case freeZoneEstablishment = "free_zone_establishment"
+    case llc
 }
 
 public struct StripeConnectAccountRequirements: StripeModel {

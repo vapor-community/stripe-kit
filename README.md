@@ -11,17 +11,17 @@
 ## Installation
 To start using StripeKit, in your `Package.swift`, add the following
 
-~~~~swift
-.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "14.0.0")
-~~~~
+```swift
+.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "16.0.0")
+```
 
 ## Using the API
 Initialize the `StripeClient`
 
-~~~~swift
+```swift
 let httpClient = HTTPClient(..)
 let stripe = StripeClient(httpClient: httpClient, eventLoop: eventLoop, apiKey: "sk_12345")
-~~~~
+```
 
 And now you have acess to the APIs via `stripe`.
 
@@ -29,7 +29,7 @@ The APIs you have available correspond to what's implemented.
 
 For example to use the `charges` API, the stripeclient has a property to access that API via routes.
 
-~~~~swift
+```swift
  stripe.charges.create(amount: 2500,
                        currency: .usd,
 		               description: "A server written in swift.",
@@ -40,7 +40,7 @@ For example to use the `charges` API, the stripeclient has a property to access 
                               print("Sorry you have to use Node.js 🤢")
                           }
             }
-~~~~
+```
 
 ## Expandable objects
 
@@ -245,7 +245,9 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] Coupons
 * [x] Promotion Codes
 * [x] Discounts
+* [x] Tax Codes
 * [x] Tax Rates
+* [x] Shipping Rates
 ---
 ### Checkout
 * [x] Sessions

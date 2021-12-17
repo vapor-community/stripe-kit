@@ -1,5 +1,8 @@
 # Changelog
 
+## 16.0.0 - 2021-12-17
+* [#142](https://github.com/vapor-community/stripe-kit/pull/142) ⚠️ Breaking changes ⚠️ Multiple API updates.
+
 ## 15.0.1 - 2021-11-13
 * [#141](https://github.com/vapor-community/stripe-kit/pull/141) Fixes exchange rate decoding type.
 

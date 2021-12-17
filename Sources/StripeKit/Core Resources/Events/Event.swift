@@ -272,6 +272,8 @@ public enum StripeEventType: String, StripeModel {
     case checkoutSessionAsyncPaymentSucceeded = "checkout.session.async_payment_succeeded"
     /// Occurs when a Checkout Session has been successfully completed.
     case checkoutSessionCompleted = "checkout.session.completed"
+    /// Occurs when a Checkout Session is expired.
+    case checkoutSessionExpired = "checkout.session.expired"
     /// Occurs whenever a coupon is created.
     case couponCreated = "coupon.created"
     /// Occurs whenever a coupon is deleted.

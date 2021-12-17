@@ -40,11 +40,13 @@ public struct StripeProduct: StripeModel {
     public var shippable: Bool?
     /// Extra information about a product which will appear on your customer’s credit card statement. In the case that multiple products are billed at once, the first statement descriptor will be used. Only available on products of `type=service`.
     public var statementDescriptor: String?
+    /// A tax code ID.
+    @Expandable<StripeTaxCode> public var taxCode: String?
     /// The type of the product. The product is either of type `good`, which is eligible for use with Orders and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
     public var type: StripeProductType?
     /// A label that represents units of this product, such as seat(s), in Stripe and on customers’ receipts and invoices. Only available on products of type=service.
     public var unitLabel: String?
-    ///
+    /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
     public var updated: Date?
     /// A URL of a publicly-accessible webpage for this product. Only applicable to products of `type=good`.
     public var url: String?
