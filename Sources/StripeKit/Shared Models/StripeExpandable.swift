@@ -35,20 +35,14 @@ public struct Expandable<Model: StripeModel>: StripeModel {
     }
     
     public init(from decoder: Decoder) throws {
-        let codingPath = decoder.codingPath
-        do {
-            let container = try decoder.singleValueContainer()
+        if let container = try decoder.singleValueContainerIfPresentAndNotNull() {
             do {
-                if container.decodeNil() {
-                    _state = .empty
-                } else {
-                    _state = .unexpanded(try container.decode(String.self))
-                }
+                self._state = .unexpanded(try container.decode(String.self))
             } catch DecodingError.typeMismatch(let type, _) where type is String.Type {
-                _state = .expanded(try container.decode(Model.self))
+                self._state = .expanded(try container.decode(Model.self))
             }
-        } catch DecodingError.keyNotFound(_, let context) where context.codingPath.count == codingPath.count {
-            _state = .empty
+        } else {
+            self._state = .empty
         }
     }
     
@@ -179,20 +173,14 @@ public struct ExpandableCollection<Model: StripeModel>: StripeModel {
     }
     
     public init(from decoder: Decoder) throws {
-        let codingPath = decoder.codingPath
-        do {
-            let container = try decoder.singleValueContainer()
+        if let container = try decoder.singleValueContainerIfPresentAndNotNull() {
             do {
-                if container.decodeNil() {
-                    _state = .empty
-                } else {
-                    _state = .unexpanded(try container.decode([String].self))
-                }
+                self._state = .unexpanded(try container.decode([String].self))
             } catch DecodingError.typeMismatch(let type, _) where type is String.Type {
-                _state = .expanded(try container.decode([Model].self))
+                self._state = .expanded(try container.decode([Model].self))
             }
-        } catch DecodingError.keyNotFound(_, let context) where context.codingPath.count == codingPath.count {
-            _state = .empty
+        } else {
+            self._state = .empty
         }
     }
     
@@ -226,6 +214,24 @@ public struct ExpandableCollection<Model: StripeModel>: StripeModel {
             return nil
         case .expanded(let models):
             return models
+        }
+    }
+}
+
+internal extension Decoder {
+    func singleValueContainerIfPresentAndNotNull() throws -> SingleValueDecodingContainer? {
+        do {
+            let container = try self.singleValueContainer()
+            
+            if container.decodeNil() {
+                return nil
+            }
+            return container
+        }
+        catch DecodingError.keyNotFound(_, let context)
+            where context.codingPath.count == self.codingPath.count
+        {
+            return nil
         }
     }
 }
