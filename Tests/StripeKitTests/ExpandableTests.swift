@@ -356,4 +356,36 @@ class ExpandableTests: XCTestCase {
         let sess = try JSONDecoder().decode(StripeSession.self, from: session)
         _ = try JSONDecoder().decode(StripeSession.self, from: JSONEncoder().encode(sess))
     }
+    
+    func testExpandableCollection_decodesProperly() throws {
+        
+        struct SimpleType: StripeModel {
+            @ExpandableCollection<StripeDiscount> var discounts: [String]?
+        }
+        
+        let discounts = """
+        {
+            "discounts": [
+                {
+                    "id": "di_1234",
+                    "object": "discount"
+                },
+                {
+                    "id": "di_12345",
+                    "object": "discount"
+                },
+            ]
+        }
+        """.data(using: .utf8)!
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        let simple = try decoder.decode(SimpleType.self, from: discounts)
+        
+        XCTAssertEqual(simple.$discounts?.count, 2)
+        XCTAssertEqual(simple.$discounts?[0].id, "di_1234")
+        XCTAssertEqual(simple.$discounts?[1].id, "di_12345")
+    }
 }
