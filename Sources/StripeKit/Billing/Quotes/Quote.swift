@@ -40,7 +40,7 @@ public struct StripeQuote: StripeModel {
     /// A description that will be displayed on the quote PDF.
     public var description: String?
     /// The discounts applied to this quote.
-    public var discounts: [String]?
+    @ExpandableCollection<StripeDiscount> public var discounts: [String]?
     /// The date on which the quote will be canceled if in `open` or `draft` status. Measured in seconds since the Unix epoch.
     public var expiresAt: Date?
     /// A footer that will be displayed on the quote PDF.

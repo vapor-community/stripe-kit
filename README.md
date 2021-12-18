@@ -44,9 +44,9 @@ For example to use the `charges` API, the stripeclient has a property to access 
 
 ## Expandable objects
 
-StripeKit supports [expandable objects](https://stripe.com/docs/api/expanding_objects) via 2 property wrappers:
+StripeKit supports [expandable objects](https://stripe.com/docs/api/expanding_objects) via 3 property wrappers:
 
-`@Expandable` and `@DynamicExpandable`
+`@Expandable`, `@DynamicExpandable` and `@ExpandableCollection`
 
 All API routes that can return expanded objects have an extra parameter `expand: [String]?` that allows specifying which objects to expand. 
 
@@ -116,6 +116,20 @@ stripeclient.applicationFees.retrieve(fee: "fee_1234", expand: ["originatingTran
     ...
     // Access the originatingTransaction as a StripeTransfer
     applicationfee.$originatingTransaction(as: StripeTransfer.self)?.destination // acc_1234
+}
+```
+
+### Usage with `@ExpandableCollection`:
+1. Expanding an array of `id`s 
+
+```swift
+stripeClient.retrieve(invoice: "in_12345", expand: ["discounts"])
+.flatMap { invoice in
+    // Access the discounts array as `String`s
+    invoice.discounts.map { print($0) } // "","","",..
+    
+    // Access the array of `StripeDiscount`s
+    invoice.$discounts.compactMap(\.id).map { print($0) } // "di_1","di_2","di_3",...  
 }
 ```
 
