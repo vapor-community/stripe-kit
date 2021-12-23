@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.2.0 - 2021-12-22
+* [#144](https://github.com/vapor-community/stripe-kit/pull/144)
+    * Fix SwiftCrypto version requirement
+
 ## 16.1.0 - 2021-12-17
 * [#143](https://github.com/vapor-community/stripe-kit/pull/143) 
     * Adds support for expanding an array of models using `@ExpandableCollection`
