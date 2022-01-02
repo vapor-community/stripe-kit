@@ -35,6 +35,7 @@ public protocol SessionRoutes {
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in payment mode, but not Checkout Sessions in subscription or setup mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation.
     ///   - taxIdCollection: Controls tax ID collection settings for the session.
+    ///   - automaticTax: Settings for automatic tax lookup for this session and resulting payments, invoices, and subscriptions
     ///   - expand: An array of propertiies to expand.
     /// - Returns: A `StripeSession`.
     func create(cancelUrl: String,
@@ -60,6 +61,7 @@ public protocol SessionRoutes {
                 submitType: StripeSessionSubmitType?,
                 subscriptionData: [String: Any]?,
                 taxIdCollection: [String: Any]?,
+                automaticTax: [String: Any]?,
                 expand: [String]?) -> EventLoopFuture<StripeSession>
     
     /// A Session can be expired when it is in one of these statuses: open
@@ -115,6 +117,7 @@ extension SessionRoutes {
                        submitType: StripeSessionSubmitType? = nil,
                        subscriptionData: [String: Any]? = nil,
                        taxIdCollection: [String: Any]? = nil,
+                       automaticTax: [String: Any]? = nil,
                        expand: [String]? = nil) -> EventLoopFuture<StripeSession> {
         return create(cancelUrl: cancelUrl,
                       paymentMethodTypes: paymentMethodTypes,
@@ -139,6 +142,7 @@ extension SessionRoutes {
                       submitType: submitType,
                       subscriptionData: subscriptionData,
                       taxIdCollection: taxIdCollection,
+                      automaticTax: automaticTax,
                       expand: expand)
     }
     
@@ -192,6 +196,7 @@ public struct StripeSessionRoutes: SessionRoutes {
                        submitType: StripeSessionSubmitType?,
                        subscriptionData: [String: Any]?,
                        taxIdCollection: [String: Any]?,
+                       automaticTax: [String: Any]?,
                        expand: [String]?) -> EventLoopFuture<StripeSession> {
         var body: [String: Any] = ["cancel_url": cancelUrl,
                                    "payment_method_types": paymentMethodTypes.map { $0.rawValue },
@@ -275,6 +280,10 @@ public struct StripeSessionRoutes: SessionRoutes {
         
         if let taxIdCollection = taxIdCollection {
             taxIdCollection.forEach { body["tax_id_collection[\($0)]"] = $1 }
+        }
+        
+        if let automaticTax = automaticTax {
+            automaticTax.forEach { body["automatic_tax[\($0)]"] = $1 }
         }
         
         if let expand = expand {
