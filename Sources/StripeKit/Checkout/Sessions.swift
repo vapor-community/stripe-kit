@@ -58,7 +58,7 @@ public struct StripeSession: StripeModel {
     /// When set, provides configuration for Checkout to collect a shipping address from a customer.
     public var shippingAddressCollection: StripeSessionShippingAddressCollection?
     /// The shipping rate options applied to this Session.
-    public var shipppingOptions: [StripeSessionShippingOption]?
+    public var shippingOptions: [StripeSessionShippingOption]?
     /// The ID of the ShippingRate for Checkout Sessions in payment mode.
     @Expandable<StripeShippingRate> public var shippingRate: String?
     /// Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in `payment` mode, but not Checkout Sessions in `subscription` or `setup` mode. Supported values are `auto`, `book`, `donate`, or `pay`.

@@ -31,11 +31,11 @@ public protocol SessionRoutes {
     ///   - phoneNumberCollection: Controls phone number collection settings for the session. We recommend that you review your privacy policy and check with your legal contacts before using this feature. Learn more about collecting phone numbers with Checkout.
     ///   - setupIntentData: A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
     ///   - shippingAddressCollection: When set, provides configuration for Checkout to collect a shipping address from a customer.
-    ///   - shipppingOptions:The shipping rate options to apply to this Session.
+    ///   - shippingOptions:The shipping rate options to apply to this Session.
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in payment mode, but not Checkout Sessions in subscription or setup mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation.
     ///   - taxIdCollection: Controls tax ID collection settings for the session.
-    ///   - expand: An array of propertiies to expand.
+    ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeSession`.
     func create(cancelUrl: String,
                 paymentMethodTypes: [StripeSessionPaymentMethodType],
