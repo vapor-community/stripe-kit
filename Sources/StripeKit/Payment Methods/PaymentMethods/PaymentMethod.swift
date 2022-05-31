@@ -69,6 +69,7 @@ public struct StripePaymentMethod: StripeModel {
 
 public enum StripePaymentMethodType: String, StripeModel {
     case acssDebit = "acss_debit"
+    case affirm
     case afterpayClearpay = "afterpay_clearpay"
     case alipay
     case auBecsDebit = "au_becs_debit"
@@ -76,15 +77,23 @@ public enum StripePaymentMethodType: String, StripeModel {
     case bancontact
     case boleto
     case card
+    case cardPresent = "card_present"
+    case customerBalance = "customer_balance"
     case eps
     case fpx
     case giropay
     case grabpay
     case ideal
+    case interactPresent = "interact_present"
+    case klarna
+    case konbini
+    case link
     case oxxo
     case p24
+    case paynow
     case sepaDebit = "sepa_debit"
     case sofort
+    case usBankAccount = "us_bank_account"
     case wechatPay = "wechat_pay"
 }
 
