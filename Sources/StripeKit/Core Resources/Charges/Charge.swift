@@ -433,7 +433,7 @@ public struct StripeChargePaymentDetailsCardPresentReceipt: StripeModel {
     public var transactionStatusInformation: String?
 }
 
-public enum StripeChargePaymentDetailsCardPresentReceiptAccountType: Codable {
+public enum StripeChargePaymentDetailsCardPresentReceiptAccountType: String, Codable {
     /// A credit account, as when using a credit card
     case credit
     /// A checking account, as when using a debit card
