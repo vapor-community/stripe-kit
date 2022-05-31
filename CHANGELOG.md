@@ -1,5 +1,14 @@
 # Changelog
 
+## 16.2.0 - 2021-12-22
+* [#144](https://github.com/vapor-community/stripe-kit/pull/144)
+    * Fix SwiftCrypto version requirement
+
+## 16.1.0 - 2021-12-17
+* [#143](https://github.com/vapor-community/stripe-kit/pull/143) 
+    * Adds support for expanding an array of models using `@ExpandableCollection`
+    * Adds `checkoutSession`, `invoice`, `invoiceItem` and `promotionCode` to `StripeDiscount`.
+
 ## 16.0.0 - 2021-12-17
 * [#142](https://github.com/vapor-community/stripe-kit/pull/142) ⚠️ Breaking changes ⚠️ Multiple API updates.
 
