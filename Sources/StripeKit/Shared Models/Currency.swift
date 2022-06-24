@@ -143,4 +143,5 @@ public enum StripeCurrency: String, StripeModel {
     case yer
     case zar
     case zmw
+    // TODO: - finish adding stripe currecies
 }
