@@ -29,6 +29,7 @@ public enum StripeCurrency: String, StripeModel {
     case brl
     case bsd
     case bwp
+    case byn
     case bzd
     case cad
     case cdf
