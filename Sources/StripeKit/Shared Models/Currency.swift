@@ -1,8 +1,8 @@
 //
-//Currency.swift
-//Stripe
+// Currency.swift
+// Stripe
 //
-//Created by Anthony Castelli on 4/14/17.
+// Created by Anthony Castelli on 4/14/17.
 //
 //
 
