@@ -41,7 +41,7 @@ public enum StripeEventObject: StripeModel {
     case bankAccount(StripeBankAccount)
     case applicationFee(StripeApplicationFee)
     case applicationFeeRefund(StripeApplicationFeeRefund)
-    case balance(StripeBalance)
+    case balance(Balance)
     case capability(StripeCapability)
     case charge(StripeCharge)
     case dispute(StripeDispute)
@@ -105,7 +105,7 @@ public enum StripeEventObject: StripeModel {
         case "fee_refund":
             self = try .applicationFeeRefund(StripeApplicationFeeRefund(from: decoder))
         case "balance":
-            self = try .balance(StripeBalance(from: decoder))
+            self = try .balance(Balance(from: decoder))
         case "capability":
             self = try .capability(StripeCapability(from: decoder))
         case "charge":

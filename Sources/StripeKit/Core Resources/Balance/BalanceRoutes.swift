@@ -10,23 +10,15 @@ import NIO
 import NIOHTTP1
 
 public protocol BalanceRoutes {
-    /// Retrieves the current account balance, based on the authentication that was used to make the request. For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
-    ///
-    /// - Returns: A `StripeBalance`.
-    func retrieve() -> EventLoopFuture<StripeBalance>
+    /// Retrieves the current account balance, based on the authentication that was used to make the request. For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances) .
+    func retrieve() async throws -> Balance
     
     /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension BalanceRoutes {
-    public func retrieve() -> EventLoopFuture<StripeBalance> {
-        return retrieve()
-    }
+    mutating func addHeaders(_ headers: HTTPHeaders) -> BalanceRoutes
 }
 
 public struct StripeBalanceRoutes: BalanceRoutes {
-    public var headers: HTTPHeaders = [:]
+    var headers: HTTPHeaders = [:]
     
     private let apiHandler: StripeAPIHandler
     private let balance = APIBase + APIVersion + "balance"
@@ -35,7 +27,14 @@ public struct StripeBalanceRoutes: BalanceRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve() -> EventLoopFuture<StripeBalance> {
-        return apiHandler.send(method: .GET, path: balance, headers: headers)
+    public func retrieve() async throws -> Balance {
+        try await apiHandler.send(method: .GET,
+                                  path: balance,
+                                  headers: headers)
+    }
+    
+    public mutating func addHeaders(_ headers: HTTPHeaders) -> BalanceRoutes {
+        headers.forEach { self.headers.replaceOrAdd(name: $0.name, value: $0.value) }
+        return self
     }
 }
