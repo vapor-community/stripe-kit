@@ -112,14 +112,14 @@ public final class StripeClient {
     // MARK: - WEBHOOKS
     public var webhookEndpoints: WebhookEndpointRoutes
     
-    var handler: StripeDefaultAPIHandler
+    var handler: StripeAPIHandler
     
     /// Returns a StripeClient used to interact with the Stripe APIs.
     /// - Parameter httpClient: An `HTTPClient`used to communicate wiith the Stripe API
     /// - Parameter eventLoop: An `EventLoop` used to return an `EventLoopFuture` on.
     /// - Parameter apiKey: A Stripe API key.
     public init(httpClient: HTTPClient, eventLoop: EventLoop, apiKey: String) {
-        handler = StripeDefaultAPIHandler(httpClient: httpClient, eventLoop: eventLoop, apiKey: apiKey)
+        handler = StripeAPIHandler(httpClient: httpClient, eventLoop: eventLoop, apiKey: apiKey)
         
         balances = StripeBalanceRoutes(apiHandler: handler)
         balanceTransactions = StripeBalanceTransactionRoutes(apiHandler: handler)
