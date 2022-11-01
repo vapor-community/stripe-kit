@@ -8,7 +8,7 @@
 import NIO
 import NIOHTTP1
 
-public protocol BalanceTransactionRoutes {
+public protocol BalanceTransactionRoutes: StripeAPIRoute {
     /// Retrieves the balance transaction with the given ID.
     ///
     /// - Parameter id: The ID of the desired balance transaction.
