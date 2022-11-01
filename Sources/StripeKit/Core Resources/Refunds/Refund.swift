@@ -17,7 +17,7 @@ public struct StripeRefund: StripeModel {
     /// Amount, in cents.
     public var amount: Int?
     /// Balance transaction that describes the impact on your account balance.
-    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
+    @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// ID of the charge that was refunded.
     @Expandable<StripeCharge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -27,7 +27,7 @@ public struct StripeRefund: StripeModel {
     /// An arbitrary string attached to the object. Often useful for displaying to users. (Available on non-card refunds only)
     public var description: String?
     /// If the refund failed, this balance transaction describes the adjustment made on your account balance that reverses the initial balance transaction.
-    @Expandable<StripeBalanceTransaction> public var failureBalanceTransaction: String?
+    @Expandable<BalanceTransaction> public var failureBalanceTransaction: String?
     /// If the refund failed, the reason for refund failure if known. Possible values are `lost_or_stolen_card`, `expired_or_canceled_card`, or `unknown`.
     public var failureReason: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

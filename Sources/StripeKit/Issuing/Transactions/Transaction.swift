@@ -19,7 +19,7 @@ public struct StripeTransaction: StripeModel {
     /// The Authorization object that led to this transaction.
     @Expandable<StripeAuthorization> public var authorization: String?
     /// ID of the balance transaction associated with this transaction.
-    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
+    @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// The card used to make this transaction.
     @Expandable<StripeIssuingCard> public var card: String?
     /// The cardholder to whom this transaction belongs.

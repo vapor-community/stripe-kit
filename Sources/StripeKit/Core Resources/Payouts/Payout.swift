@@ -20,7 +20,7 @@ public struct StripePayout: StripeModel {
     /// Returns `true` if the payout was created by an automated payout schedule, and false if it was requested manually.
     public var automatic: Bool?
     /// ID of the balance transaction that describes the impact of this payout on your account balance.
-    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
+    @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
@@ -30,7 +30,7 @@ public struct StripePayout: StripeModel {
     /// ID of the bank account or card the payout was sent to.
     @DynamicExpandable<StripeCard, StripeBankAccount> public var destination: String?
     /// If the payout failed or was canceled, this will be the ID of the balance transaction that reversed the initial balance transaction, and puts the funds from the failed payout back in your balance.
-    @Expandable<StripeBalanceTransaction> public var failureBalanceTransaction: String?
+    @Expandable<BalanceTransaction> public var failureBalanceTransaction: String?
     /// Error code explaining reason for payout failure if available. See Types of payout failures for a list of failure codes.
     public var failureCode: StripePayoutFailureCode?
     /// Message to user further explaining reason for payout failure if available.

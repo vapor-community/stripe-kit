@@ -17,7 +17,7 @@ public struct StripeDispute: StripeModel {
     /// Disputed amount. Usually the amount of the charge, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
     public var amount: Int?
     /// List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.
-    public var balanceTransactions: [StripeBalanceTransaction]?
+    public var balanceTransactions: [BalanceTransaction]?
     /// ID of the charge that was disputed.
     @Expandable<StripeCharge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.

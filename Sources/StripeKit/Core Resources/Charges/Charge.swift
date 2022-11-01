@@ -27,7 +27,7 @@ public struct StripeCharge: StripeModel {
     /// The amount of the application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
     public var applicationFeeAmount: Int?
     /// ID of the balance transaction that describes the impact of this charge on your account balance (not including refunds or disputes).
-    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
+    @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// Billing information associated with the payment method at the time of the transaction.
     public var billingDetails: StripeBillingDetails?
     /// The full statement descriptor that is passed to card networks, and that is displayed on your customers’ credit card and bank statements. Allows you to see what the statement descriptor looks like after the static and dynamic portions are combined.

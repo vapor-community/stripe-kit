@@ -15,7 +15,7 @@ public struct StripeApplicationFeeRefund: StripeModel {
     /// Amount, in cents.
     public var amount: Int?
     /// Balance transaction that describes the impact on your account balance.
-    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
+    @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.

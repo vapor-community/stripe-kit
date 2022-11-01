@@ -13,7 +13,7 @@ public protocol BalanceTransactionRoutes {
     ///
     /// - Parameter id: The ID of the desired balance transaction, as found on any API object that affects the balance (e.g., a charge or transfer).
     /// - Returns: A `StripeBalanceTransaction`.
-    func retrieve(id: String) -> EventLoopFuture<StripeBalanceTransaction>
+    func retrieve(id: String) -> EventLoopFuture<BalanceTransaction>
     
     /// Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.
     ///
@@ -26,7 +26,7 @@ public protocol BalanceTransactionRoutes {
 }
 
 extension BalanceTransactionRoutes {
-    public func retrieve(id: String) -> EventLoopFuture<StripeBalanceTransaction> {
+    public func retrieve(id: String) -> EventLoopFuture<BalanceTransaction> {
         return retrieve(id: id)
     }
     
@@ -46,7 +46,7 @@ public struct StripeBalanceTransactionRoutes: BalanceTransactionRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeBalanceTransaction> {
+    public func retrieve(id: String) -> EventLoopFuture<BalanceTransaction> {
         return apiHandler.send(method: .GET, path: balanceTransaction + id, headers: headers)
     }
     

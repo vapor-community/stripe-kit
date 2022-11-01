@@ -22,7 +22,7 @@ public struct StripeAuthorization: StripeModel {
     /// How the card details were provided. One of `chip`, `contactless`, `keyed_in`, `online`, or `swipe`.
     public var authorizationMethod: StripeAuthorizationMethod?
     /// List of balance transactions associated with this authorization.
-    public var balanceTransactions: [StripeBalanceTransaction]?
+    public var balanceTransactions: [BalanceTransaction]?
     /// Card associated with this authorization.
     public var card: StripeIssuingCard?
     /// The cardholder to whom this authorization belongs.

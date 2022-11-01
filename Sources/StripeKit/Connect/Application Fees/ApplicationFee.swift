@@ -22,7 +22,7 @@ public struct StripeApplicationFee: StripeModel {
     // TODO: - Implement Application (see stripe .net)
     public var application: String?
     /// Balance transaction that describes the impact of this collected application fee on your account balance (not including refunds).
-    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
+    @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// ID of the charge that the application fee was taken from.
     @Expandable<StripeCharge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.

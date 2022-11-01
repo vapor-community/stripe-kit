@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Balance Transaction Object](https://stripe.com/docs/api/balance/balance_transaction)
-public struct StripeBalanceTransaction: StripeModel {
+public struct BalanceTransaction: StripeModel {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -103,5 +103,5 @@ public struct StripeBalanceTransactionList: StripeModel {
     public var object: String
     public var url: String?
     public var hasMore: Bool?
-    public var data: [StripeBalanceTransaction]?
+    public var data: [BalanceTransaction]?
 }

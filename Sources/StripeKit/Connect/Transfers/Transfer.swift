@@ -18,7 +18,7 @@ public struct StripeTransfer: StripeModel {
     /// Amount in cents reversed (can be less than the amount attribute on the transfer if a partial reversal was issued).
     public var amountReversed: Int?
     /// Balance transaction that describes the impact of this transfer on your account balance.
-    @Expandable<StripeBalanceTransaction> public var balanceTransaction: String?
+    @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// Time that this record of the transfer was first created.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
