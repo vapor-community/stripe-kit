@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.2.1 - 2022-5-31
+* [#148](https://github.com/vapor-community/stripe-kit/pull/148)
+    * Added `card_present` to payment method type.
+
 ## 16.2.0 - 2021-12-22
 * [#144](https://github.com/vapor-community/stripe-kit/pull/144)
     * Fix SwiftCrypto version requirement
