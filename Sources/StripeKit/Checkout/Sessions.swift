@@ -43,6 +43,8 @@ public struct StripeSession: StripeModel {
     public var mode: StripeSessionMode?
     /// The ID of the PaymentIntent created if SKUs or line items were provided.
     @Expandable<StripePaymentIntent> public var paymentIntent: String?
+    /// Enable invoice creation of this CheckoutSession.
+    public var invoiceCreation: StripeInvoiceCreation?
     /// Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
     public var paymentMethodOptions: StripeSessionPaymentMethodOptions?
     /// Details on the state of phone number collection for the session.
@@ -194,6 +196,11 @@ public enum StripeSessionMode: String, StripeModel {
     case payment
     case setup
     case subscription
+}
+
+public struct StripeInvoiceCreation: StripeModel {
+    /// Indicates whether invoice creation is enabled for the session
+    public var enabled: Bool
 }
 
 public struct StripeSessionPaymentMethodOptions: StripeModel {

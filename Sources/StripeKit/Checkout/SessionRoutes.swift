@@ -26,6 +26,7 @@ public protocol SessionRoutes {
     ///   - locale: The IETF language tag of the locale Checkout is displayed in. If blank or auto, the browser’s locale is used. Supported values are auto, da, de, en, es, fi, fr, it, ja, nb, nl, pl, pt, sv, or zh.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - mode: The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
+    ///   - invoiceCreation: The Invoice creation  of the Checkout Session for successful one-time payments.
     ///   - paymentIntentData: A subset of parameters to be passed to PaymentIntent creation.
     ///   - paymentMethodOptions: Payment-method-specific configuration.
     ///   - phoneNumberCollection: Controls phone number collection settings for the session. We recommend that you review your privacy policy and check with your legal contacts before using this feature. Learn more about collecting phone numbers with Checkout.
@@ -51,6 +52,7 @@ public protocol SessionRoutes {
                 locale: StripeSessionLocale?,
                 metadata: [String: String]?,
                 mode: StripeSessionMode?,
+                invoiceCreation: StripeInvoiceCreation?,
                 paymentIntentData: [String: Any]?,
                 paymentMethodOptions: [String: Any]?,
                 phoneNumberCollection: Bool?,
@@ -106,6 +108,7 @@ extension SessionRoutes {
                        locale: StripeSessionLocale? = nil,
                        metadata: [String: String]? = nil,
                        mode: StripeSessionMode? = nil,
+                       invoiceCreation: StripeInvoiceCreation? = nil,
                        paymentIntentData: [String: Any]? = nil,
                        paymentMethodOptions: [String: Any]? = nil,
                        phoneNumberCollection: Bool? = nil,
@@ -130,6 +133,7 @@ extension SessionRoutes {
                       locale: locale,
                       metadata: metadata,
                       mode: mode,
+                      invoiceCreation: invoiceCreation,
                       paymentIntentData: paymentIntentData,
                       paymentMethodOptions: paymentMethodOptions,
                       phoneNumberCollection: phoneNumberCollection,
@@ -183,6 +187,7 @@ public struct StripeSessionRoutes: SessionRoutes {
                        locale: StripeSessionLocale?,
                        metadata: [String: String]?,
                        mode: StripeSessionMode?,
+                       invoiceCreation: StripeInvoiceCreation?,
                        paymentIntentData: [String: Any]?,
                        paymentMethodOptions: [String: Any]?,
                        phoneNumberCollection: Bool?,
@@ -239,6 +244,10 @@ public struct StripeSessionRoutes: SessionRoutes {
         
         if let mode = mode {
             body["mode"] = mode
+        }
+        
+        if let invoiceCreation = invoiceCreation {
+            body["invoice_creation"] = invoiceCreation
         }
         
         if let paymentIntentData = paymentIntentData {
