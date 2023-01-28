@@ -52,7 +52,7 @@ public protocol SessionRoutes {
                 locale: StripeSessionLocale?,
                 metadata: [String: String]?,
                 mode: StripeSessionMode?,
-                invoiceCreation: StripeInvoiceCreation?,
+                invoiceCreation: Bool?,
                 paymentIntentData: [String: Any]?,
                 paymentMethodOptions: [String: Any]?,
                 phoneNumberCollection: Bool?,
@@ -108,7 +108,7 @@ extension SessionRoutes {
                        locale: StripeSessionLocale? = nil,
                        metadata: [String: String]? = nil,
                        mode: StripeSessionMode? = nil,
-                       invoiceCreation: StripeInvoiceCreation? = nil,
+                       invoiceCreation: Bool? = nil,
                        paymentIntentData: [String: Any]? = nil,
                        paymentMethodOptions: [String: Any]? = nil,
                        phoneNumberCollection: Bool? = nil,
@@ -187,7 +187,7 @@ public struct StripeSessionRoutes: SessionRoutes {
                        locale: StripeSessionLocale?,
                        metadata: [String: String]?,
                        mode: StripeSessionMode?,
-                       invoiceCreation: StripeInvoiceCreation?,
+                       invoiceCreation: Bool?,
                        paymentIntentData: [String: Any]?,
                        paymentMethodOptions: [String: Any]?,
                        phoneNumberCollection: Bool?,
@@ -247,7 +247,7 @@ public struct StripeSessionRoutes: SessionRoutes {
         }
         
         if let invoiceCreation = invoiceCreation {
-            body["invoice_creation"] = invoiceCreation
+            body["invoice_creation"] = StripeInvoiceCreation(enabled: invoiceCreation)
         }
         
         if let paymentIntentData = paymentIntentData {
