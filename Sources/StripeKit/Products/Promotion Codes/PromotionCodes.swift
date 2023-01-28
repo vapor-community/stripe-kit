@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripePromotionCode: StripeModel {
+public struct StripePromotionCode: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -36,7 +36,7 @@ public struct StripePromotionCode: StripeModel {
     public var timesRedeemed: Int?
 }
 
-public struct StripePromotionCodeRestrictions: StripeModel {
+public struct StripePromotionCodeRestrictions: Codable {
     /// A Boolean indicating if the Promotion Code should only be redeemed for Customers without any successful payments or invoices
     public var firstTimeTransaction: Bool?
     /// Minimum amount required to redeem this Promotion Code into a Coupon (e.g., a purchase must be $100 or more to work).
@@ -45,7 +45,7 @@ public struct StripePromotionCodeRestrictions: StripeModel {
     public var minimumAmountCurrency: String?
 }
 
-public struct StripePromotionCodeList: StripeModel {
+public struct StripePromotionCodeList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

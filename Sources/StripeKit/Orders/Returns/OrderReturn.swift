@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Return Object](https://stripe.com/docs/api/order_returns/object)
-public struct StripeOrderReturn: StripeModel {
+public struct StripeOrderReturn: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -30,7 +30,7 @@ public struct StripeOrderReturn: StripeModel {
     @Expandable<StripeRefund> public var refund: String?
 }
 
-public struct StripeOrderReturnList: StripeModel {
+public struct StripeOrderReturnList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

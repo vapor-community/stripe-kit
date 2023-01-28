@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Webhook Object](https://stripe.com/docs/api/webhook_endpoints)
-public struct StripeWebhook: StripeModel {
+public struct StripeWebhook: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -33,12 +33,12 @@ public struct StripeWebhook: StripeModel {
     public var url: String?
 }
 
-public enum StripeWebhookStatus: String, StripeModel {
+public enum StripeWebhookStatus: String, Codable {
     case enabled
     case disabled
 }
 
-public struct StripeWebhookList: StripeModel {
+public struct StripeWebhookList: Codable {
     public var object: String
     public var data: [StripeWebhook]?
     public var hasMore: Bool?

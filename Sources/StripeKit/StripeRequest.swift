@@ -31,7 +31,7 @@ struct StripeAPIHandler {
     }
     
     @available(*, deprecated, message: "Migrate to async await")
-    public func send<SM: StripeModel>(method: HTTPMethod,
+    public func send<SM: Codable>(method: HTTPMethod,
                                       path: String,
                                       query: String = "",
                                       body: HTTPClient.Body = .string(""),

@@ -8,7 +8,7 @@
 import Foundation
 
 /// To share the contents of a File object with non-Stripe users, you can create a FileLink. FileLinks contain a URL that can be used to retrieve the contents of the file without authentication.
-public struct StripeFileLink: StripeModel {
+public struct StripeFileLink: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -29,7 +29,7 @@ public struct StripeFileLink: StripeModel {
     public var url: String?
 }
 
-public struct StripeFileLinkList: StripeModel {
+public struct StripeFileLinkList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

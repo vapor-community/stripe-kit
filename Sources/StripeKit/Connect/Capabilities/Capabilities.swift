@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripeCapability: StripeModel {
+public struct StripeCapability: Codable {
     /// The identifier for the capability.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -24,7 +24,7 @@ public struct StripeCapability: StripeModel {
     public var status: StripeCapabilitiesStatus?
 }
 
-public struct StripeCapabilitiesRequirements: StripeModel {
+public struct StripeCapabilitiesRequirements: Codable {
     /// Date by which the fields in `currently_due` must be collected to keep the capability enabled for the account. These fields may disable the capability sooner if the next threshold is reached before they are collected.
     public var currentDeadline: Date?
     /// Fields that need to be collected to keep the capability enabled. If not collected by `current_deadline`, these fields appear in `past_due` as well, and the capability is disabled.
@@ -46,14 +46,14 @@ public struct StripeCapabilitiesRequirements: StripeModel {
     public var pendingVerification: [String]?
 }
 
-public enum StripeCapabilitiesStatus: String, StripeModel {
+public enum StripeCapabilitiesStatus: String, Codable {
     case active
     case inactive
     case pending
     case unrequested
 }
 
-public struct StripeCapabilitiesList: StripeModel {
+public struct StripeCapabilitiesList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

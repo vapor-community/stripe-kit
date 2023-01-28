@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Refund Object](https://stripe.com/docs/api/refunds/object ).
-public struct StripeRefund: StripeModel {
+public struct StripeRefund: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -46,26 +46,26 @@ public struct StripeRefund: StripeModel {
     @Expandable<StripeTransferReversal> public var transferReversal: String?
 }
 
-public enum StripeRefundFailureReason: String, StripeModel {
+public enum StripeRefundFailureReason: String, Codable {
     case lostOrStolenCard = "lost_or_stolen_card"
     case expiredOrCanceledCard = "expired_or_canceled_card"
     case unknown
 }
 
-public enum StripeRefundReason: String, StripeModel {
+public enum StripeRefundReason: String, Codable {
     case duplicate
     case fraudulent
     case requestedByCustomer = "requested_by_customer"
 }
 
-public struct StripeRefundsList: StripeModel {
+public struct StripeRefundsList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [StripeRefund]?
 }
 
-public enum StripeRefundStatus: String, StripeModel {
+public enum StripeRefundStatus: String, Codable {
     case pending
     case succeeded
     case failed

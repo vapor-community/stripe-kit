@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Invoice Line Item Object](https://stripe.com/docs/api/invoices/line_item).
-public struct StripeInvoiceLineItem: StripeModel {
+public struct StripeInvoiceLineItem: Codable {
     /// Unique identifier for the object.
     public var id: String?
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -50,19 +50,19 @@ public struct StripeInvoiceLineItem: StripeModel {
     public var type: StripeInvoiceLineItemType?
 }
 
-public struct StripeInvoiceLineItemPeriod: StripeModel {
+public struct StripeInvoiceLineItemPeriod: Codable {
     /// Start of the line item’s billing period
     public var start: Date?
     /// End of the line item’s billing period
     public var end: Date?
 }
 
-public enum StripeInvoiceLineItemType: String, StripeModel {
+public enum StripeInvoiceLineItemType: String, Codable {
     case invoiceitem
     case subscription
 }
 
-public struct StripeInvoiceLineItemList: StripeModel {
+public struct StripeInvoiceLineItemList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

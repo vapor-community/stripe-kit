@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripeTaxCode: StripeModel {
+public struct StripeTaxCode: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -18,7 +18,7 @@ public struct StripeTaxCode: StripeModel {
     public var name: String
 }
 
-public struct StripeTaxCodeList: StripeModel {
+public struct StripeTaxCodeList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

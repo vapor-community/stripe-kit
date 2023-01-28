@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Invoice Object](https://stripe.com/docs/api/invoices/object).
-public struct StripeInvoice: StripeModel {
+public struct StripeInvoice: Codable {
     /// Unique identifier for the object.
     public var id: String?
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -141,12 +141,12 @@ public struct StripeInvoice: StripeModel {
     public var webhooksDeliveredAt: Date?
 }
 
-public enum StripeInvoiceCollectionMethod: String, StripeModel {
+public enum StripeInvoiceCollectionMethod: String, Codable {
     case chargeAutomatically = "charge_automatically"
     case sendInvoice = "send_invoice"
 }
 
-public enum StripeInvoiceBillingReason: String, StripeModel {
+public enum StripeInvoiceBillingReason: String, Codable {
     case subscriptionCycle = "subscription_cycle"
     case subscriptionCreate = "subscription_create"
     case subscriptionUpdate = "subscription_update"
@@ -156,14 +156,14 @@ public enum StripeInvoiceBillingReason: String, StripeModel {
     case subscriptionThreshold = "subscription_threshold"
 }
 
-public struct StripeInvoiceCustomerTaxId: StripeModel {
+public struct StripeInvoiceCustomerTaxId: Codable {
     /// The type of the tax ID, one of eu_vat, nz_gst, au_abn, or unknown
     public var type: StripeTaxIDType?
     /// The value of the tax ID.
     public var value: String?
 }
 
-public struct StripeInvoiceLastFinalizationError: StripeModel {
+public struct StripeInvoiceLastFinalizationError: Codable {
     /// For some errors that could be handled programmatically, a short string indicating the error code reported.
     public var code: StripeErrorCode?
     /// A URL to more information about the error code reported.
@@ -178,38 +178,38 @@ public struct StripeInvoiceLastFinalizationError: StripeModel {
     public var type: StripeErrorType?
 }
 
-public struct StripeInvoicePaymentSettings: StripeModel {
+public struct StripeInvoicePaymentSettings: Codable {
     /// Payment-method-specific configuration to provide to the invoice’s PaymentIntent.
     public var paymentMethodOptions: StripeInvoicePaymentSettingsPaymentMethodOptions?
     /// The list of payment method types (e.g. card) to provide to the invoice’s PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice’s default payment method, the subscription’s default payment method, the customer’s default payment method, and your invoice template settings.
     public var paymentMethodTypes: [StripePaymentMethodType]?
 }
 
-public struct StripeInvoicePaymentSettingsPaymentMethodOptions: StripeModel {
+public struct StripeInvoicePaymentSettingsPaymentMethodOptions: Codable {
     /// If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice’s PaymentIntent.
     public var bancontact: StripeInvoicePaymentSettingsPaymentMethodOptionsBancontact?
     /// If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice’s PaymentIntent.
     public var card: StripeInvoicePaymentSettingsPaymentMethodOptionsCard?
 }
 
-public struct StripeInvoicePaymentSettingsPaymentMethodOptionsBancontact: StripeModel {
+public struct StripeInvoicePaymentSettingsPaymentMethodOptionsBancontact: Codable {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: String?
 }
 
-public struct StripeInvoicePaymentSettingsPaymentMethodOptionsCard: StripeModel {
+public struct StripeInvoicePaymentSettingsPaymentMethodOptionsCard: Codable {
     /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and other requirements. However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on manually requesting 3D Secure for more information on how this configuration interacts with Radar and our SCA Engine.
     public var requestThreeDSecure: StripeInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreedSecure?
 }
 
-public enum StripeInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreedSecure: String, StripeModel {
+public enum StripeInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreedSecure: String, Codable {
     /// Triggers 3D Secure authentication only if it is required.
     case automatic
     /// Requires 3D Secure authentication if it is available.
     case any
 }
 
-public enum StripeInvoiceStatus: String, StripeModel {
+public enum StripeInvoiceStatus: String, Codable {
     case draft
     case open
     case paid
@@ -217,7 +217,7 @@ public enum StripeInvoiceStatus: String, StripeModel {
     case void
 }
 
-public struct StripeInvoiceStatusTransitions: StripeModel {
+public struct StripeInvoiceStatusTransitions: Codable {
     /// The time that the invoice draft was finalized.
     public var finalizedAt: Date?
     /// The time that the invoice was marked uncollectible.
@@ -228,21 +228,21 @@ public struct StripeInvoiceStatusTransitions: StripeModel {
     public var voidedAt: Date?
 }
 
-public struct StripeInvoiceThresholdReason: StripeModel {
+public struct StripeInvoiceThresholdReason: Codable {
     /// The total invoice amount threshold boundary if it triggered the threshold invoice.
     public var amountGte: Int?
     /// Indicates which line items triggered a threshold invoice.
     public var itemReasons: [StripeInvoiceThresholdReasonItemReason]?
 }
 
-public struct StripeInvoiceThresholdReasonItemReason: StripeModel {
+public struct StripeInvoiceThresholdReasonItemReason: Codable {
     /// The IDs of the line items that triggered the threshold invoice.
     public var lineItemIds: [String]?
     /// The quantity threshold boundary that applied to the given line item.
     public var usageGte: Int?
 }
 
-public struct StripeInvoiceTotalTaxAmount: StripeModel {
+public struct StripeInvoiceTotalTaxAmount: Codable {
     /// The amount, in cents, of the tax.
     public var amount: Int?
     /// Whether this tax amount is inclusive or exclusive.
@@ -251,21 +251,21 @@ public struct StripeInvoiceTotalTaxAmount: StripeModel {
     public var taxRate: String?
 }
 
-public struct StripeInvoiceTotalDiscountAmount: StripeModel {
+public struct StripeInvoiceTotalDiscountAmount: Codable {
     /// The amount, in cents, of the discount.
     public var amount: Int?
     /// The discount that was applied to get this discount amount.
     @Expandable<StripeDiscount> public var discount: String?
 }
 
-public struct StripeInvoiceTransferData: StripeModel {
+public struct StripeInvoiceTransferData: Codable {
     /// The amount in cents that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
     public var amount: Int?
     /// The account where funds from the payment will be transferred to upon payment success.
     @Expandable<StripeConnectAccount> public var destination: String?
 }
 
-public struct StripeInvoiceList: StripeModel {
+public struct StripeInvoiceList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

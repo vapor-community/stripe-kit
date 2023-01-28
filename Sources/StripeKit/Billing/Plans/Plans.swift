@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Plan Object](https://stripe.com/docs/api/plans/object).
-public struct StripePlan: StripeModel {
+public struct StripePlan: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -52,26 +52,26 @@ public struct StripePlan: StripeModel {
     public var usageType: StripePlanUsageType?
 }
 
-public enum StripePlanAggregateUsage: String, StripeModel {
+public enum StripePlanAggregateUsage: String, Codable {
     case sum
     case lastDuringPeriod = "last_during_period"
     case lastEver = "last_ever"
     case max
 }
 
-public enum StripePlanBillingScheme: String, StripeModel {
+public enum StripePlanBillingScheme: String, Codable {
     case perUnit = "per_unit"
     case tiered
 }
 
-public enum StripePlanInterval: String, StripeModel {
+public enum StripePlanInterval: String, Codable {
     case day
     case week
     case month
     case year
 }
 
-public struct StripePlanTier: StripeModel {
+public struct StripePlanTier: Codable {
     /// Price for the entire tier.
     public var flatAmount: Int?
     /// Per unit price for units relevant to the tier.
@@ -80,29 +80,29 @@ public struct StripePlanTier: StripeModel {
     public var upTo: Int?
 }
 
-public enum StripePlanTiersMode: String, StripeModel {
+public enum StripePlanTiersMode: String, Codable {
     case graduated
     case volume
 }
 
-public struct StripePlanTransformUsage: StripeModel {
+public struct StripePlanTransformUsage: Codable {
     /// Divide usage by this number.
     public var divideBy: Int?
     /// After division, either round the result `up` or `down`.
     public var round: StripePlanTransformUsageRound?
 }
 
-public enum StripePlanTransformUsageRound: String, StripeModel {
+public enum StripePlanTransformUsageRound: String, Codable {
     case up
     case down
 }
 
-public enum StripePlanUsageType: String, StripeModel {
+public enum StripePlanUsageType: String, Codable {
     case metered
     case licensed
 }
 
-public struct StripePlanList: StripeModel {
+public struct StripePlanList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

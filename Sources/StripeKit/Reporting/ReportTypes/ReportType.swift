@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Report Type Object](https://stripe.com/docs/api/reporting/report_type/object) .
-public struct StripeReportType: StripeModel {
+public struct StripeReportType: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -27,7 +27,7 @@ public struct StripeReportType: StripeModel {
     public var version: Int?
 }
 
-public struct StripeReportTypeList: StripeModel {
+public struct StripeReportTypeList: Codable {
     public var object: String
     public var data: [StripeReportType]?
     public var hasMore: Bool?

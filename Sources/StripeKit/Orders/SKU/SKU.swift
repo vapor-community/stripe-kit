@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [SKU Object](https://stripe.com/docs/api/skus/object).
-public struct StripeSKU: StripeModel {
+public struct StripeSKU: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -40,7 +40,7 @@ public struct StripeSKU: StripeModel {
     public var updated: Date?
 }
 
-public struct StripeSKUInventory: StripeModel {
+public struct StripeSKUInventory: Codable {
     /// The count of inventory available. Will be present if and only if `type` is `finite`.
     public var quantity: Int?
     /// Inventory type. Possible values are `finite`, `bucket` (not quantified), and `infinite`.
@@ -49,19 +49,19 @@ public struct StripeSKUInventory: StripeModel {
     public var value: StripeSKUInventoryValue?
 }
 
-public enum StripeSKUInventoryType: String, StripeModel {
+public enum StripeSKUInventoryType: String, Codable {
     case finite
     case bucket
     case infinite
 }
 
-public enum StripeSKUInventoryValue: String, StripeModel {
+public enum StripeSKUInventoryValue: String, Codable {
     case inStock = "in_stock"
     case limited
     case outOfStock = "out_of_stock"
 }
 
-public struct StripeSKUList: StripeModel {
+public struct StripeSKUList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

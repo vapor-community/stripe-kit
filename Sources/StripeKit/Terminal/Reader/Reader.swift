@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Reader Object](https://stripe.com/docs/api/terminal/readers/object).
-public struct StripeReader: StripeModel {
+public struct StripeReader: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -33,7 +33,7 @@ public struct StripeReader: StripeModel {
     public var status: String?
 }
 
-public struct StripeReaderList: StripeModel {
+public struct StripeReaderList: Codable {
     public var object: String
     public var data: [StripeReader]?
     public var hasMore: Bool?

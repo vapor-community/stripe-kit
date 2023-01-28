@@ -7,7 +7,7 @@
 //
 
 /// The [Card Object](https://stripe.com/docs/api/external_account_cards/object).
-public struct StripeCard: StripeModel {
+public struct StripeCard: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -66,7 +66,7 @@ public struct StripeCard: StripeModel {
     public var tokenizationMethod: StripeCardTokenizedMethod?
 }
 
-public struct StripeCardList: StripeModel {
+public struct StripeCardList: Codable {
     /// String representing the object’s type. Objects of the same type share the same value. Always has the value list.
     public var object: String
     /// An array of `StripeCard`s associated with the account.
@@ -77,14 +77,14 @@ public struct StripeCardList: StripeModel {
     public var url: String?
 }
 
-public enum StripeCardValidationCheck: String, StripeModel {
+public enum StripeCardValidationCheck: String, Codable {
     case pass
     case fail
     case unavailable
     case unchecked
 }
 
-public enum StripeCardBrand: String, StripeModel {
+public enum StripeCardBrand: String, Codable {
     case americanExpress = "American Express"
     case dinersClub = "Diners Club"
     case discover = "Discover"
@@ -95,14 +95,14 @@ public enum StripeCardBrand: String, StripeModel {
     case unknown = "Unknown"
 }
 
-public enum StripeCardFundingType: String, StripeModel {
+public enum StripeCardFundingType: String, Codable {
     case credit
     case debit
     case prepaid
     case unknown
 }
 
-public enum StripeCardTokenizedMethod: String, StripeModel {
+public enum StripeCardTokenizedMethod: String, Codable {
     case androidPay = "android_pay"
     case applePay = "apple_pay"
     case masterpass

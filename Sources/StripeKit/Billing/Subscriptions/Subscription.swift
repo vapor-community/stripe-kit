@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Subscription Object](https://stripe.com/docs/api/subscriptions/object)
-public struct StripeSubscription: StripeModel {
+public struct StripeSubscription: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -92,45 +92,45 @@ public struct StripeSubscription: StripeModel {
     public var trialStart: Date?
 }
 
-public struct StripeSubscriptionBillingThresholds: StripeModel {
+public struct StripeSubscriptionBillingThresholds: Codable {
     /// Monetary threshold that triggers the subscription to create an invoice
     public var amountGte: Int?
     /// Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
     public var resetBillingCycleAnchor: Bool?
 }
 
-public struct StripeSubscriptionPaymentSettings: StripeModel {
+public struct StripeSubscriptionPaymentSettings: Codable {
     /// Payment-method-specific configuration to provide to invoices created by the subscription.
     public var paymentMethodOptions: StripeSubscriptionPaymentSettingsPaymentMethodOptions?
     /// The list of payment method types to provide to every invoice created by the subscription. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice’s default payment method, the subscription’s default payment method, the customer’s default payment method, and your invoice template settings.
     public var paymentMethodTypes: [SubscriptionPaymentSettingsPaymentMethodType]?
 }
 
-public struct StripeSubscriptionPaymentSettingsPaymentMethodOptions: StripeModel {
+public struct StripeSubscriptionPaymentSettingsPaymentMethodOptions: Codable {
     /// This sub-hash contains details about the Bancontact payment method options to pass to invoices created by the subscription.
     public var bancontact: StripeSubscriptionPaymentSettingsPaymentMethodOptionsBancontact?
     /// This sub-hash contains details about the Card payment method options to pass to invoices created by the subscription.
     public var card: StripeSubscriptionPaymentSettingsPaymentMethodOptionsCard?
 }
 
-public struct StripeSubscriptionPaymentSettingsPaymentMethodOptionsBancontact: StripeModel {
+public struct StripeSubscriptionPaymentSettingsPaymentMethodOptionsBancontact: Codable {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: String?
 }
 
-public struct StripeSubscriptionPaymentSettingsPaymentMethodOptionsCard: StripeModel {
+public struct StripeSubscriptionPaymentSettingsPaymentMethodOptionsCard: Codable {
     /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and other requirements. However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on manually requesting 3D Secure for more information on how this configuration interacts with Radar and our SCA Engine.
     public var requestThreeDSecure: StripeSubscriptionPaymentSettingsPaymentMethodOptionsCardRequestThreedSecure?
 }
 
-public enum StripeSubscriptionPaymentSettingsPaymentMethodOptionsCardRequestThreedSecure: String, StripeModel {
+public enum StripeSubscriptionPaymentSettingsPaymentMethodOptionsCardRequestThreedSecure: String, Codable {
     /// Triggers 3D Secure authentication only if it is required.
     case automatic
     /// Requires 3D Secure authentication if it is available.
     case any
 }
 
-public enum SubscriptionPaymentSettingsPaymentMethodType: String, StripeModel {
+public enum SubscriptionPaymentSettingsPaymentMethodType: String, Codable {
     case achCreditTransfer = "ach_transfer_credit"
     case achDebit = "ach_debit"
     case auBecsDebit = "au_becs_debit"
@@ -148,14 +148,14 @@ public enum SubscriptionPaymentSettingsPaymentMethodType: String, StripeModel {
     case wechatPay = "wechat_pay"
 }
 
-public struct StripeSubscriptionPendingInvoiceInterval: StripeModel {
+public struct StripeSubscriptionPendingInvoiceInterval: Codable {
     /// Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
     public var interval: StripePlanInterval?
     /// The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
     public var intervalCount: Int?
 }
 
-public enum StripeSubscriptionStatus: String, StripeModel {
+public enum StripeSubscriptionStatus: String, Codable {
     case incomplete
     case incompleteExpired = "incomplete_expired"
     case trialing
@@ -165,19 +165,19 @@ public enum StripeSubscriptionStatus: String, StripeModel {
     case unpaid
 }
 
-public struct StripeSubscriptionList: StripeModel {
+public struct StripeSubscriptionList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [StripeSubscription]?
 }
 
-public struct StripeSubscriptionInvoiceCustomerBalanceSettings: StripeModel {
+public struct StripeSubscriptionInvoiceCustomerBalanceSettings: Codable {
     /// Controls whether a customer balance applied to this invoice should be consumed and not credited or debited back to the customer if voided.
     public var consumeAppliedBalanceOnVoid: Bool?
 }
 
-public enum StripeSubscriptionPaymentBehavior: String, StripeModel {
+public enum StripeSubscriptionPaymentBehavior: String, Codable {
     /// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid.
     case allowIncomplete = "allow_incomplete"
     /// Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid.
@@ -188,13 +188,13 @@ public enum StripeSubscriptionPaymentBehavior: String, StripeModel {
     case defaultIncomplete = "default_incomplete"
 }
 
-public enum StripeSubscriptionProrationBehavior: String, StripeModel {
+public enum StripeSubscriptionProrationBehavior: String, Codable {
     case createProrations = "create_prorations"
     case none
     case alwaysInvoice = "always_invoice"
 }
 
-public struct StripeSubscriptionPendingUpdate: StripeModel {
+public struct StripeSubscriptionPendingUpdate: Codable {
     /// If the update is applied, determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
     public var billingCycleAnchor: Date?
     /// The point after which the changes reflected by this update will be discarded and no longer applied.
@@ -207,20 +207,20 @@ public struct StripeSubscriptionPendingUpdate: StripeModel {
     public var trialFromPlan: Bool?
 }
 
-public struct StripeSubscriptionPauseCollection: StripeModel {
+public struct StripeSubscriptionPauseCollection: Codable {
     /// The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
     public var behavior: StripeSubscriptionPauseCollectionBehavior?
     /// The time after which the subscription will resume collecting payments.
     public var resumesAt: Date?
 }
 
-public enum StripeSubscriptionPauseCollectionBehavior: String, StripeModel {
+public enum StripeSubscriptionPauseCollectionBehavior: String, Codable {
     case keepAsDraft = "keep_as_draft"
     case markUncollectible = "mark_uncollectible"
     case void
 }
 
-public struct StripeSubscriptionTransferData: StripeModel {
+public struct StripeSubscriptionTransferData: Codable {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
     public var amountPercent: Int?
     /// The account where funds from the payment will be transferred to upon payment success.

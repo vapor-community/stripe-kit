@@ -7,7 +7,7 @@
 
 import Foundation
 /// The top-up object [see here](https://stripe.com/docs/api/topups/object)
-public struct StripeTopUp: StripeModel {
+public struct StripeTopUp: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -42,7 +42,7 @@ public struct StripeTopUp: StripeModel {
     public var transferGroup: String?
 }
 
-public enum StripeTopUpStatus: String, StripeModel {
+public enum StripeTopUpStatus: String, Codable {
     case canceled
     case failed
     case pending
@@ -50,7 +50,7 @@ public enum StripeTopUpStatus: String, StripeModel {
     case succeeded
 }
 
-public struct StripeTopUpList: StripeModel {
+public struct StripeTopUpList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

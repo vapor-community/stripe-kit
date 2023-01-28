@@ -10,11 +10,11 @@ import Foundation
 
 /// Stripe uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the `2xx` range indicate success. Codes in the `4xx` range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the `5xx` range indicate an error with Stripe's servers (these are rare).
 /// Some `4xx` errors that could be handled programmatically (e.g., a card is declined) include an error code that briefly explains the error reported.
-public final class StripeError: StripeModel, Error {
+public final class StripeError: Codable, Error {
     public var error: _StripeError?
 }
 
-public final class _StripeError: StripeModel {
+public final class _StripeError: Codable {
     /// The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
     public var type: StripeErrorType?
     /// For card errors, the ID of the failed charge.
@@ -38,7 +38,7 @@ public final class _StripeError: StripeModel {
 }
 
 // https://stripe.com/docs/api#errors-type
-public enum StripeErrorType: String, StripeModel {
+public enum StripeErrorType: String, Codable {
     /// Failure to connect to Stripe's API.
     case apiConnectionError = "api_connection_error"
     /// API errors cover any other type of problem (e.g., a temporary problem with Stripe's servers), and are extremely uncommon
@@ -59,7 +59,7 @@ public enum StripeErrorType: String, StripeModel {
 
 // https://stripe.com/docs/api#errors-code
 // https://stripe.com/docs/error-codes
-public enum StripeErrorCode: String, StripeModel {
+public enum StripeErrorCode: String, Codable {
     /// The email address provided for the creation of a deferred account already has an account associated with it. Use the OAuth flow to connect the existing account to your platform.
     case accountAlreadyExists = "account_already_exists"
     /// The country of the business address provided does not match the country of the account. Businesses must be located in the same country as the account.
@@ -236,7 +236,7 @@ public enum StripeErrorCode: String, StripeModel {
 
 // https://stripe.com/docs/api#errors-decline-code
 // https://stripe.com/docs/declines/codes
-public enum StripeDeclineCode: String, StripeModel {
+public enum StripeDeclineCode: String, Codable {
     /// The payment cannot be authorized.
     case approveWithId = "approve_with_id"
     /// The card has been declined for an unknown reason.

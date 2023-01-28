@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [File Object](https://stripe.com/docs/api/files/object)
-public struct StripeFile: StripeModel {
+public struct StripeFile: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -33,7 +33,7 @@ public struct StripeFile: StripeModel {
     public var url: String?
 }
 
-public enum StripeFilePurpose: String, StripeModel {
+public enum StripeFilePurpose: String, Codable {
     case additionalVerification = "additional_verification"
     case businessIcon = "business_icon"
     case businessLogo = "business_logo"
@@ -44,7 +44,7 @@ public enum StripeFilePurpose: String, StripeModel {
     case taxDocumentUserUpload = "tax_document_user_upload"
 }
 
-public enum StripeFileType: String, StripeModel {
+public enum StripeFileType: String, Codable {
     case csv
     case docx
     case gif
@@ -55,7 +55,7 @@ public enum StripeFileType: String, StripeModel {
     case xlsx
 }
 
-public struct StripeFileUploadList: StripeModel {
+public struct StripeFileUploadList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

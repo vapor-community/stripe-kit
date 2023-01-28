@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Early Fraud Warning Object](https://stripe.com/docs/api/radar/early_fraud_warnings/object).
-public struct StripeEarlyFraudWarning: StripeModel {
+public struct StripeEarlyFraudWarning: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -27,7 +27,7 @@ public struct StripeEarlyFraudWarning: StripeModel {
     @Expandable<StripePaymentIntent> public var paymentIntent: String?
 }
 
-public enum StripeEarlyFraudWarningFraudType: String, StripeModel {
+public enum StripeEarlyFraudWarningFraudType: String, Codable {
     case cardNeverReceived = "card_never_received"
     case fraudulentCardApplication = "fraudulent_card_application"
     case madeWithCounterfeitCard = "made_with_counterfeit_card"
@@ -37,7 +37,7 @@ public enum StripeEarlyFraudWarningFraudType: String, StripeModel {
     case unauthorizedUseOfCard = "unauthorized_use_of_card"
 }
 
-public struct StripeEarlyFraudWarningList: StripeModel {
+public struct StripeEarlyFraudWarningList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

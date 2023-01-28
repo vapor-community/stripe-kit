@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripePortalConfiguration: StripeModel {
+public struct StripePortalConfiguration: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -34,7 +34,7 @@ public struct StripePortalConfiguration: StripeModel {
     public var updated: Date?
 }
 
-public struct StripePortalConfigurationBusinessProfile: StripeModel {
+public struct StripePortalConfigurationBusinessProfile: Codable {
     /// The messaging shown to customers in the portal.
     public var headline: String?
     /// A link to the business’s publicly available privacy policy.
@@ -43,7 +43,7 @@ public struct StripePortalConfigurationBusinessProfile: StripeModel {
     public var termsOfServiceUrl: String?
 }
 
-public struct StripePortalConfigurationFeatures: StripeModel {
+public struct StripePortalConfigurationFeatures: Codable {
     /// Information about updating customer details in the portal.
     public var customerUpdate: StripePortalConfigurationFeaturesCustomerUpdate?
     /// Information about showing invoice history in the portal.
@@ -58,12 +58,12 @@ public struct StripePortalConfigurationFeatures: StripeModel {
     public var subscriptionUpdate: StripePortalConfigurationFeaturesSubscriptionUpdate?
 }
 
-public struct StripePortalConfigurationFeaturesCustomerUpdate: StripeModel {
+public struct StripePortalConfigurationFeaturesCustomerUpdate: Codable {
     /// The types of customer updates that are supported. When empty, customers are not updateable.
     public var allowedUpdates: [StripePortalConfigurationFeaturesCustomerUpdateAllowedUpdate]?
 }
 
-public enum StripePortalConfigurationFeaturesCustomerUpdateAllowedUpdate: String, StripeModel {
+public enum StripePortalConfigurationFeaturesCustomerUpdateAllowedUpdate: String, Codable {
     /// Allow updating email addresses.
     case email
     /// Allow updating billing addresses.
@@ -76,17 +76,17 @@ public enum StripePortalConfigurationFeaturesCustomerUpdateAllowedUpdate: String
     case taxId = "tax_id"
 }
 
-public struct StripePortalConfigurationFeaturesInvoiceHistory: StripeModel {
+public struct StripePortalConfigurationFeaturesInvoiceHistory: Codable {
     /// Whether the feature is enabled.
     public var enabled: Bool?
 }
 
-public struct StripePortalConfigurationFeaturesPaymentMethodUpdate: StripeModel {
+public struct StripePortalConfigurationFeaturesPaymentMethodUpdate: Codable {
     /// Whether the feature is enabled.
     public var enabled: Bool?
 }
 
-public struct StripePortalConfigurationFeaturesSubscriptionCancel: StripeModel {
+public struct StripePortalConfigurationFeaturesSubscriptionCancel: Codable {
     /// Whether the feature is enabled.
     public var enabled: Bool?
     /// Whether to cancel subscriptions immediately or at the end of the billing period.
@@ -95,19 +95,19 @@ public struct StripePortalConfigurationFeaturesSubscriptionCancel: StripeModel {
     public var prorationBehavior: String?
 }
 
-public enum StripePortalConfigurationFeaturesSubscriptionCancelMode: String, StripeModel {
+public enum StripePortalConfigurationFeaturesSubscriptionCancelMode: String, Codable {
     /// Cancel subscriptions immediately
     case immediately
     /// After canceling, customers can still renew subscriptions until the billing period ends.
     case atPeriodEnd = "at_period_end"
 }
 
-public struct StripePortalConfigurationFeaturesSubscriptionPause: StripeModel {
+public struct StripePortalConfigurationFeaturesSubscriptionPause: Codable {
     /// Whether the feature is enabled.
     public var enabled: Bool?
 }
 
-public struct StripePortalConfigurationFeaturesSubscriptionUpdate: StripeModel {
+public struct StripePortalConfigurationFeaturesSubscriptionUpdate: Codable {
     /// The types of subscription updates that are supported for items listed in the products attribute. When empty, subscriptions are not updateable.
     public var defaultAllowedUpdates: [StripePortalConfigurationFeaturesSubscriptionUpdateDefaultAllowedUpdate]?
     /// Whether the feature is enabled.
@@ -119,7 +119,7 @@ public struct StripePortalConfigurationFeaturesSubscriptionUpdate: StripeModel {
     public var prorationBehavior: String?
 }
 
-public enum StripePortalConfigurationFeaturesSubscriptionUpdateDefaultAllowedUpdate: String, StripeModel {
+public enum StripePortalConfigurationFeaturesSubscriptionUpdateDefaultAllowedUpdate: String, Codable {
     /// Allow switching to a different price.
     case price
     /// Allow updating subscription quantities.
@@ -128,14 +128,14 @@ public enum StripePortalConfigurationFeaturesSubscriptionUpdateDefaultAllowedUpd
     case promotionCode = "promotion_code"
 }
 
-public struct StripePortalConfigurationFeaturesSubscriptionUpdateProduct: StripeModel {
+public struct StripePortalConfigurationFeaturesSubscriptionUpdateProduct: Codable {
     /// The list of price IDs which, when subscribed to, a subscription can be updated.
     public var prices: [String]?
     /// The product ID.
     public var product: String?
 }
 
-public struct StripePortalConfigurationList: StripeModel {
+public struct StripePortalConfigurationList: Codable {
     /// String representing the object’s type. Objects of the same type share the same value. Always has the value list.
     public var object: String
     /// An array of `StripePortalConfiguration`s

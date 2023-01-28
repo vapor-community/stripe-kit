@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Credit Note Line Item](https://stripe.com/docs/api/credit_notes/line_item)
-public struct StripeCreditNoteLineItem: StripeModel {
+public struct StripeCreditNoteLineItem: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -37,12 +37,12 @@ public struct StripeCreditNoteLineItem: StripeModel {
     public var unitAmountDecimal: String?
 }
 
-public enum StripeCreditNoteLineItemType: String, StripeModel {
+public enum StripeCreditNoteLineItemType: String, Codable {
     case invoiceLineItem = "invoice_line_item"
     case customLineItem = "custom_line_item"
 }
 
-public struct StripeCreditNoteLineItemList: StripeModel {
+public struct StripeCreditNoteLineItemList: Codable {
     /// String representing the object’s type. Objects of the same type share the same value. Always has the value list.
     public var object: String?
     /// Details about each object.

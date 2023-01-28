@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripeShippingRate: StripeModel {
+public struct StripeShippingRate: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -34,32 +34,32 @@ public struct StripeShippingRate: StripeModel {
     @Expandable<StripeTaxCode> public var taxCode: String?
 }
 
-public struct StripeShippingRateFixedAmount: StripeModel {
+public struct StripeShippingRateFixedAmount: Codable {
     /// A non-negative integer in cents representing how much to charge.
     public var amount: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: StripeCurrency?
 }
 
-public enum StripeShippingRateType: String, StripeModel {
+public enum StripeShippingRateType: String, Codable {
     case fixedAmount = "fixed_amount"
 }
 
-public struct StripeShippingRateDeliveryEstimate: StripeModel {
+public struct StripeShippingRateDeliveryEstimate: Codable {
     /// The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
     public var maximum: StripeShippingRateDeliveryEstimateMaxMin?
     /// The lower bound of the estimated range. If empty, represents no lower bound.
     public var minimum: StripeShippingRateDeliveryEstimateMaxMin?
 }
 
-public struct StripeShippingRateDeliveryEstimateMaxMin: StripeModel {
+public struct StripeShippingRateDeliveryEstimateMaxMin: Codable {
     /// A unit of time.
     public var unit: StripeShippingRateDeliveryEstimateUnit?
     /// Must be greater than 0.
     public var value: Int?
 }
 
-public enum StripeShippingRateDeliveryEstimateUnit: String, StripeModel {
+public enum StripeShippingRateDeliveryEstimateUnit: String, Codable {
     case hour
     case day
     case businessDay = "business_day"
@@ -67,13 +67,13 @@ public enum StripeShippingRateDeliveryEstimateUnit: String, StripeModel {
     case month
 }
 
-public enum StripeShippingRateTaxBehavior: String, StripeModel {
+public enum StripeShippingRateTaxBehavior: String, Codable {
     case inclusive
     case exclusive
     case unspecified
 }
 
-public struct StripeShippingRateList: StripeModel {
+public struct StripeShippingRateList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

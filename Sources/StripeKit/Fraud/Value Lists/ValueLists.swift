@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Value List](https://stripe.com/docs/api/radar/value_lists/object).
-public struct StripeValueList: StripeModel {
+public struct StripeValueList: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -31,7 +31,7 @@ public struct StripeValueList: StripeModel {
     public var name: String?
 }
 
-public enum StripeValueListItemType: String, StripeModel {
+public enum StripeValueListItemType: String, Codable {
     case cardFingerprint = "card_fingerprint"
     case cardBin = "card_bin"
     case email
@@ -42,7 +42,7 @@ public enum StripeValueListItemType: String, StripeModel {
     case customerId = "customer_id"
 }
 
-public struct StripeValueListList: StripeModel {
+public struct StripeValueListList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

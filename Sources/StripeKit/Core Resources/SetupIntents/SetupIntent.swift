@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [SetupIntent Object](https://stripe.com/docs/api/setup_intents/object).
-public struct StripeSetupIntent: StripeModel {
+public struct StripeSetupIntent: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -52,20 +52,20 @@ public struct StripeSetupIntent: StripeModel {
     public var usage: String?
 }
 
-public enum StripeSetupIntentCancellationReason: String, StripeModel {
+public enum StripeSetupIntentCancellationReason: String, Codable {
     case abandoned
     case requestedByCustomer = "requested_by_customer"
     case duplicate
 }
 
-public struct StripeSetupIntentNextAction: StripeModel {
+public struct StripeSetupIntentNextAction: Codable {
     /// Contains instructions for authenticating by redirecting your customer to another page or application.
     public var redirectToUrl: StripeSetupIntentNextActionRedirectToUrl?
     /// Type of the next action to perform, one of redirect_to_url or use_stripe_sdk.
     public var type: StripeSetupIntentNextActionType?
 }
 
-public struct StripeSetupIntentNextActionRedirectToUrl: StripeModel {
+public struct StripeSetupIntentNextActionRedirectToUrl: Codable {
     /// If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
     public var returnUrl: String?
     /// The URL you must redirect your customer to in order to authenticate the payment.
@@ -77,22 +77,22 @@ public struct StripeSetupIntentNextActionRedirectToUrl: StripeModel {
      */
 }
 
-public enum StripeSetupIntentNextActionType: String, StripeModel {
+public enum StripeSetupIntentNextActionType: String, Codable {
     case redirectToUrl = "redirect_to_url"
     case useStripeSDK = "use_stripe_sdk"
 }
 
-public struct StripeSetupIntentPaymentMethodOptions: StripeModel {
+public struct StripeSetupIntentPaymentMethodOptions: Codable {
     /// If the SetupIntent’s `payment_method_types` includes `card`, this hash contains the configurations that will be applied to each setup attempt of that type.
     public var card: StripeSetupIntentPaymentMethodOptionsCard?
 }
 
-public struct StripeSetupIntentPaymentMethodOptionsCard: StripeModel {
+public struct StripeSetupIntentPaymentMethodOptionsCard: Codable {
     /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and other requirements. However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on manually requesting 3D Secure for more information on how this configuration interacts with Radar and our SCA Engine.
     public var requestThreeDSecure: String?
 }
 
-public enum StripeSetupIntentStatus: String, StripeModel {
+public enum StripeSetupIntentStatus: String, Codable {
     case requiresPaymentMethod = "requires_payment_method"
     case requiresConfirmation = "requires_confirmation"
     case requiresAction = "requires_action"
@@ -101,7 +101,7 @@ public enum StripeSetupIntentStatus: String, StripeModel {
     case succeeded
 }
 
-public struct StripeSetupIntentsList: StripeModel {
+public struct StripeSetupIntentsList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

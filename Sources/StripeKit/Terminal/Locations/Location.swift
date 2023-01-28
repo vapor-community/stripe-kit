@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Location Object](https://stripe.com/docs/api/terminal/locations/object).
-public struct StripeLocation: StripeModel {
+public struct StripeLocation: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -23,7 +23,7 @@ public struct StripeLocation: StripeModel {
     public var metadata: [String: String]?
 }
 
-public struct StripeLocationList: StripeModel {
+public struct StripeLocationList: Codable {
     public var object: String
     public var data: [StripeLocation]?
     public var hasMore: Bool?

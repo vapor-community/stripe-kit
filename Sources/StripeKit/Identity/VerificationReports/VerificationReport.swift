@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripeVerificationReport: StripeModel {
+public struct StripeVerificationReport: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -30,7 +30,7 @@ public struct StripeVerificationReport: StripeModel {
     public var verificationSession: String?
 }
 
-public struct StripeVerificationReportDocument: StripeModel {
+public struct StripeVerificationReportDocument: Codable {
     /// Address as it appears in the document.
     public var address: StripeAddress?
     /// Date of birth as it appears in the document.
@@ -60,14 +60,14 @@ public struct StripeVerificationReportDocument: StripeModel {
     public var type: StripeVerificationReportDocumentType?
 }
 
-public struct StripeVerificationReportDocumentError: StripeModel {
+public struct StripeVerificationReportDocumentError: Codable {
     /// A short machine-readable string giving the reason for the verification failure.
     public var code: StripeVerificationReportDocumentErrorCode?
     /// A human-readable message giving the reason for the failure. These messages can be shown to your users.
     public var reason: String?
 }
 
-public enum StripeVerificationReportDocumentErrorCode: String, StripeModel {
+public enum StripeVerificationReportDocumentErrorCode: String, Codable {
     /// The provided identity document has expired.
     case documentExpired = "document_expired"
     /// Stripe couldn’t verify the provided identity document. See [list of supported document types](https://stripe.com/docs/identity/verification-checks?type=document)
@@ -76,14 +76,14 @@ public enum StripeVerificationReportDocumentErrorCode: String, StripeModel {
     case documentTypeNotSupported = "document_type_not_supported"
 }
     
-public enum StripeVerificationReportDocumentStatus: String, StripeModel {
+public enum StripeVerificationReportDocumentStatus: String, Codable {
     /// The check resulted in a successful verification.
     case verified
     /// The data being checked was not able to be verified.
     case unverified
 }
 
-public enum StripeVerificationReportDocumentType: String, StripeModel {
+public enum StripeVerificationReportDocumentType: String, Codable {
     /// Drivers license document type.
     case drivingLicense = "driving_license"
     /// Passport document type.
@@ -92,7 +92,7 @@ public enum StripeVerificationReportDocumentType: String, StripeModel {
     case idCard = "id_card"
 }
 
-public struct StripeVerificationReportIdNumber: StripeModel {
+public struct StripeVerificationReportIdNumber: Codable {
     /// Date of birth.
     /// This field is not included by default. To include it in the response, expand the `dob` field.
     public var dob: StripePersonDOB?
@@ -110,14 +110,14 @@ public struct StripeVerificationReportIdNumber: StripeModel {
     public var status: StripeVerificationReportIdNumberStatus?
 }
 
-public struct StripeVerificationReportIdNumberError: StripeModel {
+public struct StripeVerificationReportIdNumberError: Codable {
     /// A short machine-readable string giving the reason for the verification failure.
     public var code: StripeVerificationReportIdNumberErrorReason?
     /// A human-readable message giving the reason for the failure. These messages can be shown to your users.
     public var reason: String?
 }
 
-public enum StripeVerificationReportIdNumberErrorReason: String, StripeModel {
+public enum StripeVerificationReportIdNumberErrorReason: String, Codable {
     /// The information provided couldn’t be verified. See [list of supported ID numbers](https://stripe.com/docs/identity/verification-checks?type=id-number)
     case idNumberUnverifiedOther = "id_number_unverified_other"
     /// The provided document didn’t contain enough data to match against the ID number.
@@ -126,7 +126,7 @@ public enum StripeVerificationReportIdNumberErrorReason: String, StripeModel {
     case idNumberMismatch = "id_number_mismatch"
 }
 
-public enum StripeVerificationReportIdNumberType: String, StripeModel {
+public enum StripeVerificationReportIdNumberType: String, Codable {
     /// An individual CPF number from Brazil.
     case brCpf = "br_cpf"
     /// A national registration identity card number from Singapore.
@@ -135,21 +135,21 @@ public enum StripeVerificationReportIdNumberType: String, StripeModel {
     case usSsn = "us_ssn"
 }
 
-public enum StripeVerificationReportIdNumberStatus: String, StripeModel {
+public enum StripeVerificationReportIdNumberStatus: String, Codable {
     /// The check resulted in a successful verification.
     case verified
     /// The data being checked was not able to be verified.
     case unverified
 }
 
-public struct StripeVerificationReportOptions: StripeModel {
+public struct StripeVerificationReportOptions: Codable {
     /// Configuration options to apply to the `document` check.
     public var document: StripeVerificationReportOptionsDocument?
     /// Configuration options to apply to the `id_number` check.
     public var idNumber: StripeVerificationReportOptionsIdNumber?
 }
 
-public struct StripeVerificationReportOptionsDocument: StripeModel {
+public struct StripeVerificationReportOptionsDocument: Codable {
     /// Array of strings of allowed identity document types. If the provided identity document isn’t one of the allowed types, the verification check will fail with a `document_type_not_allowed` error code.
     public var allowedTypes: [StripeVerificationReportOptionsDocumentAllowedType]?
     /// Collect an ID number and perform an [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number) with the document’s extracted name and date of birth.
@@ -160,7 +160,7 @@ public struct StripeVerificationReportOptionsDocument: StripeModel {
     public var requireMatchingSelfie: Bool
 }
 
-public enum StripeVerificationReportOptionsDocumentAllowedType: String, StripeModel {
+public enum StripeVerificationReportOptionsDocumentAllowedType: String, Codable {
     /// Drivers license document type.
     case drivingLicense = "driving_license"
     /// Passport document type.
@@ -169,9 +169,9 @@ public enum StripeVerificationReportOptionsDocumentAllowedType: String, StripeMo
     case idNumber = "id_number"
 }
 
-public struct StripeVerificationReportOptionsIdNumber: StripeModel {}
+public struct StripeVerificationReportOptionsIdNumber: Codable {}
 
-public struct StripeVerificationReportSelfie: StripeModel {
+public struct StripeVerificationReportSelfie: Codable {
     /// ID of the File holding the image of the identity document used in this check.
     public var document: String?
     /// Details on the verification error. Present when status is `unverified`.
@@ -182,34 +182,34 @@ public struct StripeVerificationReportSelfie: StripeModel {
     public var status: StripeVerificationReportSelfieStatus?
 }
 
-public struct StripeVerificationReportSelfieError: StripeModel {
+public struct StripeVerificationReportSelfieError: Codable {
     /// A short machine-readable string giving the reason for the verification failure.
     public var code: StripeVerificationReportSelfieErrorCode?
     /// A human-readable message giving the reason for the failure. These messages can be shown to your users.
     public var reason: String?
 }
 
-public enum StripeVerificationReportSelfieErrorCode: String, StripeModel {
+public enum StripeVerificationReportSelfieErrorCode: String, Codable {
     case selfieDocumentMissingPhoto = "selfie_document_missing_photo"
     case selfieFaceMismatch = "selfie_face_mismatch"
     case selfieUnverifiedOther = "selfie_unverified_other"
 }
 
-public enum StripeVerificationReportSelfieStatus: String, StripeModel {
+public enum StripeVerificationReportSelfieStatus: String, Codable {
     /// The check resulted in a successful verification.
     case verified
     /// The data being checked was not able to be verified.
     case unverified
 }
 
-public enum StripeVerificationReportType: String, StripeModel {
+public enum StripeVerificationReportType: String, Codable {
     /// Perform a document check.
     case document
     /// Perform an ID number check.
     case idNumber = "id_number"
 }
 
-public struct StripeVerificationReportList: StripeModel {
+public struct StripeVerificationReportList: Codable {
     public var object: String
     public var data: [StripeVerificationReport]?
     public var hasMore: Bool?

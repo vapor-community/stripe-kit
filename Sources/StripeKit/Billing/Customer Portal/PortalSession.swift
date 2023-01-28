@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripePortalSession: StripeModel {
+public struct StripePortalSession: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.

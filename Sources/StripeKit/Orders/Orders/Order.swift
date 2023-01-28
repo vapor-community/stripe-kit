@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Order Object](https://stripe.com/docs/api/orders/object)
-public struct StripeOrder: StripeModel {
+public struct StripeOrder: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -58,7 +58,7 @@ public struct StripeOrder: StripeModel {
     public var upstreamId: String?
 }
 
-public enum StripeOrderStatus: String, StripeModel {
+public enum StripeOrderStatus: String, Codable {
     case created
     case paid
     case canceled
@@ -66,14 +66,14 @@ public enum StripeOrderStatus: String, StripeModel {
     case returned
 }
 
-public struct StripeOrderStatusTransitions: StripeModel {
+public struct StripeOrderStatusTransitions: Codable {
     public var canceled: Date?
     public var fulfiled: Date?
     public var paid: Date?
     public var returned: Date?
 }
 
-public struct StripeShippingMethod: StripeModel {
+public struct StripeShippingMethod: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
@@ -86,7 +86,7 @@ public struct StripeShippingMethod: StripeModel {
     public var description: String?
 }
 
-public struct StripeDeliveryEstimate: StripeModel {
+public struct StripeDeliveryEstimate: Codable {
     /// If `type` is `"exact"`, `date` will be the expected delivery date in the format YYYY-MM-DD.
     public var date: String?
     /// If `type` is `"range"`, earliest will be be the earliest delivery date in the format YYYY-MM-DD.
@@ -97,12 +97,12 @@ public struct StripeDeliveryEstimate: StripeModel {
     public var type: StripeDeliveryEstimateType?
 }
 
-public enum StripeDeliveryEstimateType: String, StripeModel {
+public enum StripeDeliveryEstimateType: String, Codable {
     case range
     case exact
 }
 
-public struct StripeOrderList: StripeModel {
+public struct StripeOrderList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

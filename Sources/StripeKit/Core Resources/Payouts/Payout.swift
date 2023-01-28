@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Payout Object](https://stripe.com/docs/api/payouts/object).
-public struct StripePayout: StripeModel {
+public struct StripePayout: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -51,7 +51,7 @@ public struct StripePayout: StripeModel {
     public var type: StripePayoutType?
 }
 
-public enum StripePayoutFailureCode: String, StripeModel {
+public enum StripePayoutFailureCode: String, Codable {
     case accountClosed = "account_closed"
     case accountFrozen = "account_frozen"
     case bankAccountRestricted = "bank_account_restricted"
@@ -67,17 +67,17 @@ public enum StripePayoutFailureCode: String, StripeModel {
     case unsupportedCard = "unsupported_card"
 }
 
-public enum StripePayoutMethod: String, StripeModel {
+public enum StripePayoutMethod: String, Codable {
     case standard
     case instant
 }
 
-public enum StripePayoutSourceType: String, StripeModel {
+public enum StripePayoutSourceType: String, Codable {
     case bankAccount = "bank_account"
     case card
 }
 
-public enum StripePayoutStatus: String, StripeModel {
+public enum StripePayoutStatus: String, Codable {
     case paid
     case pending
     case inTransit = "in_transit"
@@ -85,12 +85,12 @@ public enum StripePayoutStatus: String, StripeModel {
     case failed
 }
 
-public enum StripePayoutType: String, StripeModel {
+public enum StripePayoutType: String, Codable {
     case bankAccount = "bank_account"
     case card
 }
 
-public struct StripePayoutsList: StripeModel {
+public struct StripePayoutsList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

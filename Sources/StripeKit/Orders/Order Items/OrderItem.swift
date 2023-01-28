@@ -7,7 +7,7 @@
 //
 
 /// The [Order Item Pobject](https://stripe.com/docs/api/order_items/object)
-public struct StripeOrderItem: StripeModel {
+public struct StripeOrderItem: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
@@ -24,7 +24,7 @@ public struct StripeOrderItem: StripeModel {
     public var type: StripeOrderItemType?
 }
 
-public enum StripeOrderItemType: String, StripeModel {
+public enum StripeOrderItemType: String, Codable {
     case sku
     case tax
     case shipping

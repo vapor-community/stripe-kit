@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Dispute Object](https://stripe.com/docs/api/disputes/object).
-public struct StripeDispute: StripeModel {
+public struct StripeDispute: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -42,7 +42,7 @@ public struct StripeDispute: StripeModel {
     public var status: StripeDisputeStatus?
 }
 
-public struct StripeDisputeEvidenceDetails: StripeModel {
+public struct StripeDisputeEvidenceDetails: Codable {
     /// Date by which evidence must be submitted in order to successfully challenge dispute. Will be null if the customer’s bank or credit card company doesn’t allow a response for this particular dispute.
     public var dueBy: Date?
     /// Whether evidence has been staged for this dispute.
@@ -53,7 +53,7 @@ public struct StripeDisputeEvidenceDetails: StripeModel {
     public var submissionCount: Int?
 }
 
-public enum StripeDisputeReason: String, StripeModel {
+public enum StripeDisputeReason: String, Codable {
     case bankCannotProcess = "bank_cannot_process"
     case checkReturned = "check_returned"
     case creditNotProcessed = "credit_not_processed"
@@ -70,7 +70,7 @@ public enum StripeDisputeReason: String, StripeModel {
     case unrecognized
 }
 
-public enum StripeDisputeStatus: String, StripeModel {
+public enum StripeDisputeStatus: String, Codable {
     case warningNeedsResponse = "warning_needs_response"
     case warningUnderReview = "warning_under_review"
     case warningClosed = "warning_closed"
@@ -81,7 +81,7 @@ public enum StripeDisputeStatus: String, StripeModel {
     case lost
 }
 
-public struct StripeDisputeList: StripeModel {
+public struct StripeDisputeList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

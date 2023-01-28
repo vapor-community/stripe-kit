@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Price Object](https://stripe.com/docs/api/prices/object)
-public struct StripePrice: StripeModel {
+public struct StripePrice: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -45,7 +45,7 @@ public struct StripePrice: StripeModel {
     public var unitAmountDecimal: String?
 }
 
-public struct StripePriceRecurring: StripeModel {
+public struct StripePriceRecurring: Codable {
     /// Specifies a usage aggregation strategy for prices of `usage_type=metered`. Allowed values are sum for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
     public var aggregateUsage: StripePriceRecurringAggregateUsage?
     /// The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
@@ -56,24 +56,24 @@ public struct StripePriceRecurring: StripeModel {
     public var usageType: StripePlanUsageType?
 }
     
-public enum StripePriceRecurringAggregateUsage: String, StripeModel {
+public enum StripePriceRecurringAggregateUsage: String, Codable {
     case sum
     case lastDuringPeriod = "last_during_period"
     case lastEver = "last_ever"
     case max
 }
 
-public enum StripePriceType: String, StripeModel {
+public enum StripePriceType: String, Codable {
     case oneTime = "one_time"
     case recurring
 }
 
-public enum StripePriceBillingScheme: String, StripeModel {
+public enum StripePriceBillingScheme: String, Codable {
     case perUnit = "per_unit"
     case tiered
 }
 
-public struct StripePriceTier: StripeModel {
+public struct StripePriceTier: Codable {
     /// Price for the entire tier.
     public var flatAmount: Int?
     /// Same as `flat_amount`, but contains a decimal value with at most 12 decimal places.
@@ -86,24 +86,24 @@ public struct StripePriceTier: StripeModel {
     public var upTo: Int?
 }
 
-public enum StripePriceTierMode: String, StripeModel {
+public enum StripePriceTierMode: String, Codable {
     case graduated
     case volume
 }
 
-public struct StripePriceTransformQuantity: StripeModel {
+public struct StripePriceTransformQuantity: Codable {
     /// Divide usage by this number.
     public var divideBy: Int?
     /// After division, either round the result `up` or `down`.
     public var round: StripePriceTransformQuantityRound?
 }
 
-public enum StripePriceTransformQuantityRound: String, StripeModel {
+public enum StripePriceTransformQuantityRound: String, Codable {
     case up
     case down
 }
 
-public struct StripePriceList: StripeModel {
+public struct StripePriceList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

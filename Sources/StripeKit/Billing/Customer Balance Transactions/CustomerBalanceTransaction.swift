@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Customer Balance Transaction Object](https://stripe.com/docs/api/customer_balance_transactions/object).
-public struct StripeCustomerBalanceTransaction: StripeModel {
+public struct StripeCustomerBalanceTransaction: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -37,7 +37,7 @@ public struct StripeCustomerBalanceTransaction: StripeModel {
     public var type: StripeCustomerBalanceTransactionType?
 }
 
-public enum StripeCustomerBalanceTransactionType: String, StripeModel {
+public enum StripeCustomerBalanceTransactionType: String, Codable {
     case adjustment
     case appliedToInvoice = "applied_to_invoice"
     case creditNote = "credit_note"
@@ -48,7 +48,7 @@ public enum StripeCustomerBalanceTransactionType: String, StripeModel {
     case unspentReceiverCredit = "unspent_receiver_credit"
 }
 
-public struct StripeCustomerBalanceTransactionList: StripeModel {
+public struct StripeCustomerBalanceTransactionList: Codable {
     public var object: String
     public var data: [StripeCustomerBalanceTransaction]?
     public var hasMore: Bool?

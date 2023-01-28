@@ -5,7 +5,7 @@
 //  Created by Andrew Edwards on 4/15/19.
 //
 
-public struct StripeBillingDetails: StripeModel {
+public struct StripeBillingDetails: Codable {
     /// Billing address.
     public var address: StripeAddress?
     /// Email address.

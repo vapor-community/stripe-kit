@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [InvoiceItem Object](https://stripe.com/docs/api/invoiceitems/object)
-public struct StripeInvoiceItem: StripeModel {
+public struct StripeInvoiceItem: Codable {
     /// Unique identifier for the object.
     public var id: String?
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -54,7 +54,7 @@ public struct StripeInvoiceItem: StripeModel {
     public var unitAmountDecimal: String?
 }
 
-public struct StripeInvoiceItemList: StripeModel {
+public struct StripeInvoiceItemList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

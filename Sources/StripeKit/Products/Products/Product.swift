@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Product Object](https://stripe.com/docs/api/products/object).
-public struct StripeProduct: StripeModel {
+public struct StripeProduct: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -52,7 +52,7 @@ public struct StripeProduct: StripeModel {
     public var url: String?
 }
 
-public struct StripeProductPackageDimensions: StripeModel {
+public struct StripeProductPackageDimensions: Codable {
     /// Height, in inches.
     public var height: Decimal?
     /// Length, in inches.
@@ -63,12 +63,12 @@ public struct StripeProductPackageDimensions: StripeModel {
     public var width: Decimal?
 }
 
-public enum StripeProductType: String, StripeModel {
+public enum StripeProductType: String, Codable {
     case service
     case good
 }
 
-public struct StripeProductsList: StripeModel {
+public struct StripeProductsList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

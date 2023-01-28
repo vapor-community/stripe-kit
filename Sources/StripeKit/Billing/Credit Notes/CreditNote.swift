@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Credit Note Object](https://stripe.com/docs/api/credit_notes/object).
-public struct StripeCreditNote: StripeModel {
+public struct StripeCreditNote: Codable {
     /// Unique identifier for the object.
     public var id: String?
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -59,24 +59,24 @@ public struct StripeCreditNote: StripeModel {
     public var voidedAt: Date?
 }
 
-public enum StripeCreditNoteReason: String, StripeModel {
+public enum StripeCreditNoteReason: String, Codable {
     case duplicate
     case fraudulent
     case orderChange = "order_change"
     case productUnsatisfactory = "product_unsatisfactory"
 }
 
-public enum StripeCreditNoteStatus: String, StripeModel {
+public enum StripeCreditNoteStatus: String, Codable {
     case issued
     case void
 }
 
-public enum StripeCreditNoteType: String, StripeModel {
+public enum StripeCreditNoteType: String, Codable {
     case postPayment = "post_payment"
     case prePayment = "pre_payment"
 }
 
-public struct StripeCreditNoteList: StripeModel {
+public struct StripeCreditNoteList: Codable {
     public var object: String
     public var data: [StripeCreditNote]?
     public var hasMore: Bool?

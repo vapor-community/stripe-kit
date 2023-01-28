@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Review Object](https://stripe.com/docs/api/radar/reviews/object).
-public struct StripeReview: StripeModel {
+public struct StripeReview: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -39,7 +39,7 @@ public struct StripeReview: StripeModel {
     public var session: StripeReviewSession?
 }
 
-public enum StripeReviewReason: String, StripeModel {
+public enum StripeReviewReason: String, Codable {
     case rule
     case manual
     case approved
@@ -48,19 +48,19 @@ public enum StripeReviewReason: String, StripeModel {
     case disputed
 }
 
-public enum StripeReviewClosedReason: String, StripeModel {
+public enum StripeReviewClosedReason: String, Codable {
     case approved
     case refunded
     case refundedAsFraud = "refunded_as_fraud"
     case disputed
 }
 
-public enum StripeReviewOpenedReason: String, StripeModel {
+public enum StripeReviewOpenedReason: String, Codable {
     case rule
     case manual
 }
 
-public struct StripeReviewIPAddressLocation: StripeModel {
+public struct StripeReviewIPAddressLocation: Codable {
     /// The city where the payment originated.
     public var city: String?
     /// Two-letter ISO code representing the country where the payment originated.
@@ -73,7 +73,7 @@ public struct StripeReviewIPAddressLocation: StripeModel {
     public var region: String?
 }
 
-public struct StripeReviewSession: StripeModel {
+public struct StripeReviewSession: Codable {
     /// The browser used in this browser session (e.g., `Safari`).
     public var browser: String?
     /// Information about the device used for the browser session (e.g., `Samsung SM-G930T`).
@@ -84,7 +84,7 @@ public struct StripeReviewSession: StripeModel {
     public var version: String?
 }
 
-public struct StripeReviewList: StripeModel {
+public struct StripeReviewList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

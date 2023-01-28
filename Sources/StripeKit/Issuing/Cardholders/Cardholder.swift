@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Cardholder object](https://stripe.com/docs/api/issuing/cardholders/object)
-public struct StripeCardholder: StripeModel {
+public struct StripeCardholder: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -41,7 +41,7 @@ public struct StripeCardholder: StripeModel {
     public var status: StripeCardholderStatus?
 }
 
-public struct StripeCardholderSpendingControls: StripeModel {
+public struct StripeCardholderSpendingControls: Codable {
     /// Array of strings containing categories of authorizations permitted on this card.
     public var allowedCategories: [String]?
     /// Array of strings containing categories of authorizations to always decline on this card.
@@ -52,7 +52,7 @@ public struct StripeCardholderSpendingControls: StripeModel {
     public var spendingLimitsCurrency: StripeCurrency?
 }
 
-public struct StripeCardholderSpendingControlSpendingLimit: StripeModel {
+public struct StripeCardholderSpendingControlSpendingLimit: Codable {
     /// Maximum amount allowed to spend per time interval.
     public var amount: Int?
     /// Array of strings containing categories on which to apply the spending limit. Leave this blank to limit all charges.
@@ -61,7 +61,7 @@ public struct StripeCardholderSpendingControlSpendingLimit: StripeModel {
     public var interval: StripeCardholderSpendingControlSpendingLimitInterval?
 }
 
-public enum StripeCardholderSpendingControlSpendingLimitInterval: String, StripeModel {
+public enum StripeCardholderSpendingControlSpendingLimitInterval: String, Codable {
     case perAuthorization = "per_authorization"
     case daily
     case weekly
@@ -70,17 +70,17 @@ public enum StripeCardholderSpendingControlSpendingLimitInterval: String, Stripe
     case allTime = "all_time"
 }
 
-public struct StripeCardholderBilling: StripeModel {
+public struct StripeCardholderBilling: Codable {
     /// The cardholder’s billing address.
     public var address: StripeAddress?
 }
 
-public struct StripeCardholderCompany: StripeModel {
+public struct StripeCardholderCompany: Codable {
     /// Whether the company’s business ID number was provided.
     public var taxIdProvided: Bool?
 }
 
-public struct StripeCardholderIndividual: StripeModel {
+public struct StripeCardholderIndividual: Codable {
     /// The date of birth of this cardholder.
     public var dob: StripePersonDOB?
     /// The first name of this cardholder
@@ -91,36 +91,36 @@ public struct StripeCardholderIndividual: StripeModel {
     public var verification: StripeCardholderIndividualVerification?
 }
 
-public struct StripeCardholderIndividualVerification: StripeModel {
+public struct StripeCardholderIndividualVerification: Codable {
     /// An identifying document, either a passport or local ID card.
     public var document: StripePersonVerificationDocument?
 }
 
-public struct StripeCardholderAuthorizationRequirements: StripeModel {
+public struct StripeCardholderAuthorizationRequirements: Codable {
     /// If the cardholder is disabled, this string describes why. Can be one of listed, rejected.listed, or under_review.
     public var disabledReason: StripeRequirementsDisabledReason?
     /// If not empty, this field contains the list of fields that need to be collected in order to verify and re-enabled the cardholder.
     public var pastDue: [String]?
 }
 
-public enum StripeCardholderStatus: String, StripeModel {
+public enum StripeCardholderStatus: String, Codable {
     case active
     case inactive
     case blocked
 }
 
-public enum StripeCardholderType: String, StripeModel {
+public enum StripeCardholderType: String, Codable {
     case individial
     case businessEntity = "business_entity"
 }
 
-public enum StripeRequirementsDisabledReason: String, StripeModel {
+public enum StripeRequirementsDisabledReason: String, Codable {
     case listed
     case rejectedListed = "rejected.listed"
     case underReview = "under_review"
 }
 
-public struct StripeCardholderList: StripeModel {
+public struct StripeCardholderList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

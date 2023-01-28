@@ -8,7 +8,7 @@
 import Foundation
 
 /// A Quote is a way to model prices that you'd like to provide to a customer. Once accepted, it will automatically create an invoice, subscription or subscription schedule.
-public struct StripeQuote: StripeModel {
+public struct StripeQuote: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -74,14 +74,14 @@ public struct StripeQuote: StripeModel {
     public var transferData: StripeQuoteTransferData?
 }
 
-public struct StripeQuoteAutomaticTax: StripeModel {
+public struct StripeQuoteAutomaticTax: Codable {
     /// Automatically calculate taxes
     public var enabled: Bool
     /// The status of the most recent automated tax calculation for this quote.
     public var status: StripeQuoteAutomaticTaxStatus?
 }
 
-public enum StripeQuoteAutomaticTaxStatus: String, StripeModel {
+public enum StripeQuoteAutomaticTaxStatus: String, Codable {
     /// The location details supplied on the customer aren’t valid or don’t provide enough location information to accurately determine tax rates for the customer.
     case requiresLocationInputs = "requires_location_inputs"
     /// Stripe successfully calculated tax automatically on this quote.
@@ -90,19 +90,19 @@ public enum StripeQuoteAutomaticTaxStatus: String, StripeModel {
     case failed
 }
 
-public enum StripeQuoteCollectionMethod: String, StripeModel {
+public enum StripeQuoteCollectionMethod: String, Codable {
     case chargeAutomatically = "charge_automatically"
     case sendInvoice = "send_invoice"
 }
 
-public struct StripeQuoteComputed: StripeModel {
+public struct StripeQuoteComputed: Codable {
     /// The definitive totals and line items the customer will be charged on a recurring basis. Takes into account the line items with recurring prices and discounts with `duration=forever` coupons only. Defaults to null if no inputted line items with recurring prices.
     public var recurring: StripeQuoteComputedRecurring?
     /// The definitive upfront totals and line items the customer will be charged on the first invoice.
     public var upfront: StripeQuoteComputedUpfront?
 }
 
-public struct StripeQuoteComputedRecurring: StripeModel {
+public struct StripeQuoteComputedRecurring: Codable {
     /// Total before any discounts or taxes are applied.
     public var amountSubtotal: Int?
     /// Total after discounts and taxes are applied.
@@ -115,7 +115,7 @@ public struct StripeQuoteComputedRecurring: StripeModel {
     public var totalDetails: StripeQuoteComputedRecurringTotalDetails?
 }
 
-public struct StripeQuoteComputedRecurringTotalDetails: StripeModel {
+public struct StripeQuoteComputedRecurringTotalDetails: Codable {
     /// This is the sum of all the line item discounts.
     public var amountDiscount: Int?
     /// This is the sum of all the line item shipping amounts.
@@ -128,28 +128,28 @@ public struct StripeQuoteComputedRecurringTotalDetails: StripeModel {
     public var breakdown: StripeQuoteComputedRecurringTotalDetailsBreakdown?
 }
 
-public struct StripeQuoteComputedRecurringTotalDetailsBreakdown: StripeModel {
+public struct StripeQuoteComputedRecurringTotalDetailsBreakdown: Codable {
     /// The aggregated line item discounts.
     public var discounts: [StripeQuoteComputedRecurringTotalDetailsBreakdownDiscount]?
     /// The aggregated line item tax amounts by rate.
     public var taxes: [StripeQuoteComputedRecurringTotalDetailsBreakdownTax]?
 }
 
-public struct StripeQuoteComputedRecurringTotalDetailsBreakdownDiscount: StripeModel {
+public struct StripeQuoteComputedRecurringTotalDetailsBreakdownDiscount: Codable {
     /// The amount discounted.
     public var amount: Int?
     /// The discount applied.
     public var discount: StripeDiscount?
 }
 
-public struct StripeQuoteComputedRecurringTotalDetailsBreakdownTax: StripeModel {
+public struct StripeQuoteComputedRecurringTotalDetailsBreakdownTax: Codable {
     /// Amount of tax applied for this rate.
     public var amount: Int?
     /// The tax rate applied.
     public var rate: StripeTaxRate?
 }
 
-public struct StripeQuoteComputedUpfront: StripeModel {
+public struct StripeQuoteComputedUpfront: Codable {
     /// Total before any discounts or taxes are applied.
     public var amountSubtotal: Int?
     /// Total after discounts and taxes are applied.
@@ -162,7 +162,7 @@ public struct StripeQuoteComputedUpfront: StripeModel {
     public var totalDetails: StripeQuoteComputedUpfrontTotalDetails?
 }
 
-public struct StripeQuoteComputedUpfrontTotalDetails: StripeModel {
+public struct StripeQuoteComputedUpfrontTotalDetails: Codable {
     /// This is the sum of all the line item discounts.
     public var amountDiscount: Int?
     /// This is the sum of all the line item shipping amounts.
@@ -175,40 +175,40 @@ public struct StripeQuoteComputedUpfrontTotalDetails: StripeModel {
     public var breakdown: StripeQuoteComputedUpfrontTotalDetailsBreakdown?
 }
 
-public struct StripeQuoteComputedUpfrontTotalDetailsBreakdown: StripeModel {
+public struct StripeQuoteComputedUpfrontTotalDetailsBreakdown: Codable {
     /// The aggregated line item discounts.
     public var discounts: [StripeQuoteComputedUpfrontTotalDetailsBreakdownDiscount]?
     /// The aggregated line item tax amounts by rate.
     public var taxes: [StripeQuoteComputedUpfrontTotalDetailsBreakdownTax]?
 }
 
-public struct StripeQuoteComputedUpfrontTotalDetailsBreakdownDiscount: StripeModel {
+public struct StripeQuoteComputedUpfrontTotalDetailsBreakdownDiscount: Codable {
     /// The amount discounted.
     public var amount: Int?
     /// The discount applied.
     public var discount: StripeDiscount?
 }
 
-public struct StripeQuoteComputedUpfrontTotalDetailsBreakdownTax: StripeModel {
+public struct StripeQuoteComputedUpfrontTotalDetailsBreakdownTax: Codable {
     /// Amount of tax applied for this rate.
     public var amount: Int?
     /// The tax rate applied.
     public var rate: StripeTaxRate?
 }
 
-public struct StripeQuoteFromQuote: StripeModel {
+public struct StripeQuoteFromQuote: Codable {
     /// Whether this quote is a revision of a different quote.
     public var isRevision: Bool?
     /// The quote that was cloned.
     @Expandable<StripeQuote> public var quote: String?
 }
 
-public struct StripeQuoteInvoiceSettings: StripeModel {
+public struct StripeQuoteInvoiceSettings: Codable {
     /// Number of days within which a customer must pay invoices generated by this quote. This value will be null for quotes where `collection_method=charge_automatically`.
     public var daysUntilDue: Int?
 }
 
-public enum StripeQuoteStatus: String, StripeModel {
+public enum StripeQuoteStatus: String, Codable {
     /// The quote can be edited while in this status and has not been sent to the customer.
     case draft
     /// The quote has been finalized and is awaiting action from the customer.
@@ -219,7 +219,7 @@ public enum StripeQuoteStatus: String, StripeModel {
     case canceled
 }
 
-public struct StripeQuoteStatusTransition: StripeModel {
+public struct StripeQuoteStatusTransition: Codable {
     /// The time that the quote was accepted. Measured in seconds since Unix epoch.
     public var acceptedAt: Date?
     /// The time that the quote was canceled. Measured in seconds since Unix epoch.
@@ -228,14 +228,14 @@ public struct StripeQuoteStatusTransition: StripeModel {
     public var finalizedAt: Date?
 }
 
-public struct StripeQuoteSubscriptionData: StripeModel {
+public struct StripeQuoteSubscriptionData: Codable {
     /// When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. This date is ignored if it is in the past when the quote is accepted. Measured in seconds since the Unix epoch.
     public var effectiveDate: Date?
     /// Integer representing the number of trial period days before the customer is charged for the first time.
     public var trialPeriodDays: Int?
 }
 
-public struct StripeQuoteTotalDetails: StripeModel {
+public struct StripeQuoteTotalDetails: Codable {
     /// This is the sum of all the line item discounts.
     public var amountDiscount: Int?
     /// This is the sum of all the line item shipping amounts.
@@ -248,28 +248,28 @@ public struct StripeQuoteTotalDetails: StripeModel {
     public var breakdown: StripeQuoteTotalDetailsBreakdown?
 }
 
-public struct StripeQuoteTotalDetailsBreakdown: StripeModel {
+public struct StripeQuoteTotalDetailsBreakdown: Codable {
     /// The aggregated line item discounts.
     public var discounts: [StripeQuoteTotalDetailsBreakdownDiscount]?
     /// The aggregated line item tax amounts by rate.
     public var taxes: [StripeQuoteTotalDetailsBreakdownTax]?
 }
 
-public struct StripeQuoteTotalDetailsBreakdownDiscount: StripeModel {
+public struct StripeQuoteTotalDetailsBreakdownDiscount: Codable {
     /// The amount discounted.
     public var amount: Int?
     /// The discount applied.
     public var discount: StripeDiscount?
 }
 
-public struct StripeQuoteTotalDetailsBreakdownTax: StripeModel {
+public struct StripeQuoteTotalDetailsBreakdownTax: Codable {
     /// Amount of tax applied for this rate.
     public var amount: Int?
     /// The tax rate applied.
     public var rate: StripeTaxRate?
 }
 
-public struct StripeQuoteTransferData: StripeModel {
+public struct StripeQuoteTransferData: Codable {
     /// The amount in cents that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
     public var amount: Int?
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount will be transferred to the destination.
@@ -278,7 +278,7 @@ public struct StripeQuoteTransferData: StripeModel {
     @Expandable<StripeConnectAccount> public var destination: String?
 }
 
-public struct StripeQuoteList: StripeModel {
+public struct StripeQuoteList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

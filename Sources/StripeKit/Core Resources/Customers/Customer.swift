@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Customer Object](https://stripe.com/docs/api/customers/object)
-public struct StripeCustomer: StripeModel {
+public struct StripeCustomer: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -60,7 +60,7 @@ public struct StripeCustomer: StripeModel {
     public var taxIds: StripeTaxIDList?
 }
 
-public struct StripeCustomerInvoiceSettings: StripeModel {
+public struct StripeCustomerInvoiceSettings: Codable {
     /// Default custom fields to be displayed on invoices for this customer.
     public var customFields: [StripeCustomerInvoiceSettingsCustomFields]?
     /// ID of the default payment method used for subscriptions and invoices for the customer.
@@ -69,20 +69,20 @@ public struct StripeCustomerInvoiceSettings: StripeModel {
     public var footer: String?
 }
 
-public struct StripeCustomerInvoiceSettingsCustomFields: StripeModel {
+public struct StripeCustomerInvoiceSettingsCustomFields: Codable {
     /// The name of the custom field.
     public var name: String?
     /// The value of the custom field.
     public var value: String?
 }
 
-public enum StripeCustomerTaxExempt: String, StripeModel {
+public enum StripeCustomerTaxExempt: String, Codable {
     case none
     case exempt
     case reverse
 }
 
-public struct StripeCustomerList: StripeModel {
+public struct StripeCustomerList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

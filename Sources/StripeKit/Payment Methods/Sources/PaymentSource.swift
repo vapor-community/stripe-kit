@@ -12,7 +12,7 @@
  https://stripe.com/docs/api#source_object
  */
 
-public enum StripePaymentSource: StripeModel {
+public enum StripePaymentSource: Codable {
     case bankAccount(StripeBankAccount)
     case card(StripeCard)
     case source(StripeSource)

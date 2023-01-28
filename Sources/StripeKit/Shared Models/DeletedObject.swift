@@ -7,7 +7,7 @@
 //
 
 
-public struct StripeDeletedObject: StripeModel {
+public struct StripeDeletedObject: Codable {
     public var id: String
     public var object: String
     public var deleted: Bool

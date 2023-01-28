@@ -7,7 +7,7 @@
 //
 
 /// The [Bak Account Object](https://stripe.com/docs/api/customer_bank_accounts/object).
-public struct StripeBankAccount: StripeModel {
+public struct StripeBankAccount: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -44,7 +44,7 @@ public struct StripeBankAccount: StripeModel {
     public var status: StripeBankAccountStatus?
 }
 
-public struct StripeBankAccountList: StripeModel {
+public struct StripeBankAccountList: Codable {
     /// String representing the object’s type. Objects of the same type share the same value. Always has the value list.
     public var object: String
     /// An array of `StripeCard`s associated with the account.
@@ -55,7 +55,7 @@ public struct StripeBankAccountList: StripeModel {
     public var url: String?
 }
 
-public enum StripeBankAccountStatus: String, StripeModel {
+public enum StripeBankAccountStatus: String, Codable {
     case new
     case validated
     case verified
@@ -63,7 +63,7 @@ public enum StripeBankAccountStatus: String, StripeModel {
     case errored
 }
 
-public enum StripeBankAccountHolderType: String, StripeModel {
+public enum StripeBankAccountHolderType: String, Codable {
     case individual
     case company
 }

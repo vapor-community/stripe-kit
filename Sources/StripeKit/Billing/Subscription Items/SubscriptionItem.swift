@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Subscription Item Object](https://stripe.com/docs/api/subscription_items/object).
-public struct StripeSubscriptionItem: StripeModel {
+public struct StripeSubscriptionItem: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -32,12 +32,12 @@ public struct StripeSubscriptionItem: StripeModel {
     public var taxRates: [StripeTaxRate]?
 }
 
-public struct StripeSubscriptionItemBillingThresholds: StripeModel {
+public struct StripeSubscriptionItemBillingThresholds: Codable {
     /// Usage threshold that triggers the subscription to create an invoice
     public var usageGte: Int?
 }
 
-public enum StripeSubscriptionItemPaymentBehavior: String, StripeModel {
+public enum StripeSubscriptionItemPaymentBehavior: String, Codable {
     /// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid.
     case allowIncomplete = "allow_incomplete"
     /// Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid.
@@ -49,13 +49,13 @@ public enum StripeSubscriptionItemPaymentBehavior: String, StripeModel {
     
 }
 
-public enum StripeSubscriptionItemProrationBehavior: String, StripeModel {
+public enum StripeSubscriptionItemProrationBehavior: String, Codable {
     case createProrations = "create_prorations"
     case alwaysInvoice = "always_invoice"
     case none
 }
 
-public struct StripeSubscriptionItemList: StripeModel {
+public struct StripeSubscriptionItemList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

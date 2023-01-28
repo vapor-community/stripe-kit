@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [PaymentIntent Object](https://stripe.com/docs/api/payment_intents/object)
-public struct StripePaymentIntent: StripeModel {
+public struct StripePaymentIntent: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -83,24 +83,24 @@ public struct StripePaymentIntent: StripeModel {
     public var transferGroup: String?
 }
 
-public struct StripePaymentIntentAutomaticMaymentMethods: StripeModel {
+public struct StripePaymentIntentAutomaticMaymentMethods: Codable {
     /// Automatically calculates compatible payment methods
     public var enabled: Bool?
 }
 
-public enum StripePaymentIntentSetupFutureUsage: String, StripeModel {
+public enum StripePaymentIntentSetupFutureUsage: String, Codable {
     case onSession = "on_session"
     case offSession = "off_session"
 }
 
-public struct StripePaymentIntentTransferData: StripeModel {
+public struct StripePaymentIntentTransferData: Codable {
 	/// Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or equivalent in charge currency. The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
     public var amount: Int?
     /// The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to upon payment success.
     public var destination: String?
 }
 
-public enum StripePaymentIntentCancellationReason: String, StripeModel {
+public enum StripePaymentIntentCancellationReason: String, Codable {
     case duplicate
     case fraudulent
     case requestedByCustomer = "requested_by_customer"
@@ -109,21 +109,21 @@ public enum StripePaymentIntentCancellationReason: String, StripeModel {
     case automatic
 }
 
-public enum StripePaymentIntentCaptureMethod: String, StripeModel {
+public enum StripePaymentIntentCaptureMethod: String, Codable {
     /// (Default) Stripe automatically captures funds when the customer authorizes the payment.
     case automatic
     /// Place a hold on the funds when the customer authorizes the payment, but don’t capture the funds until later. (Not all payment methods support this.)
     case manual
 }
 
-public enum StripePaymentIntentConfirmationMethod: String, StripeModel {
+public enum StripePaymentIntentConfirmationMethod: String, Codable {
     /// (Default) PaymentIntent can be confirmed using a publishable key. After `next_action`s are handled, no additional confirmation is required to complete the payment.
     case automatic
     /// All payment attempts must be made using a secret key. The PaymentIntent returns to the `requires_confirmation` state after handling `next_action`s, and requires your server to initiate each payment attempt with an explicit confirmation.
     case manual
 }
 
-public struct StripePaymentIntentNextAction: StripeModel {
+public struct StripePaymentIntentNextAction: Codable {
     /// Contains instructions for authenticating a payment by redirecting your customer to Alipay App or website.
     public var alipayHandleRedirect: StripePaymentIntentNextActionAlipayHandleRedirect?
     /// Contains Boleto details necessary for the customer to complete the payment.
@@ -144,7 +144,7 @@ public struct StripePaymentIntentNextAction: StripeModel {
     public var wechatPayRedirectToIosApp: StripePaymentIntentNextActionWechatPayIOSApp?
 }
 
-public struct StripePaymentIntentNextActionAlipayHandleRedirect: StripeModel {
+public struct StripePaymentIntentNextActionAlipayHandleRedirect: Codable {
     /// The native data to be used with Alipay SDK you must redirect your customer to in order to authenticate the payment in an Android App.
     public var nativeData: String?
     /// The native URL you must redirect your customer to in order to authenticate the payment in an iOS App.
@@ -155,7 +155,7 @@ public struct StripePaymentIntentNextActionAlipayHandleRedirect: StripeModel {
     public var url: String?
 }
 
-public struct StripePaymentIntentNextActionBoletoDisplayDetails: StripeModel {
+public struct StripePaymentIntentNextActionBoletoDisplayDetails: Codable {
     /// The timestamp after which the boleto expires.
     public var expiresAt: Date?
     /// The URL to the hosted boleto voucher page, which allows customers to view the boleto voucher.
@@ -166,7 +166,7 @@ public struct StripePaymentIntentNextActionBoletoDisplayDetails: StripeModel {
     public var pdf: String?
 }
 
-public struct StripePaymentIntentNextActionOXXODisplayDetails: StripeModel {
+public struct StripePaymentIntentNextActionOXXODisplayDetails: Codable {
     /// The timestamp after which the OXXO voucher expires.
     public var expiresAfter: Date?
     /// The URL for the hosted OXXO voucher page, which allows customers to view and print an OXXO voucher.
@@ -175,35 +175,35 @@ public struct StripePaymentIntentNextActionOXXODisplayDetails: StripeModel {
     public var number: String?
 }
 
-public struct StripePaymentIntentNextActionRedirectToUrl: StripeModel {
+public struct StripePaymentIntentNextActionRedirectToUrl: Codable {
     /// If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
     public var returnUrl: String?
     /// The URL you must redirect your customer to in order to authenticate the payment.
     public var url: String?
 }
 
-public enum StripePaymentIntentNextActionType: String, StripeModel {
+public enum StripePaymentIntentNextActionType: String, Codable {
     case redirectToUrl = "redirect_to_url"
     case useStripeSDK = "use_stripe_sdk"
     case alipayHandleRedirect = "alipay_handle_redirect"
     case oxxoDisplayDetails = "oxxo_display_details"
 }
 
-public struct StripePaymentIntentNextActionVerifyWithMicrodeposits: StripeModel {
+public struct StripePaymentIntentNextActionVerifyWithMicrodeposits: Codable {
     /// The timestamp when the microdeposits are expected to land.
     public var arrivalDate: Date?
     /// The URL for the hosted verification page, which allows customers to verify their bank account.
     public var hostedVerificationUrl: String?
 }
 
-public struct StripePaymentIntentNextActionWechatPayQRCode: StripeModel {
+public struct StripePaymentIntentNextActionWechatPayQRCode: Codable {
     /// The data being used to generate QR code
     public var data: String?
     /// The base64 image data for a pre-generated QR code
     public var imageDataUrl: String?
 }
 
-public struct StripePaymentIntentNextActionWechatPayAndroidApp: StripeModel {
+public struct StripePaymentIntentNextActionWechatPayAndroidApp: Codable {
     /// `app_id` is the APP ID registered on WeChat open platform
     public var appId: String?
     /// `nonce_str` is a random string
@@ -220,12 +220,12 @@ public struct StripePaymentIntentNextActionWechatPayAndroidApp: StripeModel {
     public var timestamp: String?
 }
 
-public struct StripePaymentIntentNextActionWechatPayIOSApp: StripeModel {
+public struct StripePaymentIntentNextActionWechatPayIOSApp: Codable {
     /// An universal link that redirect to Wechat Pay APP
     public var nativeUrl: String?
 }
 
-public enum StripePaymentIntentStatus: String, StripeModel {
+public enum StripePaymentIntentStatus: String, Codable {
     case requiresPaymentMethod = "requires_payment_method"
     case requiresConfirmation = "requires_confirmation"
     case requiresAction = "requires_action"
@@ -235,14 +235,14 @@ public enum StripePaymentIntentStatus: String, StripeModel {
     case succeeded
 }
 
-public struct StripePaymentIntentsList: StripeModel {
+public struct StripePaymentIntentsList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [StripePaymentIntent]?
 }
 
-public struct StripePaymentIntentPaymentMethodOptions: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptions: Codable {
     /// If the PaymentIntent’s `payment_method_types` includes `acss_debit`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var acssDebit: StripePaymentIntentPaymentMethodOptionsAcssDebit?
     /// If the PaymentIntent’s `payment_method_types` includes `afterpay_clearpay`, this hash contains the configurations that will be applied to each payment attempt of that type.
@@ -275,14 +275,14 @@ public struct StripePaymentIntentPaymentMethodOptions: StripeModel {
     public var wechatPay: StripePaymentIntentPaymentMethodOptionsWechatPay?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsAcssDebit: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsAcssDebit: Codable {
     /// Additional fields for Mandate creation
     public var mandateOptions: StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptions?
     /// Bank account verification method.
     public var verificationMethod: StripePaymentIntentPaymentMethodOptionsAcssDebitVerificationMethod?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptions: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptions: Codable {
     /// A URL for custom mandate text
     public var customMandateUrl: String?
     /// Description of the interval. Only required if `payment_schedule` parmeter is `interval` or `combined`.
@@ -293,7 +293,7 @@ public struct StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptions: St
     public var transactionType: StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
 }
 
-public enum StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, StripeModel {
+public enum StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, Codable {
     /// Payments are initiated at a regular pre-defined interval
     case interval
     /// Payments are initiated sporadically
@@ -302,7 +302,7 @@ public enum StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsPaymen
     case combined
 }
 
-public enum StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, StripeModel {
+public enum StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable {
     /// Payments are initiated at a regular pre-defined interval
     case interval
     /// Payments are initiated sporadically
@@ -311,7 +311,7 @@ public enum StripePaymentIntentPaymentMethodOptionsAcssDebitMandateOptionsTransa
     case combined
 }
 
-public enum StripePaymentIntentPaymentMethodOptionsAcssDebitVerificationMethod: String, StripeModel {
+public enum StripePaymentIntentPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable {
     /// Instant verification with fallback to microdeposits.
     case automatic
     /// Instant verification.
@@ -320,24 +320,24 @@ public enum StripePaymentIntentPaymentMethodOptionsAcssDebitVerificationMethod: 
     case microdeposits
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsAlipay: StripeModel {}
+public struct StripePaymentIntentPaymentMethodOptionsAlipay: Codable {}
 
-public struct StripePaymentIntentPaymentMethodOptionsAfterpayClearpay: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsAfterpayClearpay: Codable {
     /// Order identifier shown to the merchant in Afterpay’s online portal. We recommend using a value that helps you answer any questions a customer might have about the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
     public var reference: String?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsBancontact: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsBancontact: Codable {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: String?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsBoleto: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsBoleto: Codable {
     /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set `expires_after_days` to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
     public var expiresAfterDays: Int?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsCard: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsCard: Codable {
     /// Installment details for this payment (Mexico only). For more information, see the installments integration guide.
     public var installments: StripePaymentIntentPaymentMethodOptionsCardInstallments?
     /// Selected network to process this PaymentIntent on. Depends on the available networks of the card attached to the PaymentIntent. Can be only set confirm-time.
@@ -346,7 +346,7 @@ public struct StripePaymentIntentPaymentMethodOptionsCard: StripeModel {
     public var requestThreeDSecure: String?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsCardInstallments: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsCardInstallments: Codable {
     // TODO: - Rename the charge installment plan.
     /// Installment plans that may be selected for this PaymentIntent.
     public var availablePlans: [StripeChargePaymentDetailsCardInstallmentPlan]?
@@ -356,44 +356,44 @@ public struct StripePaymentIntentPaymentMethodOptionsCardInstallments: StripeMod
     public var plan: StripeChargePaymentDetailsCardInstallmentPlan?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsCardPresent: StripeModel {}
+public struct StripePaymentIntentPaymentMethodOptionsCardPresent: Codable {}
 
-public struct StripePaymentIntentPaymentMethodOptionsGiropay: StripeModel {}
+public struct StripePaymentIntentPaymentMethodOptionsGiropay: Codable {}
 
-public struct StripePaymentIntentPaymentMethodOptionsIdeal: StripeModel {}
+public struct StripePaymentIntentPaymentMethodOptionsIdeal: Codable {}
 
-public struct StripePaymentIntentPaymentMethodOptionsKlarna: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsKlarna: Codable {
     /// Preferred locale of the Klarna checkout page that the customer is redirected to.
     public var preferredLocale: String?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsOXXO: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsOXXO: Codable {
     /// The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set `expires_after_days` to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
     public var expiresAfterDays: Int?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsP24: StripeModel {}
+public struct StripePaymentIntentPaymentMethodOptionsP24: Codable {}
 
-public struct StripePaymentIntentPaymentMethodOptionsSepaDebit: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsSepaDebit: Codable {
     /// Additional fields for Mandate creation
     public var mandateOptions: StripePaymentIntentPaymentMethodOptionsSepaDebitMandateOptions?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsSepaDebitMandateOptions: StripeModel {}
+public struct StripePaymentIntentPaymentMethodOptionsSepaDebitMandateOptions: Codable {}
 
-public struct StripePaymentIntentPaymentMethodOptionsSofort: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsSofort: Codable {
     /// Preferred language of the SOFORT authorization page that the customer is redirected to.
     public var preferredLanguage: String?
 }
 
-public struct StripePaymentIntentPaymentMethodOptionsWechatPay: StripeModel {
+public struct StripePaymentIntentPaymentMethodOptionsWechatPay: Codable {
     /// The app ID registered with WeChat Pay. Only required when client is ios or android.
     public var appId: String?
     /// The client type that the end customer will pay from
     public var client: StripePaymentIntentPaymentMethodOptionsWechatPayClient?
 }
 
-public enum StripePaymentIntentPaymentMethodOptionsWechatPayClient: String, StripeModel {
+public enum StripePaymentIntentPaymentMethodOptionsWechatPayClient: String, Codable {
     /// The end customer will pay from web browser
     case web
     /// The end customer will pay from an iOS app

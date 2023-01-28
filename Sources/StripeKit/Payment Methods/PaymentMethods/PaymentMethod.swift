@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [PaymentMethod Object](https://stripe.com/docs/api/payment_methods/object).
-public struct StripePaymentMethod: StripeModel {
+public struct StripePaymentMethod: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -67,7 +67,7 @@ public struct StripePaymentMethod: StripeModel {
     public var type: StripePaymentMethodType?
 }
 
-public enum StripePaymentMethodType: String, StripeModel {
+public enum StripePaymentMethodType: String, Codable {
     case acssDebit = "acss_debit"
     case affirm
     case afterpayClearpay = "afterpay_clearpay"
@@ -97,7 +97,7 @@ public enum StripePaymentMethodType: String, StripeModel {
     case wechatPay = "wechat_pay"
 }
 
-public struct StripePaymentMethodAcssDebit: StripeModel {
+public struct StripePaymentMethodAcssDebit: Codable {
     /// Name of the bank associated with the bank account.
     public var bankName: String?
     /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
@@ -110,15 +110,15 @@ public struct StripePaymentMethodAcssDebit: StripeModel {
     public var transitNumber: String?
 }
 
-public struct StripePaymentMethodAfterpayClearpay: StripeModel {
+public struct StripePaymentMethodAfterpayClearpay: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-afterpay_clearpay
 }
 
-public struct StripePaymentMethodAlipay: StripeModel {
+public struct StripePaymentMethodAlipay: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-alipay
 }
 
-public struct StripePaymentMethodAuBecsDebit: StripeModel {
+public struct StripePaymentMethodAuBecsDebit: Codable {
     /// Six-digit number identifying bank and branch associated with this bank account.
     public var bsbNumber: String?
     /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
@@ -127,7 +127,7 @@ public struct StripePaymentMethodAuBecsDebit: StripeModel {
     public var last4: String?
 }
 
-public struct StripePaymentMethodBacsDebit: StripeModel {
+public struct StripePaymentMethodBacsDebit: Codable {
     /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
     public var fingerprint: String?
     /// Last four digits of the bank account number
@@ -136,16 +136,16 @@ public struct StripePaymentMethodBacsDebit: StripeModel {
     public var sortCode: String?
 }
 
-public struct StripePaymentMethodBancontact: StripeModel {
+public struct StripePaymentMethodBancontact: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-bancontact
 }
 
-public struct StripePaymentMethodBoleto: StripeModel {
+public struct StripePaymentMethodBoleto: Codable {
     /// Uniquely identifies this customer tax_id (CNPJ or CPF)
     public var taxId: String?
 }
 
-public struct StripePaymentMethodCard: StripeModel {
+public struct StripePaymentMethodCard: Codable {
     /// Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
     public var brand: StripePaymentMethodCardBrand?
     /// Checks on Card address and CVC if provided.
@@ -172,7 +172,7 @@ public struct StripePaymentMethodCard: StripeModel {
     public var wallet: StripePaymentMethodCardWallet?
 }
 
-public enum StripePaymentMethodCardBrand: String, StripeModel {
+public enum StripePaymentMethodCardBrand: String, Codable {
     case amex
     case diners
     case discover
@@ -183,7 +183,7 @@ public enum StripePaymentMethodCardBrand: String, StripeModel {
     case unknown
 }
 
-public enum StripePaymentMethodCardNetwork: String, StripeModel {
+public enum StripePaymentMethodCardNetwork: String, Codable {
     case amex
     case diners
     case discover
@@ -195,7 +195,7 @@ public enum StripePaymentMethodCardNetwork: String, StripeModel {
     case unknown
 }
 
-public struct StripePaymentMethodCardChecks: StripeModel {
+public struct StripePaymentMethodCardChecks: Codable {
     /// If a address line1 was provided, results of the check, one of ‘pass’, ‘failed’, ‘unavailable’ or ‘unchecked’.
     public var addressLine1Check: StripeCardValidationCheck?
     /// If a address postal code was provided, results of the check, one of ‘pass’, ‘failed’, ‘unavailable’ or ‘unchecked’.
@@ -204,26 +204,26 @@ public struct StripePaymentMethodCardChecks: StripeModel {
     public var cvcCheck: StripeCardValidationCheck?
 }
 
-public struct StripePaymentMethodCardGeneratedFrom: StripeModel {
+public struct StripePaymentMethodCardGeneratedFrom: Codable {
     /// The charge that created this object.
     public var charge: String?
     /// Transaction-specific details of the payment method used in the payment.
     public var paymentMethodDetails: StripeChargePaymentDetails?
 }
 
-public struct StripePaymentMethodCardNetworks: StripeModel {
+public struct StripePaymentMethodCardNetworks: Codable {
     /// All available networks for the card.
     public var available: [String]?
     /// The preferred network for the card.
     public var preferred: String?
 }
 
-public struct StripePaymentMethodCardThreeDSecureUsage: StripeModel {
+public struct StripePaymentMethodCardThreeDSecureUsage: Codable {
     /// Whether 3D Secure is supported on this card.
     public var supported: Bool?
 }
 
-public struct StripePaymentMethodCardWallet: StripeModel {
+public struct StripePaymentMethodCardWallet: Codable {
     /// If this is a `amex_express_checkout` card wallet, this hash contains details about the wallet.
     /// Stripe does not [provide any details](https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-amex_express_checkout) about possible values so this will remain nil/unimplemented.
     public var amexExpressCheckout: StripePaymentMethodAmexExpressCheckout? = nil
@@ -246,7 +246,7 @@ public struct StripePaymentMethodCardWallet: StripeModel {
     public var visaCheckout: StripePaymentMethodCardWalletVisaCheckout?
 }
 
-public struct StripePaymentMethodCardWalletMasterPass: StripeModel {
+public struct StripePaymentMethodCardWalletMasterPass: Codable {
     /// Owner’s verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var billingAddress: StripeAddress?
     /// Owner’s verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -257,7 +257,7 @@ public struct StripePaymentMethodCardWalletMasterPass: StripeModel {
     public var shippingAddress: StripeAddress?
 }
 
-public enum StripePaymentMethodCardWalletType: String, StripeModel {
+public enum StripePaymentMethodCardWalletType: String, Codable {
     case amexExpressCheckout = "amex_express_checkout"
     case applePay = "apple_pay"
     case googlePay = "google_pay"
@@ -266,7 +266,7 @@ public enum StripePaymentMethodCardWalletType: String, StripeModel {
     case visaCheckout = "visa_checkout"
 }
 
-public struct StripePaymentMethodCardWalletVisaCheckout: StripeModel {
+public struct StripePaymentMethodCardWalletVisaCheckout: Codable {
     /// Owner’s verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var billingAddress: StripeAddress?
     /// Owner’s verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -277,34 +277,34 @@ public struct StripePaymentMethodCardWalletVisaCheckout: StripeModel {
     public var shippingAddress: StripeAddress?
 }
 
-public struct StripePaymentMethodCardPresent: StripeModel {
+public struct StripePaymentMethodCardPresent: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-card_present
 }
 
-public struct StripePaymentMethodEps: StripeModel {
+public struct StripePaymentMethodEps: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-eps
 }
     
-public struct StripePaymentMethodFpx: StripeModel {
+public struct StripePaymentMethodFpx: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-fpx
 }
     
-public struct StripePaymentMethodGiropay: StripeModel {
+public struct StripePaymentMethodGiropay: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-giropay
 }
 
-public struct StripePaymentMethodGrabpay: StripeModel {
+public struct StripePaymentMethodGrabpay: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-grabpay
 }
 
-public struct StripePaymentMethodIdeal: StripeModel {
+public struct StripePaymentMethodIdeal: Codable {
     /// The customer’s bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
     public var bank: StripePaymentMethodIdealBank?
     /// The Bank Identifier Code of the customer’s bank, if the bank was provided.
     public var bic: String?
 }
 
-public enum StripePaymentMethodIdealBank: String, StripeModel {
+public enum StripePaymentMethodIdealBank: String, Codable {
     case abnAmro = "abn_amro"
     case asnBank = "asn_bank"
     case bunq
@@ -319,42 +319,42 @@ public enum StripePaymentMethodIdealBank: String, StripeModel {
     case vanLanschot = "van_lanschot"
 }
 
-public struct StripePaymentMethodKlarna: StripeModel {
+public struct StripePaymentMethodKlarna: Codable {
     /// The customer’s date of birth, if provided.
     /// This field is not included by default. To include it in the response, expand the dob field.
     public var dob: StripePersonDOB?
 }
 
-public struct StripePaymentMethodOXXO: StripeModel {
+public struct StripePaymentMethodOXXO: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-oxxo
 }
 
-public struct StripePaymentMethodP24: StripeModel {
+public struct StripePaymentMethodP24: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-p24
 }
 
-public struct StripePaymentMethodAmexExpressCheckout: StripeModel {
+public struct StripePaymentMethodAmexExpressCheckout: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-amex_express_checkout
 }
 
-public struct StripePaymentMethodApplePay: StripeModel {
+public struct StripePaymentMethodApplePay: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-apple_pay
 }
 
-public struct StripePaymentMethodGooglePay: StripeModel {
+public struct StripePaymentMethodGooglePay: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-google_pay
 }
 
-public struct StripePaymentMethodSamsungPay: StripeModel {
+public struct StripePaymentMethodSamsungPay: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-samsung_pay
 }
 
-public struct StripePaymentMethodSofort: StripeModel {
+public struct StripePaymentMethodSofort: Codable {
     /// Two-letter ISO code representing the country the bank account is located in.
     public var country: String?
 }
     
-public struct StripePaymentMethodSepaDebit: StripeModel {
+public struct StripePaymentMethodSepaDebit: Codable {
     /// Bank code of bank associated with the bank account.
     public var bankCode: String?
     /// Branch code of bank associated with the bank account.
@@ -367,11 +367,11 @@ public struct StripePaymentMethodSepaDebit: StripeModel {
     public var last4: String?
 }
 
-public struct StripePaymentMethodWechatPay: StripeModel {
+public struct StripePaymentMethodWechatPay: Codable {
     // https://stripe.com/docs/api/payment_methods/object#payment_method_object-wechat_pay
 }
 
-public struct StripePaymentMethodList: StripeModel {
+public struct StripePaymentMethodList: Codable {
     public var object: String
     public var data: [StripePaymentMethod]?
     public var hasMore: Bool?

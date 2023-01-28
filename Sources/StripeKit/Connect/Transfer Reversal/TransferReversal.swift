@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Transfer Reversal Object](https://stripe.com/docs/api/transfer_reversals/object).
-public struct StripeTransferReversal: StripeModel {
+public struct StripeTransferReversal: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -31,7 +31,7 @@ public struct StripeTransferReversal: StripeModel {
     @Expandable<StripeTransfer> public var transfer: String?
 }
 
-public struct StripeTransferReversalList: StripeModel {
+public struct StripeTransferReversalList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

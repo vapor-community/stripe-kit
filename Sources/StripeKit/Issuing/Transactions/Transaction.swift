@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripeTransaction: StripeModel {
+public struct StripeTransaction: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -46,26 +46,26 @@ public struct StripeTransaction: StripeModel {
     public var wallet: StripeTransactionWallet?
 }
 
-public struct StripeTransactionAmountDetails: StripeModel {
+public struct StripeTransactionAmountDetails: Codable {
     /// The fee charged by the ATM for the cash withdrawal.
     public var atmFee: Int?
 }
 
-public struct StripeTransactionList: StripeModel {
+public struct StripeTransactionList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [StripeTransaction]?
 }
 
-public enum StripeTransactionType: String, StripeModel {
+public enum StripeTransactionType: String, Codable {
     /// Funds were captured by the acquirer. amount will be negative as funds are moving out of your balance. Not all captures will be linked to an authorization, as acquirers can force capture in some cases.
     case capture
     /// An acquirer initiated a refund. This transaction might not be linked to an original capture, for example credits are original transactions. amount will be positive for refunds and negative for refund reversals.
     case refund
 }
 
-public struct StripeTransactionPurchaseDetails: StripeModel {
+public struct StripeTransactionPurchaseDetails: Codable {
     /// Information about the flight that was purchased with this transaction.
     public var flight: StripeTransactionPurchaseDetailsFlight?
     /// Information about fuel that was purchased with this transaction.
@@ -78,7 +78,7 @@ public struct StripeTransactionPurchaseDetails: StripeModel {
     public var reference: String?
 }
 
-public struct StripeTransactionPurchaseDetailsFlight: StripeModel {
+public struct StripeTransactionPurchaseDetailsFlight: Codable {
     /// The time that the flight departed.
     public var departureAt: Int?
     /// The name of the passenger.
@@ -91,7 +91,7 @@ public struct StripeTransactionPurchaseDetailsFlight: StripeModel {
     public var travelAgency: String?
 }
 
-public struct StripeTransactionPurchaseDetailsFlightSegment: StripeModel {
+public struct StripeTransactionPurchaseDetailsFlightSegment: Codable {
     /// The three-letter IATA airport code of the flight’s destination.
     public var arrivalAirportCode: String?
     /// The airline carrier code.
@@ -106,7 +106,7 @@ public struct StripeTransactionPurchaseDetailsFlightSegment: StripeModel {
     public var stopoverAllowed: Bool?
 }
 
-public struct StripeTransactionPurchaseDetailsFuel: StripeModel {
+public struct StripeTransactionPurchaseDetailsFuel: Codable {
     /// The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
     public var type: StripeTransactionPurchaseDetailsFuelType?
     /// The units for `volume_decimal`. One of `us_gallon` or `liter`.
@@ -117,7 +117,7 @@ public struct StripeTransactionPurchaseDetailsFuel: StripeModel {
     public var volumeDecimal: Decimal?
 }
 
-public enum StripeTransactionPurchaseDetailsFuelType: String, StripeModel {
+public enum StripeTransactionPurchaseDetailsFuelType: String, Codable {
     case diesel
     case unleadedPlus = "unleaded_plus"
     case unleadedRegular = "unleaded_regular"
@@ -125,19 +125,19 @@ public enum StripeTransactionPurchaseDetailsFuelType: String, StripeModel {
     case other
 }
 
-public enum StripeTransactionPurchaseDetailsFuelUnit: String, StripeModel {
+public enum StripeTransactionPurchaseDetailsFuelUnit: String, Codable {
     case usGallon = "us_gallon"
     case liter
 }
 
-public struct StripeTransactionPurchaseDetailsLodging: StripeModel {
+public struct StripeTransactionPurchaseDetailsLodging: Codable {
     /// The time of checking into the lodging.
     public var checkInAt: Int?
     /// The number of nights stayed at the lodging.
     public var nights: Int?
 }
 
-public struct StripeTransactionPurchaseDetailsReceipt: StripeModel {
+public struct StripeTransactionPurchaseDetailsReceipt: Codable {
     /// The description of the item. The maximum length of this field is 26 characters.
     public var description: String?
     /// The quantity of the item.
@@ -148,7 +148,7 @@ public struct StripeTransactionPurchaseDetailsReceipt: StripeModel {
     public var unitCost: Int?
 }
 
-public enum StripeTransactionWallet: String, StripeModel {
+public enum StripeTransactionWallet: String, Codable {
     case applePay = "apple_pay"
     case googlePay = "google_pay"
     case samsungPay = "samsung_pay"

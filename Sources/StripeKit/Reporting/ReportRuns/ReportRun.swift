@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Report Run Object](https://stripe.com/docs/api/reporting/report_run/object) .
-public struct StripeReportRun: StripeModel {
+public struct StripeReportRun: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -31,7 +31,7 @@ public struct StripeReportRun: StripeModel {
     public var succeededAt: Date?
 }
 
-public struct StripeReportRunParameters: StripeModel {
+public struct StripeReportRunParameters: Codable {
     /// The set of output columns requested for inclusion in the report run.
     public var columns: [String]?
     /// Connected account ID by which to filter the report run.
@@ -50,13 +50,13 @@ public struct StripeReportRunParameters: StripeModel {
     public var timezone: String?
 }
 
-public enum StripeReportRunStatus: String, StripeModel {
+public enum StripeReportRunStatus: String, Codable {
     case pending
     case succeeded
     case failed
 }
 
-public struct StripeReportRunList: StripeModel {
+public struct StripeReportRunList: Codable {
     public var object: String
     public var data: [StripeReportRun]?
     public var hasMore: Bool?

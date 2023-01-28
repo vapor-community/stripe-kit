@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripeVerificationSession: StripeModel {
+public struct StripeVerificationSession: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -39,14 +39,14 @@ public struct StripeVerificationSession: StripeModel {
     public var verifiedOutputs: StripeVerificationSessionVerifiedOutputs?
 }
 
-public struct StripeVerificationSessionLastError: StripeModel {
+public struct StripeVerificationSessionLastError: Codable {
     /// A short machine-readable string giving the reason for the verification or user-session failure.
     public var code: StripeVerificationSessionLastErrorCode?
     /// A message that explains the reason for verification or user-session failure.
     public var reason: String?
 }
 
-public enum StripeVerificationSessionLastErrorCode: String, StripeModel {
+public enum StripeVerificationSessionLastErrorCode: String, Codable {
     /// The user declined to be verified by Stripe. Check with your legal counsel to see if you have an obligation to offer an alternative, non-biometric means to verify, such as through a manual review.
     case consentDeclined = "consent_declined"
     /// The user’s device didn’t have a camera or they declined to grant Stripe permission to access it.
@@ -79,14 +79,14 @@ public enum StripeVerificationSessionLastErrorCode: String, StripeModel {
     case idNumberMismatch = "id_number_mismatch"
 }
 
-public struct StripeVerificationSessionOptions: StripeModel {
+public struct StripeVerificationSessionOptions: Codable {
     /// Configuration options to apply to the `document` check.
     public var document: StripeVerificationSessionOptionsDocument?
     /// Configuration options to apply to the `id_number` check.
     public var idNumber: StripeVerificationSessionOptionsIdNumber?
 }
 
-public struct StripeVerificationSessionOptionsDocument: StripeModel {
+public struct StripeVerificationSessionOptionsDocument: Codable {
     /// Array of strings of allowed identity document types. If the provided identity document isn’t one of the allowed types, the verification check will fail with a `document_type_not_allowed` error code.
     public var allowedTypes: [StripeVerificationSessionOptionsDocumentAllowedType]?
     /// Collect an ID number and perform an [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number) with the document’s extracted name and date of birth.
@@ -97,7 +97,7 @@ public struct StripeVerificationSessionOptionsDocument: StripeModel {
     public var requireMatchingSelfie: Bool
 }
 
-public enum StripeVerificationSessionOptionsDocumentAllowedType: String, StripeModel {
+public enum StripeVerificationSessionOptionsDocumentAllowedType: String, Codable {
     /// Drivers license document type.
     case drivingLicense = "driving_license"
     /// Passport document type.
@@ -106,21 +106,21 @@ public enum StripeVerificationSessionOptionsDocumentAllowedType: String, StripeM
     case idNumber = "id_number"
 }
 
-public struct StripeVerificationSessionOptionsIdNumber: StripeModel {}
+public struct StripeVerificationSessionOptionsIdNumber: Codable {}
 
-public struct StripeVerificationSessionRedaction: StripeModel {
+public struct StripeVerificationSessionRedaction: Codable {
     /// Indicates whether this object and its related objects have been redacted or not.
     public var status: StripeVerificationSessionRedactionStatus?
 }
 
-public enum StripeVerificationSessionRedactionStatus: String, StripeModel {
+public enum StripeVerificationSessionRedactionStatus: String, Codable {
     /// This object and its related objects have been redacted.
     case redacted
     /// This object has been redacted, and its related objects are in the process of being redacted. This process may take up to four days.
     case processing
 }
 
-public enum StripeVerificationSessionStatus: String, StripeModel {
+public enum StripeVerificationSessionStatus: String, Codable {
     /// Requires user input before processing can continue.
     case requiresInput = "requires_input"
     /// The session has been submitted and is being processed. Most [verification checks](https://stripe.com/docs/identity/verification-checks) take a few minutes to process.
@@ -131,14 +131,14 @@ public enum StripeVerificationSessionStatus: String, StripeModel {
     case canceled
 }
 
-public enum StripeVerificationSessionType: String, StripeModel {
+public enum StripeVerificationSessionType: String, Codable {
     /// [Document check](https://stripe.com/docs/identity/verification-checks?type=document)
     case document
     /// [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number).
     case idNumber = "id_number"
 }
 
-public struct StripeVerificationSessionVerifiedOutputs: StripeModel {
+public struct StripeVerificationSessionVerifiedOutputs: Codable {
     /// The user’s verified address.
     public var address: StripeAddress?
     /// The user’s verified date of birth.
@@ -155,7 +155,7 @@ public struct StripeVerificationSessionVerifiedOutputs: StripeModel {
     public var lastName: String?
 }
 
-public enum StripeVerificationSessionVerifiedOutputsIdNumberType: String, StripeModel {
+public enum StripeVerificationSessionVerifiedOutputsIdNumberType: String, Codable {
     /// An individual CPF number from Brazil.
     case brCpf = "br_cpf"
     /// A national registration identity card number from Singapore.
@@ -165,7 +165,7 @@ public enum StripeVerificationSessionVerifiedOutputsIdNumberType: String, Stripe
 }
 
 
-public struct StripeVerificationSessionList: StripeModel {
+public struct StripeVerificationSessionList: Codable {
     public var object: String
     public var data: [StripeVerificationSession]?
     public var hasMore: Bool?

@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Persons Object](https://stripe.com/docs/api/persons/object)
-public struct StripePerson: StripeModel {
+public struct StripePerson: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -63,7 +63,7 @@ public struct StripePerson: StripeModel {
     public var verification: StripePersonVerification?
 }
 
-public struct StripePersonDOB: StripeModel {
+public struct StripePersonDOB: Codable {
     /// The day of birth, between 1 and 31.
     public var day: Int?
     /// The month of birth, between 1 and 12.
@@ -72,19 +72,19 @@ public struct StripePersonDOB: StripeModel {
     public var year: Int?
 }
 
-public enum StripePersonGender: String, StripeModel {
+public enum StripePersonGender: String, Codable {
     case male
     case female
 }
 
-public enum StripePersonPoliticalExposure: String, StripeModel {
+public enum StripePersonPoliticalExposure: String, Codable {
     /// The person has disclosed that they have no political exposure
     case none
     /// The person has disclosed that they do have political exposure
     case existing
 }
 
-public struct StripePersonRelationship: StripeModel {
+public struct StripePersonRelationship: Codable {
     /// Whether the person is a director of the account’s legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
     public var director: Bool?
     /// Whether the person has significant responsibility to control, manage, or direct the organization.
@@ -99,7 +99,7 @@ public struct StripePersonRelationship: StripeModel {
     public var title: String?
 }
 
-public struct StripePersonRequirements: StripeModel {
+public struct StripePersonRequirements: Codable {
     /// Fields that need to be collected to keep the person’s account enabled. If not collected by the account’s `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
     public var currentlyDue: [String]?
     /// The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
@@ -112,12 +112,12 @@ public struct StripePersonRequirements: StripeModel {
     public var pendingVerification: [String]?
 }
 
-public struct StripePersonRequirementsError: StripeModel {
+public struct StripePersonRequirementsError: Codable {
     /// The code for the type of error.
     public var code: StripePersonRequirementsErrorCode?
 }
 
-public enum StripePersonRequirementsErrorCode: String, StripeModel {
+public enum StripePersonRequirementsErrorCode: String, Codable {
     /// The combination of the city, state, and postal code in the provided address could not be validated.
     case invalidAddressCityStatePostalCode = "invalid_address_city_state_postal_code"
     /// The street name and/or number for the provided address could not be validated.
@@ -196,7 +196,7 @@ public enum StripePersonRequirementsErrorCode: String, StripeModel {
     case verificationFailedOther = "verification_failed_other"
 }
 
-public struct StripePersonVerification: StripeModel {
+public struct StripePersonVerification: Codable {
     /// A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
     public var additionalDocument: StripePersonVerificationDocument?
     /// A user-displayable string describing the verification state for the person. For example, this may say “Provided identity information could not be verified”.
@@ -209,7 +209,7 @@ public struct StripePersonVerification: StripeModel {
     public var status: StripePersonVerificationStatus?
 }
 
-public enum StripePersonVerificationDetailsCode: String, StripeModel {
+public enum StripePersonVerificationDetailsCode: String, Codable {
     case documentAddressMismatch = "document_address_mismatch"
     case documentDobMismatch = "document_dob_mismatch"
     case documentDuplicateType = "document_duplicate_type"
@@ -221,7 +221,7 @@ public enum StripePersonVerificationDetailsCode: String, StripeModel {
 }
 
 
-public struct StripePersonVerificationDocument: StripeModel {
+public struct StripePersonVerificationDocument: Codable {
     /// The back of a document returned by a file upload with a `purpose` value of `additional_verification`.
     @Expandable<StripeFile> public var back: String?
     /// A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say “Identity document is too unclear to read”.
@@ -232,7 +232,7 @@ public struct StripePersonVerificationDocument: StripeModel {
     @Expandable<StripeFile> public var front: String?
 }
 
-public enum StripePersonVerificationDocumentDetailsCode: String, StripeModel {
+public enum StripePersonVerificationDocumentDetailsCode: String, Codable {
     case documentCorrupt = "document_corrupt"
     case documentCountryNotSupported = "document_country_not_supported"
     case documentExpired = "document_expired"
@@ -253,13 +253,13 @@ public enum StripePersonVerificationDocumentDetailsCode: String, StripeModel {
     case documentTypeNotSupported = "document_type_not_supported"
 }
 
-public enum StripePersonVerificationStatus: String, StripeModel {
+public enum StripePersonVerificationStatus: String, Codable {
     case unverified
     case pending
     case verified
 }
 
-public struct StripePersonsList: StripeModel {
+public struct StripePersonsList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

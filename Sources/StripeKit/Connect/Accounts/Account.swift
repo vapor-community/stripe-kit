@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Account Object](https://stripe.com/docs/api/accounts/object)
-public struct StripeConnectAccount: StripeModel {
+public struct StripeConnectAccount: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -54,14 +54,14 @@ public struct StripeConnectAccount: StripeModel {
     public var type: StripeConnectAccountType?
 }
 
-public struct StripeConnectAccountList: StripeModel {
+public struct StripeConnectAccountList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [StripeConnectAccount]?
 }
 
-public struct StripeConnectAccountBusinessProfile: StripeModel {
+public struct StripeConnectAccountBusinessProfile: Codable {
     /// The merchant category code for the account. MCCs are used to classify businesses based on the goods or services they provide.
     public var mcc: String?
     /// The customer-facing business name.
@@ -80,14 +80,14 @@ public struct StripeConnectAccountBusinessProfile: StripeModel {
     public var url: String?
 }
 
-public enum StripeConnectAccountBusinessType: String, StripeModel {
+public enum StripeConnectAccountBusinessType: String, Codable {
     case individual
     case company
     case nonProfit = "non_profit"
     case governmentEntity = "government_entity"
 }
 
-public struct StripeConnectAccountCapablities: StripeModel {
+public struct StripeConnectAccountCapablities: Codable {
     /// The status of the ACSS Direct Debits payments capability of the account, or whether the account can directly process ACSS Direct Debits charges.
     public var acssDebitPayments: StripeConnectAccountCapabilitiesStatus?
     /// The status of the Afterpay Clearpay capability of the account, or whether the account can directly process Afterpay Clearpay charges.
@@ -134,25 +134,25 @@ public struct StripeConnectAccountCapablities: StripeModel {
     public var transfers: StripeConnectAccountCapabilitiesStatus?
 }
 
-public enum StripeConnectAccountCapabilitiesStatus: String, StripeModel {
+public enum StripeConnectAccountCapabilitiesStatus: String, Codable {
     case active
     case inactive
     case pending
 }
 
-public struct StripeConnectAccountController: StripeModel {
+public struct StripeConnectAccountController: Codable {
     /// `true` if the Connect application retrieving the resource controls the account and can therefore exercise platform controls. Otherwise, this field is null.
     public var isController: Bool?
     /// The controller type. Can be `application`, if a Connect application controls the account, or `account`, if the account controls itself.
     public var type: StripeConnectAccountControllerType?
 }
 
-public enum StripeConnectAccountControllerType: String, StripeModel {
+public enum StripeConnectAccountControllerType: String, Codable {
     case application
     case account
 }
 
-public struct StripeConnectAccountCompany: StripeModel {
+public struct StripeConnectAccountCompany: Codable {
     /// The company’s primary address.
     public var address: StripeAddress?
     /// The Kana variation of the company’s primary address (Japan only).
@@ -187,7 +187,7 @@ public struct StripeConnectAccountCompany: StripeModel {
     public var verification: StripeConnectAccountCompanyVerification?
 }
 
-public struct StripeConnectAccountCompanyOwnershipDeclaration: StripeModel {
+public struct StripeConnectAccountCompanyOwnershipDeclaration: Codable {
     /// The Unix timestamp marking when the beneficial owner attestation was made.
     public var date: Date?
     /// The IP address from which the beneficial owner attestation was made.
@@ -196,12 +196,12 @@ public struct StripeConnectAccountCompanyOwnershipDeclaration: StripeModel {
     public var userAgent: String?
 }
 
-public struct StripeConnectAccountCompanyVerification: StripeModel {
+public struct StripeConnectAccountCompanyVerification: Codable {
     /// A document for the company.
     public var document: StripeConnectAccountCompanyVerificationDocument?
 }
 
-public struct StripeConnectAccountCompanyVerificationDocument: StripeModel {
+public struct StripeConnectAccountCompanyVerificationDocument: Codable {
     /// The back of a document returned by a file upload with a `purpose` value of `additional_verification`.
     @Expandable<StripeFile> public var back: String?
     /// A user-displayable string describing the verification state of this document.
@@ -212,7 +212,7 @@ public struct StripeConnectAccountCompanyVerificationDocument: StripeModel {
     @Expandable<StripeFile> public var front: String?
 }
 
-public enum StripeConnectAccountCompanyVerificationDocumentDetailsCode: String, StripeModel {
+public enum StripeConnectAccountCompanyVerificationDocumentDetailsCode: String, Codable {
     case documentCorrupt = "document_corrupt"
     case documentExpired = "document_expired"
     case documentFailedCopy = "document_failed_copy"
@@ -229,7 +229,7 @@ public enum StripeConnectAccountCompanyVerificationDocumentDetailsCode: String, 
     case documentTooLarge = "document_too_large"
 }
 
-public enum StripeConnectAccountCompanyStructure: String, StripeModel {
+public enum StripeConnectAccountCompanyStructure: String, Codable {
     case governmentInstrumentality = "government_instrumentality"
     case governmentalUnit = "governmental_unit"
     case incorporatedNonProfit = "incorporated_non_profit"
@@ -252,7 +252,7 @@ public enum StripeConnectAccountCompanyStructure: String, StripeModel {
     case llc
 }
 
-public struct StripeConnectAccountRequirements: StripeModel {
+public struct StripeConnectAccountRequirements: Codable {
     /// Date by which the fields in `currently_due` must be collected to keep the account enabled. These fields may disable the account sooner if the next threshold is reached before they are collected.
     public var currentDeadline: Date?
     /// Fields that need to be collected to keep the account enabled. If not collected by `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
@@ -269,7 +269,7 @@ public struct StripeConnectAccountRequirements: StripeModel {
     public var pendingVerification: [String]?
 }
 
-public enum StripeConnectAccountRequirementsDisabledReason: String, StripeModel {
+public enum StripeConnectAccountRequirementsDisabledReason: String, Codable {
     case requirementsPastDue = "requirements.past_due"
     case requirementsPendingVerification = "requirements.pending_verification"
     case rejectedFraud = "rejected.fraud"
@@ -281,7 +281,7 @@ public enum StripeConnectAccountRequirementsDisabledReason: String, StripeModel 
     case other
 }
 
-public struct StripeConnectAccountRequirementsError: StripeModel {
+public struct StripeConnectAccountRequirementsError: Codable {
     /// The code for the type of error.
     public var code: StripeConnectAccountRequirementsErrorCode?
     /// An informative message that indicates the error type and provides additional details about the error.
@@ -290,7 +290,7 @@ public struct StripeConnectAccountRequirementsError: StripeModel {
     public var requirement: String?
 }
 
-public enum StripeConnectAccountRequirementsErrorCode: String, StripeModel {
+public enum StripeConnectAccountRequirementsErrorCode: String, Codable {
     /// The combination of the city, state, and postal code in the provided address could not be validated.
     case invalidAddressCityStatePostalCode = "invalid_address_city_state_postal_code"
     /// The street name and/or number for the provided address could not be validated.
@@ -379,7 +379,7 @@ public enum StripeConnectAccountRequirementsErrorCode: String, StripeModel {
     case verificationRequiresAdditionalMemorandumOfAssociations = "verification_requires_additional_memorandum_of_associations"
 }
 
-public struct StripeConnectAccountSettings: StripeModel {
+public struct StripeConnectAccountSettings: Codable {
     /// Settings specific to Bacs Direct Debit on the account.
     public var bacsDebitPayments: StripeConnectAccountSettingsBacsDebitPayments?
     /// Settings used to apply the account’s branding to email receipts, invoices, Checkout, and other products.
@@ -398,12 +398,12 @@ public struct StripeConnectAccountSettings: StripeModel {
     public var sepaDebitPayments: StripeConnectAccountSettingsSepaDebitPayments?
 }
 
-public struct StripeConnectAccountSettingsBacsDebitPayments: StripeModel {
+public struct StripeConnectAccountSettingsBacsDebitPayments: Codable {
     /// The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this will appear on the mandate, and as the statement descriptor.
     public var displayName: String?
 }
 
-public struct StripeConnectAccountSettingsBranding: StripeModel {
+public struct StripeConnectAccountSettingsBranding: Codable {
     /// (ID of a file upload) An icon for the account. Must be square and at least 128px x 128px.
     @Expandable<StripeFile> public var icon: String?
     /// (ID of a file upload) A logo for the account that will be used in Checkout instead of the icon and without the account’s name next to it if provided. Must be at least 128px x 128px.
@@ -414,12 +414,12 @@ public struct StripeConnectAccountSettingsBranding: StripeModel {
     public var secondaryColor: String?
 }
 
-public struct StripeConnectAccountSettingsCardIssuing: StripeModel {
+public struct StripeConnectAccountSettingsCardIssuing: Codable {
     /// Details on the account’s acceptance of the Stripe Issuing Terms and Disclosures.
     public var tosAcceptance: StripeConnectAccountSettingsCardIssuingTOSAcceptance?
 }
 
-public struct StripeConnectAccountSettingsCardIssuingTOSAcceptance: StripeModel {
+public struct StripeConnectAccountSettingsCardIssuingTOSAcceptance: Codable {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
     public var date: Int?
     /// The IP address from which the account representative accepted the service agreement.
@@ -428,28 +428,28 @@ public struct StripeConnectAccountSettingsCardIssuingTOSAcceptance: StripeModel 
     public var userAgent: String?
 }
 
-public struct StripeConnectAccountSettingsCardPayments: StripeModel {
+public struct StripeConnectAccountSettingsCardPayments: Codable {
     /// Automatically declines certain charge types regardless of whether the card issuer accepted or declined the charge.
     public var declineOn: StripeConnectAccountSettingsCardPaymentsDeclineOn?
     /// The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic statement_descriptor specified on the charge. statement_descriptor_prefix is useful for maximizing descriptor space for the dynamic portion.
     public var statementDescriptorPrefix: String?
 }
 
-public struct StripeConnectAccountSettingsCardPaymentsDeclineOn: StripeModel {
+public struct StripeConnectAccountSettingsCardPaymentsDeclineOn: Codable {
     /// Whether Stripe automatically declines charges with an incorrect ZIP or postal code. This setting only applies when a ZIP or postal code is provided and they fail bank verification.
     public var avsFailure: Bool?
     /// Whether Stripe automatically declines charges with an incorrect CVC. This setting only applies when a CVC is provided and it fails bank verification.
     public var cvcFailure: Bool?
 }
 
-public struct StripeConnectAccountSettingsDashboard: StripeModel {
+public struct StripeConnectAccountSettingsDashboard: Codable {
     /// The display name for this account. This is used on the Stripe Dashboard to differentiate between accounts.
     public var displayName: String?
     /// The timezone used in the Stripe Dashboard for this account. A list of possible time zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones) .
     public var timezone: String?
 }
 
-public struct StripeConnectAccountSettingsPayments: StripeModel {
+public struct StripeConnectAccountSettingsPayments: Codable {
     /// The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
     public var statementDescriptor: String?
     /// The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only)
@@ -458,7 +458,7 @@ public struct StripeConnectAccountSettingsPayments: StripeModel {
     public var statementDescriptorKanji: String?
 }
 
-public struct StripeConnectAccountSettingsPayouts: StripeModel {
+public struct StripeConnectAccountSettingsPayouts: Codable {
     /// A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See our Understanding Connect Account Balances documentation for details. Default value is true for Express accounts and false for Custom accounts.
     public var debitNegativeBalances: Bool?
     /// Details on when funds from charges are available, and when they are paid out to an external account. See our Setting Bank and Debit Card Payouts documentation for details.
@@ -467,7 +467,7 @@ public struct StripeConnectAccountSettingsPayouts: StripeModel {
     public var statementDescriptor: String?
 }
 
-public struct StripeConnectAccountSettingsPayoutSchedule: StripeModel {
+public struct StripeConnectAccountSettingsPayoutSchedule: Codable {
     /// The number of days charges for the account will be held before being paid out.
     public var delayDays: Int?
     /// How frequently funds will be paid out. One of manual (payouts only created via API call), daily, weekly, or monthly.
@@ -478,12 +478,12 @@ public struct StripeConnectAccountSettingsPayoutSchedule: StripeModel {
     public var weeklyAnchor: StripeConnectAccountSettingsPayoutScheduleWeeklyAnchor?
 }
 
-public struct StripeConnectAccountSettingsSepaDebitPayments: StripeModel {
+public struct StripeConnectAccountSettingsSepaDebitPayments: Codable {
     /// SEPA creditor identifier that identifies the company making the payment.
     public var creditorId: String?
 }
 
-public struct StripeConnectAccountTOSAcceptance: StripeModel {
+public struct StripeConnectAccountTOSAcceptance: Codable {
     /// The Unix timestamp marking when the Stripe Services Agreement was accepted by the account representative
     public var date: Date?
     /// The IP address from which the Stripe Services Agreement was accepted by the account representative
@@ -494,13 +494,13 @@ public struct StripeConnectAccountTOSAcceptance: StripeModel {
     public var serviceAgreement: String?
 }
 
-public enum StripeConnectAccountType: String, StripeModel {
+public enum StripeConnectAccountType: String, Codable {
     case standard
     case express
     case custom
 }
 
-public struct StripeConnectAccountLoginLink: StripeModel {
+public struct StripeConnectAccountLoginLink: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -509,20 +509,20 @@ public struct StripeConnectAccountLoginLink: StripeModel {
     public var url: String?
 }
 
-public enum StripeConnectAccountRejectReason: String, StripeModel {
+public enum StripeConnectAccountRejectReason: String, Codable {
     case fraud
     case termsOfService = "terms_of_service"
     case other
 }
 
-public enum StripeConnectAccountSettingsPayoutScheduleInterval: String, StripeModel {
+public enum StripeConnectAccountSettingsPayoutScheduleInterval: String, Codable {
     case manual
     case daily
     case weekly
     case monthly
 }
 
-public enum StripeConnectAccountSettingsPayoutScheduleWeeklyAnchor: String, StripeModel {
+public enum StripeConnectAccountSettingsPayoutScheduleWeeklyAnchor: String, Codable {
     case sunday
     case monday
     case tuesday

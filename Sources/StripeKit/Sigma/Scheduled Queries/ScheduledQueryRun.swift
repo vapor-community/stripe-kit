@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Scheduled Query Run Object](https://stripe.com/docs/api/sigma/scheduled_queries/object).
-public struct StripeScheduledQueryRun: StripeModel {
+public struct StripeScheduledQueryRun: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -33,19 +33,19 @@ public struct StripeScheduledQueryRun: StripeModel {
     public var title: String?
 }
 
-public struct StripeScheduledQueryRunList: StripeModel {
+public struct StripeScheduledQueryRunList: Codable {
     public var object: String
     public var data: [StripeScheduledQueryRun]?
     public var hasMore: Bool?
     public var url: String?
 }
 
-public struct StripeScheduledQueryRunError: StripeModel {
+public struct StripeScheduledQueryRunError: Codable {
     /// Information about the run failure.
     public var message: String?
 }
 
-public enum StripeScheduledQueryRunStatus: String, StripeModel {
+public enum StripeScheduledQueryRunStatus: String, Codable {
     case completed
     case canceled
     case failed

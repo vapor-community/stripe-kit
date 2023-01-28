@@ -7,7 +7,7 @@
 
 import Foundation
 /// The [Event Object](https://stripe.com/docs/api/events/object)
-public struct StripeEvent: StripeModel {
+public struct StripeEvent: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -30,12 +30,12 @@ public struct StripeEvent: StripeModel {
     public var type: StripeEventType?
 }
 
-public struct StripeEventData: StripeModel {
+public struct StripeEventData: Codable {
     /// Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](https://stripe.com/docs/api/events/object#invoice_object) as the value of the object key.
     public var object: StripeEventObject
 }
 
-public enum StripeEventObject: StripeModel {
+public enum StripeEventObject: Codable {
     case account(StripeConnectAccount)
     case card(StripeCard)
     case bankAccount(StripeBankAccount)
@@ -206,14 +206,14 @@ public enum StripeEventObject: StripeModel {
     }
 }
 
-public struct StripeEventRequest: StripeModel {
+public struct StripeEventRequest: Codable {
     /// ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe’s automatic subscription handling). Request logs are available in the dashboard, but currently not in the API.
     public var id: String?
     /// The idempotency key transmitted during the request, if any. Note: This property is populated only for events on or after May 23, 2017.
     public var idempotencyKey: String?
 }
 
-public enum StripeEventType: String, StripeModel {
+public enum StripeEventType: String, Codable {
     /// Occurs whenever an account status or property has changed.
     case accountUpdated = "account.updated"
     /// Occurs whenever a user authorizes an application. Sent to the related application only.
@@ -572,7 +572,7 @@ public enum StripeEventType: String, StripeModel {
     case unknownEvent = "unknown"
 }
 
-public struct StripeEventList: StripeModel {
+public struct StripeEventList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

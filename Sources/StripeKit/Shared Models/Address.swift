@@ -6,7 +6,7 @@
 //
 //
 
-public struct StripeAddress: StripeModel {
+public struct StripeAddress: Codable {
     /// City/District/Suburb/Town/Village.
     public var city: String?
     /// 2-letter country code.
@@ -21,7 +21,7 @@ public struct StripeAddress: StripeModel {
     public var state: String?
 }
 
-public struct StripeAddressKana: StripeModel {
+public struct StripeAddressKana: Codable {
     /// City/Ward
     public var city: String?
     /// Two-letter country code (ISO 3166-1 alpha-2).
@@ -38,7 +38,7 @@ public struct StripeAddressKana: StripeModel {
     public var town: String?
 }
 
-public struct StripeAddressKanji: StripeModel {
+public struct StripeAddressKanji: Codable {
     /// City/Ward
     public var city: String?
     /// Two-letter country code (ISO 3166-1 alpha-2).

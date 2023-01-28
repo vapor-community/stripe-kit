@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StripeMandate: StripeModel {
+public struct StripeMandate: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -30,7 +30,7 @@ public struct StripeMandate: StripeModel {
     public var type: StripeMandateType?
 }
 
-public struct StripeMandateCustomerAcceptance: StripeModel {
+public struct StripeMandateCustomerAcceptance: Codable {
     /// The time at which the customer accepted the Mandate.
     public var acceptedAt: Date?
     /// If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
@@ -41,19 +41,19 @@ public struct StripeMandateCustomerAcceptance: StripeModel {
     public var type: StripeMandateCustomerAcceptanceType?
 }
 
-public struct StripeMandateCustomerAcceptanceOnline: StripeModel {
+public struct StripeMandateCustomerAcceptanceOnline: Codable {
     /// The IP address from which the Mandate was accepted by the customer
     public var ipAddress: String?
     /// The user agent of the browser from which the Mandate was accepted by the customer.
     public var userAgent: String?
 }
 
-public enum StripeMandateCustomerAcceptanceType: String, StripeModel {
+public enum StripeMandateCustomerAcceptanceType: String, Codable {
     case online
     case offline
 }
 
-public struct StripeMandatePaymentMethodDetails: StripeModel {
+public struct StripeMandatePaymentMethodDetails: Codable {
     /// If this mandate is associated with a card payment method, this hash contains mandate information specific to the card payment method.
     public var card: StripePaymentMethodCard?
     /// If this mandate is associated with a `sepa_debit` payment method, this hash contains mandate information specific to the `sepa_debit` payment method.
@@ -62,20 +62,20 @@ public struct StripeMandatePaymentMethodDetails: StripeModel {
     public var type: StripePaymentMethodType?
 }
 
-public struct StripeMandateSingleUse: StripeModel {
+public struct StripeMandateSingleUse: Codable {
     /// On a single use mandate, the amount of the payment.
     public var amount: Int?
     /// On a single use mandate, the currency of the payment.
     public var currency: StripeCurrency?
 }
 
-public enum StripeMandateStatus: String, StripeModel {
+public enum StripeMandateStatus: String, Codable {
     case active
     case inactive
     case pending
 }
 
-public enum StripeMandateType: String, StripeModel {
+public enum StripeMandateType: String, Codable {
     case multiUse = "multi_use"
     case singleUse = "single_use"
 }

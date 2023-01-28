@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Card Object](https://stripe.com/docs/api/issuing/cards/object)
-public struct StripeIssuingCard: StripeModel {
+public struct StripeIssuingCard: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -55,14 +55,14 @@ public struct StripeIssuingCard: StripeModel {
     public var wallets: StripeIssuingCardWallets?
 }
 
-public struct StripeIssuingCardList: StripeModel {
+public struct StripeIssuingCardList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [StripeIssuingCard]?
 }
 
-public struct StripeIssuingCardSpendingControls: StripeModel {
+public struct StripeIssuingCardSpendingControls: Codable {
     /// Array of strings containing categories of authorizations permitted on this card.
     public var allowedCategories: [String]?
     /// Array of strings containing categories of authorizations to always decline on this card.
@@ -73,7 +73,7 @@ public struct StripeIssuingCardSpendingControls: StripeModel {
     public var spendingLimitsCurrency: StripeCurrency?
 }
 
-public enum StripeIssuingCardReplacementReason: String, StripeModel {
+public enum StripeIssuingCardReplacementReason: String, Codable {
     /// The card was lost. This status is only valid if the card it replaces is marked as lost.
     case lost
     /// The card was stolen. This status is only valid if the card it replaces is marked as stolen.
@@ -84,7 +84,7 @@ public enum StripeIssuingCardReplacementReason: String, StripeModel {
     case expired
 }
 
-public struct StripeIssuingCardShipping: StripeModel {
+public struct StripeIssuingCardShipping: Codable {
     /// Shipping address.
     public var address: StripeAddress?
     /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -105,12 +105,12 @@ public struct StripeIssuingCardShipping: StripeModel {
     public var type: StripeIssuingCardShippingType?
 }
 
-public enum StripeIssuingCardShippingCarrier: String, StripeModel {
+public enum StripeIssuingCardShippingCarrier: String, Codable {
     case fedex
     case usps
 }
 
-public enum StripeIssuingCardShippingStatus: String, StripeModel {
+public enum StripeIssuingCardShippingStatus: String, Codable {
     case pending
     case shipped
     case delivered
@@ -119,12 +119,12 @@ public enum StripeIssuingCardShippingStatus: String, StripeModel {
     case canceled
 }
 
-public enum StripeIssuingCardShippingType: String, StripeModel {
+public enum StripeIssuingCardShippingType: String, Codable {
     case bulk
     case individual
 }
 
-public enum StripeIssuingCardShippingSpeed: String, StripeModel {
+public enum StripeIssuingCardShippingSpeed: String, Codable {
     /// Cards arrive in 2-6 business days.
     case standard
     /// Cards arrive in 2 business days.
@@ -133,7 +133,7 @@ public enum StripeIssuingCardShippingSpeed: String, StripeModel {
     case overnight
 }
 
-public enum StripeIssuingCardStatus: String, StripeModel {
+public enum StripeIssuingCardStatus: String, Codable {
     /// The card can approve authorizations.
     case active
     /// The card will decline authorizations with the `card_inactive` reason.
@@ -142,21 +142,21 @@ public enum StripeIssuingCardStatus: String, StripeModel {
     case canceled
 }
 
-public enum StripeIssuingCardType: String, StripeModel {
+public enum StripeIssuingCardType: String, Codable {
     /// No physical card will be printed. The card can be used online and can be added to digital wallets.
     case virtual
     /// A physical card will be printed and shipped. It can be used at physical terminals.
     case physical
 }
 
-public enum StripeIssuingCardCancellationReason: String, StripeModel {
+public enum StripeIssuingCardCancellationReason: String, Codable {
     /// The card was lost.
     case lost
     /// The card was stolen.
     case stolen
 }
 
-public struct StripeIssuingCardWallets: StripeModel {
+public struct StripeIssuingCardWallets: Codable {
     /// Apple Pay Details
     public var applePay: StripeIssuingCardWalletsApplePay?
     /// Google Pay Details
@@ -165,14 +165,14 @@ public struct StripeIssuingCardWallets: StripeModel {
     public var primaryAccountIdentifier: String?
 }
 
-public struct StripeIssuingCardWalletsApplePay: StripeModel {
+public struct StripeIssuingCardWalletsApplePay: Codable {
     /// Apple Pay Eligibility
     public var eligible: Bool?
     /// Reason the card is ineligible for Apple Pay
     public var ineligibleReason: StripeIssuingCardWalletsApplePayIneligibleReason?
 }
 
-public enum StripeIssuingCardWalletsApplePayIneligibleReason: String, StripeModel {
+public enum StripeIssuingCardWalletsApplePayIneligibleReason: String, Codable {
     /// Apple Pay is not supported in the cardholder’s country.
     case unsupportedReason = "unsupported_reason"
     /// Apple Pay is not enabled for your account.
@@ -181,14 +181,14 @@ public enum StripeIssuingCardWalletsApplePayIneligibleReason: String, StripeMode
     case missingCardholderContact = "missing_cardholder_contact"
 }
 
-public struct StripeIssuingCardWalletsGooglePay: StripeModel {
+public struct StripeIssuingCardWalletsGooglePay: Codable {
     /// Google Pay Eligibility
     public var eligible: Bool?
     /// Reason the card is ineligible for Google Pay
     public var ineligibleReason: StripeIssuingCardWalletsGooglePayIneligibleReason?
 }
 
-public enum StripeIssuingCardWalletsGooglePayIneligibleReason: String, StripeModel {
+public enum StripeIssuingCardWalletsGooglePayIneligibleReason: String, Codable {
     /// Google Pay is not supported in the cardholder’s country.
     case unsupportedReason = "unsupported_reason"
     /// Google Pay is not enabled for your account.

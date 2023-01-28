@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Charge Object](https://stripe.com/docs/api/charges/object).
-public struct StripeCharge: StripeModel {
+public struct StripeCharge: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -102,19 +102,19 @@ public struct StripeCharge: StripeModel {
     public var transferGroup: String?
 }
 
-public struct StripeChargeFraudDetails: StripeModel {
+public struct StripeChargeFraudDetails: Codable {
     /// Assessments reported by you. If set, possible values of are `safe` and `fraudulent`.
     public var userReport: StripeChargeFraudDetailsReportType?
     /// Assessments from Stripe. If set, the value is `fraudulent`.
     public var stripeReport: StripeChargeFraudDetailsReportType?
 }
 
-public enum StripeChargeFraudDetailsReportType: String, StripeModel {
+public enum StripeChargeFraudDetailsReportType: String, Codable {
     case safe
     case fraudulent
 }
 
-public struct StripeChargeOutcome: StripeModel {
+public struct StripeChargeOutcome: Codable {
     /// Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://stripe.com/docs/declines#blocked-payments) after bank authorization, and may temporarily appear as “pending” on a cardholder’s statement.
     public var networkStatus: StripeChargeOutcomeNetworkStatus?
     /// An enumerated value providing a more detailed explanation of the outcome’s `type`. Charges blocked by Radar’s default block rule have the value `highest_risk_level`. Charges placed in review by Radar’s default review rule have the value `elevated_risk_level`. Charges authorized, blocked, or placed in review by custom rules have the value `rule`. See [understanding declines](https://stripe.com/docs/declines) for more details.
@@ -131,14 +131,14 @@ public struct StripeChargeOutcome: StripeModel {
     public var type: StripeChargeOutcomeType?
 }
 
-public enum StripeChargeOutcomeNetworkStatus: String, StripeModel {
+public enum StripeChargeOutcomeNetworkStatus: String, Codable {
     case approvedByNetwork = "approved_by_network"
     case declinedByNetwork = "declined_by_network"
     case notSentToNetwork = "not_sent_to_network"
     case reversedAfterApproval = "reversed_after_approval"
 }
 
-public enum StripeChargeOutcomeRiskLevel: String, StripeModel {
+public enum StripeChargeOutcomeRiskLevel: String, Codable {
     case normal
     case elevated
     case highest
@@ -146,7 +146,7 @@ public enum StripeChargeOutcomeRiskLevel: String, StripeModel {
     case unknown
 }
 
-public enum StripeChargeOutcomeType: String, StripeModel {
+public enum StripeChargeOutcomeType: String, Codable {
     case authorized
     case manualReview = "manual_review"
     case issuerDeclined = "issuer_declined"
@@ -154,20 +154,20 @@ public enum StripeChargeOutcomeType: String, StripeModel {
     case invalid
 }
 
-public enum StripeChargeStatus: String, StripeModel {
+public enum StripeChargeStatus: String, Codable {
     case succeeded
     case pending
     case failed
 }
 
-public struct StripeChargeTransferData: StripeModel {
+public struct StripeChargeTransferData: Codable {
     /// The amount transferred to the destination account, if specified. By default, the entire charge amount is transferred to the destination account.
     public var amount: Int?
     /// ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
     public var destination: String?
 }
 
-public struct StripeChargesList: StripeModel {
+public struct StripeChargesList: Codable {
     /// String representing the object’s type. Objects of the same type share the same value. Always has the value list.
     public var object: String
     /// True if this list has another page of items after this one that can be fetched.
@@ -177,7 +177,7 @@ public struct StripeChargesList: StripeModel {
     public var data: [StripeCharge]?
 }
 
-public struct StripeChargePaymentDetails: StripeModel {
+public struct StripeChargePaymentDetails: Codable {
     ///If this is a `ach_credit_transfer` payment, this hash contains a snapshot of the transaction specific details of the `ach_credit_transfer` payment method.
     public var achCreditTransfer: StripeChargePaymentDetailsACHCreditTransfer?
     /// If this is a `ach_debit` payment, this hash contains a snapshot of the transaction specific details of the `ach_debit` payment method.
@@ -230,7 +230,7 @@ public struct StripeChargePaymentDetails: StripeModel {
     public var wechat: StripeChargePaymentDetailsWechat?
 }
 
-public struct StripeChargePaymentDetailsACHCreditTransfer: StripeModel {
+public struct StripeChargePaymentDetailsACHCreditTransfer: Codable {
     /// Account number to transfer funds to.
     public var accountNumber: String?
     /// Name of the bank associated with the routing number.
@@ -241,7 +241,7 @@ public struct StripeChargePaymentDetailsACHCreditTransfer: StripeModel {
     public var swiftCode: String?
 }
 
-public struct StripeChargePaymentDetailsACHDebit: StripeModel {
+public struct StripeChargePaymentDetailsACHDebit: Codable {
     /// Type of entity that holds the account. This can be either individual or company.
     public var accountHolderType: StripeChargePaymentDetailsACHDebitAccountHolderType?
     /// Name of the bank associated with the bank account.
@@ -256,15 +256,15 @@ public struct StripeChargePaymentDetailsACHDebit: StripeModel {
     public var routingNumber: String?
 }
 
-public enum StripeChargePaymentDetailsACHDebitAccountHolderType: String, StripeModel {
+public enum StripeChargePaymentDetailsACHDebitAccountHolderType: String, Codable {
     case individual
     case company
 }
 
-public struct StripeChargePaymentDetailsAfterpayClearpay: StripeModel {
+public struct StripeChargePaymentDetailsAfterpayClearpay: Codable {
 }
 
-public struct StripeChargePaymentDetailsAlipay: StripeModel {
+public struct StripeChargePaymentDetailsAlipay: Codable {
     /// Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
     public var buyerId: String?
     /// Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
@@ -273,7 +273,7 @@ public struct StripeChargePaymentDetailsAlipay: StripeModel {
     public var transactionId: String?
 }
 
-public struct StripeChargePaymentDetailsAuBecsDebit: StripeModel {
+public struct StripeChargePaymentDetailsAuBecsDebit: Codable {
     /// Bank-State-Branch number of the bank account.
     public var bsbNumber: String?
     /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
@@ -284,7 +284,7 @@ public struct StripeChargePaymentDetailsAuBecsDebit: StripeModel {
     public var mandate: String?
 }
 
-public struct StripeChargePaymentDetailsBacsDebit: StripeModel {
+public struct StripeChargePaymentDetailsBacsDebit: Codable {
     /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
     public var fingerprint: String?
     /// Last four digits of the bank account number.
@@ -295,7 +295,7 @@ public struct StripeChargePaymentDetailsBacsDebit: StripeModel {
     public var sortCode: String?
 }
 
-public struct StripeChargePaymentDetailsBancontact: StripeModel {
+public struct StripeChargePaymentDetailsBancontact: Codable {
     /// Bank code of bank associated with the bank account.
     public var bankCode: String?
     /// Name of the bank associated with the bank account.
@@ -310,14 +310,14 @@ public struct StripeChargePaymentDetailsBancontact: StripeModel {
     public var verifiedName: String?
 }
 
-public enum StripeChargePaymentDetailsBancontactPreferredLanguage: String, StripeModel {
+public enum StripeChargePaymentDetailsBancontactPreferredLanguage: String, Codable {
     case en
     case de
     case fr
     case nl
 }
 
-public struct StripeChargePaymentDetailsCard: StripeModel {
+public struct StripeChargePaymentDetailsCard: Codable {
     /// Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
     public var brand: StripePaymentMethodCardBrand?
     /// Checks on Card address and CVC if provided.
@@ -344,12 +344,12 @@ public struct StripeChargePaymentDetailsCard: StripeModel {
     public var wallet: StripePaymentMethodCardWallet?
 }
 
-public struct StripeChargePaymentDetailsCardInstallments: StripeModel {
+public struct StripeChargePaymentDetailsCardInstallments: Codable {
     /// Installment plan selected for the payment.
     public var plan: StripeChargePaymentDetailsCardInstallmentPlan?
 }
 
-public struct StripeChargePaymentDetailsCardInstallmentPlan: StripeModel {
+public struct StripeChargePaymentDetailsCardInstallmentPlan: Codable {
     /// For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
     public var count: Int?
     /// For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card. One of `month`.
@@ -358,7 +358,7 @@ public struct StripeChargePaymentDetailsCardInstallmentPlan: StripeModel {
     public var type: String?
 }
 
-public struct StripeChargePaymentDetailsCardThreeDSecure: StripeModel {
+public struct StripeChargePaymentDetailsCardThreeDSecure: Codable {
     /// Whether or not authentication was performed. 3D Secure will succeed without authentication when the card is not enrolled.
     public var authenticated: Bool?
     /// Whether or not 3D Secure succeeded.
@@ -367,7 +367,7 @@ public struct StripeChargePaymentDetailsCardThreeDSecure: StripeModel {
     public var version: String?
 }
 
-public struct StripeChargePaymentDetailsCardPresent: StripeModel {
+public struct StripeChargePaymentDetailsCardPresent: Codable {
     /// The authorized amount
     public var authorizedAmount: Int?
     /// Card brand. Can be amex, diners, discover, jcb, mastercard, unionpay, visa, or unknown.
@@ -404,7 +404,7 @@ public struct StripeChargePaymentDetailsCardPresent: StripeModel {
     public var receipt: StripeChargePaymentDetailsCardPresentReceipt?
 }
 
-public enum StripeChargePaymentDetailsCardPresentReadMethod: String, StripeModel {
+public enum StripeChargePaymentDetailsCardPresentReadMethod: String, Codable {
     case contactEmv = "contact_emv"
     case contactlessEmv = "contactless_emv"
     case magneticStripeFallback = "magnetic_stripe_fallback"
@@ -412,7 +412,7 @@ public enum StripeChargePaymentDetailsCardPresentReadMethod: String, StripeModel
     case contactlessMagstripeMode = "contactless_magstripe_mode"
 }
 
-public struct StripeChargePaymentDetailsCardPresentReceipt: StripeModel {
+public struct StripeChargePaymentDetailsCardPresentReceipt: Codable {
     /// The type of account being debited or credited
     public var accountType: StripeChargePaymentDetailsCardPresentReceiptAccountType?
     /// EMV tag 9F26, cryptogram generated by the integrated circuit chip.
@@ -444,19 +444,19 @@ public enum StripeChargePaymentDetailsCardPresentReceiptAccountType: String, Cod
     case unknown
 }
 
-public struct StripeChargePaymentDetailsEPS: StripeModel {
+public struct StripeChargePaymentDetailsEPS: Codable {
     /// Owner’s verified full name. Values are verified or provided by EPS directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var verifiedName: String?
 }
 
-public struct StripeChargePaymentDetailsFpx: StripeModel {
+public struct StripeChargePaymentDetailsFpx: Codable {
     /// The customer’s bank. Can be one of `affin_bank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, or `pb_enterprise`.
     public var bank: StripeChargePaymentDetailsFpxBank?
     /// Unique transaction id generated by FPX for every request from the merchant
     public var transactionId: String?
 }
 
-public enum StripeChargePaymentDetailsFpxBank: String, StripeModel {
+public enum StripeChargePaymentDetailsFpxBank: String, Codable {
     case affinBank = "affin_bank"
     case allianceBank = "alliance_bank"
     case ambank
@@ -479,7 +479,7 @@ public enum StripeChargePaymentDetailsFpxBank: String, StripeModel {
     case pbEnterprise = "pb_enterprise"
 }
 
-public struct StripeChargePaymentDetailsGiropay: StripeModel {
+public struct StripeChargePaymentDetailsGiropay: Codable {
     /// Bank code of bank associated with the bank account.
     public var bankCode: String?
     /// Name of the bank associated with the bank account.
@@ -490,12 +490,12 @@ public struct StripeChargePaymentDetailsGiropay: StripeModel {
     public var verifiedName: String?
 }
 
-public struct StripeChargePaymentDetailsGrabpay: StripeModel {
+public struct StripeChargePaymentDetailsGrabpay: Codable {
     /// Unique transaction id generated by GrabPay
     public var transactionId: String?
 }
 
-public struct StripeChargePaymentDetailsIdeal: StripeModel {
+public struct StripeChargePaymentDetailsIdeal: Codable {
     /// The customer’s bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
     public var bank: StripeChargePaymentDetailsIdealBank?
     /// The Bank Identifier Code of the customer’s bank.
@@ -506,7 +506,7 @@ public struct StripeChargePaymentDetailsIdeal: StripeModel {
     public var verifiedName: String?
 }
 
-public struct StripeChargePaymentDetailsInteracPresent: StripeModel {
+public struct StripeChargePaymentDetailsInteracPresent: Codable {
     /// Card brand. Can be `interac`, `mastercard` or `visa`.
     public var brand: StripeChargePaymentDetailsInteracPresentBrand?
     /// The cardholder name as read from the card, in ISO 7813 format. May include alphanumeric characters, special characters and first/last name separator (`/`).
@@ -535,13 +535,13 @@ public struct StripeChargePaymentDetailsInteracPresent: StripeModel {
     public var receipt: StripeChargePaymentDetailsInteracPresentReceipt?
 }
 
-public enum StripeChargePaymentDetailsInteracPresentBrand: String, StripeModel {
+public enum StripeChargePaymentDetailsInteracPresentBrand: String, Codable {
     case interac
     case mastercard
     case visa
 }
 
-public enum StripeChargePaymentDetailsInteracPresentReadMethod: String, StripeModel {
+public enum StripeChargePaymentDetailsInteracPresentReadMethod: String, Codable {
     case contactEmv = "contact_emv"
     case contactlessEmv = "contactless_emv"
     case magneticStripeFallback = "magnetic_stripe_fallback"
@@ -549,7 +549,7 @@ public enum StripeChargePaymentDetailsInteracPresentReadMethod: String, StripeMo
     case contactlessMagstripeMode = "contactless_magstripe_mode"
 }
 
-public struct StripeChargePaymentDetailsInteracPresentReceipt: StripeModel {
+public struct StripeChargePaymentDetailsInteracPresentReceipt: Codable {
     /// EMV tag 9F26, cryptogram generated by the integrated circuit chip.
     public var applicationCryptogram: String?
     /// Mnenomic of the Application Identifier.
@@ -568,21 +568,21 @@ public struct StripeChargePaymentDetailsInteracPresentReceipt: StripeModel {
     public var transactionStatusInformation: String?
 }
 
-public struct StripeChargePaymentDetailsKlarna: StripeModel {
+public struct StripeChargePaymentDetailsKlarna: Codable {
     /// The Klarna payment method used for this transaction. Can be one of `pay_later`, `pay_now`, `pay_with_financing`, or `pay_in_installments`.
     public var paymentMethodCategory: StripeChargePaymentDetailsKlarnaPaymentMethodCategory?
     /// Preferred language of the Klarna authorization page that the customer is redirected to.
     public var preferredLocale: String?
 }
 
-public enum StripeChargePaymentDetailsKlarnaPaymentMethodCategory: String, StripeModel {
+public enum StripeChargePaymentDetailsKlarnaPaymentMethodCategory: String, Codable {
     case payLater = "pay_later"
     case payNow = "pay_now"
     case payWithFinancing = "pay_with_financing"
     case payInInstallments = "pay_in_installments"
 }
 
-public enum StripeChargePaymentDetailsIdealBank: String, StripeModel {
+public enum StripeChargePaymentDetailsIdealBank: String, Codable {
     case abnAmro = "abn_amro"
     case asnBank = "asn_bank"
     case bunq
@@ -597,26 +597,26 @@ public enum StripeChargePaymentDetailsIdealBank: String, StripeModel {
     case vanLanschot = "van_lanschot"
 }
 
-public struct StripeChargePaymentDetailsMultibanco: StripeModel {
+public struct StripeChargePaymentDetailsMultibanco: Codable {
     /// Entity number associated with this Multibanco payment.
     public var entity: String?
     /// Reference number associated with this Multibanco payment.
     public var reference: String?
 }
 
-public struct StripeChargePaymentDetailsOXXO: StripeModel {
+public struct StripeChargePaymentDetailsOXXO: Codable {
     /// OXXO reference number
     public var number: String?
 }
 
-public struct StripeChargePaymentDetailsP24: StripeModel {
+public struct StripeChargePaymentDetailsP24: Codable {
     /// Unique reference for this Przelewy24 payment.
     public var reference: String?
     /// Owner’s verified full name. Values are verified or provided by Przelewy24 directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var verifiedName: String?
 }
 
-public struct StripeChargePaymentDetailsSepaDebit: StripeModel {
+public struct StripeChargePaymentDetailsSepaDebit: Codable {
     /// Bank code of bank associated with the bank account.
     public var bankCode: String?
     /// Branch code of bank associated with the bank account.
@@ -631,7 +631,7 @@ public struct StripeChargePaymentDetailsSepaDebit: StripeModel {
     public var mandate: String?
 }
 
-public struct StripeChargePaymentDetailsSofort: StripeModel {
+public struct StripeChargePaymentDetailsSofort: Codable {
     /// Bank code of bank associated with the bank account.
     public var bankCode: String?
     /// Name of the bank associated with the bank account.
@@ -646,11 +646,11 @@ public struct StripeChargePaymentDetailsSofort: StripeModel {
     public var verifiedName: String?
 }
 
-public struct StripeChargePaymentDetailsStripeAccount: StripeModel {
+public struct StripeChargePaymentDetailsStripeAccount: Codable {
     // https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-stripe_account
 }
 
-public enum StripeChargePaymentDetailsType: String, StripeModel {
+public enum StripeChargePaymentDetailsType: String, Codable {
     case achCreditTransfer = "ach_credit_transfer"
     case achDebit = "ach_debit"
     case alipay
@@ -670,6 +670,6 @@ public enum StripeChargePaymentDetailsType: String, StripeModel {
     case wechat
 }
 
-public struct StripeChargePaymentDetailsWechat: StripeModel {
+public struct StripeChargePaymentDetailsWechat: Codable {
     // https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-wechat
 }

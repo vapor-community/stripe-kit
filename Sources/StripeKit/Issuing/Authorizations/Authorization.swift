@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Authorization Object](https://stripe.com/docs/api/issuing/authorizations/object).
-public struct StripeAuthorization: StripeModel {
+public struct StripeAuthorization: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -55,12 +55,12 @@ public struct StripeAuthorization: StripeModel {
     public var wallet: StripeAuthorizationWallet?
 }
 
-public struct StripeAuthorizationAmountDetails: StripeModel {
+public struct StripeAuthorizationAmountDetails: Codable {
     /// The fee charged by the ATM for the cash withdrawal.
     public var atmFee: Int?
 }
 
-public struct StripeAuthorizationPendingRequest: StripeModel {
+public struct StripeAuthorizationPendingRequest: Codable {
     /// The additional amount Stripe will hold if the authorization is approved, in the card’s currency and in the smallest currency unit.
     public var amount: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
@@ -73,7 +73,7 @@ public struct StripeAuthorizationPendingRequest: StripeModel {
     public var merchantCurrency: StripeCurrency?
 }
 
-public enum StripeAuthorizationMethod: String, StripeModel {
+public enum StripeAuthorizationMethod: String, Codable {
     case keyedIn = "keyed_in"
     case swipe
     case chip
@@ -81,7 +81,7 @@ public enum StripeAuthorizationMethod: String, StripeModel {
     case online
 }
 
-public struct StripeAuthorizationMerchantData: StripeModel {
+public struct StripeAuthorizationMerchantData: Codable {
     // TODO: - Make this an enum once it's solidified. https://stripe.com/docs/issuing/merchant-categories
     /// A categorization of the seller’s type of business. See our merchant categories guide for a list of possible values.
     public var category: String?
@@ -101,7 +101,7 @@ public struct StripeAuthorizationMerchantData: StripeModel {
     public var state: String?
 }
 
-public struct StripeAuthorizationRequestHistory: StripeModel {
+public struct StripeAuthorizationRequestHistory: Codable {
     /// Whether this request was approved.
     public var approved: Bool?
     /// The amount that was authorized at the time of this request
@@ -118,7 +118,7 @@ public struct StripeAuthorizationRequestHistory: StripeModel {
     public var reason: StripeAuthorizationRequestHistoryReason?
 }
 
-public enum StripeAuthorizationRequestHistoryReason: String, StripeModel {
+public enum StripeAuthorizationRequestHistoryReason: String, Codable {
     case authorizationControls = "authorization_controls"
     case cardActive = "card_active"
     case cardInactive = "card_inactive"
@@ -131,13 +131,13 @@ public enum StripeAuthorizationRequestHistoryReason: String, StripeModel {
     case webhookTimeout = "webhook_timeout"
 }
 
-public enum StripeAuthorizationStatus: String, StripeModel {
+public enum StripeAuthorizationStatus: String, Codable {
     case pending
     case reversed
     case closed
 }
 
-public struct StripeAuthorizationVerificationData: StripeModel {
+public struct StripeAuthorizationVerificationData: Codable {
     /// One of `match`, `mismatch`, or `not_provided`.
     public var addressLine1Check: StripeAuthorizationVerificationDataCheck?
     /// One of `match`, `mismatch`, or `not_provided`.
@@ -150,26 +150,26 @@ public struct StripeAuthorizationVerificationData: StripeModel {
     public var expiryCheck: StripeAuthorizationVerificationDataCheck?
 }
 
-public enum StripeAuthorizationVerificationDataCheck: String, StripeModel {
+public enum StripeAuthorizationVerificationDataCheck: String, Codable {
     case match
     case mismatch
     case notProvided = "not_provided"
 }
 
-public enum StripeAuthorizationVerificationDataAuthorization: String, StripeModel {
+public enum StripeAuthorizationVerificationDataAuthorization: String, Codable {
     case exempt
     case failure
     case none
     case success
 }
 
-public enum StripeAuthorizationWallet: String, StripeModel {
+public enum StripeAuthorizationWallet: String, Codable {
     case applePay = "apple_pay"
     case googlePay = "google_pay"
     case samsungPay = "samsung_pay"
 }
 
-public struct StripeAuthorizationList: StripeModel {
+public struct StripeAuthorizationList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

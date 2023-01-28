@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Account Link Object](https://stripe.com/docs/api/account_links/object).
-public struct AccountLink: StripeModel {
+public struct AccountLink: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -19,14 +19,14 @@ public struct AccountLink: StripeModel {
     public var url: String?
 }
 
-public enum AccountLinkCreationType: String, StripeModel {
+public enum AccountLinkCreationType: String, Codable {
     /// Provides a form for inputting outstanding requirements. Send the user to the form in this mode to just collect the new information you need.
     case accountOnboarding = "account_onboarding"
     /// Displays the fields that are already populated on the account object, and allows your user to edit previously provided information. Consider framing this as “edit my profile” or “update my verification information”.
     case accountUpdate = "account_update"
 }
 
-public enum AccountLinkCreationCollectType: String, StripeModel {
+public enum AccountLinkCreationCollectType: String, Codable {
     case currentlyDue = "currently_due"
     case eventuallyDue = "eventually_due"
 }

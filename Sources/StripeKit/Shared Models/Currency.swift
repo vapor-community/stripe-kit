@@ -6,7 +6,7 @@
 //
 //
 
-public enum StripeCurrency: String, StripeModel {
+public enum StripeCurrency: String, Codable {
     case usd
     case aed
     case afn

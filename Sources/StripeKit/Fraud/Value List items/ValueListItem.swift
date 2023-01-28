@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Value List Item](https://stripe.com/docs/api/radar/value_list_items).
-public struct StripeValueListItem: StripeModel {
+public struct StripeValueListItem: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -25,7 +25,7 @@ public struct StripeValueListItem: StripeModel {
     public var valueList: String?
 }
 
-public struct StripeValueListItemList: StripeModel {
+public struct StripeValueListItemList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

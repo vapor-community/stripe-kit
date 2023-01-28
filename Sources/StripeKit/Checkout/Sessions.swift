@@ -6,7 +6,7 @@
 //
 
 /// The [Session Object.](https://stripe.com/docs/api/checkout/sessions/object)
-public struct StripeSession: StripeModel {
+public struct StripeSession: Codable {
     /// Unique identifier for the object. Used to pass to redirectToCheckout in Stripe.js.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -77,19 +77,19 @@ public struct StripeSession: StripeModel {
     public var url: String?
 }
 
-public struct StripeSessionList: StripeModel {
+public struct StripeSessionList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [StripeSession]?
 }
 
-public enum StripeSessionBillingAddressCollection: String, StripeModel {
+public enum StripeSessionBillingAddressCollection: String, Codable {
     case auto
     case required
 }
 
-public struct StripeSessionCustomerDetails: StripeModel {
+public struct StripeSessionCustomerDetails: Codable {
     /// The customer’s email at time of checkout.
     public var email: String?
     /// The customer’s tax exempt status at time of checkout.
@@ -100,14 +100,14 @@ public struct StripeSessionCustomerDetails: StripeModel {
     public var phone: String?
 }
 
-public struct StripeSessionCustomerDetailsTaxId: StripeModel {
+public struct StripeSessionCustomerDetailsTaxId: Codable {
     /// The type of the tax ID.
     public var type: StripeTaxIDType
     /// The value of the tax ID.
     public var value: String?
 }
 
-public struct StripeSessionLineItem: StripeModel {
+public struct StripeSessionLineItem: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -130,28 +130,28 @@ public struct StripeSessionLineItem: StripeModel {
     public var taxes: [StripeSessionLineItemTax]?
 }
 
-public struct StripeSessionLineItemDiscount: StripeModel {
+public struct StripeSessionLineItemDiscount: Codable {
     /// The amount discounted.
     public var amount: Int?
     /// The discount applied.
     public var discount: StripeDiscount?
 }
 
-public struct StripeSessionLineItemTax: StripeModel {
+public struct StripeSessionLineItemTax: Codable {
     /// Amount of tax applied for this rate.
     public var amount: Int?
     /// The tax rate applied.
     public var rate: StripeTaxRate?
 }
 
-public struct StripeSessionLineItemList: StripeModel {
+public struct StripeSessionLineItemList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [StripeSessionLineItem]?
 }
 
-public enum StripeSessionLocale: String, StripeModel {
+public enum StripeSessionLocale: String, Codable {
     case auto
     case bg
     case cs
@@ -190,13 +190,13 @@ public enum StripeSessionLocale: String, StripeModel {
     case zhTw = "zh-TW"
 }
 
-public enum StripeSessionMode: String, StripeModel {
+public enum StripeSessionMode: String, Codable {
     case payment
     case setup
     case subscription
 }
 
-public struct StripeSessionPaymentMethodOptions: StripeModel {
+public struct StripeSessionPaymentMethodOptions: Codable {
     /// If the Checkout Session’s `payment_method_types` includes `acss_debit`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var acssDebit: StripeSessionPaymentMethodOptionsAcssDebit?
     /// If the Checkout Session’s `payment_method_types` includes boleto, this hash contains the configurations that will be applied to each payment attempt of that type.
@@ -205,12 +205,12 @@ public struct StripeSessionPaymentMethodOptions: StripeModel {
     public var oxxo: StripeSessionPaymentMethodOptionsOXXO?
 }
 
-public struct StripeSessionPhoneNumberCollection: StripeModel {
+public struct StripeSessionPhoneNumberCollection: Codable {
     /// Indicates whether phone number collection is enabled for the session
     public var enabled: Bool
 }
 
-public struct StripeSessionPaymentMethodOptionsAcssDebit: StripeModel {
+public struct StripeSessionPaymentMethodOptionsAcssDebit: Codable {
     /// Currency supported by the bank account. Returned when the Session is in `setup` mode.
     public var currency: StripeSessionPaymentMethodOptionsAcssDebitCurrency?
     /// Additional fields for Mandate creation
@@ -219,12 +219,12 @@ public struct StripeSessionPaymentMethodOptionsAcssDebit: StripeModel {
     public var verificationMethod: StripeSessionPaymentMethodOptionsAcssDebitVerificationMethod?
 }
 
-public enum StripeSessionPaymentMethodOptionsAcssDebitCurrency: String, StripeModel {
+public enum StripeSessionPaymentMethodOptionsAcssDebitCurrency: String, Codable {
     case cad
     case usd
 }
 
-public struct StripeSessionPaymentMethodOptionsAcssDebitMandateOptions: StripeModel {
+public struct StripeSessionPaymentMethodOptionsAcssDebitMandateOptions: Codable {
     /// A URL for custom mandate text
     public var customMandateUrl: String?
     /// Description of the interval. Only required if `payment_schedule` parmeter is `interval` or `combined`.
@@ -235,7 +235,7 @@ public struct StripeSessionPaymentMethodOptionsAcssDebitMandateOptions: StripeMo
     public var transactionType: StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
 }
 
-public enum StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, StripeModel {
+public enum StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, Codable {
     /// Payments are initiated at a regular pre-defined interval
     case interval
     /// Payments are initiated sporadically
@@ -244,14 +244,14 @@ public enum StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsPaymentSched
     case combined
 }
 
-public enum StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, StripeModel {
+public enum StripeSessionPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable {
     /// Transaction are made for personal reasons
     case personal
     /// Transactions are made for business reasons
     case business
 }
 
-public enum StripeSessionPaymentMethodOptionsAcssDebitVerificationMethod: String, StripeModel {
+public enum StripeSessionPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable {
     /// Instant verification with fallback to microdeposits.
     case automatic
     /// Instant verification.
@@ -260,17 +260,17 @@ public enum StripeSessionPaymentMethodOptionsAcssDebitVerificationMethod: String
     case microdeposits
 }
 
-public struct StripeSessionPaymentMethodOptionsBoleto: StripeModel {
+public struct StripeSessionPaymentMethodOptionsBoleto: Codable {
     /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set  `expires_after_days` to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
     public var expiresAfterDays: Int?
 }
 
-public struct StripeSessionPaymentMethodOptionsOXXO: StripeModel {
+public struct StripeSessionPaymentMethodOptionsOXXO: Codable {
     /// The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set `expires_after_days` to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
     public var expiresAfterDays: Int?
 }
 
-public enum StripeSessionPaymentMethodType: String, StripeModel {
+public enum StripeSessionPaymentMethodType: String, Codable {
     case alipay
     case card
     case ideal
@@ -290,19 +290,19 @@ public enum StripeSessionPaymentMethodType: String, StripeModel {
     case oxxo
 }
 
-public struct StripeSessionShippingAddressCollection: StripeModel {
+public struct StripeSessionShippingAddressCollection: Codable {
     /// An array of two-letter ISO country codes representing which countries Checkout should provide as options for shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
     public var allowedCountries: [String]?
 }
 
-public struct StripeSessionShippingOption: StripeModel {
+public struct StripeSessionShippingOption: Codable {
     /// A non-negative integer in cents representing how much to charge.
     public var shippingAmount: Int?
     /// The shipping rate.
     @Expandable<StripeShippingRate> public var shippingRate: String?
 }
 
-public enum StripeSessionSubmitType: String, StripeModel {
+public enum StripeSessionSubmitType: String, Codable {
     case auto
     case book
     case donate
@@ -318,7 +318,7 @@ public enum StripeSessionStatus: String, Codable {
     case expired
 }
 
-public struct StripeSessionTotalDetails: StripeModel {
+public struct StripeSessionTotalDetails: Codable {
     /// This is the sum of all the line item discounts.
     public var amountDiscount: Int?
     /// This is the sum of all the line item shipping amounts.
@@ -329,14 +329,14 @@ public struct StripeSessionTotalDetails: StripeModel {
     public var breakdown: StripeSessionTotalDetailsBreakdown?
 }
 
-public struct StripeSessionTotalDetailsBreakdown: StripeModel {
+public struct StripeSessionTotalDetailsBreakdown: Codable {
     /// The aggregated line item discounts.
     public var discounts: [StripeSessionLineItemDiscount]?
     /// The aggregated line item tax amounts by rate.
     public var taxes: [StripeSessionLineItemTax]?
 }
 
-public enum StripeSessionPaymentStatus: String, StripeModel {
+public enum StripeSessionPaymentStatus: String, Codable {
     /// The payment funds are available in your account.
     case paid
     /// The payment funds are not yet available in your account.
@@ -345,7 +345,7 @@ public enum StripeSessionPaymentStatus: String, StripeModel {
     case noPaymentRequired = "no_payment_required"
 }
 
-public struct StripeSessionTaxIdCollection: StripeModel {
+public struct StripeSessionTaxIdCollection: Codable {
     /// Indicates whether tax ID collection is enabled for the session
     public var enabled: Bool?
 }

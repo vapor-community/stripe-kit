@@ -6,7 +6,7 @@
 //
 //
 
-public struct StripeShippingLabel: StripeModel {
+public struct StripeShippingLabel: Codable {
     /// Shipping address.
     public var address: StripeAddress?
     /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.

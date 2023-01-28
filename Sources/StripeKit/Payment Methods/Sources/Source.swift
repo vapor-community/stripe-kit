@@ -9,7 +9,7 @@
 import Foundation
 
 /// The [Source Object](https://stripe.com/docs/api/sources/object).
-public struct StripeSource: StripeModel {
+public struct StripeSource: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -64,27 +64,27 @@ public struct StripeSource: StripeModel {
     public var wechat: StripeSourceWechat?
 }
 
-public struct StripeSourceCodeVerification: StripeModel {
+public struct StripeSourceCodeVerification: Codable {
     /// The number of attempts remaining to authenticate the source object with a verification code.
     public var attemptsRemaining: Int?
     /// The status of the code verification, either `pending` (awaiting verification, `attempts_remaining` should be greater than 0), `succeeded` (successful verification) or `failed` (failed verification, cannot be verified anymore as `attempts_remaining` should be 0).
     public var status: StripeSourceCodeVerificationStatus?
 }
 
-public enum StripeSourceCodeVerificationStatus: String, StripeModel {
+public enum StripeSourceCodeVerificationStatus: String, Codable {
     case pending
     case succeeded
     case failed
 }
 
-public enum StripeSourceFlow: String, StripeModel {
+public enum StripeSourceFlow: String, Codable {
     case redirect
     case receiver
     case codeVerification = "code_verification"
     case none
 }
 
-public struct StripeSourceOwner: StripeModel {
+public struct StripeSourceOwner: Codable {
     /// Owner’s address.
     public var address: StripeAddress?
     /// Owner’s email address.
@@ -103,7 +103,7 @@ public struct StripeSourceOwner: StripeModel {
     public var verifiedPhone: String?
 }
 
-public struct StripeSourceReceiver: StripeModel {
+public struct StripeSourceReceiver: Codable {
     /// The address of the receiver source. This is the value that should be communicated to the customer to send their funds to.
     public var address: String?
     /// The total amount that was charged by you. The amount charged is expressed in the source’s currency.
@@ -118,19 +118,19 @@ public struct StripeSourceReceiver: StripeModel {
     public var refundAttributesStatus: StripeSourceReceiverRefundAttributesStatus?
 }
 
-public enum StripeSourceReceiverRefundAttributesMethod: String, StripeModel {
+public enum StripeSourceReceiverRefundAttributesMethod: String, Codable {
     case email
     case manual
     case none
 }
 
-public enum StripeSourceReceiverRefundAttributesStatus: String, StripeModel {
+public enum StripeSourceReceiverRefundAttributesStatus: String, Codable {
     case missing
     case requested
     case available
 }
 
-public struct StripeSourceRedirect: StripeModel {
+public struct StripeSourceRedirect: Codable {
     /// The failure reason for the redirect, either `user_abort` (the customer aborted or dropped out of the redirect flow), `declined` (the authentication failed or the transaction was declined), or `processing_error` (the redirect failed due to a technical error). Present only if the redirect status is `failed`.
     public var failureReason: StripeSourceRedirectFailureReason?
     /// The URL you provide to redirect the customer to after they authenticated their payment.
@@ -141,21 +141,21 @@ public struct StripeSourceRedirect: StripeModel {
     public var url: String?
 }
 
-public enum StripeSourceRedirectFailureReason: String, StripeModel {
+public enum StripeSourceRedirectFailureReason: String, Codable {
     case userAbort = "user_abort"
     case declined
     case processingError = "processing_error"
     case failed
 }
 
-public enum StripeSourceRedirectReason: String, StripeModel {
+public enum StripeSourceRedirectReason: String, Codable {
     case pending
     case succeeded
     case notRequired = "not_required"
     case failed
 }
 
-public enum StripeSourceStatus: String, StripeModel {
+public enum StripeSourceStatus: String, Codable {
     case canceled
     case chargeable
     case consumed
@@ -163,7 +163,7 @@ public enum StripeSourceStatus: String, StripeModel {
     case pending
 }
 
-public enum StripeSourceType: String, StripeModel {
+public enum StripeSourceType: String, Codable {
     case achCreditTransfer = "ach_credit_transfer"
     case achDebit = "ach_debit"
     case alipay
@@ -181,13 +181,13 @@ public enum StripeSourceType: String, StripeModel {
     case wechat
 }
 
-public enum StripeSourceUsage: String, StripeModel {
+public enum StripeSourceUsage: String, Codable {
     case reusable
     case singleUse = "single_use"
 }
 
 // MARK: - Sources
-public struct StripeSourceACHCreditTransfer: StripeModel {
+public struct StripeSourceACHCreditTransfer: Codable {
     public var accountNumber: String?
     public var bankName: String?
     public var fingerprint: String?
@@ -195,7 +195,7 @@ public struct StripeSourceACHCreditTransfer: StripeModel {
     public var swiftCode: String?
 }
 
-public struct StripeSourceACHDebit: StripeModel {
+public struct StripeSourceACHDebit: Codable {
     public var bankName: String?
     public var country: String?
     public var fingerprint: String?
@@ -204,12 +204,12 @@ public struct StripeSourceACHDebit: StripeModel {
     public var type: String?
 }
 
-public struct StripeSourceAlipay: StripeModel {
+public struct StripeSourceAlipay: Codable {
     public var nativeUrl: String?
     public var statementDescriptor: String?
 }
 
-public struct StripeSourceBancontact: StripeModel {
+public struct StripeSourceBancontact: Codable {
     public var bankCode: String?
     public var bankName: String?
     public var bic: String?
@@ -217,7 +217,7 @@ public struct StripeSourceBancontact: StripeModel {
     public var preferredLanguage: String?
 }
 
-public struct StripeSourceCard: StripeModel {
+public struct StripeSourceCard: Codable {
     public var addressLine1Check: String?
     public var addressZipCheck: String?
     public var brand: StripeCardBrand?
@@ -234,7 +234,7 @@ public struct StripeSourceCard: StripeModel {
     public var tokenizationMethod: String?
 }
 
-public struct StripeSourceCardPresent: StripeModel {
+public struct StripeSourceCardPresent: Codable {
     public var applicationCryptogram: String?
     public var applicationPreferredName: String?
     public var authorizationCode: String?
@@ -260,33 +260,33 @@ public struct StripeSourceCardPresent: StripeModel {
     public var transactionStatusInformation: String?
 }
 
-public struct StripeSourceEPS: StripeModel {
+public struct StripeSourceEPS: Codable {
     // The Eps sources do not have any specific property today.
     // The only ones available in the spec are for private betas.
 }
 
-public struct StripeSourceGiropay: StripeModel {
+public struct StripeSourceGiropay: Codable {
     public var bankCode: String?
     public var bic: String?
     public var bankName: String?
 }
 
-public struct StripeSourceIDEAL: StripeModel {
+public struct StripeSourceIDEAL: Codable {
     public var bank: String?
     public var bic: String?
     public var ibanLast4: String?
 }
 
-public struct StripeSourceMultibanco: StripeModel {
+public struct StripeSourceMultibanco: Codable {
     public var entity: String?
     public var reference: String?
 }
 
-public struct StripeSourceP24: StripeModel {
+public struct StripeSourceP24: Codable {
     public var reference: String?
 }
 
-public struct StripeSourceSepaDebit: StripeModel {
+public struct StripeSourceSepaDebit: Codable {
     public var bankCode: String?
     public var branchCode: String?
     public var country: String?
@@ -296,7 +296,7 @@ public struct StripeSourceSepaDebit: StripeModel {
     public var mandateUrl: String?
 }
 
-public struct StripeSourceSofort: StripeModel {
+public struct StripeSourceSofort: Codable {
     public var bankCode: String?
     public var bankName: String?
     public var bic: String?
@@ -305,7 +305,7 @@ public struct StripeSourceSofort: StripeModel {
     public var verifiedName: String?
 }
 
-public struct StripeSourceThreeDSecure: StripeModel {
+public struct StripeSourceThreeDSecure: Codable {
     public var addressLine1Check: String?
     public var addressZipCheck: String?
     public var authenticated: Bool?
@@ -324,19 +324,19 @@ public struct StripeSourceThreeDSecure: StripeModel {
     public var tokenizationMethod: StripeCardTokenizedMethod?
 }
 
-public enum StripeSourceThreeDSecureSupportStatus: String, StripeModel {
+public enum StripeSourceThreeDSecureSupportStatus: String, Codable {
     case notSupported = "not_supported"
     case required
     case recommended
     case optional
 }
 
-public struct StripeSourceWechat: StripeModel {
+public struct StripeSourceWechat: Codable {
     // Stripe has no offocial documentation details
     /// https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-wechat
 }
 
-public struct StripeSourcesList: StripeModel {
+public struct StripeSourcesList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

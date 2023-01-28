@@ -6,7 +6,7 @@
 //
 
 /// The [Dispute Evidence Object](https://stripe.com/docs/api/disputes/evidence_object).
-public struct StripeDisputeEvidence: StripeModel {
+public struct StripeDisputeEvidence: Codable {
     /// Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity.
     public var accessActivityLog: String?
     /// The billing address provided by the customer.

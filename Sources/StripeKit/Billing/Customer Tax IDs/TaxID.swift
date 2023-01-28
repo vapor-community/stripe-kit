@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Tax ID Object](https://stripe.com/docs/api/customer_tax_ids/object).
-public struct StripeTaxID: StripeModel {
+public struct StripeTaxID: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -29,7 +29,7 @@ public struct StripeTaxID: StripeModel {
     public var verification: StripeTaxIDVerififcation?
 }
 
-public enum StripeTaxIDType: String, StripeModel {
+public enum StripeTaxIDType: String, Codable {
     case ae_trn
     case au_abn
     case br_cnpj
@@ -66,7 +66,7 @@ public enum StripeTaxIDType: String, StripeModel {
     case unknown
 }
 
-public struct StripeTaxIDVerififcation: StripeModel {
+public struct StripeTaxIDVerififcation: Codable {
     /// Verification status, one of `pending`, `unavailable`, `unverified`, or `verified`.
     public var status: StripeTaxIDVerififcationStatus?
     /// Verified address.
@@ -75,14 +75,14 @@ public struct StripeTaxIDVerififcation: StripeModel {
     public var verifiedName: String?
 }
 
-public enum StripeTaxIDVerififcationStatus: String, StripeModel {
+public enum StripeTaxIDVerififcationStatus: String, Codable {
     case pending
     case unavailable
     case unverified
     case verified
 }
 
-public struct StripeTaxIDList: StripeModel {
+public struct StripeTaxIDList: Codable {
     public var object: String
     public var url: String?
     public var hasMore: Bool?

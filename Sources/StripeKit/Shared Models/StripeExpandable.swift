@@ -8,21 +8,21 @@
 import Foundation
 
 extension KeyedDecodingContainer {
-    public func decode<U>(_ type: ExpandableCollection<U>.Type, forKey key: Self.Key) throws -> ExpandableCollection<U> where U: StripeModel {
+    public func decode<U>(_ type: ExpandableCollection<U>.Type, forKey key: Self.Key) throws -> ExpandableCollection<U> where U: Codable {
        return try decodeIfPresent(type, forKey: key) ?? ExpandableCollection<U>()
     }
     
-    public func decode<U>(_ type: Expandable<U>.Type, forKey key: Self.Key) throws -> Expandable<U> where U: StripeModel {
+    public func decode<U>(_ type: Expandable<U>.Type, forKey key: Self.Key) throws -> Expandable<U> where U: Codable {
        return try decodeIfPresent(type, forKey: key) ?? Expandable<U>()
     }
     
-    public func decode<U,D>(_ type: DynamicExpandable<U,D>.Type, forKey key: Self.Key) throws -> DynamicExpandable<U,D> where U: StripeModel, D: StripeModel {
+    public func decode<U,D>(_ type: DynamicExpandable<U,D>.Type, forKey key: Self.Key) throws -> DynamicExpandable<U,D> where U: Codable, D: Codable {
        return try decodeIfPresent(type, forKey: key) ?? DynamicExpandable<U,D>()
     }
 }
 
 @propertyWrapper
-public struct Expandable<Model: StripeModel>: StripeModel {
+public struct Expandable<Model: Codable>: Codable {
     
     private enum ExpandableState {
         case unexpanded(String)
@@ -81,10 +81,10 @@ public struct Expandable<Model: StripeModel>: StripeModel {
 }
 
 @propertyWrapper
-public struct DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
+public struct DynamicExpandable<A: Codable, B: Codable>: Codable {
     private enum ExpandableState {
         case unexpanded(String)
-        indirect case expanded(StripeModel)
+        indirect case expanded(Codable)
         case empty
     }
 
@@ -146,7 +146,7 @@ public struct DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
         
     public var projectedValue: DynamicExpandable<A,B> { self }
     
-    public func callAsFunction<T: StripeModel>(as type: T.Type) -> T? {
+    public func callAsFunction<T: Codable>(as type: T.Type) -> T? {
         switch _state {
         case .unexpanded(_), .empty:
             return nil
@@ -161,7 +161,7 @@ public struct DynamicExpandable<A: StripeModel, B: StripeModel>: StripeModel {
 }
 
 @propertyWrapper
-public struct ExpandableCollection<Model: StripeModel>: StripeModel {
+public struct ExpandableCollection<Model: Codable>: Codable {
     private enum ExpandableState {
         case unexpanded([String])
         indirect case expanded([Model])

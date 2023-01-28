@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Transfer Object](https://stripe.com/docs/api/transfers/object).
-public struct StripeTransfer: StripeModel {
+public struct StripeTransfer: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -46,12 +46,12 @@ public struct StripeTransfer: StripeModel {
     public var transferGroup: String?
 }
 
-public enum StripeTransferSourceType: String, StripeModel {
+public enum StripeTransferSourceType: String, Codable {
     case card
     case bankAccount = "bank_account"
 }
 
-public struct StripeTransferList: StripeModel {
+public struct StripeTransferList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

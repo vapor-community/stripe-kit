@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Tax Rate Object](https://stripe.com/docs/api/tax_rates/object)
-public struct StripeTaxRate: StripeModel {
+public struct StripeTaxRate: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -39,12 +39,12 @@ public struct StripeTaxRate: StripeModel {
     public var taxType: StripeTaxRateTaxType?
 }
 
-public enum StripeTaxRateTaxType: String, StripeModel {
+public enum StripeTaxRateTaxType: String, Codable {
     case vat
     case salesTax = "sales_tax"
 }
 
-public struct StripeTaxRateList: StripeModel {
+public struct StripeTaxRateList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

@@ -8,7 +8,7 @@
 import Foundation
 
 /// The [Dispte Object](https://stripe.com/docs/api/issuing/disputes/object)
-public struct StripeIssuingDispute: StripeModel {
+public struct StripeIssuingDispute: Codable {
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -33,40 +33,40 @@ public struct StripeIssuingDispute: StripeModel {
     public var status: StripeIssuingDisputeStatus?
 }
 
-public struct StripeIssuingDisputeList: StripeModel {
+public struct StripeIssuingDisputeList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [StripeIssuingDispute]?
 }
 
-public struct StripeIssuingDisputeEvidence: StripeModel {
+public struct StripeIssuingDisputeEvidence: Codable {
     /// Evidence to support a fraudulent dispute. This will only be present if your dispute’s `reason` is `fraudulent`.
     public var fraudulent: StripeIssuingDisputeEvidenceFraudulent?
     /// Evidence to support an uncategorized dispute. This will only be present if your dispute’s `reason` is `other`.
     public var other: StripeIssuingDisputeEvidenceOther?
 }
 
-public struct StripeIssuingDisputeEvidenceFraudulent: StripeModel {
+public struct StripeIssuingDisputeEvidenceFraudulent: Codable {
     /// Brief freeform text explaining why you are disputing this transaction.
     public var disputeExplination: String?
     /// (ID of a file upload) Additional file evidence supporting your dispute.
     public var uncategorizedFile: String?
 }
 
-public struct StripeIssuingDisputeEvidenceOther: StripeModel {
+public struct StripeIssuingDisputeEvidenceOther: Codable {
     /// Brief freeform text explaining why you are disputing this transaction.
     public var disputeExplination: String?
     /// (ID of a file upload) Additional file evidence supporting your dispute.
     public var uncategorizedFile: String?
 }
 
-public enum StripeIssuingDisputeReason: String, StripeModel {
+public enum StripeIssuingDisputeReason: String, Codable {
     case other
     case fraudulent
 }
 
-public enum StripeIssuingDisputeStatus: String, StripeModel {
+public enum StripeIssuingDisputeStatus: String, Codable {
     case unsubmitted
     case underReview = "under_review"
     case won
