@@ -86,7 +86,7 @@ public enum StripeSourceFlow: String, Codable {
 
 public struct StripeSourceOwner: Codable {
     /// Owner’s address.
-    public var address: StripeAddress?
+    public var address: Address?
     /// Owner’s email address.
     public var email: String?
     /// Owner’s full name.
@@ -94,7 +94,7 @@ public struct StripeSourceOwner: Codable {
     /// Owner’s phone number (including extension).
     public var phone: String?
     /// Verified owner’s address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    public var verifiedAddress: StripeAddress?
+    public var verifiedAddress: Address?
     /// Verified owner’s email address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var verifiedEmail: String?
     /// Verified owner’s full name. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.

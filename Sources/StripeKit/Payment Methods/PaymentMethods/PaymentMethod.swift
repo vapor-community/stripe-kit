@@ -248,7 +248,7 @@ public struct StripePaymentMethodCardWallet: Codable {
 
 public struct StripePaymentMethodCardWalletMasterPass: Codable {
     /// Owner’s verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    public var billingAddress: StripeAddress?
+    public var billingAddress: Address?
     /// Owner’s verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var email: String?
     /// Owner’s verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -268,13 +268,13 @@ public enum StripePaymentMethodCardWalletType: String, Codable {
 
 public struct StripePaymentMethodCardWalletVisaCheckout: Codable {
     /// Owner’s verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    public var billingAddress: StripeAddress?
+    public var billingAddress: Address?
     /// Owner’s verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var email: String?
     /// Owner’s verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var name: String?
     /// Owner’s verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    public var shippingAddress: StripeAddress?
+    public var shippingAddress: Address?
 }
 
 public struct StripePaymentMethodCardPresent: Codable {

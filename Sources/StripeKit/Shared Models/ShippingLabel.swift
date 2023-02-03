@@ -8,7 +8,7 @@
 
 public struct StripeShippingLabel: Codable {
     /// Shipping address.
-    public var address: StripeAddress?
+    public var address: Address?
     /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
     public var carrier: String?
     /// Recipient name.

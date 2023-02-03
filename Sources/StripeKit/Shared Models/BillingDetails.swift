@@ -7,7 +7,7 @@
 
 public struct StripeBillingDetails: Codable {
     /// Billing address.
-    public var address: StripeAddress?
+    public var address: Address?
     /// Email address.
     public var email: String?
     /// Full name.

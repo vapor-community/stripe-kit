@@ -86,7 +86,7 @@ public enum StripeIssuingCardReplacementReason: String, Codable {
 
 public struct StripeIssuingCardShipping: Codable {
     /// Shipping address.
-    public var address: StripeAddress?
+    public var address: Address?
     /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
     public var carrier: StripeIssuingCardShippingCarrier?
     /// A unix timestamp representing a best estimate of when the card will be delivered.

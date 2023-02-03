@@ -72,7 +72,7 @@ public enum StripeCardholderSpendingControlSpendingLimitInterval: String, Codabl
 
 public struct StripeCardholderBilling: Codable {
     /// The cardholder’s billing address.
-    public var address: StripeAddress?
+    public var address: Address?
 }
 
 public struct StripeCardholderCompany: Codable {

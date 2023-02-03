@@ -6,7 +6,7 @@
 //
 //
 
-public struct StripeAddress: Codable {
+public struct Address: Codable {
     /// City/District/Suburb/Town/Village.
     public var city: String?
     /// 2-letter country code.
@@ -19,6 +19,20 @@ public struct StripeAddress: Codable {
     public var postalCode: String?
     /// State/County/Province/Region.
     public var state: String?
+    
+    public init(city: String? = nil,
+                country: String? = nil,
+                line1: String? = nil,
+                line2: String? = nil,
+                postalCode: String? = nil,
+                state: String? = nil) {
+        self.city = city
+        self.country = country
+        self.line1 = line1
+        self.line2 = line2
+        self.postalCode = postalCode
+        self.state = state
+    }
 }
 
 public struct StripeAddressKana: Codable {

@@ -15,7 +15,7 @@ public struct StripeCustomer: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The customers address.
-    public var addrress: StripeAddress?
+    public var addrress: Address?
     /// Current balance, if any, being stored on the customer’s account. If negative, the customer has credit to apply to the next invoice. If positive, the customer has an amount owed that will be added to the next invoice. The balance does not refer to any unpaid invoices; it solely takes into account amounts that have yet to be successfully applied to any invoice. This balance is only taken into account as invoices are finalized. Note that the balance does not include unpaid invoices.
     public var balance: Int?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.

@@ -16,7 +16,7 @@ public struct StripePerson: Codable {
     /// The account the person is associated with.
     public var account: String?
     /// The persons address.
-    public var address: StripeAddress?
+    public var address: Address?
     /// The Kana variation of the person’s address (Japan only).
     public var addressKana: StripeAddressKana?
     /// The Kanji variation of the person’s address (Japan only).
