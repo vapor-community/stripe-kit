@@ -30,6 +30,18 @@ public struct Expandable<Model: Codable>: Codable {
         case empty
     }
     
+    public init(model: Model) {
+        self._state = .expanded(model)
+    }
+    
+    public init(id: String?) {
+        if let id {
+            self._state = .unexpanded(id)
+        } else {
+            self._state = .empty
+        }        
+    }
+    
     public init() {
         self._state = .empty
     }
