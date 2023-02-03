@@ -54,7 +54,7 @@ public struct StripeSession: Codable {
     /// The ID of the SetupIntent for Checkout Sessions in setup mode.
     @Expandable<StripeSetupIntent> public var setupIntent: String?
     /// Shipping information for this Checkout Session.
-    public var shipping: StripeShippingLabel?
+    public var shipping: ShippingLabel?
     /// When set, provides configuration for Checkout to collect a shipping address from a customer.
     public var shippingAddressCollection: StripeSessionShippingAddressCollection?
     /// The shipping rate options applied to this Session.

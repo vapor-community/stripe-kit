@@ -227,7 +227,7 @@ public struct StripeSourceCard: Codable {
     public var expMonth: Int?
     public var expYear: Int?
     public var fingerprint: String?
-    public var funding: StripeCardFundingType?
+    public var funding: CardFundingType?
     public var last4: String?
     public var name: String?
     public var threeDSecure: String?
@@ -250,7 +250,7 @@ public struct StripeSourceCardPresent: Codable {
     public var expMonth: Int?
     public var expyear: Int?
     public var fingerprint: String?
-    public var funding: StripeCardFundingType?
+    public var funding: CardFundingType?
     public var last4: String?
     public var posDeviceId: String?
     public var posEntryMode: String?
@@ -318,7 +318,7 @@ public struct StripeSourceThreeDSecure: Codable {
     public var expMonth: Int?
     public var expYear: Int?
     public var fingerprint: String?
-    public var funding: StripeCardFundingType?
+    public var funding: CardFundingType?
     public var last4: String?
     public var threedSecure: StripeSourceThreeDSecureSupportStatus?
     public var tokenizationMethod: StripeCardTokenizedMethod?

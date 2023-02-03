@@ -29,7 +29,7 @@ public protocol ChargeRoutes {
     ///   - transferData: An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
     ///   - transferGroup: A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#grouping-transactions).
     ///   - expand: An array of properties to expand.
-    /// - Returns: A `StripeCharge`.
+    /// - Returns: A `Charge`.
     func create(amount: Int,
                 currency: Currency,
                 applicationFeeAmount: Int?,
@@ -45,14 +45,14 @@ public protocol ChargeRoutes {
                 statementDescriptorSuffix: String?,
                 transferData: [String: Any]?,
                 transferGroup: String?,
-                expand: [String]?) -> EventLoopFuture<StripeCharge>
+                expand: [String]?) -> EventLoopFuture<Charge>
     
     /// Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
     ///
     /// - Parameter charge: The identifier of the charge to be retrieved.
     /// - Parameter expand: An array of properties to expand.
-    /// - Returns: A `StripeCharge`.
-    func retrieve(charge: String, expand: [String]?) -> EventLoopFuture<StripeCharge>
+    /// - Returns: A `Charge`.
+    func retrieve(charge: String, expand: [String]?) -> EventLoopFuture<Charge>
     
     /// Updates the specified charge by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
@@ -66,7 +66,7 @@ public protocol ChargeRoutes {
     ///   - shipping: Shipping information for the charge. Helps prevent fraud on charges for physical goods.
     ///   - transferGroup: A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
     ///   - expand: An array of properties to expand.
-    /// - Returns: A `StripeCharge`.
+    /// - Returns: A `Charge`.
     func update(charge: String,
                 customer: String?,
                 description: String?,
@@ -75,7 +75,7 @@ public protocol ChargeRoutes {
                 receiptEmail: String?,
                 shipping: [String: Any]?,
                 transferGroup: String?,
-                expand: [String]?) -> EventLoopFuture<StripeCharge>
+                expand: [String]?) -> EventLoopFuture<Charge>
     
     /// Capture the payment of an existing, uncaptured, charge. This is the second half of the two-step payment flow, where first you [created a charge](https://stripe.com/docs/api/charges/capture#create_charge) with the capture option set to false. \n Uncaptured payments expire exactly seven days after they are created. If they are not captured by that point in time, they will be marked as refunded and will no longer be capturable.
     ///
@@ -89,7 +89,7 @@ public protocol ChargeRoutes {
     ///   - transferData: An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
     ///   - transferGroup: A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
     ///   - expand: An array of properties to expand.
-    /// - Returns: A `StripeCharge`.
+    /// - Returns: A `Charge`.
     func capture(charge: String,
                  amount: Int?,
                  applicationFeeAmount: Int?,
@@ -98,7 +98,7 @@ public protocol ChargeRoutes {
                  statementDescriptorSuffix: String?,
                  transferData: [String: Any]?,
                  transferGroup: String?,
-                 expand: [String]?) -> EventLoopFuture<StripeCharge>
+                 expand: [String]?) -> EventLoopFuture<Charge>
     
     /// Returns a list of charges you’ve previously created. The charges are returned in sorted order, with the most recent charges appearing first.
     ///
@@ -126,7 +126,7 @@ extension ChargeRoutes {
                        statementDescriptorSuffix: String? = nil,
                        transferData: [String: Any]? = nil,
                        transferGroup: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeCharge> {
+                       expand: [String]? = nil) -> EventLoopFuture<Charge> {
         return create(amount: amount,
                       currency: currency,
                       applicationFeeAmount: applicationFeeAmount,
@@ -145,7 +145,7 @@ extension ChargeRoutes {
                       expand: expand)
     }
     
-    public func retrieve(charge: String, expand: [String]? = nil) -> EventLoopFuture<StripeCharge> {
+    public func retrieve(charge: String, expand: [String]? = nil) -> EventLoopFuture<Charge> {
         return retrieve(charge: charge, expand: expand)
     }
     
@@ -157,7 +157,7 @@ extension ChargeRoutes {
                        receiptEmail: String? = nil,
                        shipping: [String: Any]? = nil,
                        transferGroup: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeCharge> {
+                       expand: [String]? = nil) -> EventLoopFuture<Charge> {
         return update(charge: chargeId,
                       customer: customer,
                       description: description,
@@ -177,7 +177,7 @@ extension ChargeRoutes {
                         statementDescriptorSuffix: String? = nil,
                         transferData: [String: Any]? = nil,
                         transferGroup: String? = nil,
-                        expand: [String]? = nil) -> EventLoopFuture<StripeCharge> {
+                        expand: [String]? = nil) -> EventLoopFuture<Charge> {
         return capture(charge: charge,
                        amount: amount,
                        applicationFeeAmount: applicationFeeAmount,
@@ -220,7 +220,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
                        statementDescriptorSuffix: String?,
                        transferData: [String: Any]?,
                        transferGroup: String?,
-                       expand: [String]?) -> EventLoopFuture<StripeCharge> {
+                       expand: [String]?) -> EventLoopFuture<Charge> {
         var body: [String: Any] = ["amount": amount, "currency": currency.rawValue]
         if let applicationFeeAmount = applicationFeeAmount {
             body["application_fee_amount"] = applicationFeeAmount
@@ -285,7 +285,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
         return apiHandler.send(method: .POST, path: charge, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(charge: String, expand: [String]?) -> EventLoopFuture<StripeCharge> {
+    public func retrieve(charge: String, expand: [String]?) -> EventLoopFuture<Charge> {
         var queryParams = ""
         if let expand = expand {
             queryParams = ["expand": expand].queryParameters
@@ -301,7 +301,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
                        receiptEmail: String?,
                        shipping: [String: Any]?,
                        transferGroup: String?,
-                       expand: [String]?) -> EventLoopFuture<StripeCharge> {
+                       expand: [String]?) -> EventLoopFuture<Charge> {
         var body: [String: Any] = [:]
         
         if let customer = customer {
@@ -347,7 +347,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
                         statementDescriptorSuffix: String?,
                         transferData: [String: Any]?,
                         transferGroup: String?,
-                        expand: [String]?) -> EventLoopFuture<StripeCharge> {
+                        expand: [String]?) -> EventLoopFuture<Charge> {
         var body: [String: Any] = [:]
         
         if let amount = amount {

@@ -19,7 +19,7 @@ public struct StripeDispute: Codable {
     /// List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.
     public var balanceTransactions: [BalanceTransaction]?
     /// ID of the charge that was disputed.
-    @Expandable<StripeCharge> public var charge: String?
+    @Expandable<Charge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.

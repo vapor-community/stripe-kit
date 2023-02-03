@@ -49,7 +49,7 @@ public struct StripeCustomer: Codable {
     /// The customer’s preferred locales (languages), ordered by preference
     public var preferredLocals: [String]?
     /// Mailing and shipping address for the customer. Appears on invoices emailed to this customer.
-    public var shipping: StripeShippingLabel?
+    public var shipping: ShippingLabel?
     /// The customer’s payment sources, if any.
     public var sources: StripeSourcesList?
     /// The customer’s current subscriptions, if any.

@@ -21,7 +21,7 @@ public struct StripeCard: Codable {
     /// Address line 1 (Street address/PO Box/Company name).
     public var addressLine1: String?
     /// If `address_line1` was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
-    public var addressLine1Check: StripeCardValidationCheck?
+    public var addressLine1Check: CardValidationCheck?
     /// Address line 2 (Apartment/Suite/Unit/Building).
     public var addressLine2: String?
     /// State/County/Province/Region.
@@ -29,7 +29,7 @@ public struct StripeCard: Codable {
     /// ZIP or postal code.
     public var addressZip: String?
     /// If `address_zip` was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
-    public var addressZipCheck: StripeCardValidationCheck?
+    public var addressZipCheck: CardValidationCheck?
     /// A set of available payout methods for this card. Will be either `["standard"]` or `["standard", "instant"]`. Only values from this set should be passed as the `method` when creating a transfer.
     public var availablePayoutMethods: [String]?
     /// Card brand. Can be `American Express`, `Diners Club`, `Discover`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
@@ -41,7 +41,7 @@ public struct StripeCard: Codable {
     /// The customer that this card belongs to. This attribute will not be in the card object if the card belongs to an account or recipient instead.
     @Expandable<StripeCustomer> public var customer: String?
     /// If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
-    public var cvcCheck: StripeCardValidationCheck?
+    public var cvcCheck: CardValidationCheck?
     /// Whether this card is the default external account for its currency.
     public var defaultForCurrency: Bool?
     /// (For tokenized numbers only.) The last four digits of the device account number.
@@ -53,7 +53,7 @@ public struct StripeCard: Codable {
     /// Uniquely identifies this particular card number. You can use this attribute to check whether two customers who’ve signed up with you are using the same card number, for example.
     public var fingerprint: String?
     /// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
-    public var funding: StripeCardFundingType?
+    public var funding: CardFundingType?
     /// The last four digits of the card.
     public var last4: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -77,7 +77,7 @@ public struct StripeCardList: Codable {
     public var url: String?
 }
 
-public enum StripeCardValidationCheck: String, Codable {
+public enum CardValidationCheck: String, Codable {
     case pass
     case fail
     case unavailable
@@ -95,7 +95,7 @@ public enum StripeCardBrand: String, Codable {
     case unknown = "Unknown"
 }
 
-public enum StripeCardFundingType: String, Codable {
+public enum CardFundingType: String, Codable {
     case credit
     case debit
     case prepaid

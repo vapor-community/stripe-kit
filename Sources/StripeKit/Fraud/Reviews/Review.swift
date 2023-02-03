@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// The [Review Object](https://stripe.com/docs/api/radar/reviews/object).
+/// The [Review Object](https://stripe.com/docs/api/radar/reviews/object)
 public struct StripeReview: Codable {
     /// Unique identifier for the object.
     public var id: String
@@ -16,7 +16,7 @@ public struct StripeReview: Codable {
     /// The ZIP or postal code of the card used, if applicable.
     public var billingZip: String?
     /// The charge associated with this review.
-    @Expandable<StripeCharge> public var charge: String?
+    @Expandable<Charge> public var charge: String?
     /// The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
     public var closedReason: StripeReviewClosedReason?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
