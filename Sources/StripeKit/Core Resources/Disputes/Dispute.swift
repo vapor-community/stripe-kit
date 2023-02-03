@@ -23,7 +23,7 @@ public struct StripeDispute: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Evidence provided to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review.
     public var evidence: StripeDisputeEvidence?
     /// Information about the evidence submission.

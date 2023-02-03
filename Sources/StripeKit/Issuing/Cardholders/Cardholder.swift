@@ -49,7 +49,7 @@ public struct StripeCardholderSpendingControls: Codable {
     /// Limit the spending with rules based on time intervals and categories.
     public var spendingLimits: [StripeCardholderSpendingControlSpendingLimit]?
     /// Currency for the amounts within spending_limits.
-    public var spendingLimitsCurrency: StripeCurrency?
+    public var spendingLimitsCurrency: Currency?
 }
 
 public struct StripeCardholderSpendingControlSpendingLimit: Codable {

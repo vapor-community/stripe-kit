@@ -22,7 +22,7 @@ public struct StripeTransfer: Codable {
     /// Time that this record of the transfer was first created.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// ID of the Stripe account the transfer was sent to.

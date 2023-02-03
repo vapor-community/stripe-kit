@@ -23,7 +23,7 @@ public struct StripeSource: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO code for the currency associated with the source. This is the currency for which the source will be chargeable once ready. Required for `single_use` sources.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The ID of the customer to which this source is attached. This will not be present when the source has not been attached to a customer.
     public var customer: String?
     /// The authentication flow of the source. flow is one of `redirect`, `receiver`, `code_verification`, `none`.

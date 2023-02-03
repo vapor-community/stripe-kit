@@ -27,7 +27,7 @@ public struct StripePlan: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// One of `day`, `week`, `month` or `year`. The frequency with which a subscription should be billed.
     public var interval: StripePlanInterval?
     /// The number of intervals (specified in the `interval` property) between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months.

@@ -19,7 +19,7 @@ public struct StripeTopUp: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Date the funds are expected to arrive in your Stripe account for payouts. This factors in delays like weekends or bank holidays. May not be specified depending on status of top-up.

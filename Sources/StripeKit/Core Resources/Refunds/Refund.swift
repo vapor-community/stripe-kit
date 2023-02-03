@@ -23,7 +23,7 @@ public struct StripeRefund: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// An arbitrary string attached to the object. Often useful for displaying to users. (Available on non-card refunds only)
     public var description: String?
     /// If the refund failed, this balance transaction describes the adjustment made on your account balance that reverses the initial balance transaction.

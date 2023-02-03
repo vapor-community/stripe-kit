@@ -28,7 +28,7 @@ public struct StripeApplicationFee: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// ID of the corresponding charge on the platform account, if this fee was the result of a charge using the destination parameter.

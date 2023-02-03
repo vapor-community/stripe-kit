@@ -27,7 +27,7 @@ public struct StripeBankAccount: Codable {
     /// Two-letter ISO code representing the country the bank account is located in.
     public var country: String?
     /// Three-letter ISO code for the currency paid out to the bank account.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The customer that this bank account belongs to.
     @Expandable<StripeCustomer> public var customer: String?
     /// Whether this bank account is the default external account for its currency.

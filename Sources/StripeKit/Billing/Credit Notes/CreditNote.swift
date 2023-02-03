@@ -18,7 +18,7 @@ public struct StripeCreditNote: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// ID of the customer.
     @Expandable<StripeCustomer> public var customer: String?
     /// Customer balance transaction related to this credit note.

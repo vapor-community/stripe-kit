@@ -27,7 +27,7 @@ public struct StripeOrder: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The customer used for the order.
     @Expandable<StripeCustomer> public var customer: String?
     /// The email address of the customer placing the order.
@@ -79,7 +79,7 @@ public struct StripeShippingMethod: Codable {
     /// A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
     public var amount: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The estimated delivery date for the given shipping method. Can be either a specific date or a range.
     public var deliveryEstimate: StripeDeliveryEstimate?
     /// An arbitrary string attached to the object. Often useful for displaying to users.

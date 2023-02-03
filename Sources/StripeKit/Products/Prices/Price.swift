@@ -16,7 +16,7 @@ public struct StripePrice: Codable {
     /// Whether the price can be used for new purchases.
     public var active: Bool?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// The ID of the product this price is associated with.

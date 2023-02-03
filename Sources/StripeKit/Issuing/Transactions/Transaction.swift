@@ -27,13 +27,13 @@ public struct StripeTransaction: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// The amount that the merchant will receive, denominated in `merchant_currency`. It will be different from `amount` if the merchant is taking payment in a different currency.
     public var merchantAmount: Int?
     /// The currency with which the merchant is taking payment.
-    public var merchantCurrency: StripeCurrency?
+    public var merchantCurrency: Currency?
     /// More information about the user involved in the transaction.
     public var merchantData: StripeAuthorizationMerchantData?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

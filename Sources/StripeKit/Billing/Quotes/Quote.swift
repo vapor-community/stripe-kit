@@ -34,7 +34,7 @@ public struct StripeQuote: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The tax rates applied to this quote.
     public var defaultTaxRates: [String]?
     /// A description that will be displayed on the quote PDF.

@@ -28,7 +28,7 @@ public protocol PriceRoutes {
     ///   - transformQuantity: Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
     ///   - unitAmountDecimal: Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     ///  - expand: An array of properties to expand.
-    func create(currency: StripeCurrency,
+    func create(currency: Currency,
                 unitAmount: Int?,
                 active: Bool?,
                 metadata: [String: String]?,
@@ -76,7 +76,7 @@ public protocol PriceRoutes {
 }
 
 extension PriceRoutes {
-    public func create(currency: StripeCurrency,
+    public func create(currency: Currency,
                        unitAmount: Int? = nil,
                        active: Bool? = nil,
                        metadata: [String: String]? = nil,
@@ -145,7 +145,7 @@ public struct StripePriceRoutes: PriceRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(currency: StripeCurrency,
+    public func create(currency: Currency,
                        unitAmount: Int?,
                        active: Bool?,
                        metadata: [String: String]?,

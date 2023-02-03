@@ -18,7 +18,7 @@ public struct StripeIssuingCard: Codable {
     /// The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object to which the card belongs.
     public var cardholder: StripeCardholder?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The expiration month of the card.
     public var expMonth: Int?
     /// The expiration year of the card.
@@ -70,7 +70,7 @@ public struct StripeIssuingCardSpendingControls: Codable {
     /// Limit the spending with rules based on time intervals and categories.
     public var spendingLimits: [StripeCardholderSpendingControlSpendingLimit]?
     /// Currency for the amounts within spending_limits. Locked to the currency of the card.
-    public var spendingLimitsCurrency: StripeCurrency?
+    public var spendingLimitsCurrency: Currency?
 }
 
 public enum StripeIssuingCardReplacementReason: String, Codable {

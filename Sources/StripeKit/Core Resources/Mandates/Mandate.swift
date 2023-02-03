@@ -66,7 +66,7 @@ public struct StripeMandateSingleUse: Codable {
     /// On a single use mandate, the amount of the payment.
     public var amount: Int?
     /// On a single use mandate, the currency of the payment.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
 }
 
 public enum StripeMandateStatus: String, Codable {

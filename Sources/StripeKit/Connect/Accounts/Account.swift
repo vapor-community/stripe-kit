@@ -31,7 +31,7 @@ public struct StripeConnectAccount: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?
     /// Three-letter ISO currency code representing the default currency for the account. This must be a currency that Stripe supports in the account’s country.
-    public var defaultCurrency: StripeCurrency?
+    public var defaultCurrency: Currency?
     /// Whether account details have been submitted. Standard accounts cannot receive payouts before this is true.
     public var detailsSubmitted: Bool?
     /// The primary user’s email address.

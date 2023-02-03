@@ -37,7 +37,7 @@ public struct StripeCard: Codable {
     /// Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you’ve collected.
     public var country: String?
     /// Three-letter ISO code for currency. Only applicable on accounts (not customers or recipients). The card can be used as a transfer destination for funds in this currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The customer that this card belongs to. This attribute will not be in the card object if the card belongs to an account or recipient instead.
     @Expandable<StripeCustomer> public var customer: String?
     /// If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.

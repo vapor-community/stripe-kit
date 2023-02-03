@@ -41,7 +41,7 @@ public struct StripeInvoice: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Custom fields displayed on the invoice.
     public var customFields: [[String: String]]?
     @Expandable<StripeCustomer> public var customer: String?

@@ -18,7 +18,7 @@ public protocol CustomerBalanceTransactionRoutes {
     /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     /// - Parameter expand: An array of properties to expand.
     func create(amount: Int,
-                currency: StripeCurrency,
+                currency: Currency,
                 customer: String,
                 description: String?,
                 metadata: [String: String]?,
@@ -53,7 +53,7 @@ public protocol CustomerBalanceTransactionRoutes {
 
 extension CustomerBalanceTransactionRoutes {
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        customer: String,
                        description: String? = nil,
                        metadata: [String: String]? = nil,
@@ -98,7 +98,7 @@ public struct StripeCustomerBalanceTransactionRoutes: CustomerBalanceTransaction
     }
     
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        customer: String,
                        description: String?,
                        metadata: [String: String]?,

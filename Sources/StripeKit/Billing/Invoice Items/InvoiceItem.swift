@@ -17,7 +17,7 @@ public struct StripeInvoiceItem: Codable {
     /// Amount (in the currency specified) of the invoice item. This should always be equal to unit_amount * quantity.
     public var amount: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The ID of the customer who will be billed when this invoice item is billed.
     @Expandable<StripeCustomer> public var customer: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.

@@ -21,7 +21,7 @@ public struct StripeCustomer: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO code for the currency the customer can be charged in for recurring billing purposes.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// ID of the default payment source for the customer.
     @Expandable<StripeSource> public var defaultSource: String?
     /// When the customer’s latest invoice is billed by charging automatically, delinquent is true if the invoice’s latest charge is failed. When the customer’s latest invoice is billed by sending an invoice, delinquent is true if the invoice is not paid by its due date.

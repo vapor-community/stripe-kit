@@ -30,7 +30,7 @@ public protocol InvoiceItemRoutes {
     ///   - unitAmountDecimal: Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeInvoiceItem`.
-    func create(currency: StripeCurrency,
+    func create(currency: Currency,
                 customer: String,
                 amount: Int?,
                 description: String?,
@@ -103,7 +103,7 @@ public protocol InvoiceItemRoutes {
 }
 
 extension InvoiceItemRoutes {
-    public func create(currency: StripeCurrency,
+    public func create(currency: Currency,
                        customer: String,
                        amount: Int? = nil,
                        description: String? = nil,
@@ -188,7 +188,7 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(currency: StripeCurrency,
+    public func create(currency: Currency,
                        customer: String,
                        amount: Int?,
                        description: String?,

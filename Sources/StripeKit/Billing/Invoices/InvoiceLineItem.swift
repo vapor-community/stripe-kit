@@ -17,7 +17,7 @@ public struct StripeInvoiceLineItem: Codable {
     /// The amount, in cents.
     public var amount: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// If true, discounts will apply to this line item. Always false for prorations.

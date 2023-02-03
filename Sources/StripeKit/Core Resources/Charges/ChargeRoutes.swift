@@ -31,7 +31,7 @@ public protocol ChargeRoutes {
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeCharge`.
     func create(amount: Int,
-                currency: StripeCurrency,
+                currency: Currency,
                 applicationFeeAmount: Int?,
                 capture: Bool?,
                 customer: String?,
@@ -112,7 +112,7 @@ public protocol ChargeRoutes {
 
 extension ChargeRoutes {
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        applicationFeeAmount: Int? = nil,
                        capture: Bool? = nil,
                        customer: String? = nil,
@@ -206,7 +206,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
     }
     
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        applicationFeeAmount: Int?,
                        capture: Bool?,
                        customer: String?,

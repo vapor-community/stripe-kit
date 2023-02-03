@@ -53,12 +53,12 @@ public struct BalanceAmount: Codable {
     /// Balance amount.
     public var amount: Int?
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies) .
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Breakdown of balance by source types.
     public var sourceTypes: BalanceAmountSourceType?
     
     public init(amount: Int? = nil,
-                currency: StripeCurrency? = nil,
+                currency: Currency? = nil,
                 sourceTypes: BalanceAmountSourceType? = nil) {
         self.amount = amount
         self.currency = currency

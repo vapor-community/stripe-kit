@@ -23,7 +23,7 @@ public protocol TransferRoutes {
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeTransfer`.
     func create(amount: Int,
-                currency: StripeCurrency,
+                currency: Currency,
                 destination: String,
                 description: String?,
                 metadata: [String: String]?,
@@ -65,7 +65,7 @@ public protocol TransferRoutes {
 
 extension TransferRoutes {
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        destination: String,
                        description: String? = nil,
                        metadata: [String: String]? = nil,
@@ -114,7 +114,7 @@ public struct StripeTransferRoutes: TransferRoutes {
     }
     
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        destination: String,
                        description: String?,
                        metadata: [String: String]?,

@@ -24,7 +24,7 @@ public protocol IssuingCardRoutes {
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeIssuingCard`.
     func create(cardholder: String,
-                currency: StripeCurrency,
+                currency: Currency,
                 type: StripeIssuingCardType,
                 spendingControls: [String: Any]?,
                 metadata: [String: String]?,
@@ -70,7 +70,7 @@ public protocol IssuingCardRoutes {
 
 extension IssuingCardRoutes {
     func create(cardholder: String,
-                currency: StripeCurrency,
+                currency: Currency,
                 type: StripeIssuingCardType,
                 spendingControls: [String: Any]? = nil,
                 metadata: [String: String]? = nil,
@@ -125,7 +125,7 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
     }
     
     public func create(cardholder: String,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        type: StripeIssuingCardType,
                        spendingControls: [String: Any]?,
                        metadata: [String: String]?,
