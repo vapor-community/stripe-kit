@@ -16,6 +16,12 @@ internal let APIBase = "https://api.stripe.com/"
 internal let FilesAPIBase = "https://files.stripe.com/"
 internal let APIVersion = "v1/"
 
+extension HTTPClientRequest.Body {
+    public static func string(_ string: String) -> Self {
+        .bytes(.init(string: string))
+    }
+}
+
 struct StripeAPIHandler {
     private let httpClient: HTTPClient
     private let apiKey: String
