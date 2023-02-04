@@ -21,7 +21,7 @@ public struct StripeSKU: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The URL of an image for this SKU, meant to be displayable to the customer.
     public var image: String?
     /// Description of the SKU’s inventory.

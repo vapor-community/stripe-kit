@@ -22,7 +22,7 @@ public protocol OrderRoutes {
     ///   - shipping: Shipping address for the order. Required if any of the SKUs are for products that have shippable set to true.
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeOrder`.
-    func create(currency: StripeCurrency,
+    func create(currency: Currency,
                 coupon: String?,
                 customer: String?,
                 email: String?,
@@ -97,7 +97,7 @@ public protocol OrderRoutes {
 }
 
 extension OrderRoutes {
-    public func create(currency: StripeCurrency,
+    public func create(currency: Currency,
                        coupon: String? = nil,
                        customer: String? = nil,
                        email: String? = nil,
@@ -170,7 +170,7 @@ public struct StripeOrderRoutes: OrderRoutes {
         self.apiHandler = apiHandler
     }
 
-    public func create(currency: StripeCurrency,
+    public func create(currency: Currency,
                        coupon: String?,
                        customer: String?,
                        email: String?,

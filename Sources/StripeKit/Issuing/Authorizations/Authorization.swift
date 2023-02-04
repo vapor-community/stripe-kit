@@ -30,13 +30,13 @@ public struct StripeAuthorization: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// The total amount that was authorized or rejected. This amount is in the `merchant_currency` and in the smallest currency unit.
     public var merchantAmount: Int?
     /// The currency that was presented to the cardholder for the authorization. Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var merchantCurrency: StripeCurrency?
+    public var merchantCurrency: Currency?
     /// Details about the merchant (grocery store, e-commerce website, etc.) where the card authorization happened.
     public var merchantData: StripeAuthorizationMerchantData?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -64,13 +64,13 @@ public struct StripeAuthorizationPendingRequest: Codable {
     /// The additional amount Stripe will hold if the authorization is approved, in the card’s currency and in the smallest currency unit.
     public var amount: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// If set true, you may provide amount to control how much to hold for the authorization.
     public var isAmountControllable: Bool?
     /// The amount the merchant is requesting to be authorized in the merchant_currency. The amount is in the smallest currency unit.
     public var merchantAmount: Int?
     /// The local currency the merchant is requesting to authorize.
-    public var merchantCurrency: StripeCurrency?
+    public var merchantCurrency: Currency?
 }
 
 public enum StripeAuthorizationMethod: String, Codable {
@@ -107,13 +107,13 @@ public struct StripeAuthorizationRequestHistory: Codable {
     /// The amount that was authorized at the time of this request
     public var authorizedAmount: Int?
     /// The currency that was presented to the cardholder for the authorization. Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var authorizedCurrency: StripeCurrency?
+    public var authorizedCurrency: Currency?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The amount Stripe held from your account to fund the authorization, if the request was approved
     public var heldAmount: Int?
     /// The currency of the held amount
-    public var heldCurrency: StripeCurrency?
+    public var heldCurrency: Currency?
     /// One of `authorization_controls` , `card_active`, `card_inactive`, `insufficient_funds`, `account_compliance_disabled`, `account_inactive`, `suspected_fraud`, `webhook_approved`, `webhook_declined`, or `webhook_timeout`.
     public var reason: StripeAuthorizationRequestHistoryReason?
 }

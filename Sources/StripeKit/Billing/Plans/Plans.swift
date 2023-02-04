@@ -27,9 +27,9 @@ public struct StripePlan: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// One of `day`, `week`, `month` or `year`. The frequency with which a subscription should be billed.
-    public var interval: StripePlanInterval?
+    public var interval: PlanInterval?
     /// The number of intervals (specified in the `interval` property) between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months.
     public var intervalCount: Int?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
@@ -64,7 +64,7 @@ public enum StripePlanBillingScheme: String, Codable {
     case tiered
 }
 
-public enum StripePlanInterval: String, Codable {
+public enum PlanInterval: String, Codable {
     case day
     case week
     case month

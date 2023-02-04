@@ -13,11 +13,11 @@ public struct StripeCountrySpec: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The default currency for this country. This applies to both payment methods and bank accounts.
-    public var defaultCurrency: StripeCurrency?
+    public var defaultCurrency: Currency?
     /// Currencies that can be accepted in the specific country (for transfers).
     public var supportedBankAccountCurrencies: [String: [String]]?
     /// Currencies that can be accepted in the specified country (for payments).
-    public var supportedPaymentCurrencies: [StripeCurrency]?
+    public var supportedPaymentCurrencies: [Currency]?
     /// Payment methods available in the specified country. You may need to enable some payment methods (e.g., [ACH](https://stripe.com/docs/ach)) on your account before they appear in this list. The `stripe` payment method refers to [charging through your platform](https://stripe.com/docs/connect/destination-charges).
     public var supportedPaymentMethods: [String]?
     /// Countries that can accept transfers from the specified country.

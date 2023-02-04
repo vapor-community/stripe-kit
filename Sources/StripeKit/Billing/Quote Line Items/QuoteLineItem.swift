@@ -17,7 +17,7 @@ public struct StripeQuoteLineItem: Codable {
     /// Total after discounts and taxes.
     public var amountTotal: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// An arbitrary string attached to the object. Often useful for displaying to users. Defaults to product name.
     public var description: String?
     /// This field is not included by default. To include it in the response, expand the `discounts` field.

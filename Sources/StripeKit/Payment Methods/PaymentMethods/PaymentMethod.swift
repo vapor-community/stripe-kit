@@ -147,9 +147,9 @@ public struct StripePaymentMethodBoleto: Codable {
 
 public struct StripePaymentMethodCard: Codable {
     /// Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
-    public var brand: StripePaymentMethodCardBrand?
+    public var brand: PaymentMethodDetailsCardBrand?
     /// Checks on Card address and CVC if provided.
-    public var checks: StripePaymentMethodCardChecks?
+    public var checks: PaymentMethodDetailsCardChecks?
     /// Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you’ve collected.
     public var country: String?
     /// Two-digit number representing the card’s expiration month.
@@ -159,7 +159,7 @@ public struct StripePaymentMethodCard: Codable {
     /// Uniquely identifies this particular card number. You can use this attribute to check whether two customers who’ve signed up with you are using the same card number, for example.
     public var fingerprint: String?
     /// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
-    public var funding: StripeCardFundingType?
+    public var funding: CardFundingType?
     /// Details of the original PaymentMethod that created this object.
     public var generatedFrom: StripePaymentMethodCardGeneratedFrom?
     /// The last four digits of the card.
@@ -172,7 +172,7 @@ public struct StripePaymentMethodCard: Codable {
     public var wallet: StripePaymentMethodCardWallet?
 }
 
-public enum StripePaymentMethodCardBrand: String, Codable {
+public enum PaymentMethodDetailsCardBrand: String, Codable {
     case amex
     case diners
     case discover
@@ -183,8 +183,9 @@ public enum StripePaymentMethodCardBrand: String, Codable {
     case unknown
 }
 
-public enum StripePaymentMethodCardNetwork: String, Codable {
+public enum PaymentMethodCardNetwork: String, Codable {
     case amex
+    case cartesBancaires = "cartes_bancaires"
     case diners
     case discover
     case interac
@@ -195,20 +196,28 @@ public enum StripePaymentMethodCardNetwork: String, Codable {
     case unknown
 }
 
-public struct StripePaymentMethodCardChecks: Codable {
+public struct PaymentMethodDetailsCardChecks: Codable {
     /// If a address line1 was provided, results of the check, one of ‘pass’, ‘failed’, ‘unavailable’ or ‘unchecked’.
-    public var addressLine1Check: StripeCardValidationCheck?
+    public var addressLine1Check: CardValidationCheck?
     /// If a address postal code was provided, results of the check, one of ‘pass’, ‘failed’, ‘unavailable’ or ‘unchecked’.
-    public var addressPostalCodeCheck: StripeCardValidationCheck?
+    public var addressPostalCodeCheck: CardValidationCheck?
     /// If a CVC was provided, results of the check, one of ‘pass’, ‘failed’, ‘unavailable’ or ‘unchecked’.
-    public var cvcCheck: StripeCardValidationCheck?
+    public var cvcCheck: CardValidationCheck?
+    
+    public init(addressLine1Check: CardValidationCheck? = nil,
+                addressPostalCodeCheck: CardValidationCheck? = nil,
+                cvcCheck: CardValidationCheck? = nil) {
+        self.addressLine1Check = addressLine1Check
+        self.addressPostalCodeCheck = addressPostalCodeCheck
+        self.cvcCheck = cvcCheck
+    }
 }
 
 public struct StripePaymentMethodCardGeneratedFrom: Codable {
     /// The charge that created this object.
     public var charge: String?
     /// Transaction-specific details of the payment method used in the payment.
-    public var paymentMethodDetails: StripeChargePaymentDetails?
+    public var paymentMethodDetails: ChargePaymentMethodDetails?
 }
 
 public struct StripePaymentMethodCardNetworks: Codable {
@@ -241,23 +250,23 @@ public struct StripePaymentMethodCardWallet: Codable {
     /// Stripe does not [provide any details](https://stripe.com/docs/api/payment_methods/object#payment_method_object-card-wallet-samsung_pay) about possible values so this will remain nil/unimplemented.
     public var samsungPay: StripePaymentMethodSamsungPay? = nil
     /// The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
-    public var type: StripePaymentMethodCardWalletType?
+    public var type: PaymentMethodDetailsCardWalletType?
     /// If this is a `visa_checkout` card wallet, this hash contains details about the wallet.
     public var visaCheckout: StripePaymentMethodCardWalletVisaCheckout?
 }
 
 public struct StripePaymentMethodCardWalletMasterPass: Codable {
     /// Owner’s verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    public var billingAddress: StripeAddress?
+    public var billingAddress: Address?
     /// Owner’s verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var email: String?
     /// Owner’s verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var name: String?
     /// Owner’s verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    public var shippingAddress: StripeAddress?
+    public var shippingAddress: Address?
 }
 
-public enum StripePaymentMethodCardWalletType: String, Codable {
+public enum PaymentMethodDetailsCardWalletType: String, Codable {
     case amexExpressCheckout = "amex_express_checkout"
     case applePay = "apple_pay"
     case googlePay = "google_pay"
@@ -268,13 +277,13 @@ public enum StripePaymentMethodCardWalletType: String, Codable {
 
 public struct StripePaymentMethodCardWalletVisaCheckout: Codable {
     /// Owner’s verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    public var billingAddress: StripeAddress?
+    public var billingAddress: Address?
     /// Owner’s verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var email: String?
     /// Owner’s verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var name: String?
     /// Owner’s verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    public var shippingAddress: StripeAddress?
+    public var shippingAddress: Address?
 }
 
 public struct StripePaymentMethodCardPresent: Codable {

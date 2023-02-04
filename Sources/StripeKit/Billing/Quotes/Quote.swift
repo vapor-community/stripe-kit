@@ -34,7 +34,7 @@ public struct StripeQuote: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The tax rates applied to this quote.
     public var defaultTaxRates: [String]?
     /// A description that will be displayed on the quote PDF.
@@ -108,7 +108,7 @@ public struct StripeQuoteComputedRecurring: Codable {
     /// Total after discounts and taxes are applied.
     public var amountTotal: Int?
     /// The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
-    public var interval: StripePlanInterval?
+    public var interval: PlanInterval?
     /// The number of intervals (specified in the `interval` attribute) between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months.
     public var intervalCount: Int?
     /// Tax and discount details for the computed total amount.

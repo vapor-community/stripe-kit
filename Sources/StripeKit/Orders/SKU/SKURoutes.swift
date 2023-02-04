@@ -26,7 +26,7 @@ public protocol SKURoutes {
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeSKU`.
     func create(id: String?,
-                currency: StripeCurrency,
+                currency: Currency,
                 inventory: [String: Any],
                 price: Int,
                 product: String,
@@ -64,7 +64,7 @@ public protocol SKURoutes {
     func update(id: String,
                 active: Bool?,
                 attributes: [String]?,
-                currency: StripeCurrency?,
+                currency: Currency?,
                 image: String?,
                 inventory: [String: Any]?,
                 metadata: [String: String]?,
@@ -91,7 +91,7 @@ public protocol SKURoutes {
 
 extension SKURoutes {
     public func create(id: String? = nil,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        inventory: [String: Any],
                        price: Int,
                        product: String,
@@ -121,7 +121,7 @@ extension SKURoutes {
     public func update(id: String,
                        active: Bool? = nil,
                        attributes: [String]? = nil,
-                       currency: StripeCurrency? = nil,
+                       currency: Currency? = nil,
                        image: String? = nil,
                        inventory: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
@@ -162,7 +162,7 @@ public struct StripeSKURoutes: SKURoutes {
     }
 
     public func create(id: String?,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        inventory: [String: Any],
                        price: Int,
                        product: String,
@@ -217,7 +217,7 @@ public struct StripeSKURoutes: SKURoutes {
     public func update(id: String,
                        active: Bool?,
                        attributes: [String]?,
-                       currency: StripeCurrency?,
+                       currency: Currency?,
                        image: String?,
                        inventory: [String: Any]?,
                        metadata: [String: String]?,

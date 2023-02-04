@@ -52,7 +52,7 @@ public protocol RefundRoutes {
     ///
     /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/refunds/list)
     /// - Returns: A `StripeRefundsList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeRefundsList>
+    func listAll(filter: [String: Any]?) -> EventLoopFuture<RefundsList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -87,7 +87,7 @@ extension RefundRoutes {
         return update(refund: refund, metadata: metadata, expand: expand)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeRefundsList> {
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<RefundsList> {
         return listAll(filter: filter)
     }
 }
@@ -170,7 +170,7 @@ public struct StripeRefundRoutes: RefundRoutes {
         return apiHandler.send(method: .POST, path: "\(refunds)/\(refund)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeRefundsList> {
+    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<RefundsList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

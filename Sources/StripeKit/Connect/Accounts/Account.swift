@@ -31,7 +31,7 @@ public struct StripeConnectAccount: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?
     /// Three-letter ISO currency code representing the default currency for the account. This must be a currency that Stripe supports in the account’s country.
-    public var defaultCurrency: StripeCurrency?
+    public var defaultCurrency: Currency?
     /// Whether account details have been submitted. Standard accounts cannot receive payouts before this is true.
     public var detailsSubmitted: Bool?
     /// The primary user’s email address.
@@ -69,7 +69,7 @@ public struct StripeConnectAccountBusinessProfile: Codable {
     /// Internal-only description of the product sold or service provided by the business. It’s used by Stripe for risk and underwriting purposes.
     public var productDescription: String?
     /// A publicly available mailing address for sending support issues to.
-    public var supportAddress: StripeAddress?
+    public var supportAddress: Address?
     /// A publicly available email address for sending support issues to.
     public var supportEmail: String?
     /// A publicly available phone number to call with support issues.
@@ -154,7 +154,7 @@ public enum StripeConnectAccountControllerType: String, Codable {
 
 public struct StripeConnectAccountCompany: Codable {
     /// The company’s primary address.
-    public var address: StripeAddress?
+    public var address: Address?
     /// The Kana variation of the company’s primary address (Japan only).
     public var addressKana: StripeAddressKana?
     /// The Kanji variation of the company’s primary address (Japan only).

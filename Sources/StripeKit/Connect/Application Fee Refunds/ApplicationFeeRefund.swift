@@ -19,7 +19,7 @@ public struct StripeApplicationFeeRefund: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// ID of the application fee that was refunded.
     @Expandable<StripeApplicationFee> public var fee: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

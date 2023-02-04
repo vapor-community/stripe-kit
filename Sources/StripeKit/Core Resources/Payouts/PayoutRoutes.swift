@@ -23,7 +23,7 @@ public protocol PayoutRoutes {
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePayout`.
     func create(amount: Int,
-                currency: StripeCurrency,
+                currency: Currency,
                 description: String?,
                 destination: String?,
                 metadata: [String: String]?,
@@ -73,7 +73,7 @@ public protocol PayoutRoutes {
 
 extension PayoutRoutes {
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        description: String? = nil,
                        destination: String? = nil,
                        metadata: [String: String]? = nil,
@@ -124,7 +124,7 @@ public struct StripePayoutRoutes: PayoutRoutes {
     }
     
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        description: String?,
                        destination: String?,
                        metadata: [String: String]?,

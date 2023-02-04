@@ -19,11 +19,11 @@ public struct StripeRefund: Codable {
     /// Balance transaction that describes the impact on your account balance.
     @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// ID of the charge that was refunded.
-    @Expandable<StripeCharge> public var charge: String?
+    @Expandable<Charge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// An arbitrary string attached to the object. Often useful for displaying to users. (Available on non-card refunds only)
     public var description: String?
     /// If the refund failed, this balance transaction describes the adjustment made on your account balance that reverses the initial balance transaction.
@@ -58,7 +58,7 @@ public enum StripeRefundReason: String, Codable {
     case requestedByCustomer = "requested_by_customer"
 }
 
-public struct StripeRefundsList: Codable {
+public struct RefundsList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?

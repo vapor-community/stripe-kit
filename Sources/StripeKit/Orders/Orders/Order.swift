@@ -23,11 +23,11 @@ public struct StripeOrder: Codable {
     /// A fee in cents that will be applied to the order and transferred to the application owner’s Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees documentation.
     public var applicationFee: Int?
     /// The ID of the payment used to pay for the order. Present if the order status is `paid`, `fulfilled`, or `refunded`.
-    @Expandable<StripeCharge> public var charge: String?
+    @Expandable<Charge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The customer used for the order.
     @Expandable<StripeCustomer> public var customer: String?
     /// The email address of the customer placing the order.
@@ -45,7 +45,7 @@ public struct StripeOrder: Codable {
     /// The shipping method that is currently selected for this order, if any. If present, it is equal to one of the ids of shipping methods in the shipping_methods array. At order creation time, if there are multiple shipping methods, Stripe will automatically selected the first method.
     public var selectedShippingMethod: String?
     /// The shipping address for the order. Present if the order is for goods to be shipped.
-    public var shipping: StripeShippingLabel?
+    public var shipping: ShippingLabel?
     /// A list of supported shipping methods for this order. The desired shipping method can be specified either by updating the order, or when paying it.
     public var shippingMethods: [StripeShippingMethod]?
     /// Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More details in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
@@ -79,7 +79,7 @@ public struct StripeShippingMethod: Codable {
     /// A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
     public var amount: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The estimated delivery date for the given shipping method. Can be either a specific date or a range.
     public var deliveryEstimate: StripeDeliveryEstimate?
     /// An arbitrary string attached to the object. Often useful for displaying to users.

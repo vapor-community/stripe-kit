@@ -22,7 +22,7 @@ public struct StripeSession: Codable {
     /// The URL the customer will be directed to if they decide to cancel payment and return to your website.
     public var cancelUrl: String?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// A unique string to reference the Checkout Session. This can be a customer ID, a cart ID, or similar, and can be used to reconcile the session with your internal systems.
     public var clientReferenceId: String?
     /// The ID of the customer for this session. A new customer will be created unless an existing customer was provided in when the session was created.
@@ -54,7 +54,7 @@ public struct StripeSession: Codable {
     /// The ID of the SetupIntent for Checkout Sessions in setup mode.
     @Expandable<StripeSetupIntent> public var setupIntent: String?
     /// Shipping information for this Checkout Session.
-    public var shipping: StripeShippingLabel?
+    public var shipping: ShippingLabel?
     /// When set, provides configuration for Checkout to collect a shipping address from a customer.
     public var shippingAddressCollection: StripeSessionShippingAddressCollection?
     /// The shipping rate options applied to this Session.
@@ -117,7 +117,7 @@ public struct StripeSessionLineItem: Codable {
     /// Total after discounts and taxes.
     public var amountTotal: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// An arbitrary string attached to the object. Often useful for displaying to users. Defaults to product name.
     public var description: String?
     /// The discounts applied to the line item. This field is not included by default. To include it in the response, expand the `discounts` field.

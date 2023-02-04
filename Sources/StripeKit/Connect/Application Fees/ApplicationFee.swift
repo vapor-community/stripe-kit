@@ -24,15 +24,15 @@ public struct StripeApplicationFee: Codable {
     /// Balance transaction that describes the impact of this collected application fee on your account balance (not including refunds).
     @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// ID of the charge that the application fee was taken from.
-    @Expandable<StripeCharge> public var charge: String?
+    @Expandable<Charge> public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// ID of the corresponding charge on the platform account, if this fee was the result of a charge using the destination parameter.
-    @DynamicExpandable<StripeCharge, StripeTransfer> public var originatingTransaction: String?
+    @DynamicExpandable<Charge, StripeTransfer> public var originatingTransaction: String?
     /// Whether the fee has been fully refunded. If the fee is only partially refunded, this attribute will still be false.
     public var refunded: Bool?
     /// A list of refunds that have been applied to the fee.

@@ -33,8 +33,8 @@ public protocol PlanRoutes {
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePlan`.
     func create(id: String?,
-                currency: StripeCurrency,
-                interval: StripePlanInterval,
+                currency: Currency,
+                interval: PlanInterval,
                 product: Any,
                 active: Bool?,
                 aggregateUsage: StripePlanAggregateUsage?,
@@ -96,8 +96,8 @@ public protocol PlanRoutes {
 
 extension PlanRoutes {
     public func create(id: String? = nil,
-                       currency: StripeCurrency,
-                       interval: StripePlanInterval,
+                       currency: Currency,
+                       interval: PlanInterval,
                        product: Any,
                        active: Bool? = nil,
                        aggregateUsage: StripePlanAggregateUsage? = nil,
@@ -173,8 +173,8 @@ public struct StripePlanRoutes: PlanRoutes {
     }
     
     public func create(id: String?,
-                       currency: StripeCurrency,
-                       interval: StripePlanInterval,
+                       currency: Currency,
+                       interval: PlanInterval,
                        product: Any,
                        active: Bool?,
                        aggregateUsage: StripePlanAggregateUsage?,

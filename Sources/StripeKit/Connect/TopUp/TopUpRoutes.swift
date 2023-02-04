@@ -22,7 +22,7 @@ public protocol TopUpRoutes {
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripeTopUp`.
     func create(amount: Int,
-                currency: StripeCurrency,
+                currency: Currency,
                 description: String?,
                 metadata: [String: String]?,
                 source: String?,
@@ -69,7 +69,7 @@ public protocol TopUpRoutes {
 
 extension TopUpRoutes {
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        description: String? = nil,
                        metadata: [String: String]? = nil,
                        source: String? = nil,
@@ -120,7 +120,7 @@ public struct StripeTopUpRoutes: TopUpRoutes {
     }
     
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        description: String?,
                        metadata: [String: String]?,
                        source: String?,

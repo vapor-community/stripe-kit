@@ -14,7 +14,7 @@ public struct StripeLocation: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The full address of the location.
-    public var address: StripeAddress?
+    public var address: Address?
     /// The display name of the location.
     public var displayName: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.

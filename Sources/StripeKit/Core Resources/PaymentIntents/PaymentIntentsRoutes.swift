@@ -42,7 +42,7 @@ public protocol PaymentIntentsRoutes {
     ///   - expand: An array of properties to expand.
     /// - Returns: A `StripePaymentIntent`.
     func create(amount: Int,
-                currency: StripeCurrency,
+                currency: Currency,
                 automaticPaymentMethods: [String: Any]?,
                 applicationFeeAmount: Int?,
                 captureMethod: StripePaymentIntentCaptureMethod?,
@@ -104,7 +104,7 @@ public protocol PaymentIntentsRoutes {
     func update(intent: String,
                 amount: Int?,
                 applicationFeeAmount: Int?,
-                currency: StripeCurrency?,
+                currency: Currency?,
                 customer: String?,
                 description: String?,
                 metadata: [String: String]?,
@@ -196,7 +196,7 @@ public protocol PaymentIntentsRoutes {
 
 extension PaymentIntentsRoutes {
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        automaticPaymentMethods: [String: Any]? = nil,
                        applicationFeeAmount: Int? = nil,
                        captureMethod: StripePaymentIntentCaptureMethod? = nil,
@@ -262,7 +262,7 @@ extension PaymentIntentsRoutes {
     public func update(intent: String,
                        amount: Int? = nil,
                        applicationFeeAmount: Int? = nil,
-                       currency: StripeCurrency? = nil,
+                       currency: Currency? = nil,
                        customer: String? = nil,
                        description: String? = nil,
                        metadata: [String: String]? = nil,
@@ -367,7 +367,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
     }
     
     public func create(amount: Int,
-                       currency: StripeCurrency,
+                       currency: Currency,
                        automaticPaymentMethods: [String: Any]?,
                        applicationFeeAmount: Int?,
                        captureMethod: StripePaymentIntentCaptureMethod?,
@@ -520,7 +520,7 @@ public struct StripePaymentIntentsRoutes: PaymentIntentsRoutes {
     public func update(intent: String,
                        amount: Int?,
                        applicationFeeAmount: Int?,
-                       currency: StripeCurrency?,
+                       currency: Currency?,
                        customer: String?,
                        description: String?,
                        metadata: [String: String]?,

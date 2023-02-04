@@ -13,7 +13,7 @@ public struct StripeOrderItem: Codable {
     /// A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
     public var amount: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Description of the line item, meant to be displayable to the user (e.g., `"Express shipping"`).
     public var description: String?
     /// The ID of the associated object for this line item. Expandable if not null (e.g., expandable to a SKU).

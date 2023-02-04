@@ -18,7 +18,7 @@ public struct StripeIssuingDispute: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The currency the disputed_transaction was made in.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The transaction being disputed.
     public var disputedTransaction: String?
     /// Evidence related to the dispute. This hash will contain exactly one non-null value, containing an evidence object that matches its `reason`

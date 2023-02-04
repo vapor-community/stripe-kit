@@ -38,7 +38,7 @@ public struct StripeShippingRateFixedAmount: Codable {
     /// A non-negative integer in cents representing how much to charge.
     public var amount: Int?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
 }
 
 public enum StripeShippingRateType: String, Codable {

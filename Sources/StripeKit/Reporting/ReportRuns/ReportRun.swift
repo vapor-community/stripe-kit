@@ -37,7 +37,7 @@ public struct StripeReportRunParameters: Codable {
     /// Connected account ID by which to filter the report run.
     public var connectedAccount: String?
     /// Currency of objects to be included in the report run.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Ending timestamp of data to be included in the report run (exclusive).
     public var intervalEnd: Date?
     /// Starting timestamp of data to be included in the report run.

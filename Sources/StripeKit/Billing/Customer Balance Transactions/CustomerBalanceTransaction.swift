@@ -20,7 +20,7 @@ public struct StripeCustomerBalanceTransaction: Codable {
     /// The ID of the credit note (if any) related to the transaction.
     @Expandable<StripeCreditNote> public var creditNote: String?
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The ID of the customer the transaction belongs to.
     @Expandable<StripeCustomer> public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.

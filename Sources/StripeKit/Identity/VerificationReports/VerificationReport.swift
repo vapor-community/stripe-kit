@@ -32,7 +32,7 @@ public struct StripeVerificationReport: Codable {
 
 public struct StripeVerificationReportDocument: Codable {
     /// Address as it appears in the document.
-    public var address: StripeAddress?
+    public var address: Address?
     /// Date of birth as it appears in the document.
     /// This field is not included by default. To include it in the response, expand the `dob` field.
     public var dob: StripePersonDOB?

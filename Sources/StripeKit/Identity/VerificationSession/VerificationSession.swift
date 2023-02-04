@@ -140,7 +140,7 @@ public enum StripeVerificationSessionType: String, Codable {
 
 public struct StripeVerificationSessionVerifiedOutputs: Codable {
     /// The user’s verified address.
-    public var address: StripeAddress?
+    public var address: Address?
     /// The user’s verified date of birth.
     /// This field is not included by default. To include it in the response, expand the `dob` field.
     public var dob: StripePersonDOB?

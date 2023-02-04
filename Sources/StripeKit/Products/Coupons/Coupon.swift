@@ -19,7 +19,7 @@ public struct StripeCoupon: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// If amount_off has been set, the three-letter ISO code for the currency of the amount to take off.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// One of `forever`, `once`, and `repeating`. Describes how long a customer who applies this coupon will get the discount.
     public var duration: StripeCouponDuration?
     /// If `duration` is `repeating`, the number of months the coupon applies. Null if coupon `duration` is `forever` or `once`.

@@ -23,7 +23,7 @@ public struct StripeSource: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO code for the currency associated with the source. This is the currency for which the source will be chargeable once ready. Required for `single_use` sources.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// The ID of the customer to which this source is attached. This will not be present when the source has not been attached to a customer.
     public var customer: String?
     /// The authentication flow of the source. flow is one of `redirect`, `receiver`, `code_verification`, `none`.
@@ -86,7 +86,7 @@ public enum StripeSourceFlow: String, Codable {
 
 public struct StripeSourceOwner: Codable {
     /// Owner’s address.
-    public var address: StripeAddress?
+    public var address: Address?
     /// Owner’s email address.
     public var email: String?
     /// Owner’s full name.
@@ -94,7 +94,7 @@ public struct StripeSourceOwner: Codable {
     /// Owner’s phone number (including extension).
     public var phone: String?
     /// Verified owner’s address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    public var verifiedAddress: StripeAddress?
+    public var verifiedAddress: Address?
     /// Verified owner’s email address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
     public var verifiedEmail: String?
     /// Verified owner’s full name. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -227,7 +227,7 @@ public struct StripeSourceCard: Codable {
     public var expMonth: Int?
     public var expYear: Int?
     public var fingerprint: String?
-    public var funding: StripeCardFundingType?
+    public var funding: CardFundingType?
     public var last4: String?
     public var name: String?
     public var threeDSecure: String?
@@ -250,7 +250,7 @@ public struct StripeSourceCardPresent: Codable {
     public var expMonth: Int?
     public var expyear: Int?
     public var fingerprint: String?
-    public var funding: StripeCardFundingType?
+    public var funding: CardFundingType?
     public var last4: String?
     public var posDeviceId: String?
     public var posEntryMode: String?
@@ -318,7 +318,7 @@ public struct StripeSourceThreeDSecure: Codable {
     public var expMonth: Int?
     public var expYear: Int?
     public var fingerprint: String?
-    public var funding: StripeCardFundingType?
+    public var funding: CardFundingType?
     public var last4: String?
     public var threedSecure: StripeSourceThreeDSecureSupportStatus?
     public var tokenizationMethod: StripeCardTokenizedMethod?

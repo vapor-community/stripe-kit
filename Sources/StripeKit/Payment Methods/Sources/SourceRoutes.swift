@@ -30,7 +30,7 @@ public protocol SourceRoutes {
     /// - Returns: A `StripeSource`.
     func create(type: StripeSourceType,
                 amount: Int?,
-                currency: StripeCurrency?,
+                currency: Currency?,
                 flow: StripeSourceFlow?,
                 mandate: [String: Any]?,
                 metadata: [String: String]?,
@@ -91,7 +91,7 @@ public protocol SourceRoutes {
 extension SourceRoutes {
     public func create(type: StripeSourceType,
                        amount: Int? = nil,
-                       currency: StripeCurrency? = nil,
+                       currency: Currency? = nil,
                        flow: StripeSourceFlow? = nil,
                        mandate: [String: Any]? = nil,
                        metadata: [String: String]? = nil,
@@ -159,7 +159,7 @@ public struct StripeSourceRoutes: SourceRoutes {
     
     public func create(type: StripeSourceType,
                        amount: Int?,
-                       currency: StripeCurrency?,
+                       currency: Currency?,
                        flow: StripeSourceFlow?,
                        mandate: [String: Any]?,
                        metadata: [String: String]?,

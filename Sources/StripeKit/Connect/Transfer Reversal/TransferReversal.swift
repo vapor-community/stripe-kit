@@ -20,7 +20,7 @@ public struct StripeTransferReversal: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// Linked payment refund for the transfer reversal.
     @Expandable<StripeRefund> public var destinationPaymentRefund: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

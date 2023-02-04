@@ -32,7 +32,7 @@ public struct StripePaymentIntent: Codable {
     /// Capture method of this PaymentIntent, one of `automatic` or `manual`.
     public var captureMethod: StripePaymentIntentCaptureMethod?
     /// Charges that were created by this PaymentIntent, if any.
-    public var charges: StripeChargesList?
+    public var charges: ChargeList?
     /// The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key. Please refer to [dynamic authentication](https://stripe.com/docs/payments/dynamic-authentication) guide on how `client_secret` should be handled.
     public var clientSecret: String?
     /// Confirmation method of this PaymentIntent, one of `manual` or `automatic`.
@@ -40,7 +40,7 @@ public struct StripePaymentIntent: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
-    public var currency: StripeCurrency?
+    public var currency: Currency?
     /// ID of the Customer this PaymentIntent is for if one exists.
     @Expandable<StripeCustomer> public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
@@ -70,7 +70,7 @@ public struct StripePaymentIntent: Codable {
     /// Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. For more, learn to save card details after a payment. Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer.
     public var setupFutureUsage: StripePaymentIntentSetupFutureUsage?
     /// Shipping information for this PaymentIntent.
-    public var shipping: StripeShippingLabel?
+    public var shipping: ShippingLabel?
     /// For non-card charges, you can use this value as the complete description that appears on your customers’ statements. Must contain at least one letter, maximum 22 characters.
     public var statementDescriptor: String?
     /// Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
@@ -349,11 +349,11 @@ public struct StripePaymentIntentPaymentMethodOptionsCard: Codable {
 public struct StripePaymentIntentPaymentMethodOptionsCardInstallments: Codable {
     // TODO: - Rename the charge installment plan.
     /// Installment plans that may be selected for this PaymentIntent.
-    public var availablePlans: [StripeChargePaymentDetailsCardInstallmentPlan]?
+    public var availablePlans: [ChargePaymentMethodDetailsCardInstallmentPlan]?
     /// Whether Installments are enabled for this PaymentIntent.
     public var enabled: Bool?
     /// Installment plan selected for this PaymentIntent.
-    public var plan: StripeChargePaymentDetailsCardInstallmentPlan?
+    public var plan: ChargePaymentMethodDetailsCardInstallmentPlan?
 }
 
 public struct StripePaymentIntentPaymentMethodOptionsCardPresent: Codable {}
