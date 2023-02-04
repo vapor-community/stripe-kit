@@ -295,14 +295,54 @@ public struct ChargeTransferData: Codable {
     }
 }
 
-public struct StripeChargesList: Codable {
+public struct ChargeList: Codable {
     /// String representing the object’s type. Objects of the same type share the same value. Always has the value list.
     public var object: String
     /// True if this list has another page of items after this one that can be fetched.
     public var hasMore: Bool?
     /// The URL where this list can be accessed.
     public var url: String?
+    /// The list of Chrages
     public var data: [Charge]?
+    
+    public init(object: String,
+                hasMore: Bool? = nil,
+                url: String? = nil,
+                data: [Charge]? = nil) {
+        self.object = object
+        self.hasMore = hasMore
+        self.url = url
+        self.data = data
+    }
+}
+
+public struct ChargeSearchResult: Codable {
+    /// A string describing the object type returned.
+    public var object: String
+    /// A list of charges, paginated by any request parameters.
+    public var data: [Charge]?
+    /// Whether or not there are more elements available after this set.
+    public var hasMore: Bool?
+    /// The URL for accessing this list.
+    public var url: String?
+    /// The URL for accessing the next page in search results.
+    public var nextPage: String?
+    /// The total count of entries in the search result, not just the current page.
+    public var totalCount: Int?
+    
+    public init(object: String,
+                data: [Charge]? = nil,
+                hasMore: Bool? = nil,
+                url: String? = nil,
+                nextPage: String? = nil,
+                totalCount: Int? = nil) {
+        self.object = object
+        self.data = data
+        self.hasMore = hasMore
+        self.url = url
+        self.nextPage = nextPage
+        self.totalCount = totalCount
+    }
 }
 
 public struct ChargePaymentMethodDetails: Codable {

@@ -32,7 +32,7 @@ public struct StripePaymentIntent: Codable {
     /// Capture method of this PaymentIntent, one of `automatic` or `manual`.
     public var captureMethod: StripePaymentIntentCaptureMethod?
     /// Charges that were created by this PaymentIntent, if any.
-    public var charges: StripeChargesList?
+    public var charges: ChargeList?
     /// The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key. Please refer to [dynamic authentication](https://stripe.com/docs/payments/dynamic-authentication) guide on how `client_secret` should be handled.
     public var clientSecret: String?
     /// Confirmation method of this PaymentIntent, one of `manual` or `automatic`.
