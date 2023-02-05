@@ -125,6 +125,7 @@ public struct StripeChargeRoutes: ChargeRoutes {
     private let apiHandler: StripeAPIHandler
     private let charges = APIBase + APIVersion + "charges/"
     private let charge = APIBase + APIVersion + "charges"
+    private let search = APIBase + APIVersion + "charges/search"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
@@ -337,6 +338,6 @@ public struct StripeChargeRoutes: ChargeRoutes {
             queryParams["page"] = page
         }
         
-        return try await apiHandler.send(method: .GET, path: charge, query: queryParams.queryParameters, headers: headers)
+        return try await apiHandler.send(method: .GET, path: search, query: queryParams.queryParameters, headers: headers)
     }
 }
