@@ -13,13 +13,13 @@ public protocol DiscountRoutes {
     ///
     /// - Parameter customer: The id of the customer this discount belongs to.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(customer: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(customer: String) -> EventLoopFuture<DeletedObject>
     
     /// Removes the currently applied discount on a subscription.
     ///
     /// - Parameter subscription: The id of the subscription this discount was applied to.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(subscription: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(subscription: String) -> EventLoopFuture<DeletedObject>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -36,11 +36,11 @@ public struct StripeDiscountRoutes: DiscountRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func delete(customer: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(customer: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(customers)/\(customer)/discount", headers: headers)
     }
     
-    public func delete(subscription: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(subscription: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(subscriptions)/\(subscription)/discount", headers: headers)
     }
 }

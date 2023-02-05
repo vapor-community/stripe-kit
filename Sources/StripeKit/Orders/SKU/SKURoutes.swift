@@ -83,7 +83,7 @@ public protocol SKURoutes {
     ///
     /// - Parameter id: The identifier of the SKU to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(id: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(id: String) -> EventLoopFuture<DeletedObject>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -146,7 +146,7 @@ extension SKURoutes {
         return listAll(filter: filter)
     }
     
-    public func delete(id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String) -> EventLoopFuture<DeletedObject> {
         return delete(id: id)
     }
 }
@@ -275,7 +275,7 @@ public struct StripeSKURoutes: SKURoutes {
         return apiHandler.send(method: .GET, path: skus, query: queryParams, headers: headers)
     }
     
-    public func delete(id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(skus)/\(id)", headers: headers)
     }
 }

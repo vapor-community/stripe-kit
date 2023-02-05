@@ -52,7 +52,7 @@ public protocol ExternalAccountsRoutes {
     ///   - account: The connect account associated with this bank account.
     ///   - id: The ID of the bank account to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func deleteBankAccount(account: String, id: String) -> EventLoopFuture<StripeDeletedObject>
+    func deleteBankAccount(account: String, id: String) -> EventLoopFuture<DeletedObject>
     
     /// List all bank accounts belonging to a connect account. You can see a list of the bank accounts belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts). Note that the 10 most recent external accounts are always available by default on the corresponding Stripe object. If you need more than those 10, you can use this API method and the `limit` and `starting_after` parameters to page through additional bank accounts.
     ///
@@ -117,7 +117,7 @@ public protocol ExternalAccountsRoutes {
     ///   - account: The connect account associated with this card.
     ///   - id: The ID of the card to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func deleteCard(account: String, id: String) -> EventLoopFuture<StripeDeletedObject>
+    func deleteCard(account: String, id: String) -> EventLoopFuture<DeletedObject>
     
     /// List all cards belonging to a connect account. You can see a list of the cards belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts). Note that the 10 most recent external accounts are always available by default on the corresponding Stripe object. If you need more than those 10, you can use this API method and the `limit` and `starting_after` parameters to page through additional bank accounts.
     ///
@@ -154,7 +154,7 @@ extension ExternalAccountsRoutes {
                           metadata: metadata)
     }
     
-    public func deleteBankAccount(account: String, id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func deleteBankAccount(account: String, id: String) -> EventLoopFuture<DeletedObject> {
         return deleteBankAccount(account: account, id: id)
     }
     
@@ -198,7 +198,7 @@ extension ExternalAccountsRoutes {
                           name: name)
     }
     
-    public func deleteCard(account: String, id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func deleteCard(account: String, id: String) -> EventLoopFuture<DeletedObject> {
         return deleteCard(account: account, id: id)
     }
     
@@ -268,7 +268,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func deleteBankAccount(account: String, id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func deleteBankAccount(account: String, id: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     
@@ -366,7 +366,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts/\(id)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func deleteCard(account: String, id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func deleteCard(account: String, id: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     

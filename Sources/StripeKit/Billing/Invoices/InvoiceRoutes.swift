@@ -110,7 +110,7 @@ public protocol InvoiceRoutes {
     ///
     /// - Parameter invoice: The identifier of the invoice to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(invoice: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(invoice: String) -> EventLoopFuture<DeletedObject>
     
     /// Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you’d like to finalize a draft invoice manually, you can do so using this method.
     ///
@@ -281,7 +281,7 @@ extension InvoiceRoutes {
                       expand: expand)
     }
     
-    public func delete(invoice: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(invoice: String) -> EventLoopFuture<DeletedObject> {
         return delete(invoice: invoice)
     }
     
@@ -551,7 +551,7 @@ public struct StripeInvoiceRoutes: InvoiceRoutes {
         return apiHandler.send(method: .POST, path: "\(invoices)/\(invoice)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(invoice: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(invoice: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(invoices)/\(invoice)", headers: headers)
     }
     

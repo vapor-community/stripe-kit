@@ -131,7 +131,7 @@ public protocol PersonRoutes {
     ///   - account: The unique identifier of the account the person is associated with.
     ///   - person: The ID of a person to update.
     /// - Returns: Returns the deleted person object.
-    func delete(account: String, person: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(account: String, person: String) -> EventLoopFuture<DeletedObject>
     
     /// Returns a list of people associated with the account’s legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
     ///
@@ -252,7 +252,7 @@ extension PersonRoutes {
                       verification: verification)
     }
     
-    public func delete(account: String, person: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(account: String, person: String) -> EventLoopFuture<DeletedObject> {
         return delete(account: account, person: person)
     }
     
@@ -519,7 +519,7 @@ public struct StripePersonRoutes: PersonRoutes {
         return apiHandler.send(method: .POST, path: "\(persons)/\(account)/persons/\(person)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(account: String, person: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(account: String, person: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(persons)/\(account)/persons/\(person)", headers: headers)
     }
     

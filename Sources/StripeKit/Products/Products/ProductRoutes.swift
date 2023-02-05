@@ -94,7 +94,7 @@ public protocol ProductRoutes {
     ///
     /// - Parameter id: The ID of the product to delete.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(id: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(id: String) -> EventLoopFuture<DeletedObject>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -171,7 +171,7 @@ extension ProductRoutes {
         return listAll(filter: filter)
     }
     
-    public func delete(id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String) -> EventLoopFuture<DeletedObject> {
         return delete(id: id)
     }
 }
@@ -349,7 +349,7 @@ public struct StripeProductRoutes: ProductRoutes {
         return apiHandler.send(method: .GET, path: products, query: queryParams, headers: headers)
     }
     
-    public func delete(id: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(products)/\(id)", headers: headers)
     }
 }

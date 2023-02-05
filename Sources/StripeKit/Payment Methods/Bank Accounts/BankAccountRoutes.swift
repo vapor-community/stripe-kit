@@ -64,7 +64,7 @@ public protocol BankAccountRoutes {
     ///   - id: The ID of the source to be deleted.
     ///   - customer: The ID of the customer this source belongs to.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(id: String, customer: String) -> EventLoopFuture<DeletedObject>
     
     /// You can see a list of the bank accounts belonging to a Customer. Note that the 10 most recent sources are always available by default on the Customer. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional bank accounts.
     ///
@@ -111,7 +111,7 @@ extension BankAccountRoutes {
         return verify(id: id, customer: customer, amounts: amounts, expand: expand)
     }
     
-    public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String, customer: String) -> EventLoopFuture<DeletedObject> {
         return delete(id: id, customer: customer)
     }
     
@@ -201,7 +201,7 @@ public struct StripeBankAccountRoutes: BankAccountRoutes {
         return apiHandler.send(method: .POST, path: "\(bankaccounts)/\(customer)/sources/\(id)/verify", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String, customer: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(bankaccounts)/\(customer)/sources/\(id)", headers: headers)
     }
     

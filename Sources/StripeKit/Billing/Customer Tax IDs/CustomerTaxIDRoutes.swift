@@ -37,7 +37,7 @@ public protocol CustomerTaxIDRoutes {
     ///   - id: Unique identifier of the `TaxID` object to delete.
     ///   - customer: ID of the customer.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(id: String, customer: String) -> EventLoopFuture<DeletedObject>
     
     /// Returns a list of tax IDs for a customer.
     ///
@@ -80,7 +80,7 @@ public struct StripeCustomerTaxIDRoutes: CustomerTaxIDRoutes {
         return apiHandler.send(method: .GET, path: "\(taxids)/\(customer)/tax_ids/\(id)", query: queryParams, headers: headers)
     }
     
-    public func delete(id: String, customer: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(id: String, customer: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(taxids)/\(customer)/tax_ids/\(id)", headers: headers)
     }
     
