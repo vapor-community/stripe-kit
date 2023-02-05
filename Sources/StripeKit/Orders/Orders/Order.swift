@@ -29,7 +29,7 @@ public struct StripeOrder: Codable {
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: Currency?
     /// The customer used for the order.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// The email address of the customer placing the order.
     public var email: String?
     /// External coupon code to load for this order.

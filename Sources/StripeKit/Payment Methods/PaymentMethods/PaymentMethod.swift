@@ -36,7 +36,7 @@ public struct StripePaymentMethod: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
     public var eps: StripePaymentMethodEps?
     /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.

@@ -44,7 +44,7 @@ public struct StripeInvoice: Codable {
     public var currency: Currency?
     /// Custom fields displayed on the invoice.
     public var customFields: [[String: String]]?
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// The customer’s address. Until the invoice is finalized, this field will equal customer.address. Once the invoice is finalized, this field will no longer be updated.
     public var customerAddress: Address?
     /// The customer’s email. Until the invoice is finalized, this field will equal customer.email. Once the invoice is finalized, this field will no longer be updated.

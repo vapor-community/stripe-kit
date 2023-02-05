@@ -50,7 +50,7 @@ public enum StripeEventObject: Codable {
     case configuration(StripePortalConfiguration)
     case coupon(StripeCoupon)
     case creditNote(StripeCreditNote)
-    case customer(StripeCustomer)
+    case customer(Customer)
     case discount(StripeDiscount)
     case subscription(StripeSubscription)
     case taxId(StripeTaxID)
@@ -121,7 +121,7 @@ public enum StripeEventObject: Codable {
         case "credit_note":
             self = try .creditNote(StripeCreditNote(from: decoder))
         case "customer":
-            self = try .customer(StripeCustomer(from: decoder))
+            self = try .customer(Customer(from: decoder))
         case "discount":
             self = try .discount(StripeDiscount(from: decoder))
         case "subscription":

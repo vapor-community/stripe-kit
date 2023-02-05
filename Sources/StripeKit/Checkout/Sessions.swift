@@ -26,7 +26,7 @@ public struct StripeSession: Codable {
     /// A unique string to reference the Checkout Session. This can be a customer ID, a cart ID, or similar, and can be used to reconcile the session with your internal systems.
     public var clientReferenceId: String?
     /// The ID of the customer for this session. A new customer will be created unless an existing customer was provided in when the session was created.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// The customer details including the customer’s tax exempt status and the customer’s tax IDs. Only present on Sessions in `payment` or `subscription` mode.
     public var customerDetails: StripeSessionCustomerDetails?
     /// If provided, this value will be used when the Customer object is created. If not provided, customers will be asked to enter their email address. Use this parameter to prefill customer data if you already have an email on file. To access information about the customer once a session is complete, use the `customer` field.

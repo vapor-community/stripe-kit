@@ -42,7 +42,7 @@ public struct StripePaymentIntent: Codable {
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: Currency?
     /// ID of the Customer this PaymentIntent is for if one exists.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// ID of the invoice that created this PaymentIntent, if it exists.

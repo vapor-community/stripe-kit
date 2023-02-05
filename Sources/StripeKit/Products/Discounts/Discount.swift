@@ -17,7 +17,7 @@ public struct StripeDiscount: Codable {
     /// Hash describing the coupon applied to create this discount.
     public var coupon: StripeCoupon?
     /// The id of the customer this discount is associated with.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// If the coupon has a duration of repeating, the date that this discount will end. If the coupon has a duration of once or forever, this attribute will be null.
     public var end: Date?
     /// Date that the coupon was applied.

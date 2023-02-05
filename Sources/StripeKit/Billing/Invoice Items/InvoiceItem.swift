@@ -19,7 +19,7 @@ public struct StripeInvoiceItem: Codable {
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: Currency?
     /// The ID of the customer who will be billed when this invoice item is billed.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var date: Date?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
