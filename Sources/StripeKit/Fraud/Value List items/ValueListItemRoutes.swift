@@ -27,7 +27,7 @@ public protocol ValueListItemRoutes {
     ///
     /// - Parameter item: The identifier of the value list item to be deleted.
     /// - Returns: A `StripeValueListItem`.
-    func delete(item: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(item: String) -> EventLoopFuture<DeletedObject>
     
     /// Returns a list of `ValueListItem` objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
@@ -48,7 +48,7 @@ extension ValueListItemRoutes {
         return retrieve(item: item)
     }
     
-    func delete(item: String) -> EventLoopFuture<StripeDeletedObject> {
+    func delete(item: String) -> EventLoopFuture<DeletedObject> {
         return delete(item: item)
     }
     
@@ -76,7 +76,7 @@ public struct StripeValueListItemRoutes: ValueListItemRoutes {
         return apiHandler.send(method: .GET, path: "\(valuelistitems)/\(item)", headers: headers)
     }
     
-    public func delete(item: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(item: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(valuelistitems)/\(item)", headers: headers)
     }
     

@@ -93,7 +93,7 @@ public protocol AccountRoutes {
     ///
     /// - Parameter account: The identifier of the account to be deleted. If none is provided, will default to the account of the API key.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(account: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(account: String) -> EventLoopFuture<DeletedObject>
     
     /// With Connect, you may flag accounts as suspicious.
     /// Test-mode Custom and Express accounts can be rejected at any time. Accounts created using live-mode keys may only be rejected once all balances are zero.
@@ -190,7 +190,7 @@ extension AccountRoutes {
                       tosAcceptance: tosAcceptance)
     }
     
-    public func delete(account: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(account: String) -> EventLoopFuture<DeletedObject> {
         return delete(account: account)
     }
     
@@ -370,7 +370,7 @@ public struct StripeConnectAccountRoutes: AccountRoutes {
         return apiHandler.send(method: .POST, path: "\(accounts)/\(account)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(account: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(account: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)", headers: headers)
     }
     

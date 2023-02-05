@@ -29,7 +29,7 @@ public struct StripeBankAccount: Codable {
     /// Three-letter ISO code for the currency paid out to the bank account.
     public var currency: Currency?
     /// The customer that this bank account belongs to.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// Whether this bank account is the default external account for its currency.
     public var defaultForCurrency: Bool?
     /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.

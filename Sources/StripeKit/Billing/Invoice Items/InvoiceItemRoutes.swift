@@ -90,7 +90,7 @@ public protocol InvoiceItemRoutes {
     ///
     /// - Parameter invoiceItem: The identifier of the invoice item to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(invoiceItem: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(invoiceItem: String) -> EventLoopFuture<DeletedObject>
     
     /// Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
     ///
@@ -169,7 +169,7 @@ extension InvoiceItemRoutes {
                           expand: expand)
     }
     
-    public func delete(invoiceItem: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(invoiceItem: String) -> EventLoopFuture<DeletedObject> {
         return delete(invoiceItem: invoiceItem)
     }
     
@@ -341,7 +341,7 @@ public struct StripeInvoiceItemRoutes: InvoiceItemRoutes {
         return apiHandler.send(method: .POST, path: "\(invoiceitems)/\(invoiceItem)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(invoiceItem: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(invoiceItem: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(invoiceitems)/\(invoiceItem)", headers: headers)
     }
     

@@ -82,7 +82,7 @@ public protocol PlanRoutes {
     ///
     /// - Parameter plan: The identifier of the plan to be deleted.
     /// - Returns: A `StripeDeletedObject`
-    func delete(plan: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(plan: String) -> EventLoopFuture<DeletedObject>
     
     /// Returns a list of your plans.
     ///
@@ -153,7 +153,7 @@ extension PlanRoutes {
                       expand: expand)
     }
     
-    public func delete(plan: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(plan: String) -> EventLoopFuture<DeletedObject> {
         return delete(plan: plan)
     }
     
@@ -306,7 +306,7 @@ public struct StripePlanRoutes: PlanRoutes {
         return apiHandler.send(method: .POST, path: "\(plans)/\(plan)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(plan: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(plan: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(plans)/\(plan)", headers: headers)
     }
     

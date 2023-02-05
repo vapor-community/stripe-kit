@@ -7,8 +7,16 @@
 //
 
 
-public struct StripeDeletedObject: Codable {
+public struct DeletedObject: Codable {
     public var id: String
     public var object: String
     public var deleted: Bool
+    
+    public init(id: String,
+                object: String,
+                deleted: Bool) {
+        self.id = id
+        self.object = object
+        self.deleted = deleted
+    }
 }

@@ -55,7 +55,7 @@ public protocol CouponRoutes {
     ///
     /// - Parameter coupon: The identifier of the coupon to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(coupon: String) -> EventLoopFuture<DeletedObject>
     
     /// Returns a list of your coupons.
     ///
@@ -98,7 +98,7 @@ extension CouponRoutes {
         return update(coupon: coupon, metadata: metadata, name: name)
     }
     
-    public func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(coupon: String) -> EventLoopFuture<DeletedObject> {
         return delete(coupon: coupon)
     }
     
@@ -186,7 +186,7 @@ public struct StripeCouponRoutes: CouponRoutes {
         return apiHandler.send(method: .POST, path: "\(coupons)/\(coupon)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(coupon: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(coupon: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(coupons)/\(coupon)", headers: headers)
     }
     

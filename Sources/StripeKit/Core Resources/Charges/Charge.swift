@@ -39,7 +39,7 @@ public struct Charge: Codable {
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: Currency?
     /// ID of the customer this charge is for if one exists.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Details about the dispute if the charge has been disputed.

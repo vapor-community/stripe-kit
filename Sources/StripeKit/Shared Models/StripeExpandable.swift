@@ -100,6 +100,22 @@ public struct DynamicExpandable<A: Codable, B: Codable>: Codable {
         case empty
     }
 
+    public init(model: A) {
+        self._state = .expanded(model)
+    }
+    
+    public init(model: B) {
+        self._state = .expanded(model)
+    }
+    
+    public init(id: String?) {
+        if let id {
+            self._state = .unexpanded(id)
+        } else {
+            self._state = .empty
+        }
+    }
+    
     public init() {
         self._state = .empty
     }

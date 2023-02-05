@@ -22,7 +22,7 @@ public struct StripeSubscriptionSchedule: Codable {
     /// Object representing the start and end dates for the current phase of the subscription schedule, if it is active.
     public var currentPhase: StripeSubscriptionScheduleCurrentPhase?
     /// ID of the customer who owns the subscription schedule.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// Object representing the subscription schedule’s default settings.
     public var defaultSettings: StripeSubscriptionScheduleDefaultSettings?
     /// Behavior of the subscription schedule and underlying subscription when it ends.

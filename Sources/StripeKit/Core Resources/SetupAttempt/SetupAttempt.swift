@@ -17,7 +17,7 @@ public struct StripeSetupAttempt: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?
     /// The value of customer on the SetupIntent at the time of this confirmation.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// The value of `on_behalf_of` on the SetupIntent at the time of this confirmation.

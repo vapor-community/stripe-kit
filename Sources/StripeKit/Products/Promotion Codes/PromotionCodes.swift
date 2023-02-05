@@ -17,7 +17,7 @@ public struct StripePromotionCode: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The customer that this promotion code can be used by.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// The customer-facing code. Regardless of case, this code must be unique across all active promotion codes for each customer.
     public var code: String?
     /// Hash describing the coupon for this promotion code.

@@ -22,7 +22,7 @@ public struct StripeSetupIntent: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// ID of the Customer this SetupIntent belongs to, if one exists. If present, payment methods used with this SetupIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this SetupIntent.
-    @Expandable<StripeCustomer> public var customer: String?
+    @Expandable<Customer> public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// The error encountered in the previous SetupIntent confirmation.

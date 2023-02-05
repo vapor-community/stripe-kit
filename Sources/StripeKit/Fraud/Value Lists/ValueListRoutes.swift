@@ -39,7 +39,7 @@ public protocol ValueListRoutes {
     ///
     /// - Parameter valueList: The identifier of the value list to be deleted.
     /// - Returns: A `StripeDeletedObject`.
-    func delete(valueList: String) -> EventLoopFuture<StripeDeletedObject>
+    func delete(valueList: String) -> EventLoopFuture<DeletedObject>
     
     /// Returns a list of `ValueList` objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
@@ -76,7 +76,7 @@ extension ValueListRoutes {
                           name: name)
     }
     
-    func delete(valueList: String) -> EventLoopFuture<StripeDeletedObject> {
+    func delete(valueList: String) -> EventLoopFuture<DeletedObject> {
         return delete(valueList: valueList)
     }
     
@@ -138,7 +138,7 @@ public struct StripeValueListRoutes: ValueListRoutes {
         return apiHandler.send(method: .POST, path: "\(valuelists)/\(valueList)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func delete(valueList: String) -> EventLoopFuture<StripeDeletedObject> {
+    public func delete(valueList: String) -> EventLoopFuture<DeletedObject> {
         return apiHandler.send(method: .DELETE, path: "\(valuelists)/\(valueList)", headers: headers)
     }
     
