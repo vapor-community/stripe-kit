@@ -44,7 +44,7 @@ public enum StripeEventObject: Codable {
     case balance(Balance)
     case capability(StripeCapability)
     case charge(Charge)
-    case dispute(StripeDispute)
+    case dispute(Dispute)
     case refund(StripeRefund)
     case checkoutSession(StripeSession)
     case configuration(StripePortalConfiguration)
@@ -111,7 +111,7 @@ public enum StripeEventObject: Codable {
         case "charge":
             self = try .charge(Charge(from: decoder))
         case "dispute":
-            self = try .dispute(StripeDispute(from: decoder))
+            self = try .dispute(Dispute(from: decoder))
         case "refund":
             self = try .refund(StripeRefund(from: decoder))
         case "checkout.session":

@@ -5,8 +5,8 @@
 //  Created by Andrew Edwards on 12/7/17.
 //
 
-/// The [Dispute Evidence Object](https://stripe.com/docs/api/disputes/evidence_object).
-public struct StripeDisputeEvidence: Codable {
+/// The [Dispute Evidence Object](https://stripe.com/docs/api/disputes/evidence_object)
+public struct DisputeEvidence: Codable {
     /// Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity.
     public var accessActivityLog: String?
     /// The billing address provided by the customer.
@@ -61,4 +61,60 @@ public struct StripeDisputeEvidence: Codable {
     @Expandable<StripeFile> public var uncategorizedFile: String?
     /// Any additional evidence or statements.
     public var uncategorizedText: String?
+    
+    public init(accessActivityLog: String? = nil,
+                billingAddress: String? = nil,
+                cancellationPolicy: String? = nil,
+                cancellationPolicyDisclosure: String? = nil,
+                cancellationRebuttal: String? = nil,
+                customerCommunication: String? = nil,
+                customerEmailAddress: String? = nil,
+                customerName: String? = nil,
+                customerPurchaseIp: String? = nil,
+                customerSignature: String? = nil,
+                duplicateChargeDocumentation: String? = nil,
+                duplicateChargeExplanation: String? = nil,
+                duplicateChargeId: String? = nil,
+                productDescription: String? = nil,
+                receipt: String? = nil,
+                refundPolicy: String? = nil,
+                refundPolicyDisclosure: String? = nil,
+                refundRefusalExplanation: String? = nil,
+                serviceDate: String? = nil,
+                serviceDocumentation: String? = nil,
+                shippingAddress: String? = nil,
+                shippingCarrier: String? = nil,
+                shippingDate: String? = nil,
+                shippingDocumentation: String? = nil,
+                shippingTrackingNumber: String? = nil,
+                uncategorizedFile: String? = nil,
+                uncategorizedText: String? = nil) {
+        self.accessActivityLog = accessActivityLog
+        self.billingAddress = billingAddress
+        self._cancellationPolicy = Expandable(id: cancellationPolicy)
+        self.cancellationPolicyDisclosure = cancellationPolicyDisclosure
+        self.cancellationRebuttal = cancellationRebuttal
+        self._customerCommunication = Expandable(id: customerCommunication)
+        self.customerEmailAddress = customerEmailAddress
+        self.customerName = customerName
+        self.customerPurchaseIp = customerPurchaseIp
+        self._customerSignature = Expandable(id: customerSignature)
+        self._duplicateChargeDocumentation = Expandable(id: duplicateChargeDocumentation)
+        self.duplicateChargeExplanation = duplicateChargeExplanation
+        self.duplicateChargeId = duplicateChargeId
+        self.productDescription = productDescription
+        self._receipt = Expandable(id: receipt)
+        self._refundPolicy = Expandable(id: refundPolicy)
+        self.refundPolicyDisclosure = refundPolicyDisclosure
+        self.refundRefusalExplanation = refundRefusalExplanation
+        self.serviceDate = serviceDate
+        self._serviceDocumentation = Expandable(id: serviceDocumentation)
+        self.shippingAddress = shippingAddress
+        self.shippingCarrier = shippingCarrier
+        self.shippingDate = shippingDate
+        self._shippingDocumentation = Expandable(id: shippingDocumentation)
+        self.shippingTrackingNumber = shippingTrackingNumber
+        self._uncategorizedFile = Expandable(id: uncategorizedFile)
+        self.uncategorizedText = uncategorizedText
+    }
 }
