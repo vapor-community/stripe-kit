@@ -322,7 +322,7 @@ class ExpandableTests: XCTestCase {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-       _ = try decoder.decode(StripeEventData.self, from: objectMissingExpandableTransferFieldOnCharge)
+       _ = try decoder.decode(EventData.self, from: objectMissingExpandableTransferFieldOnCharge)
     }
     
     func testExpandable_nullEncodingDecoding() throws {
