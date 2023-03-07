@@ -7,35 +7,72 @@
 
 import Foundation
 /// The [Event Object](https://stripe.com/docs/api/events/object)
-public struct StripeEvent: Codable {
+public struct Event: Codable {
     /// Unique identifier for the object.
     public var id: String
+    /// The Stripe API version used to render data. Note: This property is populated only for events on or after October 31, 2014.
+    public var apiVersion: String?
+    /// Object containing data associated with the event.
+    public var data: EventData?
+    /// Information on the API request that instigated the event.
+    public var request: EventRequest?
+    /// Description of the event (e.g., invoice.created or charge.refunded).
+    public var type: EventType?
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The connected account that originated the event.
     public var account: String?
-    /// The Stripe API version used to render data. Note: This property is populated only for events on or after October 31, 2014.
-    public var apiVersion: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date?
-    /// Object containing data associated with the event.
-    public var data: StripeEventData?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Number of webhooks that have yet to be successfully delivered (i.e., to return a 20x response) to the URLs you’ve specified.
     public var pendingWebhooks: Int?
-    /// Information on the API request that instigated the event.
-    public var request: StripeEventRequest?
-    /// Description of the event (e.g., invoice.created or charge.refunded).
-    public var type: StripeEventType?
+    
+    public init(id: String,
+                apiVersion: String? = nil,
+                data: EventData? = nil,
+                request: EventRequest? = nil,
+                type: EventType? = nil,
+                object: String,
+                account: String? = nil,
+                created: Date? = nil,
+                livemode: Bool? = nil,
+                pendingWebhooks: Int? = nil) {
+        self.id = id
+        self.apiVersion = apiVersion
+        self.data = data
+        self.request = request
+        self.type = type
+        self.object = object
+        self.account = account
+        self.created = created
+        self.livemode = livemode
+        self.pendingWebhooks = pendingWebhooks
+    }
 }
 
-public struct StripeEventData: Codable {
+public struct EventData: Codable {
     /// Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](https://stripe.com/docs/api/events/object#invoice_object) as the value of the object key.
-    public var object: StripeEventObject
+    public var object: EventObject
+    
+    // TODO: - Figure out how to decode this.
+    /// Object containing the names of the attributes that have changed, and their previous values (sent along only with *.updated events).
+    //public var previousAttributes: [String: Any]?
+    
+    public init(object: EventObject) {
+        self.object = object
+    }
 }
 
-public enum StripeEventObject: Codable {
+// TODO: - Add types
+/// PaymentLink
+/// CashBalance
+/// Customer cash balance transaction
+/// Financial connection
+/// Source transaction
+
+public enum EventObject: Codable {
     case account(StripeConnectAccount)
     case card(StripeCard)
     case bankAccount(StripeBankAccount)
@@ -206,16 +243,20 @@ public enum StripeEventObject: Codable {
     }
 }
 
-public struct StripeEventRequest: Codable {
+public struct EventRequest: Codable {
     /// ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe’s automatic subscription handling). Request logs are available in the dashboard, but currently not in the API.
     public var id: String?
     /// The idempotency key transmitted during the request, if any. Note: This property is populated only for events on or after May 23, 2017.
     public var idempotencyKey: String?
+    
+    public init(id: String? = nil,
+                idempotencyKey: String? = nil) {
+        self.id = id
+        self.idempotencyKey = idempotencyKey
+    }
 }
 
-public enum StripeEventType: String, Codable {
-    /// Occurs whenever an account status or property has changed.
-    case accountUpdated = "account.updated"
+public enum EventType: String, Codable {
     /// Occurs whenever a user authorizes an application. Sent to the related application only.
     case accountApplicationAuthorized = "account.application.authorized"
     /// Occurs whenever a user deauthorizes an application. Sent to the related application only.
@@ -226,34 +267,28 @@ public enum StripeEventType: String, Codable {
     case accountExternalAccountDeleted = "account.external_account.deleted"
     /// Occurs whenever an external account is updated.
     case accountExternalAccountUpdated = "account.external_account.updated"
+    /// Occurs whenever an account status or property has changed.
+    case accountUpdated = "account.updated"
     /// Occurs whenever an application fee is created on a charge.
     case applicationFeeCreated = "application_fee.created"
-    /// Occurs whenever an application fee is refunded, whether from refunding a charge or from refunding the application fee directly. This includes partial refunds.
-    case applicationFeeRefunded = "application_fee.refunded"
     /// Occurs whenever an application fee refund is updated.
     case applicationFeeRefundUpdated = "application_fee.refund.updated"
+    /// Occurs whenever an application fee is refunded, whether from refunding a charge or from refunding the application fee directly. This includes partial refunds.
+    case applicationFeeRefunded = "application_fee.refunded"
     /// Occurs whenever your Stripe balance has been updated (e.g., when a charge is available to be paid out). By default, Stripe automatically transfers funds in your balance to your bank account on a daily basis.
     case balanceAvailable = "balance.available"
     /// Occurs whenever a portal configuration is created.
     case billingPortalConfigurationCreated = "billing_portal.configuration.created"
     /// Occurs whenever a portal configuration is updated.
     case billingPortalConfigurationUpdated = "billing_portal.configuration.updated"
+    /// Occurs whenever a portal session is created.
+    case billingPortalSessionCreated = "billing_portal.session.created"
     /// Occurs whenever a capability has new requirements or a new status.
     case capabilityUpdated = "capability.updated"
+    /// Occurs whenever a capability has new requirements or a new status.
+    case cashBalanceFundsAvailable = "cash_balance.funds_available"
     /// Occurs whenever a previously uncaptured charge is captured.
     case chargeCaptured = "charge.captured"
-    /// Occurs whenever an uncaptured charge expires.
-    case chargeExpired = "charge.expired"
-    /// Occurs whenever a failed charge attempt occurs.
-    case chargeFailed = "charge.failed"
-    /// Occurs whenever a pending charge is created.
-    case chargePending = "charge.pending"
-    /// Occurs whenever a charge is refunded, including partial refunds.
-    case chargeRefunded = "charge.refunded"
-    /// Occurs whenever a new charge is created and is successful.
-    case chargeSucceeded = "charge.succeeded"
-    /// Occurs whenever a charge description or metadata is updated.
-    case chargeUpdated = "charge.updated"
     /// Occurs when a dispute is closed and the dispute status changes to lost, warning_closed, or won.
     case chargeDisputeClosed = "charge.dispute.closed"
     /// Occurs whenever a customer disputes a charge with their bank.
@@ -264,8 +299,20 @@ public enum StripeEventType: String, Codable {
     case chargeDisputeFundsWithdrawn = "charge.dispute.funds_withdrawn"
     /// Occurs when the dispute is updated (usually with evidence).
     case chargeDisputeUpdated = "charge.dispute.updated"
+    /// Occurs whenever an uncaptured charge expires.
+    case chargeExpired = "charge.expired"
+    /// Occurs whenever a failed charge attempt occurs.
+    case chargeFailed = "charge.failed"
+    /// Occurs whenever a pending charge is created.
+    case chargePending = "charge.pending"
     /// Occurs whenever a refund is updated, on selected payment methods.
     case chargeRefundUpdated = "charge.refund.updated"
+    /// Occurs whenever a charge is refunded, including partial refunds.
+    case chargeRefunded = "charge.refunded"
+    /// Occurs whenever a new charge is created and is successful.
+    case chargeSucceeded = "charge.succeeded"
+    /// Occurs whenever a charge description or metadata is updated.
+    case chargeUpdated = "charge.updated"
     /// Occurs when a payment intent using a delayed payment method fails.
     case checkoutSessionAsyncPaymentFailed = "checkout.session.async_payment_failed"
     /// Occurs when a payment intent using a delayed payment method finally succeeds.
@@ -286,12 +333,12 @@ public enum StripeEventType: String, Codable {
     case creditNoteUpdated = "credit_note.updated"
     /// Occurs whenever a credit note is voided.
     case creditNoteVoided = "credit_note.voided"
+    /// Occurs whenever a new customer cash balance transactions is created.
+    case customerCashBalanceTransactionCreated = "customer_cash_balance_transaction.created"
     /// Occurs whenever a new customer is created.
     case customerCreated = "customer.created"
     /// Occurs whenever a customer is deleted.
     case customerDeleted = "customer.deleted"
-    /// Occurs whenever any property of a customer changes.
-    case customerUpdated = "customer.updated"
     /// Occurs whenever a coupon is attached to a customer.
     case customerDiscountCreated = "customer.discount.created"
     /// Occurs whenever a coupon is removed from a customer.
@@ -310,11 +357,15 @@ public enum StripeEventType: String, Codable {
     case customerSubscriptionCreated = "customer.subscription.created"
     /// Occurs whenever a customer's subscription ends.
     case customerSubscriptionDeleted = "customer.subscription.deleted"
+    /// Occurs whenever a customer’s subscription is paused. Only applies when subscriptions enter `status=paused`, not when payment collection is paused.
+    case customerSubscriptionPaused = "customer.subscription.paused"
     /// Occurs whenever a customer's subscription's pending update is applied, and the subscription is updated.
     case customerSubscriptionPendingUpdateApplied = "customer.subscription.pending_update_applied"
     /// Occurs whenever a customer's subscription's pending update expires before the related invoice is paid.
     case customerSubscriptionPendingUpdateExpired = "customer.subscription.pending_update_expired"
-    /// Occurs three days before a subscription's trial period is scheduled to end, or when a trial is ended immediately (using trial_end=now).
+    /// Occurs whenever a customer’s subscription is no longer paused. Only applies when a `status=paused` subscription is resumed, not when payment collection is resumed.
+    case customerSubscriptionResumed = "customer.subscription.resumed"
+    /// Occurs three days before a subscription's trial period is scheduled to end, or when a trial is ended immediately (using `trial_end=now`).
     case customerSubscriptionTrialWillEnd = "customer.subscription.trial_will_end"
     /// Occurs whenever a subscription changes (e.g., switching from one plan to another, or changing the status from trial to active).
     case customerSubscriptionUpdated = "customer.subscription.updated"
@@ -324,8 +375,20 @@ public enum StripeEventType: String, Codable {
     case customerTaxIdDeleted = "customer.tax_id.deleted"
     /// Occurs whenever a customer's tax ID is updated.
     case customerTaxIdUpdated = "customer.tax_id.updated"
+    /// Occurs whenever any property of a customer changes.
+    case customerUpdated = "customer.updated"
     /// Occurs whenever a new Stripe-generated file is available for your account.
     case fileCreated = "file.created"
+    /// Occurs when a new Financial Connections account is created.
+    case financialConnectionsAccountCreated = "financial_connections.account.created"
+    /// Occurs when a Financial Connections account’s status is updated from `active` to `inactive`.
+    case financialConnectionsAccountDeactivated = "financial_connections.account.deactivated"
+    /// Occurs when a Financial Connections account is disconnected.
+    case financialConnectionsAccountDisconnected = "financial_connections.account.disconnected"
+    /// Occurs when a Financial Connections account’s status is updated from `inactive` to `active`.
+    case financialConnectionsAccountReactivated = "financial_connections.account.reactivated"
+    /// Occurs when an Account’s `balance_refresh` status transitions from `pending` to either `succeeded` or `failed`.
+    case financialConnectionsAccountRefreshedBalance = "financial_connections.account.refreshed_balance"
     /// Occurs whenever a VerificationSession is canceled
     case identityVerificationSessionCanceled = "identity.verification_session.canceled"
     /// Occurs whenever a VerificationSession is created
@@ -348,17 +411,17 @@ public enum StripeEventType: String, Codable {
     case invoiceFinalized = "invoice.finalized"
     /// Occurs whenever an invoice is marked uncollectible.
     case invoiceMarkedUncollectible = "invoice.marked_uncollectible"
+    /// Occurs whenever an invoice payment attempt succeeds or an invoice is marked as paid out-of-band.
+    case invoicePaid = "invoice.paid"
     /// Occurs whenever an invoice payment attempt requires further user action to complete.
     case invoicePaymentActionRequired = "invoice.payment_action_required"
     /// Occurs whenever an invoice payment attempt fails, due either to a declined payment or to the lack of a stored payment method.
     case invoicePaymentFailed = "invoice.payment_failed"
     /// Occurs whenever an invoice payment attempt succeeds.
     case invoicePaymentSucceeded = "invoice.payment_succeeded"
-    /// Occurs whenever an invoice payment attempt succeeds or an invoice is marked as paid out-of-band.
-    case invoicePaid = "invoice.paid"
     /// Occurs whenever an invoice email is sent out.
     case invoiceSent = "invoice.sent"
-    /// Occurs X number of days before a subscription is scheduled to create an invoice that is automatically charged—where X is determined by your subscriptions settings. Note: The received Invoice object will not have an invoice ID.
+    /// Occurs X number of days before a subscription is scheduled to create an invoice that is automatically charged—where X is determined by your subscriptions settings. Note: The received `Invoice` object will not have an invoice ID.
     case invoiceUpcoming = "invoice.upcoming"
     /// Occurs whenever an invoice changes (e.g., the invoice amount).
     case invoiceUpdated = "invoice.updated"
@@ -372,7 +435,7 @@ public enum StripeEventType: String, Codable {
     case invoiceitemUpdated = "invoiceitem.updated"
     /// Occurs whenever an authorization is created.
     case issuingAuthorizationCreated = "issuing_authorization.created"
-    /// Represents a synchronous request for authorization, see Using your integration to handle authorization requests.
+    /// Represents a synchronous request for authorization, see Using your integration to handle authorization requests. You must create a webhook endpoint which explicitly subscribes to this event type to access it. Webhook endpoints which subscribe to all events will not include this event type.
     case issuingAuthorizationRequest = "issuing_authorization.request"
     /// Occurs whenever an authorization is updated.
     case issuingAuthorizationUpdated = "issuing_authorization.updated"
@@ -402,28 +465,26 @@ public enum StripeEventType: String, Codable {
     case mandateUpdated = "mandate.updated"
     /// Occurs whenever an order is created.
     case orderCreated = "order.created"
-    /// Occurs whenever an order payment attempt fails.
-    case orderPaymentFailed = "order.payment_failed"
-    /// Occurs whenever an order payment attempt succeeds.
-    case orderPaymentSucceeded = "order.payment_succeeded"
-    /// Occurs whenever an order is updated.
-    case orderUpdated = "order.updated"
-    /// Occurs whenever an order return is created.
-    case orderReturnCreated = "order_return.created"
     /// Occurs when a PaymentIntent has funds to be captured. Check the `amount_capturable` property on the PaymentIntent to determine the amount that can be captured. You may capture the PaymentIntent with an `amount_to_capture` value up to the specified amount. Learn more about capturing PaymentIntents.
     case paymentIntentAmountCapturableUpdated = "payment_intent.amount_capturable_updated"
     /// Occurs when a PaymentIntent is canceled.
     case paymentIntentCanceled = "payment_intent.canceled"
     /// Occurs when a new PaymentIntent is created.
     case paymentIntentCreated = "payment_intent.created"
+    /// Occurs when funds are applied to a `customer_balance` PaymentIntent and the `‘amount_remaining’` changes.
+    case paymentIntentPartiallyFunded = "payment_intent.partially_funded"
     /// Occurs when a PaymentIntent has failed the attempt to create a source or a payment.
     case paymentIntentPaymentFailed = "payment_intent.payment_failed"
     /// Occurs when a PaymentIntent has started processing.
     case paymentIntentProcessing = "payment_intent.processing"
-    /// Occurs when a PaymentIntent transitions to requires_action state
+    /// Occurs when a PaymentIntent transitions to `requires_action` state
     case paymentIntentRequiresAction = "payment_intent.requires_action"
     /// Occurs when a PaymentIntent has been successfully fulfilled.
     case paymentIntentSucceeded = "payment_intent.succeeded"
+    /// Occurs when a payment link is created.
+    case paymentLinkCreated = "payment_link.created"
+    /// Occurs when a payment link is updated.
+    case paymentLinkUpdated = "payment_link.updated"
     /// Occurs whenever a new payment method is attached to a customer.
     case paymentMethodAttached = "payment_method.attached"
     /// Occurs whenever a card payment method's details are automatically updated by the network.
@@ -488,21 +549,25 @@ public enum StripeEventType: String, Codable {
     case recipientDeleted = "recipient.deleted"
     /// Occurs whenever a recipient is updated.
     case recipientUpdated = "recipient.updated"
-    /// Occurs whenever a requested **ReportRun** failed to complete.
+    /// Occurs whenever a refund from a customer’s cash balance is created.
+    case refundCreated = "refund.created"
+    /// Occurs whenever a refund from a customer’s cash balance is updated.
+    case refundUpdated = "refund.updated"
+    /// Occurs whenever a requested `ReportRun` failed to complete.
     case reportingReportRunFailed = "reporting.report_run.failed"
-    /// Occurs whenever a requested **ReportRun** completed succesfully.
+    /// Occurs whenever a requested `ReportRun` completed succesfully.
     case reportingReportRunSucceeded = "reporting.report_run.succeeded"
-    /// Occurs whenever a **ReportType** is updated (typically to indicate that a new day's data has come available).
+    /// Occurs whenever a `ReportType` is updated (typically to indicate that a new day's data has come available).
     case reportingReportTypeUpdated = "reporting.report_type.updated"
-    /// Occurs whenever a review is closed. The review's reason field indicates why: approved, disputed, refunded, or refunded_as_fraud.
+    /// Occurs whenever a review is closed. The review's reason field indicates why: `approved`, `disputed`, `refunded`, or `refunded_as_fraud`.
     case reviewClosed = "review.closed"
     /// Occurs whenever a review is opened.
     case reviewOpened = "review.opened"
     /// Occurs when a SetupIntent is canceled.
-    case setupAttemptCanceled = "setup_intent.canceled"
+    case setupIntentCanceled = "setup_intent.canceled"
     /// Occurs when a new SetupIntent is created.
     case setupIntentCreated = "setup_intent.created"
-    /// Occurs when a SetupIntent is in requires_action state.
+    /// Occurs when a SetupIntent is in `requires_action` state.
     case setupIntentRequiresAction = "setup_intent.requires_action"
     /// Occurs when a SetupIntent has failed the attempt to setup a payment method.
     case setupIntentSetupFailed = "setup_intent.setup_failed"
@@ -548,6 +613,20 @@ public enum StripeEventType: String, Codable {
     case taxRateCreated = "tax_rate.created"
     /// Occurs whenever a tax rate is updated.
     case taxRateUpdated = "tax_rate.updated"
+    /// Occurs whenever an action sent to a Terminal reader failed.
+    case terminalReaderActionFailed = "terminal.reader.action_failed"
+    /// Occurs whenever an action sent to a Terminal reader was successful.
+    case terminalReaderActionSucceeded = "terminal.reader.action_succeeded"
+    /// Occurs whenever a test clock starts advancing.
+    case testHelpersTestClockAdvancing = "test_helpers.test_clock.advancing"
+    /// Occurs whenever a test clock is created.
+    case testHelpersTestClockCreated = "test_helpers.test_clock.created"
+    /// Occurs whenever a test clock is deleted.
+    case testHelpersTestClockDeleted = "test_helpers.test_clock.deleted"
+    /// Occurs whenever a test clock fails to advance its frozen time.
+    case testHelpersTestClockInternalFailure = "test_helpers.test_clock.internal_failure"
+    /// Occurs whenever a test clock transitions to a ready status.
+    case testHelpersTestClockReady = "test_helpers.test_clock.ready"
     /// Occurs whenever a top-up is canceled.
     case topupCanceled = "topup.canceled"
     /// Occurs whenever a top-up is created.
@@ -560,10 +639,6 @@ public enum StripeEventType: String, Codable {
     case topupSucceeded = "topup.succeeded"
     /// Occurs whenever a transfer is created.
     case transferCreated = "transfer.created"
-    /// Occurs whenever a transfer failed.
-    case transferFailed = "transfer.failed"
-    /// Occurs after a transfer is paid. For Instant Payouts, the event will be sent on the next business day, although the funds should be received well beforehand.
-    case transferPaid = "transfer.paid"
     /// Occurs whenever a transfer is reversed, including partial reversals.
     case transferReversed = "transfer.reversed"
     /// Occurs whenever a transfer's description or metadata is updated.
@@ -572,9 +647,9 @@ public enum StripeEventType: String, Codable {
     case unknownEvent = "unknown"
 }
 
-public struct StripeEventList: Codable {
+public struct EventList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
-    public var data: [StripeEvent]?
+    public var data: [Event]?
 }
