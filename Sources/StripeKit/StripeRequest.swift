@@ -20,6 +20,10 @@ extension HTTPClientRequest.Body {
     public static func string(_ string: String) -> Self {
         .bytes(.init(string: string))
     }
+    
+    public static func data(_ data: Data) -> Self {
+        .bytes(.init(data: data))
+    }
 }
 
 struct StripeAPIHandler {
