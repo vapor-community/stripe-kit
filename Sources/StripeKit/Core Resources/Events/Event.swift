@@ -54,7 +54,7 @@ public enum StripeEventObject: Codable {
     case discount(StripeDiscount)
     case subscription(StripeSubscription)
     case taxId(StripeTaxID)
-    case file(StripeFile)
+    case file(File)
     case invoice(StripeInvoice)
     case invoiceItem(StripeInvoiceItem)
     case issuingAuthorization(StripeAuthorization)
@@ -129,7 +129,7 @@ public enum StripeEventObject: Codable {
         case "tax_id":
             self = try .taxId(StripeTaxID(from: decoder))
         case "file":
-            self = try .file(StripeFile(from: decoder))
+            self = try .file(File(from: decoder))
         case "identity.verification_session":
             self = try .verificationSession(StripeVerificationSession(from: decoder))
         case "invoice":
