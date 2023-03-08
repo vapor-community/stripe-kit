@@ -9,44 +9,27 @@ import NIO
 import NIOHTTP1
 import Foundation
 
-public protocol FileRoutes {
+public protocol FileRoutes: StripeAPIRoute {
     /// To upload a file to Stripe, you’ll need to send a request of type `multipart/form-data`. The request should contain the file you would like to upload, as well as the parameters for creating a file. \n All of Stripe’s officially supported API libraries should have support for sending `multipart/form-data`.
     ///
     /// - Parameters:
     ///   - file: A file to upload. The file should follow the specifications of RFC 2388 (which defines file transfers for the `multipart/form-data` protocol).
-    ///   - purpose: The purpose of the uploaded file. Possible values are `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `identity_document`, `pci_document`, or `tax_document_user_upload`.
+    ///   - purpose: The purpose of the uploaded file.
     ///   - fileLinkData: Optional parameters to automatically create a file link for the newly created file.
-    /// - Returns: A `StripeFile`.
-    mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) -> EventLoopFuture<StripeFile>
+    /// - Returns: Returns the file object..
+    mutating func create(file: Data, purpose: FilePurpose, fileLinkData: [String: Any]?) async throws -> File
     
-    /// Retrieves the details of an existing file object. Supply the unique file upload ID from a file creation request, and Stripe will return the corresponding transfer information.
+    /// Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object. To access file contents, see the [File Upload Guide](https://stripe.com/docs/file-upload#download-file-contents) .
     ///
     /// - Parameter id: The identifier of the file upload to be retrieved.
-    /// - Returns: A `StripeFile`.
-    func retrieve(file: String) -> EventLoopFuture<StripeFile>
+    /// - Returns: Returns a file object if a valid identifier was provided, and returns an error otherwise.
+    func retrieve(file: String) async throws -> File
     
     /// Returns a list of the files that you have uploaded to Stripe. The file uploads are returned sorted by creation date, with the most recently created file uploads appearing first.
     ///
     /// - Parameter filter: A dictionary that contains the filters. More info [here](https://stripe.com/docs/api/curl#list_file_uploads).
     /// - Returns: A `FileUploadList`
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileUploadList>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension FileRoutes {
-    public mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]? = nil) -> EventLoopFuture<StripeFile> {
-        return create(file: file, purpose: purpose, fileLinkData: fileLinkData)
-    }
-    
-    public func retrieve(file: String) -> EventLoopFuture<StripeFile> {
-        return retrieve(file: file)
-    }
-    
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeFileUploadList> {
-        return listAll(filter: filter)
-    }
+    func listAll(filter: [String: Any]?) async throws -> FileUploadList
 }
 
 public struct StripeFileRoutes: FileRoutes {
@@ -60,7 +43,7 @@ public struct StripeFileRoutes: FileRoutes {
         self.apiHandler = apiHandler
     }
     
-    public mutating func create(file: Data, purpose: StripeFilePurpose, fileLinkData: [String: Any]?) -> EventLoopFuture<StripeFile> {
+    public mutating func create(file: Data, purpose: FilePurpose, fileLinkData: [String: Any]? = nil) async throws -> File {
         var body: Data = Data()
         
         // Form data structure found here.
@@ -87,20 +70,20 @@ public struct StripeFileRoutes: FileRoutes {
         
         body.append("\r\n--\(boundary)--\r\n")
         
-        return apiHandler.send(method: .POST, path: filesupload, body: .data(body), headers: headers)
+        return try await apiHandler.send(method: .POST, path: filesupload, body: .data(body), headers: headers)
     }
     
-    public func retrieve(file: String) -> EventLoopFuture<StripeFile> {
-        return apiHandler.send(method: .GET, path: "\(files)/\(file)", headers: headers)
+    public func retrieve(file: String) async throws -> File {
+        try await apiHandler.send(method: .GET, path: "\(files)/\(file)", headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeFileUploadList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> FileUploadList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: files, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: files, query: queryParams, headers: headers)
     }
 }
 
