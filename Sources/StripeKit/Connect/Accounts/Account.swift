@@ -203,13 +203,13 @@ public struct StripeConnectAccountCompanyVerification: Codable {
 
 public struct StripeConnectAccountCompanyVerificationDocument: Codable {
     /// The back of a document returned by a file upload with a `purpose` value of `additional_verification`.
-    @Expandable<StripeFile> public var back: String?
+    @Expandable<File> public var back: String?
     /// A user-displayable string describing the verification state of this document.
     public var details: String?
     /// One of `document_corrupt`, `document_expired`, `document_failed_copy`, `document_failed_greyscale`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_not_readable`, `document_not_uploaded`, `document_type_not_supported`, or `document_too_large`. A machine-readable code specifying the verification state for this document.
     public var detailsCode: StripeConnectAccountCompanyVerificationDocumentDetailsCode?
     /// The front of a document returned by a file upload with a `purpose` value of `additional_verification`.
-    @Expandable<StripeFile> public var front: String?
+    @Expandable<File> public var front: String?
 }
 
 public enum StripeConnectAccountCompanyVerificationDocumentDetailsCode: String, Codable {
@@ -405,9 +405,9 @@ public struct StripeConnectAccountSettingsBacsDebitPayments: Codable {
 
 public struct StripeConnectAccountSettingsBranding: Codable {
     /// (ID of a file upload) An icon for the account. Must be square and at least 128px x 128px.
-    @Expandable<StripeFile> public var icon: String?
+    @Expandable<File> public var icon: String?
     /// (ID of a file upload) A logo for the account that will be used in Checkout instead of the icon and without the account’s name next to it if provided. Must be at least 128px x 128px.
-    @Expandable<StripeFile> public var logo: String?
+    @Expandable<File> public var logo: String?
     /// A CSS hex color value representing the primary branding color for this account
     public var primaryColor: String?
     /// A CSS hex color value representing the secondary branding color for this account

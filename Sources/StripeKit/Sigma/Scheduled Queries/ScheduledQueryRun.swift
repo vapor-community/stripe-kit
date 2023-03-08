@@ -20,7 +20,7 @@ public struct StripeScheduledQueryRun: Codable {
     /// If the query run was not successful, this field contains information about the failure.
     public var error: StripeScheduledQueryRunError?
     /// The file object representing the results of the query.
-    public var file: StripeFile?
+    public var file: File?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Time at which the result expires and is no longer available for download.

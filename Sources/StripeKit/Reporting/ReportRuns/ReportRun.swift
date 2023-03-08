@@ -24,7 +24,7 @@ public struct StripeReportRun: Codable {
     /// The ID of the report type to run, such as `"balance.summary.1"`.
     public var reportType: String?
     /// The file object representing the result of the report run (populated when `status=succeeded`).
-    public var result: StripeFile?
+    public var result: File?
     /// Status of this report run. This will be `pending` when the run is initially created. When the run finishes, this will be set to `succeeded` and the `result` field will be populated. Rarely, we may encounter an error, at which point this will be set to `failed` and the `error` field will be populated.
     public var status: StripeReportRunStatus?
     /// Timestamp at which this run successfully finished (populated when `status=succeeded`). Measured in seconds since the Unix epoch.
