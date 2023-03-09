@@ -99,7 +99,7 @@ public enum EventObject: Codable {
     case issuingCardHolder(StripeCardholder)
     case issuingDispute(StripeIssuingDispute)
     case issuingTransaction(StripeTransaction)
-    case mandate(StripeMandate)
+    case mandate(Mandate)
     case order(StripeOrder)
     case orderReturn(StripeOrderReturn)
     case paymentIntent(StripePaymentIntent)
@@ -184,7 +184,7 @@ public enum EventObject: Codable {
         case "issuing.transaction":
             self = try .issuingTransaction(StripeTransaction(from: decoder))
         case "mandate":
-            self = try .mandate(StripeMandate(from: decoder))
+            self = try .mandate(Mandate(from: decoder))
         case "order":
             self = try .order(StripeOrder(from: decoder))
         case "order_return":
