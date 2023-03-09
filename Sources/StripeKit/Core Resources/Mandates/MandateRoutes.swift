@@ -8,21 +8,11 @@
 import NIO
 import NIOHTTP1
 
-public protocol MandateRoutes {
-    
+public protocol MandateRoutes: StripeAPIRoute {    
     /// Retrieves a Mandate object
     /// - Parameter mandate: ID of the Mandate to retrieve.
     /// - Parameter expand: An array of porperties to expand.
-    func retrieve(mandate: String, expand: [String]?) -> EventLoopFuture<StripeMandate>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension MandateRoutes {
-    func retrieve(mandate: String, expand: [String]? = nil) -> EventLoopFuture<StripeMandate> {
-        return retrieve(mandate: mandate, expand: expand)
-    }
+    func retrieve(mandate: String, expand: [String]?) async throws -> Mandate
 }
 
 public struct StripeMandateRoutes: MandateRoutes {
@@ -35,12 +25,12 @@ public struct StripeMandateRoutes: MandateRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(mandate: String, expand: [String]?) -> EventLoopFuture<StripeMandate> {
+    public func retrieve(mandate: String, expand: [String]? = nil) async throws -> Mandate {
         var queryParams = ""
-        if let expand = expand {
+        if let expand {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(self.mandate)/\(mandate)", query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: "\(self.mandate)/\(mandate)", query: queryParams, headers: headers)
     }
 }
