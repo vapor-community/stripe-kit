@@ -24,7 +24,7 @@ public struct StripeEarlyFraudWarning: Codable {
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// ID of the Payment Intent this early fraud warning is for, optionally expanded.
-    @Expandable<StripePaymentIntent> public var paymentIntent: String?
+    @Expandable<PaymentIntent> public var paymentIntent: String?
 }
 
 public enum StripeEarlyFraudWarningFraudType: String, Codable {

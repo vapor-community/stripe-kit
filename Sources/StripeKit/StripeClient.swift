@@ -19,7 +19,7 @@ public final class StripeClient {
     public var files: FileRoutes
     public var fileLinks: FileLinkRoutes
     public var mandates: MandateRoutes
-    public var paymentIntents: PaymentIntentsRoutes
+    public var paymentIntents: PaymentIntentRoutes
     public var setupIntents: SetupIntentsRoutes
     public var setupAttempts: SetupAttemptRoutes
     public var payouts: PayoutRoutes
@@ -130,7 +130,7 @@ public final class StripeClient {
         files = StripeFileRoutes(apiHandler: handler)
         fileLinks = StripeFileLinkRoutes(apiHandler: handler)
         mandates = StripeMandateRoutes(apiHandler: handler)
-        paymentIntents = StripePaymentIntentsRoutes(apiHandler: handler)
+        paymentIntents = StripePaymentIntentRoutes(apiHandler: handler)
         setupIntents = StripeSetupIntentsRoutes(apiHandler: handler)
         setupAttempts = StripeSetupAttemptRoutes(apiHandler: handler)
         payouts = StripePayoutRoutes(apiHandler: handler)

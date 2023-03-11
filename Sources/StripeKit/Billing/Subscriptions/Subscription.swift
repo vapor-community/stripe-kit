@@ -67,7 +67,7 @@ public struct StripeSubscription: Codable {
     /// Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling Create an invoice for the given subscription at the specified interval.
     public var pendingInvoiceItemInterval: StripeSubscriptionPendingInvoiceInterval?
     /// You can use this SetupIntent to collect user authentication when creating a subscription without immediate payment or updating a subscription’s payment method, allowing you to optimize for off-session payments. Learn more in the SCA Migration Guide.
-    @Expandable<StripePaymentIntent> public var pendingSetupIntent: String?
+    @Expandable<PaymentIntent> public var pendingSetupIntent: String?
     /// If specified, [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates) that will be applied to the subscription once the`latest_invoice` has been paid.
     public var pendingUpdate: StripeSubscriptionPendingUpdate?
     /// The schedule attached to the subscription

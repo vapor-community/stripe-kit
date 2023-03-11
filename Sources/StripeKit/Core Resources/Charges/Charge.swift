@@ -69,7 +69,7 @@ public struct Charge: Codable {
     /// `true` if the charge succeeded, or was successfully authorized for later capture.
     public var paid: Bool?
     /// ID of the PaymentIntent associated with this charge, if one exists.
-    @Expandable<StripePaymentIntent> public var paymentIntent: String?
+    @Expandable<PaymentIntent> public var paymentIntent: String?
     /// ID of the payment method used in this charge.
     public var paymentMethod: String?
     /// Details about the payment method at the time of the transaction.

@@ -42,7 +42,7 @@ public struct StripeSession: Codable {
     /// The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
     public var mode: StripeSessionMode?
     /// The ID of the PaymentIntent created if SKUs or line items were provided.
-    @Expandable<StripePaymentIntent> public var paymentIntent: String?
+    @Expandable<PaymentIntent> public var paymentIntent: String?
     /// Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
     public var paymentMethodOptions: StripeSessionPaymentMethodOptions?
     /// Details on the state of phone number collection for the session.

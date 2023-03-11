@@ -30,7 +30,7 @@ public final class _StripeError: Codable {
     /// If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
     public var param: String?
     /// The PaymentIntent object for errors returned on a request involving a PaymentIntent.
-    public var paymentIntent: StripePaymentIntent?
+    public var paymentIntent: PaymentIntent?
     /// The PaymentMethod object for errors returned on a request involving a PaymentMethod.
     public var paymentMethod: StripePaymentMethod?
     /// The source object for errors returned on a request involving a source.
