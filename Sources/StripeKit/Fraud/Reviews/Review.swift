@@ -32,7 +32,7 @@ public struct StripeReview: Codable {
     /// The reason the review was opened. One of rule or manual.
     public var openedReason: StripeReviewOpenedReason?
     /// The PaymentIntent ID associated with this review, if one exists.
-    @Expandable<StripePaymentIntent> public var paymentIntent: String?
+    @Expandable<PaymentIntent> public var paymentIntent: String?
     /// The reason the review is currently open or closed. One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
     public var reason: StripeReviewReason?
     /// Information related to the browsing session of the user who initiated the payment.

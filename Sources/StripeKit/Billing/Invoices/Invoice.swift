@@ -96,7 +96,7 @@ public struct StripeInvoice: Codable {
     /// Whether payment was successfully collected for this invoice. An invoice can be paid (most commonly) with a charge or with credit from the customer’s account balance.
     public var paid: Bool?
     /// The PaymentIntent associated with this invoice. The PaymentIntent is generated when the invoice is finalized, and can then be used to pay the invoice. Note that voiding an invoice will cancel the PaymentIntent.
-    @Expandable<StripePaymentIntent> public var paymentIntent: String?
+    @Expandable<PaymentIntent> public var paymentIntent: String?
     /// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
     public var paymentSettings: StripeInvoicePaymentSettings?
     /// End of the usage period during which invoice items were added to this invoice.
