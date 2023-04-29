@@ -104,7 +104,7 @@ public enum EventObject: Codable {
     case orderReturn(StripeOrderReturn)
     case paymentIntent(PaymentIntent)
     case paymentMethod(StripePaymentMethod)
-    case payout(StripePayout)
+    case payout(Payout)
     case person(StripePerson)
     case plan(StripePlan)
     case price(StripePrice)
@@ -194,7 +194,7 @@ public enum EventObject: Codable {
         case "payment_method":
             self = try .paymentMethod(StripePaymentMethod(from: decoder))
         case "payout":
-            self = try .payout(StripePayout(from: decoder))
+            self = try .payout(Payout(from: decoder))
         case "person":
             self = try .person(StripePerson(from: decoder))
         case "plan":
