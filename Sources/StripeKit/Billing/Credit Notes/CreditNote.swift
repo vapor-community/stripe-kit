@@ -44,7 +44,7 @@ public struct StripeCreditNote: Codable {
     /// Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
     public var reason: StripeCreditNoteReason?
     /// Refund related to this credit note.
-    @Expandable<StripeRefund> public var refund: String?
+    @Expandable<Refund> public var refund: String?
     /// Status of this credit note, one of issued or void. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
     public var status: StripeCreditNoteStatus?
     /// The integer amount in `cents` representing the amount of the credit note, excluding tax and discount.

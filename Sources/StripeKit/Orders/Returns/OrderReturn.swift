@@ -27,7 +27,7 @@ public struct StripeOrderReturn: Codable {
     /// The order that this return includes items from.
     @Expandable<StripeOrder> public var order: String?
     /// The ID of the refund issued for this return.
-    @Expandable<StripeRefund> public var refund: String?
+    @Expandable<Refund> public var refund: String?
 }
 
 public struct StripeOrderReturnList: Codable {
