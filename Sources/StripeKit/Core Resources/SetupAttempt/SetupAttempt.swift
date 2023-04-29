@@ -29,7 +29,7 @@ public struct StripeSetupAttempt: Codable {
     /// The error encountered during this attempt to confirm the SetupIntent, if any.
     public var setupError: _StripeError?
     /// ID of the SetupIntent that this attempt belongs to.
-    @Expandable<StripeSetupIntent> public var setupIntent: String?
+    @Expandable<SetupIntent> public var setupIntent: String?
     /// Status of this SetupAttempt, one of `requires_confirmation`, `requires_action`, `processing`, `succeeded`, `failed`, or `abandoned`.
     public var status: StripeSetupAttemptStatus?
     /// The value of usage on the SetupIntent at the time of this confirmation, one of `off_session` or `on_session`.

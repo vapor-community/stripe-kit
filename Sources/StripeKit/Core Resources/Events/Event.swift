@@ -115,7 +115,7 @@ public enum EventObject: Codable {
     case reportRun(StripeReportRun)
     case reportType(StripeReportType)
     case review(StripeReview)
-    case setupIntent(StripeSetupIntent)
+    case setupIntent(SetupIntent)
     case scheduledQueryRun(StripeScheduledQueryRun)
     case sku(StripeSKU)
     case subscriptionSchedule(StripeSubscriptionSchedule)
@@ -216,7 +216,7 @@ public enum EventObject: Codable {
         case "review":
             self = try .review(StripeReview(from: decoder))
         case "setup_intent":
-            self = try .setupIntent(StripeSetupIntent(from: decoder))
+            self = try .setupIntent(SetupIntent(from: decoder))
         case "scheduled_query_run":
             self = try .scheduledQueryRun(StripeScheduledQueryRun(from: decoder))
         case "sku":

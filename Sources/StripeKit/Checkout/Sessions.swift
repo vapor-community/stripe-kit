@@ -52,7 +52,7 @@ public struct StripeSession: Codable {
     /// The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`. You can use this value to decide when to fulfill your customer’s order.
     public var paymentStatus: StripeSessionPaymentStatus?
     /// The ID of the SetupIntent for Checkout Sessions in setup mode.
-    @Expandable<StripeSetupIntent> public var setupIntent: String?
+    @Expandable<SetupIntent> public var setupIntent: String?
     /// Shipping information for this Checkout Session.
     public var shipping: ShippingLabel?
     /// When set, provides configuration for Checkout to collect a shipping address from a customer.
