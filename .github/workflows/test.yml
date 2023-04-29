@@ -1,11 +1,11 @@
-#name: test
-#on:
-#  pull_request:
-#  push: { branches: [ main ] }
-#jobs:
-#  unit-tests:
-#    uses: vapor/ci/.github/workflows/run-unit-tests.yml@reusable-workflows
-#    with:
-#      with_coverage: false
-#      with_tsan: true
-#      coverage_ignores: '/Tests/'
+name: test
+on:
+  pull_request: { types: [opened, reopened, synchronize, ready_for_review] }
+  push: { branches: [ main ] }
+jobs:
+  unit-tests:
+    uses: vapor/ci/.github/workflows/run-unit-tests.yml@reusable-workflows
+    with:
+      with_coverage: false
+      with_tsan: true
+      coverage_ignores: '/Tests/'
