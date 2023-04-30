@@ -29,7 +29,7 @@ public struct Charge: Codable {
     /// ID of the balance transaction that describes the impact of this charge on your account balance (not including refunds or disputes).
     @Expandable<BalanceTransaction> public var balanceTransaction: String?
     /// Billing information associated with the payment method at the time of the transaction.
-    public var billingDetails: StripeBillingDetails?
+    public var billingDetails: BillingDetails?
     /// The full statement descriptor that is passed to card networks, and that is displayed on your customers’ credit card and bank statements. Allows you to see what the statement descriptor looks like after the static and dynamic portions are combined.
     public var calculatedStatementDescriptor: String?
     /// If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
@@ -114,7 +114,7 @@ public struct Charge: Codable {
                 applicationFee: String? = nil,
                 applicationFeeAmount: Int? = nil,
                 balanceTransaction: String? = nil,
-                billingDetails: StripeBillingDetails? = nil,
+                billingDetails: BillingDetails? = nil,
                 calculatedStatementDescriptor: String? = nil,
                 captured: Bool? = nil,
                 created: Date,

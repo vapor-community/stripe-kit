@@ -58,7 +58,7 @@ public struct StripeSubscriptionScheduleDefaultSettings: Codable {
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
     public var collectionMethod: StripeInvoiceCollectionMethod?
     /// ID of the default payment method for the subscription schedule. If not set, invoices will use the default payment method in the customer’s invoice settings.
-    @Expandable<StripePaymentMethod> public var defaultPaymentMethod: String?
+    @Expandable<PaymentMethod> public var defaultPaymentMethod: String?
     /// The subscription schedule’s default invoice settings.
     public var invoiceSettings: StripeSubscriptionScheduleInvoiceSettings?
     /// The account (if any) the subscription’s payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription’s invoices.
@@ -89,7 +89,7 @@ public struct StripeSubscriptionSchedulePhase: Codable {
     /// ID of the coupon to use during this phase of the subscription schedule.
     @Expandable<StripeCoupon> public var coupon: String?
     /// ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer’s invoice settings.
-    @Expandable<StripePaymentMethod> public var defaultPaymentMethod: String?
+    @Expandable<PaymentMethod> public var defaultPaymentMethod: String?
     /// The default tax rates to apply to the subscription during this phase of the subscription schedule.
     public var defaultTaxRates: [StripeTaxRate]?
     /// The end of this phase of the subscription schedule.

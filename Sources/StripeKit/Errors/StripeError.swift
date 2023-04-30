@@ -32,7 +32,7 @@ public final class _StripeError: Codable {
     /// The PaymentIntent object for errors returned on a request involving a PaymentIntent.
     public var paymentIntent: PaymentIntent?
     /// The PaymentMethod object for errors returned on a request involving a PaymentMethod.
-    public var paymentMethod: StripePaymentMethod?
+    public var paymentMethod: PaymentMethod?
     /// The source object for errors returned on a request involving a source.
     public var source: StripeSource?
 }

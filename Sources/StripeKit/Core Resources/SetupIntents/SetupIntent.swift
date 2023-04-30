@@ -24,7 +24,7 @@ public struct SetupIntent: Codable {
     /// If present, this property tells you what actions you need to take in order for your customer to continue payment setup.
     public var nextAction: SetupIntentNextAction?
     /// ID of the payment method used with this SetupIntent.
-    @Expandable<StripePaymentMethod> public var paymentMethod: String?
+    @Expandable<PaymentMethod> public var paymentMethod: String?
     /// The list of payment method types (e.g. card) that this SetupIntent is allowed to set up.
     public var paymentMethodTypes: [String]?
     /// Status of this SetupIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `canceled`, or `succeeded`.

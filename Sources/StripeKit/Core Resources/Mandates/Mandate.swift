@@ -13,7 +13,7 @@ public struct Mandate: Codable {
     /// Details about the customer’s acceptance of the mandate.
     public var customerAcceptance: MandateCustomerAcceptance?
     /// ID of the payment method associated with this mandate.
-    @Expandable<StripePaymentMethod> public var paymentMethod: String?
+    @Expandable<PaymentMethod> public var paymentMethod: String?
     /// Additional mandate information specific to the payment method type.
     public var paymentMethodDetails: MandatePaymentMethodDetails?
     /// The status of the Mandate, one of `active`, `inactive`, or `pending`. The Mandate can be used to initiate a payment only if status=active.
@@ -110,7 +110,7 @@ public struct MandatePaymentMethodDetails: Codable {
     /// If this mandate is associated with a `sepa_debit` payment method, this hash contains mandate information specific to the `sepa_debit` payment method.
     public var sepaDebit: MandatePaymentMethodDetailsSepaDebit?
     /// The type of the payment method associated with this mandate. An additional hash is included on `payment_method_details` with a name matching this value. It contains mandate information specific to the payment method.
-    public var type: StripePaymentMethodType?
+    public var type: PaymentMethodType?
     
     public init(acssDebit: MandatePaymentMethodDetailsACSSDebit? = nil,
                 auBecsDebit: MandatePaymentMethodDetailsAuBecsDebit? = nil,
@@ -119,7 +119,7 @@ public struct MandatePaymentMethodDetails: Codable {
                 card: MandatePaymentMethodDetailsCard? = nil,
                 link: MandatePaymentMethodDetailsLink? = nil,
                 sepaDebit: MandatePaymentMethodDetailsSepaDebit? = nil,
-                type: StripePaymentMethodType? = nil) {
+                type: PaymentMethodType? = nil) {
         self.acssDebit = acssDebit
         self.auBecsDebit = auBecsDebit
         self.bacsDebit = bacsDebit

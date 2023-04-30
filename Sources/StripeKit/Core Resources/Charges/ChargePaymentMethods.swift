@@ -17,6 +17,16 @@ public struct ChargePaymentMethodDetailsACHCreditTransfer: Codable {
     public var routingNumber: String?
     /// SWIFT code of the bank associated with the routing number
     public var swiftCode: String?
+    
+    public init(accountNumber: String? = nil,
+                bankName: String? = nil,
+                routingNumber: String? = nil,
+                swiftCode: String? = nil) {
+        self.accountNumber = accountNumber
+        self.bankName = bankName
+        self.routingNumber = routingNumber
+        self.swiftCode = swiftCode
+    }
 }
 
 // MARK: - ACHDebit
@@ -33,6 +43,20 @@ public struct ChargePaymentMethodDetailsACHDebit: Codable {
     public var last4: String?
     /// Routing transit number for the bank account.
     public var routingNumber: String?
+    
+    public init(accountHolderType: ChargePaymentMethodDetailsACHDebitAccountHolderType? = nil,
+                bankName: String? = nil,
+                country: String? = nil,
+                fingerprint: String? = nil,
+                last4: String? = nil,
+                routingNumber: String? = nil) {
+        self.accountHolderType = accountHolderType
+        self.bankName = bankName
+        self.country = country
+        self.fingerprint = fingerprint
+        self.last4 = last4
+        self.routingNumber = routingNumber
+    }
 }
 
 public enum ChargePaymentMethodDetailsACHDebitAccountHolderType: String, Codable {
@@ -233,6 +257,32 @@ public struct ChargePaymentMethodDetailsCard: Codable {
     public var threeDSecure: ChargePaymentMethodDetailsCardThreeDSecure?
     /// If this Card is part of a card wallet, this contains the details of the card wallet.
     public var wallet: ChargePaymentMethodDetailsCardWallet?
+    
+    public init(brand: PaymentMethodDetailsCardBrand? = nil,
+                checks: PaymentMethodDetailsCardChecks? = nil,
+                country: String? = nil,
+                expMonth: Int? = nil,
+                expYear: Int? = nil,
+                fingerprint: String? = nil,
+                funding: CardFundingType? = nil,
+                installments: ChargePaymentMethodDetailsCardInstallments? = nil,
+                last4: String? = nil,
+                network: PaymentMethodCardNetwork? = nil,
+                threeDSecure: ChargePaymentMethodDetailsCardThreeDSecure? = nil,
+                wallet: ChargePaymentMethodDetailsCardWallet? = nil) {
+        self.brand = brand
+        self.checks = checks
+        self.country = country
+        self.expMonth = expMonth
+        self.expYear = expYear
+        self.fingerprint = fingerprint
+        self.funding = funding
+        self.installments = installments
+        self.last4 = last4
+        self.network = network
+        self.threeDSecure = threeDSecure
+        self.wallet = wallet
+    }
 }
 
 public struct ChargePaymentMethodDetailsCardInstallments: Codable {
@@ -335,7 +385,7 @@ public struct ChargePaymentMethodDetailsCardWallet: Codable {
     /// If this is a `masterpass` card wallet, this hash contains details about the wallet.
     public var masterpass: ChargePaymentMethodDetailsMasterpass?
     /// If this is a `samsung_pay` card wallet, this hash contains details about the wallet.
-    public var samsungPay: StripePaymentMethodSamsungPay?
+    public var samsungPay: ChargePaymentMethodDetailsSamsungPay?
     /// The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
     public var type: PaymentMethodDetailsCardWalletType?
     /// If this is a `visa_checkout` card wallet, this hash contains details about the wallet.
@@ -346,7 +396,7 @@ public struct ChargePaymentMethodDetailsCardWallet: Codable {
                 dynamicLast4: String? = nil,
                 googlePay: ChargePaymentMethodDetailsGooglePay? = nil,
                 masterpass: ChargePaymentMethodDetailsMasterpass? = nil,
-                samsungPay: StripePaymentMethodSamsungPay? = nil,
+                samsungPay: ChargePaymentMethodDetailsSamsungPay? = nil,
                 type: PaymentMethodDetailsCardWalletType? = nil,
                 visaCheckout: ChargePaymentMethodDetailsVisaCheckout? = nil) {
         self.amexExpressCheckout = amexExpressCheckout

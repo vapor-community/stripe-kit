@@ -31,7 +31,7 @@ public struct SetupAttempt: Codable {
     /// The value of `on_behalf_of` on the SetupIntent at the time of this confirmation.
     @Expandable<StripeConnectAccount> public var onBehalfOf: String?
     /// ID of the payment method used with this SetupAttempt.
-    @Expandable<StripePaymentMethod> public var paymentMethod: String?
+    @Expandable<PaymentMethod> public var paymentMethod: String?
     /// Details about the payment method at the time of SetupIntent confirmation.
     public var paymentMethodDetails: SetupAttemptPaymentMethodDetails?
     /// The error encountered during this attempt to confirm the SetupIntent, if any.

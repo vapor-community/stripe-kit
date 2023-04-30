@@ -32,7 +32,7 @@ public struct PaymentIntent: Codable {
     /// If present, this property tells you what actions you need to take in order for your customer to fulfill a payment using the provided source.
     public var nextAction: PaymentIntentNextAction?
     /// ID of the payment method used in this PaymentIntent.
-    @Expandable<StripePaymentMethod> public var paymentMethod: String?
+    @Expandable<PaymentMethod> public var paymentMethod: String?
     /// Email address that the receipt for the resulting payment will be sent to.
     public var receiptEmail: String?
     /// Indicates that you intend to make future payments with this PaymentIntent’s payment method. If present, the payment method used with this PaymentIntent can be attached to a Customer, even after the transaction completes. Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. For more, learn to save card details after a payment. Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by SCA, using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect off-session payments for this customer.

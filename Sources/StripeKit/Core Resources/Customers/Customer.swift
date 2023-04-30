@@ -165,7 +165,7 @@ public struct CustomerInvoiceSettings: Codable {
     /// Default custom fields to be displayed on invoices for this customer.
     public var customFields: [CustomerInvoiceSettingsCustomFields]?
     /// ID of the default payment method used for subscriptions and invoices for the customer.
-    @Expandable<StripePaymentMethod> public var defaultPaymentMethod: String?
+    @Expandable<PaymentMethod> public var defaultPaymentMethod: String?
     /// Default footer to be displayed on invoices for this customer.
     public var footer: String?
     /// Default options for invoice PDF rendering for this customer.
