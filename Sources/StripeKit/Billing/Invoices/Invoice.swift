@@ -60,7 +60,7 @@ public struct StripeInvoice: Codable {
     /// The customer’s tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as customer.tax_ids. Once the invoice is finalized, this field will no longer be updated.
     public var customerTaxIds: [StripeInvoiceCustomerTaxId]?
     /// ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription’s default payment method, if any, or to the default payment method in the customer’s invoice settings.
-    @Expandable<StripePaymentMethod> public var defaultPaymentMethod: String?
+    @Expandable<PaymentMethod> public var defaultPaymentMethod: String?
     /// ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription’s default source, if any, or to the customer’s default source.
     @Expandable<StripeSource> public var defaultSource: String?
     /// The tax rates applied to this invoice, if any.
@@ -173,7 +173,7 @@ public struct StripeInvoiceLastFinalizationError: Codable {
     /// If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
     public var param: String?
     /// If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
-    public var paymentMethodType: StripePaymentMethodType?
+    public var paymentMethodType: PaymentMethodType?
     /// The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`.
     public var type: StripeErrorType?
 }
@@ -182,7 +182,7 @@ public struct StripeInvoicePaymentSettings: Codable {
     /// Payment-method-specific configuration to provide to the invoice’s PaymentIntent.
     public var paymentMethodOptions: StripeInvoicePaymentSettingsPaymentMethodOptions?
     /// The list of payment method types (e.g. card) to provide to the invoice’s PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice’s default payment method, the subscription’s default payment method, the customer’s default payment method, and your invoice template settings.
-    public var paymentMethodTypes: [StripePaymentMethodType]?
+    public var paymentMethodTypes: [PaymentMethodType]?
 }
 
 public struct StripeInvoicePaymentSettingsPaymentMethodOptions: Codable {

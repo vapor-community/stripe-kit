@@ -5,7 +5,7 @@
 //  Created by Andrew Edwards on 4/15/19.
 //
 
-public struct StripeBillingDetails: Codable {
+public struct BillingDetails: Codable {
     /// Billing address.
     public var address: Address?
     /// Email address.
@@ -14,4 +14,14 @@ public struct StripeBillingDetails: Codable {
     public var name: String?
     /// Billing phone number (including extension).
     public var phone: String?
+    
+    public init(address: Address? = nil,
+                email: String? = nil,
+                name: String? = nil,
+                phone: String? = nil) {
+        self.address = address
+        self.email = email
+        self.name = name
+        self.phone = phone
+    }
 }
