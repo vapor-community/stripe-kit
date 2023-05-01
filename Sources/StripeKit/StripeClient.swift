@@ -29,6 +29,7 @@ public final class StripeClient {
     // MARK: - PAYMENT METHODS
     public var paymentMethods: PaymentMethodRoutes
     public var bankAccounts: BankAccountRoutes
+    public var cashBalances: CashBalanceRoutes
     public var cards: CardRoutes
     public var sources: SourceRoutes
     
@@ -136,8 +137,10 @@ public final class StripeClient {
         payouts = StripePayoutRoutes(apiHandler: handler)
         refunds = StripeRefundRoutes(apiHandler: handler)
         tokens = StripeTokenRoutes(apiHandler: handler)
+        
         paymentMethods = StripePaymentMethodRoutes(apiHandler: handler)
         bankAccounts = StripeBankAccountRoutes(apiHandler: handler)
+        cashBalances = StripeCashBalanceRoutes(apiHandler: handler)
         cards = StripeCardRoutes(apiHandler: handler)
         sources = StripeSourceRoutes(apiHandler: handler)
         
