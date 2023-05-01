@@ -250,6 +250,7 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 ### Payment Methods
 * [x] Payment Methods
 * [x] Bank Accounts
+* [x] Cash Balance
 * [x] Cards
 * [x] Sources
 ---
