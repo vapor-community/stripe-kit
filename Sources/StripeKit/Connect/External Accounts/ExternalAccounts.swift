@@ -23,7 +23,7 @@ public struct StripeExternalAccountsList: Codable {
     /// An array of `StripeCard`s associated with the account.
     public var cardAccounts: [StripeCard]?
     /// An array of `StripeBankAccount`s associated with the account.
-    public var bankAccounts: [StripeBankAccount]?
+    public var bankAccounts: [BankAccount]?
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -32,6 +32,6 @@ public struct StripeExternalAccountsList: Codable {
         url = try container.decodeIfPresent(String.self, forKey: .url)
         
         cardAccounts = try container.decodeIfPresent([StripeCard].self, forKey: .data)?.filter{ $0.object == "card" }
-        bankAccounts = try container.decodeIfPresent([StripeBankAccount].self, forKey: .data)?.filter{ $0.object == "bank_account" }
+        bankAccounts = try container.decodeIfPresent([BankAccount].self, forKey: .data)?.filter{ $0.object == "bank_account" }
     }
 }

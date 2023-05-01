@@ -34,7 +34,7 @@ public struct Payout: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// ID of the bank account or card the payout was sent to.
-    @DynamicExpandable<StripeCard, StripeBankAccount> public var destination: String?
+    @DynamicExpandable<StripeCard, BankAccount> public var destination: String?
     /// If the payout failed or was canceled, this will be the ID of the balance transaction that reversed the initial balance transaction, and puts the funds from the failed payout back in your balance.
     @Expandable<BalanceTransaction> public var failureBalanceTransaction: String?
     /// Error code explaining reason for payout failure if available. See Types of payout failures for a list of failure codes.

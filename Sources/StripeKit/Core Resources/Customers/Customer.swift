@@ -95,7 +95,7 @@ public struct Customer: Codable {
     /// ID of the default payment source for the customer.
     ///
     /// If you are using payment methods created via the PaymentMethods API, see the `invoice_settings.default_payment_method` field instead.
-    @DynamicExpandable<StripeBankAccount, StripeCard> public var defaultSource: String?
+    @DynamicExpandable<BankAccount, StripeCard> public var defaultSource: String?
     /// When the customer’s latest invoice is billed by charging automatically, delinquent is true if the invoice’s latest charge is failed. When the customer’s latest invoice is billed by sending an invoice, delinquent is true if the invoice is not paid by its due date.
     public var delinquent: Bool?
     /// Describes the current discount active on the customer, if there is one.

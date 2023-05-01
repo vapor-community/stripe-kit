@@ -13,7 +13,7 @@
  */
 
 public enum StripePaymentSource: Codable {
-    case bankAccount(StripeBankAccount)
+    case bankAccount(BankAccount)
     case card(StripeCard)
     case source(StripeSource)
     
@@ -22,7 +22,7 @@ public enum StripePaymentSource: Codable {
         let object = try container.decode(String.self, forKey: .object)
         switch object {
         case "bank_account":
-            self = try .bankAccount(StripeBankAccount(from: decoder))
+            self = try .bankAccount(BankAccount(from: decoder))
         case "card":
             self = try .card(StripeCard(from: decoder))
         case "source":
@@ -53,7 +53,7 @@ public enum StripePaymentSource: Codable {
 }
 
 extension StripePaymentSource {
-    public var bankAccount: StripeBankAccount? {
+    public var bankAccount: BankAccount? {
         guard case let .bankAccount(bankAccount) = self else {
             return nil
         }
