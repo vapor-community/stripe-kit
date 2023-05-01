@@ -344,7 +344,7 @@ public struct StripeSourcesList: Codable {
 }
 
 extension StripeSourcesList {
-    public var bankAccounts: [StripeBankAccount]? {
+    public var bankAccounts: [BankAccount]? {
         return data?.compactMap { $0.bankAccount }
     }
     

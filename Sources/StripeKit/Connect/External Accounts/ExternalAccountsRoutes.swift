@@ -18,7 +18,7 @@ public protocol ExternalAccountsRoutes {
 
     ///   - metadata: A set of key-value pairs that you can attach to an external account object. It can be useful for storing additional information about the external account in a structured format.
     /// - Returns: A `StripeBankAccount`.
-    func create(account: String, bankAccount: Any, defaultForCurrency: Bool?, metadata: [String: String]?) -> EventLoopFuture<StripeBankAccount>
+    func create(account: String, bankAccount: Any, defaultForCurrency: Bool?, metadata: [String: String]?) -> EventLoopFuture<BankAccount>
     
     /// By default, you can see the 10 most recent external accounts stored on a Custom account directly on the object, but you can also retrieve details about a specific bank account stored on the [Custom account](https://stripe.com/docs/connect/custom-accounts).
     ///
@@ -26,7 +26,7 @@ public protocol ExternalAccountsRoutes {
     ///   - account: The connect account associated with this bank account.
     ///   - id: The ID of the bank account to retrieve.
     /// - Returns: A `StripeBankAccount`.
-    func retrieve(account: String, id: String) -> EventLoopFuture<StripeBankAccount>
+    func retrieve(account: String, id: String) -> EventLoopFuture<BankAccount>
     
     /// Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design. \n You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
     ///
@@ -41,9 +41,9 @@ public protocol ExternalAccountsRoutes {
     func update(account: String,
                 id: String,
                 accountHolderName: String?,
-                accountHolderType: StripeBankAccountHolderType?,
+                accountHolderType: BankAccountHolderType?,
                 defaultForCurrency: Bool?,
-                metadata: [String: String]?) -> EventLoopFuture<StripeBankAccount>
+                metadata: [String: String]?) -> EventLoopFuture<BankAccount>
     
     /// Deletes a bank account. You can delete destination bank accounts from a [Custom account](https://stripe.com/docs/connect/custom-accounts). \n If a bank account's `default_for_currency` property is true, it can only be deleted if it is the only external account for that currency, and the currency is not the Stripe account's default currency. Otherwise, before deleting the account, you must set another external account to be the default for the currency.
 
@@ -60,7 +60,7 @@ public protocol ExternalAccountsRoutes {
     ///   - account: The connect account associated with the bank account(s).
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/external_account_bank_accounts/list)
     /// - Returns: A `StripeBankAccountList`.
-    func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<StripeBankAccountList>
+    func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<BankAccountList>
     
     /// Creates a new card. When you create a new card, you must specify a [Custom account](https://stripe.com/docs/connect/custom-accounts) to create it on. \n If the account has no default destination card, then the new card will become the default. However, if the owner already has a default then it will not change. To change the default, you should set `default_for_currency` to `true` when creating a card for a Custom account.
     ///
@@ -132,20 +132,20 @@ public protocol ExternalAccountsRoutes {
 }
 
 extension ExternalAccountsRoutes {
-    public func create(account: String, bankAccount: Any, defaultForCurrency: Bool? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeBankAccount> {
+    public func create(account: String, bankAccount: Any, defaultForCurrency: Bool? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<BankAccount> {
         return create(account: account, bankAccount: bankAccount, defaultForCurrency: defaultForCurrency, metadata: metadata)
     }
     
-    public func retrieve(account: String, id: String) -> EventLoopFuture<StripeBankAccount> {
+    public func retrieve(account: String, id: String) -> EventLoopFuture<BankAccount> {
         return retrieve(account: account, id: id)
     }
     
     public func update(account: String,
                        id: String,
                        accountHolderName: String? = nil,
-                       accountHolderType: StripeBankAccountHolderType? = nil,
+                       accountHolderType: BankAccountHolderType? = nil,
                        defaultForCurrency: Bool? = nil,
-                       metadata: [String: String]? = nil) -> EventLoopFuture<StripeBankAccount> {
+                       metadata: [String: String]? = nil) -> EventLoopFuture<BankAccount> {
         return update(account: account,
                           id: id,
                           accountHolderName: accountHolderName,
@@ -158,7 +158,7 @@ extension ExternalAccountsRoutes {
         return deleteBankAccount(account: account, id: id)
     }
     
-    public func listAll(account: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeBankAccountList> {
+    public func listAll(account: String, filter: [String: Any]? = nil) -> EventLoopFuture<BankAccountList> {
         return listAll(account: account, filter: filter)
     }
     
@@ -217,7 +217,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(account: String, bankAccount: Any, defaultForCurrency: Bool?, metadata: [String: String]?) -> EventLoopFuture<StripeBankAccount> {
+    public func create(account: String, bankAccount: Any, defaultForCurrency: Bool?, metadata: [String: String]?) -> EventLoopFuture<BankAccount> {
         var body: [String: Any] = [:]
         
         if let bankToken = bankAccount as? String {
@@ -237,16 +237,16 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(account: String, id: String) -> EventLoopFuture<StripeBankAccount> {
+    public func retrieve(account: String, id: String) -> EventLoopFuture<BankAccount> {
         return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     
     public func update(account: String,
                        id: String,
                        accountHolderName: String?,
-                       accountHolderType: StripeBankAccountHolderType?,
+                       accountHolderType: BankAccountHolderType?,
                        defaultForCurrency: Bool?,
-                       metadata: [String: String]?) -> EventLoopFuture<StripeBankAccount> {
+                       metadata: [String: String]?) -> EventLoopFuture<BankAccount> {
         var body: [String: Any] = [:]
         
         if let accountHolderName = accountHolderName {
@@ -272,7 +272,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     
-    public func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<StripeBankAccountList> {
+    public func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<BankAccountList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

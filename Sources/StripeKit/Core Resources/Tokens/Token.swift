@@ -15,7 +15,7 @@ public struct Token: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Hash describing the bank account.
-    public var bankAccount: StripeBankAccount?
+    public var bankAccount: BankAccount?
     /// Hash describing the card used to make the charge.
     public var card: StripeCard?
     /// IP address of the client that generated the token.
@@ -31,7 +31,7 @@ public struct Token: Codable {
     
     public init(id: String,
                 object: String,
-                bankAccount: StripeBankAccount? = nil,
+                bankAccount: BankAccount? = nil,
                 card: StripeCard? = nil,
                 clientIp: String? = nil,
                 created: Date,
