@@ -17,7 +17,7 @@ public struct Token: Codable {
     /// Hash describing the bank account.
     public var bankAccount: BankAccount?
     /// Hash describing the card used to make the charge.
-    public var card: StripeCard?
+    public var card: Card?
     /// IP address of the client that generated the token.
     public var clientIp: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -32,7 +32,7 @@ public struct Token: Codable {
     public init(id: String,
                 object: String,
                 bankAccount: BankAccount? = nil,
-                card: StripeCard? = nil,
+                card: Card? = nil,
                 clientIp: String? = nil,
                 created: Date,
                 livemode: Bool? = nil,

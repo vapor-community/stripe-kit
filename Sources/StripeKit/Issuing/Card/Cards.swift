@@ -32,7 +32,7 @@ public struct StripeIssuingCard: Codable {
     /// The type of the card.
     public var type: StripeIssuingCardType?
     /// The brand of the card.
-    public var brand: StripeCardBrand?
+    public var brand: CardBrand?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The card’s CVC. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with the expand parameter. Additionally, it’s only available via the “Retrieve a card” endpoint, not via “List all cards” or any other endpoint.
