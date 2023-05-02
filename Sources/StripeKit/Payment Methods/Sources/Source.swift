@@ -220,7 +220,7 @@ public struct StripeSourceBancontact: Codable {
 public struct StripeSourceCard: Codable {
     public var addressLine1Check: String?
     public var addressZipCheck: String?
-    public var brand: StripeCardBrand?
+    public var brand: CardBrand?
     public var country: String?
     public var cvcCheck: String?
     public var dynamicLast4: String?
@@ -239,7 +239,7 @@ public struct StripeSourceCardPresent: Codable {
     public var applicationPreferredName: String?
     public var authorizationCode: String?
     public var authorizationResponseCode: String?
-    public var brand: StripeCardBrand?
+    public var brand: CardBrand?
     public var country: String?
     public var cvmType: String?
     public var dataType: String?
@@ -309,7 +309,7 @@ public struct StripeSourceThreeDSecure: Codable {
     public var addressLine1Check: String?
     public var addressZipCheck: String?
     public var authenticated: Bool?
-    public var brand: StripeCardBrand?
+    public var brand: CardBrand?
     public var card: String?
     public var country: String?
     public var customer: String?
@@ -321,7 +321,7 @@ public struct StripeSourceThreeDSecure: Codable {
     public var funding: CardFundingType?
     public var last4: String?
     public var threedSecure: StripeSourceThreeDSecureSupportStatus?
-    public var tokenizationMethod: StripeCardTokenizedMethod?
+    public var tokenizationMethod: CardTokenizedMethod?
 }
 
 public enum StripeSourceThreeDSecureSupportStatus: String, Codable {
@@ -348,7 +348,7 @@ extension StripeSourcesList {
         return data?.compactMap { $0.bankAccount }
     }
     
-    public var cards: [StripeCard]? {
+    public var cards: [Card]? {
         return data?.compactMap { $0.card }
     }
     

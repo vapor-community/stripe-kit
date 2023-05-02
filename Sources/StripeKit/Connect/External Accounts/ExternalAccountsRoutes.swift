@@ -71,7 +71,7 @@ public protocol ExternalAccountsRoutes {
     
     ///   - metadata: A set of key-value pairs that you can attach to an external account object. It can be useful for storing additional information about the external account in a structured format.
     /// - Returns: A `StripeCard`.
-    func create(account: String, card: Any, defaultForCurrency: Bool?, metadata: [String: String]?) -> EventLoopFuture<StripeCard>
+    func create(account: String, card: Any, defaultForCurrency: Bool?, metadata: [String: String]?) -> EventLoopFuture<Card>
     
     /// By default, you can see the 10 most recent external accounts stored on a [Custom account](https://stripe.com/docs/connect/custom-accounts) directly on the object, but you can also retrieve details about a specific card stored on the [Custom account](https://stripe.com/docs/connect/custom-accounts).
     ///
@@ -79,7 +79,7 @@ public protocol ExternalAccountsRoutes {
     ///   - account: The connect account associated with this card.
     ///   - id: The ID of the card to retrieve.
     /// - Returns: A `StripeCard`.
-    func retrieve(account: String, id: String) -> EventLoopFuture<StripeCard>
+    func retrieve(account: String, id: String) -> EventLoopFuture<Card>
     
     /// If you need to update only some card details, like the billing address or expiration date, you can do so without having to re-enter the full card details. Stripe also works directly with card networks so that your customers can [continue using your service](https://stripe.com/docs/saving-cards#automatic-card-updates) without interruption.
     /// - Parameters:
@@ -109,7 +109,7 @@ public protocol ExternalAccountsRoutes {
                 expMonth: Int?,
                 expYear: Int?,
                 metadata: [String: String]?,
-                name: String?) -> EventLoopFuture<StripeCard>
+                name: String?) -> EventLoopFuture<Card>
     
     /// Deletes a card. If a card's default_for_currency property is true, it can only be deleted if it is the only external account for that currency, and the currency is not the Stripe account's default currency. Otherwise, before deleting the card, you must set another external account to be the default for the currency.
     ///
@@ -125,7 +125,7 @@ public protocol ExternalAccountsRoutes {
     ///   - account: The connect account associated with the card(s).
     ///   - filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/external_account_cards/list)
     /// - Returns: A `StripeCardList`.
-    func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<StripeCardList>
+    func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<CardList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
@@ -162,11 +162,11 @@ extension ExternalAccountsRoutes {
         return listAll(account: account, filter: filter)
     }
     
-    public func create(account: String, card: Any, defaultForCurrency: Bool? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<StripeCard> {
+    public func create(account: String, card: Any, defaultForCurrency: Bool? = nil, metadata: [String: String]? = nil) -> EventLoopFuture<Card> {
         return create(account: account, card: card, defaultForCurrency: defaultForCurrency, metadata: metadata)
     }
     
-    public func retrieve(account: String, id: String) -> EventLoopFuture<StripeCard> {
+    public func retrieve(account: String, id: String) -> EventLoopFuture<Card> {
         return retrieve(account: account, id: id)
     }
     
@@ -182,7 +182,7 @@ extension ExternalAccountsRoutes {
                        expMonth: Int? = nil,
                        expYear: Int? = nil,
                        metadata: [String: String]? = nil,
-                       name: String?) -> EventLoopFuture<StripeCard> {
+                       name: String?) -> EventLoopFuture<Card> {
         return update(account: account,
                           id: id,
                           addressCity: addressCity,
@@ -202,7 +202,7 @@ extension ExternalAccountsRoutes {
         return deleteCard(account: account, id: id)
     }
     
-    public func listAll(account: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeCardList> {
+    public func listAll(account: String, filter: [String: Any]? = nil) -> EventLoopFuture<CardList> {
         return listAll(account: account, filter: filter)
     }
 }
@@ -280,7 +280,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts", query: queryParams, headers: headers)
     }
     
-    public func create(account: String, card: Any, defaultForCurrency: Bool?, metadata: [String: String]?) -> EventLoopFuture<StripeCard> {
+    public func create(account: String, card: Any, defaultForCurrency: Bool?, metadata: [String: String]?) -> EventLoopFuture<Card> {
         var body: [String: Any] = [:]
         
         if let cardToken = card as? String {
@@ -300,7 +300,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         return apiHandler.send(method: .POST, path: "\(accounts)/\(account)/external_accounts", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(account: String, id: String) -> EventLoopFuture<StripeCard> {
+    public func retrieve(account: String, id: String) -> EventLoopFuture<Card> {
         return apiHandler.send(method: .GET, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     
@@ -316,7 +316,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
                        expMonth: Int?,
                        expYear: Int?,
                        metadata: [String: String]?,
-                       name: String?) -> EventLoopFuture<StripeCard> {
+                       name: String?) -> EventLoopFuture<Card> {
         var body: [String: Any] = [:]
         
         if let addressCity = addressCity {
@@ -370,7 +370,7 @@ public struct StripeExternalAccountsRoutes: ExternalAccountsRoutes {
         return apiHandler.send(method: .DELETE, path: "\(accounts)/\(account)/external_accounts/\(id)", headers: headers)
     }
     
-    public func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<StripeCardList> {
+    public func listAll(account: String, filter: [String: Any]?) -> EventLoopFuture<CardList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

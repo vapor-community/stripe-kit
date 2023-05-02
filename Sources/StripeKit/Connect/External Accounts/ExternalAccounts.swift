@@ -21,7 +21,7 @@ public struct StripeExternalAccountsList: Codable {
     /// The URL where this list can be accessed.
     public var url: String?
     /// An array of `StripeCard`s associated with the account.
-    public var cardAccounts: [StripeCard]?
+    public var cardAccounts: [Card]?
     /// An array of `StripeBankAccount`s associated with the account.
     public var bankAccounts: [BankAccount]?
     
@@ -31,7 +31,7 @@ public struct StripeExternalAccountsList: Codable {
         hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)
         url = try container.decodeIfPresent(String.self, forKey: .url)
         
-        cardAccounts = try container.decodeIfPresent([StripeCard].self, forKey: .data)?.filter{ $0.object == "card" }
+        cardAccounts = try container.decodeIfPresent([Card].self, forKey: .data)?.filter{ $0.object == "card" }
         bankAccounts = try container.decodeIfPresent([BankAccount].self, forKey: .data)?.filter{ $0.object == "bank_account" }
     }
 }
