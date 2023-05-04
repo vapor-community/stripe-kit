@@ -15,7 +15,7 @@
 public enum StripePaymentSource: Codable {
     case bankAccount(BankAccount)
     case card(Card)
-    case source(StripeSource)
+    case source(Source)
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -26,7 +26,7 @@ public enum StripePaymentSource: Codable {
         case "card":
             self = try .card(Card(from: decoder))
         case "source":
-            self = try .source(StripeSource(from: decoder))
+            self = try .source(Source(from: decoder))
         default:
             throw DecodingError.dataCorruptedError(
                 forKey: CodingKeys.object,
@@ -67,7 +67,7 @@ extension StripePaymentSource {
         return card
     }
     
-    public var source: StripeSource? {
+    public var source: Source? {
         guard case let .source(source) = self else {
             return nil
         }
