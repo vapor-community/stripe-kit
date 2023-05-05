@@ -20,7 +20,7 @@ public struct StripePrice: Codable {
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// The ID of the product this price is associated with.
-    @Expandable<StripeProduct> public var product: String?
+    @Expandable<Product> public var product: String?
     /// The recurring components of a price such as `interval` and `usage_type`.
     public var recurring: StripePriceRecurring?
     /// One of `one_time` or `recurring` depending on whether the price is for a one-time purchase or a recurring (subscription) purchase.
