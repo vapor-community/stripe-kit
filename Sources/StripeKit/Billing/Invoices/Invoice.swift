@@ -62,7 +62,7 @@ public struct StripeInvoice: Codable {
     /// ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription’s default payment method, if any, or to the default payment method in the customer’s invoice settings.
     @Expandable<PaymentMethod> public var defaultPaymentMethod: String?
     /// ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription’s default source, if any, or to the customer’s default source.
-    @Expandable<StripeSource> public var defaultSource: String?
+    @Expandable<Source> public var defaultSource: String?
     /// The tax rates applied to this invoice, if any.
     public var defaultTaxRates: [StripeTaxRate]?
     /// An arbitrary string attached to the object. Often useful for displaying to users. Referenced as ‘memo’ in the Dashboard.

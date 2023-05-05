@@ -34,7 +34,7 @@ public final class _StripeError: Codable {
     /// The PaymentMethod object for errors returned on a request involving a PaymentMethod.
     public var paymentMethod: PaymentMethod?
     /// The source object for errors returned on a request involving a source.
-    public var source: StripeSource?
+    public var source: Source?
 }
 
 // https://stripe.com/docs/api#errors-type

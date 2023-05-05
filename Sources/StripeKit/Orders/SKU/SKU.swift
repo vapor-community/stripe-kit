@@ -31,11 +31,11 @@ public struct StripeSKU: Codable {
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// The dimensions of this SKU for shipping purposes.
-    public var packageDimensions: StripeProductPackageDimensions?
+    public var packageDimensions: ProductPackageDimensions?
     /// The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
     public var price: Int?
     /// The ID of the product this SKU is associated with. The product must be currently active.
-    @Expandable<StripeProduct> public var product: String?
+    @Expandable<Product> public var product: String?
     /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
     public var updated: Date?
 }

@@ -33,7 +33,7 @@ public struct StripeTopUp: Codable {
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// For most Stripe users, the source of every top-up is a bank account. This hash is then the [source object](https://stripe.com/docs/api/topups/object#source_object) describing that bank account.
-    public var source: StripeSource?
+    public var source: Source?
     /// Extra information about a top-up. This will appear on your source’s bank statement. It must contain at least one letter.
     public var statementDescriptor: String?
     /// The status of the top-up is either `canceled`, `failed`, `pending`, `reversed`, or `succeeded`.
