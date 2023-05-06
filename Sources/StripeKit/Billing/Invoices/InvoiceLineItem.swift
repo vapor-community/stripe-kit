@@ -33,7 +33,7 @@ public struct StripeInvoiceLineItem: Codable {
     /// The plan of the subscription, if the line item is a subscription or a proration.
     public var plan: StripePlan?
     /// The price of the line item.
-    public var price: StripePrice?
+    public var price: Price?
     /// Whether this is a proration.
     public var proration: Bool?
     /// The quantity of the subscription, if the line item is a subscription or a proration.
