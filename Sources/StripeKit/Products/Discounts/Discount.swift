@@ -31,5 +31,5 @@ public struct StripeDiscount: Codable {
     /// The invoice item id (or invoice line item id for invoice line items of type=‘subscription’) that the discount’s coupon was applied to, if it was applied directly to a particular invoice item or invoice line item.
     public var invoiceItem: String?
     /// The promotion code applied to create this discount.
-    @Expandable<StripePromotionCode> public var promotionCode: String?
+    @Expandable<PromotionCode> public var promotionCode: String?
 }

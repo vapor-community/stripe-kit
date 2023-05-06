@@ -109,7 +109,7 @@ public enum EventObject: Codable {
     case plan(StripePlan)
     case price(Price)
     case product(Product)
-    case promotionCode(StripePromotionCode)
+    case promotionCode(PromotionCode)
     case earlyFraudWarniing(StripeEarlyFraudWarning)
     case quote(StripeQuote)
     case reportRun(StripeReportRun)
@@ -204,7 +204,7 @@ public enum EventObject: Codable {
         case "product":
             self = try .product(Product(from: decoder))
         case "promotion_code":
-            self = try .promotionCode(StripePromotionCode(from: decoder))
+            self = try .promotionCode(PromotionCode(from: decoder))
         case "radar.early_fraud_warning":
             self = try .earlyFraudWarniing(StripeEarlyFraudWarning(from: decoder))
         case "quote":
