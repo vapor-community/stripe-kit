@@ -34,7 +34,7 @@ public struct Price: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Prices defined in each available currency option. Each key must be a three-letter ISO currency code and a supported currency. For example, to get your price in eur, fetch the value of the eur key in `currency_options`. This field is not included by default. To include it in the response, expand the `currency_options` field.
-    public var currencyOptions: PriceCurrencyOption?
+    public var currencyOptions: [Currency: PriceCurrencyOption]?
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
     public var customUnitAmount: PriceCustomUnitAmount?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
@@ -64,7 +64,7 @@ public struct Price: Codable {
                 object: String,
                 billingScheme: PriceBillingScheme? = nil,
                 created: Date,
-                currencyOptions: PriceCurrencyOption? = nil,
+                currencyOptions: [Currency: PriceCurrencyOption]? = nil,
                 customUnitAmount: PriceCustomUnitAmount? = nil,
                 livemode: Bool? = nil,
                 lookupKey: String? = nil,

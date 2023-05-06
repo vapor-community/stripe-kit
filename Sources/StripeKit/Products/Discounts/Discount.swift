@@ -15,7 +15,7 @@ public struct StripeDiscount: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Hash describing the coupon applied to create this discount.
-    public var coupon: StripeCoupon?
+    public var coupon: Coupon?
     /// The id of the customer this discount is associated with.
     @Expandable<Customer> public var customer: String?
     /// If the coupon has a duration of repeating, the date that this discount will end. If the coupon has a duration of once or forever, this attribute will be null.
