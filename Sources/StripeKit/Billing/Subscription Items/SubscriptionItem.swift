@@ -29,7 +29,7 @@ public struct StripeSubscriptionItem: Codable {
     /// The `subscription` this `subscription_item` belongs to.
     public var subscription: String?
     /// The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
-    public var taxRates: [StripeTaxRate]?
+    public var taxRates: [TaxRate]?
 }
 
 public struct StripeSubscriptionItemBillingThresholds: Codable {

@@ -146,7 +146,7 @@ public struct StripeQuoteComputedRecurringTotalDetailsBreakdownTax: Codable {
     /// Amount of tax applied for this rate.
     public var amount: Int?
     /// The tax rate applied.
-    public var rate: StripeTaxRate?
+    public var rate: TaxRate?
 }
 
 public struct StripeQuoteComputedUpfront: Codable {
@@ -193,7 +193,7 @@ public struct StripeQuoteComputedUpfrontTotalDetailsBreakdownTax: Codable {
     /// Amount of tax applied for this rate.
     public var amount: Int?
     /// The tax rate applied.
-    public var rate: StripeTaxRate?
+    public var rate: TaxRate?
 }
 
 public struct StripeQuoteFromQuote: Codable {
@@ -266,7 +266,7 @@ public struct StripeQuoteTotalDetailsBreakdownTax: Codable {
     /// Amount of tax applied for this rate.
     public var amount: Int?
     /// The tax rate applied.
-    public var rate: StripeTaxRate?
+    public var rate: TaxRate?
 }
 
 public struct StripeQuoteTransferData: Codable {

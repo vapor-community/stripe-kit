@@ -37,7 +37,7 @@ public struct Product: Codable {
     /// Extra information about a product which will appear on your customer’s credit card statement. In the case that multiple products are billed at once, the first statement descriptor will be used.
     public var statementDescriptor: String?
     /// A tax code ID.
-    @Expandable<StripeTaxCode> public var taxCode: String?
+    @Expandable<TaxCode> public var taxCode: String?
     /// A label that represents units of this product. When set, this will be included in customers’ receipts, invoices, Checkout, and the customer portal.
     public var unitLabel: String?
     /// Time at which the object was last updated. Measured in seconds since the Unix epoch.

@@ -43,7 +43,7 @@ public struct StripeSubscription: Codable {
     /// ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If not set, defaults to the customer’s default source.
     @Expandable<Source> public var defaultSource: String?
     /// The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
-    public var defaultTaxRates: [StripeTaxRate]?
+    public var defaultTaxRates: [TaxRate]?
     /// Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis.
     public var discount: Discount?
     /// If the subscription has ended, the date the subscription ended.
