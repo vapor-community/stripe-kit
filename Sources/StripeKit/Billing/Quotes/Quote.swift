@@ -40,7 +40,7 @@ public struct StripeQuote: Codable {
     /// A description that will be displayed on the quote PDF.
     public var description: String?
     /// The discounts applied to this quote.
-    @ExpandableCollection<StripeDiscount> public var discounts: [String]?
+    @ExpandableCollection<Discount> public var discounts: [String]?
     /// The date on which the quote will be canceled if in `open` or `draft` status. Measured in seconds since the Unix epoch.
     public var expiresAt: Date?
     /// A footer that will be displayed on the quote PDF.
@@ -139,7 +139,7 @@ public struct StripeQuoteComputedRecurringTotalDetailsBreakdownDiscount: Codable
     /// The amount discounted.
     public var amount: Int?
     /// The discount applied.
-    public var discount: StripeDiscount?
+    public var discount: Discount?
 }
 
 public struct StripeQuoteComputedRecurringTotalDetailsBreakdownTax: Codable {
@@ -186,7 +186,7 @@ public struct StripeQuoteComputedUpfrontTotalDetailsBreakdownDiscount: Codable {
     /// The amount discounted.
     public var amount: Int?
     /// The discount applied.
-    public var discount: StripeDiscount?
+    public var discount: Discount?
 }
 
 public struct StripeQuoteComputedUpfrontTotalDetailsBreakdownTax: Codable {
@@ -259,7 +259,7 @@ public struct StripeQuoteTotalDetailsBreakdownDiscount: Codable {
     /// The amount discounted.
     public var amount: Int?
     /// The discount applied.
-    public var discount: StripeDiscount?
+    public var discount: Discount?
 }
 
 public struct StripeQuoteTotalDetailsBreakdownTax: Codable {
