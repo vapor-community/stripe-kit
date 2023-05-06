@@ -21,7 +21,7 @@ public struct StripePromotionCode: Codable {
     /// The customer-facing code. Regardless of case, this code must be unique across all active promotion codes for each customer.
     public var code: String?
     /// Hash describing the coupon for this promotion code.
-    public var coupon: StripeCoupon?
+    public var coupon: Coupon?
     /// Date at which the promotion code can no longer be redeemed.
     public var expiresAt: Date?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
