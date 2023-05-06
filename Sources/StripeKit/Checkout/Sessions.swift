@@ -134,7 +134,7 @@ public struct StripeSessionLineItemDiscount: Codable {
     /// The amount discounted.
     public var amount: Int?
     /// The discount applied.
-    public var discount: StripeDiscount?
+    public var discount: Discount?
 }
 
 public struct StripeSessionLineItemTax: Codable {

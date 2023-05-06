@@ -68,7 +68,7 @@ public struct StripeInvoice: Codable {
     /// An arbitrary string attached to the object. Often useful for displaying to users. Referenced as ‘memo’ in the Dashboard.
     public var description: String?
     /// The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use expand[]=discounts to expand each discount.
-    @ExpandableCollection<StripeDiscount> public var discounts: [String]?
+    @ExpandableCollection<Discount> public var discounts: [String]?
     /// The date on which payment for this invoice is due. This value will be `null` for invoices where `billing=charge_automatically`.
     public var dueDate: Date?
     /// Ending customer balance after the invoice is finalized. Invoices are finalized approximately an hour after successful webhook delivery or when payment collection is attempted for the invoice. If the invoice has not been finalized yet, this will be null.
@@ -255,7 +255,7 @@ public struct StripeInvoiceTotalDiscountAmount: Codable {
     /// The amount, in cents, of the discount.
     public var amount: Int?
     /// The discount that was applied to get this discount amount.
-    @Expandable<StripeDiscount> public var discount: String?
+    @Expandable<Discount> public var discount: String?
 }
 
 public struct StripeInvoiceTransferData: Codable {
