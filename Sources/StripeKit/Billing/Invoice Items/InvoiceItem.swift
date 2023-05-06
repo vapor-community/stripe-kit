@@ -47,7 +47,7 @@ public struct StripeInvoiceItem: Codable {
     /// The subscription item that this invoice item has been created for, if any.
     public var subscriptionItem: String?
     /// The tax rates which apply to the invoice item. When set, the default_tax_rates on the invoice do not apply to this invoice item.
-    public var taxRates: [StripeTaxRate]?
+    public var taxRates: [TaxRate]?
     /// Unit Amount (in the currency specified) of the invoice item.
     public var unitAmount: Int?
     /// Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.

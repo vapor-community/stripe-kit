@@ -43,7 +43,7 @@ public struct StripeQuoteLineItemTax: Codable {
     /// Amount of tax applied for this rate.
     public var amount: Int?
     /// The tax rate applied.
-    public var rate: StripeTaxRate?
+    public var rate: TaxRate?
 }
 
 public struct StripeQuoteLineItemList: Codable {

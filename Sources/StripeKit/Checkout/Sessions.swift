@@ -60,7 +60,7 @@ public struct StripeSession: Codable {
     /// The shipping rate options applied to this Session.
     public var shipppingOptions: [StripeSessionShippingOption]?
     /// The ID of the ShippingRate for Checkout Sessions in payment mode.
-    @Expandable<StripeShippingRate> public var shippingRate: String?
+    @Expandable<ShippingRate> public var shippingRate: String?
     /// Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in `payment` mode, but not Checkout Sessions in `subscription` or `setup` mode. Supported values are `auto`, `book`, `donate`, or `pay`.
     public var submitType: StripeSessionSubmitType?
     /// The status of the Checkout Session, one of `open`, `complete`, or `expired`.
@@ -141,7 +141,7 @@ public struct StripeSessionLineItemTax: Codable {
     /// Amount of tax applied for this rate.
     public var amount: Int?
     /// The tax rate applied.
-    public var rate: StripeTaxRate?
+    public var rate: TaxRate?
 }
 
 public struct StripeSessionLineItemList: Codable {
@@ -299,7 +299,7 @@ public struct StripeSessionShippingOption: Codable {
     /// A non-negative integer in cents representing how much to charge.
     public var shippingAmount: Int?
     /// The shipping rate.
-    @Expandable<StripeShippingRate> public var shippingRate: String?
+    @Expandable<ShippingRate> public var shippingRate: String?
 }
 
 public enum StripeSessionSubmitType: String, Codable {

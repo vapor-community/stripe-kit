@@ -45,7 +45,7 @@ public struct StripeInvoiceLineItem: Codable {
     /// The amount of tax calculated per tax rate for this line item
     public var taxAmounts: [StripeInvoiceTotalTaxAmount]?
     /// The tax rates which apply to the line item.
-    public var taxRates: [StripeTaxRate]?
+    public var taxRates: [TaxRate]?
     /// A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
     public var type: StripeInvoiceLineItemType?
 }

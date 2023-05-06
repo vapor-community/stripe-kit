@@ -119,7 +119,7 @@ public enum EventObject: Codable {
     case scheduledQueryRun(StripeScheduledQueryRun)
     case sku(StripeSKU)
     case subscriptionSchedule(StripeSubscriptionSchedule)
-    case taxRate(StripeTaxRate)
+    case taxRate(TaxRate)
     case topup(StripeTopUp)
     case transfer(StripeTransfer)
     case verificationSession(StripeVerificationSession)
@@ -224,7 +224,7 @@ public enum EventObject: Codable {
         case "subscription_schedule":
             self = try .subscriptionSchedule(StripeSubscriptionSchedule(from: decoder))
         case "tax_rate":
-            self = try .taxRate(StripeTaxRate(from: decoder))
+            self = try .taxRate(TaxRate(from: decoder))
         case "topup":
             self = try .topup(StripeTopUp(from: decoder))
         case "transfer":

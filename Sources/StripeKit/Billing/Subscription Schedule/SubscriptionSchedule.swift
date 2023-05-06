@@ -91,7 +91,7 @@ public struct StripeSubscriptionSchedulePhase: Codable {
     /// ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer’s invoice settings.
     @Expandable<PaymentMethod> public var defaultPaymentMethod: String?
     /// The default tax rates to apply to the subscription during this phase of the subscription schedule.
-    public var defaultTaxRates: [StripeTaxRate]?
+    public var defaultTaxRates: [TaxRate]?
     /// The end of this phase of the subscription schedule.
     public var endDate: Date?
     /// The subscription schedule’s default invoice settings.

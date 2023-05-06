@@ -28,7 +28,7 @@ public struct StripeCreditNoteLineItem: Codable {
     /// The amount of tax calculated per tax rate for this line item
     public var taxAmounts: [StripeInvoiceTotalTaxAmount]?
     /// The tax rates which apply to the line item.
-    public var taxRates: [StripeTaxRate]?
+    public var taxRates: [TaxRate]?
     /// The type of the credit note line item, one of `invoice_line_item` or `custom_line_item`. When the type is `invoice_line_item` there is an additional `invoice_line_item` property on the resource the value of which is the id of the credited line item on the invoice.
     public var type: StripeCreditNoteLineItemType?
     /// The cost of each unit of product being credited.

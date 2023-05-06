@@ -9,7 +9,7 @@ import NIO
 import NIOHTTP1
 import Foundation
 
-public protocol TaxRateRoutes {
+public protocol TaxRateRoutes: StripeAPIRoute {
     /// Creates a new tax rate.
     ///
     /// - Parameters:
@@ -23,7 +23,7 @@ public protocol TaxRateRoutes {
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - state: ISO 3166-2 subdivision code, without country prefix. For example, “NY” for New York, United States.
     ///   - taxType: The high-level tax type, such as `vat` or `sales_tax`.
-    /// - Returns: A `StripeTaxRate`.
+    /// - Returns: The created tax rate object.
     func create(displayName: String,
                 inclusive: Bool,
                 percentage: String,
@@ -33,13 +33,13 @@ public protocol TaxRateRoutes {
                 jurisdiction: String?,
                 metadata: [String: String]?,
                 state: String?,
-                taxType: StripeTaxRateTaxType?) -> EventLoopFuture<StripeTaxRate>
+                taxType: TaxRateTaxType?) async throws -> TaxRate
     
     /// Retrieves a tax rate with the given ID
     ///
     /// - Parameter taxRate: The ID of the desired tax rate.
-    /// - Returns: A `StripeTaxRate`.
-    func retrieve(taxRate: String) -> EventLoopFuture<StripeTaxRate>
+    /// - Returns: Returns an tax rate if a valid tax rate ID was provided. Returns an error otherwise.
+    func retrieve(taxRate: String) async throws -> TaxRate
     
     /// Updates an existing tax rate.
     ///
@@ -53,7 +53,7 @@ public protocol TaxRateRoutes {
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - state: ISO 3166-2 subdivision code, without country prefix. For example, “NY” for New York, United States.
     ///   - taxType: The high-level tax type, such as `vat` or `sales_tax`.
-    /// - Returns: A `StripeTaxRate`.
+    /// - Returns: The updated tax rate.
     func update(taxRate: String,
                 active: Bool?,
                 country: String?,
@@ -62,68 +62,13 @@ public protocol TaxRateRoutes {
                 jurisdiction: String?,
                 metadata: [String: String]?,
                 state: String?,
-                taxType: StripeTaxRateTaxType?) -> EventLoopFuture<StripeTaxRate>
+                taxType: TaxRateTaxType?) async throws -> TaxRate
     
     /// Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/tax_rates/list)
-    /// - Returns: A `StripeTaxRateList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTaxRateList>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension TaxRateRoutes {
-    public func create(displayName: String,
-                       inclusive: Bool,
-                       percentage: String,
-                       active: Bool? = nil,
-                       country: String? = nil,
-                       description: String? = nil,
-                       jurisdiction: String? = nil,
-                       metadata: [String: String]? = nil,
-                       state: String? = nil,
-                       taxType: StripeTaxRateTaxType? = nil) -> EventLoopFuture<StripeTaxRate> {
-        return create(displayName: displayName,
-                      inclusive: inclusive,
-                      percentage: percentage,
-                      active: active,
-                      country: country,
-                      description: description,
-                      jurisdiction: jurisdiction,
-                      metadata: metadata,
-                      state: state,
-                      taxType: taxType)
-    }
-    
-    public func retrieve(taxRate: String) -> EventLoopFuture<StripeTaxRate> {
-        return retrieve(taxRate: taxRate)
-    }
-    
-    public func update(taxRate: String,
-                       active: Bool? = nil,
-                       country: String? = nil,
-                       description: String? = nil,
-                       displayName: String? = nil,
-                       jurisdiction: String? = nil,
-                       metadata: [String: String]? = nil,
-                       state: String? = nil,
-                       taxType: StripeTaxRateTaxType? = nil) -> EventLoopFuture<StripeTaxRate> {
-        return update(taxRate: taxRate,
-                      active: active,
-                      country: country,
-                      description: description,
-                      displayName: displayName,
-                      jurisdiction: jurisdiction,
-                      metadata: metadata,
-                      state: state,
-                      taxType: taxType)
-    }
-    
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTaxRateList> {
-        return listAll(filter: filter)
-    }
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More](https://stripe.com/docs/api/tax_rates/list)
+    /// - Returns: A dictionary with a `data` property that contains an array of up to `limit` tax rates, starting after tax rate `starting_after`. Each entry in the array is a separate tax rate object. If no more tax rates are available, the resulting array will be empty. This request should never return an error.
+    func listAll(filter: [String: Any]?) async throws -> TaxRateList
 }
 
 public struct StripeTaxRateRoutes: TaxRateRoutes {
@@ -139,104 +84,104 @@ public struct StripeTaxRateRoutes: TaxRateRoutes {
     public func create(displayName: String,
                        inclusive: Bool,
                        percentage: String,
-                       active: Bool?,
-                       country: String?,
-                       description: String?,
-                       jurisdiction: String?,
-                       metadata: [String: String]?,
-                       state: String?,
-                       taxType: StripeTaxRateTaxType?) -> EventLoopFuture<StripeTaxRate> {
+                       active: Bool? = nil,
+                       country: String? = nil,
+                       description: String? = nil,
+                       jurisdiction: String? = nil,
+                       metadata: [String: String]? = nil,
+                       state: String? = nil,
+                       taxType: TaxRateTaxType? = nil) async throws -> TaxRate {
         var body: [String: Any] = ["display_name": displayName,
                                    "inclusive": inclusive,
                                    "percentage": percentage]
         
-        if let active = active {
+        if let active {
             body["active"] = active
         }
         
-        if let country = country {
+        if let country {
             body["country"] = country
         }
         
-        if let description = description {
+        if let description {
             body["description"] = description
         }
         
-        if let jurisdiction = jurisdiction {
+        if let jurisdiction {
             body["jurisdiction"] = jurisdiction
         }
         
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let state = state {
+        if let state {
             body["state"] = state
         }
         
-        if let taxType = taxType {
+        if let taxType {
             body["tax_type"] = taxType.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: taxrates, body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: taxrates, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(taxRate: String) -> EventLoopFuture<StripeTaxRate> {
-        return apiHandler.send(method: .GET, path: "\(taxrates)/\(taxRate)", headers: headers)
+    public func retrieve(taxRate: String) async throws -> TaxRate {
+        try await apiHandler.send(method: .GET, path: "\(taxrates)/\(taxRate)", headers: headers)
     }
     
     public func update(taxRate: String,
-                       active: Bool?,
-                       country: String?,
-                       description: String?,
-                       displayName: String?,
-                       jurisdiction: String?,
-                       metadata: [String: String]?,
-                       state: String?,
-                       taxType: StripeTaxRateTaxType?) -> EventLoopFuture<StripeTaxRate> {
+                       active: Bool? = nil,
+                       country: String? = nil,
+                       description: String? = nil,
+                       displayName: String? = nil,
+                       jurisdiction: String? = nil,
+                       metadata: [String: String]? = nil,
+                       state: String? = nil,
+                       taxType: TaxRateTaxType? = nil) async throws -> TaxRate {
         var body: [String: Any] = [:]
         
-        if let active = active {
+        if let active {
             body["active"] = active
         }
         
-        if let country = country {
+        if let country {
             body["country"] = country
         }
         
-        if let description = description {
+        if let description {
             body["description"] = description
         }
         
-        if let displayName = displayName {
+        if let displayName {
             body["display_name"] = displayName
         }
         
-        if let jurisdiction = jurisdiction {
+        if let jurisdiction {
             body["jurisdiction"] = jurisdiction
         }
         
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let state = state {
+        if let state {
             body["state"] = state
         }
         
-        if let taxType = taxType {
+        if let taxType {
             body["tax_type"] = taxType.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: "\(taxrates)/\(taxRate)", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(taxrates)/\(taxRate)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTaxRateList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> TaxRateList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams += filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: taxrates, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: taxrates, query: queryParams, headers: headers)
     }
 }
