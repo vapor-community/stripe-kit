@@ -37,7 +37,7 @@ public struct StripeInvoiceItem: Codable {
     /// If the invoice item is a proration, the plan of the subscription that the proration was computed for.
     public var plan: StripePlan?
     /// The price of the invoice item.
-    public var price: StripePrice?
+    public var price: Price?
     /// Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.
     public var proration: Bool?
     /// Quantity of units for the invoice item. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.

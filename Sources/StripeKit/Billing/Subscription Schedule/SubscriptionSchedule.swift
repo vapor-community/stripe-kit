@@ -110,7 +110,7 @@ public struct StripeSubscriptionSchedulePhase: Codable {
 
 public struct StripeSubscriptionSchedulePhaseAddInvoiceItem: Codable {
     /// ID of the price used to generate the invoice item.
-    @Expandable<StripePrice> public var price: String?
+    @Expandable<Price> public var price: String?
     /// The quantity of the invoice item.
     public var quantity: Int?
 }

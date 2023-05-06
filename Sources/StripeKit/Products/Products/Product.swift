@@ -15,7 +15,7 @@ public struct Product: Codable {
     /// Whether the product is currently available for purchase.
     public var active: Bool?
     /// The ID of the Price object that is the default price for this product.
-    @Expandable<StripePrice> public var defaultPrice: String?
+    @Expandable<Price> public var defaultPrice: String?
     /// The product’s description, meant to be displayable to the customer. Only applicable to products of `type=good`.
     public var description: String?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

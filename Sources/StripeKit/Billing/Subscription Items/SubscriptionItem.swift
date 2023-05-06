@@ -23,7 +23,7 @@ public struct StripeSubscriptionItem: Codable {
     /// Hash describing the plan the customer is subscribed to.
     public var plan: StripePlan?
     /// The price the customer is subscribed to.
-    public var price: StripePrice?
+    public var price: Price?
     /// The quantity of the plan to which the customer should be subscribed.
     public var quantity: Int?
     /// The `subscription` this `subscription_item` belongs to.

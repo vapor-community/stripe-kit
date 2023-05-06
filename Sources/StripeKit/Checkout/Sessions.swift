@@ -123,7 +123,7 @@ public struct StripeSessionLineItem: Codable {
     /// The discounts applied to the line item. This field is not included by default. To include it in the response, expand the `discounts` field.
     public var discounts: [StripeSessionLineItemDiscount]?
     /// The price used to generate the line item.
-    public var price: StripePrice?
+    public var price: Price?
     /// The quantity of products being purchased.
     public var quantity: Int?
     /// The taxes applied to the line item. This field is not included by default. To include it in the response, expand the `taxes` field.
