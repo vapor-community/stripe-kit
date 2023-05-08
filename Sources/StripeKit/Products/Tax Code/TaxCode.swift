@@ -33,4 +33,14 @@ public struct TaxCodeList: Codable {
     public var hasMore: Bool?
     public var url: String?
     public var data: [TaxCode]?
+    
+    public init(object: String,
+                hasMore: Bool? = nil,
+                url: String? = nil,
+                data: [TaxCode]? = nil) {
+        self.object = object
+        self.hasMore = hasMore
+        self.url = url
+        self.data = data
+    }
 }
