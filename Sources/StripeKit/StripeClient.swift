@@ -36,6 +36,9 @@ public final class StripeClient {
     // MARK: - CHECKOUT
     public var sessions: SessionRoutes
     
+    // MARK: - PaymentLink
+    public var paymentLinks: PaymentLinkRoutes
+    
     // MARK: - Products
     public var products: ProductRoutes
     public var prices: PriceRoutes
@@ -145,6 +148,8 @@ public final class StripeClient {
         sources = StripeSourceRoutes(apiHandler: handler)
         
         sessions = StripeSessionRoutes(apiHandler: handler)
+        
+        paymentLinks = StripePaymentLinkRoutes(apiHandler: handler)
         
         products = StripeProductRoutes(apiHandler: handler)
         prices = StripePriceRoutes(apiHandler: handler)

@@ -270,7 +270,7 @@ public struct StripeSessionRoutes: SessionRoutes {
         }
         
         if let submitType {
-            body["submit_type"] = submitType
+            body["submit_type"] = submitType.rawValue
         }
         
         if let subscriptionData {
