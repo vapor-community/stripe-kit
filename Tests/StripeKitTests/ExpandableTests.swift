@@ -353,8 +353,8 @@ class ExpandableTests: XCTestCase {
           "paymentStatus": "unpaid"
         }
         """.data(using: .utf8)!
-        let sess = try JSONDecoder().decode(StripeSession.self, from: session)
-        _ = try JSONDecoder().decode(StripeSession.self, from: JSONEncoder().encode(sess))
+        let sess = try JSONDecoder().decode(Session.self, from: session)
+        _ = try JSONDecoder().decode(Session.self, from: JSONEncoder().encode(sess))
     }
     
     func testExpandableCollection_decodesProperly() throws {

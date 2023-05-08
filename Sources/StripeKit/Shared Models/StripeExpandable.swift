@@ -200,6 +200,22 @@ public struct ExpandableCollection<Model: Codable>: Codable {
         self._state = .empty
     }
     
+    public init(ids: [String]?) {
+        if let ids {
+            self._state = .unexpanded(ids)
+        } else {
+            self._state = .empty
+        }
+    }
+    
+    public init(models: [Model]?) {
+        if let models {
+            self._state = .expanded(models)
+        } else {
+            self._state = .empty
+        }
+    }
+    
     public init(from decoder: Decoder) throws {
         if let container = try decoder.singleValueContainerIfPresentAndNotNull() {
             do {
