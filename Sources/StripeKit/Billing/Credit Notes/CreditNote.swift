@@ -40,7 +40,7 @@ public struct CreditNote: Codable {
     /// ID of the customer.
     @Expandable<Customer> public var customer: String?
     /// Customer balance transaction related to this credit note.
-    @Expandable<StripeCustomerBalanceTransaction> public var customerBalanceTransaction: String?
+    @Expandable<CustomerBalanceTransaction> public var customerBalanceTransaction: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// A unique number that identifies this particular credit note and appears on the PDF of the credit note and its associated invoice.
