@@ -84,7 +84,7 @@ public enum EventObject: Codable {
     case dispute(Dispute)
     case refund(Refund)
     case checkoutSession(Session)
-    case configuration(StripePortalConfiguration)
+    case configuration(PortalConfiguration)
     case coupon(Coupon)
     case creditNote(CreditNote)
     case customer(Customer)
@@ -138,7 +138,7 @@ public enum EventObject: Codable {
         case "bank_account":
             self = try .bankAccount(BankAccount(from: decoder))
         case "billing_portal.configuration":
-            self = try .configuration(StripePortalConfiguration(from: decoder))
+            self = try .configuration(PortalConfiguration(from: decoder))
         case "fee_refund":
             self = try .applicationFeeRefund(StripeApplicationFeeRefund(from: decoder))
         case "balance":
