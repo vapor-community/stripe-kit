@@ -267,6 +267,9 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 ### Checkout
 * [x] Sessions
 ---
+### Payment Links
+* [x] Payment Links
+---
 ### Billing
 * [x] Credit Notes
 * [x] Customer Balance Transactions
