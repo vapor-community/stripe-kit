@@ -63,7 +63,7 @@ public struct Customer: Codable {
     /// Describes the customer’s tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text `“Reverse charge”`.
     public var taxExempt: CustomerTaxExempt?
     /// The customers tax IDs
-    public var taxIds: StripeTaxIDList?
+    public var taxIds: TaxIDList?
     /// ID of the test clock this customer belongs to.
     public var testClock: String? // TODO: - Make this @Expandable
     
@@ -92,7 +92,7 @@ public struct Customer: Codable {
                 sources: StripeSourcesList? = nil,
                 subscriptions: StripeSubscriptionList? = nil,
                 taxExempt: CustomerTaxExempt? = nil,
-                taxIds: StripeTaxIDList? = nil,
+                taxIds: TaxIDList? = nil,
                 testClock: String? = nil) {
         self.id = id
         self.address = address

@@ -469,7 +469,7 @@ public struct PaymentLinkInvoiceCreation: Codable {
 
 public struct PaymentLinkInvoiceCreationInvoiceData: Codable {
     /// The account tax IDs associated with the invoice
-    @ExpandableCollection<StripeTaxID> public var accountTaxIds: [String]?
+    @ExpandableCollection<TaxID> public var accountTaxIds: [String]?
     /// Custom fields displayed on the invoice.
     public var customFields: [PaymentLinkInvoiceCreationInvoiceDataCustomFields]?
     /// An arbitrary string attached to the object. Often useful for displaying to users.

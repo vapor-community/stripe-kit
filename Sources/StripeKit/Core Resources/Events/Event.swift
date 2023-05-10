@@ -90,7 +90,7 @@ public enum EventObject: Codable {
     case customer(Customer)
     case discount(Discount)
     case subscription(StripeSubscription)
-    case taxId(StripeTaxID)
+    case taxId(TaxID)
     case file(File)
     case invoice(StripeInvoice)
     case invoiceItem(StripeInvoiceItem)
@@ -164,7 +164,7 @@ public enum EventObject: Codable {
         case "subscription":
             self = try .subscription(StripeSubscription(from: decoder))
         case "tax_id":
-            self = try .taxId(StripeTaxID(from: decoder))
+            self = try .taxId(TaxID(from: decoder))
         case "file":
             self = try .file(File(from: decoder))
         case "identity.verification_session":

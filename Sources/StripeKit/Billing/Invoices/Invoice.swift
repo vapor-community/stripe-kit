@@ -158,7 +158,7 @@ public enum StripeInvoiceBillingReason: String, Codable {
 
 public struct StripeInvoiceCustomerTaxId: Codable {
     /// The type of the tax ID, one of eu_vat, nz_gst, au_abn, or unknown
-    public var type: StripeTaxIDType?
+    public var type: TaxIDType?
     /// The value of the tax ID.
     public var value: String?
 }
