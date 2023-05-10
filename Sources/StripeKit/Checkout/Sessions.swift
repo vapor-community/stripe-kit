@@ -381,7 +381,7 @@ public struct SessionInvoiceCreation: Codable {
 
 public struct SessionInvoiceCreationInvoiceData: Codable {
     /// The account tax IDs associated with the invoice
-    @ExpandableCollection<StripeTaxID> public var accountTaxIds: [String]?
+    @ExpandableCollection<TaxID> public var accountTaxIds: [String]?
     /// Custom fields displayed on the invoice.
     public var customFields: [SessionInvoiceCreationInvoiceDataCustomFields]?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
@@ -564,11 +564,11 @@ public struct SessionCustomerDetails: Codable {
 
 public struct SessionCustomerDetailsTaxId: Codable {
     /// The type of the tax ID.
-    public var type: StripeTaxIDType
+    public var type: TaxIDType
     /// The value of the tax ID.
     public var value: String?
     
-    public init(type: StripeTaxIDType, value: String? = nil) {
+    public init(type: TaxIDType, value: String? = nil) {
         self.type = type
         self.value = value
     }
