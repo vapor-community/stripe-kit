@@ -8,36 +8,58 @@
 
 import Foundation
 
-/// The [Subscription Item Object](https://stripe.com/docs/api/subscription_items/object).
-public struct StripeSubscriptionItem: Codable {
+/// The [Subscription Item Object](https://stripe.com/docs/api/subscription_items/object) .
+public struct SubscriptionItem: Codable {
     /// Unique identifier for the object.
     public var id: String
-    /// String representing the object’s type. Objects of the same type share the same value.
-    public var object: String
-    /// Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
-    public var billingThresholds: StripeSubscriptionItemBillingThresholds?
-    /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Date
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    /// Hash describing the plan the customer is subscribed to.
-    public var plan: Plan?
     /// The price the customer is subscribed to.
     public var price: Price?
     /// The quantity of the plan to which the customer should be subscribed.
     public var quantity: Int?
     /// The `subscription` this `subscription_item` belongs to.
     public var subscription: String?
+    /// String representing the object’s type. Objects of the same type share the same value.
+    public var object: String
+    /// Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
+    public var billingThresholds: SubscriptionItemBillingThresholds?
+    /// Time at which the object was created. Measured in seconds since the Unix epoch.
+    public var created: Date
     /// The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
     public var taxRates: [TaxRate]?
+    
+    public init(id: String,
+                metadata: [String : String]? = nil,
+                price: Price? = nil,
+                quantity: Int? = nil,
+                subscription: String? = nil,
+                object: String,
+                billingThresholds: SubscriptionItemBillingThresholds? = nil,
+                created: Date,
+                taxRates: [TaxRate]? = nil) {
+        self.id = id
+        self.metadata = metadata
+        self.price = price
+        self.quantity = quantity
+        self.subscription = subscription
+        self.object = object
+        self.billingThresholds = billingThresholds
+        self.created = created
+        self.taxRates = taxRates
+    }
 }
 
-public struct StripeSubscriptionItemBillingThresholds: Codable {
+public struct SubscriptionItemBillingThresholds: Codable {
     /// Usage threshold that triggers the subscription to create an invoice
     public var usageGte: Int?
+    
+    public init(usageGte: Int? = nil) {
+        self.usageGte = usageGte
+    }
 }
 
-public enum StripeSubscriptionItemPaymentBehavior: String, Codable {
+public enum SubscriptionItemPaymentBehavior: String, Codable {
     /// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid.
     case allowIncomplete = "allow_incomplete"
     /// Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription’s first invoice cannot be paid.
@@ -49,15 +71,25 @@ public enum StripeSubscriptionItemPaymentBehavior: String, Codable {
     
 }
 
-public enum StripeSubscriptionItemProrationBehavior: String, Codable {
+public enum SubscriptionItemProrationBehavior: String, Codable {
     case createProrations = "create_prorations"
     case alwaysInvoice = "always_invoice"
     case none
 }
 
-public struct StripeSubscriptionItemList: Codable {
+public struct SubscriptionItemList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
-    public var data: [StripeSubscriptionItem]?
+    public var data: [SubscriptionItem]?
+    
+    public init(object: String,
+                hasMore: Bool? = nil,
+                url: String? = nil,
+                data: [SubscriptionItem]? = nil) {
+        self.object = object
+        self.hasMore = hasMore
+        self.url = url
+        self.data = data
+    }
 }
