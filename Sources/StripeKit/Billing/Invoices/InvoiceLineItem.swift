@@ -40,7 +40,7 @@ public struct InvoiceLineItem: Codable {
     public var discountable: Bool?
     @ExpandableCollection<Discount> public var discounts: [String]?
     /// The ID of the invoice item associated with this line item if any.
-    @Expandable<StripeInvoiceItem> public var invoiceItem: String?
+    @Expandable<InvoiceItem> public var invoiceItem: String?
     /// Whether this is a test line item.
     public var livemode: Bool?
     /// Additional details for proration line items.
