@@ -68,7 +68,7 @@ public struct Quote: Codable {
     /// The timestamps of which the quote transitioned to a new status.
     public var statusTransitions: QuoteStatusTransition?
     /// The subscription that was created or updated from this quote.
-    @Expandable<StripeSubscription> public var subscription: String?
+    @Expandable<Subscription> public var subscription: String?
     /// When creating a subscription or subscription schedule, the specified configuration data will be used. There must be at least one line item with a recurring price for a subscription or subscription schedule to be created.
     public var subscriptionData: QuoteSubscriptionData?
     /// The subscription schedule that was created or updated from this quote.

@@ -46,9 +46,9 @@ public struct InvoiceLineItem: Codable {
     /// Additional details for proration line items.
     public var prorationDetails: InvoiceLineItemProrationDetails?
     /// The subscription that the invoice item pertains to, if any.
-    @Expandable<StripeSubscription> public var subscription: String?
+    @Expandable<Subscription> public var subscription: String?
     /// The subscription item that generated this invoice item. Left empty if the line item is not an explicit result of a subscription.
-    @Expandable<StripeSubscriptionItem> public var subscriptionItem: String?
+    @Expandable<SubscriptionItem> public var subscriptionItem: String?
     /// The amount of tax calculated per tax rate for this line item
     public var taxAmounts: [InvoiceTotalTaxAmount]?
     /// The tax rates which apply to the line item.

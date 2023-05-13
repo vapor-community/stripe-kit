@@ -39,7 +39,7 @@ public struct Invoice: Codable {
     /// The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
     public var status: InvoiceStatus?
     /// The subscription that this invoice was prepared for, if any.
-    @Expandable<StripeSubscription> public var subscription: String?
+    @Expandable<Subscription> public var subscription: String?
     /// Total after discount.
     public var total: Int?
     /// String representing the object’s type. Objects of the same type share the same value.

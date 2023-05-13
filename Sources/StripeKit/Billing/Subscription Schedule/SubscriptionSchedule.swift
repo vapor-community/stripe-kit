@@ -40,7 +40,7 @@ public struct StripeSubscriptionSchedule: Codable {
     /// The present status of the subscription schedule. Possible values are not_started, active, completed, released, and canceled. You can read more about the different states in our behavior guide.
     public var status: StripeSubscriptionScheduleStatus?
     /// ID of the subscription managed by the subscription schedule.
-    @Expandable<StripeSubscription> public var subscription: String?
+    @Expandable<Subscription> public var subscription: String?
 }
 
 public struct StripeSubscriptionScheduleCurrentPhase: Codable {
@@ -54,7 +54,7 @@ public struct StripeSubscriptionScheduleDefaultSettings: Codable {
     /// Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle documentation.
     public var billingCycleAnchor: StripeSubscriptionScheduleBillingCycleAnchor?
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
-    public var billingThresholds: StripeSubscriptionBillingThresholds?
+    public var billingThresholds: SubscriptionBillingThresholds?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
     public var collectionMethod: InvoiceCollectionMethod?
     /// ID of the default payment method for the subscription schedule. If not set, invoices will use the default payment method in the customer’s invoice settings.
@@ -62,7 +62,7 @@ public struct StripeSubscriptionScheduleDefaultSettings: Codable {
     /// The subscription schedule’s default invoice settings.
     public var invoiceSettings: StripeSubscriptionScheduleInvoiceSettings?
     /// The account (if any) the subscription’s payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription’s invoices.
-    public var transferData: StripeSubscriptionTransferData?
+    public var transferData: SubscriptionTransferData?
 }
 
 public enum StripeSubscriptionScheduleEndBehavior: String, Codable {
@@ -83,7 +83,7 @@ public struct StripeSubscriptionSchedulePhase: Codable {
     /// Possible values are `phase_start` or `automatic`. If phase_start then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If automatic then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle documentation.
     public var billingCycleAnchor: StripeSubscriptionScheduleBillingCycleAnchor?
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
-    public var billingThresholds: StripeSubscriptionBillingThresholds?
+    public var billingThresholds: SubscriptionBillingThresholds?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
     public var collectionMethod: InvoiceCollectionMethod?
     /// ID of the coupon to use during this phase of the subscription schedule.
@@ -103,7 +103,7 @@ public struct StripeSubscriptionSchedulePhase: Codable {
     /// The start of this phase of the subscription schedule.
     public var startDate: Date?
     /// The account (if any) the subscription’s payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription’s invoices.
-    public var transferData: StripeSubscriptionTransferData?
+    public var transferData: SubscriptionTransferData?
     /// When the trial ends within the phase.
     public var trialEnd: Date?
 }

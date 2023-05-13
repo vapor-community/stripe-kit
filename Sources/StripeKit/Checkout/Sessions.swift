@@ -103,7 +103,7 @@ public struct Session: Codable {
     /// Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in `payment` mode, but not Checkout Sessions in `subscription` or `setup` mode.
     public var submitType: SessionSubmitType?
     /// The ID of the subscription created if one or more plans were provided.
-    @Expandable<StripeSubscription> public var subscription: String?
+    @Expandable<Subscription> public var subscription: String?
     /// Details on the state of tax ID collection for the session.
     public var taxIdCollection: SessionTaxIdCollection?
     /// Tax and discount details for the computed total amount.

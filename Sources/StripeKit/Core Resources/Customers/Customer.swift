@@ -59,7 +59,7 @@ public struct Customer: Codable {
     /// The customer’s payment sources, if any.
     public var sources: StripeSourcesList?
     /// The customer’s current subscriptions, if any.
-    public var subscriptions: StripeSubscriptionList?
+    public var subscriptions: SubscriptionList?
     /// Describes the customer’s tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text `“Reverse charge”`.
     public var taxExempt: CustomerTaxExempt?
     /// The customers tax IDs
@@ -90,7 +90,7 @@ public struct Customer: Codable {
                 nextInvoiceSequence: Int? = nil,
                 preferredLocals: [String]? = nil,
                 sources: StripeSourcesList? = nil,
-                subscriptions: StripeSubscriptionList? = nil,
+                subscriptions: SubscriptionList? = nil,
                 taxExempt: CustomerTaxExempt? = nil,
                 taxIds: TaxIDList? = nil,
                 testClock: String? = nil) {

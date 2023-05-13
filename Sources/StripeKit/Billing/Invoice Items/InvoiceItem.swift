@@ -43,7 +43,7 @@ public struct InvoiceItem: Codable {
     /// Quantity of units for the invoice item. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.
     public var quantity: Int?
     /// The subscription that this invoice item has been created for, if any.
-    @Expandable<StripeSubscription> public var subscription: String?
+    @Expandable<Subscription> public var subscription: String?
     /// The subscription item that this invoice item has been created for, if any.
     public var subscriptionItem: String?
     /// The tax rates which apply to the invoice item. When set, the default_tax_rates on the invoice do not apply to this invoice item.
