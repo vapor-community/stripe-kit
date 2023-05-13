@@ -14,7 +14,7 @@ public struct CreditNote: Codable {
     /// Three-letter ISO currency code, in lowercase. Must be a supported currency.
     public var currency: Currency?
     /// ID of the invoice.
-    @Expandable<StripeInvoice> public var invoice: String?
+    @Expandable<Invoice> public var invoice: String?
     /// Line items that make up the credit note
     public var lines: CreditNoteLineItemList?
     /// Customer-facing text that appears on the credit note PDF.

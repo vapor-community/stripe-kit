@@ -49,7 +49,7 @@ public struct StripeQuote: Codable {
     public var fromQuote: StripeQuoteFromQuote?
     /// A header that will be displayed on the quote PDF.
     public var header: String?
-    @Expandable<StripeInvoice> public var invoice: String?
+    @Expandable<Invoice> public var invoice: String?
     /// All invoices will be billed using the specified settings.
     public var invoiceSettings: StripeQuoteInvoiceSettings?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

@@ -68,7 +68,7 @@ public struct PaymentIntent: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// ID of the invoice that created this PaymentIntent, if it exists.
-    @Expandable<StripeInvoice> public var invoice: String?
+    @Expandable<Invoice> public var invoice: String?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// The account (if any) for which the funds of the PaymentIntent are intended. See the PaymentIntents Connect usage guide for details.

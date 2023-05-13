@@ -27,13 +27,13 @@ public struct StripeInvoiceItem: Codable {
     /// If true, discounts will apply to this invoice item. Always false for prorations.
     public var discountable: Bool?
     /// The ID of the invoice this invoice item belongs to.
-    @Expandable<StripeInvoice> public var invoice: String?
+    @Expandable<Invoice> public var invoice: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// The period associated with with this invoice item.
-    public var period: StripeInvoiceLineItemPeriod?
+    public var period: InvoiceLineItemPeriod?
     /// If the invoice item is a proration, the plan of the subscription that the proration was computed for.
     public var plan: StripePlan?
     /// The price of the invoice item.

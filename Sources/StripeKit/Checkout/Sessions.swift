@@ -69,7 +69,7 @@ public struct Session: Codable {
     /// The timestamp at which the Checkout Session will expire
     public var expiresAt: Date?
     /// ID of the invoice created by the Checkout Session, if it exists.
-    @Expandable<StripeInvoice> public var invoice: String?
+    @Expandable<Invoice> public var invoice: String?
     /// Details on the state of invoice creation for the Checkout Session.
     public var invoiceCreation: SessionInvoiceCreation?
     /// Has the `value` true if the object exists in live mode or the value `false` if the object exists in test mode.
