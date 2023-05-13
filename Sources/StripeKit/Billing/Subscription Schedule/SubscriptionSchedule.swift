@@ -97,7 +97,7 @@ public struct StripeSubscriptionSchedulePhase: Codable {
     /// The subscription schedule’s default invoice settings.
     public var invoiceSettings: StripeSubscriptionScheduleInvoiceSettings?
     /// Plans to subscribe during this phase of the subscription schedule.
-    public var plans: [StripePlan]?
+    public var plans: [Plan]?
     /// Controls whether or not the subscription schedule will prorate when transitioning to this phase. Values are `create_prorations` and `none`.
     public var prorationBehavior: StripeSubscriptionSchedulePhaseProrationBehavior?
     /// The start of this phase of the subscription schedule.
