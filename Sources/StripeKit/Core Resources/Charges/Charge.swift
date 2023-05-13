@@ -55,7 +55,7 @@ public struct Charge: Codable {
     /// Information on fraud assessments for the charge.
     public var fraudDetails: ChargeFraudDetails?
     /// ID of the invoice this charge is for if one exists.
-    @Expandable<StripeInvoice> public var invoice: String?
+    @Expandable<Invoice> public var invoice: String?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

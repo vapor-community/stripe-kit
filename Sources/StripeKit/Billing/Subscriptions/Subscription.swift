@@ -27,7 +27,7 @@ public struct StripeSubscription: Codable {
     /// If the subscription has been canceled, the date of that cancellation. If the subscription was canceled with `cancel_at_period_end`, `canceled_at` will still reflect the date of the initial cancellation request, not the end of the subscription period when the subscription is automatically moved to a canceled state.
     public var canceledAt: Date?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
-    public var collectionMethod: StripeInvoiceCollectionMethod?
+    public var collectionMethod: InvoiceCollectionMethod?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.
@@ -53,7 +53,7 @@ public struct StripeSubscription: Codable {
     /// List of subscription items, each with an attached plan.
     public var items: StripeSubscriptionItemList?
     /// The most recent invoice this subscription has generated.
-    @Expandable<StripeInvoice> public var latestInvoice: String?
+    @Expandable<Invoice> public var latestInvoice: String?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
