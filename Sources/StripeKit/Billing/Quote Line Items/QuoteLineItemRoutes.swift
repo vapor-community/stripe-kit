@@ -13,24 +13,24 @@ public protocol QuoteLineItemRoutes {
     /// - Parameter quote: The ID of the quote
     /// - Parameter filter: A dictionary that will be used for the query parameters.
     /// - Returns: A `StripeQuoteLineItemList`.
-    func retrieve(quote: String, filter: [String: Any]?) -> EventLoopFuture<StripeQuoteLineItemList>
+    func retrieve(quote: String, filter: [String: Any]?) -> EventLoopFuture<QuoteLineItemList>
     
     /// When retrieving a quote, there is an includable `upfront.line_items` property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of upfront line items.
     /// - Parameter quote: The ID of the quote
     /// - Parameter filter: A dictionary that will be used for the query parameters.
     /// - Returns: A `StripeQuoteLineItemList`.
-    func retrieveUpfront(quote: String, filter: [String: Any]?) -> EventLoopFuture<StripeQuoteLineItemList>
+    func retrieveUpfront(quote: String, filter: [String: Any]?) -> EventLoopFuture<QuoteLineItemList>
     
     /// Headers to send with the request.
     var headers: HTTPHeaders { get set }
 }
 
 extension QuoteLineItemRoutes {
-    public func retrieve(quote: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeQuoteLineItemList> {
+    public func retrieve(quote: String, filter: [String: Any]? = nil) -> EventLoopFuture<QuoteLineItemList> {
         retrieve(quote: quote, filter: filter)
     }
     
-    public func retrieveUpfront(quote: String, filter: [String: Any]? = nil) -> EventLoopFuture<StripeQuoteLineItemList> {
+    public func retrieveUpfront(quote: String, filter: [String: Any]? = nil) -> EventLoopFuture<QuoteLineItemList> {
         retrieveUpfront(quote: quote, filter: filter)
     }
 }
@@ -45,7 +45,7 @@ public struct StripeQuoteLineItemRoutes: QuoteLineItemRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(quote: String, filter: [String: Any]?) -> EventLoopFuture<StripeQuoteLineItemList> {
+    public func retrieve(quote: String, filter: [String: Any]?) -> EventLoopFuture<QuoteLineItemList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters
@@ -54,7 +54,7 @@ public struct StripeQuoteLineItemRoutes: QuoteLineItemRoutes {
         return apiHandler.send(method: .GET, path: "\(quotelineitems)/\(quote)/line_items", query: queryParams, headers: headers)
     }
     
-    public func retrieveUpfront(quote: String, filter: [String: Any]?) -> EventLoopFuture<StripeQuoteLineItemList> {
+    public func retrieveUpfront(quote: String, filter: [String: Any]?) -> EventLoopFuture<QuoteLineItemList> {
         var queryParams = ""
         if let filter = filter {
             queryParams = filter.queryParameters

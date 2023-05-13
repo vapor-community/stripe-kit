@@ -127,7 +127,7 @@ public struct Invoice: Codable {
     /// Total amount of all pre-payment credit notes issued for this invoice.
     public var prePaymentCreditNotesAmount: Int?
     /// The quote this invoice was generated from.
-    @Expandable<StripeQuote> public var quote: String?
+    @Expandable<Quote> public var quote: String?
     /// This is the transaction number that appears on email receipts sent for this invoice.
     public var receiptNumber: String?
     /// Options for invoice PDF rendering.
