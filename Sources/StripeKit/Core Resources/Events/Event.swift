@@ -93,7 +93,7 @@ public enum EventObject: Codable {
     case taxId(TaxID)
     case file(File)
     case invoice(Invoice)
-    case invoiceItem(StripeInvoiceItem)
+    case invoiceItem(InvoiceItem)
     case issuingAuthorization(StripeAuthorization)
     case issuingCard(StripeIssuingCard)
     case issuingCardHolder(StripeCardholder)
@@ -172,7 +172,7 @@ public enum EventObject: Codable {
         case "invoice":
             self = try .invoice(Invoice(from: decoder))
         case "invoiceitem":
-            self = try .invoiceItem(StripeInvoiceItem(from: decoder))
+            self = try .invoiceItem(InvoiceItem(from: decoder))
         case "issuing.authorization":
             self = try .issuingAuthorization(StripeAuthorization(from: decoder))
         case "issuing.card":
