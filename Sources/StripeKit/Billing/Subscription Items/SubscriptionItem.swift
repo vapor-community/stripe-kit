@@ -21,7 +21,7 @@ public struct StripeSubscriptionItem: Codable {
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// Hash describing the plan the customer is subscribed to.
-    public var plan: StripePlan?
+    public var plan: Plan?
     /// The price the customer is subscribed to.
     public var price: Price?
     /// The quantity of the plan to which the customer should be subscribed.
