@@ -289,6 +289,7 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 ### Connect
 * [x] Account
 * [x] Account Links
+* [x] Account Sessions
 * [x] Application Fees
 * [x] Application Fee Refunds
 * [x] Capabilities

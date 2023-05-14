@@ -68,6 +68,7 @@ public final class StripeClient {
     
     // MARK: - CONNECT
     public var connectAccounts: AccountRoutes
+    public var accountSessions: AccountSessionRoutes
     public var accountLinks: AccountLinkRoutes
     public var applicationFees: ApplicationFeesRoutes
     public var applicationFeeRefunds: ApplicationFeeRefundRoutes
@@ -178,6 +179,7 @@ public final class StripeClient {
         testClocks = StripeTestClockRoutes(apiHandler: handler)
         
         connectAccounts = StripeConnectAccountRoutes(apiHandler: handler)
+        accountSessions =  StripeAccountSessionsRoutes(apiHandler: handler)
         accountLinks = StripeAccountLinkRoutes(apiHandler: handler)
         applicationFees = StripeApplicationFeeRoutes(apiHandler: handler)
         applicationFeeRefunds = StripeApplicationFeeRefundRoutes(apiHandler: handler)
