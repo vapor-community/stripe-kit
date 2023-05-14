@@ -149,7 +149,7 @@ public struct Invoice: Codable {
     /// The amount of tax on this invoice. This is the sum of all the tax amounts on this invoice.
     public var tax: Int?
     /// ID of the test clock this invoice belongs to.
-    public var testClock: String? // TODO: - Add Expandable support.
+    @Expandable<TestClock> public var testClock: String?
     /// If `billing_reason` is set to `subscription_threshold` this returns more information on which threshold rules triggered the invoice.
     public var thresholdReason: InvoiceThresholdReason?
     /// The aggregate amounts calculated per discount across all line items.
@@ -308,7 +308,7 @@ public struct Invoice: Codable {
         self.subtotal = subtotal
         self.subtotalExcludingTax = subtotalExcludingTax
         self.tax = tax
-        self.testClock = testClock
+        self._testClock = Expandable(id: testClock)
         self.thresholdReason = thresholdReason
         self.totalDiscountAmounts = totalDiscountAmounts
         self.totalExcludingTax = totalExcludingTax

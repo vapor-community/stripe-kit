@@ -49,7 +49,7 @@ public struct InvoiceItem: Codable {
     /// The tax rates which apply to the invoice item. When set, the default_tax_rates on the invoice do not apply to this invoice item.
     public var taxRates: [TaxRate]?
     /// ID of the test clock this invoice item belongs to.
-    public var testClock: String? // TODO: - Make Expandable
+    @Expandable<TestClock> public var testClock: String?
     /// Unit Amount (in the currency specified) of the invoice item.
     public var unitAmount: Int?
     /// Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
@@ -96,7 +96,7 @@ public struct InvoiceItem: Codable {
         self._subscription = Expandable(id: subscription)
         self.subscriptionItem = subscriptionItem
         self.taxRates = taxRates
-        self.testClock = testClock
+        self._testClock = Expandable(id: testClock)
         self.unitAmount = unitAmount
         self.unitAmountDecimal = unitAmountDecimal
     }

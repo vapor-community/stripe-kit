@@ -44,8 +44,45 @@ public struct SubscriptionSchedule: Codable {
     /// ID of the subscription once managed by the subscription schedule (if it is released).
     public var releasedSubscription: String?
     /// ID of the test clock this subscription schedule belongs to.
-    public var testClock: String? // TODO: - Make Expandable
+    @Expandable<TestClock> public var testClock: String?
     
+    public init(id: String,
+                currentPhase: SubscriptionScheduleCurrentPhase? = nil,
+                customer: String? = nil,
+                metadata: [String : String]? = nil,
+                phases: [SubscriptionSchedulePhase]? = nil,
+                status: SubscriptionScheduleStatus? = nil,
+                subscription: String? = nil,
+                object: String,
+                application: String? = nil,
+                canceledAt: Date? = nil,
+                completedAt: Date? = nil,
+                created: Date,
+                defaultSettings: SubscriptionScheduleDefaultSettings? = nil,
+                endBehavior: SubscriptionScheduleEndBehavior? = nil,
+                livemode: Bool? = nil,
+                releasedAt: Date? = nil,
+                releasedSubscription: String? = nil,
+                testClock: String? = nil) {
+        self.id = id
+        self.currentPhase = currentPhase
+        self._customer = Expandable(id: customer)
+        self.metadata = metadata
+        self.phases = phases
+        self.status = status
+        self._subscription = Expandable(id: subscription)
+        self.object = object
+        self.application = application
+        self.canceledAt = canceledAt
+        self.completedAt = completedAt
+        self.created = created
+        self.defaultSettings = defaultSettings
+        self.endBehavior = endBehavior
+        self.livemode = livemode
+        self.releasedAt = releasedAt
+        self.releasedSubscription = releasedSubscription
+        self._testClock = Expandable(id: testClock)
+    }
 }
 
 public struct SubscriptionScheduleCurrentPhase: Codable {
@@ -337,4 +374,14 @@ public struct SubscriptionScheduleList: Codable {
     public var hasMore: Bool?
     public var url: String?
     public var data: [SubscriptionSchedule]?
+    
+    public init(object: String,
+                hasMore: Bool? = nil,
+                url: String? = nil,
+                data: [SubscriptionSchedule]? = nil) {
+        self.object = object
+        self.hasMore = hasMore
+        self.url = url
+        self.data = data
+    }
 }

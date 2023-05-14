@@ -283,6 +283,7 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] Subscriptions
 * [x] Subscription items
 * [x] Subscription Schedule
+* [x] Test Clocks
 * [x] Usage Records
 ---
 ### Connect

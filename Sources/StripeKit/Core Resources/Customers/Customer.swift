@@ -65,7 +65,7 @@ public struct Customer: Codable {
     /// The customers tax IDs
     public var taxIds: TaxIDList?
     /// ID of the test clock this customer belongs to.
-    public var testClock: String? // TODO: - Make this @Expandable
+    @Expandable<TestClock> public var testClock: String?
     
     public init(id: String,
                 address: Address? = nil,
@@ -120,7 +120,7 @@ public struct Customer: Codable {
         self.subscriptions = subscriptions
         self.taxExempt = taxExempt
         self.taxIds = taxIds
-        self.testClock = testClock
+        self._testClock = Expandable(id: testClock)
     }
 }
 
