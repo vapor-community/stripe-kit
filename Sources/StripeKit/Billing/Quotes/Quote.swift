@@ -74,7 +74,7 @@ public struct Quote: Codable {
     /// The subscription schedule that was created or updated from this quote.
     @Expandable<SubscriptionSchedule> public var subscriptionSchedule: String?
     /// ID of the test clock this quote belongs to.
-    public var testClock: String? // TODO: - Make expandable
+    @Expandable<TestClock> public var testClock: String?
     /// Tax and discount details for the computed total amount.
     public var totalDetails: QuoteTotalDetails?
     /// The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the invoices.
@@ -147,7 +147,7 @@ public struct Quote: Codable {
         self._subscription = Expandable(id: subscription)
         self.subscriptionData = subscriptionData
         self._subscriptionSchedule = Expandable(id: subscriptionSchedule)
-        self.testClock = testClock
+        self._testClock = Expandable(id: testClock)
         self.totalDetails = totalDetails
         self.transferData = transferData
     }

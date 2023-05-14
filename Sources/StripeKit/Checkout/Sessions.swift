@@ -77,7 +77,7 @@ public struct Session: Codable {
     /// The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser’s locale is used.
     public var locale: SessionLocale?
     /// The ID of the Payment Link that created this Session.
-    public var paymentLink: String? // TODO: - Add expandable payment link
+    @Expandable<PaymentLink> public var paymentLink: String?
     /// Configure whether a Checkout Session should collect a payment method.
     public var paymentMethodCollection: SessionPaymentMethodCollection?
     /// Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
@@ -193,7 +193,7 @@ public struct Session: Codable {
         self.invoiceCreation = invoiceCreation
         self.livemode = livemode
         self.locale = locale
-        self.paymentLink = paymentLink
+        self._paymentLink = Expandable(id: paymentLink)
         self.paymentMethodCollection = paymentMethodCollection
         self.paymentMethodOptions = paymentMethodOptions
         self.paymentMethodTypes = paymentMethodTypes
