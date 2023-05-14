@@ -73,7 +73,7 @@ public struct EventData: Codable {
 /// Source transaction
 
 public enum EventObject: Codable {
-    case account(StripeConnectAccount)
+    case account(ConnectAccount)
     case card(Card)
     case bankAccount(BankAccount)
     case applicationFee(StripeApplicationFee)
@@ -130,7 +130,7 @@ public enum EventObject: Codable {
             .decode(String.self, forKey: .object)
         switch object {
         case "account":
-            self = try .account(StripeConnectAccount(from: decoder))
+            self = try .account(ConnectAccount(from: decoder))
         case "application_fee":
             self = try .applicationFee(StripeApplicationFee(from: decoder))
         case "card":

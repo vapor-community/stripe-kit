@@ -13,7 +13,7 @@ public struct StripeApplicationFee: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// ID of the Stripe account this fee was taken from.
-    @Expandable<StripeConnectAccount> public var account: String?
+    @Expandable<ConnectAccount> public var account: String?
     /// Amount earned, in cents.
     public var amount: Int?
     /// Amount in cents refunded (can be less than the amount attribute on the fee if a partial refund was issued)

@@ -13,7 +13,7 @@ public struct StripeCapability: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The account for which the capability enables functionality.
-    @Expandable<StripeConnectAccount> public var account: String?
+    @Expandable<ConnectAccount> public var account: String?
     /// Whether the capability has been requested.
     public var requested: Bool?
     ///
@@ -37,7 +37,7 @@ public struct StripeCapabilitiesRequirements: Codable {
     /// If you believe that the rejection is in error, please contact support@stripe.com for assistance.
     public var disabledReason: String?
     /// Fields that are `currently_due` and need to be collected again because validation or verification failed.
-    public var errors: [StripeConnectAccountRequirementsError]?
+    public var errors: [ConnectAccountRequirementsError]?
     /// Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
     public var eventuallyDue: [String]?
     /// Fields that weren’t collected by `current_deadline`. These fields need to be collected to enable the capability on the account.

@@ -26,7 +26,7 @@ public struct StripeTransfer: Codable {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// ID of the Stripe account the transfer was sent to.
-    @Expandable<StripeConnectAccount> public var destination: String?
+    @Expandable<ConnectAccount> public var destination: String?
     /// If the destination is a Stripe account, this will be the ID of the payment that the destination account received for the transfer.
     // Charge used here https://github.com/stripe/stripe-dotnet/blob/8fc1398369ed461816002a65bfc87f1b5860d76a/src/Stripe.net/Entities/Transfers/Transfer.cs#L81
     @Expandable<Charge> public var destinationPayment: String?

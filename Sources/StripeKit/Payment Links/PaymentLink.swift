@@ -47,7 +47,7 @@ public struct PaymentLink: Codable {
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// The account on behalf of which to charge. See the Connect documentation for details.
-    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
+    @Expandable<ConnectAccount> public var onBehalfOf: String?
     /// Indicates the parameters to be passed to PaymentIntent creation during checkout.
     public var paymentIntentData: PaymentLinkPaymentIntentData?
     /// Configuration for collecting a payment method during checkout.
@@ -615,7 +615,7 @@ public struct PaymentLinkTransferData: Codable {
     /// The amount in cents that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
     public var amount: Int?
     /// The connected account receiving the transfer.
-    @Expandable<StripeConnectAccount> public var destination: String?
+    @Expandable<ConnectAccount> public var destination: String?
     
     public init(amount: Int? = nil, destination: String? = nil) {
         self.amount = amount

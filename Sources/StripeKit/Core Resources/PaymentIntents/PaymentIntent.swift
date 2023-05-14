@@ -72,7 +72,7 @@ public struct PaymentIntent: Codable {
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// The account (if any) for which the funds of the PaymentIntent are intended. See the PaymentIntents Connect usage guide for details.
-    @Expandable<StripeConnectAccount> public var onBehalfOn: String?
+    @Expandable<ConnectAccount> public var onBehalfOn: String?
     /// Payment-method-specific configuration for this PaymentIntent.
     public var paymentMethodOptions: PaymentIntentPaymentMethodOptions?
     /// The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
@@ -217,7 +217,7 @@ public struct PaymentIntentTransferData: Codable {
 	/// Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or equivalent in charge currency. The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
     public var amount: Int?
     /// The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to upon payment success.
-    @Expandable<StripeConnectAccount> public var destination: String?
+    @Expandable<ConnectAccount> public var destination: String?
     
     public init(amount: Int? = nil, destination: String? = nil) {
         self.amount = amount

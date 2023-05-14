@@ -83,7 +83,7 @@ public struct Subscription: Codable {
     /// Specifies the approximate timestamp on which any pending invoice items will be billed according to the schedule provided at `pending_invoice_item_interval`.
     public var nextPendingInvoiceItemInvoice: Date?
     /// The account (if any) the charge was made on behalf of for charges associated with this subscription. See the Connect documentation for details.
-    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
+    @Expandable<ConnectAccount> public var onBehalfOf: String?
     /// If specified, payment collection for this subscription will be paused.
     public var pauseCollection: SubscriptionPauseCollection?
     /// Payment settings passed on to invoices created by the subscription.
@@ -403,7 +403,7 @@ public struct SubscriptionTransferData: Codable {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
     public var amountPercent: Int?
     /// The account where funds from the payment will be transferred to upon payment success.
-    @Expandable<StripeConnectAccount> public var destination: String?
+    @Expandable<ConnectAccount> public var destination: String?
     
     public init(amountPercent: Int? = nil, destination: String? = nil) {
         self.amountPercent = amountPercent

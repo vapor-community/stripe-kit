@@ -115,7 +115,7 @@ public struct SubscriptionScheduleDefaultSettings: Codable {
     /// The subscription schedule’s default invoice settings.
     public var invoiceSettings: SubscriptionScheduleInvoiceSettings?
     /// The account (if any) the charge was made on behalf of for charges associated with the schedule’s subscription. See the Connect documentation for details.
-    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
+    @Expandable<ConnectAccount> public var onBehalfOf: String?
     /// The account (if any) the subscription’s payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription’s invoices.
     public var transferData: SubscriptionScheduleTransferData?
     
@@ -186,7 +186,7 @@ public struct SubscriptionScheduleTransferData: Codable {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
     public var amountPercent: Int?
     /// The account where funds from the payment will be transferred to upon payment success.
-    @Expandable<StripeConnectAccount> public var destination: String?
+    @Expandable<ConnectAccount> public var destination: String?
     
     public init(amountPercent: Int? = nil, destination: String? = nil) {
         self.amountPercent = amountPercent
@@ -226,7 +226,7 @@ public struct SubscriptionSchedulePhase: Codable {
     /// Set of key-value pairs that you can attach to a phase. Metadata on a schedule’s phase will update the underlying subscription’s metadata when the phase is entered. Updating the underlying subscription’s metadata directly will not affect the current phase’s metadata.
     public var metadata: [String: String]?
     /// The account (if any) the charge was made on behalf of for charges associated with the schedule’s subscription. See the Connect documentation for details.
-    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
+    @Expandable<ConnectAccount> public var onBehalfOf: String?
     /// Controls whether or not the subscription schedule will prorate when transitioning to this phase. Values are `create_prorations` and `none`.
     public var prorationBehavior: SubscriptionSchedulePhaseProrationBehavior?
     /// The start of this phase of the subscription schedule.
@@ -343,7 +343,7 @@ public struct SubscriptionSchedulePhaseTransferData: Codable {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
     public var amountPercent: Int?
     /// The account where funds from the payment will be transferred to upon payment success.
-    @Expandable<StripeConnectAccount> public var destination: String?
+    @Expandable<ConnectAccount> public var destination: String?
     
     public init(amountPercent: Int? = nil, destination: String? = nil) {
         self.amountPercent = amountPercent

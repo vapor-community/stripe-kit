@@ -62,7 +62,7 @@ public struct Quote: Codable {
     /// A unique number that identifies this particular quote. This number is assigned once the quote is finalized.
     public var number: String?
     /// The account on behalf of which to charge. See the Connect documentation for details.
-    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
+    @Expandable<ConnectAccount> public var onBehalfOf: String?
     /// The status of the quote.
     public var status: QuoteStatus?
     /// The timestamps of which the quote transitioned to a new status.
@@ -569,7 +569,7 @@ public struct QuoteTransferData: Codable {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount will be transferred to the destination.
     public var amountPercent: String?
     /// The account where funds from the payment will be transferred to upon payment success.
-    @Expandable<StripeConnectAccount> public var destination: String?
+    @Expandable<ConnectAccount> public var destination: String?
     
     public init(amount: Int? = nil,
                 amountPercent: String? = nil,
