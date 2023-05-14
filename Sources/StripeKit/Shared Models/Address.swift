@@ -35,7 +35,7 @@ public struct Address: Codable {
     }
 }
 
-public struct StripeAddressKana: Codable {
+public struct AddressKana: Codable {
     /// City/Ward
     public var city: String?
     /// Two-letter country code (ISO 3166-1 alpha-2).
@@ -50,9 +50,25 @@ public struct StripeAddressKana: Codable {
     public var state: String?
     /// Town/cho-me
     public var town: String?
+    
+    public init(city: String? = nil,
+                country: String? = nil,
+                line1: String? = nil,
+                line2: String? = nil,
+                postalCode: String? = nil,
+                state: String? = nil,
+                town: String? = nil) {
+        self.city = city
+        self.country = country
+        self.line1 = line1
+        self.line2 = line2
+        self.postalCode = postalCode
+        self.state = state
+        self.town = town
+    }
 }
 
-public struct StripeAddressKanji: Codable {
+public struct AddressKanji: Codable {
     /// City/Ward
     public var city: String?
     /// Two-letter country code (ISO 3166-1 alpha-2).
@@ -67,4 +83,20 @@ public struct StripeAddressKanji: Codable {
     public var state: String?
     /// Town/cho-me
     public var town: String?
+    
+    public init(city: String? = nil,
+                country: String? = nil,
+                line1: String? = nil,
+                line2: String? = nil,
+                postalCode: String? = nil,
+                state: String? = nil,
+                town: String? = nil) {
+        self.city = city
+        self.country = country
+        self.line1 = line1
+        self.line2 = line2
+        self.postalCode = postalCode
+        self.state = state
+        self.town = town
+    }
 }

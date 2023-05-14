@@ -29,7 +29,7 @@ public struct SetupAttempt: Codable {
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// The value of `on_behalf_of` on the SetupIntent at the time of this confirmation.
-    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
+    @Expandable<ConnectAccount> public var onBehalfOf: String?
     /// ID of the payment method used with this SetupAttempt.
     @Expandable<PaymentMethod> public var paymentMethod: String?
     /// Details about the payment method at the time of SetupIntent confirmation.

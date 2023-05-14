@@ -33,7 +33,7 @@ public struct BankAccount: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The account this bank account belongs to.
-    @Expandable<StripeConnectAccount> public var account: String?
+    @Expandable<ConnectAccount> public var account: String?
     /// The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
     public var accountType: String?
     /// A set of available payout methods for this bank account. Only values from this set should be passed as the `method` when creating a payout.

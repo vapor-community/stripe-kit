@@ -49,7 +49,7 @@ public struct Card: Codable {
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// The account this card belongs to. This attribute will not be in the card object if the card belongs to a customer or recipient instead.
-    @Expandable<StripeConnectAccount> public var account: String?
+    @Expandable<ConnectAccount> public var account: String?
     /// If `address_line1` was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
     public var addressLine1Check: CardValidationCheck?
     /// A set of available payout methods for this card. Only values from this set should be passed as the method when creating a payout.

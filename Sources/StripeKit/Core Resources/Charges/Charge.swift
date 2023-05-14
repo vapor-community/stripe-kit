@@ -61,7 +61,7 @@ public struct Charge: Codable {
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
-    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
+    @Expandable<ConnectAccount> public var onBehalfOf: String?
     /// ID of the order this charge is for if one exists.
     @Expandable<StripeOrder> public var order: String?
     /// Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
@@ -286,7 +286,7 @@ public struct ChargeTransferData: Codable {
     /// The amount transferred to the destination account, if specified. By default, the entire charge amount is transferred to the destination account.
     public var amount: Int?
     /// ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
-    @Expandable<StripeConnectAccount> public var destination: String?
+    @Expandable<ConnectAccount> public var destination: String?
     
     public init(amount: Int? = nil,
                 destination: String? = nil) {

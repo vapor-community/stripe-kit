@@ -18,9 +18,9 @@ public struct StripePerson: Codable {
     /// The persons address.
     public var address: Address?
     /// The Kana variation of the person’s address (Japan only).
-    public var addressKana: StripeAddressKana?
+    public var addressKana: AddressKana?
     /// The Kanji variation of the person’s address (Japan only).
-    public var addressKanji: StripeAddressKanji?
+    public var addressKanji: AddressKanji?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The Persons date of birth.

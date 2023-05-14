@@ -115,7 +115,7 @@ public struct Invoice: Codable {
     /// A unique, identifying string that appears on emails sent to the customer for this invoice. This starts with the customer’s unique invoice_prefix if it is specified.
     public var number: String?
     /// The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the Invoices with Connect documentation for details.
-    @Expandable<StripeConnectAccount> public var onBehalfOf: String?
+    @Expandable<ConnectAccount> public var onBehalfOf: String?
     /// Whether payment was successfully collected for this invoice. An invoice can be paid (most commonly) with a charge or with credit from the customer’s account balance.
     public var paid: Bool?
     /// Returns true if the invoice was manually marked paid, returns false if the invoice hasn’t been paid yet or was paid on Stripe.
@@ -639,7 +639,7 @@ public struct InvoiceTransferData: Codable {
     /// The amount in cents that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
     public var amount: Int?
     /// The account where funds from the payment will be transferred to upon payment success.
-    @Expandable<StripeConnectAccount> public var destination: String?
+    @Expandable<ConnectAccount> public var destination: String?
     
     public init(amount: Int? = nil, destination: String? = nil) {
         self.amount = amount
