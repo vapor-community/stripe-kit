@@ -118,7 +118,7 @@ public enum EventObject: Codable {
     case setupIntent(SetupIntent)
     case scheduledQueryRun(StripeScheduledQueryRun)
     case sku(StripeSKU)
-    case subscriptionSchedule(StripeSubscriptionSchedule)
+    case subscriptionSchedule(SubscriptionSchedule)
     case taxRate(TaxRate)
     case topup(StripeTopUp)
     case transfer(StripeTransfer)
@@ -222,7 +222,7 @@ public enum EventObject: Codable {
         case "sku":
             self = try .sku(StripeSKU(from: decoder))
         case "subscription_schedule":
-            self = try .subscriptionSchedule(StripeSubscriptionSchedule(from: decoder))
+            self = try .subscriptionSchedule(SubscriptionSchedule(from: decoder))
         case "tax_rate":
             self = try .taxRate(TaxRate(from: decoder))
         case "topup":
