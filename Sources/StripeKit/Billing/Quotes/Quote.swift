@@ -72,7 +72,7 @@ public struct Quote: Codable {
     /// When creating a subscription or subscription schedule, the specified configuration data will be used. There must be at least one line item with a recurring price for a subscription or subscription schedule to be created.
     public var subscriptionData: QuoteSubscriptionData?
     /// The subscription schedule that was created or updated from this quote.
-    @Expandable<StripeSubscriptionSchedule> public var subscriptionSchedule: String?
+    @Expandable<SubscriptionSchedule> public var subscriptionSchedule: String?
     /// ID of the test clock this quote belongs to.
     public var testClock: String? // TODO: - Make expandable
     /// Tax and discount details for the computed total amount.

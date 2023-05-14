@@ -91,7 +91,7 @@ public struct Subscription: Codable {
     /// Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling Create an invoice for the given subscription at the specified interval.
     public var pendingInvoiceItemInterval: SubscriptionPendingInvoiceInterval?
     /// The schedule attached to the subscription
-    @Expandable<StripeSubscriptionSchedule> public var schedule: String?
+    @Expandable<SubscriptionSchedule> public var schedule: String?
     /// Date when the subscription was first created. The date might differ from the `created` date due to backdating.
     public var startDate: Date?
     /// ID of the test clock this subscription belongs to.
