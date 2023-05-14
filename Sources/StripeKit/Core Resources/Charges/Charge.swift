@@ -23,7 +23,7 @@ public struct Charge: Codable {
     /// ID of the Connect application that created the charge.
     public var application: String?
     /// The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
-    @Expandable<StripeApplicationFee> public var applicationFee: String?
+    @Expandable<ApplicationFee> public var applicationFee: String?
     /// The amount of the application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
     public var applicationFeeAmount: Int?
     /// ID of the balance transaction that describes the impact of this charge on your account balance (not including refunds or disputes).

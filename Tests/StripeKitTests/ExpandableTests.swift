@@ -132,7 +132,7 @@ class ExpandableTests: XCTestCase {
         decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        let appFee = try decoder.decode(StripeApplicationFee.self, from: fee)
+        let appFee = try decoder.decode(ApplicationFee.self, from: fee)
         
         XCTAssertNotNil(appFee.$originatingTransaction(as: Charge.self))
         XCTAssertNil(appFee.$originatingTransaction(as: StripeTransfer.self))
