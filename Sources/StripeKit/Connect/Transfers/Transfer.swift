@@ -34,7 +34,7 @@ public struct Transfer: Codable {
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     public var livemode: Bool?
     /// A list of reversals that have been applied to the transfer.
-    public var reversals: StripeTransferReversalList?
+    public var reversals: TransferReversalList?
     /// Whether the transfer has been fully reversed. If the transfer is only partially reversed, this attribute will still be false.
     public var reversed: Bool?
     /// ID of the charge or payment that was used to fund the transfer. If null, the transfer was funded from the available balance.
@@ -56,7 +56,7 @@ public struct Transfer: Codable {
                 created: Date,
                 destinationPayment: String? = nil,
                 livemode: Bool? = nil,
-                reversals: StripeTransferReversalList? = nil,
+                reversals: TransferReversalList? = nil,
                 reversed: Bool? = nil,
                 sourceTransaction: String? = nil,
                 sourceType: TransferSourceType? = nil,

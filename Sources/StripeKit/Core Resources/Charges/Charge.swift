@@ -87,7 +87,7 @@ public struct Charge: Codable {
     /// A list of refunds that have been applied to the charge.
     public var refunds: RefundsList?
     /// ID of the review associated with this charge if one exists.
-    @Expandable<StripeReview> public var review: String?
+    @Expandable<Review> public var review: String?
     /// Shipping information for the charge.
     public var shipping: ShippingLabel?
     /// The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.

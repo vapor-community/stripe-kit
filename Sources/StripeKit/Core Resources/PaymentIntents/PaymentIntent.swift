@@ -80,7 +80,7 @@ public struct PaymentIntent: Codable {
     /// If present, this property tells you about the processing state of the payment.
     public var processing: PaymentIntentProcessing?
     /// ID of the review associated with this PaymentIntent, if any.
-    @Expandable<StripeReview> public var review: String?
+    @Expandable<Review> public var review: String?
     /// The data with which to automatically create a Transfer when the payment is finalized. See the PaymentIntents Connect usage guide for details.
     public var transferData: PaymentIntentTransferData?
     /// A string that identifies the resulting payment as part of a group. See the PaymentIntents Connect usage guide for details.
