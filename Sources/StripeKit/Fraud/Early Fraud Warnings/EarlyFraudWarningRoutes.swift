@@ -8,29 +8,15 @@
 import NIO
 import NIOHTTP1
 
-public protocol EarlyFraudWarningRoutes {
-    
+public protocol EarlyFraudWarningRoutes: StripeAPIRoute {
     /// Retrieves the details of an early fraud warning that has previously been created.
     /// - Parameter earlyFraudWarning: The identifier of the early fraud warning to be retrieved.
     /// - Parameter expand: An array of properties to expand.
-    func retrieve(earlyFraudWarning: String, expand: [String]?) -> EventLoopFuture<StripeEarlyFraudWarning>
+    func retrieve(earlyFraudWarning: String, expand: [String]?) async throws -> EarlyFraudWarning
     
     /// Returns a list of early fraud warnings.
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/radar/early_fraud_warnings/list).
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeEarlyFraudWarningList>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension EarlyFraudWarningRoutes {
-    public func retrieve(earlyFraudWarning: String, expand: [String]? = nil) -> EventLoopFuture<StripeEarlyFraudWarning> {
-        return retrieve(earlyFraudWarning: earlyFraudWarning, expand: expand)
-    }
-    
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeEarlyFraudWarningList> {
-        return listAll(filter: filter)
-    }
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More](https://stripe.com/docs/api/radar/early_fraud_warnings/list)
+    func listAll(filter: [String: Any]?) async throws -> EarlyFraudWarningList
 }
 
 public struct StripeEarlyFraudWarningRoutes: EarlyFraudWarningRoutes {
@@ -43,21 +29,21 @@ public struct StripeEarlyFraudWarningRoutes: EarlyFraudWarningRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(earlyFraudWarning: String, expand: [String]?) -> EventLoopFuture<StripeEarlyFraudWarning> {
+    public func retrieve(earlyFraudWarning: String, expand: [String]? = nil) async throws -> EarlyFraudWarning {
         var queryParams = ""
-        if let expand = expand {
+        if let expand {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(earlyfraudwarnings)/\(earlyFraudWarning)", query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: "\(earlyfraudwarnings)/\(earlyFraudWarning)", query: queryParams, headers: headers)
     }
     
-    public func listAll(filter: [String : Any]? = nil) -> EventLoopFuture<StripeEarlyFraudWarningList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> EarlyFraudWarningList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: earlyfraudwarnings, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: earlyfraudwarnings, query: queryParams, headers: headers)
     }
 }
