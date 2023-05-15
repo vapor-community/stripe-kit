@@ -23,7 +23,7 @@ public struct ConnectAccount: Codable {
     /// The primary user’s email address.
     public var email: String?
     /// Information about the person represented by the account. This field is null unless business_type is set to individual.
-    public var individual: StripePerson?
+    public var individual: Person?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// Information about the requirements for the account, including what information needs to be collected, and by when.
@@ -61,7 +61,7 @@ public struct ConnectAccount: Codable {
                 company: ConnectAccountCompany? = nil,
                 country: String? = nil,
                 email: String? = nil,
-                individual: StripePerson? = nil,
+                individual: Person? = nil,
                 metadata: [String : String]? = nil,
                 requirements: ConnectAccountRequirements? = nil,
                 tosAcceptance: ConnectAccountTOSAcceptance? = nil,
@@ -959,7 +959,6 @@ public enum ConnectAccountType: String, Codable {
 }
 
 public struct ConnectAccountLoginLink: Codable {
-    public var id: String
     /// String representing the object’s type. Objects of the same type share the same value.
     public var object: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -967,11 +966,9 @@ public struct ConnectAccountLoginLink: Codable {
     /// The URL for the login link.
     public var url: String?
     
-    public init(id: String,
-                object: String,
+    public init(object: String,
                 created: Date,
                 url: String? = nil) {
-        self.id = id
         self.object = object
         self.created = created
         self.url = url

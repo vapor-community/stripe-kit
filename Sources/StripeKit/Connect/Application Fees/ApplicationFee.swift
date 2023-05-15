@@ -33,7 +33,7 @@ public struct ApplicationFee: Codable {
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool
     /// ID of the corresponding charge on the platform account, if this fee was the result of a charge using the destination parameter.
-    @DynamicExpandable<Charge, StripeTransfer> public var originatingTransaction: String?
+    @DynamicExpandable<Charge, Transfer> public var originatingTransaction: String?
     /// A list of refunds that have been applied to the fee.
     public var refunds: ApplicationFeeRefundList?
     ///
