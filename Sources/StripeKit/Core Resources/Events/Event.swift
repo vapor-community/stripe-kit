@@ -105,7 +105,7 @@ public enum EventObject: Codable {
     case paymentIntent(PaymentIntent)
     case paymentMethod(PaymentMethod)
     case payout(Payout)
-    case person(StripePerson)
+    case person(Person)
     case plan(Plan)
     case price(Price)
     case product(Product)
@@ -120,8 +120,8 @@ public enum EventObject: Codable {
     case sku(StripeSKU)
     case subscriptionSchedule(SubscriptionSchedule)
     case taxRate(TaxRate)
-    case topup(StripeTopUp)
-    case transfer(StripeTransfer)
+    case topup(TopUp)
+    case transfer(Transfer)
     case verificationSession(StripeVerificationSession)
     
     public init(from decoder: Decoder) throws {
@@ -196,7 +196,7 @@ public enum EventObject: Codable {
         case "payout":
             self = try .payout(Payout(from: decoder))
         case "person":
-            self = try .person(StripePerson(from: decoder))
+            self = try .person(Person(from: decoder))
         case "plan":
             self = try .plan(Plan(from: decoder))
         case "price":
@@ -226,9 +226,9 @@ public enum EventObject: Codable {
         case "tax_rate":
             self = try .taxRate(TaxRate(from: decoder))
         case "topup":
-            self = try .topup(StripeTopUp(from: decoder))
+            self = try .topup(TopUp(from: decoder))
         case "transfer":
-            self = try .transfer(StripeTransfer(from: decoder))
+            self = try .transfer(Transfer(from: decoder))
         default:
             throw DecodingError.keyNotFound(CodingKeys.object,
                                             DecodingError.Context(codingPath: [CodingKeys.object],

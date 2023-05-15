@@ -143,7 +143,7 @@ public struct StripeVerificationSessionVerifiedOutputs: Codable {
     public var address: Address?
     /// The user’s verified date of birth.
     /// This field is not included by default. To include it in the response, expand the `dob` field.
-    public var dob: StripePersonDOB?
+    public var dob: PersonDOB?
     /// The user’s verified first name.
     public var firstName: String?
     /// The user’s verified id number.

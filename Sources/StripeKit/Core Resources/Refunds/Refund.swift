@@ -45,9 +45,9 @@ public struct Refund: Codable {
     /// This is the transaction number that appears on email receipts sent for this refund.
     public var receiptNumber: String?
     /// The transfer reversal that is associated with the refund. Only present if the charge came from another Stripe account. See the Connect documentation for details.
-    @Expandable<StripeTransferReversal> public var sourceTransferReversal: String?
+    @Expandable<TransferReversal> public var sourceTransferReversal: String?
     /// If the accompanying transfer was reversed, the transfer reversal object. Only applicable if the charge was created using the destination parameter.
-    @Expandable<StripeTransferReversal> public var transferReversal: String?
+    @Expandable<TransferReversal> public var transferReversal: String?
     
     public init(id: String,
                 amount: Int? = nil,

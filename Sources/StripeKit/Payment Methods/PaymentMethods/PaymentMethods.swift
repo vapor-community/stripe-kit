@@ -710,9 +710,9 @@ public enum PaymentMethodInteractPresentReadMethod: String, Codable {
 public struct PaymentMethodKlarna: Codable {
     /// The customer’s date of birth, if provided.
     /// This field is not included by default. To include it in the response, expand the dob field.
-    public var dob: StripePersonDOB?
+    public var dob: PersonDOB?
     
-    public init(dob: StripePersonDOB? = nil) {
+    public init(dob: PersonDOB? = nil) {
         self.dob = dob
     }
 }

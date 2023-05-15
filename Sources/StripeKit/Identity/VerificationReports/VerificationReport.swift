@@ -35,18 +35,18 @@ public struct StripeVerificationReportDocument: Codable {
     public var address: Address?
     /// Date of birth as it appears in the document.
     /// This field is not included by default. To include it in the response, expand the `dob` field.
-    public var dob: StripePersonDOB?
+    public var dob: PersonDOB?
     /// Details on the verification error. Present when status is `unverified`.
     public var error: StripeVerificationReportDocumentError?
     /// Expiration date of the document.
     /// This field is not included by default. To include it in the response, expand the `expiration_date` field.
-    public var expirationDate: StripePersonDOB?
+    public var expirationDate: PersonDOB?
     /// Array of `File` ids containing images for this document.
     public var files: [String]?
     /// First name as it appears in the document.
     public var firstName: String?
     /// Issued date of the document.
-    public var issuedDate: StripePersonDOB?
+    public var issuedDate: PersonDOB?
     /// Issuing country of the document.
     public var issuingCountry: String?
     /// Last name as it appears in the document.
@@ -95,7 +95,7 @@ public enum StripeVerificationReportDocumentType: String, Codable {
 public struct StripeVerificationReportIdNumber: Codable {
     /// Date of birth.
     /// This field is not included by default. To include it in the response, expand the `dob` field.
-    public var dob: StripePersonDOB?
+    public var dob: PersonDOB?
     /// Details on the verification error. Present when status is `unverified`.
     public var error: StripeVerificationReportIdNumberError?
     /// First name.

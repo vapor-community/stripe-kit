@@ -135,7 +135,7 @@ class ExpandableTests: XCTestCase {
         let appFee = try decoder.decode(ApplicationFee.self, from: fee)
         
         XCTAssertNotNil(appFee.$originatingTransaction(as: Charge.self))
-        XCTAssertNil(appFee.$originatingTransaction(as: StripeTransfer.self))
+        XCTAssertNil(appFee.$originatingTransaction(as: Transfer.self))
     }
     
     func testExpandable_decodesProperly_whenTopLevelField_isMissing() throws {

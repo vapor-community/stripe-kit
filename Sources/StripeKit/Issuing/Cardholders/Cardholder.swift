@@ -82,7 +82,7 @@ public struct StripeCardholderCompany: Codable {
 
 public struct StripeCardholderIndividual: Codable {
     /// The date of birth of this cardholder.
-    public var dob: StripePersonDOB?
+    public var dob: PersonDOB?
     /// The first name of this cardholder
     public var firstName: String?
     /// The first name of this cardholder
@@ -93,7 +93,7 @@ public struct StripeCardholderIndividual: Codable {
 
 public struct StripeCardholderIndividualVerification: Codable {
     /// An identifying document, either a passport or local ID card.
-    public var document: StripePersonVerificationDocument?
+    public var document: PersonVerificationDocument?
 }
 
 public struct StripeCardholderAuthorizationRequirements: Codable {
