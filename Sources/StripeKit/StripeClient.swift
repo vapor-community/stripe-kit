@@ -91,6 +91,7 @@ public final class StripeClient {
     public var cardholders: CardholderRoutes
     public var issuingCards: IssuingCardRoutes
     public var issuingDisputes: IssuingDisputeRoutes
+    public var fundingInstructions: FundingInstructionsRoutes
     public var transactions: TransactionRoutes
     
     // MARK: - TERMINAL
@@ -200,6 +201,7 @@ public final class StripeClient {
         cardholders = StripeCardholderRoutes(apiHandler: handler)
         issuingCards = StripeIssuingCardRoutes(apiHandler: handler)
         issuingDisputes = StripeIssuingDisputeRoutes(apiHandler: handler)
+        fundingInstructions = StripeFundingInstructionsRoutes(apiHandler: handler)
         transactions = StripeTransactionRoutes(apiHandler: handler)
         
         connectionTokens = StripeConnectionTokenRoutes(apiHandler: handler)
