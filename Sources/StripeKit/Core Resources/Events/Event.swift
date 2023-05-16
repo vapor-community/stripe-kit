@@ -71,6 +71,7 @@ public struct EventData: Codable {
 /// Customer cash balance transaction
 /// Financial connection
 /// Source transaction
+/// FundingInstructions
 
 public enum EventObject: Codable {
     case account(ConnectAccount)
@@ -94,11 +95,11 @@ public enum EventObject: Codable {
     case file(File)
     case invoice(Invoice)
     case invoiceItem(InvoiceItem)
-    case issuingAuthorization(StripeAuthorization)
-    case issuingCard(StripeIssuingCard)
-    case issuingCardHolder(StripeCardholder)
-    case issuingDispute(StripeIssuingDispute)
-    case issuingTransaction(StripeTransaction)
+    case issuingAuthorization(Authorization)
+    case issuingCard(IssuingCard)
+    case issuingCardHolder(Cardholder)
+    case issuingDispute(IssuingDispute)
+    case issuingTransaction(Transaction)
     case mandate(Mandate)
     case order(StripeOrder)
     case orderReturn(StripeOrderReturn)
@@ -174,15 +175,15 @@ public enum EventObject: Codable {
         case "invoiceitem":
             self = try .invoiceItem(InvoiceItem(from: decoder))
         case "issuing.authorization":
-            self = try .issuingAuthorization(StripeAuthorization(from: decoder))
+            self = try .issuingAuthorization(Authorization(from: decoder))
         case "issuing.card":
-            self = try .issuingCard(StripeIssuingCard(from: decoder))
+            self = try .issuingCard(IssuingCard(from: decoder))
         case "issuing.cardholder":
-            self = try .issuingCardHolder(StripeCardholder(from: decoder))
+            self = try .issuingCardHolder(Cardholder(from: decoder))
         case "issuing.dispute":
-            self = try .issuingDispute(StripeIssuingDispute(from: decoder))
+            self = try .issuingDispute(IssuingDispute(from: decoder))
         case "issuing.transaction":
-            self = try .issuingTransaction(StripeTransaction(from: decoder))
+            self = try .issuingTransaction(Transaction(from: decoder))
         case "mandate":
             self = try .mandate(Mandate(from: decoder))
         case "order":

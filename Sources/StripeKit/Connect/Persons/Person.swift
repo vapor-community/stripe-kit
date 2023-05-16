@@ -412,6 +412,16 @@ public struct PersonVerificationDocument: Codable {
     public var detailsCode: PersonVerificationDocumentDetailsCode?
     /// The front of a document returned by a file upload with a `purpose` value of `additional_verification`.
     @Expandable<File> public var front: String?
+    
+    public init(back: String? = nil,
+                details: String? = nil,
+                detailsCode: PersonVerificationDocumentDetailsCode? = nil,
+                front: String? = nil) {
+        self._back = Expandable(id: back)
+        self.details = details
+        self.detailsCode = detailsCode
+        self._front = Expandable(id: front)
+    }
 }
 
 public enum PersonVerificationDocumentDetailsCode: String, Codable {

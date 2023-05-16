@@ -311,6 +311,7 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] Cardholders
 * [x] Cards
 * [x] Disputes
+* [x] Funding Instructions
 * [x] Transactions
 ---
 ### Terminal
