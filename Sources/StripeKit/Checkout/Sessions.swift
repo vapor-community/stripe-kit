@@ -721,6 +721,7 @@ public enum SessionMode: String, Codable {
     case subscription
 }
 
+
 public enum SessionPaymentMethodCollection: String, Codable {
     /// The Checkout Session will always collect a PaymentMethod.
     case always
