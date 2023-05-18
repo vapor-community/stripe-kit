@@ -333,6 +333,7 @@ class ExpandableTests: XCTestCase {
           "successUrl": "https://example.com",
           "livemode": false,
           "customer": null,
+          "created": 1588268981,
           "metadata": {},
           "totalDetails": {
             "amountShipping": 0,
