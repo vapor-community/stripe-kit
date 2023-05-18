@@ -31,7 +31,7 @@ public final class StripeClient {
     public var bankAccounts: BankAccountRoutes
     public var cashBalances: CashBalanceRoutes
     public var cards: CardRoutes
-    public var sources: SourceRoutes
+//    public var sources: SourceRoutes
     
     // MARK: - CHECKOUT
     public var sessions: SessionRoutes
@@ -123,10 +123,9 @@ public final class StripeClient {
     
     /// Returns a StripeClient used to interact with the Stripe APIs.
     /// - Parameter httpClient: An `HTTPClient`used to communicate wiith the Stripe API
-    /// - Parameter eventLoop: An `EventLoop` used to return an `EventLoopFuture` on.
     /// - Parameter apiKey: A Stripe API key.
-    public init(httpClient: HTTPClient, eventLoop: EventLoop, apiKey: String) {
-        handler = StripeAPIHandler(httpClient: httpClient, eventLoop: eventLoop, apiKey: apiKey)
+    public init(httpClient: HTTPClient, apiKey: String) {
+        handler = StripeAPIHandler(httpClient: httpClient, apiKey: apiKey)
         
         balances = StripeBalanceRoutes(apiHandler: handler)
         balanceTransactions = StripeBalanceTransactionRoutes(apiHandler: handler)
@@ -148,7 +147,7 @@ public final class StripeClient {
         bankAccounts = StripeBankAccountRoutes(apiHandler: handler)
         cashBalances = StripeCashBalanceRoutes(apiHandler: handler)
         cards = StripeCardRoutes(apiHandler: handler)
-        sources = StripeSourceRoutes(apiHandler: handler)
+//        sources = StripeSourceRoutes(apiHandler: handler)
         
         sessions = StripeSessionRoutes(apiHandler: handler)
         

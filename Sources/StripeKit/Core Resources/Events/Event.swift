@@ -65,17 +65,10 @@ public struct EventData: Codable {
     }
 }
 
-// TODO: - Add types
-/// PaymentLink
-/// CashBalance
-/// Customer cash balance transaction
-/// Financial connection
-/// Source transaction
-/// FundingInstructions
-
 public enum EventObject: Codable {
     case account(ConnectAccount)
     case card(Card)
+    case cashBalance(CashBalance)
     case bankAccount(BankAccount)
     case applicationFee(ApplicationFee)
     case applicationFeeRefund(ApplicationFeeRefund)
@@ -102,6 +95,7 @@ public enum EventObject: Codable {
     case issuingTransaction(Transaction)
     case mandate(Mandate)
     case paymentIntent(PaymentIntent)
+    case paymentLink(PaymentLink)
     case paymentMethod(PaymentMethod)
     case payout(Payout)
     case person(Person)
@@ -120,6 +114,8 @@ public enum EventObject: Codable {
     case taxRate(TaxRate)
     case topup(TopUp)
     case transfer(Transfer)
+    case testClock(TestClock)
+    case reader(TerminalReader)
     case verificationSession(VerificationSession)
     
     public init(from decoder: Decoder) throws {
@@ -133,6 +129,8 @@ public enum EventObject: Codable {
             self = try .applicationFee(ApplicationFee(from: decoder))
         case "card":
             self = try .card(Card(from: decoder))
+        case "cash_balance":
+            self = try .cashBalance(CashBalance(from: decoder))
         case "bank_account":
             self = try .bankAccount(BankAccount(from: decoder))
         case "billing_portal.configuration":
@@ -185,6 +183,8 @@ public enum EventObject: Codable {
             self = try .mandate(Mandate(from: decoder))
         case "payment_intent":
             self = try .paymentIntent(PaymentIntent(from: decoder))
+        case "payment_link":
+            self = try .paymentLink(PaymentLink(from: decoder))
         case "payment_method":
             self = try .paymentMethod(PaymentMethod(from: decoder))
         case "payout":
@@ -217,6 +217,10 @@ public enum EventObject: Codable {
             self = try .subscriptionSchedule(SubscriptionSchedule(from: decoder))
         case "tax_rate":
             self = try .taxRate(TaxRate(from: decoder))
+        case "test_helpers.test_clock":
+            self = try .testClock(TestClock(from: decoder))
+        case "terminal.reader":
+            self = try .reader(TerminalReader(from: decoder))
         case "topup":
             self = try .topup(TopUp(from: decoder))
         case "transfer":
@@ -493,6 +497,8 @@ public enum EventType: String, Codable {
     case payoutFailed = "payout.failed"
     /// Occurs whenever a payout is expected to be available in the destination account. If the payout fails, a payout.failed notification is also sent, at a later time.
     case payoutPaid = "payout.paid"
+    /// Occurs whenever balance transactions paid out in an automatic payout can be queried.
+    case payoutReconciliationCompleted = "payout.reconciliation_completed"
     /// Occurs whenever a payout's metadata is updated.
     case payoutUpdated = "payout.updated"
     /// Occurs whenever a person associated with an account is created.
@@ -549,7 +555,7 @@ public enum EventType: String, Codable {
     case reportingReportRunFailed = "reporting.report_run.failed"
     /// Occurs whenever a requested `ReportRun` completed succesfully.
     case reportingReportRunSucceeded = "reporting.report_run.succeeded"
-    /// Occurs whenever a `ReportType` is updated (typically to indicate that a new day's data has come available).
+    /// Occurs whenever a `ReportType` is updated (typically to indicate that a new day's data has come available). You must create a webhook endpoint which explicitly subscribes to this event type to access it. Webhook endpoints which subscribe to all events will not include this event type.
     case reportingReportTypeUpdated = "reporting.report_type.updated"
     /// Occurs whenever a review is closed. The review's reason field indicates why: `approved`, `disputed`, `refunded`, or `refunded_as_fraud`.
     case reviewClosed = "review.closed"
@@ -644,4 +650,14 @@ public struct EventList: Codable {
     public var hasMore: Bool?
     public var url: String?
     public var data: [Event]?
+    
+    public init(object: String,
+                hasMore: Bool? = nil,
+                url: String? = nil,
+                data: [Event]? = nil) {
+        self.object = object
+        self.hasMore = hasMore
+        self.url = url
+        self.data = data
+    }
 }
