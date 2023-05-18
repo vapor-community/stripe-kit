@@ -6,7 +6,8 @@
 ### StripeKit is a Swift package used to communicate with the [Stripe](https://stripe.com) API for Server Side Swift Apps.
 
 ## Version support
-**You can check the [CHANGELOG](https://github.com/vapor-community/stripe-kit/blob/master/CHANGELOG.md) to see which version of StripeKit meets your needs.**
+
+Stripe API version `2022-11-15` -> StripeKit: 18.0.0
 
 ## Installation
 To start using StripeKit, in your `Package.swift`, add the following
