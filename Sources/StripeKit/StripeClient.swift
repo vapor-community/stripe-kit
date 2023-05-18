@@ -79,6 +79,7 @@ public final class StripeClient {
     public var topups: TopUpRoutes
     public var transfers: TransferRoutes
     public var transferReversals: TransferReversalRoutes
+    public var secretManager: SecretRoutes
     
     // MARK: - FRAUD
     public var earlyFraudWarnings: EarlyFraudWarningRoutes
@@ -190,6 +191,7 @@ public final class StripeClient {
         topups = StripeTopUpRoutes(apiHandler: handler)
         transfers = StripeTransferRoutes(apiHandler: handler)
         transferReversals = StripeTransferReversalRoutes(apiHandler: handler)
+        secretManager = StripeSecretRoutes(apiHandler: handler)
         
         earlyFraudWarnings = StripeEarlyFraudWarningRoutes(apiHandler: handler)
         reviews = StripeReviewRoutes(apiHandler: handler)
