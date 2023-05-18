@@ -120,7 +120,7 @@ public enum EventObject: Codable {
     case taxRate(TaxRate)
     case topup(TopUp)
     case transfer(Transfer)
-    case verificationSession(StripeVerificationSession)
+    case verificationSession(VerificationSession)
     
     public init(from decoder: Decoder) throws {
         let object = try decoder
@@ -166,7 +166,7 @@ public enum EventObject: Codable {
         case "file":
             self = try .file(File(from: decoder))
         case "identity.verification_session":
-            self = try .verificationSession(StripeVerificationSession(from: decoder))
+            self = try .verificationSession(VerificationSession(from: decoder))
         case "invoice":
             self = try .invoice(Invoice(from: decoder))
         case "invoiceitem":
