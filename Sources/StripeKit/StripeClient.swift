@@ -95,9 +95,14 @@ public final class StripeClient {
     public var transactions: TransactionRoutes
     
     // MARK: - TERMINAL
-    public var connectionTokens: ConnectionTokenRoutes
-    public var locations: LocationRoutes
-    public var readers: ReaderRoutes
+    public var terminalConnectionTokens: TerminalConnectionTokenRoutes
+    public var terminalLocations: TerminalLocationRoutes
+    public var terminalReaders: TerminalReaderRoutes
+    public var terminalHardwareOrders: TerminalHardwareOrderRoutes
+    public var terminalHardwareProducts: TerminalHardwareProductRoutes
+    public var terminalHardwareSkus: TerminalHardwareSKURoutes
+    public var terminalHardwareShippingMethods: TerminalHardwareShippingMethodRoutes
+    public var terminalConfiguration: TerminalConfigurationRoutes
     
     // MARK: - ORDERS
     public var orders: OrderRoutes
@@ -204,9 +209,14 @@ public final class StripeClient {
         fundingInstructions = StripeFundingInstructionsRoutes(apiHandler: handler)
         transactions = StripeTransactionRoutes(apiHandler: handler)
         
-        connectionTokens = StripeConnectionTokenRoutes(apiHandler: handler)
-        locations = StripeLocationRoutes(apiHandler: handler)
-        readers = StripeReaderRoutes(apiHandler: handler)
+        terminalConnectionTokens = StripeTerminalConnectionTokenRoutes(apiHandler: handler)
+        terminalLocations = StripeTerminalLocationRoutes(apiHandler: handler)
+        terminalReaders = StripeTerminalReaderRoutes(apiHandler: handler)
+        terminalHardwareOrders = StripeTerminalHardwareOrderRoutes(apiHandler: handler)
+        terminalHardwareProducts = StripeTerminalHardwareProductRoutes(apiHandler: handler)
+        terminalHardwareSkus = StripeTerminalHardwareSKURoutes(apiHandler: handler)
+        terminalHardwareShippingMethods = StripeTerminalHardwareShippingMethodRoutes(apiHandler: handler)
+        terminalConfiguration = StripeTerminalConfigurationRoutes(apiHandler: handler)
         
         orders = StripeOrderRoutes(apiHandler: handler)
         orderReturns = StripeOrderReturnRoutes(apiHandler: handler)
@@ -222,12 +232,5 @@ public final class StripeClient {
         verificationReports = StripeVerificationReportRoutes(apiHandler: handler)
         
         webhookEndpoints = StripeWebhookEndpointRoutes(apiHandler: handler)
-    }
-    
-    /// Hop to a new eventloop to execute requests on.
-    /// - Parameter eventLoop: The eventloop to execute requests on.
-    public func hopped(to eventLoop: EventLoop) -> StripeClient {
-        handler.eventLoop = eventLoop
-        return self
     }
 }

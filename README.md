@@ -318,6 +318,11 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] Connection Tokens
 * [x] Locations
 * [x] Readers
+* [x] Hardware Orders
+* [x] Hardware Products
+* [x] Hardware SKUs
+* [x] Hardware Shipping Methods
+* [x] Configurations
 ---
 ### Orders
 * [x] Orders
