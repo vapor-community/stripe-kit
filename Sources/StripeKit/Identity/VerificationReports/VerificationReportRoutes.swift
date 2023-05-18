@@ -8,31 +8,18 @@
 import NIO
 import NIOHTTP1
 
-public protocol VerificationReportRoutes {
+public protocol VerificationReportRoutes: StripeAPIRoute {
     /// Retrieves an existing VerificationReport
     /// - Parameter verificationReportId: The id of the verification report.
     ///
-    /// - Returns: A `StripeVerificationReport`
-    func retrieve(verificationReportId: String, expand: [String]?) -> EventLoopFuture<StripeVerificationReport>
+    /// - Returns: Returns a ``VerificationReport`` object
+    func retrieve(verificationReportId: String, expand: [String]?) async throws -> VerificationReport
     
     /// List all verification reports.
     /// - Parameter filter: A dictionary that will be used for the query parameters.
     /// 
-    /// - Returns: A `StripeVerificationReportList`
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeVerificationReportList>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension VerificationReportRoutes {
-    func retrieve(verificationReportId: String, expand: [String]? = nil) -> EventLoopFuture<StripeVerificationReport> {
-        retrieve(verificationReportId: verificationReportId, expand: expand)
-    }
-    
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeVerificationReportList> {
-        listAll(filter: filter)
-    }
+    /// - Returns: List of ``VerificationReport`` objects that match the provided filter criteria.
+    func listAll(filter: [String: Any]?) async throws -> VerificationReportList
 }
 
 public struct StripeVerificationReportRoutes: VerificationReportRoutes {
@@ -45,21 +32,22 @@ public struct StripeVerificationReportRoutes: VerificationReportRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(verificationReportId: String, expand: [String]?) -> EventLoopFuture<StripeVerificationReport> {
+    public func retrieve(verificationReportId: String,
+                         expand: [String]? = nil) async throws -> VerificationReport {
         var queryParams = ""
-        if let expand = expand {
+        if let expand {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: verificationreport + "/\(verificationReportId)", query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: verificationreport + "/\(verificationReportId)", query: queryParams, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeVerificationReportList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> VerificationReportList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: verificationreport, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: verificationreport, query: queryParams, headers: headers)
     }
 }

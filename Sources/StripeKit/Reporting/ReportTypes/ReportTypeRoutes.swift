@@ -8,17 +8,13 @@
 import NIO
 import NIOHTTP1
 
-public protocol ReportTypeRoutes {
-    
-    /// Retrieves the details of a Report Type. (Requires a live-mode API key.)
+public protocol ReportTypeRoutes: StripeAPIRoute {
+    /// Retrieves the details of a Report Type. (Certain report types require a live-mode API key.)
     /// - Parameter reportType: The ID of the Report Type to retrieve, such as `balance.summary.1`.
-    func retrieve(reportType: String) -> EventLoopFuture<StripeReportType>
+    func retrieve(reportType: String) async throws -> ReportType
     
-    /// Returns a full list of Report Types. (Requires a live-mode API key.)
-    func listAll() -> EventLoopFuture<StripeReportTypeList>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
+    /// Returns a full list of Report Types.
+    func listAll() async throws -> ReportTypeList
 }
 
 public struct StripeReportTypeRoutes: ReportTypeRoutes {
@@ -31,11 +27,11 @@ public struct StripeReportTypeRoutes: ReportTypeRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(reportType: String) -> EventLoopFuture<StripeReportType> {
-        return apiHandler.send(method: .GET, path: "\(reporttypes)/\(reportType)", headers: headers)
+    public func retrieve(reportType: String) async throws -> ReportType {
+        try await apiHandler.send(method: .GET, path: "\(reporttypes)/\(reportType)", headers: headers)
     }
     
-    public func listAll() -> EventLoopFuture<StripeReportTypeList> {
-        return apiHandler.send(method: .GET, path: reporttypes, headers: headers)
+    public func listAll() async throws -> ReportTypeList {
+        try await apiHandler.send(method: .GET, path: reporttypes, headers: headers)
     }
 }

@@ -132,10 +132,10 @@ class ExpandableTests: XCTestCase {
         decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        let appFee = try decoder.decode(StripeApplicationFee.self, from: fee)
+        let appFee = try decoder.decode(ApplicationFee.self, from: fee)
         
-        XCTAssertNotNil(appFee.$originatingTransaction(as: StripeCharge.self))
-        XCTAssertNil(appFee.$originatingTransaction(as: StripeTransfer.self))
+        XCTAssertNotNil(appFee.$originatingTransaction(as: Charge.self))
+        XCTAssertNil(appFee.$originatingTransaction(as: Transfer.self))
     }
     
     func testExpandable_decodesProperly_whenTopLevelField_isMissing() throws {
@@ -322,7 +322,7 @@ class ExpandableTests: XCTestCase {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-       _ = try decoder.decode(StripeEventData.self, from: objectMissingExpandableTransferFieldOnCharge)
+       _ = try decoder.decode(EventData.self, from: objectMissingExpandableTransferFieldOnCharge)
     }
     
     func testExpandable_nullEncodingDecoding() throws {
@@ -333,6 +333,7 @@ class ExpandableTests: XCTestCase {
           "successUrl": "https://example.com",
           "livemode": false,
           "customer": null,
+          "created": 1588268981,
           "metadata": {},
           "totalDetails": {
             "amountShipping": 0,
@@ -353,14 +354,14 @@ class ExpandableTests: XCTestCase {
           "paymentStatus": "unpaid"
         }
         """.data(using: .utf8)!
-        let sess = try JSONDecoder().decode(StripeSession.self, from: session)
-        _ = try JSONDecoder().decode(StripeSession.self, from: JSONEncoder().encode(sess))
+        let sess = try JSONDecoder().decode(Session.self, from: session)
+        _ = try JSONDecoder().decode(Session.self, from: JSONEncoder().encode(sess))
     }
     
     func testExpandableCollection_decodesProperly() throws {
         
-        struct SimpleType: StripeModel {
-            @ExpandableCollection<StripeDiscount> var discounts: [String]?
+        struct SimpleType: Codable {
+            @ExpandableCollection<Discount> var discounts: [String]?
         }
         
         let discounts = """

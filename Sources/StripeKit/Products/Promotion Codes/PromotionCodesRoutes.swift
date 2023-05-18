@@ -9,7 +9,7 @@ import NIO
 import NIOHTTP1
 import Foundation
 
-public protocol PromotionCodesRoutes {
+public protocol PromotionCodesRoutes: StripeAPIRoute {
     
     /// A promotion code points to a coupon. You can optionally restrict the code to a specific customer, redemption limit, and expiration date.
     /// - Parameters:
@@ -28,61 +28,26 @@ public protocol PromotionCodesRoutes {
                 customer: String?,
                 expiresAt: Date?,
                 maxRedemptions: Int?,
-                restrictions: [String: Any]?) -> EventLoopFuture<StripePromotionCode>
+                restrictions: [String: Any]?) async throws -> PromotionCode
     
     /// Updates the specified promotion code by setting the values of the parameters passed. Most fields are, by design, not editable.
     /// - Parameters:
     ///   - promotionCode: The identifier of the promotion code to update.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     ///   - active: Whether the promotion code is currently active. A promotion code can only be reactivated when the coupon is still valid and the promotion code is otherwise redeemable.
+    ///   - restrictions: Settings that restrict the redemption of the promotion code.
     func update(promotionCode: String,
                 metadata: [String: String]?,
-                active: Bool?) -> EventLoopFuture<StripePromotionCode>
+                active: Bool?,
+                restrictions: [String: Any]?) async throws -> PromotionCode
     
     /// Retrieves the promotion code with the given ID.
     /// - Parameter promotionCode: The identifier of the promotion code to retrieve.
-    func retrieve(promotionCode: String) -> EventLoopFuture<StripePromotionCode>
+    func retrieve(promotionCode: String) async throws -> PromotionCode
     
     /// Returns a list of your promotion codes.
     /// - Parameter filter: A dictionary that will be used for the query parameters.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePromotionCodeList>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension PromotionCodesRoutes {
-    public func create(coupon: String,
-                       code: String? = nil,
-                       metadata: [String: String]? = nil,
-                       active: Bool? = nil,
-                       customer: String? = nil,
-                       expiresAt: Date? = nil,
-                       maxRedemptions: Int? = nil,
-                       restrictions: [String: Any]? = nil) -> EventLoopFuture<StripePromotionCode> {
-        create(coupon: coupon,
-               code: code,
-               metadata: metadata,
-               active: active,
-               customer: customer,
-               expiresAt: expiresAt,
-               maxRedemptions: maxRedemptions,
-               restrictions: restrictions)
-    }
-    
-    public func update(promotionCode: String,
-                       metadata: [String: String]? = nil,
-                       active: Bool? = nil) -> EventLoopFuture<StripePromotionCode> {
-        update(promotionCode: promotionCode, metadata: metadata, active: active)
-    }
-    
-    public func retrieve(promotionCode: String) -> EventLoopFuture<StripePromotionCode> {
-        retrieve(promotionCode: promotionCode)
-    }
-    
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripePromotionCodeList> {
-        listAll(filter: filter)
-    }
+    func listAll(filter: [String: Any]?) async throws -> PromotionCodeList
 }
 
 public struct StripePromotionCodesRoutes: PromotionCodesRoutes {
@@ -96,49 +61,50 @@ public struct StripePromotionCodesRoutes: PromotionCodesRoutes {
     }
     
     public func create(coupon: String,
-                       code: String?,
-                       metadata: [String: String]?,
-                       active: Bool?,
-                       customer: String?,
-                       expiresAt: Date?,
-                       maxRedemptions: Int?,
-                       restrictions: [String: Any]?) -> EventLoopFuture<StripePromotionCode> {
+                       code: String? = nil,
+                       metadata: [String: String]? = nil,
+                       active: Bool? = nil,
+                       customer: String? = nil,
+                       expiresAt: Date? = nil,
+                       maxRedemptions: Int? = nil,
+                       restrictions: [String: Any]? = nil) async throws -> PromotionCode {
         var body: [String: Any] = ["coupon": coupon]
         
-        if let code = code {
+        if let code {
             body["code"] = code
         }
         
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let active = active {
+        if let active {
             body["active"] = active
         }
         
-        if let customer = customer {
+        if let customer {
             body["customer"] = customer
         }
         
-        if let expiresAt = expiresAt {
+        if let expiresAt {
             body["expiresAt"] = Int(expiresAt.timeIntervalSince1970)
         }
         
-        if let maxRedemptions = maxRedemptions {
+        if let maxRedemptions {
             body["max_redemptions"] = maxRedemptions
         }
         
-        if let restrictions = restrictions {
+        if let restrictions {
             restrictions.forEach { body["restrictions[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: promotionCodes, body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: promotionCodes, body: .string(body.queryParameters), headers: headers)
     }
     
     public func update(promotionCode: String,
-                       metadata: [String: String]?,
-                       active: Bool?) -> EventLoopFuture<StripePromotionCode> {
+                       metadata: [String: String]? = nil,
+                       active: Bool? = nil,
+                       restrictions: [String: Any]? = nil) async throws -> PromotionCode {
         var body: [String: Any] = [:]
         
         if let active = active {
@@ -149,19 +115,23 @@ public struct StripePromotionCodesRoutes: PromotionCodesRoutes {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(promotionCodes)/\(promotionCode)", body: .string(body.queryParameters), headers: headers)
+        if let restrictions {
+            restrictions.forEach { body["restrictions[\($0)]"] = $1 }
+        }
+        
+        return try await apiHandler.send(method: .POST, path: "\(promotionCodes)/\(promotionCode)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(promotionCode: String) -> EventLoopFuture<StripePromotionCode> {
-        apiHandler.send(method: .GET, path: "\(promotionCodes)/\(promotionCode)", headers: headers)
+    public func retrieve(promotionCode: String) async throws -> PromotionCode {
+        try await apiHandler.send(method: .GET, path: "\(promotionCodes)/\(promotionCode)", headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripePlanList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> PromotionCodeList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: promotionCodes, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: promotionCodes, query: queryParams, headers: headers)
     }
 }

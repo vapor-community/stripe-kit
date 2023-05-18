@@ -8,7 +8,7 @@
 import NIO
 import NIOHTTP1
 
-public protocol TopUpRoutes {
+public protocol TopUpRoutes: StripeAPIRoute {
     /// Top up the balance of an account
     ///
     /// - Parameters:
@@ -20,22 +20,22 @@ public protocol TopUpRoutes {
     ///   - statementDescriptor: Extra information about a top-up for the source’s bank statement. Limited to 15 ASCII characters.
     ///   - transferGroup: A string that identifies this top-up as part of a group.
     ///   - expand: An array of properties to expand.
-    /// - Returns: A `StripeTopUp`.
+    /// - Returns: Returns the top-up object.
     func create(amount: Int,
-                currency: StripeCurrency,
+                currency: Currency,
                 description: String?,
                 metadata: [String: String]?,
                 source: String?,
                 statementDescriptor: String?,
                 transferGroup: String?,
-                expand: [String]?) -> EventLoopFuture<StripeTopUp>
+                expand: [String]?) async throws -> TopUp
     
     /// Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
     ///
     /// - Parameter topup: The ID of the top-up to retrieve.
     /// - Parameter expand: An array of properties to expand.
-    /// - Returns: A `StripeTopUp`.
-    func retrieve(topup: String, expand: [String]?) -> EventLoopFuture<StripeTopUp>
+    /// - Returns: Returns a top-up if a valid identifier was provided, and returns an error otherwise.
+    func retrieve(topup: String, expand: [String]?) async throws -> TopUp
     
     /// Updates the metadata of a top-up. Other top-up details are not editable by design.
     ///
@@ -44,69 +44,24 @@ public protocol TopUpRoutes {
     ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
     ///   - expand: An array of properties to expand.
-    /// - Returns: A `StripeTopUp`.
+    /// - Returns: The newly updated top-up object if the call succeeded. Otherwise, this call returns an error.
     func update(topup: String,
                 description: String?,
                 metadata: [String: String]?,
-                expand: [String]?) -> EventLoopFuture<StripeTopUp>
+                expand: [String]?) async throws -> TopUp
     
     /// Returns a list of top-ups.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/topups/list).
-    /// - Returns: A `StripeTopUpList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTopUpList>
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More](https://stripe.com/docs/api/topups/list) .
+    /// - Returns: A dictionary containing the `data` property, which is an array of separate top-up objects. The number of top-ups in the array is limited to the number designated in `limit`. If no more top-ups are available, the resulting array will be empty. This request should never return an error.
+    func listAll(filter: [String: Any]?) async throws -> TopUpList
     
     /// Cancels a top-up. Only pending top-ups can be canceled.
     ///
     /// - Parameter topup: The ID of the top-up to cancel.
     /// - Parameter expand: An array of properties to expand.
-    /// - Returns: A canceled `StripeTopUp`.
-    func cancel(topup: String, expand: [String]?) -> EventLoopFuture<StripeTopUp>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension TopUpRoutes {
-    public func create(amount: Int,
-                       currency: StripeCurrency,
-                       description: String? = nil,
-                       metadata: [String: String]? = nil,
-                       source: String? = nil,
-                       statementDescriptor: String? = nil,
-                       transferGroup: String? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeTopUp> {
-        return create(amount: amount,
-                      currency: currency,
-                      description: description,
-                      metadata: metadata,
-                      source: source,
-                      statementDescriptor: statementDescriptor,
-                      transferGroup: transferGroup,
-                      expand: expand)
-    }
-    
-    public func retrieve(topup: String, expand: [String]? = nil) -> EventLoopFuture<StripeTopUp> {
-        return retrieve(topup: topup, expand: expand)
-    }
-    
-    public func update(topup: String,
-                       description: String? = nil,
-                       metadata: [String: String]? = nil,
-                       expand: [String]? = nil) -> EventLoopFuture<StripeTopUp> {
-        return update(topup: topup,
-                      description: description,
-                      metadata: metadata,
-                      expand: expand)
-    }
-    
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeTopUpList> {
-        return listAll(filter: filter)
-    }
-    
-    public func cancel(topup: String, expand: [String]? = nil) -> EventLoopFuture<StripeTopUp> {
-        return cancel(topup: topup, expand: expand)
-    }
+    /// - Returns: Returns the canceled top-up. If the top-up is already canceled or can’t be canceled, an error is returned.
+    func cancel(topup: String, expand: [String]?) async throws -> TopUp
 }
 
 public struct StripeTopUpRoutes: TopUpRoutes {
@@ -120,88 +75,88 @@ public struct StripeTopUpRoutes: TopUpRoutes {
     }
     
     public func create(amount: Int,
-                       currency: StripeCurrency,
-                       description: String?,
-                       metadata: [String: String]?,
-                       source: String?,
-                       statementDescriptor: String?,
-                       transferGroup: String?,
-                       expand: [String]?) -> EventLoopFuture<StripeTopUp> {
+                       currency: Currency,
+                       description: String? = nil,
+                       metadata: [String: String]? = nil,
+                       source: String? = nil,
+                       statementDescriptor: String? = nil,
+                       transferGroup: String? = nil,
+                       expand: [String]? = nil) async throws -> TopUp {
         var body: [String: Any] = ["amount": amount,
                                    "currency": currency.rawValue]
         
-        if let description = description {
+        if let description {
             body["description"] = description
         }
         
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let source = source {
+        if let source {
             body["source"] = source
         }
         
-        if let statementDescriptor = statementDescriptor {
+        if let statementDescriptor {
             body["statement_descriptor"] = statementDescriptor
         }
         
-        if let transferGroup = transferGroup {
+        if let transferGroup {
             body["transfer_group"] = transferGroup
         }
         
-        if let expand = expand {
+        if let expand {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: topups, body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: topups, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(topup: String, expand: [String]?) -> EventLoopFuture<StripeTopUp> {
+    public func retrieve(topup: String, expand: [String]? = nil) async throws -> TopUp {
         var queryParams = ""
-        if let expand = expand {
+        if let expand {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(topups)/\(topup)", query: queryParams)
+        return try await apiHandler.send(method: .GET, path: "\(topups)/\(topup)", query: queryParams, headers: headers)
     }
     
     public func update(topup: String,
-                       description: String?,
-                       metadata: [String: String]?,
-                       expand: [String]?) -> EventLoopFuture<StripeTopUp> {
+                       description: String? = nil,
+                       metadata: [String: String]? = nil,
+                       expand: [String]? = nil) async throws -> TopUp {
         var body: [String: Any] = [:]
         
-        if let description = description {
+        if let description {
             body["description"] = description
         }
         
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let expand = expand {
+        if let expand {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(topups)/\(topup)", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(topups)/\(topup)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeTopUpList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> TopUpList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: topups, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: topups, query: queryParams, headers: headers)
     }
     
-    public func cancel(topup: String, expand: [String]?) -> EventLoopFuture<StripeTopUp> {
+    public func cancel(topup: String, expand: [String]? = nil) async throws -> TopUp {
         var body: [String: Any] = [:]
         
-        if let expand = expand {
+        if let expand {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(topups)/\(topup)/cancel", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(topups)/\(topup)/cancel", body: .string(body.queryParameters), headers: headers)
     }
 }

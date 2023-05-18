@@ -12,21 +12,21 @@
  https://stripe.com/docs/api#source_object
  */
 
-public enum StripePaymentSource: StripeModel {
-    case bankAccount(StripeBankAccount)
-    case card(StripeCard)
-    case source(StripeSource)
+public enum StripePaymentSource: Codable {
+    case bankAccount(BankAccount)
+    case card(Card)
+    case source(Source)
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let object = try container.decode(String.self, forKey: .object)
         switch object {
         case "bank_account":
-            self = try .bankAccount(StripeBankAccount(from: decoder))
+            self = try .bankAccount(BankAccount(from: decoder))
         case "card":
-            self = try .card(StripeCard(from: decoder))
+            self = try .card(Card(from: decoder))
         case "source":
-            self = try .source(StripeSource(from: decoder))
+            self = try .source(Source(from: decoder))
         default:
             throw DecodingError.dataCorruptedError(
                 forKey: CodingKeys.object,
@@ -53,21 +53,21 @@ public enum StripePaymentSource: StripeModel {
 }
 
 extension StripePaymentSource {
-    public var bankAccount: StripeBankAccount? {
+    public var bankAccount: BankAccount? {
         guard case let .bankAccount(bankAccount) = self else {
             return nil
         }
         return bankAccount
     }
     
-    public var card: StripeCard? {
+    public var card: Card? {
         guard case let .card(card) = self else {
             return nil
         }
         return card
     }
     
-    public var source: StripeSource? {
+    public var source: Source? {
         guard case let .source(source) = self else {
             return nil
         }

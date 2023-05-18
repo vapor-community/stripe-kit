@@ -6,7 +6,7 @@
 //
 //
 
-public struct StripeAddress: StripeModel {
+public struct Address: Codable {
     /// City/District/Suburb/Town/Village.
     public var city: String?
     /// 2-letter country code.
@@ -19,9 +19,23 @@ public struct StripeAddress: StripeModel {
     public var postalCode: String?
     /// State/County/Province/Region.
     public var state: String?
+    
+    public init(city: String? = nil,
+                country: String? = nil,
+                line1: String? = nil,
+                line2: String? = nil,
+                postalCode: String? = nil,
+                state: String? = nil) {
+        self.city = city
+        self.country = country
+        self.line1 = line1
+        self.line2 = line2
+        self.postalCode = postalCode
+        self.state = state
+    }
 }
 
-public struct StripeAddressKana: StripeModel {
+public struct AddressKana: Codable {
     /// City/Ward
     public var city: String?
     /// Two-letter country code (ISO 3166-1 alpha-2).
@@ -36,9 +50,25 @@ public struct StripeAddressKana: StripeModel {
     public var state: String?
     /// Town/cho-me
     public var town: String?
+    
+    public init(city: String? = nil,
+                country: String? = nil,
+                line1: String? = nil,
+                line2: String? = nil,
+                postalCode: String? = nil,
+                state: String? = nil,
+                town: String? = nil) {
+        self.city = city
+        self.country = country
+        self.line1 = line1
+        self.line2 = line2
+        self.postalCode = postalCode
+        self.state = state
+        self.town = town
+    }
 }
 
-public struct StripeAddressKanji: StripeModel {
+public struct AddressKanji: Codable {
     /// City/Ward
     public var city: String?
     /// Two-letter country code (ISO 3166-1 alpha-2).
@@ -53,4 +83,20 @@ public struct StripeAddressKanji: StripeModel {
     public var state: String?
     /// Town/cho-me
     public var town: String?
+    
+    public init(city: String? = nil,
+                country: String? = nil,
+                line1: String? = nil,
+                line2: String? = nil,
+                postalCode: String? = nil,
+                state: String? = nil,
+                town: String? = nil) {
+        self.city = city
+        self.country = country
+        self.line1 = line1
+        self.line2 = line2
+        self.postalCode = postalCode
+        self.state = state
+        self.town = town
+    }
 }
