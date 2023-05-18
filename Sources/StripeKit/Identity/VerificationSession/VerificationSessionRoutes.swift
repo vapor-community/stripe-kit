@@ -8,7 +8,7 @@
 import NIO
 import NIOHTTP1
 
-public protocol VerificationSessionRoutes {
+public protocol VerificationSessionRoutes: StripeAPIRoute {
     /// Creates a VerificationSession object.
     /// After the VerificationSession is created, display a verification modal using the session `client_secret` or send your users to the session’s url.
     /// If your API key is in test mode, verification checks won’t actually process, though everything else will occur as if in live mode.
@@ -17,27 +17,25 @@ public protocol VerificationSessionRoutes {
     /// - Parameter options: A set of options for the session’s verification checks.
     /// - Parameter returnUrl: The URL that the user will be redirected to upon completing the verification flow.
     /// - Parameter expand: An array of properties to expand.
-    ///
-    /// - Returns: A `StripeVerificationSession`.
-    func create(type: StripeVerificationSessionType,
+    /// - Returns: Returns the created ``VerificationSession`` object
+    func create(type: VerificationSessionType,
                 metadata: [String: String]?,
                 options: [String: Any]?,
                 returnUrl: String?,
-                expand: [String]?) -> EventLoopFuture<StripeVerificationSession>
+                expand: [String]?) async throws -> VerificationSession
     
     /// Returns a list of VerificationSessions
     /// - Parameter filter: A dictionary that will be used for the query parameters.
-    /// - Returns: A `StripeVerificationSessionList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeVerificationSessionList>
-    
+    /// - Returns: List of ``VerificationSession`` objects that match the provided filter criteria.
+    func listAll(filter: [String: Any]?) async throws -> VerificationSessionList
     
     /// Retrieves the details of a VerificationSession that was previously created.
     /// When the session status is `requires_input`, you can use this method to retrieve a valid `client_secret` or url to allow re-submission.
     /// - Parameter verificationSessionId: Id of the verification session.
     /// - Parameter expand: An array of properties to expand.
     ///
-    /// - Returns: A `StripeVerificationSession`.
-    func retrieve(verificationSessionId: String, expand: [String]?) -> EventLoopFuture<StripeVerificationSession>
+    /// - Returns: Returns a ``VerificationSession`` object
+    func retrieve(verificationSessionId: String, expand: [String]?) async throws -> VerificationSession
     
     /// Updates a VerificationSession object.
     /// When the session status is `requires_input`, you can use this method to update the verification check and options.
@@ -47,75 +45,33 @@ public protocol VerificationSessionRoutes {
     /// - Parameter type: The type of verification check to be performed.
     /// - Parameter expand: An array of properties to expand.
     ///
-    /// - Returns: A `StripeVerificationSession`.
+    /// - Returns: Returns the updated ``VerificationSession`` object
     func update(verificationSessionId: String,
                 metadata: [String: String]?,
                 options: [String: Any]?,
-                type: StripeVerificationSessionType?,
-                expand: [String]?) -> EventLoopFuture<StripeVerificationSession>
-    
+                type: VerificationSessionType?,
+                expand: [String]?) async throws -> VerificationSession
     
     /// A VerificationSession object can be canceled when it is in `requires_input` status.
     /// Once canceled, future submission attempts are disabled. This cannot be undone.
     /// - Parameter verificationSessionId: Id of the verification session.
     /// - Parameter expand: An array of properties to expand.
     ///
-    /// - Returns: The canceled `StripeVerificationSession`.
-    func cancel(verificationSessionId: String, expand: [String]?) -> EventLoopFuture<StripeVerificationSession>
+    /// - Returns: Returns the canceled ``VerificationSession`` object
+    func cancel(verificationSessionId: String, expand: [String]?) async throws -> VerificationSession
     
     /// Redact a VerificationSession to remove all collected information from Stripe. This will redact the VerificationSession and all objects related to it, including VerificationReports, Events, request logs, etc.
     ///
-    /// A VerificationSession object can be redacted when it is in `requires_input` or verified status. Redacting a VerificationSession in `requires_action` state will automatically cancel it.
+    /// A VerificationSession object can be redacted when it is in `requires_input` or `verified` status. Redacting a VerificationSession in `requires_action` state will automatically cancel it.
     ///
     /// The redaction process may take up to four days. When the redaction process is in progress, the VerificationSession’s `redaction.status` field will be set to `processing`; when the process is finished, it will change to `redacted` and an `identity.verification_session.redacted` event will be emitted.
     ///
-    /// Redaction is irreversible. Redacted objects are still accessible in the Stripe API, but all the fields that contain personal data will be replaced by the string [redacted] or a similar placeholder. The metadata field will also be erased. Redacted objects cannot be updated or used for any purpose.
+    /// Redaction is irreversible. Redacted objects are still accessible in the Stripe API, but all the fields that contain personal data will be replaced by the string `[redacted]` or a similar placeholder. The `metadata` field will also be erased. Redacted objects cannot be updated or used for any purpose.
     /// - Parameter verificationSessionId: Id of the verification session.
     /// - Parameter expand: An array of properties to expand.
     ///
-    /// - Returns: The redacted `StripeVerificationSession`.
-    func redact(verificationSessionId: String, expand: [String]?) -> EventLoopFuture<StripeVerificationSession>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension VerificationSessionRoutes {
-    func create(type: StripeVerificationSessionType,
-                metadata: [String: String]? = nil,
-                options: [String: Any]? = nil,
-                returnUrl: String? = nil,
-                expand: [String]? = nil) -> EventLoopFuture<StripeVerificationSession> {
-        create(type: type,
-               metadata: metadata,
-               options: options,
-               returnUrl: returnUrl,
-               expand: expand)
-    }
-    
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeVerificationSessionList> {
-        listAll(filter: filter)
-    }
-    
-    func retrieve(verificationSessionId: String, expand: [String]? = nil) -> EventLoopFuture<StripeVerificationSession> {
-        retrieve(verificationSessionId: verificationSessionId, expand: expand)
-    }
-    
-    func update(verificationSessionId: String,
-                metadata: [String: String]? = nil,
-                options: [String: Any]? = nil,
-                type: StripeVerificationSessionType? = nil,
-                expand: [String]? = nil) -> EventLoopFuture<StripeVerificationSession> {
-        update(verificationSessionId: verificationSessionId, metadata: metadata, options: options, type: type, expand: expand)
-    }
-    
-    func cancel(verificationSessionId: String, expand: [String]? = nil) -> EventLoopFuture<StripeVerificationSession> {
-        cancel(verificationSessionId: verificationSessionId, expand: expand)
-    }
-    
-    func redact(verificationSessionId: String, expand: [String]? = nil) -> EventLoopFuture<StripeVerificationSession> {
-        redact(verificationSessionId: verificationSessionId, expand: expand)
-    }
+    /// - Returns: Returns the redacted ``VerificationSession`` object.
+    func redact(verificationSessionId: String, expand: [String]?) async throws -> VerificationSession
 }
 
 public struct StripeVerificationSessionRoutes: VerificationSessionRoutes {
@@ -128,95 +84,97 @@ public struct StripeVerificationSessionRoutes: VerificationSessionRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(type: StripeVerificationSessionType,
-                       metadata: [String: String]?,
-                       options: [String: Any]?,
-                       returnUrl: String?,
-                       expand: [String]?) -> EventLoopFuture<StripeVerificationSession> {
+    public func create(type: VerificationSessionType,
+                       metadata: [String: String]? = nil,
+                       options: [String: Any]? = nil,
+                       returnUrl: String? = nil,
+                       expand: [String]? = nil) async throws -> VerificationSession {
         var body: [String: Any] = ["type": type.rawValue]
         
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let options = options {
+        if let options {
             options.forEach { body["options[\($0)]"] = $1 }
         }
         
-        if let returnUrl = returnUrl {
+        if let returnUrl {
             body["return_url"] = returnUrl
         }
         
-        if let expand = expand {
+        if let expand {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: verificationsession, body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: verificationsession, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeVerificationSessionList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> VerificationSessionList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: verificationsession, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: verificationsession, query: queryParams, headers: headers)
     }
     
-    public func retrieve(verificationSessionId: String, expand: [String]?) -> EventLoopFuture<StripeVerificationSession> {
+    public func retrieve(verificationSessionId: String, expand: [String]? = nil) async throws -> VerificationSession {
         var queryParams = ""
-        if let expand = expand {
+        if let expand {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: "\(verificationsession)/\(verificationSessionId)", query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: "\(verificationsession)/\(verificationSessionId)", query: queryParams, headers: headers)
     }
     
     public func update(verificationSessionId: String,
-                       metadata: [String: String]?,
-                       options: [String: Any]?,
-                       type: StripeVerificationSessionType?,
-                       expand: [String]?) -> EventLoopFuture<StripeVerificationSession> {
+                       metadata: [String: String]? = nil,
+                       options: [String: Any]? = nil,
+                       type: VerificationSessionType? = nil,
+                       expand: [String]? = nil) async throws -> VerificationSession {
         var body: [String: Any] = [:]
         
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let options = options {
+        if let options {
             options.forEach { body["options[\($0)]"] = $1 }
         }
         
-        if let expand = expand {
+        if let expand {
             body["expand"] = expand
         }
         
-        if let type = type {
+        if let type {
             body["type"] = type.rawValue
         }
         
-        if let expand = expand {
+        if let expand {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(verificationsession)/\(verificationSessionId)", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(verificationsession)/\(verificationSessionId)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func cancel(verificationSessionId: String, expand: [String]?) -> EventLoopFuture<StripeVerificationSession> {
+    public func cancel(verificationSessionId: String,
+                       expand: [String]? = nil) async throws -> VerificationSession {
         var queryParams = ""
-        if let expand = expand {
+        if let expand {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .POST, path: "\(verificationsession)/\(verificationSessionId)/cancel", query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(verificationsession)/\(verificationSessionId)/cancel", query: queryParams, headers: headers)
     }
     
-    public func redact(verificationSessionId: String, expand: [String]?) -> EventLoopFuture<StripeVerificationSession> {
+    public func redact(verificationSessionId: String,
+                       expand: [String]? = nil) async throws -> VerificationSession {
         var queryParams = ""
-        if let expand = expand {
+        if let expand {
             queryParams = ["expand": expand].queryParameters
         }
         
-        return apiHandler.send(method: .POST, path: "\(verificationsession)/\(verificationSessionId)/redact", query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(verificationsession)/\(verificationSessionId)/redact", query: queryParams, headers: headers)
     }
 }
