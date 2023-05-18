@@ -37,7 +37,7 @@ public struct StripeBalanceTransactionRoutes: BalanceTransactionRoutes {
     
     public func listAll(filter: [String: Any]?) async throws -> BalanceTransactionList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
         return try await apiHandler.send(method: .GET, path: balanceTransactions, query: queryParams, headers: headers)

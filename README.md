@@ -299,6 +299,7 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] Top-ups
 * [x] Transfers
 * [x] Transfer Reversals
+* [x] Secret Management
 ---
 ### Fraud
 * [x] Early Fraud Warnings
@@ -344,6 +345,3 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 
 ## License
 StripeKit is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
-
-## Want to help?
-Feel free to submit a pull request whether it's a clean up, a new approach to handling things, adding a new part of the API, or even if it's just a typo. All help is welcomed! 😀
