@@ -62,8 +62,6 @@ public struct Charge: Codable {
     public var metadata: [String: String]?
     /// The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
     @Expandable<ConnectAccount> public var onBehalfOf: String?
-    /// ID of the order this charge is for if one exists.
-    @Expandable<StripeOrder> public var order: String?
     /// Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
     public var outcome: ChargeOutcome?
     /// `true` if the charge succeeded, or was successfully authorized for later capture.
@@ -131,7 +129,6 @@ public struct Charge: Codable {
                 livemode: Bool? = nil,
                 metadata: [String : String]? = nil,
                 onBehalfOf: String? = nil,
-                order: String? = nil,
                 outcome: ChargeOutcome? = nil,
                 paid: Bool? = nil,
                 paymentIntent: String? = nil,
@@ -178,7 +175,6 @@ public struct Charge: Codable {
         self.livemode = livemode
         self.metadata = metadata
         self._onBehalfOf = Expandable(id: onBehalfOf)
-        self._order = Expandable(id: order)
         self.outcome = outcome
         self.paid = paid
         self._paymentIntent = Expandable(id: paymentIntent)

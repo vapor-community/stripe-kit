@@ -103,13 +103,7 @@ public final class StripeClient {
     public var terminalHardwareSkus: TerminalHardwareSKURoutes
     public var terminalHardwareShippingMethods: TerminalHardwareShippingMethodRoutes
     public var terminalConfiguration: TerminalConfigurationRoutes
-    
-    // MARK: - ORDERS
-    public var orders: OrderRoutes
-    public var orderReturns: OrderReturnRoutes
-    public var skus: SKURoutes
-    public var ephemeralKeys: EphemeralKeyRoutes
-    
+        
     // MARK: - SIGMA
     public var scheduledQueryRuns: ScheduledQueryRunRoutes
 
@@ -217,11 +211,6 @@ public final class StripeClient {
         terminalHardwareSkus = StripeTerminalHardwareSKURoutes(apiHandler: handler)
         terminalHardwareShippingMethods = StripeTerminalHardwareShippingMethodRoutes(apiHandler: handler)
         terminalConfiguration = StripeTerminalConfigurationRoutes(apiHandler: handler)
-        
-        orders = StripeOrderRoutes(apiHandler: handler)
-        orderReturns = StripeOrderReturnRoutes(apiHandler: handler)
-        skus = StripeSKURoutes(apiHandler: handler)
-        ephemeralKeys = StripeEphemeralKeyRoutes(apiHandler: handler)
         
         scheduledQueryRuns = StripeScheduledQueryRunRoutes(apiHandler: handler)
         

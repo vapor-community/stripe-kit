@@ -25,7 +25,7 @@ public struct ShippingRate: Codable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
-    public var deliveryEstimate: StripeDeliveryEstimate?
+    public var deliveryEstimate: ShippingRateDeliveryEstimate?
     /// Has the value true if the object exists in live mode or the value false if the object exists in test mode.
     public var livemode: Bool?
     /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of inclusive, exclusive, or unspecified.
@@ -41,7 +41,7 @@ public struct ShippingRate: Codable {
                 type: ShippingRateType? = nil,
                 object: String,
                 created: Date,
-                deliveryEstimate: StripeDeliveryEstimate? = nil,
+                deliveryEstimate: ShippingRateDeliveryEstimate? = nil,
                 livemode: Bool? = nil,
                 taxBehavior: ShippingRateTaxBehavior? = nil,
                 taxCode: String? = nil) {

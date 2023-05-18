@@ -101,8 +101,6 @@ public enum EventObject: Codable {
     case issuingDispute(IssuingDispute)
     case issuingTransaction(Transaction)
     case mandate(Mandate)
-    case order(StripeOrder)
-    case orderReturn(StripeOrderReturn)
     case paymentIntent(PaymentIntent)
     case paymentMethod(PaymentMethod)
     case payout(Payout)
@@ -117,8 +115,7 @@ public enum EventObject: Codable {
     case reportType(StripeReportType)
     case review(Review)
     case setupIntent(SetupIntent)
-    case scheduledQueryRun(StripeScheduledQueryRun)
-    case sku(StripeSKU)
+    case scheduledQueryRun(ScheduledQueryRun)
     case subscriptionSchedule(SubscriptionSchedule)
     case taxRate(TaxRate)
     case topup(TopUp)
@@ -186,10 +183,6 @@ public enum EventObject: Codable {
             self = try .issuingTransaction(Transaction(from: decoder))
         case "mandate":
             self = try .mandate(Mandate(from: decoder))
-        case "order":
-            self = try .order(StripeOrder(from: decoder))
-        case "order_return":
-            self = try .orderReturn(StripeOrderReturn(from: decoder))
         case "payment_intent":
             self = try .paymentIntent(PaymentIntent(from: decoder))
         case "payment_method":
@@ -219,9 +212,7 @@ public enum EventObject: Codable {
         case "setup_intent":
             self = try .setupIntent(SetupIntent(from: decoder))
         case "scheduled_query_run":
-            self = try .scheduledQueryRun(StripeScheduledQueryRun(from: decoder))
-        case "sku":
-            self = try .sku(StripeSKU(from: decoder))
+            self = try .scheduledQueryRun(ScheduledQueryRun(from: decoder))
         case "subscription_schedule":
             self = try .subscriptionSchedule(SubscriptionSchedule(from: decoder))
         case "tax_rate":

@@ -324,13 +324,6 @@ See the [Vapor helper library](https://github.com/vapor-community/stripe) to use
 * [x] Hardware Shipping Methods
 * [x] Configurations
 ---
-### Orders
-* [x] Orders
-* [x] Order Items
-* [x] Returns
-* [x] SKUs
-* [x] Ephemeral Keys
----
 ### Sigma
 * [x] Scheduled Queries
 ---

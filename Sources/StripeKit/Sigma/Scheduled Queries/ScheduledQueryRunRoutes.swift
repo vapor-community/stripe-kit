@@ -8,31 +8,18 @@
 import NIO
 import NIOHTTP1
 
-public protocol ScheduledQueryRunRoutes {
+public protocol ScheduledQueryRunRoutes: StripeAPIRoute {
     /// Retrieves the details of an scheduled query run.
     ///
     /// - Parameter scheduledQueryRun: Unique identifier for the object.
     /// - Returns: A `StripeScheduledQueryRun`.
-    func retrieve(scheduledQueryRun: String) -> EventLoopFuture<StripeScheduledQueryRun>
+    func retrieve(scheduledQueryRun: String) async throws -> ScheduledQueryRun
     
     /// Returns a list of scheduled query runs.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/sigma/scheduled_queries/list)
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More](https://stripe.com/docs/api/sigma/scheduled_queries/list)
     /// - Returns: A `StripeScheduledQueryRunList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeScheduledQueryRunList>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension ScheduledQueryRunRoutes {
-    func retrieve(scheduledQueryRun: String) -> EventLoopFuture<StripeScheduledQueryRun> {
-        return retrieve(scheduledQueryRun: scheduledQueryRun)
-    }
-    
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeScheduledQueryRunList> {
-        return listAll(filter: filter)
-    }
+    func listAll(filter: [String: Any]?) async throws -> ScheduledQueryRunList
 }
 
 public struct StripeScheduledQueryRunRoutes: ScheduledQueryRunRoutes {
@@ -45,16 +32,16 @@ public struct StripeScheduledQueryRunRoutes: ScheduledQueryRunRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(scheduledQueryRun: String) -> EventLoopFuture<StripeScheduledQueryRun> {
-        return apiHandler.send(method: .GET, path: "\(scheduledqueryruns)/\(scheduledQueryRun)", headers: headers)
+    public func retrieve(scheduledQueryRun: String) async throws -> ScheduledQueryRun {
+        try await apiHandler.send(method: .GET, path: "\(scheduledqueryruns)/\(scheduledQueryRun)", headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeScheduledQueryRunList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> ScheduledQueryRunList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: scheduledqueryruns, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: scheduledqueryruns, query: queryParams, headers: headers)
     }
 }
