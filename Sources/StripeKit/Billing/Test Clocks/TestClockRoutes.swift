@@ -71,7 +71,7 @@ public struct StripeTestClockRoutes: TestClockRoutes {
     }
     
     public func advance(testClock: String, frozenTime: Date) async throws -> TestClock {
-        var body: [String: Any] = ["frozen_time": Int(frozenTime.timeIntervalSince1970)]
+        let body: [String: Any] = ["frozen_time": Int(frozenTime.timeIntervalSince1970)]
         
         return try await apiHandler.send(method: .POST, path: "\(testclocks)/\(testClock)/advance", body: .string(body.queryParameters), headers: headers)
     }

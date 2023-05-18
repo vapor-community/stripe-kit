@@ -111,8 +111,8 @@ public enum EventObject: Codable {
     case promotionCode(PromotionCode)
     case earlyFraudWarniing(EarlyFraudWarning)
     case quote(Quote)
-    case reportRun(StripeReportRun)
-    case reportType(StripeReportType)
+    case reportRun(ReportRun)
+    case reportType(ReportType)
     case review(Review)
     case setupIntent(SetupIntent)
     case scheduledQueryRun(ScheduledQueryRun)
@@ -204,9 +204,9 @@ public enum EventObject: Codable {
         case "quote":
             self = try .quote(Quote(from: decoder))
         case "reporting.report_run":
-            self = try .reportRun(StripeReportRun(from: decoder))
+            self = try .reportRun(ReportRun(from: decoder))
         case "reporting.report_type":
-            self = try .reportType(StripeReportType(from: decoder))
+            self = try .reportType(ReportType(from: decoder))
         case "review":
             self = try .review(Review(from: decoder))
         case "setup_intent":
