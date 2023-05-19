@@ -133,6 +133,32 @@ public struct PaymentMethodCard: Codable {
     public var threeDSecureUsage: PaymentMethodCardThreeDSecureUsage?
     /// If this Card is part of a card wallet, this contains the details of the card wallet.
     public var wallet: PaymentMethodCardWallet?
+    
+    public init(brand: PaymentMethodDetailsCardBrand? = nil,
+                checks: PaymentMethodDetailsCardChecks? = nil,
+                country: String? = nil,
+                expMonth: Int? = nil,
+                expYear: Int? = nil,
+                fingerprint: String? = nil,
+                funding: CardFundingType? = nil,
+                generatedFrom: PaymentMethodCardGeneratedFrom? = nil,
+                last4: String? = nil,
+                networks: PaymentMethodCardNetworks? = nil,
+                threeDSecureUsage: PaymentMethodCardThreeDSecureUsage? = nil,
+                wallet: PaymentMethodCardWallet? = nil) {
+        self.brand = brand
+        self.checks = checks
+        self.country = country
+        self.expMonth = expMonth
+        self.expYear = expYear
+        self.fingerprint = fingerprint
+        self.funding = funding
+        self.generatedFrom = generatedFrom
+        self.last4 = last4
+        self.networks = networks
+        self.threeDSecureUsage = threeDSecureUsage
+        self.wallet = wallet
+    }
 }
 
 public enum PaymentMethodDetailsCardBrand: String, Codable {
@@ -387,6 +413,24 @@ public struct PaymentMethodCardWallet: Codable {
     public var type: PaymentMethodDetailsCardWalletType?
     /// If this is a `visa_checkout` card wallet, this hash contains details about the wallet.
     public var visaCheckout: PaymentMethodCardWalletVisaCheckout?
+    
+    public init(amexExpressCheckout: PaymentMethodCardWalletAmexExpressCheckout? = nil,
+                applePay: PaymentMethodCardWalletApplePay? = nil,
+                dynamicLast4: String? = nil,
+                googlePay: PaymentMethodCardWalletGooglePay? = nil,
+                masterpass: PaymentMethodCardWalletMasterPass? = nil,
+                samsungPay: PaymentMethodCardWalletSamsungPay? = nil,
+                type: PaymentMethodDetailsCardWalletType? = nil,
+                visaCheckout: PaymentMethodCardWalletVisaCheckout? = nil) {
+        self.amexExpressCheckout = amexExpressCheckout
+        self.applePay = applePay
+        self.dynamicLast4 = dynamicLast4
+        self.googlePay = googlePay
+        self.masterpass = masterpass
+        self.samsungPay = samsungPay
+        self.type = type
+        self.visaCheckout = visaCheckout
+    }
 }
 
 public struct PaymentMethodCardWalletAmexExpressCheckout: Codable {
