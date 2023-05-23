@@ -50,7 +50,7 @@ public struct Price: Codable {
     /// Apply a transformation to the reported usage or set quantity before computing the amount billed. Cannot be combined with `tiers`.
     public var transformQuantity: PriceTransformQuantity?
     /// The unit amount in cents to be charged, represented as a decimal string with at most 12 decimal places.
-    public var unitAmountDecimal: PriceTaxBehavior?
+    public var unitAmountDecimal: String?
     
     public init(id: String,
                 active: Bool? = nil,
@@ -72,7 +72,7 @@ public struct Price: Codable {
                 tiers: [PriceTier]? = nil,
                 tiersMode: PriceTierMode? = nil,
                 transformQuantity: PriceTransformQuantity? = nil,
-                unitAmountDecimal: PriceTaxBehavior? = nil) {
+                unitAmountDecimal: String? = nil) {
         self.id = id
         self.active = active
         self.currency = currency
