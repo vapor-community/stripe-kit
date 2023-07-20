@@ -44,21 +44,21 @@ public struct SessionPaymentMethodOptions: Codable {
     /// If the Checkout Session’s `payment_method_types` includes `klarna`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var klarna: SessionPaymentMethodOptionsKlarna?
     /// If the Checkout Session’s `payment_method_types` includes `konbini`, this hash contains the configurations that will be applied to each payment attempt of that type.
-    public var konbini: SessionPaymentMethodOptionsKonbini
+    public var konbini: SessionPaymentMethodOptionsKonbini?
     /// If the Checkout Session’s `payment_method_types` includes `link`, this hash contains the configurations that will be applied to each payment attempt of that type.
-    public var link: SessionPaymentMethodOptionsLink
+    public var link: SessionPaymentMethodOptionsLink?
     /// If the Checkout Session’s `payment_method_types` includes `oxxo`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var oxxo: SessionPaymentMethodOptionsOXXO?
     /// If the Checkout Session’s `payment_method_types` includes `p24`, this hash contains the configurations that will be applied to each payment attempt of that type.
-    public var p24: SessionPaymentMethodOptionsP24
+    public var p24: SessionPaymentMethodOptionsP24?
     /// If the Checkout Session’s `payment_method_types` includes `paynow`, this hash contains the configurations that will be applied to each payment attempt of that type.
-    public var paynow: SessionPaymentMethodOptionsPaynow
+    public var paynow: SessionPaymentMethodOptionsPaynow?
     /// If the Checkout Session’s `payment_method_types` includes `pix`, this hash contains the configurations that will be applied to each payment attempt of that type.
-    public var pix: SessionPaymentMethodOptionsPix
+    public var pix: SessionPaymentMethodOptionsPix?
     /// If the Checkout Session’s `payment_method_types` includes `sepa_debit`, this hash contains the configurations that will be applied to each payment attempt of that type.
-    public var sepaDebit: SessionPaymentMethodOptionsSepaDebit
+    public var sepaDebit: SessionPaymentMethodOptionsSepaDebit?
     /// If the Checkout Session’s `payment_method_types` includes `sofort`, this hash contains the configurations that will be applied to each payment attempt of that type.
-    public var sofort: SessionPaymentMethodOptionsSofort
+    public var sofort: SessionPaymentMethodOptionsSofort?
     /// If the Checkout Session’s `payment_method_types` includes `us_bank_account`, this hash contains the configurations that will be applied to each payment attempt of that type.
     public var usBankAccount: SessionPaymentMethodOptionsUSBankAccount?
     
@@ -79,14 +79,14 @@ public struct SessionPaymentMethodOptions: Codable {
                 grabpay: SessionPaymentMethodOptionsGrabpay? = nil,
                 ideal: SessionPaymentMethodOptionsIdeal? = nil,
                 klarna: SessionPaymentMethodOptionsKlarna? = nil,
-                konbini: SessionPaymentMethodOptionsKonbini,
-                link: SessionPaymentMethodOptionsLink,
+                konbini: SessionPaymentMethodOptionsKonbini? = nil,
+                link: SessionPaymentMethodOptionsLink? = nil,
                 oxxo: SessionPaymentMethodOptionsOXXO? = nil,
-                p24: SessionPaymentMethodOptionsP24,
-                paynow: SessionPaymentMethodOptionsPaynow,
-                pix: SessionPaymentMethodOptionsPix,
-                sepaDebit: SessionPaymentMethodOptionsSepaDebit,
-                sofort: SessionPaymentMethodOptionsSofort,
+                p24: SessionPaymentMethodOptionsP24? = nil,
+                paynow: SessionPaymentMethodOptionsPaynow? = nil,
+                pix: SessionPaymentMethodOptionsPix? = nil,
+                sepaDebit: SessionPaymentMethodOptionsSepaDebit? = nil,
+                sofort: SessionPaymentMethodOptionsSofort? = nil,
                 usBankAccount: SessionPaymentMethodOptionsUSBankAccount? = nil) {
         self.acssDebit = acssDebit
         self.affirm = affirm
