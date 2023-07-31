@@ -16,7 +16,7 @@ public protocol FileLinkRoutes: StripeAPIRoute {
     ///   - file: The ID of the file. The file’s `purpose` must be one of the following: `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `identity_document_downloadable`, `pci_document`, `selfie`, `sigma_scheduled_query`,`tax_document_user_upload` or `terminal_reader_splashscreen`.
     ///   - expiresAt: A future timestamp after which the link will no longer be usable.
     ///   - metadata: Set of key-value pairs that you can attach to an object.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the file link object if successful, and returns an error otherwise.
     func create(file: String,
                 expiresAt: Date?,
@@ -27,7 +27,7 @@ public protocol FileLinkRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - link: The identifier of the file link to be retrieved.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a file link object if a valid identifier was provided, and returns an error otherwise.
     func retrieve(link: String, expand: [String]?) async throws -> FileLink
     
@@ -37,7 +37,7 @@ public protocol FileLinkRoutes: StripeAPIRoute {
     ///   - link: The ID of the file link.
     ///   - expiresAt: A future timestamp after which the link will no longer be usable, or `now` to expire the link immediately.
     ///   - metadata: Set of key-value pairs that you can attach to an object.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: A `FileLink`.
     func update(link: String,
                 expiresAt: Any?,

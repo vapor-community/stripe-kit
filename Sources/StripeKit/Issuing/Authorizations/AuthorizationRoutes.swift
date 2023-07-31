@@ -12,7 +12,7 @@ public protocol AuthorizationRoutes: StripeAPIRoute {
     /// Retrieves an Issuing Authorization object.
     ///
     /// - Parameter authorization: The ID of the authorization to retrieve.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an Issuing ``Authorization`` object if a valid identifier was provided.
     func retrieve(authorization: String, expand: [String]?) async throws -> Authorization
     
@@ -21,7 +21,7 @@ public protocol AuthorizationRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - authorization: The identifier of the authorization to update.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an updated Issuing ``Authorization`` object if a valid identifier was provided.
     func update(authorization: String, metadata: [String: String]?, expand: [String]?) async throws -> Authorization
     
@@ -31,7 +31,7 @@ public protocol AuthorizationRoutes: StripeAPIRoute {
     ///   - authorization: The identifier of the authorization to approve.
     ///   - amount: If the authorization’s `pending_request.is_amount_controllable` property is `true`, you may provide this value to control how much to hold for the authorization. Must be positive (use decline to `decline` an authorization request).
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an approved Issuing ``Authorization`` object.
     func approve(authorization: String,
                  amount: Int?,
@@ -42,7 +42,7 @@ public protocol AuthorizationRoutes: StripeAPIRoute {
     ///
     /// - Parameter authorization: The identifier of the issuing authorization to decline.
     /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a declined Issuing ``Authorization`` object.
     func decline(authorization: String, metadata: [String: String]?, expand: [String]?) async throws -> Authorization
     

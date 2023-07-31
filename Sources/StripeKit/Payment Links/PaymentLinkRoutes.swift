@@ -36,7 +36,7 @@ public protocol PaymentLinkRoutes: StripeAPIRoute {
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in `payment` mode, but not Checkout Sessions in `subscription` or `setup` mode.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation for Checkout Sessions in subscription mode.
     ///   - taxIdCollection: Controls tax ID collection settings for the session.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a Session object.
     func create(lineItems: [[String: Any]]?,
                 metadata: [String: String]?,
@@ -67,7 +67,7 @@ public protocol PaymentLinkRoutes: StripeAPIRoute {
     /// Retrieve a payment link.
     /// - Parameters:
     ///   - id: The id of the payment link.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the payment link.
     func retrieve(id: String, expand: [String]?) async throws -> PaymentLink
     
@@ -88,7 +88,7 @@ public protocol PaymentLinkRoutes: StripeAPIRoute {
     ///   - paymentMethodCollection: Specify whether Checkout should collect a payment method. When set to `if_required`, Checkout will not collect a payment method when the total due for the session is 0.This may occur if the Checkout Session includes a free trial or a discount. Can only be set in `subscription` mode. If you’d like information on how to collect a payment method outside of Checkout, read the guide on [configuring subscriptions with a free trial](https://stripe.com/docs/payments/checkout/free-trials) .
     ///   - paymentMethodTypes: The list of payment method types that customers can use. Pass an empty string to enable automatic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) .
     ///   - shippingAddressCollection: Configuration for collecting the customer’s shipping address.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Updated payment link.
     func update(id: String,
                 active: Bool?,

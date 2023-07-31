@@ -24,7 +24,7 @@ public protocol PayoutRoutes: StripeAPIRoute {
     ///   - destination: The ID of a bank account or a card to send the payout to. If no destination is supplied, the default external account for the specified currency will be used.
     ///   - method: The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See Instant payouts for marketplaces for more information.)
     ///   - sourceType: The source balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the balances API. One of `bank_account` or `card`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a payout object if there were no initial errors with the payout creation (invalid routing number, insufficient funds, etc). The status of the payout object will be initially marked as pending.
     func create(amount: Int,
                 currency: Currency,
@@ -39,7 +39,7 @@ public protocol PayoutRoutes: StripeAPIRoute {
     /// Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
     ///
     /// - Parameter payout: The identifier of the payout to be retrieved.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a payout object if a valid identifier was provided, and returns an error otherwise.
     func retrieve(payout: String, expand: [String]?) async throws -> Payout
     
@@ -48,7 +48,7 @@ public protocol PayoutRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - payout: The identifier of the payout to be updated.
     ///   - metadata: A set of key-value pairs that you can attach to a payout object. It can be useful for storing additional information about the payout in a structured format.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the payout object if the update succeeded. This call returns an error if update parameters are invalid.
     func update(payout: String, metadata: [String: String]?, expand: [String]?) async throws -> Payout
     
@@ -61,7 +61,7 @@ public protocol PayoutRoutes: StripeAPIRoute {
     /// A previously created payout can be canceled if it has not yet been paid out. Funds will be refunded to your available balance. You may not cancel automatic Stripe payouts.
     ///
     /// - Parameter payout: The identifier of the payout to be canceled.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the payout object if the cancellation succeeded. Returns an error if the payout has already been canceled or cannot be canceled.
     func cancel(payout: String, expand: [String]?) async throws -> Payout
     

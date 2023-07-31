@@ -31,7 +31,7 @@ public protocol QuoteRoutes: StripeAPIRoute {
     ///    - subscriptionData: When creating a subscription or subscription schedule, the specified configuration data will be used. There    must be at least one line item with a recurring price for a subscription or subscription schedule to be created. A subscription schedule is created if `subscription_data[effective_date]` is present and in the future, otherwise a subscription is created.
     ///    - testClock: ID of the test clock to attach to the quote.
     ///    - transferData: The data with which to automatically create a Transfer for each of the invoices.
-    ///    - expand: An array of properties to expand.
+    ///    - expand: Specifies which fields in the response should be expanded.
     ///    - Returns: Returns the quote object.
     func create(lineItems: [[String: Any]]?,
                 metadata: [String: String]?,
@@ -56,7 +56,7 @@ public protocol QuoteRoutes: StripeAPIRoute {
     
     /// Retrieves the quote with the given ID.
     /// - Parameter quote: The id of the quote.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a quote if a valid quote ID was provided. Returns an error otherwise.
     func retrieve(quote: String, expand: [String]?) async throws -> Quote
     
@@ -80,7 +80,7 @@ public protocol QuoteRoutes: StripeAPIRoute {
     ///    - onBehalfOf: The account on behalf of which to charge.
     ///    - subscriptionData: When creating a subscription or subscription schedule, the specified configuration data will be used. There    must be at least one line item with a recurring price for a subscription or subscription schedule to be created. A subscription schedule is created if `subscription_data[effective_date]` is present and in the future, otherwise a subscription is created.
     ///    - transferData: The data with which to automatically create a Transfer for each of the invoices.
-    ///    - expand: An array of properties to expand.
+    ///    - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the updated quote object.
     func update(quote: String,
                 lineItems: [[String: Any]]?,
@@ -104,7 +104,7 @@ public protocol QuoteRoutes: StripeAPIRoute {
     
     /// Finalizes the quote.
     /// - Parameter quote: The id of the quote
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an open quote. Returns an error otherwise.
     func finalize(quote: String,
                   expiresAt: Date?,
@@ -112,13 +112,13 @@ public protocol QuoteRoutes: StripeAPIRoute {
     
     /// Accepts the specified quote.
     /// - Parameter quote: The id of the quote
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an accepted quote and creates an invoice, subscription or subscription schedule. Returns an error otherwise
     func accept(quote: String, expand: [String]?) async throws -> Quote
     
     /// Cancels the quote.
     /// - Parameter quote: The id of the quote
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a canceled quote. Returns an error otherwise.
     func cancel(quote: String, expand: [String]?) async throws -> Quote
     

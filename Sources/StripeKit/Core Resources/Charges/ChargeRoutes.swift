@@ -29,7 +29,7 @@ public protocol ChargeRoutes: StripeAPIRoute {
     ///   - radarOptions: Options to configure Radar. See Radar Session for more information.
     ///   - transferData: An optional dictionary including the account to automatically transfer to as part of a destination charge. See the Connect documentation for details.
     ///   - transferGroup: A string that identifies this transaction as part of a group. For details, see Grouping transactions.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the charge object if the charge succeeded. This call will return an error if something goes wrong. A common source of error is an invalid or expired card, or a valid card with insufficient available balance.
     func create(amount: Int,
                 currency: Currency,
@@ -52,7 +52,7 @@ public protocol ChargeRoutes: StripeAPIRoute {
     /// Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
     /// - Parameters:
     ///   - charge: The id of the chrage.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a charge if a valid identifier was provided, and returns an error otherwise.
     func retrieve(charge: String, expand: [String]?) async throws -> Charge
     
@@ -67,7 +67,7 @@ public protocol ChargeRoutes: StripeAPIRoute {
     ///   - shipping: Shipping information for the charge. Helps prevent fraud on charges for physical goods.
     ///   - fraudDetails: A set of key-value pairs you can attach to a charge giving information about its riskiness. If you believe a charge is fraudulent, include a `user_report` key with a value of `fraudulent`. If you believe a charge is safe, include a `user_report` key with a value of `safe`. Stripe will use the information you send to improve our fraud detection algorithms.
     ///   - transferGroup: A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the charge object if the update succeeded. This call will return an error if update parameters are invalid.
     func update(charge: String,
                 customer: String?,
@@ -91,7 +91,7 @@ public protocol ChargeRoutes: StripeAPIRoute {
     ///   - applicationFeeAmount: An application fee amount to add on to this charge, which must be less than or equal to the original amount.
     ///   - transferData: An optional dictionary including the account to automatically transfer to as part of a destination charge. See the Connect documentation for details.
     ///   - transferGroup: A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the Connect documentation for details.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the charge object, with an updated captured property (set to true). Capturing a charge will always succeed, unless the charge is already refunded, expired, captured, or an invalid capture amount is specified, in which case this method will return an error.
     func capture(charge: String,
                  amount: Int?,

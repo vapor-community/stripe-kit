@@ -27,7 +27,7 @@ public protocol RefundRoutes: StripeAPIRoute {
     ///   - refundApplicationFee: Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. /n An application fee can be refunded only by the application that created the charge.
     ///   - reverseTransfer: Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). /n A transfer can be reversed only by the application that created the charge.
     ///   - instructionsEmail: For payment methods without native refund support (e.g., Konbini, PromptPay), use this email from the customer to receive refund instructions.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the Refund object if the refund succeeded. Returns an error if the Charge/PaymentIntent has already been refunded, or if an invalid identifier was provided.
     func create(charge: String?,
                 amount: Int?,
@@ -43,7 +43,7 @@ public protocol RefundRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - refund: ID of refund to retrieve.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a refund if a valid ID was provided. Returns an error otherwise.
     func retrieve(refund: String, expand: [String]?) async throws -> Refund
     
@@ -52,7 +52,7 @@ public protocol RefundRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - refund: ID of refund to update.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the refund object if the update succeeded. This call will return an error if update parameters are invalid.
     func update(refund: String, metadata: [String: String]?, expand: [String]?) async throws -> Refund
         
@@ -61,7 +61,7 @@ public protocol RefundRoutes: StripeAPIRoute {
     /// Refunds in other states cannot be canceled, and only refunds for payment methods that require customer action will enter the `requires_action` state.
     /// - Parameters:
     ///   - refund: The refund to cancel
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the refund object if the cancelation succeeded. This call will return an error if the refund is unable to be canceled.
     func cancel(refund: String, expand: [String]?) async throws -> Refund
     

@@ -19,7 +19,7 @@ public protocol ApplicationFeeRefundRoutes: StripeAPIRoute {
     ///   - fee: The identifier of the application fee to be refunded.
     ///   - amount: A positive integer, in `cents`, representing how much of this fee to refund. Can refund only up to the remaining unrefunded amount of the fee.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the `Application Fee Refund` object if the refund succeeded. Returns an error if the fee has already been refunded, or if an invalid fee identifier was provided.
     func create(fee: String,
                 amount: Int?,
@@ -31,7 +31,7 @@ public protocol ApplicationFeeRefundRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - refund: ID of refund to retrieve.
     ///   - fee: ID of the application fee refunded.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the application fee refund object.
     func retrieve(refund: String, fee: String, expand: [String]?) async throws -> ApplicationFeeRefund
     
@@ -43,7 +43,7 @@ public protocol ApplicationFeeRefundRoutes: StripeAPIRoute {
     ///   - refund: ID of refund to retrieve.
     ///   - fee: ID of the application fee refunded.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the application fee refund object if the update succeeded. This call will return an error if update parameters are invalid.
     func update(refund: String,
                 fee: String,

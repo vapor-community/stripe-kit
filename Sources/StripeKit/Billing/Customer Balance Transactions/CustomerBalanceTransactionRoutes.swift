@@ -16,7 +16,7 @@ public protocol CustomerBalanceTransactionRoutes: StripeAPIRoute {
     ///  - customer: The customer the transaction belongs to.
     ///  - description: An arbitrary string attached to the object. Often useful for displaying to users.
     ///  - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-    ///  - expand: An array of properties to expand.
+    ///  - expand: Specifies which fields in the response should be expanded.
     func create(amount: Int,
                 currency: Currency,
                 customer: String,
@@ -28,7 +28,7 @@ public protocol CustomerBalanceTransactionRoutes: StripeAPIRoute {
     /// - Parameters:
     ///  - customer: The customer the transaction belongs to.
     ///  - transaction: The transaction to retrieve.
-    ///  - expand: An array of properties to expand.
+    ///  - expand: Specifies which fields in the response should be expanded.
     func retrieve(customer: String, transaction: String, expand: [String]?) async throws -> CustomerBalanceTransaction
     
     /// Most customer balance transaction fields are immutable, but you may update its `description` and `metadata`.
@@ -37,7 +37,7 @@ public protocol CustomerBalanceTransactionRoutes: StripeAPIRoute {
     ///  - transaction: The transaction to update.
     ///  - description: An arbitrary string attached to the object. Often useful for displaying to users.
     ///  - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-    ///  - expand: An array of properties to expand.
+    ///  - expand: Specifies which fields in the response should be expanded.
     func update(customer: String,
                 transaction: String,
                 description: String?,

@@ -16,7 +16,7 @@ public protocol SecretRoutes: StripeAPIRoute {
     ///   - payload: The plaintext secret value to be stored.
     ///   - scope: Specifies the scoping of the secret. Requests originating from UI extensions can only access account-scoped secrets or secrets scoped to their own user.
     ///   - expiresAt: The Unix timestamp for the expiry time of the secret, after which the secret deletes.
-    ///   - expand: An Array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a secret object.
     func setSecret(name: String,
                    payload: String,
@@ -28,7 +28,7 @@ public protocol SecretRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - name: A name for the secret that’s unique within the scope.
     ///   - scope: Specifies the scoping of the secret. Requests originating from UI extensions can only access account-scoped secrets or secrets scoped to their own user.
-    ///   - expand: An Array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a secret object.
     func find(name: String,
               scope: [String: Any],
@@ -38,7 +38,7 @@ public protocol SecretRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - name: A name for the secret that’s unique within the scope.
     ///   - scope: Specifies the scoping of the secret. Requests originating from UI extensions can only access account-scoped secrets or secrets scoped to their own user.
-    ///   - expand: An Array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the deleted secret object.
     func delete(name: String, scope: [String: Any], expand: [String]?) async throws -> Secret
     

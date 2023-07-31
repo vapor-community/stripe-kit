@@ -25,7 +25,7 @@ public protocol TerminalConfigurationRoutes: StripeAPIRoute {
     /// Retrieves a ``TerminalConfiguration`` object.
     /// - Parameters:
     ///   - config: The id of the configuration.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a ``TerminalConfiguration`` object if a valid identifier was provided.
     func retrieve(config: String, expand: [String]?) async throws -> TerminalConfiguration
     

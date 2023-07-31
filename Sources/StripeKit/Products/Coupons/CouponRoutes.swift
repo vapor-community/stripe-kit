@@ -29,7 +29,7 @@ public protocol CouponRoutes: StripeAPIRoute {
     ///   - currencyOptions: Coupons defined in each available currency option (only supported if `amount_off` is passed). Each key must be a three-letter ISO currency code and a supported currency. For example, to define your coupon in eur, pass the fields below in the eur key of `currency_options`.
     ///   - maxRedemptions: A positive integer specifying the number of times the coupon can be redeemed before it’s no longer valid. For example, you might have a 50% off coupon that the first 20 readers of your blog can use.
     ///   - redeemBy: Unix timestamp specifying the last time at which the coupon can be redeemed. After the `redeem_by` date, the coupon can no longer be applied to new customers.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the coupon object.
     func create(amountOff: Int?,
                 currency: Currency?,

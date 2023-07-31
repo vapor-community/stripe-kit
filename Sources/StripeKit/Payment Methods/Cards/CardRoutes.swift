@@ -17,7 +17,7 @@ public protocol CardRoutes: StripeAPIRoute {
     ///   - customer: The ID of the customer to attach this source to.
     ///   - source:A token, like the ones returned by Stripe.js. Stripe will automatically validate the card.
     ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the card in a structured format.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the ``Card`` object.
     func create(customer: String, source: Any, metadata: [String: String]?, expand: [String]?) async throws -> Card
     
@@ -26,7 +26,7 @@ public protocol CardRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - id: ID of card to retrieve.
     ///   - customer: The ID of the customer this source belongs to.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the ``Card`` object.
     func retrieve(id: String, customer: String, expand: [String]?) async throws -> Card
     
@@ -45,7 +45,7 @@ public protocol CardRoutes: StripeAPIRoute {
     ///   - expYear: Four digit number representing the card’s expiration year.
     ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the bank account in a structured format.
     ///   - name: Cardholder name.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the ``Card`` object.
     func update(id: String,
                 customer: String,

@@ -17,7 +17,7 @@ public protocol PortalSessionRoutes: StripeAPIRoute {
     ///   - locale: The IETF language tag of the locale Customer Portal is displayed in. If blank or auto, the customer’s `preferred_locales` or browser’s locale is used.
     ///   - onBehalfOf: The `on_behalf_of` account to use for this session. When specified, only subscriptions and invoices with this `on_behalf_of` account appear in the portal. For more information, see the docs. Use the Accounts API to modify the `on_behalf_of` account’s branding settings, which the portal displays.
     ///   - returnUrl: The default URL to redirect customers to when they click on the portal’s link to return to your website.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     func create(customer: String,
                 configuration: [String: Any]?,
                 flowData: [String: Any]?,

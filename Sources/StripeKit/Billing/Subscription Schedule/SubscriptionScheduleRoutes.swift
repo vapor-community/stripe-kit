@@ -20,7 +20,7 @@ public protocol SubscriptionScheduleRoutes: StripeAPIRoute {
     ///  - defaultSettings: Object representing the subscription schedule’s default settings.
     ///  - endBehavior: Configures how the subscription schedule behaves when it ends. Possible values are release or cancel with the default being release. release will end the subscription schedule and keep the underlying subscription running.cancel will end the subscription schedule and cancel the underlying subscription.
     ///  - fromSubscription: Migrate an existing subscription to be managed by a subscription schedule. If this parameter is set, a subscription schedule will be created using the subscription’s plan(s), set to auto-renew using the subscription’s interval. When using this parameter, other parameters (such as phase values) cannot be set. To create a subscription schedule with other modifications, we recommend making two separate API calls.
-    ///  - expand: An array of properties to expand.
+    ///  - expand: Specifies which fields in the response should be expanded.
     func create(customer: String?,
                 metadata: [String: String]?,
                 phases: [[String: Any]]?,
@@ -33,7 +33,7 @@ public protocol SubscriptionScheduleRoutes: StripeAPIRoute {
     /// Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
     /// - Parameters:
     ///   - schedule: The identifier of the subscription schedule to be retrieved.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     func retrieve(schedule: String, expand: [String]?) async throws -> SubscriptionSchedule
     
     /// Updates an existing subscription schedule.
@@ -45,7 +45,7 @@ public protocol SubscriptionScheduleRoutes: StripeAPIRoute {
     ///  - prorationBehavior: If the update changes the current phase, indicates if the changes should be prorated. Defaults to true.
     ///  - defaultSettings: Object representing the subscription schedule’s default settings.
     ///  - endBehavior: Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
-    ///  - expand: An array of properties to expand.
+    ///  - expand: Specifies which fields in the response should be expanded.
     func update(schedule: String,
                 metadata: [String: String]?,
                 phases: [[String: Any]]?,
@@ -60,7 +60,7 @@ public protocol SubscriptionScheduleRoutes: StripeAPIRoute {
     ///  - schedule: The identifier of the subscription schedule to be canceled.
     ///  - invoiceNow: If the subscription schedule is `active`, indicates whether or not to generate a final invoice that contains any un-invoiced metered usage and new/pending proration invoice items. Defaults to `true`.
     ///  - prorate: If the subscription schedule is `active`, indicates if the cancellation should be prorated. Defaults to `true`.
-    ///  - expand: An array of properties to expand.
+    ///  - expand: Specifies which fields in the response should be expanded.
     func cancel(schedule: String,
                 invoiceNow: Bool?,
                 prorate: Bool?,
@@ -71,7 +71,7 @@ public protocol SubscriptionScheduleRoutes: StripeAPIRoute {
     /// - Parameters:
     ///  - schedule: The identifier of the subscription schedule to be released.
     ///  - preserveCancelDate: Keep any cancellation on the subscription that the schedule has set
-    ///  - expand: An array of properties to expand.
+    ///  - expand: Specifies which fields in the response should be expanded.
     func release(schedule: String,
                  preserveCancelDate: Bool?,
                  expand: [String]?) async throws -> SubscriptionSchedule

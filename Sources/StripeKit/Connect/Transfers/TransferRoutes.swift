@@ -20,7 +20,7 @@ public protocol TransferRoutes: StripeAPIRoute {
     ///   - sourceTransaction: You can use this parameter to transfer funds from a charge before they are added to your available balance. A pending balance will transfer immediately but the funds will not become available until the original charge becomes available. See the Connect documentation for details.
     ///   - sourceType: The source balance to use for this transfer. One of `bank_account`, `fpx` or `card`. For most users, this will default to `card`.
     ///   - transferGroup: A string that identifies this transaction as part of a group. See the Connect documentation for details.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a transfer object if there were no initial errors with the transfer creation (e.g., insufficient funds).
     func create(amount: Int,
                 currency: Currency,
@@ -35,7 +35,7 @@ public protocol TransferRoutes: StripeAPIRoute {
     /// Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
     ///
     /// - Parameter transfer: The identifier of the transfer to be retrieved.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a transfer object if a valid identifier was provided, and returns an error otherwise.
     func retrieve(transfer: String, expand: [String]?) async throws -> Transfer
     
@@ -46,7 +46,7 @@ public protocol TransferRoutes: StripeAPIRoute {
     ///   - transfer: The ID of the transfer to be updated.
     ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the transfer object if the update succeeded. This call will return an error if update parameters are invalid.
     func update(transfer: String,
                 description: String?,

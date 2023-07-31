@@ -13,13 +13,13 @@ public protocol CapabilitiesRoutes: StripeAPIRoute {
     /// Retrieves information about the specified Account Capability.
     /// - Parameters:
     ///   - capability: The ID of an account capability to retrieve.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     func retrieve(capability: String, expand: [String]?) async throws -> Capability
     
     /// Updates an existing Account Capability.
     /// - Parameter capability: The ID of an account capability to update.
     /// - Parameter requested: Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     func update(capability: String, requested: Bool?, expand: [String]?) async throws -> Capability
     
     /// Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.

@@ -21,7 +21,7 @@ public protocol IssuingCardRoutes: StripeAPIRoute {
     ///   - replacementReason: If `replacement_for` is specified, this should indicate why that card is being replaced.
     ///   - shipping: The address where the card will be shipped.
     ///   - spendingControls: Spending rules that give you some control over how your cards can be used. Refer to our authorizations documentation for more details.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an Issuing Card object if creation succeeds.
     func create(cardholder: String,
                 currency: Currency,
@@ -37,7 +37,7 @@ public protocol IssuingCardRoutes: StripeAPIRoute {
     /// Retrieves an Issuing `Card` object.
     ///
     /// - Parameter card: The identifier of the card to be retrieved.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an Issuing `Card` object if a valid identifier was provided. When requesting the ID of a card that has been deleted, a subset of the card’s information will be returned, including a `deleted` property, which will be true.
     func retrieve(card: String, expand: [String]?) async throws -> IssuingCard
     
@@ -50,7 +50,7 @@ public protocol IssuingCardRoutes: StripeAPIRoute {
     ///   - status: Dictates whether authorizations can be approved on this card. If this card is being canceled because it was lost or stolen, this information should be provided as `cancellation_reason`.
     ///   - pin: The desired new PIN for this card.
     ///   - spendingControls: Spending rules that give you some control over how your cards can be used. Refer to our authorizations documentation for more details. This will be unset if you POST an empty value.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an updated Issuing Card object if a valid identifier was provided.
     func update(card: String,
                 cancellationReason: IssuingCardCancellationReason?,
@@ -69,28 +69,28 @@ public protocol IssuingCardRoutes: StripeAPIRoute {
     /// Updates the shipping status of the specified Issuing `Card` object to shipped.
     /// - Parameters:
     ///   - card: The identifier of the issued card to update.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an updated Issuing `Card` object.
     func ship(card: String, expand: [String]?) async throws -> IssuingCard
     
     /// Updates the shipping status of the specified Issuing `Card` object to `delivered`.
     /// - Parameters:
     ///   - card: The identifier of the issued card to update.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an updated Issuing `Card` object.
     func deliver(card: String, expand: [String]?) async throws -> IssuingCard
     
     /// Updates the shipping status of the specified Issuing `Card` object to `returned`.
     /// - Parameters:
     ///   - card: The identifier of the issued card to update.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an updated Issuing `Card` object.
     func `return`(card: String, expand: [String]?) async throws -> IssuingCard
     
     /// Updates the shipping status of the specified Issuing `Card` object to `failure`.
     /// - Parameters:
     ///   - card: The identifier of the issued card to update.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an updated Issuing `Card` object.
     func fail(card: String, expand: [String]?) async throws -> IssuingCard
 }

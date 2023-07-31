@@ -49,7 +49,7 @@ public protocol SubscriptionRoutes: StripeAPIRoute {
     ///   - trialFromPlan: Indicates if a plan’s `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to false. Setting this flag to true together with `trial_end` is not allowed.
     ///   - trialPeriodDays: Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan.
     ///   - trialSettings: Settings related to subscription trials.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: The newly created Subscription object, if the call succeeded. If the attempted charge fails, the subscription is created in an incomplete status.
     func create(customer: String,
                 items: [[String: Any]],
@@ -88,7 +88,7 @@ public protocol SubscriptionRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - id: ID of the subscription to retrieve.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the subscription object.
     func retrieve(id: String, expand: [String]?) async throws -> Subscription
     
@@ -139,7 +139,7 @@ public protocol SubscriptionRoutes: StripeAPIRoute {
     ///   - trialEnd: Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, `trial_end` will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer’s trial immediately. Can be at most two years from `billing_cycle_anchor`.
     ///   - trialFromPlan: Indicates if a plan’s `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to true together with `trial_end` is not allowed.
     ///   - trialSettings: Settings related to subscription trials.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: The newly updated Subscription object, if the call succeeded. If `payment_behavior` is `error_if_incomplete` and a charge is required for the update and it fails, this call returns an error, and the subscription update does not go into effect.
     func update(subscription: String,
                 cancelAtPeriodEnd: Bool?,
@@ -178,7 +178,7 @@ public protocol SubscriptionRoutes: StripeAPIRoute {
     ///   - billingCycleAnchor: Either `now` or `unchanged`. Setting the value to `now` resets the subscription’s billing cycle anchor to the current time (in UTC). Setting the value to `unchanged` advances the subscription’s billing cycle anchor to the period that surrounds the current time. For more information, see the billing cycle documentation.
     ///   - prorationBehavior: Determines how to handle prorations when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item’s `quantity` changes. The default value is `create_prorations`.
     ///   - prorationDate: If set, the proration will be calculated as though the subscription was resumed at the given time. This can be used to apply exactly the same proration that was previewed with upcoming invoice endpoint.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: The subscription object.
     func resume(subscription: String,
                 billingCycleAnchor: String?,
@@ -197,7 +197,7 @@ public protocol SubscriptionRoutes: StripeAPIRoute {
     ///   - cancellationDetails: Details about why this subscription was cancelled.
     ///   - invoiceNow: Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
     ///   - prorate: Will generate a proration invoice item that credits remaining unused time until the subscription period end.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: The canceled ``Subscription`` object. Its subscription status will be set to `canceled`.
     func cancel(subscription: String,
                 cancellationDetails: [String: Any]?,

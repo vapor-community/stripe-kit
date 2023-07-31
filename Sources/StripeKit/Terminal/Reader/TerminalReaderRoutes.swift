@@ -127,7 +127,7 @@ public protocol TerminalReaderRoutes: StripeAPIRoute {
     ///   - type: Simulated payment type.
     ///   - amountTip: Simulated on-reader tip amount.
     ///   - interacPresent: Simulated data for the `interac_present` payment method.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an updated ``TerminalReader`` resource.
     func simulatePresentPaymentMethod(reader: String,
                                       cardPresent: [String: Any]?,

@@ -11,7 +11,7 @@ import NIOHTTP1
 public protocol EarlyFraudWarningRoutes: StripeAPIRoute {
     /// Retrieves the details of an early fraud warning that has previously been created.
     /// - Parameter earlyFraudWarning: The identifier of the early fraud warning to be retrieved.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     func retrieve(earlyFraudWarning: String, expand: [String]?) async throws -> EarlyFraudWarning
     
     /// Returns a list of early fraud warnings.

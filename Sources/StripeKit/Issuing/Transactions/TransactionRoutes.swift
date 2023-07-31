@@ -12,7 +12,7 @@ public protocol TransactionRoutes: StripeAPIRoute {
     /// Retrieves an Issuing Transaction object.
     ///
     /// - Parameter transaction: The ID of the transaction to retrieve.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an Issuing Transaction object if a valid identifier was provided.
     func retrieve(transaction: String, expand: [String]?) async throws -> Transaction
     
@@ -21,7 +21,7 @@ public protocol TransactionRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - transaction: The identifier of the transaction to update.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an updated Issuing Transaction object if a valid identifier was provided.
     func update(transaction: String, metadata: [String: String]?, expand: [String]?) async throws -> Transaction
     

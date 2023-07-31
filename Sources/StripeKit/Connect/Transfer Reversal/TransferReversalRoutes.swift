@@ -21,7 +21,7 @@ public protocol TransferReversalRoutes: StripeAPIRoute {
     ///   - description: An arbitrary string which you can attach to a reversal object. It is displayed alongside the reversal in the Dashboard. This will be unset if you POST an empty value. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     ///   - refundApplicationFee: Boolean indicating whether the application fee should be refunded when reversing this transfer. If a full transfer reversal is given, the full application fee will be refunded. Otherwise, the application fee will be refunded with an amount proportional to the amount of the transfer reversed.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a transfer reversal object if the reversal succeeded. Returns an error if the transfer has already been reversed or an invalid transfer identifier was provided.
     func create(id: String,
                 amount: Int?,
@@ -35,7 +35,7 @@ public protocol TransferReversalRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - id: ID of reversal to retrieve.
     ///   - reversal: ID of the transfer reversed.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the reversal object.
     func retrieve(id: String, transfer: String, expand: [String]?) async throws -> TransferReversal
     
@@ -47,7 +47,7 @@ public protocol TransferReversalRoutes: StripeAPIRoute {
     ///   - id: ID of reversal to retrieve.
     ///   - transfer: ID of the transfer reversed.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the reversal object if the update succeeded. This call will return an error if update parameters are invalid.
     func update(id: String,
                 transfer: String,

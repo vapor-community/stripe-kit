@@ -12,14 +12,14 @@ public protocol ReviewRoutes: StripeAPIRoute {
     /// Approves a `Review` object, closing it and removing it from the list of reviews.
     ///
     /// - Parameter review: The identifier of the review to be approved.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the approved Review object.
     func approve(review: String, expand: [String]?) async throws -> Review
     
     /// Retrieves a Review object.
     ///
     /// - Parameter review: The identifier of the review to be retrieved.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a Review object if a valid identifier was provided.
     func retrieve(review: String, expand: [String]?) async throws -> Review
     
