@@ -490,21 +490,38 @@ public enum ChargePaymentMethodDetailsType: String, Codable {
     case achCreditTransfer = "ach_credit_transfer"
     case achDebit = "ach_debit"
     case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
     case alipay
     case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
     case bancontact
+    case blik
+    case boleto
     case card
     case cardPresent = "card_present"
+    case cashapp
+    case customerBalance = "customer_balance"    
     case eps
+    case fpx
     case giropay
+    case grabpay
     case ideal
+    case interacPresent = "interac_present"
     case klarna
+    case konbini
     case multibanco
+    case oxxo
     case p24
+    case paynow
+    case pix
+    case promptpay
     case sepaDebit = "sepa_debit"
     case sofort
     case stripeAccount = "stripe_account"
+    case usBankAccount = "us_bank_account"
     case wechat
+    case wechatPay = "wechat_pay"
 }
 
 public struct ChrageRadarOptions: Codable {
