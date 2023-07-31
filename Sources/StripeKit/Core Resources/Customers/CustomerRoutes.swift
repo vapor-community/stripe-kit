@@ -71,6 +71,7 @@ public protocol CustomerRoutes: StripeAPIRoute {
     /// This request accepts mostly the same arguments as the customer creation call.
     ///
     /// - Parameters:
+    ///   - customer: The id of the customer
     ///   - address: The customer’s address.
     ///   - description: An arbitrary string that you can attach to a customer object. It is displayed alongside the customer in the dashboard.
     ///   - email: Customer’s email address. It’s displayed alongside the customer in your dashboard and can be useful for searching and tracking. This may be up to 512 characters.
@@ -92,7 +93,8 @@ public protocol CustomerRoutes: StripeAPIRoute {
     ///   - taxExempt: The customer’s tax exemption. One of none, exempt, or reverse.
     ///   - expand: An array of properties to expand.
     /// - Returns: Returns the customer object if the update succeeded. Returns an error if create parameters are invalid (e.g. specifying an invalid coupon or an invalid source).
-    func update(address: [String: Any]?,
+    func update(customer: String,
+                address: [String: Any]?,
                 description: String?,
                 email: String?,
                 metadata: [String: String]?,
@@ -275,7 +277,8 @@ public struct StripeCustomerRoutes: CustomerRoutes {
         return try await apiHandler.send(method: .GET, path: self.customer + customer, query: queryParams, headers: headers)
     }
     
-    public func update(address: [String: Any]? = nil,
+    public func update(customer: String,
+                       address: [String: Any]? = nil,
                        description: String? = nil,
                        email: String? = nil,
                        metadata: [String: String]? = nil,
