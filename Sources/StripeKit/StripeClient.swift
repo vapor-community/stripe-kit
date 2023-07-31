@@ -25,6 +25,7 @@ public final class StripeClient {
     public var payouts: PayoutRoutes
     public var refunds: RefundRoutes
     public var tokens: TokenRoutes
+    public var ephemeralKeys: EphemeralKeyRoutes
     
     // MARK: - PAYMENT METHODS
     public var paymentMethods: PaymentMethodRoutes
@@ -142,6 +143,7 @@ public final class StripeClient {
         payouts = StripePayoutRoutes(apiHandler: handler)
         refunds = StripeRefundRoutes(apiHandler: handler)
         tokens = StripeTokenRoutes(apiHandler: handler)
+        ephemeralKeys = StripeEphemeralKeyRoutes(apiHandler: handler)
         
         paymentMethods = StripePaymentMethodRoutes(apiHandler: handler)
         bankAccounts = StripeBankAccountRoutes(apiHandler: handler)
