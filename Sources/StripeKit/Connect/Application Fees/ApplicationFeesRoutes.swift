@@ -13,7 +13,7 @@ public protocol ApplicationFeesRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - fee: The identifier of the fee to be retrieved.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an application fee object if a valid identifier was provided, and returns an error otherwise.
     func retrieve(fee: String, expand: [String]?) async throws -> ApplicationFee
     

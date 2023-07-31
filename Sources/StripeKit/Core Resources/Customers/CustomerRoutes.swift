@@ -33,7 +33,7 @@ public protocol CustomerRoutes: StripeAPIRoute {
     ///   - taxExempt: The customer’s tax exemption. One of none, exempt, or reverse.
     ///   - taxIdData: The customer’s tax IDs.
     ///   - testClock: ID of the test clock to attach to the customer.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the customer object if the update succeeded. Returns an error if create parameters are invalid (e.g. specifying an invalid coupon or an invalid source).
     func create(address: [String: Any]?,
                 description: String?,
@@ -62,7 +62,7 @@ public protocol CustomerRoutes: StripeAPIRoute {
     /// Retrieves a Customer object.
     /// - Parameters:
     ///   - customer: The id of the customer
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the Customer object for a valid identifier. If it’s for a deleted Customer, a subset of the customer’s information is returned, including a deleted property that’s set to true.
     func retrieve(customer: String, expand: [String]?) async throws -> Customer
     
@@ -91,7 +91,7 @@ public protocol CustomerRoutes: StripeAPIRoute {
     ///   - source: When using payment sources created via the Token or Sources APIs, passing source will create a new source object, make it the new customer default source, and delete the old customer default if one exists. If you want to add additional sources instead of replacing the existing default, use the card creation API. Whenever you attach a card to a customer, Stripe will automatically validate the card.
     ///   - tax: Tax details about the customer.
     ///   - taxExempt: The customer’s tax exemption. One of none, exempt, or reverse.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the customer object if the update succeeded. Returns an error if create parameters are invalid (e.g. specifying an invalid coupon or an invalid source).
     func update(customer: String,
                 address: [String: Any]?,
@@ -132,7 +132,7 @@ public protocol CustomerRoutes: StripeAPIRoute {
     ///   - query: The search query string. See search query language and the list of supported query fields for customers.
     ///   - limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
     ///   - page: A cursor for pagination across multiple pages of results. Don’t include this parameter on the first call. Use the `next_page` value returned in a previous response to request subsequent results.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: A dictionary with a data property that contains an array of up to limit customers. If no objects match the query, the resulting array will be empty. See the related guide on expanding properties in lists.
     func search(query: String, limit: Int?, page: String?, expand: [String]?) async throws -> CustomerSearchResult
 }

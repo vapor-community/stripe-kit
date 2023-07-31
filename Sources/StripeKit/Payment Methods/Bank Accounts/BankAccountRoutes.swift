@@ -15,7 +15,7 @@ public protocol BankAccountRoutes: StripeAPIRoute {
     ///   - customer: The ID of the customer to attach this bank account to.
     ///   - source: Either a token, like the ones returned by Stripe.js, or a dictionary containing a user’s bank account details (with the options shown below).
     ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the bank account in a structured format.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the bank account object.
     func create(customer: String,
                 source: Any,
@@ -27,7 +27,7 @@ public protocol BankAccountRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - id: ID of bank account to retrieve.
     ///   - customer: The ID of the customer this source belongs to.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the bank account object.
     func retrieve(id: String, customer: String, expand: [String]?)  async throws -> BankAccount
     
@@ -39,7 +39,7 @@ public protocol BankAccountRoutes: StripeAPIRoute {
     ///   - accountHolderName: The name of the person or business that owns the bank account.
     ///   - accountHolderType: The type of entity that holds the account. This can be either `individual` or `company`.
     ///   - metadata: A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the bank account in a structured format.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the bank account object.
     func update(id: String,
                 customer: String,
@@ -54,7 +54,7 @@ public protocol BankAccountRoutes: StripeAPIRoute {
     ///   - id: The ID of the source to be verified.
     ///   - customer: The ID of the customer this source belongs to.
     ///   - amounts: Two positive integers, in cents, equal to the values of the microdeposits sent to the bank account.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the bank account object with a `status` of **verified**.
     func verify(id: String, customer: String, amounts: [Int]?, expand: [String]?) async throws -> BankAccount
     

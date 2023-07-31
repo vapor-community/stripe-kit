@@ -31,7 +31,7 @@ public protocol InvoiceItemRoutes: StripeAPIRoute {
     ///   - taxRates: The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
     ///   - unitAmount: The integer unit amount in cents of the charge to be applied to the upcoming invoice. This `unit_amount` will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer’s account, pass a negative `unit_amount`.
     ///   - unitAmountDecimal: Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: The created invoice item object is returned if successful. Otherwise, this call returns an error.
     func create(customer: String,
                 amount: Int?,
@@ -57,7 +57,7 @@ public protocol InvoiceItemRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - invoiceItem: The ID of the desired invoice item.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an invoice item if a valid invoice item ID was provided. Returns an error otherwise.
     func retrieve(invoiceItem: String, expand: [String]?) async throws -> InvoiceItem
     
@@ -79,7 +79,7 @@ public protocol InvoiceItemRoutes: StripeAPIRoute {
     ///   - taxRates: The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
     ///   - unitAmount: The integer unit amount in cents of the charge to be applied to the upcoming invoice. This `unit_amount` will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer’s account, pass a negative `unit_amount`.
     ///   - unitAmountDecimal: Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: The updated invoice item object is returned upon success. Otherwise, this call returns an error.
     func update(invoiceItem: String,
                 amount: Int?,

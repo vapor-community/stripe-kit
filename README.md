@@ -299,6 +299,7 @@ extension StripeSignatureError: AbortError {
 * [x] Payouts
 * [x] Refunds
 * [x] Tokens
+* [x] EphemeralKeys
 ---
 ### Payment Methods
 * [x] Payment Methods

@@ -31,7 +31,7 @@ public protocol CreditNoteRoutes: StripeAPIRoute {
     ///   - refund: ID of an existing refund to link this credit note to.
     ///   - refundAmount: The integer amount in cents representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
     ///   - shippingCost: When `shipping_cost` contains the `shipping_rate` from the invoice, the `shipping_cost` is included in the credit note.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: A `StripeCreditNote`.
     func create(invoice: String,
                 lines: [[String: Any]]?,
@@ -59,7 +59,7 @@ public protocol CreditNoteRoutes: StripeAPIRoute {
     ///   - refund: ID of an existing refund to link this credit note to.
     ///   - refundAmount: The integer amount in cents representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
     ///   - shippingCost: When `shipping_cost` contains the `shipping_rate` from the invoice, the `shipping_cost` is included in the credit note.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     func preview(invoice: String,
                  lines: [[String: Any]]?,
                  memo: String?,
@@ -77,7 +77,7 @@ public protocol CreditNoteRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - id: ID of the credit note object to retrieve.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a credit note object if a valid identifier was provided.
     func retrieve(id: String, expand: [String]?) async throws -> CreditNote
     
@@ -87,7 +87,7 @@ public protocol CreditNoteRoutes: StripeAPIRoute {
     ///   - id: ID of the credit note object to update.
     ///   - memo: Credit note memo. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the updated credit note object if the call succeeded.
     func update(id: String, memo: String?, metadata: [String: String]?, expand: [String]?) async throws -> CreditNote
     
@@ -108,7 +108,7 @@ public protocol CreditNoteRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - id: ID of the credit note object to void.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     func void(id: String, expand: [String]?) async throws -> CreditNote
     
     /// Returns a list of credit notes.

@@ -30,7 +30,7 @@ public protocol PriceRoutes: StripeAPIRoute {
     ///   - transferLookupKey: If set to true, will atomically remove the lookup key from the existing price, and assign it to this price.
     ///   - transformQuantity: Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
     ///   - unitAmountDecimal: Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    ///  - expand: An array of properties to expand.
+    ///  - expand: Specifies which fields in the response should be expanded.
     func create(currency: Currency,
                 product: String?,
                 unitAmount: Int?,
@@ -53,7 +53,7 @@ public protocol PriceRoutes: StripeAPIRoute {
     
     /// Retrieves the price with the given ID.
     /// - Parameter price: The ID of the price to retrieve.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     func retrieve(price: String, expand: [String]?) async throws -> Price
     
     /// Updates the specified price by setting the values of the parameters passed. Any parameters not provided are left unchanged.
@@ -65,7 +65,7 @@ public protocol PriceRoutes: StripeAPIRoute {
     ///   - currencyOptions: Prices defined in each available currency option. Each key must be a three-letter ISO currency code and a supported currency. For example, to define your price in `eur`, pass the fields below in the `eur` key of `currency_options`.
     ///   - lookupKey: A lookup key used to retrieve prices dynamically from a static string.
     ///   - transferLookupKey: If set to true, will atomically remove the lookup key from the existing price, and assign it to this price.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     func update(price: String,
                 active: Bool?,
                 metadata: [String: String]?,

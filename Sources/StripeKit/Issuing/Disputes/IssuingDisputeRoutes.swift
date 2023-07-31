@@ -16,7 +16,7 @@ public protocol IssuingDisputeRoutes: StripeAPIRoute {
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     ///   - transaction: The ID of the issuing transaction to create a dispute for.
     ///   - amount: Amount to dispute, defaults to full value, given in the currency the transaction was made in.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an Issuing `Dispute` object in `unsubmitted` status if creation succeeds.
     func create(evidence: [String: Any]?,
                 metadata: [String: String]?,
@@ -28,7 +28,7 @@ public protocol IssuingDisputeRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - dispute: The ID of the dispute to submit.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an Issuing `Dispute` object in `submitted` status if submission succeeds.
     func submit(dispute: String,
                 metadata: [String: String]?,
@@ -37,7 +37,7 @@ public protocol IssuingDisputeRoutes: StripeAPIRoute {
     /// Retrieves an Issuing Dispute object.
     ///
     /// - Parameter dispute: The ID of the dispute to retrieve.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an Issuing `Dispute` object if a valid identifier was provided.
     func retrieve(dispute: String, expand: [String]?) async throws -> IssuingDispute
     
@@ -48,7 +48,7 @@ public protocol IssuingDisputeRoutes: StripeAPIRoute {
     ///   - evidence: Evidence provided for the dispute.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     ///   - amount: The dispute amount in the card’s currency and in the smallest currency unit.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an updated Issuing `Dispute` object if a valid identifier was provided.
     func update(dispute: String,
                 evidence: [String: Any]?,

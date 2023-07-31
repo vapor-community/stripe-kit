@@ -15,7 +15,7 @@ public protocol CustomerTaxIDRoutes: StripeAPIRoute {
     ///   - customer: ID of the customer.
     ///   - type: Type of the tax ID.
     ///   - value: Value of the tax ID.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: The created ``TaxID`` object.
     func create(customer: String,
                 type: TaxIDType,
@@ -27,7 +27,7 @@ public protocol CustomerTaxIDRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - id: Unique identifier of the TaxID object to retrieve.
     ///   - customer: ID of the customer.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a ``TaxID`` object if a valid identifier was provided.
     func retrieve(id: String, customer: String, expand: [String]?) async throws -> TaxID
     

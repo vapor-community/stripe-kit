@@ -39,7 +39,7 @@ public protocol PersonRoutes: StripeAPIRoute {
     ///   - politicalExposure: Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
     ///   - registeredAddress: The person’s registered address.
     ///   - verification: The person’s verification status.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a person object.
     func create(account: String,
                 address: [String: Any]?,
@@ -75,7 +75,7 @@ public protocol PersonRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - account: The unique identifier of the account the person is associated with.
     ///   - person: The ID of a person to retrieve.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a person object.
     func retrieve(account: String, person: String, expand: [String]?) async throws -> Person
     
@@ -109,7 +109,7 @@ public protocol PersonRoutes: StripeAPIRoute {
     ///   - politicalExposure: Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
     ///   - registeredAddress: The person’s registered address.
     ///   - verification: The person’s verification status.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a person object.
     func update(account: String,
                 person: String,

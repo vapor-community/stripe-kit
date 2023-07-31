@@ -16,7 +16,7 @@ public protocol ExternalAccountsRoutes: StripeAPIRoute {
     ///   - externalAccount: Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js/reference), or a dictionary containing a user’s bank account details
     ///   - metadata: A set of key-value pairs that you can attach to an external account object. It can be useful for storing additional information about the external account in a structured format.
     ///   - defaultForCurrency: When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the bank account object.
     func createBankAccount(account: String,
                            externalAccount: Any,
@@ -29,7 +29,7 @@ public protocol ExternalAccountsRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - account: The connect account associated with this bank account.
     ///   - id: The ID of the bank account to retrieve.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the bank account object.
     func retrieveBankAccount(account: String,
                              id: String,
@@ -48,7 +48,7 @@ public protocol ExternalAccountsRoutes: StripeAPIRoute {
     ///   - accountHolderType: The type of entity that holds the account. This can be either `individual` or `company`. This will be unset if you POST an empty value.
     ///   - accountType: The bank account type. This can only be checking or savings in most countries. In Japan, this can only be futsu or toza.
     ///   - documents: Documents that may be submitted to satisfy various informational requests.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the bank account object.
     func updateBankAccount(account: String,
                            id: String,
@@ -89,7 +89,7 @@ public protocol ExternalAccountsRoutes: StripeAPIRoute {
     ///   - externalAccount: Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js/reference), or a dictionary containing a user’s card details.
     ///   - metadata: A set of key-value pairs that you can attach to an external account object. It can be useful for storing additional information about the external account in a structured format.
     ///   - defaultForCurrency: When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the card object.
     func createCard(account: String,
                     externalAccount: Any,
@@ -102,7 +102,7 @@ public protocol ExternalAccountsRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - account: The connect account associated with this card.
     ///   - id: The ID of the card to retrieve.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the card object.
     func retrieveCard(account: String, id: String, expand: [String]?) async throws -> Card
     
@@ -121,7 +121,7 @@ public protocol ExternalAccountsRoutes: StripeAPIRoute {
     ///   - expMonth: Two digit number representing the card’s expiration month.
     ///   - expYear: Four digit number representing the card’s expiration year.
     ///   - name: Cardholder name. This will be unset if you POST an empty value.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the card object.
     func updateCard(account: String,
                     id: String,

@@ -19,7 +19,7 @@ public protocol TopUpRoutes: StripeAPIRoute {
     ///   - source: The ID of a source to transfer funds from. For most users, this should be left unspecified which will use the bank account that was set up in the dashboard for the specified currency. In test mode, this can be a test bank token (see [Testing Top-ups](https://stripe.com/docs/connect/testing#testing-top-ups)).
     ///   - statementDescriptor: Extra information about a top-up for the source’s bank statement. Limited to 15 ASCII characters.
     ///   - transferGroup: A string that identifies this top-up as part of a group.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the top-up object.
     func create(amount: Int,
                 currency: Currency,
@@ -33,7 +33,7 @@ public protocol TopUpRoutes: StripeAPIRoute {
     /// Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
     ///
     /// - Parameter topup: The ID of the top-up to retrieve.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a top-up if a valid identifier was provided, and returns an error otherwise.
     func retrieve(topup: String, expand: [String]?) async throws -> TopUp
     
@@ -43,7 +43,7 @@ public protocol TopUpRoutes: StripeAPIRoute {
     ///   - topup: The ID of the top-up to retrieve.
     ///   - description: An arbitrary string attached to the object. Often useful for displaying to users. This will be unset if you POST an empty value.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: The newly updated top-up object if the call succeeded. Otherwise, this call returns an error.
     func update(topup: String,
                 description: String?,
@@ -59,7 +59,7 @@ public protocol TopUpRoutes: StripeAPIRoute {
     /// Cancels a top-up. Only pending top-ups can be canceled.
     ///
     /// - Parameter topup: The ID of the top-up to cancel.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the canceled top-up. If the top-up is already canceled or can’t be canceled, an error is returned.
     func cancel(topup: String, expand: [String]?) async throws -> TopUp
 }

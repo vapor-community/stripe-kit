@@ -106,7 +106,7 @@ public protocol PaymentIntentRoutes: StripeAPIRoute {
     ///   - paymentMethodTypes: The list of payment method types that this PaymentIntent is allowed to use. If this is not provided, defaults to `[“card”]`. Valid payment method types include: `card` and `card_present`.
     ///   - transferData: The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents Connect usage guide.
     ///   - transferGroup: A string that identifies the resulting payment as part of a group. See the PaymentIntents Connect usage guide for details.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a PaymentIntent object.
     func update(intent: String,
                 amount: Int?,
@@ -146,7 +146,7 @@ public protocol PaymentIntentRoutes: StripeAPIRoute {
     ///   - radarOptions: Options to configure Radar. See Radar Session for more information.
     ///   - returnUrl: The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method’s app or site. If you’d prefer to redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter is only used for cards and other redirect-based payment methods.
     ///   - useStripeSDK: Set to true only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the resulting PaymentIntent after all possible transitions are applied.
     func confirm(intent: String,
                  paymentMethod: String?,
@@ -179,7 +179,7 @@ public protocol PaymentIntentRoutes: StripeAPIRoute {
     ///   - statementDescriptor: For non-card charges, you can use this value as the complete description that appears on your customers’ statements. Must contain at least one letter, maximum 22 characters.
     ///   - statementDescriptorSuffix: Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
     ///   - transferData: The parameters used to automatically create a Transfer when the payment is captured. For more information, see the PaymentIntents use case for connected accounts.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: A `PaymentIntent`.
     func capture(intent: String,
                  amountToCapture: Int?,
@@ -197,7 +197,7 @@ public protocol PaymentIntentRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - intent: ID of the paymentintent to cancel.
     ///   - cancellationReason: Reason for canceling this PaymentIntent. If set, possible values are `duplicate`, `fraudulent`, `requested_by_customer`, or `failed_invoice`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a PaymentIntent object if the cancellation succeeded. Returns an error if the PaymentIntent has already been canceled or is not in a cancelable state.
     func cancel(intent: String, cancellationReason: PaymentIntentCancellationReason?, expand: [String]?) async throws -> PaymentIntent
     

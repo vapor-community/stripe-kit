@@ -27,7 +27,7 @@ public protocol SetupIntentsRoutes: StripeAPIRoute {
     ///   - paymentMethodOptions: Payment-method-specific configuration for this SetupIntent.
     ///   - returnUrl: The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method’s app or site. If you’d prefer to redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with `confirm=true`.
     ///   - singleUse: If this hash is populated, this SetupIntent will generate a `single_use` Mandate on success.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     func create(confirm: Bool?,
                 customer: String?,
                 description: String?,
@@ -49,7 +49,7 @@ public protocol SetupIntentsRoutes: StripeAPIRoute {
     /// Retrieves the details of a SetupIntent that has previously been created.
     /// - Parameter intent: ID of the SetupIntent to retrieve.
     /// - Parameter clientSecret: The client secret of the SetupIntent. Required if a publishable key is used to retrieve the SetupIntent.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     func retrieve(intent: String, clientSecret: String?, expand: [String]?) async throws -> SetupIntent
     
     /// Updates a SetupIntent object.
@@ -64,7 +64,7 @@ public protocol SetupIntentsRoutes: StripeAPIRoute {
     ///   - flowDirections: Indicates the directions of money movement for which this payment method is intended to be used. Include inbound if you intend to use the payment method as the origin to pull funds from. Include outbound if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
     ///   - paymentMethodData: When included, this hash creates a PaymentMethod that is set as the payment_method value in the SetupIntent.
     ///   - paymentMethodOptions: Payment-method-specific configuration for this SetupIntent.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     func update(intent: String,
                 customer: String?,
                 description: String?,
@@ -87,7 +87,7 @@ public protocol SetupIntentsRoutes: StripeAPIRoute {
     ///   - mandateData: This hash contains details about the Mandate to create
     ///   - paymentMethodOptions: Payment-method-specific configuration for this SetupIntent.
     ///   - returnUrl: The URL to redirect your customer back to after they authenticate on the payment method’s app or site. If you’d prefer to redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter is only used for cards and other redirect-based payment methods.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     func confirm(intent: String,
                  paymentMethod: String?,
                  mandateData: [String: Any]?,
@@ -100,7 +100,7 @@ public protocol SetupIntentsRoutes: StripeAPIRoute {
     /// Once canceled, setup is abandoned and any operations on the SetupIntent will fail with an error.
     /// - Parameter intent: ID of the SetupIntent to retrieve.
     /// - Parameter cancellationReason: Reason for canceling this SetupIntent. Possible values are `abandoned`, `requested_by_customer`, or `duplicate`.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     func cancel(intent: String, cancellationReason: SetupIntentCancellationReason?, expand: [String]?) async throws -> SetupIntent
     
     /// Returns a list of SetupIntents.
@@ -113,7 +113,7 @@ public protocol SetupIntentsRoutes: StripeAPIRoute {
     ///   - intent: Id of the setup intent
     ///   - amounts: Two positive integers, in cents, equal to the values of the microdeposits sent to the bank account.
     ///   - descriptorCode: A six-character code starting with SM present in the microdeposit sent to the bank account.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a SetupIntent object.
     func verifyMicrodeposits(intent: String,
                              amounts: [Int]?,

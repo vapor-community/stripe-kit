@@ -41,7 +41,7 @@ public protocol InvoiceRoutes: StripeAPIRoute {
     ///   - shippingDetails: Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is set, otherwise the PDF will render the shipping address from the customer.
     ///   - statementDescriptor: Extra information about a charge for the customer’s credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item’s product’s `statement_descriptor`.
     ///   - transferData: If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice’s charge.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the invoice object. Returns an error if the customer ID provided is invalid.
     func create(autoAdvance: Bool?,
                 collectionMethod: InvoiceCollectionMethod?,
@@ -76,7 +76,7 @@ public protocol InvoiceRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - invoice: The identifier of the desired invoice.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an invoice object if a valid invoice ID was provided. Returns an error otherwise.
     ///
     /// The invoice object contains a `lines` hash that contains information about the subscriptions and invoice items that have been applied to the invoice, as well as any prorations that Stripe has automatically calculated. Each line on the invoice has an `amount` attribute that represents the amount actually contributed to the invoice’s total. For invoice items and prorations, the amount attribute is the same as for the invoice item or proration respectively. For subscriptions, the amount may be different from the plan’s regular price depending on whether the invoice covers a trial period or the invoice period differs from the plan’s usual interval.
@@ -110,7 +110,7 @@ public protocol InvoiceRoutes: StripeAPIRoute {
     ///   - shippingDetails: Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is set, otherwise the PDF will render the shipping address from the customer.
     ///   - statementDescriptor: Extra information about a charge for the customer’s credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item’s product’s `statement_descriptor`.
     ///   - transferData: If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice’s charge. This will be unset if you POST an empty value.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the invoice object.
     func update(invoice: String,
                 autoAdvance: Bool?,
@@ -148,7 +148,7 @@ public protocol InvoiceRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - invoice: The invoice to be finalized, it must have `status=draft`.
     ///   - autoAdvance: Controls whether Stripe will perform automatic collection of the invoice. When false, the invoice’s state will not automatically advance without an explicit action.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns an invoice object with `status=open`.
     func finalize(invoice: String, autoAdvance: Bool?, expand: [String]?) async throws -> Invoice
     
@@ -162,7 +162,7 @@ public protocol InvoiceRoutes: StripeAPIRoute {
     ///   - paidOutOfBand: Boolean representing whether an invoice is paid outside of Stripe. This will result in no charge being made.
     ///   - paymentMethod: A PaymentMethod to be charged. The PaymentMethod must be the ID of a PaymentMethod belonging to the customer associated with the invoice being paid.
     ///   - source: A payment source to be charged. The source must be the ID of a source belonging to the customer associated with the invoice being paid.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the invoice object.
     func pay(invoice: String,
              forgive: Bool?,
@@ -179,7 +179,7 @@ public protocol InvoiceRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - invoice: The invoice you would like to send. The billing mode for this invoice must be `send_invoice`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the invoice object.
     func send(invoice: String, expand: [String]?) async throws -> Invoice
     
@@ -187,7 +187,7 @@ public protocol InvoiceRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - invoice: ID of invoice to void. It must be finalized.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the voided invoice object.
     func void(invoice: String, expand: [String]?) async throws -> Invoice
     
@@ -195,7 +195,7 @@ public protocol InvoiceRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - invoice: The identifier of the invoice to be marked as uncollectible. The invoice must be `open`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the invoice object
     func markUncollectible(invoice: String, expand: [String]?) async throws -> Invoice
     

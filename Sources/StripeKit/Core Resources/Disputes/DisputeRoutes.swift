@@ -14,7 +14,7 @@ public protocol DisputeRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - dispute: ID of dispute to retrieve.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a dispute if a valid dispute ID was provided. Returns an error otherwise.
     func retrieve(dispute: String, expand: [String]?) async throws -> Dispute
     
@@ -25,7 +25,7 @@ public protocol DisputeRoutes: StripeAPIRoute {
     ///   - evidence: Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
     ///   - metadata: A set of key-value pairs that you can attach to a dispute object. This can be useful for storing additional information about the dispute in a structured format.
     ///   - submit: Whether to immediately submit evidence to the bank. If `false`, evidence is staged on the dispute. Staged evidence is visible in the API and Dashboard, and can be submitted to the bank by making another request with this attribute set to `true` (the default).
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the dispute object.
     func update(dispute: String,
                 evidence: [String: Any]?,
@@ -39,7 +39,7 @@ public protocol DisputeRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - dispute: ID of the dispute to close.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the dispute object.
     func close(dispute: String, expand: [String]?) async throws -> Dispute
     

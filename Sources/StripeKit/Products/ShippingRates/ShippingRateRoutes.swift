@@ -19,7 +19,7 @@ public protocol ShippingRateRoutes: StripeAPIRoute {
     ///  - deliveryEstimate: The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
     ///  - taxBehavior: Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
     ///  - taxCode: A tax code ID. The Shipping tax code is `txcd_92010001`.
-    ///  - expand: An array of properties to expand.
+    ///  - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a shipping rate object if the call succeeded.
     func create(displayName: String,
                 type: ShippingRateType,
@@ -32,7 +32,7 @@ public protocol ShippingRateRoutes: StripeAPIRoute {
     
     /// Returns the shipping rate object with the given ID.
     /// - Parameter id: The ID of the shipping rate.
-    /// - Parameter array: An array of properties to expand.
+    /// - Parameter array: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a shipping rate object if a valid identifier was provided.
     func retrieve(id: String, expand: [String]?) async throws -> ShippingRate
     
@@ -43,7 +43,7 @@ public protocol ShippingRateRoutes: StripeAPIRoute {
     ///   - fixedAmount: Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     ///   - taxBehavior: Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the modified shipping rate object if the call succeeded.
     func update(id: String,
                 active: Bool?,

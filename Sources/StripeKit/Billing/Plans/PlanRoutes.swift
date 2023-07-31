@@ -30,7 +30,7 @@ public protocol PlanRoutes: StripeAPIRoute {
     ///   - transformUsage: Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
     ///   - trialPeriodDays: Default number of trial days when subscribing a customer to this plan using `trial_from_plan=true`.
     ///   - usageType: Configures how the quantity per period should be determined, can be either `metered` or `licensed`. `licensed` will automatically bill the `quantity` set for a plan when adding it to a subscription, `metered` will aggregate the total usage based on usage records. Defaults to `licensed`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the plan object
     func create(amount: Int?,
                 currency: Currency,
@@ -55,7 +55,7 @@ public protocol PlanRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - plan: The ID of the desired plan.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a plan if a valid plan ID was provided. Returns an error otherwise.
     func retrieve(plan: String, expand: [String]?) async throws -> Plan
     
@@ -68,7 +68,7 @@ public protocol PlanRoutes: StripeAPIRoute {
     ///   - nickname: A brief description of the plan, hidden from customers. This will be unset if you POST an empty value.
     ///   - product: The product the plan belongs to. Note that after updating, statement descriptors and line items of the plan in active subscriptions will be affected.
     ///   - trialPeriodDays: Default number of trial days when subscribing a customer to this plan using `trial_from_plan=true`.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: The updated plan object is returned upon success. Otherwise, this call returns an error.
     func update(plan: String,
                 active: Bool?,

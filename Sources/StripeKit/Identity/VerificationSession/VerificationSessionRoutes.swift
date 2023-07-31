@@ -16,7 +16,7 @@ public protocol VerificationSessionRoutes: StripeAPIRoute {
     /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     /// - Parameter options: A set of options for the session’s verification checks.
     /// - Parameter returnUrl: The URL that the user will be redirected to upon completing the verification flow.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns the created ``VerificationSession`` object
     func create(type: VerificationSessionType,
                 metadata: [String: String]?,
@@ -32,7 +32,7 @@ public protocol VerificationSessionRoutes: StripeAPIRoute {
     /// Retrieves the details of a VerificationSession that was previously created.
     /// When the session status is `requires_input`, you can use this method to retrieve a valid `client_secret` or url to allow re-submission.
     /// - Parameter verificationSessionId: Id of the verification session.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     ///
     /// - Returns: Returns a ``VerificationSession`` object
     func retrieve(verificationSessionId: String, expand: [String]?) async throws -> VerificationSession
@@ -43,7 +43,7 @@ public protocol VerificationSessionRoutes: StripeAPIRoute {
     /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     /// - Parameter options: A set of options for the session’s verification checks.
     /// - Parameter type: The type of verification check to be performed.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     ///
     /// - Returns: Returns the updated ``VerificationSession`` object
     func update(verificationSessionId: String,
@@ -55,7 +55,7 @@ public protocol VerificationSessionRoutes: StripeAPIRoute {
     /// A VerificationSession object can be canceled when it is in `requires_input` status.
     /// Once canceled, future submission attempts are disabled. This cannot be undone.
     /// - Parameter verificationSessionId: Id of the verification session.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     ///
     /// - Returns: Returns the canceled ``VerificationSession`` object
     func cancel(verificationSessionId: String, expand: [String]?) async throws -> VerificationSession
@@ -68,7 +68,7 @@ public protocol VerificationSessionRoutes: StripeAPIRoute {
     ///
     /// Redaction is irreversible. Redacted objects are still accessible in the Stripe API, but all the fields that contain personal data will be replaced by the string `[redacted]` or a similar placeholder. The `metadata` field will also be erased. Redacted objects cannot be updated or used for any purpose.
     /// - Parameter verificationSessionId: Id of the verification session.
-    /// - Parameter expand: An array of properties to expand.
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
     ///
     /// - Returns: Returns the redacted ``VerificationSession`` object.
     func redact(verificationSessionId: String, expand: [String]?) async throws -> VerificationSession

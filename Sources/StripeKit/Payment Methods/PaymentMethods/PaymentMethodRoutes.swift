@@ -46,7 +46,7 @@ public protocol PaymentMethodRoutes: StripeAPIRoute {
     ///   - sofort: If this is a sofort PaymentMethod, this hash contains details about the SOFORT payment method.
     ///   - usBankAccount: If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
     ///   - wechatPay: If this is a `wechat_pay` PaymentMethod, this hash contains details about the `wechat_pay` payment method.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: A `StripePaymentMethod`.
     func create(type: PaymentMethodType,
                 billingDetails: [String: Any]?,
@@ -88,7 +88,7 @@ public protocol PaymentMethodRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - paymentMethod: The ID of the PaymentMethod.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a PaymentMethod object.
     func retrieve(paymentMethod: String, expand: [String]?) async throws -> PaymentMethod
     
@@ -101,7 +101,7 @@ public protocol PaymentMethodRoutes: StripeAPIRoute {
     ///   - card: If this is a `card` PaymentMethod, this hash contains the user’s card details.
     ///   - link: If this is a `link` PaymentMethod, this hash contains details about the Link payment method.
     ///   - usBankAccount: If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a PaymentMethod object.
     func update(paymentMethod: String,
                 billingDetails: [String: Any]?,
@@ -130,7 +130,7 @@ public protocol PaymentMethodRoutes: StripeAPIRoute {
     /// - Parameters:
     ///   - paymentMethod: The PaymentMethod to attach to the customer.
     ///   - customer: The ID of the customer to which to attach the PaymentMethod.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a PaymentMethod object.
     func attach(paymentMethod: String, customer: String, expand: [String]?) async throws -> PaymentMethod
     
@@ -138,7 +138,7 @@ public protocol PaymentMethodRoutes: StripeAPIRoute {
     ///
     /// - Parameters:
     ///   - paymentMethod: The PaymentMethod to detach from the customer.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a PaymentMethod object.
     func detach(paymentMethod: String, expand: [String]?) async throws -> PaymentMethod
 }

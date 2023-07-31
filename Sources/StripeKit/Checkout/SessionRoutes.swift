@@ -45,7 +45,7 @@ public protocol SessionRoutes {
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in `payment` mode, but not Checkout Sessions in `subscription` or `setup` mode.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation for Checkout Sessions in subscription mode.
     ///   - taxIdCollection: Controls tax ID collection settings for the session.
-    ///   - expand: An array of properties to expand.
+    ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a Session object.
     func create(lineItems: [[String: Any]]?,
                 mode: SessionMode,
