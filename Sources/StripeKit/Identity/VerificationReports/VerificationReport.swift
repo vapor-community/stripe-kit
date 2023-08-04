@@ -166,7 +166,7 @@ public enum StripeVerificationReportOptionsDocumentAllowedType: String, StripeMo
     /// Passport document type.
     case passport
     /// ID card document type.
-    case idNumber = "id_number"
+    case idCard = "id_card"
 }
 
 public struct StripeVerificationReportOptionsIdNumber: StripeModel {}
