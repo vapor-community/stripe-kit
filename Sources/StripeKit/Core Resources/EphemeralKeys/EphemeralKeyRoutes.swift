@@ -34,7 +34,7 @@ public struct StripeEphemeralKeyRoutes: EphemeralKeyRoutes {
     public var headers: HTTPHeaders = [:]
     
     private let apiHandler: StripeAPIHandler
-    private let ephemeralkeys = APIBase + APIVersion + "ephemeral_key"
+    private let ephemeralkeys = APIBase + APIVersion + "ephemeral_keys"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
