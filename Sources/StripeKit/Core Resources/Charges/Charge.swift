@@ -356,7 +356,7 @@ public struct ChargePaymentMethodDetails: Codable {
     public var alipay: ChargePaymentMethodDetailsAlipay?
     /// If this is a `au_becs_debit` payment, this hash contains a snapshot of the transaction specific details of the `au_becs_debit` payment method.
     public var auBecsDebit: ChargePaymentMethodDetailsAuBecsDebit?
-    /// If this is a `bacs_debit` payment, this hash contains a snapshot of the transaction specific details of the bacs_debit payment method.
+    /// If this is a `bacs_debit` payment, this hash contains a snapshot of the transaction specific details of the `bacs_debit` payment method.
     public var bacsDebit: ChargePaymentMethodDetailsBacsDebit?
     /// If this is a `bancontact` payment, this hash contains a snapshot of the transaction specific details of the `bancontact` payment method.
     public var bancontact: ChargePaymentMethodDetailsBancontact?
@@ -368,6 +368,8 @@ public struct ChargePaymentMethodDetails: Codable {
     public var card: ChargePaymentMethodDetailsCard?
     /// If this is a `card_present` payment, this hash contains a snapshot of the transaction specific details of the `card_present` payment method.
     public var cardPresent: ChargePaymentMethodDetailsCardPresent?
+    /// If this is a `cashapp` payment, this hash contains a snapshot of the transaction specific details of the `cashapp` payment method.
+    public var cashapp: ChargePaymentMethodDetailsCashApp?
     /// If this is a `customer_balance` payment, this hash contains a snapshot of the transaction specific details of the `customer_balance` payment method.
     public var customerBalance: ChargePaymentMethodDetailsCustomerBalance?
     /// If this is a `eps` payment, this hash contains a snapshot of the transaction specific details of the `eps` payment method.
@@ -386,6 +388,8 @@ public struct ChargePaymentMethodDetails: Codable {
     public var klarna: ChargePaymentMethodDetailsKlarna?
     /// If this is a konbini payment, this hash contains a snapshot of the transaction specific details of the konbini payment method.
     public var konbini: ChargePaymentMethodDetailsKobini?
+    /// If this is a `link` payment, this hash contains a snapshot of the transaction specific details of the `link` payment method.
+    public var link: ChargePaymentMethodDetailsLink?
     /// If this is a `multibanco` payment, this hash contains a snapshot of the transaction specific details of the `multibanco` payment method.
     public var multibanco: ChargePaymentMethodDetailsMultibanco?
     /// If this is a oxxo payment, this hash contains a snapshot of the transaction specific details of the oxxo payment method.
@@ -394,6 +398,8 @@ public struct ChargePaymentMethodDetails: Codable {
     public var p24: ChargePaymentMethodDetailsP24?
     /// If this is a `paynow` payment, this hash contains a snapshot of the transaction specific details of the `paynow` payment method.
     public var paynow: ChargePaymentMethodDetailsPaynow?
+    /// If this is a `paypal` payment, this hash contains a snapshot of the transaction specific details of the `paypal` payment method.
+    public var paypal: ChargePaymentMethodDetailsPaypal?
     /// If this is a `pix` payment, this hash contains a snapshot of the transaction specific details of the `pix` payment method.
     public var pix: ChargePaymentMethodDetailsPix?
     /// If this is a `promptpay` payment, this hash contains a snapshot of the transaction specific details of the `promptpay` payment method.
@@ -412,42 +418,48 @@ public struct ChargePaymentMethodDetails: Codable {
     public var wechat: ChargePaymentMethodDetailsWechat?
     /// If this is a `wechat_pay` payment, this hash contains a snapshot of the transaction specific details of the `wechat_pay` payment method.
     public var wechatPay: ChargePaymentMethodDetailsWechatPay?
+    /// If this is a zip payment, this hash contains a snapshot of the transaction specific details of the zip payment method.
+    public var zip: ChargePaymentMethodDetailsZip?
     
     public init(achCreditTransfer: ChargePaymentMethodDetailsACHCreditTransfer? = nil,
-                  achDebit: ChargePaymentMethodDetailsACHDebit? = nil,
-                  acssDebit: ChargePaymentMethodDetailsACSSDebit? = nil,
-                  affirm: ChargePaymentMethodDetailsAffirm? = nil,
-                  afterpayClearpay: ChargePaymentMethodDetailsAfterpayClearpay? = nil,
-                  alipay: ChargePaymentMethodDetailsAlipay? = nil,
-                  auBecsDebit: ChargePaymentMethodDetailsAuBecsDebit? = nil,
-                  bacsDebit: ChargePaymentMethodDetailsBacsDebit? = nil,
-                  bancontact: ChargePaymentMethodDetailsBancontact? = nil,
-                  blik: ChargePaymentMethodDetailsBlik? = nil,
-                  boleto: ChargePaymentMethodDetailsBoleto? = nil,
-                  card: ChargePaymentMethodDetailsCard? = nil,
-                  cardPresent: ChargePaymentMethodDetailsCardPresent? = nil,
-                  customerBalance: ChargePaymentMethodDetailsCustomerBalance? = nil,
-                  eps: ChargePaymentMethodDetailsEPS? = nil,
-                  fpx: ChargePaymentMethodDetailsFpx? = nil,
-                  grabpay: ChargePaymentMethodDetailsGrabpay? = nil,
-                  giropay: ChargePaymentMethodDetailsGiropay? = nil,
-                  ideal: ChargePaymentMethodDetailsIdeal? = nil,
-                  interacPresent: ChargePaymentMethodDetailsInteracPresent? = nil,
-                  klarna: ChargePaymentMethodDetailsKlarna? = nil,
-                  konbini: ChargePaymentMethodDetailsKobini? = nil,
-                  multibanco: ChargePaymentMethodDetailsMultibanco? = nil,
-                  oxxo: ChargePaymentMethodDetailsOXXO? = nil,
-                  p24: ChargePaymentMethodDetailsP24? = nil,
-                  paynow: ChargePaymentMethodDetailsPaynow? = nil,
-                  pix: ChargePaymentMethodDetailsPix? = nil,
-                  promptpay: ChargePaymentMethodDetailsPromptpay? = nil,
-                  sepaDebit: ChargePaymentMethodDetailsSepaDebit? = nil,
-                  sofort: ChargePaymentMethodDetailsSofort? = nil,
-                  stripeAccount: ChargePaymentMethodDetailsStripeAccount? = nil,
-                  type: ChargePaymentMethodDetailsType? = nil,
-                  usBankAccount: ChargePaymentMethodDetailsUSBankAccount? = nil,
-                  wechat: ChargePaymentMethodDetailsWechat? = nil,
-                  wechatPay: ChargePaymentMethodDetailsWechatPay? = nil) {
+                achDebit: ChargePaymentMethodDetailsACHDebit? = nil,
+                acssDebit: ChargePaymentMethodDetailsACSSDebit? = nil,
+                affirm: ChargePaymentMethodDetailsAffirm? = nil,
+                afterpayClearpay: ChargePaymentMethodDetailsAfterpayClearpay? = nil,
+                alipay: ChargePaymentMethodDetailsAlipay? = nil,
+                auBecsDebit: ChargePaymentMethodDetailsAuBecsDebit? = nil,
+                bacsDebit: ChargePaymentMethodDetailsBacsDebit? = nil,
+                bancontact: ChargePaymentMethodDetailsBancontact? = nil,
+                blik: ChargePaymentMethodDetailsBlik? = nil,
+                boleto: ChargePaymentMethodDetailsBoleto? = nil,
+                card: ChargePaymentMethodDetailsCard? = nil,
+                cardPresent: ChargePaymentMethodDetailsCardPresent? = nil,
+                cashapp: ChargePaymentMethodDetailsCashApp? = nil,
+                customerBalance: ChargePaymentMethodDetailsCustomerBalance? = nil,
+                eps: ChargePaymentMethodDetailsEPS? = nil,
+                fpx: ChargePaymentMethodDetailsFpx? = nil,
+                grabpay: ChargePaymentMethodDetailsGrabpay? = nil,
+                giropay: ChargePaymentMethodDetailsGiropay? = nil,
+                ideal: ChargePaymentMethodDetailsIdeal? = nil,
+                interacPresent: ChargePaymentMethodDetailsInteracPresent? = nil,
+                klarna: ChargePaymentMethodDetailsKlarna? = nil,
+                konbini: ChargePaymentMethodDetailsKobini? = nil,
+                link: ChargePaymentMethodDetailsLink? = nil,
+                multibanco: ChargePaymentMethodDetailsMultibanco? = nil,
+                oxxo: ChargePaymentMethodDetailsOXXO? = nil,
+                p24: ChargePaymentMethodDetailsP24? = nil,
+                paynow: ChargePaymentMethodDetailsPaynow? = nil,
+                paypal: ChargePaymentMethodDetailsPaypal? = nil,
+                pix: ChargePaymentMethodDetailsPix? = nil,
+                promptpay: ChargePaymentMethodDetailsPromptpay? = nil,
+                sepaDebit: ChargePaymentMethodDetailsSepaDebit? = nil,
+                sofort: ChargePaymentMethodDetailsSofort? = nil,
+                stripeAccount: ChargePaymentMethodDetailsStripeAccount? = nil,
+                type: ChargePaymentMethodDetailsType? = nil,
+                usBankAccount: ChargePaymentMethodDetailsUSBankAccount? = nil,
+                wechat: ChargePaymentMethodDetailsWechat? = nil,
+                wechatPay: ChargePaymentMethodDetailsWechatPay? = nil,
+                zip: ChargePaymentMethodDetailsZip? = nil) {
         self.achCreditTransfer = achCreditTransfer
         self.achDebit = achDebit
         self.acssDebit = acssDebit
@@ -461,6 +473,7 @@ public struct ChargePaymentMethodDetails: Codable {
         self.boleto = boleto
         self.card = card
         self.cardPresent = cardPresent
+        self.cashapp = cashapp
         self.customerBalance = customerBalance
         self.eps = eps
         self.fpx = fpx
@@ -469,11 +482,13 @@ public struct ChargePaymentMethodDetails: Codable {
         self.ideal = ideal
         self.interacPresent = interacPresent
         self.klarna = klarna
+        self.link = link
         self.konbini = konbini
         self.multibanco = multibanco
         self.oxxo = oxxo
         self.p24 = p24
         self.paynow = paynow
+        self.paypal = paypal
         self.pix = pix
         self.promptpay = promptpay
         self.sepaDebit = sepaDebit
@@ -483,6 +498,7 @@ public struct ChargePaymentMethodDetails: Codable {
         self.usBankAccount = usBankAccount
         self.wechat = wechat
         self.wechatPay = wechatPay
+        self.zip = zip
     }
 }
 
@@ -510,10 +526,12 @@ public enum ChargePaymentMethodDetailsType: String, Codable {
     case interacPresent = "interac_present"
     case klarna
     case konbini
+    case link
     case multibanco
     case oxxo
     case p24
     case paynow
+    case paypal
     case pix
     case promptpay
     case sepaDebit = "sepa_debit"
@@ -522,6 +540,7 @@ public enum ChargePaymentMethodDetailsType: String, Codable {
     case usBankAccount = "us_bank_account"
     case wechat
     case wechatPay = "wechat_pay"
+    case zip
 }
 
 public struct ChrageRadarOptions: Codable {
