@@ -7,7 +7,7 @@
 
 ## Version support
 
-Stripe API version `2022-11-15` -> StripeKit: 20.0.0
+Stripe API version `2022-11-15` -> StripeKit: 21.0.0
 
 ## Installation
 To start using StripeKit, in your `Package.swift`, add the following
