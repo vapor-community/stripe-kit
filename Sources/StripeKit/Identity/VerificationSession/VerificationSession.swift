@@ -103,7 +103,7 @@ public enum StripeVerificationSessionOptionsDocumentAllowedType: String, StripeM
     /// Passport document type.
     case passport
     /// ID card document type.
-    case idCard = "id_card"
+    case idNumber = "id_card"
 }
 
 public struct StripeVerificationSessionOptionsIdNumber: StripeModel {}
