@@ -256,7 +256,7 @@ public enum VerificationReportOptionsDocumentAllowedType: String, Codable {
     /// Passport document type.
     case passport
     /// ID card document type.
-    case idNumber = "id_number"
+    case idCard = "id_card"
 }
 
 public struct VerificationReportOptionsIdNumber: Codable {
