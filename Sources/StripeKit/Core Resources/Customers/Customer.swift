@@ -229,8 +229,8 @@ public struct CustomerList: Codable {
 public struct CustomerSearchResult: Codable {
     /// A string describing the object type returned.
     public var object: String
-    /// A list of charges, paginated by any request parameters.
-    public var data: [Charge]?
+    /// A list of customers, paginated by any request parameters.
+    public var data: [Customer]?
     /// Whether or not there are more elements available after this set.
     public var hasMore: Bool?
     /// The URL for accessing this list.
@@ -241,7 +241,7 @@ public struct CustomerSearchResult: Codable {
     public var totalCount: Int?
     
     public init(object: String,
-                data: [Charge]? = nil,
+                data: [Customer]? = nil,
                 hasMore: Bool? = nil,
                 url: String? = nil,
                 nextPage: String? = nil,
