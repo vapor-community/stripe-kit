@@ -19,21 +19,26 @@ public final class StripeClient {
     public var files: FileRoutes
     public var fileLinks: FileLinkRoutes
     public var mandates: MandateRoutes
-    public var paymentIntents: PaymentIntentsRoutes
+    public var paymentIntents: PaymentIntentRoutes
     public var setupIntents: SetupIntentsRoutes
     public var setupAttempts: SetupAttemptRoutes
     public var payouts: PayoutRoutes
     public var refunds: RefundRoutes
     public var tokens: TokenRoutes
+    public var ephemeralKeys: EphemeralKeyRoutes
     
     // MARK: - PAYMENT METHODS
     public var paymentMethods: PaymentMethodRoutes
     public var bankAccounts: BankAccountRoutes
+    public var cashBalances: CashBalanceRoutes
     public var cards: CardRoutes
-    public var sources: SourceRoutes
+//    public var sources: SourceRoutes
     
     // MARK: - CHECKOUT
     public var sessions: SessionRoutes
+    
+    // MARK: - PaymentLink
+    public var paymentLinks: PaymentLinkRoutes
     
     // MARK: - Products
     public var products: ProductRoutes
@@ -60,9 +65,11 @@ public final class StripeClient {
     public var usageRecords: UsageRecordRoutes
     public var quoteLineItems: QuoteLineItemRoutes
     public var quotes: QuoteRoutes
+    public var testClocks: TestClockRoutes
     
     // MARK: - CONNECT
     public var connectAccounts: AccountRoutes
+    public var accountSessions: AccountSessionRoutes
     public var accountLinks: AccountLinkRoutes
     public var applicationFees: ApplicationFeesRoutes
     public var applicationFeeRefunds: ApplicationFeeRefundRoutes
@@ -73,6 +80,7 @@ public final class StripeClient {
     public var topups: TopUpRoutes
     public var transfers: TransferRoutes
     public var transferReversals: TransferReversalRoutes
+    public var secretManager: SecretRoutes
     
     // MARK: - FRAUD
     public var earlyFraudWarnings: EarlyFraudWarningRoutes
@@ -85,19 +93,19 @@ public final class StripeClient {
     public var cardholders: CardholderRoutes
     public var issuingCards: IssuingCardRoutes
     public var issuingDisputes: IssuingDisputeRoutes
+    public var fundingInstructions: FundingInstructionsRoutes
     public var transactions: TransactionRoutes
     
     // MARK: - TERMINAL
-    public var connectionTokens: ConnectionTokenRoutes
-    public var locations: LocationRoutes
-    public var readers: ReaderRoutes
-    
-    // MARK: - ORDERS
-    public var orders: OrderRoutes
-    public var orderReturns: OrderReturnRoutes
-    public var skus: SKURoutes
-    public var ephemeralKeys: EphemeralKeyRoutes
-    
+    public var terminalConnectionTokens: TerminalConnectionTokenRoutes
+    public var terminalLocations: TerminalLocationRoutes
+    public var terminalReaders: TerminalReaderRoutes
+    public var terminalHardwareOrders: TerminalHardwareOrderRoutes
+    public var terminalHardwareProducts: TerminalHardwareProductRoutes
+    public var terminalHardwareSkus: TerminalHardwareSKURoutes
+    public var terminalHardwareShippingMethods: TerminalHardwareShippingMethodRoutes
+    public var terminalConfiguration: TerminalConfigurationRoutes
+        
     // MARK: - SIGMA
     public var scheduledQueryRuns: ScheduledQueryRunRoutes
 
@@ -112,14 +120,13 @@ public final class StripeClient {
     // MARK: - WEBHOOKS
     public var webhookEndpoints: WebhookEndpointRoutes
     
-    var handler: StripeDefaultAPIHandler
+    var handler: StripeAPIHandler
     
     /// Returns a StripeClient used to interact with the Stripe APIs.
     /// - Parameter httpClient: An `HTTPClient`used to communicate wiith the Stripe API
-    /// - Parameter eventLoop: An `EventLoop` used to return an `EventLoopFuture` on.
     /// - Parameter apiKey: A Stripe API key.
-    public init(httpClient: HTTPClient, eventLoop: EventLoop, apiKey: String) {
-        handler = StripeDefaultAPIHandler(httpClient: httpClient, eventLoop: eventLoop, apiKey: apiKey)
+    public init(httpClient: HTTPClient, apiKey: String) {
+        handler = StripeAPIHandler(httpClient: httpClient, apiKey: apiKey)
         
         balances = StripeBalanceRoutes(apiHandler: handler)
         balanceTransactions = StripeBalanceTransactionRoutes(apiHandler: handler)
@@ -130,18 +137,23 @@ public final class StripeClient {
         files = StripeFileRoutes(apiHandler: handler)
         fileLinks = StripeFileLinkRoutes(apiHandler: handler)
         mandates = StripeMandateRoutes(apiHandler: handler)
-        paymentIntents = StripePaymentIntentsRoutes(apiHandler: handler)
+        paymentIntents = StripePaymentIntentRoutes(apiHandler: handler)
         setupIntents = StripeSetupIntentsRoutes(apiHandler: handler)
         setupAttempts = StripeSetupAttemptRoutes(apiHandler: handler)
         payouts = StripePayoutRoutes(apiHandler: handler)
         refunds = StripeRefundRoutes(apiHandler: handler)
         tokens = StripeTokenRoutes(apiHandler: handler)
+        ephemeralKeys = StripeEphemeralKeyRoutes(apiHandler: handler)
+        
         paymentMethods = StripePaymentMethodRoutes(apiHandler: handler)
         bankAccounts = StripeBankAccountRoutes(apiHandler: handler)
+        cashBalances = StripeCashBalanceRoutes(apiHandler: handler)
         cards = StripeCardRoutes(apiHandler: handler)
-        sources = StripeSourceRoutes(apiHandler: handler)
+//        sources = StripeSourceRoutes(apiHandler: handler)
         
         sessions = StripeSessionRoutes(apiHandler: handler)
+        
+        paymentLinks = StripePaymentLinkRoutes(apiHandler: handler)
         
         products = StripeProductRoutes(apiHandler: handler)
         prices = StripePriceRoutes(apiHandler: handler)
@@ -166,8 +178,10 @@ public final class StripeClient {
         usageRecords = StripeUsageRecordRoutes(apiHandler: handler)
         quoteLineItems = StripeQuoteLineItemRoutes(apiHandler: handler)
         quotes = StripeQuoteRoutes(apiHandler: handler)
+        testClocks = StripeTestClockRoutes(apiHandler: handler)
         
         connectAccounts = StripeConnectAccountRoutes(apiHandler: handler)
+        accountSessions =  StripeAccountSessionsRoutes(apiHandler: handler)
         accountLinks = StripeAccountLinkRoutes(apiHandler: handler)
         applicationFees = StripeApplicationFeeRoutes(apiHandler: handler)
         applicationFeeRefunds = StripeApplicationFeeRefundRoutes(apiHandler: handler)
@@ -178,6 +192,7 @@ public final class StripeClient {
         topups = StripeTopUpRoutes(apiHandler: handler)
         transfers = StripeTransferRoutes(apiHandler: handler)
         transferReversals = StripeTransferReversalRoutes(apiHandler: handler)
+        secretManager = StripeSecretRoutes(apiHandler: handler)
         
         earlyFraudWarnings = StripeEarlyFraudWarningRoutes(apiHandler: handler)
         reviews = StripeReviewRoutes(apiHandler: handler)
@@ -188,16 +203,17 @@ public final class StripeClient {
         cardholders = StripeCardholderRoutes(apiHandler: handler)
         issuingCards = StripeIssuingCardRoutes(apiHandler: handler)
         issuingDisputes = StripeIssuingDisputeRoutes(apiHandler: handler)
+        fundingInstructions = StripeFundingInstructionsRoutes(apiHandler: handler)
         transactions = StripeTransactionRoutes(apiHandler: handler)
         
-        connectionTokens = StripeConnectionTokenRoutes(apiHandler: handler)
-        locations = StripeLocationRoutes(apiHandler: handler)
-        readers = StripeReaderRoutes(apiHandler: handler)
-        
-        orders = StripeOrderRoutes(apiHandler: handler)
-        orderReturns = StripeOrderReturnRoutes(apiHandler: handler)
-        skus = StripeSKURoutes(apiHandler: handler)
-        ephemeralKeys = StripeEphemeralKeyRoutes(apiHandler: handler)
+        terminalConnectionTokens = StripeTerminalConnectionTokenRoutes(apiHandler: handler)
+        terminalLocations = StripeTerminalLocationRoutes(apiHandler: handler)
+        terminalReaders = StripeTerminalReaderRoutes(apiHandler: handler)
+        terminalHardwareOrders = StripeTerminalHardwareOrderRoutes(apiHandler: handler)
+        terminalHardwareProducts = StripeTerminalHardwareProductRoutes(apiHandler: handler)
+        terminalHardwareSkus = StripeTerminalHardwareSKURoutes(apiHandler: handler)
+        terminalHardwareShippingMethods = StripeTerminalHardwareShippingMethodRoutes(apiHandler: handler)
+        terminalConfiguration = StripeTerminalConfigurationRoutes(apiHandler: handler)
         
         scheduledQueryRuns = StripeScheduledQueryRunRoutes(apiHandler: handler)
         
@@ -208,12 +224,5 @@ public final class StripeClient {
         verificationReports = StripeVerificationReportRoutes(apiHandler: handler)
         
         webhookEndpoints = StripeWebhookEndpointRoutes(apiHandler: handler)
-    }
-    
-    /// Hop to a new eventloop to execute requests on.
-    /// - Parameter eventLoop: The eventloop to execute requests on.
-    public func hopped(to eventLoop: EventLoop) -> StripeClient {
-        handler.eventLoop = eventLoop
-        return self
     }
 }

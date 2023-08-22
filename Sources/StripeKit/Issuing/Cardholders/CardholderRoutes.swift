@@ -8,129 +8,66 @@
 import NIO
 import NIOHTTP1
 
-public protocol CardholderRoutes {
+public protocol CardholderRoutes: StripeAPIRoute {
     /// Creates a new Issuing Cardholder object that can be issued cards.
     ///
     /// - Parameters:
     ///   - billing: The cardholder’s billing address.
-    ///   - name: The cardholder’s name. This will be printed on cards issued to them.
-    ///   - type: The type of cardholder. Possible values are `individual` or `business_entity`.
-    ///   - authorizationControls: Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details. This will be unset if you POST an empty value.
-    ///   - company: Additional information about a business_entity cardholder.
+    ///   - name: The cardholder’s name. This will be printed on cards issued to them. The maximum length of this field is 24 characters. This field cannot contain any special characters or numbers.
     ///   - email: The cardholder’s email address.
-    ///   - individual: Additional information about an `individual` cardholder.
-    ///   - isDefault: Specifies whether to set this as the default cardholder.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-    ///   - phoneNumber: The cardholder’s phone number. This will be transformed to E.164 if it is not provided in that format already.
-    ///   - status: Specifies whether to permit authorizations on this cardholder’s cards. Possible values are `active` or `inactive`.
-    /// - Returns: A `StripeCardholder`.
+    ///   - phoneNumber: The cardholder’s phone number. This will be transformed to E.164 if it is not provided in that format already. This is required for all cardholders who will be creating EU cards. See the 3D Secure documentation for more details.
+    ///   - company: Additional information about a `company` cardholder.
+    ///   - individual: Additional information about an `individual` cardholder.
+    ///   - spendingControls: Rules that control spending across this cardholder’s cards. Refer to our documentation for more details.
+    ///   - status: Specifies whether to permit authorizations on this cardholder’s cards. Defaults to active.
+    ///   - type: The type of cardholder. Possible values are `individual` or `business_entity`.
+    /// - Returns: Returns an Issuing Cardholder object if creation succeeds.
     func create(billing: [String: Any],
                 name: String,
-                type: StripeCardholderType,
-                authorizationControls: [String: Any]?,
-                company: [String: Any]?,
                 email: String?,
-                individual: [String: Any]?,
-                isDefault: Bool?,
                 metadata: [String: String]?,
                 phoneNumber: String?,
-                status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder>
+                company: [String: Any]?,
+                individual: [String: Any]?,
+                spendingControls: [String: Any]?,
+                status: CardholderStatus?,
+                type: CardholderType) async throws -> Cardholder
     
     /// Retrieves an Issuing Cardholder object.
     ///
     /// - Parameter cardholder: The identifier of the cardholder to be retrieved.
-    /// - Returns: A `StripeCardholder`.
-    func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder>
+    /// - Returns: Returns an Issuing Cardholder object if a valid identifier was provided.
+    func retrieve(cardholder: String) async throws -> Cardholder
     
     /// Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
     /// - Parameters:
     ///   - cardholder: The ID of the cardholder to update.
-    ///   - authorizationControls: Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details. This will be unset if you POST an empty value.
     ///   - billing: The cardholder’s billing address.
-    ///   - company: Additional information about a `business_entity` cardholder.
     ///   - email: The cardholder’s email address.
-    ///   - individual: Additional information about an individual cardholder.
-    ///   - isDefault: Specifies whether to set this as the default cardholder.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - phoneNumber: The cardholder’s phone number. This will be transformed to E.164 if it is not provided in that format already.
-    ///   - status: Specifies whether to permit authorizations on this cardholder’s cards. Possible values are `active` or `inactive`.
-    /// - Returns: A `StripeCardholder`.
+    ///   - company: Additional information about a `company` cardholder.
+    ///   - individual: Additional information about an `individual` cardholder.
+    ///   - spendingControls: Rules that control spending across this cardholder’s cards. Refer to our documentation for more details.
+    ///   - status: Specifies whether to permit authorizations on this cardholder’s cards.
+    /// - Returns: Returns an updated Issuing Cardholder object if a valid identifier was provided.
     func update(cardholder: String,
-                authorizationControls: [String: Any]?,
                 billing: [String: Any]?,
-                company: [String: Any]?,
                 email: String?,
-                individual: [String: Any]?,
-                isDefault: Bool?,
                 metadata: [String: String]?,
                 phoneNumber: String?,
-                status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder>
+                company: [String: Any]?,
+                individual: [String: Any]?,
+                spendingControls: [String: Any]?,
+                status: CardholderStatus?) async throws -> Cardholder
     
     /// Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
     /// - Parameter filter:  A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/issuing/cardholders/list).
-    /// - Returns: A `StripeAuthorizationList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeAuthorizationList>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension CardholderRoutes {
-    func create(billing: [String: Any],
-                name: String,
-                type: StripeCardholderType,
-                authorizationControls: [String: Any]? = nil,
-                company: [String: Any]? = nil,
-                email: String? = nil,
-                individual: [String: Any]? = nil,
-                isDefault: Bool? = nil,
-                metadata: [String: String]? = nil,
-                phoneNumber: String? = nil,
-                status: StripeCardholderStatus? = nil) -> EventLoopFuture<StripeCardholder> {
-        return create(billing: billing,
-                      name: name,
-                      type: type,
-                      authorizationControls: authorizationControls,
-                      company: company,
-                      email: email,
-                      individual: individual,
-                      isDefault: isDefault,
-                      metadata: metadata,
-                      phoneNumber: phoneNumber,
-                      status: status)
-    }
-    
-    func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder> {
-        return retrieve(cardholder: cardholder)
-    }
-    
-    func update(cardholder: String,
-                authorizationControls: [String: Any]? = nil,
-                billing: [String: Any]? = nil,
-                company: [String: Any]? = nil,
-                email: String? = nil,
-                individual: [String: Any]? = nil,
-                isDefault: Bool? = nil,
-                metadata: [String: String]? = nil,
-                phoneNumber: String? = nil,
-                status: StripeCardholderStatus? = nil) -> EventLoopFuture<StripeCardholder> {
-        return update(cardholder: cardholder,
-                      authorizationControls: authorizationControls,
-                      billing: billing,
-                      company: company,
-                      email: email,
-                      individual: individual,
-                      isDefault: isDefault,
-                      metadata: metadata,
-                      phoneNumber: phoneNumber,
-                      status: status)
-    }
-    
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeAuthorizationList> {
-        return listAll(filter: filter)
-    }
+    /// - Returns: A dictionary with a `data` property that contains an array of up to `limit` cardholders, starting after cardholder `starting_after`. Each entry in the array is a separate Issuing ``Cardholder`` object. If no more cardholders are available, the resulting array will be empty.
+    func listAll(filter: [String: Any]?) async throws -> AuthorizationList
 }
 
 public struct StripeCardholderRoutes: CardholderRoutes {
@@ -145,115 +82,105 @@ public struct StripeCardholderRoutes: CardholderRoutes {
     
     public func create(billing: [String: Any],
                        name: String,
-                       type: StripeCardholderType,
-                       authorizationControls: [String: Any]?,
-                       company: [String: Any]?,
-                       email: String?,
-                       individual: [String: Any]?,
-                       isDefault: Bool?,
-                       metadata: [String: String]?,
-                       phoneNumber: String?,
-                       status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder> {
+                       email: String? = nil,
+                       metadata: [String: String]? = nil,
+                       phoneNumber: String? = nil,
+                       company: [String: Any]? = nil,
+                       individual: [String: Any]? = nil,
+                       spendingControls: [String: Any]? = nil,
+                       status: CardholderStatus? = nil,
+                       type: CardholderType) async throws -> Cardholder {
         var body: [String: Any] = ["name": name,
                                    "type": type.rawValue]
         billing.forEach { body["billing[\($0)]"] = $1 }
         
-        if let authorizationControls = authorizationControls {
-            authorizationControls.forEach { body["authorization_controls[\($0)]"] = $1 }
-        }
-        
-        if let company = company {
-            company.forEach { body["company[\($0)]"] = $1 }
-        }
-        
-        if let email = email {
+        if let email {
             body["email"] = email
         }
         
-        if let individual = individual {
-            individual.forEach { body["individual[\($0)]"] = $1 }
-        }
-        
-        if let isDefault = isDefault {
-            body["is_default"] = isDefault
-        }
-        
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let phoneNumber = phoneNumber {
+        if let phoneNumber {
             body["phone_number"] = phoneNumber
         }
         
-        if let status = status {
+        if let company {
+            company.forEach { body["company[\($0)]"] = $1 }
+        }
+        
+        if let individual {
+            individual.forEach { body["individual[\($0)]"] = $1 }
+        }
+        
+        if let spendingControls {
+            spendingControls.forEach { body["spending_controls[\($0)]"] = $1 }
+        }
+        
+        if let status  {
             body["status"] = status.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: cardholders, body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: cardholders, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(cardholder: String) -> EventLoopFuture<StripeCardholder> {
-        return apiHandler.send(method: .GET, path: "\(cardholders)/\(cardholder)", headers: headers)
+    public func retrieve(cardholder: String) async throws -> Cardholder {
+        try await apiHandler.send(method: .GET, path: "\(cardholders)/\(cardholder)", headers: headers)
     }
     
     public func update(cardholder: String,
-                       authorizationControls: [String: Any]?,
-                       billing: [String: Any]?,
-                       company: [String: Any]?,
-                       email: String?,
-                       individual: [String: Any]?,
-                       isDefault: Bool?,
-                       metadata: [String: String]?,
-                       phoneNumber: String?,
-                       status: StripeCardholderStatus?) -> EventLoopFuture<StripeCardholder> {
+                       billing: [String: Any]? = nil,
+                       email: String? = nil,
+                       metadata: [String: String]? = nil,
+                       phoneNumber: String? = nil,
+                       company: [String: Any]? = nil,
+                       individual: [String: Any]? = nil,
+                       spendingControls: [String: Any]? = nil,
+                       status: CardholderStatus? = nil) async throws -> Cardholder {
         var body: [String: Any] = [:]
         
-        if let authorizationControls = authorizationControls {
-            authorizationControls.forEach { body["authorization_controls[\($0)]"] = $1 }
-        }
-        
-        if let billing = billing {
+        if let billing {
             billing.forEach { body["billing[\($0)]"] = $1 }
         }
         
-        if let company = company {
-            company.forEach { body["company[\($0)]"] = $1 }
-        }
-        
-        if let email = email {
+        if let email {
             body["email"] = email
         }
         
-        if let individual = individual {
-            individual.forEach { body["individual[\($0)]"] = $1 }
-        }
-        
-        if let isDefault = isDefault {
-            body["is_default"] = isDefault
-        }
-        
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let phoneNumber = phoneNumber {
+        if let phoneNumber {
             body["phone_number"] = phoneNumber
         }
         
-        if let status = status {
+        if let company {
+            company.forEach { body["company[\($0)]"] = $1 }
+        }
+        
+        if let individual {
+            individual.forEach { body["individual[\($0)]"] = $1 }
+        }
+        
+        if let spendingControls {
+            spendingControls.forEach { body["spending_controls[\($0)]"] = $1 }
+        }
+        
+        if let status {
             body["status"] = status.rawValue
         }
         
-        return apiHandler.send(method: .POST, path: "\(cardholders)/\(cardholder)", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(cardholders)/\(cardholder)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String : Any]?) -> EventLoopFuture<StripeAuthorizationList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> AuthorizationList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: cardholders, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: cardholders, query: queryParams, headers: headers)
     }
 }

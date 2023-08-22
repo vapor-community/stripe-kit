@@ -7,11 +7,11 @@
 //
 
 /// External accounts list. [See here](https://stripe.com/docs/api/accounts/object#account_object-external_accounts)
-public struct StripeExternalAccountsList: StripeModel {
+public struct ConnectAccountExternalAccountsList: Codable {
     /// String representing the object’s type. Objects of the same type share the same value. Always has the value list.
     public var object: String
     /**
-     Needs to be a string because the result can be an array of 2 possible types `StripeCard` and/or `StripeBankAccount`.
+     Needs to be a string because the result can be an array of 2 possible types ``Card`` and/or ``BankAccount``.
      We'll actually decode the array of accounts seperately based on type and filtered based on object. See the initializer.
      The `data` key is still needed in the `CodingKeys` and for decoding that property from the Stripe API, so we still have to declare it even though the type is unused.
      */
@@ -21,9 +21,9 @@ public struct StripeExternalAccountsList: StripeModel {
     /// The URL where this list can be accessed.
     public var url: String?
     /// An array of `StripeCard`s associated with the account.
-    public var cardAccounts: [StripeCard]?
+    public var cardAccounts: [Card]?
     /// An array of `StripeBankAccount`s associated with the account.
-    public var bankAccounts: [StripeBankAccount]?
+    public var bankAccounts: [BankAccount]?
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -31,7 +31,21 @@ public struct StripeExternalAccountsList: StripeModel {
         hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)
         url = try container.decodeIfPresent(String.self, forKey: .url)
         
-        cardAccounts = try container.decodeIfPresent([StripeCard].self, forKey: .data)?.filter{ $0.object == "card" }
-        bankAccounts = try container.decodeIfPresent([StripeBankAccount].self, forKey: .data)?.filter{ $0.object == "bank_account" }
+        cardAccounts = try container.decodeIfPresent([Card].self, forKey: .data)?.filter{ $0.object == "card" }
+        bankAccounts = try container.decodeIfPresent([BankAccount].self, forKey: .data)?.filter{ $0.object == "bank_account" }
+    }
+    
+    public init(object: String,
+                data: String? = nil,
+                hasMore: Bool? = nil,
+                url: String? = nil,
+                cardAccounts: [Card]? = nil,
+                bankAccounts: [BankAccount]? = nil) {
+        self.object = object
+        self.data = data
+        self.hasMore = hasMore
+        self.url = url
+        self.cardAccounts = cardAccounts
+        self.bankAccounts = bankAccounts
     }
 }

@@ -8,110 +8,91 @@
 import NIO
 import NIOHTTP1
 
-public protocol IssuingCardRoutes {
+public protocol IssuingCardRoutes: StripeAPIRoute {
     /// Creates an Issuing `Card` object.
     ///
     /// - Parameters:
     ///   - cardholder: The Cardholder object with which the card will be associated.
     ///   - currency: The currency for the card. This currently must be usd.
     ///   - type: The type of card to issue. Possible values are physical or virtual.
-    ///   - spendingControls: Spending rules that give you some control over how your cards can be used. Refer to our authorizations documentation for more details.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+    ///   - status: Specifies whether to permit authorizations on this card. Possible values are `active` or `inactive`.
     ///   - replacementFor: The card this is meant to be a replacement for (if any).
     ///   - replacementReason: If `replacement_for` is specified, this should indicate why that card is being replaced.
     ///   - shipping: The address where the card will be shipped.
-    ///   - status: Specifies whether to permit authorizations on this card. Possible values are `active` or `inactive`.
-    ///   - expand: An array of properties to expand.
-    /// - Returns: A `StripeIssuingCard`.
+    ///   - spendingControls: Spending rules that give you some control over how your cards can be used. Refer to our authorizations documentation for more details.
+    ///   - expand: Specifies which fields in the response should be expanded.
+    /// - Returns: Returns an Issuing Card object if creation succeeds.
     func create(cardholder: String,
-                currency: StripeCurrency,
-                type: StripeIssuingCardType,
-                spendingControls: [String: Any]?,
+                currency: Currency,
+                type: IssuingCardType,
                 metadata: [String: String]?,
+                status: IssuingCardStatus?,
                 replacementFor: String?,
-                replacementReason: StripeIssuingCardReplacementReason?,
+                replacementReason: IssuingCardReplacementReason?,
                 shipping: [String: Any]?,
-                status: StripeIssuingCardStatus?,
-                expand: [String]?) -> EventLoopFuture<StripeIssuingCard>
+                spendingControls: [String: Any]?,
+                expand: [String]?) async throws -> IssuingCard
     
     /// Retrieves an Issuing `Card` object.
     ///
     /// - Parameter card: The identifier of the card to be retrieved.
-    /// - Parameter expand: An array of properties to expand.
-    /// - Returns: A `StripeIssuingCard`.
-    func retrieve(card: String, expand: [String]?) -> EventLoopFuture<StripeIssuingCard>
+    /// - Parameter expand: Specifies which fields in the response should be expanded.
+    /// - Returns: Returns an Issuing `Card` object if a valid identifier was provided. When requesting the ID of a card that has been deleted, a subset of the card’s information will be returned, including a `deleted` property, which will be true.
+    func retrieve(card: String, expand: [String]?) async throws -> IssuingCard
     
     /// Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     ///
     /// - Parameters:
     ///   - card: The identifier of the issued card to update.
-    ///   - spendingControls: Spending rules that give you some control over how your cards can be used. Refer to our authorizations documentation for more details. This will be unset if you POST an empty value.
     ///   - cancellationReason: Reason why the `status` of this card is `canceled`.
     ///   - metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
     ///   - status: Dictates whether authorizations can be approved on this card. If this card is being canceled because it was lost or stolen, this information should be provided as `cancellation_reason`.
-    ///   - expand: An array of properties to expand.
-    /// - Returns: A `StripeIssuingCard`.
+    ///   - pin: The desired new PIN for this card.
+    ///   - spendingControls: Spending rules that give you some control over how your cards can be used. Refer to our authorizations documentation for more details. This will be unset if you POST an empty value.
+    ///   - expand: Specifies which fields in the response should be expanded.
+    /// - Returns: Returns an updated Issuing Card object if a valid identifier was provided.
     func update(card: String,
-                spendingControls: [String: Any]?,
-                cancellationReason: StripeIssuingCardCancellationReason?,
+                cancellationReason: IssuingCardCancellationReason?,
                 metadata: [String: String]?,
-                status: StripeIssuingCardStatus?,
-                expand: [String]?) -> EventLoopFuture<StripeIssuingCard>
+                status: IssuingCardStatus?,
+                pin: [String: Any]?,
+                spendingControls: [String: Any]?,
+                expand: [String]?) async throws -> IssuingCard
     
     /// Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
     ///
-    /// - Parameter filter:  A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/issuing/cards/list).
-    /// - Returns: A `StripeIssuingCardList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeIssuingCardList>
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More](https://stripe.com/docs/api/issuing/cards/list)
+    /// - Returns: A dictionary with a `data` property that contains an array of up to `limit` cards, starting after card `starting_after`. Each entry in the array is a separate Issuing `Card` object. If no more cards are available, the resulting array will be empty.
+    func listAll(filter: [String: Any]?) async throws -> IssuingCardList
     
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension IssuingCardRoutes {
-    func create(cardholder: String,
-                currency: StripeCurrency,
-                type: StripeIssuingCardType,
-                spendingControls: [String: Any]? = nil,
-                metadata: [String: String]? = nil,
-                replacementFor: String? = nil,
-                replacementReason: StripeIssuingCardReplacementReason? = nil,
-                shipping: [String: Any]? = nil,
-                status: StripeIssuingCardStatus? = nil,
-                expand: [String]? = nil) -> EventLoopFuture<StripeIssuingCard> {
-        return create(cardholder: cardholder,
-                      currency: currency,
-                      type: type,
-                      spendingControls: spendingControls,
-                      metadata: metadata,
-                      replacementFor: replacementFor,
-                      replacementReason: replacementReason,
-                      shipping: shipping,
-                      status: status,
-                      expand: expand)
-    }
+    /// Updates the shipping status of the specified Issuing `Card` object to shipped.
+    /// - Parameters:
+    ///   - card: The identifier of the issued card to update.
+    ///   - expand: Specifies which fields in the response should be expanded.
+    /// - Returns: Returns an updated Issuing `Card` object.
+    func ship(card: String, expand: [String]?) async throws -> IssuingCard
     
-    func retrieve(card: String, expand: [String]? = nil) -> EventLoopFuture<StripeIssuingCard> {
-        return retrieve(card: card, expand: expand)
-    }
+    /// Updates the shipping status of the specified Issuing `Card` object to `delivered`.
+    /// - Parameters:
+    ///   - card: The identifier of the issued card to update.
+    ///   - expand: Specifies which fields in the response should be expanded.
+    /// - Returns: Returns an updated Issuing `Card` object.
+    func deliver(card: String, expand: [String]?) async throws -> IssuingCard
     
-    func update(card: String,
-                spendingControls: [String: Any]? = nil,
-                cancellationReason: StripeIssuingCardCancellationReason? = nil,
-                metadata: [String: String]? = nil,
-                status: StripeIssuingCardStatus? = nil,
-                expand: [String]? = nil) -> EventLoopFuture<StripeIssuingCard> {
-        return update(card: card,
-                      spendingControls: spendingControls,
-                      cancellationReason: cancellationReason,
-                      metadata: metadata,
-                      status: status,
-                      expand: expand)
-    }
+    /// Updates the shipping status of the specified Issuing `Card` object to `returned`.
+    /// - Parameters:
+    ///   - card: The identifier of the issued card to update.
+    ///   - expand: Specifies which fields in the response should be expanded.
+    /// - Returns: Returns an updated Issuing `Card` object.
+    func `return`(card: String, expand: [String]?) async throws -> IssuingCard
     
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeIssuingCardList> {
-        return listAll(filter: filter)
-    }
+    /// Updates the shipping status of the specified Issuing `Card` object to `failure`.
+    /// - Parameters:
+    ///   - card: The identifier of the issued card to update.
+    ///   - expand: Specifies which fields in the response should be expanded.
+    /// - Returns: Returns an updated Issuing `Card` object.
+    func fail(card: String, expand: [String]?) async throws -> IssuingCard
 }
 
 public struct StripeIssuingCardRoutes: IssuingCardRoutes {
@@ -119,102 +100,148 @@ public struct StripeIssuingCardRoutes: IssuingCardRoutes {
     
     private let apiHandler: StripeAPIHandler
     private let issuingcards = APIBase + APIVersion + "issuing/cards"
+    private let testhelpers = APIBase + APIVersion + "test_helpers/issuing/cards"
     
     init(apiHandler: StripeAPIHandler) {
         self.apiHandler = apiHandler
     }
     
     public func create(cardholder: String,
-                       currency: StripeCurrency,
-                       type: StripeIssuingCardType,
-                       spendingControls: [String: Any]?,
-                       metadata: [String: String]?,
-                       replacementFor: String?,
-                       replacementReason: StripeIssuingCardReplacementReason?,
-                       shipping: [String: Any]?,
-                       status: StripeIssuingCardStatus?,
-                       expand: [String]?) -> EventLoopFuture<StripeIssuingCard> {
+                       currency: Currency,
+                       type: IssuingCardType,
+                       metadata: [String: String]? = nil,
+                       status: IssuingCardStatus? = nil,
+                       replacementFor: String? = nil,
+                       replacementReason: IssuingCardReplacementReason? = nil,
+                       shipping: [String: Any]? = nil,
+                       spendingControls: [String: Any]? = nil,
+                       expand: [String]? = nil) async throws -> IssuingCard {
         var body: [String: Any] = ["cardholder": cardholder,
                                    "currency": currency.rawValue,
                                    "type": type.rawValue]
         
-        if let spendingControls = spendingControls {
-            spendingControls.forEach { body["spending_controls[\($0)]"] = $1 }
-        }
-        
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        if let replacementFor = replacementFor {
+        if let status {
+            body["status"] = status.rawValue
+        }
+        
+        if let replacementFor {
             body["replacement_for"] = replacementFor
         }
         
-        if let replacementReason = replacementReason {
+        if let replacementReason {
             body["replacement_reason"] = replacementReason.rawValue
         }
         
-        if let shipping = shipping {
+        if let shipping {
             shipping.forEach { body["shipping[\($0)]"] = $1 }
         }
         
-        if let status = status {
-            body["status"] = status.rawValue
-        }
-        
-        if let expand = expand {
-            body["expand"] = expand
-        }
-        
-        return apiHandler.send(method: .POST, path: issuingcards, body: .string(body.queryParameters), headers: headers)
-    }
-    
-    public func retrieve(card: String, expand: [String]?) -> EventLoopFuture<StripeIssuingCard> {
-        var queryParams = ""
-        if let expand = expand {
-            queryParams = ["expand": expand].queryParameters
-        }
-        
-        return apiHandler.send(method: .GET, path: "\(issuingcards)/\(card)", query: queryParams, headers: headers)
-    }
-
-    public func update(card: String,
-                       spendingControls: [String: Any]?,
-                       cancellationReason: StripeIssuingCardCancellationReason?,
-                       metadata: [String: String]?,
-                       status: StripeIssuingCardStatus?,
-                       expand: [String]?) -> EventLoopFuture<StripeIssuingCard> {
-        var body: [String: Any] = [:]
-        
-        if let spendingControls = spendingControls {
+        if let spendingControls {
             spendingControls.forEach { body["spending_controls[\($0)]"] = $1 }
         }
         
-        if let cancellationReason = cancellationReason {
-            body["cancellation_reason"] = cancellationReason.rawValue
-        }
-        
-        if let metadata = metadata {
-            metadata.forEach { body["metadata[\($0)]"] = $1 }
-        }
-        
-        if let status = status {
-            body["status"] = status.rawValue
-        }
-        
-        if let expand = expand {
+        if let expand {
             body["expand"] = expand
         }
         
-        return apiHandler.send(method: .POST, path: "\(issuingcards)/\(card)", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: issuingcards, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeIssuingCardList> {
+    public func retrieve(card: String, expand: [String]? = nil) async throws -> IssuingCard {
         var queryParams = ""
-        if let filter = filter {
+        if let expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        
+        return try await apiHandler.send(method: .GET, path: "\(issuingcards)/\(card)", query: queryParams, headers: headers)
+    }
+
+    public func update(card: String,
+                       cancellationReason: IssuingCardCancellationReason? = nil,
+                       metadata: [String: String]? = nil,
+                       status: IssuingCardStatus? = nil,
+                       pin: [String: Any]? = nil,
+                       spendingControls: [String: Any]? = nil,
+                       expand: [String]? = nil) async throws -> IssuingCard {
+        var body: [String: Any] = [:]
+        
+        if let cancellationReason {
+            body["cancellation_reason"] = cancellationReason.rawValue
+        }
+        
+        if let metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let status {
+            body["status"] = status.rawValue
+        }
+        
+        if let pin {
+            pin.forEach { body["pin[\($0)]"] = $1 }
+        }
+        
+        if let spendingControls {
+            spendingControls.forEach { body["spending_controls[\($0)]"] = $1 }
+        }
+        
+        if let expand {
+            body["expand"] = expand
+        }
+        
+        return try await apiHandler.send(method: .POST, path: "\(issuingcards)/\(card)", body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func listAll(filter: [String: Any]? = nil) async throws -> IssuingCardList {
+        var queryParams = ""
+        if let filter {
             queryParams = filter.queryParameters
         }
         
-        return apiHandler.send(method: .GET, path: issuingcards, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: issuingcards, query: queryParams, headers: headers)
+    }
+    
+    public func ship(card: String, expand: [String]? = nil) async throws -> IssuingCard {
+        var body: [String: Any] = [:]
+        
+        if let expand {
+            body["expand"] = expand
+        }
+        
+        return try await apiHandler.send(method: .POST, path: "\(testhelpers)/\(card)/shipping/ship", body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func deliver(card: String, expand: [String]? = nil) async throws -> IssuingCard {
+        var body: [String: Any] = [:]
+        
+        if let expand {
+            body["expand"] = expand
+        }
+        
+        return try await apiHandler.send(method: .POST, path: "\(testhelpers)/\(card)/shipping/deliver", body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func `return`(card: String, expand: [String]? = nil) async throws -> IssuingCard {
+        var body: [String: Any] = [:]
+        
+        if let expand {
+            body["expand"] = expand
+        }
+        
+        return try await apiHandler.send(method: .POST, path: "\(testhelpers)/\(card)/shipping/return", body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func fail(card: String, expand: [String]? = nil) async throws -> IssuingCard {
+        var body: [String: Any] = [:]
+        
+        if let expand {
+            body["expand"] = expand
+        }
+        
+        return try await apiHandler.send(method: .POST, path: "\(testhelpers)/\(card)/shipping/fail", body: .string(body.queryParameters), headers: headers)
     }
 }

@@ -8,75 +8,46 @@
 import NIO
 import NIOHTTP1
 
-public protocol WebhookEndpointRoutes {
+public protocol WebhookEndpointRoutes: StripeAPIRoute {
     /// A webhook endpoint must have a `url` and a list of `enabled_events`. You may optionally specify the Boolean `connect` parameter. If set to true, then a Connect webhook endpoint that notifies the specified `url` about events from all connected accounts is created; otherwise an account webhook endpoint that notifies the specified `url` only about events from your account is created. You can also create webhook endpoints in the [webhooks settings](https://dashboard.stripe.com/account/webhooks) section of the Dashboard.
     /// - Parameter enabledEvents: The list of events to enable for this endpoint. You may specify `['*']` to enable all events, except those that require explicit selection.
     /// - Parameter url: The URL of the webhook endpoint.
-    /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
     /// - Parameter apiVersion: Events sent to this endpoint will be generated with this Stripe Version instead of your account’s default Stripe Version.
+    /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    /// - Parameter description: An optional description of what the webhook is used for.
     /// - Parameter connect: Whether this endpoint should receive events from connected accounts (true), or from your account (false). Defaults to false.
     func create(enabledEvents: [String],
                 url: String,
-                metadata: [String: String]?,
                 apiVersion: String?,
-                connect: Bool?) -> EventLoopFuture<StripeWebhook>
+                description: String?,
+                metadata: [String: String]?,
+                connect: Bool?) async throws -> Webhook
     
     /// Retrieves the webhook endpoint with the given ID.
     /// - Parameter webhookEndpoint: The ID of the desired webhook endpoint.
-    func retrieve(webhookEndpoint: String) -> EventLoopFuture<StripeWebhook>
+    func retrieve(webhookEndpoint: String) async throws -> Webhook
     
     /// Updates the webhook endpoint. You may edit the `url`, the list of `enabled_events`, and the status of your endpoint.
     /// - Parameter webhookEndpoint: The ID of the desired webhook endpoint.
-    /// - Parameter disabled: Disable the webhook endpoint if set to true.
+    /// - Parameter description: An optional description of what the webhook is used for.
     /// - Parameter enabledEvents: The list of events to enable for this endpoint. You may specify `['*']` to enable all events, except those that require explicit selection.
-    /// - Parameter url: The URL of the webhook endpoint.
     /// - Parameter metadata: Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
+    /// - Parameter url: The URL of the webhook endpoint.
+    /// - Parameter disabled: Disable the webhook endpoint if set to true.
     func update(webhookEndpoint: String,
-                disabled: Bool?,
+                description: String?,
                 enabledEvents: [String]?,
+                metadata: [String: String]?,
                 url: String?,
-                metadata: [String: String]?) -> EventLoopFuture<StripeWebhook>
+                disabled: Bool?) async throws -> Webhook
     
     /// Returns a list of your webhook endpoints.
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/sigma/webhooks/list)
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeWebhookList>
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More](https://stripe.com/docs/api/sigma/webhooks/list)
+    func listAll(filter: [String: Any]?) async throws -> WebhookList
     
     /// You can also delete webhook endpoints via the webhook endpoint management page of the Stripe dashboard.
     /// - Parameter webhookEndpoint: The ID of the webhook endpoint to delete.
-    func delete(webhookEndpoint: String) -> EventLoopFuture<StripeWebhook>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension WebhookEndpointRoutes {
-    func create(enabledEvents: [String],
-                url: String,
-                metadata: [String: String]? = nil,
-                apiVersion: String? = nil,
-                connect: Bool? = nil) -> EventLoopFuture<StripeWebhook> {
-        return create(enabledEvents: enabledEvents, url: url, metadata: metadata, apiVersion: apiVersion, connect: connect)
-    }
-    
-    func retrieve(webhookEndpoint: String) -> EventLoopFuture<StripeWebhook> {
-        return retrieve(webhookEndpoint: webhookEndpoint)
-    }
-    
-    func update(webhookEndpoint: String,
-                disabled: Bool? = nil,
-                enabledEvents: [String]? = nil,
-                url: String? = nil,
-                metadata: [String: String]? = nil) -> EventLoopFuture<StripeWebhook> {
-        return update(webhookEndpoint: webhookEndpoint, disabled: disabled, enabledEvents: enabledEvents, url: url, metadata: metadata)
-    }
-    
-    func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeWebhookList> {
-        return listAll(filter: filter)
-    }
-    
-    func delete(webhookEndpoint: String) -> EventLoopFuture<StripeWebhook> {
-        return delete(webhookEndpoint: webhookEndpoint)
-    }
+    func delete(webhookEndpoint: String) async throws -> Webhook
 }
 
 public struct StripeWebhookEndpointRoutes: WebhookEndpointRoutes {
@@ -89,65 +60,79 @@ public struct StripeWebhookEndpointRoutes: WebhookEndpointRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func create(enabledEvents: [String], url: String, metadata: [String: String]?, apiVersion: String?, connect: Bool?) -> EventLoopFuture<StripeWebhook> {
+    public func create(enabledEvents: [String],
+                       url: String,
+                       apiVersion: String? = nil,
+                       description: String? = nil,
+                       metadata: [String: String]? = nil,
+                       connect: Bool? = nil) async throws -> Webhook {
         var body: [String: Any] = ["enabled_events": enabledEvents,
                                    "url": url]
         
-        if let metadata = metadata {
-            metadata.forEach { body["metadata[\($0)]"] = $1 }
-        }
-        
-        if let apiVersion = apiVersion {
+        if let apiVersion {
             body["api_version"] = apiVersion
         }
         
-        if let connect = connect {
-            body["connect"] = connect
+        if let description {
+            body["description"] = description
         }
         
-        return apiHandler.send(method: .POST, path: webhooks, body: .string(body.queryParameters), headers: headers)
-    }
-    
-    public func retrieve(webhookEndpoint: String) -> EventLoopFuture<StripeWebhook> {
-        return apiHandler.send(method: .GET, path: "\(webhooks)/\(webhookEndpoint)", headers: headers)
-    }
-    
-    public func update(webhookEndpoint: String,
-                       disabled: Bool?,
-                       enabledEvents: [String]?,
-                       url: String?,
-                       metadata: [String: String]?) -> EventLoopFuture<StripeWebhook> {
-        var body: [String: Any] = [:]
-        
-        if let disabled = disabled {
-            body["disabled"] = disabled
-        }
-        
-        if let enabledEvents = enabledEvents {
-            body["enabled_events"] = enabledEvents
-        }
-        
-        if let url = url {
-            body["url"] = url
-        }
-        
-        if let metadata = metadata {
+        if let metadata {
             metadata.forEach { body["metadata[\($0)]"] = $1 }
         }
         
-        return apiHandler.send(method: .POST, path: "\(webhooks)/\(webhookEndpoint)", body: .string(body.queryParameters), headers: headers)
+        if let connect {
+            body["connect"] = connect
+        }
+        
+        return try await apiHandler.send(method: .POST, path: webhooks, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeWebhookList> {
+    public func retrieve(webhookEndpoint: String) async throws -> Webhook {
+        try await apiHandler.send(method: .GET, path: "\(webhooks)/\(webhookEndpoint)", headers: headers)
+    }
+    
+    public func update(webhookEndpoint: String,
+                       description: String? = nil,
+                       enabledEvents: [String]? = nil,
+                       metadata: [String: String]? = nil,
+                       url: String? = nil,
+                       disabled: Bool? = nil) async throws -> Webhook {
+        var body: [String: Any] = [:]
+        
+        if let description {
+            body["description"] = description
+        }
+        
+        if let enabledEvents {
+            body["enabled_events"] = enabledEvents
+        }
+        
+        if let metadata {
+            metadata.forEach { body["metadata[\($0)]"] = $1 }
+        }
+        
+        if let url {
+            body["url"] = url
+        }
+        
+        if let disabled {
+            body["disabled"] = disabled
+        }
+        
+        return try await apiHandler.send(method: .POST, path: "\(webhooks)/\(webhookEndpoint)", body: .string(body.queryParameters), headers: headers)
+    }
+    
+    public func listAll(filter: [String: Any]? = nil) async throws -> WebhookList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: webhooks, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: webhooks, query: queryParams, headers: headers)
     }
     
-    public func delete(webhookEndpoint: String) -> EventLoopFuture<StripeWebhook> {
-        return apiHandler.send(method: .DELETE, path: "\(webhooks)/\(webhookEndpoint)", headers: headers)
+    public func delete(webhookEndpoint: String) async throws -> Webhook {
+        try await apiHandler.send(method: .DELETE, path: "\(webhooks)/\(webhookEndpoint)", headers: headers)
     }
 }
 

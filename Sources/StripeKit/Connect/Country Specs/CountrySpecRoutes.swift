@@ -8,31 +8,18 @@
 import NIO
 import NIOHTTP1
 
-public protocol CountrySpecRoutes {
+public protocol CountrySpecRoutes: StripeAPIRoute {
     /// Lists all Country Spec objects available in the API.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/country_specs/list)
-    /// - Returns: A `StripeCountrySpecList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCountrySpecList>
+    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More](https://stripe.com/docs/api/country_specs/list)
+    /// - Returns: Returns a list of `country_spec` objects.
+    func listAll(filter: [String: Any]?) async throws -> CountrySpecList
     
     /// Returns a Country Spec for a given Country code.
     ///
     /// - Parameter country: An ISO 3166-1 alpha-2 country code. Available country codes can be listed with the [List Country Specs](https://stripe.com/docs/api#list_country_specs) endpoint.
-    /// - Returns: A `StripeCountrySpec`.
-    func retrieve(country: String) -> EventLoopFuture<StripeCountrySpec>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension CountrySpecRoutes {
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeCountrySpecList> {
-        return listAll(filter: filter)
-    }
-    
-    public func retrieve(country: String) -> EventLoopFuture<StripeCountrySpec> {
-        return retrieve(country: country)
-    }
+    /// - Returns: Returns a `country_spec` object if a valid country code is provided, and returns an error otherwise.
+    func retrieve(country: String) async throws -> CountrySpec
 }
 
 public struct StripeCountrySpecRoutes: CountrySpecRoutes {
@@ -45,15 +32,15 @@ public struct StripeCountrySpecRoutes: CountrySpecRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeCountrySpecList> {
+    public func listAll(filter: [String: Any]? = nil) async throws -> CountrySpecList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: countryspecs, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: countryspecs, query: queryParams, headers: headers)
     }
     
-    public func retrieve(country: String) -> EventLoopFuture<StripeCountrySpec> {
-         return apiHandler.send(method: .GET, path: "\(countryspecs)/\(country)", headers: headers)
+    public func retrieve(country: String) async throws -> CountrySpec {
+         try await apiHandler.send(method: .GET, path: "\(countryspecs)/\(country)", headers: headers)
     }
 }

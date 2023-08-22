@@ -8,31 +8,16 @@
 import NIO
 import NIOHTTP1
 
-public protocol BalanceTransactionRoutes {
+public protocol BalanceTransactionRoutes: StripeAPIRoute {
     /// Retrieves the balance transaction with the given ID.
     ///
-    /// - Parameter id: The ID of the desired balance transaction, as found on any API object that affects the balance (e.g., a charge or transfer).
-    /// - Returns: A `StripeBalanceTransaction`.
-    func retrieve(id: String) -> EventLoopFuture<StripeBalanceTransaction>
+    /// - Parameter id: The ID of the desired balance transaction.
+    func retrieve(id: String) async throws -> BalanceTransaction
     
     /// Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.
     ///
-    /// - Parameter filter: A dictionary that will be used for the query parameters. [See More →](https://stripe.com/docs/api/balance/balance_history).
-    /// - Returns: A `StripeBalanceTransactionList`.
-    func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeBalanceTransactionList>
-    
-    /// Headers to send with the request.
-    var headers: HTTPHeaders { get set }
-}
-
-extension BalanceTransactionRoutes {
-    public func retrieve(id: String) -> EventLoopFuture<StripeBalanceTransaction> {
-        return retrieve(id: id)
-    }
-    
-    public func listAll(filter: [String: Any]? = nil) -> EventLoopFuture<StripeBalanceTransactionList> {
-        return listAll(filter: filter)
-    }
+    /// - Parameter filter: A [dictionary](https://stripe.com/docs/api/balance/balance_history) that will be used for the query parameters.
+    func listAll(filter: [String: Any]?) async throws -> BalanceTransactionList
 }
 
 public struct StripeBalanceTransactionRoutes: BalanceTransactionRoutes {
@@ -46,15 +31,15 @@ public struct StripeBalanceTransactionRoutes: BalanceTransactionRoutes {
         self.apiHandler = apiHandler
     }
     
-    public func retrieve(id: String) -> EventLoopFuture<StripeBalanceTransaction> {
-        return apiHandler.send(method: .GET, path: balanceTransaction + id, headers: headers)
+    public func retrieve(id: String) async throws -> BalanceTransaction {
+        try await apiHandler.send(method: .GET, path: balanceTransaction + id, headers: headers)
     }
     
-    public func listAll(filter: [String: Any]?) -> EventLoopFuture<StripeBalanceTransactionList> {
+    public func listAll(filter: [String: Any]?) async throws -> BalanceTransactionList {
         var queryParams = ""
-        if let filter = filter {
+        if let filter {
             queryParams = filter.queryParameters
         }
-        return apiHandler.send(method: .GET, path: balanceTransactions, query: queryParams, headers: headers)
+        return try await apiHandler.send(method: .GET, path: balanceTransactions, query: queryParams, headers: headers)
     }
 }
