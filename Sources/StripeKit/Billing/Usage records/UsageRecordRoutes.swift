@@ -9,7 +9,7 @@ import NIO
 import NIOHTTP1
 import Foundation
 
-public protocol UsageRecordRoutes {
+public protocol UsageRecordRoutes: StripeAPIRoute {
     /// Creates a usage record for a specified subscription item and date, and fills it with a quantity.
     ///
     /// Usage records provide `quantity` information that Stripe uses to track how much a customer is using your service. With usage information and the pricing model set up by the [metered billing](https://stripe.com/docs/billing/subscriptions/metered-billing) plan, Stripe helps you send accurate invoices to your customers.
