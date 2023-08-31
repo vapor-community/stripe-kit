@@ -229,7 +229,7 @@ public struct StripeTerminalReaderRoutes: TerminalReaderRoutes {
             body["expand"] = expand
         }
         
-        return try await apiHandler.send(method: .POST, path: terminalreaders, query: "\(terminalreaders)/\(reader)/process_payment_intent", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(terminalreaders)/\(reader)/process_payment_intent", body: .string(body.queryParameters), headers: headers)
     }
     
     public func handoffSetupIntent(reader: String,
@@ -243,7 +243,7 @@ public struct StripeTerminalReaderRoutes: TerminalReaderRoutes {
             body["expand"] = expand
         }
         
-        return try await apiHandler.send(method: .POST, path: terminalreaders, query: "\(terminalreaders)/\(reader)/process_setup_intent", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(terminalreaders)/\(reader)/process_setup_intent", body: .string(body.queryParameters), headers: headers)
     }
     
     public func setupReaderDisplay(reader: String,
@@ -260,7 +260,7 @@ public struct StripeTerminalReaderRoutes: TerminalReaderRoutes {
             body["expand"] = expand
         }
         
-        return try await apiHandler.send(method: .POST, path: terminalreaders, query: "\(terminalreaders)/\(reader)/set_reader_display", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(terminalreaders)/\(reader)/set_reader_display", body: .string(body.queryParameters), headers: headers)
     }
     
     public func refund(reader: String,
@@ -297,7 +297,7 @@ public struct StripeTerminalReaderRoutes: TerminalReaderRoutes {
             body["expand"] = expand
         }
         
-        return try await apiHandler.send(method: .POST, path: terminalreaders, query: "\(terminalreaders)/\(reader)/refund_payment", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(terminalreaders)/\(reader)/refund_payment", body: .string(body.queryParameters), headers: headers)
     }
     
     public func cancelCurrentAction(reader: String, expand: [String]? = nil) async throws -> TerminalReader {
@@ -307,7 +307,7 @@ public struct StripeTerminalReaderRoutes: TerminalReaderRoutes {
             body["expand"] = expand
         }
         
-        return try await apiHandler.send(method: .POST, path: terminalreaders, query: "\(terminalreaders)/\(reader)/cancel_action", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(terminalreaders)/\(reader)/cancel_action", body: .string(body.queryParameters), headers: headers)
     }
     
     public func simulatePresentPaymentMethod(reader: String,
@@ -338,6 +338,6 @@ public struct StripeTerminalReaderRoutes: TerminalReaderRoutes {
             body["expand"] = expand
         }
         
-        return try await apiHandler.send(method: .POST, path: terminalreaders, query: "\(testhelpers)/\(reader)/present_payment_method", body: .string(body.queryParameters), headers: headers)
+        return try await apiHandler.send(method: .POST, path: "\(testhelpers)/\(reader)/present_payment_method", body: .string(body.queryParameters), headers: headers)
     }
 }
