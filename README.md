@@ -7,13 +7,13 @@
 
 ## Version support
 
-Stripe API version `2022-11-15` -> StripeKit: 21.0.0
+Stripe API version `2022-11-15` -> StripeKit: 22.0.0
 
 ## Installation
 To start using StripeKit, in your `Package.swift`, add the following
 
 ```swift
-.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "20.0.0")
+.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "22.0.0")
 ```
 
 ## Using the API
