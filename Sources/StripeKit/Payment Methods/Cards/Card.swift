@@ -32,6 +32,8 @@ public struct Card: Codable {
     @Expandable<Customer> public var customer: String?
     /// If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
     public var cvcCheck: CardValidationCheck?
+	/// Whether this card is the default external account for its currency.
+	public var defaultForCurrency: Bool?
     /// Two-digit number representing the card’s expiration month.
     public var expMonth: Int?
     /// Four-digit number representing the card’s expiration year.
