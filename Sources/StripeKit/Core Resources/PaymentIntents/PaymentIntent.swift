@@ -85,9 +85,7 @@ public struct PaymentIntent: Codable {
     public var transferData: PaymentIntentTransferData?
     /// A string that identifies the resulting payment as part of a group. See the PaymentIntents Connect usage guide for details.
     public var transferGroup: String?
-	/// Details about the subscription that created this invoice.
-	public var subscriptionDetails: SubscriptionDetails?
-
+    
     public init(id: String,
                 amount: Int? = nil,
                 automaticPaymentMethods: PaymentIntentAutomaticMaymentMethods? = nil,
