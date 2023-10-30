@@ -208,15 +208,15 @@ public struct StripePriceRoutes: PriceRoutes {
     }
     
     public func update(price: String,
-                       active: Bool?,
-                       metadata: [String: String]?,
-                       nickname: String?,
-                       currencyOptions: [String: [String: Any]]?,
-                       lookupKey: String?,
-                       taxBehavior: PriceTaxBehavior?,
-                       transferLookupKey: String?,
-                       expand: [String]?) async throws -> Price {
-        
+                       active: Bool? = nil,
+                       metadata: [String: String]? = nil,
+                       nickname: String? = nil,
+                       currencyOptions: [String: [String: Any]]? = nil,
+                       lookupKey: String? = nil,
+                       taxBehavior: PriceTaxBehavior? = nil,
+                       transferLookupKey: String? = nil,
+                       expand: [String]? = nil) async throws -> Price {
+
         var body: [String: Any] = [:]
         
         if let active {

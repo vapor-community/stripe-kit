@@ -133,7 +133,7 @@ public struct StripeRefundRoutes: RefundRoutes {
         return try await apiHandler.send(method: .POST, path: refunds, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(refund: String, expand: [String]?) async throws -> Refund {
+    public func retrieve(refund: String, expand: [String]? = nil) async throws -> Refund {
         var queryParams = ""
         if let expand {
             queryParams = ["expand": expand].queryParameters
