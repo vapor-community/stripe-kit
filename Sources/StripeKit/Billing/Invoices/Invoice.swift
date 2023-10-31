@@ -180,6 +180,7 @@ public struct Invoice: Codable {
                 periodStart: Date? = nil,
                 status: InvoiceStatus? = nil,
                 subscription: String? = nil,
+				subscriptionDetails: SubscriptionDetails? = nil,
                 total: Int? = nil,
                 object: String,
                 accountCountry: String? = nil,
@@ -256,6 +257,7 @@ public struct Invoice: Codable {
         self.periodStart = periodStart
         self.status = status
         self._subscription = Expandable(id: subscription)
+		self.subscriptionDetails = subscriptionDetails
         self.total = total
         self.object = object
         self.accountCountry = accountCountry
