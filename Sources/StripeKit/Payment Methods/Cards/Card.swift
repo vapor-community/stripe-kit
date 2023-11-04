@@ -32,6 +32,8 @@ public struct Card: Codable {
     @Expandable<Customer> public var customer: String?
     /// If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
     public var cvcCheck: CardValidationCheck?
+	/// Whether this card is the default external account for its currency.
+	public var defaultForCurrency: Bool?
     /// Two-digit number representing the card’s expiration month.
     public var expMonth: Int?
     /// Four-digit number representing the card’s expiration year.
@@ -87,6 +89,7 @@ public struct Card: Codable {
                 addressLine1Check: CardValidationCheck? = nil,
                 availablePayoutMethods: [String]? = nil,
                 currency: Currency? = nil,
+				defaultForCurrency: Bool? = nil,
                 dynamicLast4: String? = nil,
                 tokenizationMethod: CardTokenizedMethod? = nil,
                 wallet: CardWallet? = nil) {
@@ -114,6 +117,7 @@ public struct Card: Codable {
         self.addressLine1Check = addressLine1Check
         self.availablePayoutMethods = availablePayoutMethods
         self.currency = currency
+		self.defaultForCurrency = defaultForCurrency
         self.dynamicLast4 = dynamicLast4
         self.tokenizationMethod = tokenizationMethod
         self.wallet = wallet

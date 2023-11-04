@@ -40,6 +40,8 @@ public struct Invoice: Codable {
     public var status: InvoiceStatus?
     /// The subscription that this invoice was prepared for, if any.
     @Expandable<Subscription> public var subscription: String?
+	/// Details about the subscription that created this invoice.
+	public var subscriptionDetails: SubscriptionDetails?
     /// Total after discount.
     public var total: Int?
     /// String representing the object’s type. Objects of the same type share the same value.
@@ -178,6 +180,7 @@ public struct Invoice: Codable {
                 periodStart: Date? = nil,
                 status: InvoiceStatus? = nil,
                 subscription: String? = nil,
+				subscriptionDetails: SubscriptionDetails? = nil,
                 total: Int? = nil,
                 object: String,
                 accountCountry: String? = nil,
@@ -254,6 +257,7 @@ public struct Invoice: Codable {
         self.periodStart = periodStart
         self.status = status
         self._subscription = Expandable(id: subscription)
+		self.subscriptionDetails = subscriptionDetails
         self.total = total
         self.object = object
         self.accountCountry = accountCountry
@@ -316,6 +320,15 @@ public struct Invoice: Codable {
         self.transferData = transferData
         self.webhooksDeliveredAt = webhooksDeliveredAt
     }
+}
+
+public struct SubscriptionDetails: Codable {
+	/// Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+	public var metadata: [String: String]?
+	
+	public init(metadata: [String: String]? = nil) {
+		self.metadata = metadata
+	}
 }
 
 public enum InvoiceCollectionMethod: String, Codable {
