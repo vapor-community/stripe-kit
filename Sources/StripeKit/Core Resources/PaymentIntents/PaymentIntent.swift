@@ -231,6 +231,7 @@ public enum PaymentIntentCancellationReason: String, Codable {
     case requestedByCustomer = "requested_by_customer"
     case failedInvoice = "failed_invoice"
     case voidInvoice = "void_invoice"
+	case abandoned
     case automatic
 }
 
