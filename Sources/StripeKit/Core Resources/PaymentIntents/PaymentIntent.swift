@@ -226,10 +226,13 @@ public struct PaymentIntentTransferData: Codable {
 }
 
 public enum PaymentIntentCancellationReason: String, Codable {
+    case abandoned
+    case automatic
     case duplicate
+    case failedInvoice = "failed_invoice"
     case fraudulent
     case requestedByCustomer = "requested_by_customer"
-	case abandoned
+    case voidInvoice = "void_invoice"
 }
 
 public enum PaymentIntentCaptureMethod: String, Codable {
