@@ -23,7 +23,8 @@ extension Dictionary where Key == String {
             }
         } else if let array = value as? [Any] {
             return array.enumerated().flatMap { idx, value in
-                queryComponents(keyPath: keyPath + ["\(idx)"], value)
+                queryComponents(keyPath: keyPath + [""], value)
+                //queryComponents(keyPath: keyPath + ["\(idx)"], value)
             }
         } else {
             return [(keyPath, "\(value)")]
