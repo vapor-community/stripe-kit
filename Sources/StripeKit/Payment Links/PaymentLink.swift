@@ -451,7 +451,7 @@ public struct PaymentLinkCustomTextSubmit: Codable {
 
 public enum PaymentLinkCustomerCreation: String, Codable {
     /// The Checkout Session will only create a Customer if it is required for Session confirmation. Currently, only `subscription` mode Sessions require a Customer.
-    case ifRequired
+    case ifRequired = "if_required"
     /// The Checkout Session will always create a Customer when a Session confirmation is attempted.
     case always
 }
