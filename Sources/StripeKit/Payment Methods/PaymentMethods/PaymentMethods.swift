@@ -178,6 +178,7 @@ public enum PaymentMethodCardNetwork: String, Codable {
     case cartesBancaires = "cartes_bancaires"
     case diners
     case discover
+    case eftposAu = "eftpos_au"
     case interac
     case jcb
     case mastercard
