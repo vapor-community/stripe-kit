@@ -670,6 +670,38 @@ public enum ConnectAccountRequirementsErrorCode: String, Codable {
     case verificationRequiresAdditionalMemorandumOfAssociations = "verification_requires_additional_memorandum_of_associations"
     /// Underage. Age must be at least 18.
     case invalidDobAgeUnder18 = "invalid_dob_age_under_18"
+    /// Your product description must be at least 10 characters.
+    case invalidProductDescriptionLength = "invalid_product_description_length"
+    /// Your product description must be different from your URL.
+    case invalidProductDescriptionUrlMatch = "invalid_product_description_url_match"
+    /// Your statement descriptor must be between 5 and 22 characters.
+    case invalidStatementDescriptorLength = "invalid_statement_descriptor_length"
+    /// Your statement descriptor must be similar to your business name, legal entity name or URL.
+    case invalidStatementDescriptorBusinessMismatch = "invalid_statement_descriptor_business_mismatch"
+    /// Generic or well-known statement descriptors aren't supported.
+    case invalidStatementDescriptorDenylisted = "invalid_statement_descriptor_denylisted"
+    /// The statement descriptor prefix must be similar to the full statement descriptor.
+    case invalidStatementDescriptorPrefixMismatch = "invalid_statement_descriptor_prefix_mismatch"
+    /// Generic or well-known statement descriptor prefixes aren't supported.
+    case invalidStatementDescriptorPrefixDenylisted = "invalid_statement_descriptor_prefix_denylisted"
+    /// Generic or well-known business names aren't supported.
+    case invalidCompanyNameDenylisted = "invalid_company_name_denylisted"
+    /// Generic or well-known business names aren't supported.
+    case invalidBusinessProfileNameDenylisted = "invalid_business_profile_name_denylisted"
+    /// Business profile names must consist of recognizable words.
+    case invalidBusinessProfileName = "invalid_business_profile_name"
+    /// Person must be at least 13 years old.
+    case invalidDobAgeUnderMinimum = "invalid_dob_age_under_minimum"
+    /// Date of birth must be within in the last 120 years.
+    case invalidDobAgeOverMaximum = "invalid_dob_age_over_maximum"
+    /// The phone number doesn't seem to be valid. Make sure it's formatted correctly.
+    case invalidPhoneNumber = "invalid_phone_number"
+    /// Tax IDs must be a unique set of 9 numbers without dashes or other special characters.
+    case invalidTaxIdFormat = "invalid_tax_id_format"
+    /// Format as https://example.com
+    case invalidUrlFormat = "invalid_url_format"
+    /// Generic business URLs aren't supported.
+    case invalidUrlDenylisted = "invalid_url_denylisted"
 }
 
 public struct ConnectAccountFutureRequirements: Codable {
