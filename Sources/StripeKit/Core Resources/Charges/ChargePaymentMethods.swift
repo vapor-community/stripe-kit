@@ -235,6 +235,8 @@ public struct ChargePaymentMethodDetailsBoleto: Codable {
 public struct ChargePaymentMethodDetailsCard: Codable {
     /// Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
     public var brand: PaymentMethodDetailsCardBrand?
+    /// When using manual capture, a future timestamp after which the charge will be automatically refunded if uncaptured.
+    public var captureBefore: Date?
     /// Check results by Card networks on Card address and CVC at time of payment.
     public var checks: PaymentMethodDetailsCardChecks?
     /// Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you’ve collected.
@@ -259,6 +261,7 @@ public struct ChargePaymentMethodDetailsCard: Codable {
     public var wallet: ChargePaymentMethodDetailsCardWallet?
     
     public init(brand: PaymentMethodDetailsCardBrand? = nil,
+                captureBefore: Date? = nil,
                 checks: PaymentMethodDetailsCardChecks? = nil,
                 country: String? = nil,
                 expMonth: Int? = nil,
@@ -271,6 +274,7 @@ public struct ChargePaymentMethodDetailsCard: Codable {
                 threeDSecure: ChargePaymentMethodDetailsCardThreeDSecure? = nil,
                 wallet: ChargePaymentMethodDetailsCardWallet? = nil) {
         self.brand = brand
+        self.captureBefore = captureBefore
         self.checks = checks
         self.country = country
         self.expMonth = expMonth
