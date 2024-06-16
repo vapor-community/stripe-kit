@@ -366,6 +366,7 @@ public enum SubscriptionScheduleStatus: String, Codable {
 
 public enum SubscriptionSchedulePhaseProrationBehavior: String, Codable {
     case createProrations = "create_prorations"
+    case alwaysInvoice = "always_invoice"
     case none
 }
 
