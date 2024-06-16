@@ -99,7 +99,7 @@ public struct SubscriptionScheduleCurrentPhase: Codable {
 
 public struct SubscriptionScheduleDefaultSettings: Codable {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner’s Stripe account during this phase of the schedule.
-    public var applicationFeePercent: String?
+    public var applicationFeePercent: Float?
     /// Default settings for automatic tax computation.
     public var automaticTax: SubscriptionScheduleDefaultSettingsAutomaticTax?
     /// Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle documentation.
@@ -119,7 +119,7 @@ public struct SubscriptionScheduleDefaultSettings: Codable {
     /// The account (if any) the subscription’s payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription’s invoices.
     public var transferData: SubscriptionScheduleTransferData?
     
-    public init(applicationFeePercent: String? = nil,
+    public init(applicationFeePercent: Float? = nil,
                 automaticTax: SubscriptionScheduleDefaultSettingsAutomaticTax? = nil,
                 billingCycleAnchor: SubscriptionScheduleBillingCycleAnchor? = nil,
                 billingThresholds: SubscriptionScheduleDefaultSettingsBillingThresholds? = nil,
@@ -198,7 +198,7 @@ public struct SubscriptionSchedulePhase: Codable {
     /// A list of prices and quantities that will generate invoice items appended to the first invoice for this phase.
     public var addInvoiceItems: [SubscriptionSchedulePhaseAddInvoiceItem]?
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner’s Stripe account during this phase of the schedule.
-    public var applicationFeePercent: String?
+    public var applicationFeePercent: Float?
     /// Automatic tax settings for this phase.
     public var automaticTax: SubscriptionSchedulePhaseAutomaticTax?
     /// Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If automatic then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle documentation.
@@ -237,7 +237,7 @@ public struct SubscriptionSchedulePhase: Codable {
     public var trialEnd: Date?
     
     public init(addInvoiceItems: [SubscriptionSchedulePhaseAddInvoiceItem]? = nil,
-                applicationFeePercent: String? = nil,
+                applicationFeePercent: Float? = nil,
                 automaticTax: SubscriptionSchedulePhaseAutomaticTax? = nil,
                 billingCycleAnchor: SubscriptionScheduleBillingCycleAnchor? = nil,
                 billingThresholds: SubscriptionScheduleDefaultSettingsBillingThresholds? = nil,
