@@ -27,7 +27,7 @@ public protocol SubscriptionScheduleRoutes: StripeAPIRoute {
                 startDate: Date?,
                 defaultSettings: [String: Any]?,
                 endBehavior: SubscriptionScheduleEndBehavior?,
-                fromSubscription: Bool?,
+                fromSubscription: String?,
                 expand: [String]?) async throws -> SubscriptionSchedule
     
     /// Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
@@ -97,7 +97,7 @@ public struct StripeSubscriptionScheduleRoutes: SubscriptionScheduleRoutes {
                        startDate: Date? = nil,
                        defaultSettings: [String: Any]? = nil,
                        endBehavior: SubscriptionScheduleEndBehavior? = nil,
-                       fromSubscription: Bool? = nil,
+                       fromSubscription: String? = nil,
                        expand: [String]? = nil) async throws -> SubscriptionSchedule {
         var body: [String: Any] = [:]
         
