@@ -95,7 +95,7 @@ public struct StripeDisputeRoutes: DisputeRoutes {
         return try await apiHandler.send(method: .POST, path: "\(disputes)/\(dispute)", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func close(dispute: String, expand: [String]?) async throws -> Dispute {
+    public func close(dispute: String, expand: [String]? = nil) async throws -> Dispute {
         var body: [String: Any] = [:]
         
         if let expand {
@@ -105,7 +105,7 @@ public struct StripeDisputeRoutes: DisputeRoutes {
         return try await apiHandler.send(method: .POST, path: "\(disputes)/\(dispute)/close", body: .string(body.queryParameters), headers: headers)
     }
     
-    public func listAll(filter: [String : Any]?) async throws -> DisputeList {
+    public func listAll(filter: [String : Any]? = nil) async throws -> DisputeList {
         var queryParams = ""
         if let filter {
             queryParams = filter.queryParameters
