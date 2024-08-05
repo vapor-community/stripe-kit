@@ -89,7 +89,7 @@ public struct Product: Codable {
 public struct MarketingFeature: Codable {
     public var name: String?
     
-    init(name: String? = nil) {
+    public init(name: String? = nil) {
         self.name = name
     }
 }
