@@ -44,6 +44,8 @@ public struct Product: Codable {
     public var updated: Date?
     /// A URL of a publicly-accessible webpage for this product.
     public var url: String?
+    /// The marketing feature name. Up to 80 characters long.
+    public var marketingFeatures: [MarketingFeature]?
     
     public init(id: String,
                 active: Bool? = nil,
@@ -61,7 +63,8 @@ public struct Product: Codable {
                 taxCode: String? = nil,
                 unitLabel: String? = nil,
                 updated: Date? = nil,
-                url: String? = nil) {
+                url: String? = nil,
+                marketingFeatures: [MarketingFeature]? = []) {
         self.id = id
         self.active = active
         self._defaultPrice = Expandable(id: defaultPrice)
@@ -79,6 +82,15 @@ public struct Product: Codable {
         self.unitLabel = unitLabel
         self.updated = updated
         self.url = url
+        self.marketingFeatures = marketingFeatures
+    }
+}
+
+public struct MarketingFeature: Codable {
+    public var name: String?
+    
+    public init(name: String? = nil) {
+        self.name = name
     }
 }
 
