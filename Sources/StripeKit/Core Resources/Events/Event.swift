@@ -74,7 +74,7 @@ public enum EventObject: Codable {
     case applicationFee(ApplicationFee)
     case applicationFeeRefund(ApplicationFeeRefund)
     case balance(Balance)
-    case billingPortalSessionCreated(PortalSession)
+    case billingPortalSession(PortalSession)
     case capability(Capability)
     case charge(Charge)
     case dispute(Dispute)
@@ -139,8 +139,8 @@ public enum EventObject: Codable {
             self = try .bankAccount(BankAccount(from: decoder))
         case "billing_portal.configuration":
             self = try .configuration(PortalConfiguration(from: decoder))
-        case "billing_portal.session.created":
-            self = try .billingPortalSessionCreated(PortalSession(from: decoder))
+        case "billing_portal.session":
+            self = try .billingPortalSession(PortalSession(from: decoder))
         case "fee_refund":
             self = try .applicationFeeRefund(ApplicationFeeRefund(from: decoder))
         case "balance":
@@ -250,7 +250,7 @@ public enum EventObject: Codable {
             try cashBalance.encode(to: encoder)
         case .bankAccount(let bankAccount):
             try bankAccount.encode(to: encoder)
-        case .billingPortalSessionCreated(let portalSession):
+        case .billingPortalSession(let portalSession):
             try portalSession.encode(to: encoder)
         case .applicationFee(let applicationFee):
             try applicationFee.encode(to: encoder)
