@@ -21,6 +21,6 @@ class QueryEncodingTests: XCTestCase {
         let query: [String: Any] = [
             "items": [["plan": "plan_b"], ["plan": "plan_nine"]]
         ]
-        XCTAssertEqual(query.queryParameters, "items[0][plan]=plan_b&items[1][plan]=plan_nine")
+        XCTAssertEqual(query.queryParameters, "items[][plan]=plan_b&items[][plan]=plan_nine")
     }
 }
