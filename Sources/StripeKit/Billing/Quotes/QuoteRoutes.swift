@@ -272,24 +272,24 @@ public struct StripeQuoteRoutes: QuoteRoutes {
     }
     
     public func update(quote: String,
-                       lineItems: [[String: Any]]?,
-                       metadata: [String: String]?,
-                       applicationFeeAmount: Int?,
-                       applicationFeePercent: String?,
-                       automaticTax: [String: Any]?,
-                       collectionMethod: QuoteCollectionMethod?,
-                       customer: String?,
-                       defaultTaxRates: [String]?,
-                       description: String?,
-                       discounts: [[String: Any]]?,
-                       expiresAt: Date?,
-                       footer: String?,
-                       header: String?,
-                       invoiceSettings: [String: Any]?,
-                       onBehalfOf: String?,
-                       subscriptionData: [String: Any]?,
-                       transferData: [String: Any]?,
-                       expand: [String]?) async throws -> Quote {
+                       lineItems: [[String: Any]]? = nil,
+                       metadata: [String: String]? = nil,
+                       applicationFeeAmount: Int? = nil,
+                       applicationFeePercent: String? = nil,
+                       automaticTax: [String: Any]? = nil,
+                       collectionMethod: QuoteCollectionMethod? = nil,
+                       customer: String? = nil,
+                       defaultTaxRates: [String]? = nil,
+                       description: String? = nil,
+                       discounts: [[String: Any]]? = nil,
+                       expiresAt: Date? = nil,
+                       footer: String? = nil,
+                       header: String? = nil,
+                       invoiceSettings: [String: Any]? = nil,
+                       onBehalfOf: String? = nil,
+                       subscriptionData: [String: Any]? = nil,
+                       transferData: [String: Any]? = nil,
+                       expand: [String]? = nil) async throws -> Quote {
         var body: [String: Any] = [:]
         
         if let lineItems {
