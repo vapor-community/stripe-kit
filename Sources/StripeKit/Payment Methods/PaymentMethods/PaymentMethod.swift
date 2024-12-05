@@ -197,6 +197,7 @@ public enum PaymentMethodType: String, Codable {
     case sofort
     case usBankAccount = "us_bank_account"
     case wechatPay = "wechat_pay"
+    case paypal
 }
 
 public struct PaymentMethodRadarOptions: Codable {
