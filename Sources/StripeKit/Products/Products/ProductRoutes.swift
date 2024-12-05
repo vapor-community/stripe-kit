@@ -40,13 +40,14 @@ public protocol ProductRoutes: StripeAPIRoute {
                 statementDescriptor: String?,
                 taxCode: String?,
                 unitLabel: String?,
-                url: String?) async throws -> Product
+                url: String?,
+                expand: [String]?) async throws -> Product
     
     /// Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
     ///
     /// - Parameter id: The identifier of the product to be retrieved.
     /// - Returns: Returns a product object if a valid identifier was provided.
-    func retrieve(id: String) async throws -> Product
+    func retrieve(id: String, expand: [String]?) async throws -> Product
     
     /// Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     /// - Parameters:
@@ -77,7 +78,8 @@ public protocol ProductRoutes: StripeAPIRoute {
                 statementDescriptor: String?,
                 taxCode: String?,
                 unitLabel: String?,
-                url: String?) async throws -> Product
+                url: String?,
+                expand: [String]?) async throws -> Product
     
     /// Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
     ///
@@ -133,7 +135,8 @@ public struct StripeProductRoutes: ProductRoutes {
                        statementDescriptor: String? = nil,
                        taxCode: String? = nil,
                        unitLabel: String? = nil,
-                       url: String? = nil) async throws -> Product {
+                       url: String? = nil,
+                       expand: [String]? = nil) async throws -> Product {
         var body: [String: Any] = [:]
         
         body["name"] = name
@@ -185,12 +188,20 @@ public struct StripeProductRoutes: ProductRoutes {
         if let url {
             body["url"] = url
         }
+
+        if let expand {
+            body["expand"] = expand
+        }
         
         return try await apiHandler.send(method: .POST, path: products, body: .string(body.queryParameters), headers: headers)
     }
     
-    public func retrieve(id: String) async throws -> Product {
-        try await apiHandler.send(method: .GET, path: "\(products)/\(id)", headers: headers)
+    public func retrieve(id: String, expand: [String]? = nil) async throws -> Product {
+        var queryParams = ""
+        if let expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+        return try await apiHandler.send(method: .GET, path: "\(products)/\(id)", query: queryParams, headers: headers)
     }
     
     public func update(product: String,
@@ -205,7 +216,8 @@ public struct StripeProductRoutes: ProductRoutes {
                        statementDescriptor: String? = nil,
                        taxCode: String? = nil,
                        unitLabel: String? = nil,
-                       url: String? = nil) async throws -> Product {
+                       url: String? = nil,
+                       expand: [String]? = nil) async throws -> Product {
         var body: [String: Any] = [:]
         
         if let active {
@@ -254,6 +266,10 @@ public struct StripeProductRoutes: ProductRoutes {
         
         if let url {
             body["url"] = url
+        }
+
+        if let expand {
+            body["expand"] = expand
         }
         
         return try await apiHandler.send(method: .POST, path: "\(products)/\(product)", body: .string(body.queryParameters), headers: headers)

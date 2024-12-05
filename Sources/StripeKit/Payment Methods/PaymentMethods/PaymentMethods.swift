@@ -133,6 +133,8 @@ public struct PaymentMethodCard: Codable {
     public var threeDSecureUsage: PaymentMethodCardThreeDSecureUsage?
     /// If this Card is part of a card wallet, this contains the details of the card wallet.
     public var wallet: PaymentMethodCardWallet?
+    /// The issuer identification number for the card. This is the first six digits of a card number.
+    public var iin: String?
     
     public init(brand: PaymentMethodDetailsCardBrand? = nil,
                 checks: PaymentMethodDetailsCardChecks? = nil,
@@ -145,7 +147,8 @@ public struct PaymentMethodCard: Codable {
                 last4: String? = nil,
                 networks: PaymentMethodCardNetworks? = nil,
                 threeDSecureUsage: PaymentMethodCardThreeDSecureUsage? = nil,
-                wallet: PaymentMethodCardWallet? = nil) {
+                wallet: PaymentMethodCardWallet? = nil,
+                iin: String? = nil) {
         self.brand = brand
         self.checks = checks
         self.country = country
@@ -158,6 +161,7 @@ public struct PaymentMethodCard: Codable {
         self.networks = networks
         self.threeDSecureUsage = threeDSecureUsage
         self.wallet = wallet
+        self.iin = iin
     }
 }
 
@@ -178,6 +182,7 @@ public enum PaymentMethodCardNetwork: String, Codable {
     case cartesBancaires = "cartes_bancaires"
     case diners
     case discover
+    case eftposAu = "eftpos_au"
     case interac
     case jcb
     case mastercard

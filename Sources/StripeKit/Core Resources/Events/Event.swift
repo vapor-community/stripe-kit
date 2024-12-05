@@ -67,12 +67,14 @@ public struct EventData: Codable {
 
 public enum EventObject: Codable {
     case account(ConnectAccount)
+    case application(ConnectApplication)
     case card(Card)
     case cashBalance(CashBalance)
     case bankAccount(BankAccount)
     case applicationFee(ApplicationFee)
     case applicationFeeRefund(ApplicationFeeRefund)
     case balance(Balance)
+    case billingPortalSession(PortalSession)
     case capability(Capability)
     case charge(Charge)
     case dispute(Dispute)
@@ -103,7 +105,7 @@ public enum EventObject: Codable {
     case price(Price)
     case product(Product)
     case promotionCode(PromotionCode)
-    case earlyFraudWarniing(EarlyFraudWarning)
+    case earlyFraudWarning(EarlyFraudWarning)
     case quote(Quote)
     case reportRun(ReportRun)
     case reportType(ReportType)
@@ -125,6 +127,8 @@ public enum EventObject: Codable {
         switch object {
         case "account":
             self = try .account(ConnectAccount(from: decoder))
+        case "application":
+            self = try .application(ConnectApplication(from: decoder))
         case "application_fee":
             self = try .applicationFee(ApplicationFee(from: decoder))
         case "card":
@@ -135,6 +139,8 @@ public enum EventObject: Codable {
             self = try .bankAccount(BankAccount(from: decoder))
         case "billing_portal.configuration":
             self = try .configuration(PortalConfiguration(from: decoder))
+        case "billing_portal.session":
+            self = try .billingPortalSession(PortalSession(from: decoder))
         case "fee_refund":
             self = try .applicationFeeRefund(ApplicationFeeRefund(from: decoder))
         case "balance":
@@ -200,7 +206,7 @@ public enum EventObject: Codable {
         case "promotion_code":
             self = try .promotionCode(PromotionCode(from: decoder))
         case "radar.early_fraud_warning":
-            self = try .earlyFraudWarniing(EarlyFraudWarning(from: decoder))
+            self = try .earlyFraudWarning(EarlyFraudWarning(from: decoder))
         case "quote":
             self = try .quote(Quote(from: decoder))
         case "reporting.report_run":
@@ -232,7 +238,116 @@ public enum EventObject: Codable {
         }
     }
     
-    public func encode(to encoder: Encoder) throws { }
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .account(let connectAccount):
+            try connectAccount.encode(to: encoder)
+        case .application(let connectApplication):
+            try connectApplication.encode(to: encoder)
+        case .card(let card):
+            try card.encode(to: encoder)
+        case .cashBalance(let cashBalance):
+            try cashBalance.encode(to: encoder)
+        case .bankAccount(let bankAccount):
+            try bankAccount.encode(to: encoder)
+        case .billingPortalSession(let portalSession):
+            try portalSession.encode(to: encoder)
+        case .applicationFee(let applicationFee):
+            try applicationFee.encode(to: encoder)
+        case .applicationFeeRefund(let applicationFeeRefund):
+            try applicationFeeRefund.encode(to: encoder)
+        case .balance(let balance):
+            try balance.encode(to: encoder)
+        case .capability(let capability):
+            try capability.encode(to: encoder)
+        case .charge(let charge):
+            try charge.encode(to: encoder)
+        case .dispute(let dispute):
+            try dispute.encode(to: encoder)
+        case .refund(let refund):
+            try refund.encode(to: encoder)
+        case .checkoutSession(let session):
+            try session.encode(to: encoder)
+        case .configuration(let portalConfiguration):
+            try portalConfiguration.encode(to: encoder)
+        case .coupon(let coupon):
+            try coupon.encode(to: encoder)
+        case .creditNote(let creditNote):
+            try creditNote.encode(to: encoder)
+        case .customer(let customer):
+            try customer.encode(to: encoder)
+        case .discount(let discount):
+            try discount.encode(to: encoder)
+        case .subscription(let subscription):
+            try subscription.encode(to: encoder)
+        case .taxId(let taxID):
+            try taxID.encode(to: encoder)
+        case .file(let file):
+            try file.encode(to: encoder)
+        case .invoice(let invoice):
+            try invoice.encode(to: encoder)
+        case .invoiceItem(let invoiceItem):
+            try invoiceItem.encode(to: encoder)
+        case .issuingAuthorization(let authorization):
+            try authorization.encode(to: encoder)
+        case .issuingCard(let issuingCard):
+            try issuingCard.encode(to: encoder)
+        case .issuingCardHolder(let cardholder):
+            try cardholder.encode(to: encoder)
+        case .issuingDispute(let issuingDispute):
+            try issuingDispute.encode(to: encoder)
+        case .issuingTransaction(let transaction):
+            try transaction.encode(to: encoder)
+        case .mandate(let mandate):
+            try mandate.encode(to: encoder)
+        case .paymentIntent(let paymentIntent):
+            try paymentIntent.encode(to: encoder)
+        case .paymentLink(let paymentLink):
+            try paymentLink.encode(to: encoder)
+        case .paymentMethod(let paymentMethod):
+            try paymentMethod.encode(to: encoder)
+        case .payout(let payout):
+            try payout.encode(to: encoder)
+        case .person(let person):
+            try person.encode(to: encoder)
+        case .plan(let plan):
+            try plan.encode(to: encoder)
+        case .price(let price):
+            try price.encode(to: encoder)
+        case .product(let product):
+            try product.encode(to: encoder)
+        case .promotionCode(let promotionCode):
+            try promotionCode.encode(to: encoder)
+        case .earlyFraudWarning(let earlyFraudWarning):
+            try earlyFraudWarning.encode(to: encoder)
+        case .quote(let quote):
+            try quote.encode(to: encoder)
+        case .reportRun(let reportRun):
+            try reportRun.encode(to: encoder)
+        case .reportType(let reportType):
+            try reportType.encode(to: encoder)
+        case .review(let review):
+            try review.encode(to: encoder)
+        case .setupIntent(let setupIntent):
+            try setupIntent.encode(to: encoder)
+        case .scheduledQueryRun(let scheduledQueryRun):
+            try scheduledQueryRun.encode(to: encoder)
+        case .subscriptionSchedule(let subscriptionSchedule):
+            try subscriptionSchedule.encode(to: encoder)
+        case .taxRate(let taxRate):
+            try taxRate.encode(to: encoder)
+        case .topup(let topUp):
+            try topUp.encode(to: encoder)
+        case .transfer(let transfer):
+            try transfer.encode(to: encoder)
+        case .testClock(let testClock):
+            try testClock.encode(to: encoder)
+        case .reader(let terminalReader):
+            try terminalReader.encode(to: encoder)
+        case .verificationSession(let verificationSession):
+            try verificationSession.encode(to: encoder)
+        }
+    }
     
     private enum CodingKeys: String, CodingKey {
         case object

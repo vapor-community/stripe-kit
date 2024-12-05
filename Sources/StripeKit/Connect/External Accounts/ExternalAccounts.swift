@@ -35,6 +35,24 @@ public struct ConnectAccountExternalAccountsList: Codable {
         bankAccounts = try container.decodeIfPresent([BankAccount].self, forKey: .data)?.filter{ $0.object == "bank_account" }
     }
     
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(object, forKey: .object)
+        try container.encodeIfPresent(hasMore, forKey: .hasMore)
+        try container.encodeIfPresent(url, forKey: .url)
+        
+        // Merge cardAccounts and bankAccounts into a single array
+        var accounts: [AnyEncodable] = []
+        if let cardAccounts = cardAccounts {
+            accounts.append(contentsOf: cardAccounts.map { AnyEncodable($0) })
+        }
+        if let bankAccounts = bankAccounts {
+            accounts.append(contentsOf: bankAccounts.map { AnyEncodable($0) })
+        }
+        
+        try container.encode(accounts, forKey: .data)
+    }
+    
     public init(object: String,
                 data: String? = nil,
                 hasMore: Bool? = nil,
@@ -47,5 +65,25 @@ public struct ConnectAccountExternalAccountsList: Codable {
         self.url = url
         self.cardAccounts = cardAccounts
         self.bankAccounts = bankAccounts
+    }
+    
+    enum CodingKeys: CodingKey {
+        case object
+        case data
+        case hasMore
+        case url
+    }
+    
+    // A helper type to encode heterogeneous elements
+    struct AnyEncodable: Encodable {
+        private let _encode: (Encoder) throws -> Void
+
+        init<T: Encodable>(_ encodable: T) {
+            _encode = encodable.encode
+        }
+
+        func encode(to encoder: Encoder) throws {
+            try _encode(encoder)
+        }
     }
 }
