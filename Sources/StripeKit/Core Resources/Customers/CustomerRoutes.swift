@@ -135,6 +135,7 @@ public protocol CustomerRoutes: StripeAPIRoute {
     ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: A dictionary with a data property that contains an array of up to limit customers. If no objects match the query, the resulting array will be empty. See the related guide on expanding properties in lists.
     func search(query: String, limit: Int?, page: String?, expand: [String]?) async throws -> CustomerSearchResult
+
 }
 
 public struct StripeCustomerRoutes: CustomerRoutes {
@@ -412,7 +413,14 @@ public struct StripeCustomerRoutes: CustomerRoutes {
         if let page {
             queryParams["page"] = page
         }
+        var body: [String: Any] = [:]
         
-        return try await apiHandler.send(method: .GET, path: search, query: queryParams.queryParameters, headers: headers)
+        if let expand {
+            body["expand"] = expand
+        }
+        
+        return try await apiHandler.send(method: .GET, path: search, query: queryParams.queryParameters, body: .string(body.queryParameters), headers: headers)
+
     }
+    
 }
