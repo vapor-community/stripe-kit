@@ -1,7 +1,7 @@
 import XCTest
 @testable import StripeKit
 
-class QueryEncodingTests: XCTestCase {
+final class QueryEncodingTests: XCTestCase {
     
     func testSimpleQueryEncodedProperly() throws {
         let query = [

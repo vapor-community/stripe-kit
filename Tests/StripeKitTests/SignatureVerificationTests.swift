@@ -2,7 +2,7 @@ import XCTest
 @testable import StripeKit
 import Crypto
 
-class SignatureVerificationTests: XCTestCase {
+final class SignatureVerificationTests: XCTestCase {
     var jsonData: Data = try! JSONEncoder().encode(["key": "value"])
     var secret: String = "SECRET"
     

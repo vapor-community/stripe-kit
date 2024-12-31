@@ -9,7 +9,7 @@ import NIO
 import NIOHTTP1
 import Foundation
 
-public protocol SessionRoutes {
+public protocol SessionRoutes: Sendable {
     /// Creates a Session object.
     /// - Parameters:
     ///   - lineItems: A list of items the customer is purchasing. Use this parameter to pass one-time or recurring Prices. For payment mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen. For subscription mode, there is a maximum of 20 line items with recurring Prices and 20 line items with one-time Prices. Line items with one-time Prices will be on the initial invoice only.

@@ -8,7 +8,7 @@
 import NIO
 import AsyncHTTPClient
 
-public final class StripeClient {
+public struct StripeClient: Sendable {
     // MARK: - CORE RESOURCES
     public var balances: BalanceRoutes
     public var balanceTransactions: BalanceTransactionRoutes

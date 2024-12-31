@@ -1,7 +1,7 @@
 import XCTest
 @testable import StripeKit
 
-class ExpandableTests: XCTestCase {
+final class ExpandableTests: XCTestCase {
     
     func testDynamicExpandable_decodesProperly() throws {
         
