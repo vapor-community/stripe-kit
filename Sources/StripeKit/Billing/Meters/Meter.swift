@@ -28,7 +28,7 @@ public struct Meter: Codable {
     /// The meter’s status.
     public var status: MeterStatus
     /// The timestamps at which the meter status changed.
-    public var meterStatusTransitions: MeterStatusTransitions
+    public var meterStatusTransitions: MeterStatusTransitions?
     /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
     public var updated: Date
     /// Fields that specify how to calculate a meter event’s value.
