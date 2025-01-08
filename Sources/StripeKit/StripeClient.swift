@@ -72,6 +72,7 @@ public final class StripeClient {
     public var quoteLineItems: QuoteLineItemRoutes
     public var quotes: QuoteRoutes
     public var testClocks: TestClockRoutes
+    public var meters: MeterRoutes
     public var meterEvents: MeterEventRoutes
 
     // MARK: - CONNECT
@@ -194,6 +195,7 @@ public final class StripeClient {
         quoteLineItems = StripeQuoteLineItemRoutes(apiHandler: handler)
         quotes = StripeQuoteRoutes(apiHandler: handler)
         testClocks = StripeTestClockRoutes(apiHandler: handler)
+        meters = StripeMeterRoutes(apiHandler: handler)
         meterEvents = StripeMeterEventRoutes(apiHandler: handler)
 
         connectAccounts = StripeConnectAccountRoutes(apiHandler: handler)
