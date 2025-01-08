@@ -24,7 +24,7 @@ public struct Meter: Codable {
     /// The time window to pre-aggregate meter events for, if any.
     public var eventTimeWindow: MeterEventTimeWindow?
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-    public var liveMode: Bool
+    public var liveMode: Bool?
     /// The meter’s status.
     public var status: MeterStatus
     /// The timestamps at which the meter status changed.
