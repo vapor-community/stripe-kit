@@ -339,6 +339,7 @@ extension StripeSignatureError: AbortError {
 * [x] Subscription Schedule
 * [x] Test Clocks
 * [x] Usage Records
+* [x] Meter Events
 ---
 ### Connect
 * [x] Account
