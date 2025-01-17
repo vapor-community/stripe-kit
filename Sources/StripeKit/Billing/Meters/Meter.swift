@@ -81,3 +81,20 @@ public enum MeterDefaultAggregationFormula: String, Codable {
     /// Sum each event’s value.
     case sum
 }
+
+public struct MeterList: Codable {
+    public var object: String
+    public var hasMore: Bool?
+    public var url: String?
+    public var data: [Meter]?
+
+    public init(object: String,
+                hasMore: Bool? = nil,
+                url: String? = nil,
+                data: [Meter]? = nil) {
+        self.object = object
+        self.hasMore = hasMore
+        self.url = url
+        self.data = data
+    }
+}

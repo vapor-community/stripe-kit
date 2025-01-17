@@ -47,3 +47,20 @@ public enum MeterEventSummaryValueGroupingWindow: String, Codable {
     case day
     case hour
 }
+
+public struct MeterEventSummaryList: Codable {
+    public var object: String
+    public var hasMore: Bool?
+    public var url: String?
+    public var data: [MeterEventSummary]?
+
+    public init(object: String,
+                hasMore: Bool? = nil,
+                url: String? = nil,
+                data: [MeterEventSummary]? = nil) {
+        self.object = object
+        self.hasMore = hasMore
+        self.url = url
+        self.data = data
+    }
+}

@@ -46,7 +46,7 @@ public protocol MeterRoutes: StripeAPIRoute {
     func retrieve(id: String) async throws -> Meter
 
     /// Returns a list of your billing meters.
-    func listAll() async throws -> [Meter]
+    func listAll() async throws -> MeterList
 
     /// Deactivates a billing meter.
     ///
@@ -68,7 +68,7 @@ public protocol MeterRoutes: StripeAPIRoute {
         valueGroupingWindow: MeterEventSummaryValueGroupingWindow?,
         endingBefore: String?,
         limit: Int?,
-        startingAfter: String?) async throws -> [MeterEventSummary]
+        startingAfter: String?) async throws -> MeterEventSummaryList
 }
 
 public struct StripeMeterRoutes: MeterRoutes {
@@ -135,7 +135,7 @@ public struct StripeMeterRoutes: MeterRoutes {
         return try await apiHandler.send(method: .GET, path: "\(meters)/\(id)", headers: headers)
     }
 
-    public func listAll() async throws -> [Meter] {
+    public func listAll() async throws -> MeterList {
         return try await apiHandler.send(
             method: .GET,
             path: meters,
@@ -167,9 +167,8 @@ public struct StripeMeterRoutes: MeterRoutes {
         valueGroupingWindow: MeterEventSummaryValueGroupingWindow?,
         endingBefore: String?,
         limit: Int?,
-        startingAfter: String?) async throws -> [MeterEventSummary]
+        startingAfter: String?) async throws -> MeterEventSummaryList
     {
-
         var queryParams: [String: Any] = [
             "customer": customer,
             "end_time": Int(endTime.timeIntervalSince1970),
