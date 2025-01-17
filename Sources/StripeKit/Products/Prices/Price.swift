@@ -72,8 +72,7 @@ public struct Price: Codable {
                 tiers: [PriceTier]? = nil,
                 tiersMode: PriceTierMode? = nil,
                 transformQuantity: PriceTransformQuantity? = nil,
-                unitAmountDecimal: String? = nil)
-    {
+                unitAmountDecimal: String? = nil) {
         self.id = id
         self.active = active
         self.currency = currency
@@ -114,8 +113,7 @@ public struct PriceRecurring: Codable {
                 interval: PlanInterval? = nil,
                 intervalCount: Int? = nil,
                 usageType: PlanUsageType? = nil,
-                meter: String? = nil)
-    {
+                meter: String? = nil) {
         self.aggregateUsage = aggregateUsage
         self.interval = interval
         self.intervalCount = intervalCount
@@ -157,8 +155,7 @@ public struct PriceCurrencyOption: Codable {
                 taxBehavior: PriceTaxBehavior? = nil,
                 tiers: [PriceTier]? = nil,
                 unitAmount: Int? = nil,
-                unitAmountDecimal: String? = nil)
-    {
+                unitAmountDecimal: String? = nil) {
         self.customUnitAmount = customUnitAmount
         self.taxBehavior = taxBehavior
         self.tiers = tiers
@@ -177,8 +174,7 @@ public struct PriceCurrencyOptionCustomUnitAmount: Codable {
 
     public init(maximum: Int? = nil,
                 minimum: Int? = nil,
-                preset: Int? = nil)
-    {
+                preset: Int? = nil) {
         self.maximum = maximum
         self.minimum = minimum
         self.preset = preset
@@ -207,8 +203,7 @@ public struct PriceTier: Codable {
                 flatAmountDecimal: String? = nil,
                 unitAmount: Int? = nil,
                 unitAmountDecimal: String? = nil,
-                upTo: Int? = nil)
-    {
+                upTo: Int? = nil) {
         self.flatAmount = flatAmount
         self.flatAmountDecimal = flatAmountDecimal
         self.unitAmount = unitAmount
@@ -227,8 +222,7 @@ public struct PriceCustomUnitAmount: Codable {
 
     public init(maximum: Int? = nil,
                 minimum: Int? = nil,
-                preset: Int? = nil)
-    {
+                preset: Int? = nil) {
         self.maximum = maximum
         self.minimum = minimum
         self.preset = preset
@@ -247,8 +241,7 @@ public struct PriceTransformQuantity: Codable {
     public var round: PriceTransformQuantityRound?
 
     public init(divideBy: Int? = nil,
-                round: PriceTransformQuantityRound? = nil)
-    {
+                round: PriceTransformQuantityRound? = nil) {
         self.divideBy = divideBy
         self.round = round
     }
@@ -278,8 +271,7 @@ public struct PriceSearchResult: Codable {
                 hasMore: Bool? = nil,
                 url: String? = nil,
                 nextPage: String? = nil,
-                totalCount: Int? = nil)
-    {
+                totalCount: Int? = nil) {
         self.object = object
         self.data = data
         self.hasMore = hasMore
@@ -298,8 +290,7 @@ public struct PriceList: Codable {
     public init(object: String,
                 hasMore: Bool? = nil,
                 url: String? = nil,
-                data: [Price]? = nil)
-    {
+                data: [Price]? = nil) {
         self.object = object
         self.hasMore = hasMore
         self.url = url
