@@ -112,6 +112,16 @@ public struct PriceRecurring: Codable {
     public init(aggregateUsage: PriceRecurringAggregateUsage? = nil,
                 interval: PlanInterval? = nil,
                 intervalCount: Int? = nil,
+                usageType: PlanUsageType? = nil) {
+        self.aggregateUsage = aggregateUsage
+        self.interval = interval
+        self.intervalCount = intervalCount
+        self.usageType = usageType
+    }
+
+    public init(aggregateUsage: PriceRecurringAggregateUsage? = nil,
+                interval: PlanInterval? = nil,
+                intervalCount: Int? = nil,
                 usageType: PlanUsageType? = nil,
                 meter: String? = nil) {
         self.aggregateUsage = aggregateUsage
