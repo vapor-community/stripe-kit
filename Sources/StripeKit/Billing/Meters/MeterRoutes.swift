@@ -59,6 +59,16 @@ public protocol MeterRoutes: StripeAPIRoute {
     /// - Parameters:
     /// - id: Unique identifier for the object.
     func reactivate(id: String) async throws -> Meter
+
+    func eventSummaries(
+        customer: String,
+        endTime: Date,
+        id: String,
+        startTime: Date,
+        valueGroupingWindow: MeterEventSummaryValueGroupingWindow?,
+        endingBefore: String?,
+        limit: Int?,
+        startingAfter: String?) async throws -> [MeterEventSummary]
 }
 
 public struct StripeMeterRoutes: MeterRoutes {
@@ -145,6 +155,47 @@ public struct StripeMeterRoutes: MeterRoutes {
         return try await apiHandler.send(
             method: .POST,
             path: "\(meters)/\(id)/reactivate",
+            headers: headers
+        )
+    }
+
+    public func eventSummaries(
+        customer: String,
+        endTime: Date,
+        id: String,
+        startTime: Date,
+        valueGroupingWindow: MeterEventSummaryValueGroupingWindow?,
+        endingBefore: String?,
+        limit: Int?,
+        startingAfter: String?) async throws -> [MeterEventSummary]
+    {
+
+        var queryParams: [String: Any] = [
+            "customer": customer,
+            "end_time": Int(endTime.timeIntervalSince1970),
+            "start_time": Int(startTime.timeIntervalSince1970)
+        ]
+
+        if let valueGroupingWindow {
+            queryParams["value_grouping_window"] = valueGroupingWindow.rawValue
+        }
+
+        if let endingBefore {
+            queryParams["ending_before"] = endingBefore
+        }
+
+        if let limit {
+            queryParams["limit"] = limit
+        }
+
+        if let startingAfter {
+            queryParams["starting_after"] = startingAfter
+        }
+
+        return try await apiHandler.send(
+            method: .GET,
+            path: meters + "/\(id)/event_summaries",
+            query: queryParams.queryParameters,
             headers: headers
         )
     }
