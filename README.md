@@ -317,6 +317,7 @@ extension StripeSignatureError: AbortError {
 * [x] Tax Codes
 * [x] Tax Rates
 * [x] Shipping Rates
+* [x] Entitlements
 ---
 ### Checkout
 * [x] Sessions

@@ -49,7 +49,12 @@ public final class StripeClient {
     public var taxCodes: TaxCodeRoutes
     public var taxRates: TaxRateRoutes
     public var shippingRates: ShippingRateRoutes
-    
+
+    // MARK: - Entitlements
+    public var features: FeatureRoutes
+    public var productFeatures: ProductFeatureRoutes
+    public var activeEntitlements: ActiveEntitlementRoutes
+
     // MARK: - BILLING
     public var creditNotes: CreditNoteRoutes
     public var customerBalanceTransactions: CustomerBalanceTransactionRoutes
@@ -163,7 +168,11 @@ public final class StripeClient {
         taxCodes = StripeTaxCodeRoutes(apiHandler: handler)
         taxRates = StripeTaxRateRoutes(apiHandler: handler)
         shippingRates = StripeShippingRateRoutes(apiHandler: handler)
-        
+
+        features = StripeFeatureRoutes(apiHandler: handler)
+        productFeatures = StripeProductFeatureRoutes(apiHandler: handler)
+        activeEntitlements = StripeActiveEntitlementRoutes(apiHandler: handler)
+
         creditNotes = StripeCreditNoteRoutes(apiHandler: handler)
         customerBalanceTransactions = StripeCustomerBalanceTransactionRoutes(apiHandler: handler)
         portalSession = StripePortalSessionRoutes(apiHandler: handler)
