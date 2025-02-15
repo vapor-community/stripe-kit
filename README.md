@@ -32,7 +32,8 @@ For example to use the `charges` API, the stripeclient has a property to access 
 
 ```swift
 do {
-    let charge = try await stripe.charges.create(amount: 2500,
+    let stripeCharge = stripe.charges as! StripeChargeRoutes
+    let charge = try await stripeCharges.create(amount: 2500,
                                                  currency: .usd,
                                                  description: "A server written in swift.",
                                                  source: "tok_visa")
@@ -58,7 +59,8 @@ All API routes that can return expanded objects have an extra parameter `expand:
 1. Expanding a single field.
 ```swift
 // Expanding a customer from creating a `PaymentIntent`.
-     let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer"])
+     let stripepaymentIntent = stripe.paymentIntents as! StripePaymentIntentRoutes
+     let paymentIntent = try await stripepaymentIntent.create(amount: 2500, currency: .usd, expand: ["customer"])
      // Accessing the expanded `Customer` object
      paymentIntent.$customer.email
 ```
@@ -66,7 +68,8 @@ All API routes that can return expanded objects have an extra parameter `expand:
 2. Expanding multiple fields.
 ```swift
 // Expanding a customer and payment method from creating a `PaymentIntent`.
-let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer", "paymentMethod"])
+let stripepaymentIntent = stripe.paymentIntents as! StripePaymentIntentRoutes
+let paymentIntent = try await stripepaymentIntent.create(amount: 2500, currency: .usd, expand: ["customer", "paymentMethod"])
 // Accessing the expanded `StripeCustomer` object   
  paymentIntent.$customer?.email // "stripe@example.com"
 // Accessing the expanded `StripePaymentMethod` object
@@ -76,7 +79,8 @@ let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, c
 3. Expanding nested fields.
 ```swift
 // Expanding a payment method and its nested customer from creating a `PaymentIntent`.
-let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["paymentMethod.customer"])
+let stripepaymentIntent = stripe.paymentIntents as! StripePaymentIntentRoutes
+let paymentIntent = try await stripepaymentIntent.create(amount: 2500, currency: .usd, expand: ["paymentMethod.customer"])
 // Accessing the expanded `PaymentMethod` object
  paymentIntent.$paymentMethod?.card?.last4 // "1234"
 // Accessing the nested expanded `Customer` object   
@@ -87,7 +91,8 @@ let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, c
 > Note: For list operations [expanded fields must start with `data`](https://stripe.com/docs/api/expanding_objects?lang=curl)
 ```swift
 // Expanding a customer from listing all `PaymentIntent`s.
-let list = try await stripeclient.paymentIntents.listAll(filter: ["expand": ["data.customer"...]])
+let stripepaymentIntent = stripe.paymentIntents as! StripePaymentIntentRoutes
+let list = try await stripepaymentIntent.listAll(filter: ["expand": ["data.customer"...]])
 // Accessing the first `StripePaymentIntent`'s expanded `Customer` property
 list.data?.first?.$customer?.email // "stripe@example.com"
 
@@ -115,7 +120,8 @@ applicationfee.$originatingTransaction(as: Transfer.self)?.destination // acc_12
 1. Expanding an array of `id`s 
 
 ```swift
-let invoice = try await stripeClient.retrieve(invoice: "in_12345", expand: ["discounts"])
+let stripeRetrieve = stripe.retrieve as! StripeRetriveRoutes
+let invoice = try await stripeRetrieve(invoice: "in_12345", expand: ["discounts"])
 
 // Access the discounts array as `String`s
 invoice.discounts.map { print($0) } // "","","",..
@@ -133,39 +139,47 @@ For example consider the Connect account API.
 ```swift
 // We define a custom dictionary to represent the paramaters stripe requires.
 // This allows us to avoid having to add updates to the library when a paramater or structure changes.
-let individual: [String: Any] = ["address": ["city": "New York",
-					     "country": "US",
-                                             "line1": "1551 Broadway",
-                                             "postal_code": "10036",
-	                  	             "state": "NY"],
-				 "first_name": "Taylor",
-			         "last_name": "Swift",
-                                 "ssn_last_4": "0000",
-				 "dob": ["day": "13",
-					 "month": "12",
-					 "year": "1989"]] 
+let individual: [String: Any] = [
+  "address": [
+    "city": "New York", 
+    "country": "US",
+    "line1": "1551 Broadway",
+    "postal_code": "10036",
+	  "state": "NY"
+  ],
+ "first_name": "Taylor",
+ "last_name": "Swift",
+ "ssn_last_4": "0000",
+ "dob": [
+   "day": "13",
+	 "month": "12",
+	 "year": "1989"
+ ]] 
 												 
 let businessSettings: [String: Any] = ["payouts": ["statement_descriptor": "SWIFTFORALL"]]
 
 let tosDictionary: [String: Any] = ["date": Int(Date().timeIntervalSince1970), "ip": "127.0.0.1"]
 
-let connectAccount = try await stripe.connectAccounts.create(type: .custom,									
-                                  country: "US",
-				  email: "a@example.com",
-				  businessType: .individual,
-			          defaultCurrency: .usd,
-				  externalAccount: "bank_token",
-			          individual: individual,
-				  requestedCapabilities: ["platform_payments"],
-				  settings: businessSettings,
-				  tosAcceptance: tosDictionary)
+let stripeconnectAccount = stripe.connectAccounts as! StripeConnectAccountsRoutes
+let connectAccount = try await stripeconnectAccount.create(
+  type: .custom, 
+  country: "US", 
+  email: "a@example.com", 
+  businessType: .individual, 
+  defaultCurrency: .usd, 
+  externalAccount: "bank_token", 
+  individual: individual, 
+  requestedCapabilities: ["platform_payments"], 
+  settings: businessSettings, 
+  tosAcceptance: tosDictionary)
 print("New Stripe Connect account ID: \(connectAccount.id)")
 ```
 
 ## Authentication via the Stripe-Account header
 The first, preferred, authentication option is to use your (the platform account’s) secret key and pass a `Stripe-Account` header identifying the connected account for which the request is being made. The example request performs a refund of a  charge on behalf of a connected account using a builder style API:
 ```swift
-   stripe.refunds
+   let stripeRefund = stripe.refunds as! StripeRefundsRoutes
+   stripeRefund
     .addHeaders(["Stripe-Account": "acc_12345",
              "Authorization": "Bearer different_api_key",
              "Stripe-Version": "older-api-version"])
@@ -178,6 +192,7 @@ Similar to the account header, you can use the same builder style API to attach 
 
 ```swift
     let key = UUID().uuidString
+    let stripeRefund = stripe.refunds as! StripeRefundsRoutes
     stripe.refunds
     .addHeaders(["Idempotency-Key": key])
     .create(charge: "ch_12345", reason: .requestedByCustomer)
