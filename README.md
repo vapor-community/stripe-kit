@@ -58,9 +58,9 @@ All API routes that can return expanded objects have an extra parameter `expand:
 1. Expanding a single field.
 ```swift
 // Expanding a customer from creating a `PaymentIntent`.
-     let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer"])
-     // Accessing the expanded `Customer` object
-     paymentIntent.$customer.email
+let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer"])
+// Accessing the expanded `Customer` object
+paymentIntent.$customer.email
 ```
 
 2. Expanding multiple fields.
