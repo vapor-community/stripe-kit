@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.10
 import PackageDescription
 
 let package = Package(
@@ -13,7 +13,7 @@ let package = Package(
         .library(name: "StripeKit", targets: ["StripeKit"])
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.1.0"),
+        .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.24.0"),
         .package(url: "https://github.com/apple/swift-crypto.git", "1.0.0" ..< "4.0.0"),
     ],
     targets: [

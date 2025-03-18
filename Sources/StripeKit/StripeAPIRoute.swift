@@ -8,7 +8,7 @@
 import Foundation
 import NIOHTTP1
 
-public protocol StripeAPIRoute {
+public protocol StripeAPIRoute: Sendable {
     var headers: HTTPHeaders { get set }
     
     /// Headers to send with the request.
