@@ -1,6 +1,6 @@
 //
 //  Price.swift
-//  
+//
 //
 //  Created by Andrew Edwards on 7/19/20.
 //
@@ -51,11 +51,11 @@ public struct Price: Codable {
     public var transformQuantity: PriceTransformQuantity?
     /// The unit amount in cents to be charged, represented as a decimal string with at most 12 decimal places.
     public var unitAmountDecimal: String?
-    
+
     public init(id: String,
                 active: Bool? = nil,
                 currency: Currency? = nil,
-                metadata: [String : String]? = nil,
+                metadata: [String: String]? = nil,
                 nickname: String? = nil,
                 product: String? = nil,
                 recurring: PriceRecurring? = nil,
@@ -106,7 +106,9 @@ public struct PriceRecurring: Codable {
     public var intervalCount: Int?
     /// Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
     public var usageType: PlanUsageType?
-    
+    /// The meter tracking the usage of a metered price
+    public var meter: String?
+
     public init(aggregateUsage: PriceRecurringAggregateUsage? = nil,
                 interval: PlanInterval? = nil,
                 intervalCount: Int? = nil,
@@ -116,8 +118,20 @@ public struct PriceRecurring: Codable {
         self.intervalCount = intervalCount
         self.usageType = usageType
     }
+
+    public init(aggregateUsage: PriceRecurringAggregateUsage? = nil,
+                interval: PlanInterval? = nil,
+                intervalCount: Int? = nil,
+                usageType: PlanUsageType? = nil,
+                meter: String? = nil) {
+        self.aggregateUsage = aggregateUsage
+        self.interval = interval
+        self.intervalCount = intervalCount
+        self.usageType = usageType
+        self.meter = meter
+    }
 }
-    
+
 public enum PriceRecurringAggregateUsage: String, Codable {
     case sum
     case lastDuringPeriod = "last_during_period"
@@ -146,7 +160,7 @@ public struct PriceCurrencyOption: Codable {
     public var unitAmount: Int?
     /// The unit amount in cents to be charged, represented as a decimal string with at most 12 decimal places. Only set if `billing_scheme=per_unit`.
     public var unitAmountDecimal: String?
-    
+
     public init(customUnitAmount: PriceCurrencyOptionCustomUnitAmount? = nil,
                 taxBehavior: PriceTaxBehavior? = nil,
                 tiers: [PriceTier]? = nil,
@@ -167,7 +181,7 @@ public struct PriceCurrencyOptionCustomUnitAmount: Codable {
     public var minimum: Int?
     /// The starting unit amount which can be updated by the customer.
     public var preset: Int?
-    
+
     public init(maximum: Int? = nil,
                 minimum: Int? = nil,
                 preset: Int? = nil) {
@@ -194,7 +208,7 @@ public struct PriceTier: Codable {
     public var unitAmountDecimal: String?
     /// Up to and including to this quantity will be contained in the tier.
     public var upTo: Int?
-    
+
     public init(flatAmount: Int? = nil,
                 flatAmountDecimal: String? = nil,
                 unitAmount: Int? = nil,
@@ -215,7 +229,7 @@ public struct PriceCustomUnitAmount: Codable {
     public var minimum: Int?
     /// The starting unit amount which can be updated by the customer.
     public var preset: Int?
-    
+
     public init(maximum: Int? = nil,
                 minimum: Int? = nil,
                 preset: Int? = nil) {
@@ -235,7 +249,7 @@ public struct PriceTransformQuantity: Codable {
     public var divideBy: Int?
     /// After division, either round the result `up` or `down`.
     public var round: PriceTransformQuantityRound?
-    
+
     public init(divideBy: Int? = nil,
                 round: PriceTransformQuantityRound? = nil) {
         self.divideBy = divideBy
@@ -261,7 +275,7 @@ public struct PriceSearchResult: Codable {
     public var nextPage: String?
     /// The total count of entries in the search result, not just the current page.
     public var totalCount: Int?
-    
+
     public init(object: String,
                 data: [Price]? = nil,
                 hasMore: Bool? = nil,
@@ -277,13 +291,12 @@ public struct PriceSearchResult: Codable {
     }
 }
 
-
 public struct PriceList: Codable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
     public var data: [Price]?
-    
+
     public init(object: String,
                 hasMore: Bool? = nil,
                 url: String? = nil,
