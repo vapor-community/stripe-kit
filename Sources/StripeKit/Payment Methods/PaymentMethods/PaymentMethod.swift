@@ -85,6 +85,8 @@ public struct PaymentMethod: Codable {
     public var usBankAccount: PaymentMethodUSBankAccount?
     /// If this is an `wechat_pay` PaymentMethod, this hash contains details about the `wechat_pay` payment method.
     public var wechatPay: PaymentMethodWechatPay?
+    /// If this is an `paypal` PaymentMethod, this hash contains details about the `paypal` payment method.
+    public var paypal: PaymentMethodPaypal?
     
     public init(id: String,
                 billingDetails: BillingDetails? = nil,
@@ -123,7 +125,8 @@ public struct PaymentMethod: Codable {
                 sepaDebit: PaymentMethodSepaDebit? = nil,
                 sofort: PaymentMethodSofort? = nil,
                 usBankAccount: PaymentMethodUSBankAccount? = nil,
-                wechatPay: PaymentMethodWechatPay? = nil) {
+                wechatPay: PaymentMethodWechatPay? = nil,
+                paypal: PaymentMethodPaypal? = nil) {
         self.id = id
         self.billingDetails = billingDetails
         self._customer = Expandable(id: customer)
@@ -162,6 +165,7 @@ public struct PaymentMethod: Codable {
         self.sofort = sofort
         self.usBankAccount = usBankAccount
         self.wechatPay = wechatPay
+        self.paypal = paypal
     }
 }
 
@@ -197,6 +201,7 @@ public enum PaymentMethodType: String, Codable {
     case sofort
     case usBankAccount = "us_bank_account"
     case wechatPay = "wechat_pay"
+    case paypal
 }
 
 public struct PaymentMethodRadarOptions: Codable {
