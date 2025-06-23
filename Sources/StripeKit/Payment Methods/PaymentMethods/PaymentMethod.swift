@@ -190,6 +190,7 @@ public enum PaymentMethodType: String, Codable {
     case link
     case oxxo
     case p24
+    case paypal
     case paynow
     case pix
     case promptpay
