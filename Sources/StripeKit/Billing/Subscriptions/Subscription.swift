@@ -233,7 +233,7 @@ public enum SubscriptionCancellationDetailsFeedback: String, Codable {
     /// Some features are missing
     case missingFeatures = "missing_features"
     /// I’m switching to a different service
-    case switchService = "switch_service"
+    case switchService = "switched_service"
     /// I don’t use the service enough
     case unused
     /// Customer service was less than expected
