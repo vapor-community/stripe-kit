@@ -1,4 +1,5 @@
 # StripeKit
+
 ![](https://img.shields.io/badge/Swift-5.7-lightgrey.svg?style=svg)
 ![](https://img.shields.io/badge/SwiftNio-2-lightgrey.svg?style=svg)
 ![Test](https://github.com/vapor-community/stripe-kit/workflows/Test/badge.svg)
@@ -10,6 +11,7 @@
 Stripe API version `2022-11-15` -> StripeKit: 22.0.0
 
 ## Installation
+
 To start using StripeKit, in your `Package.swift`, add the following
 
 ```swift
@@ -17,6 +19,7 @@ To start using StripeKit, in your `Package.swift`, add the following
 ```
 
 ## Using the API
+
 Initialize the `StripeClient`
 
 ```swift
@@ -32,10 +35,12 @@ For example to use the `charges` API, the stripeclient has a property to access 
 
 ```swift
 do {
-    let charge = try await stripe.charges.create(amount: 2500,
-                                                 currency: .usd,
-                                                 description: "A server written in swift.",
-                                                 source: "tok_visa")
+    let charge = try await stripe.charges.create(
+        amount: 2500,
+        currency: .usd,
+        description: "A server written in swift.",
+        source: "tok_visa"
+    )
     if charge.status == .succeeded {
         print("New swift servers are on the way 🚀")
     } else {
@@ -55,42 +60,59 @@ StripeKit supports [expandable objects](https://stripe.com/docs/api/expanding_ob
 All API routes that can return expanded objects have an extra parameter `expand: [String]?` that allows specifying which objects to expand. 
 
 ### Usage with `@Expandable`:
+
 1. Expanding a single field.
+
 ```swift
 // Expanding a customer from creating a `PaymentIntent`.
-let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer"])
+let paymentIntent = try await stripeclient.paymentIntents.create(
+    amount: 2500,
+    currency: .usd,
+    expand: ["customer"]
+)
 // Accessing the expanded `Customer` object
 paymentIntent.$customer.email
 ```
 
 2. Expanding multiple fields.
+
 ```swift
 // Expanding a customer and payment method from creating a `PaymentIntent`.
-let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer", "paymentMethod"])
+let paymentIntent = try await stripeclient.paymentIntents.create(
+    amount: 2500,
+    currency: .usd,
+    expand: ["customer", "paymentMethod"]
+)
 // Accessing the expanded `StripeCustomer` object   
- paymentIntent.$customer?.email // "stripe@example.com"
+paymentIntent.$customer?.email // "stripe@example.com"
 // Accessing the expanded `StripePaymentMethod` object
- paymentIntent.$paymentMethod?.card?.last4 // "1234"
+paymentIntent.$paymentMethod?.card?.last4 // "1234"
 ```
 
 3. Expanding nested fields.
+
 ```swift
 // Expanding a payment method and its nested customer from creating a `PaymentIntent`.
-let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["paymentMethod.customer"])
+let paymentIntent = try await stripeclient.paymentIntents.create(
+    amount: 2500,
+    currency: .usd,
+    expand: ["paymentMethod.customer"]
+)
 // Accessing the expanded `PaymentMethod` object
- paymentIntent.$paymentMethod?.card?.last4 // "1234"
+paymentIntent.$paymentMethod?.card?.last4 // "1234"
 // Accessing the nested expanded `Customer` object   
- paymentIntent.$paymentMethod?.$customer?.email // "stripe@example.com"
+paymentIntent.$paymentMethod?.$customer?.email // "stripe@example.com"
 ```
 
 4. Usage with list all. 
+
 > Note: For list operations [expanded fields must start with `data`](https://stripe.com/docs/api/expanding_objects?lang=curl)
+
 ```swift
 // Expanding a customer from listing all `PaymentIntent`s.
 let list = try await stripeclient.paymentIntents.listAll(filter: ["expand": ["data.customer"...]])
 // Accessing the first `StripePaymentIntent`'s expanded `Customer` property
 list.data?.first?.$customer?.email // "stripe@example.com"
-
 ```
 
 ### Usage with `@DynamicExpandable`:
@@ -103,7 +125,10 @@ An `ApplicationFee` has an `originatingTransaction` property that can be expande
 When expanding it you can specify which object you expect by doing the following:
 
 ```swift
-let applicationfee = try await stripeclient.applicationFees.retrieve(fee: "fee_1234", expand: ["originatingTransaction"])
+let applicationfee = try await stripeclient.applicationFees.retrieve(
+    fee: "fee_1234",
+    expand: ["originatingTransaction"]
+    )
 // Access the originatingTransaction as a Charge
 applicationfee.$originatingTransaction(as: Charge.self)?.amount // 2500
 ...
@@ -112,6 +137,7 @@ applicationfee.$originatingTransaction(as: Transfer.self)?.destination // acc_12
 ```
 
 ### Usage with `@ExpandableCollection`:
+
 1. Expanding an array of `id`s 
 
 ```swift
@@ -125,6 +151,7 @@ invoice.$discounts.compactMap(\.id).map { print($0) } // "di_1","di_2","di_3",..
 ```
 
 ## Nuances with parameters and type safety
+
 Stripe has a habit of changing APIs and having dynamic parameters for a lot of their APIs.
 To accomadate for these changes, certain routes that take arguments that are `hash`s or `Dictionaries`, are represented by a Swift dictionary `[String: Any]`.
 
@@ -133,58 +160,75 @@ For example consider the Connect account API.
 ```swift
 // We define a custom dictionary to represent the paramaters stripe requires.
 // This allows us to avoid having to add updates to the library when a paramater or structure changes.
-let individual: [String: Any] = ["address": ["city": "New York",
-					     "country": "US",
-                                             "line1": "1551 Broadway",
-                                             "postal_code": "10036",
-	                  	             "state": "NY"],
-				 "first_name": "Taylor",
-			         "last_name": "Swift",
-                                 "ssn_last_4": "0000",
-				 "dob": ["day": "13",
-					 "month": "12",
-					 "year": "1989"]] 
+let individual: [String: Any] = [
+  "address": [
+    "city": "New York",
+    "country": "US",
+    "line1": "1551 Broadway",
+    "postal_code": "10036",
+    "state": "NY"
+  ],
+  "first_name": "Taylor",
+  "last_name": "Swift",
+  "ssn_last_4": "0000",
+  "dob": [
+    "day": "13",
+    "month": "12",
+    "year": "1989"
+  ]
+] 
 												 
 let businessSettings: [String: Any] = ["payouts": ["statement_descriptor": "SWIFTFORALL"]]
 
 let tosDictionary: [String: Any] = ["date": Int(Date().timeIntervalSince1970), "ip": "127.0.0.1"]
 
-let connectAccount = try await stripe.connectAccounts.create(type: .custom,									
-                                  country: "US",
-				  email: "a@example.com",
-				  businessType: .individual,
-			          defaultCurrency: .usd,
-				  externalAccount: "bank_token",
-			          individual: individual,
-				  requestedCapabilities: ["platform_payments"],
-				  settings: businessSettings,
-				  tosAcceptance: tosDictionary)
+let connectAccount = try await stripe.connectAccounts.create(
+  type: .custom,									
+  country: "US",
+  email: "a@example.com",
+  businessType: .individual,
+  defaultCurrency: .usd,
+  externalAccount: "bank_token",
+  individual: individual,
+  requestedCapabilities: ["platform_payments"],
+  settings: businessSettings,
+  tosAcceptance: tosDictionary
+)
 print("New Stripe Connect account ID: \(connectAccount.id)")
 ```
 
 ## Authentication via the Stripe-Account header
+
 The first, preferred, authentication option is to use your (the platform account’s) secret key and pass a `Stripe-Account` header identifying the connected account for which the request is being made. The example request performs a refund of a  charge on behalf of a connected account using a builder style API:
+
 ```swift
-   stripe.refunds
-    .addHeaders(["Stripe-Account": "acc_12345",
-             "Authorization": "Bearer different_api_key",
-             "Stripe-Version": "older-api-version"])
-    .create(charge: "ch_12345", reason: .requestedByCustomer)
+try await stripe
+  .refunds
+  .addHeaders([
+    "Stripe-Account": "acc_12345",
+    "Authorization": "Bearer different_api_key",
+    "Stripe-Version": "older-api-version"
+  ])
+  .create(charge: "ch_12345", reason: .requestedByCustomer)
 ```
+
 **NOTE:** The modified headers will remain on the route instance _(refunds in this case)_ of the `StripeClient` if a reference to it is held. If you're accessing the StripeClient in the scope of a function, the headers will not be retained.
 
 ## Idempotent Requests
+
 Similar to the account header, you can use the same builder style API to attach Idempotency Keys to your requests.
 
 ```swift
-    let key = UUID().uuidString
-    stripe.refunds
-    .addHeaders(["Idempotency-Key": key])
-    .create(charge: "ch_12345", reason: .requestedByCustomer)
+let key = UUID().uuidString
+try await stripe.refunds
+  .addHeaders(["Idempotency-Key": key])
+  .create(charge: "ch_12345", reason: .requestedByCustomer)
 ```
 
 ## Webhooks
+
 The webhooks API is available to use in a typesafe way to pull out entities. Here's an example of listening for the payment intent webhook.
+
 ```swift
 func handleStripeWebhooks(req: Request) async throws -> HTTPResponse {
 
@@ -210,7 +254,9 @@ func handleStripeWebhooks(req: Request) async throws -> HTTPResponse {
 ```
 
 ## Using with Vapor
+
 StripeKit is pretty easy to use but to better integrate with Vapor these are some helpful extensions
+
 ```swift
 import Vapor
 import StripeKit
