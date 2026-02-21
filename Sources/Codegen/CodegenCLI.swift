@@ -20,49 +20,60 @@
 // The codegen always processes the full spec — no domain filtering.
 // Idempotent: running twice with the same spec produces identical output.
 
+import ArgumentParser
 import Foundation
 
 @main
-struct CodegenCLI {
-    static func main() async throws {
-        let config = try parseArgs(CommandLine.arguments)
-        
+struct CodegenCLI: AsyncParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "stripe-kit-codegen",
+        abstract: "Generate Swift types from Stripe OpenAPI spec"
+    )
+
+    @Option(name: [.long, .customShort("s")], help: "Path to OpenAPI spec")
+    var spec: String = "spec3.sdk.json"
+
+    @Option(name: [.long, .customShort("o")], help: "Output directory")
+    var output: String = "Sources/StripeKit"
+
+    func run() async throws {
         printHeader()
         
         // ── 1. Load spec ──────────────────────────────────────────
-        let specData = try Data(contentsOf: URL(fileURLWithPath: config.specPath))
-        let spec = try JSONDecoder().decode(OpenAPISpec.self, from: specData)
+        let specURL = URL(filePath: spec)
+        let specData = try Data(contentsOf: specURL)
+        let openAPISpec = try JSONDecoder().decode(OpenAPISpec.self, from: specData)
         
-        print("📄 Spec: \(config.specPath) (\(ByteCountFormatter.string(fromByteCount: Int64(specData.count), countStyle: .file)))")
-        print("🔖 API Version: \(spec.info.version)")
-        print("� \(spec.components.schemas.count) schemas, \(spec.paths.count) paths")
+        print("📄 Spec: \(spec) (\(ByteCountFormatter.string(fromByteCount: Int64(specData.count), countStyle: .file)))")
+        print("🔖 API Version: \(openAPISpec.info.version)")
+        print("📋 \(openAPISpec.components.schemas.count) schemas, \(openAPISpec.paths.count) paths")
         print()
         
         // ── 2. Parse ──────────────────────────────────────────────
-        let parser = SpecParser(spec: spec)
+        let parser = SpecParser(spec: openAPISpec)
         let resources = parser.parseResources()
         let inlineSchemas = parser.parseInlineSchemas()
         
         // Build resource type name set for collision detection
         let resourceTypeNames = Set(resources.map(\.swiftTypeName))
+        _ = resourceTypeNames  // used by inline schema generation
         
-        print("� Parsed \(resources.count) resources, \(inlineSchemas.count) inline types")
+        print("📊 Parsed \(resources.count) resources, \(inlineSchemas.count) inline types")
         print()
         
         // ── 3. Initialize generators ─────────────────────────────
         let pathMapping = parser.buildPathMapping()
         print("🗺️  Path mapping: \(pathMapping.count) schemas → API paths")
-        let modelGen = ModelGenerator(allSchemas: spec.components.schemas)
-        let routeGen = RouteGenerator(spec: spec, parser: parser, pathMapping: pathMapping)
-        let paramGen = ParamGenerator(spec: spec, parser: parser, pathMapping: pathMapping)
+        let modelGen = ModelGenerator(allSchemas: openAPISpec.components.schemas)
+        let routeGen = RouteGenerator(spec: openAPISpec, parser: parser, pathMapping: pathMapping)
+        let paramGen = ParamGenerator(spec: openAPISpec, parser: parser, pathMapping: pathMapping)
         
-        let outputDir = URL(fileURLWithPath: config.outputDir)
-        let fileManager = FileManager.default
+        let outputURL = URL(filePath: output)
         
         // Clean generated directory (preserves hand-written Infrastructure/)
-        let generatedDir = outputDir.appendingPathComponent("Generated")
-        if fileManager.fileExists(atPath: generatedDir.path) {
-            try fileManager.removeItem(at: generatedDir)
+        let generatedURL = outputURL.appending(path: "Generated")
+        if FileManager.default.fileExists(atPath: generatedURL.path()) {
+            try FileManager.default.removeItem(at: generatedURL)
         }
         
         var modelCount = 0
@@ -71,48 +82,42 @@ struct CodegenCLI {
         var inlineCount = 0
         
         // ── 4. Generate resources ─────────────────────────────────
-        //
-        // Output structure:
-        //   Generated/Models/{Domain}/{TypeName}.swift
-        //   Generated/Routes/{Domain}/{TypeName}Routes.swift
-        //   Generated/Params/{Domain}/{TypeName}+Params.swift
-        //
         print("📦 Generating resources...")
         
         for resource in resources {
             let domain = resource.domain.directoryName
             
             // Model
-            let modelDir = generatedDir
-                .appendingPathComponent("Models")
-                .appendingPathComponent(domain)
-            try fileManager.createDirectory(at: modelDir, withIntermediateDirectories: true)
+            let modelDir = generatedURL
+                .appending(path: "Models")
+                .appending(path: domain)
+            try FileManager.default.createDirectory(at: modelDir, withIntermediateDirectories: true)
             
             let modelSource = modelGen.generate(resource: resource)
-            let modelFile = modelDir.appendingPathComponent("\(resource.swiftTypeName).swift")
+            let modelFile = modelDir.appending(path: "\(resource.swiftTypeName).swift")
             try modelSource.write(to: modelFile, atomically: true, encoding: .utf8)
             modelCount += 1
             
             // Routes
             if let routeSource = routeGen.generate(resource: resource) {
-                let routeDir = generatedDir
-                    .appendingPathComponent("Routes")
-                    .appendingPathComponent(domain)
-                try fileManager.createDirectory(at: routeDir, withIntermediateDirectories: true)
+                let routeDir = generatedURL
+                    .appending(path: "Routes")
+                    .appending(path: domain)
+                try FileManager.default.createDirectory(at: routeDir, withIntermediateDirectories: true)
                 
-                let routeFile = routeDir.appendingPathComponent("\(resource.swiftTypeName)Routes.swift")
+                let routeFile = routeDir.appending(path: "\(resource.swiftTypeName)Routes.swift")
                 try routeSource.write(to: routeFile, atomically: true, encoding: .utf8)
                 routeCount += 1
             }
             
             // Params
             if let paramSource = paramGen.generate(resource: resource) {
-                let paramDir = generatedDir
-                    .appendingPathComponent("Params")
-                    .appendingPathComponent(domain)
-                try fileManager.createDirectory(at: paramDir, withIntermediateDirectories: true)
+                let paramDir = generatedURL
+                    .appending(path: "Params")
+                    .appending(path: domain)
+                try FileManager.default.createDirectory(at: paramDir, withIntermediateDirectories: true)
                 
-                let paramFile = paramDir.appendingPathComponent("\(resource.swiftTypeName)+Params.swift")
+                let paramFile = paramDir.appending(path: "\(resource.swiftTypeName)+Params.swift")
                 try paramSource.write(to: paramFile, atomically: true, encoding: .utf8)
                 paramCount += 1
                 
@@ -130,40 +135,28 @@ struct CodegenCLI {
                         "import Foundation",
                         "",
                     ] + enumLines
-                    let enumFile = paramDir.appendingPathComponent("\(resource.swiftTypeName)+ParamEnums.swift")
+                    let enumFile = paramDir.appending(path: "\(resource.swiftTypeName)+ParamEnums.swift")
                     try enumSource.joined(separator: "\n").write(to: enumFile, atomically: true, encoding: .utf8)
                 }
             }
         }
         
         // ── 5. Generate inline types ──────────────────────────────
-        //
-        // Output structure:
-        //   Generated/Types/{TypeName}.swift
-        //
-        // Inline schemas that collide with a resource name get
-        // prefixed to disambiguate (e.g., request → ForwardingRequest)
-        //
-        let typesDir = generatedDir.appendingPathComponent("Types")
-        try fileManager.createDirectory(at: typesDir, withIntermediateDirectories: true)
+        let typesDir = generatedURL.appending(path: "Types")
+        try FileManager.default.createDirectory(at: typesDir, withIntermediateDirectories: true)
         
         for inline in inlineSchemas {
             let modelSource = modelGen.generate(resource: inline)
-            let modelFile = typesDir.appendingPathComponent("\(inline.swiftTypeName).swift")
+            let modelFile = typesDir.appending(path: "\(inline.swiftTypeName).swift")
             try modelSource.write(to: modelFile, atomically: true, encoding: .utf8)
             inlineCount += 1
         }
         
         // ── 6. Generate StripeClient (route wiring) ───────────────
-        //
-        // Only the client needs regeneration — it wires all route
-        // structs into a single entry point. Everything else in
-        // Infrastructure/ is hand-written API surface.
-        //
-        let infraGen = InfraGenerator(spec: spec, parser: parser, resources: resources, pathMapping: pathMapping)
+        let infraGen = InfraGenerator(spec: openAPISpec, parser: parser, resources: resources, pathMapping: pathMapping)
         let clientSource = infraGen.generateStripeClient()
         try clientSource.write(
-            to: outputDir.appendingPathComponent("Generated").appendingPathComponent("StripeClient.swift"),
+            to: generatedURL.appending(path: "StripeClient.swift"),
             atomically: true,
             encoding: .utf8
         )
@@ -179,75 +172,16 @@ struct CodegenCLI {
         print()
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         print("📦 \(modelCount + inlineCount) types, \(routeCount) routes, \(paramCount) params")
-        print(" API Version: \(spec.info.version)")
-        print("📂 Output: \(config.outputDir)/Generated/")
+        print(" API Version: \(openAPISpec.info.version)")
+        print("📂 Output: \(output)/Generated/")
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     }
     
-    // MARK: - CLI
-    
-    struct Config {
-        let specPath: String
-        let outputDir: String
-    }
-    
-    static func parseArgs(_ args: [String]) throws -> Config {
-        var specPath = "spec3.sdk.json"
-        var outputDir = "Sources/StripeKit"
-        
-        var i = 1
-        while i < args.count {
-            switch args[i] {
-            case "--spec", "-s":
-                i += 1
-                guard i < args.count else { throw CodegenError.missingArgValue("--spec") }
-                specPath = args[i]
-            case "--output", "-o":
-                i += 1
-                guard i < args.count else { throw CodegenError.missingArgValue("--output") }
-                outputDir = args[i]
-            case "--help", "-h":
-                printUsage()
-                Foundation.exit(0)
-            default:
-                break
-            }
-            i += 1
-        }
-        
-        return Config(specPath: specPath, outputDir: outputDir)
-    }
-    
-    static func printHeader() {
+    private func printHeader() {
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         print("  stripe-kit-codegen")
         print("  Generate Swift types from Stripe OpenAPI spec")
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         print()
-    }
-    
-    static func printUsage() {
-        print("""
-        USAGE: stripe-kit-codegen [options]
-        
-        OPTIONS:
-          --spec, -s <path>    Path to OpenAPI spec (default: spec3.sdk.json)
-          --output, -o <dir>   Output directory (default: Sources/StripeKit)
-          --help, -h           Show this help
-        
-        EXAMPLES:
-          stripe-kit-codegen
-          stripe-kit-codegen --spec spec3.sdk.json --output Sources/StripeKit
-        """)
-    }
-}
-
-enum CodegenError: Error, CustomStringConvertible {
-    case missingArgValue(String)
-    
-    var description: String {
-        switch self {
-        case .missingArgValue(let arg): return "Missing value for argument: \(arg)"
-        }
     }
 }

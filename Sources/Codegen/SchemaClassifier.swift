@@ -36,7 +36,7 @@ struct SchemaClassifier {
     /// Classify a single schema.
     private func classify(name: String, schema: SchemaObject) -> SchemaKind {
         // Deleted variants — skip entirely
-        if name.hasPrefix("deleted_") {
+        if name.starts(with: "deleted_") {
             return .deleted
         }
         
@@ -90,7 +90,7 @@ struct SchemaClassifier {
         // 1. Find all resource schemas in the requested domains
         var seeds: Set<String> = []
         for (name, schema) in spec.components.schemas {
-            guard !name.hasPrefix("deleted_") else { continue }
+            guard !name.starts(with: "deleted_") else { continue }
             
             let resourceId = schema.xResourceId ?? name
             let domain = StripeDomain.from(resourceId: resourceId)

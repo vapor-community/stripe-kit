@@ -542,7 +542,7 @@ struct ParamGenerator {
             let sorted = uniquePaths.sorted { $0.count < $1.count }
             for candidate in sorted {
                 let isPrefix = sorted.contains { other in
-                    other != candidate && other.hasPrefix(candidate + "/")
+                    other != candidate && other.starts(with: candidate + "/")
                 }
                 if isPrefix { return candidate }
             }
@@ -571,8 +571,8 @@ struct ParamGenerator {
         var bestByAction: [String: (action: String, path: String, schema: PropertyObject, required: Set<String>)] = [:]
         for op in results {
             if let existing = bestByAction[op.action] {
-                let existingIsLocal = existing.path.hasPrefix(basePath)
-                let newIsLocal = op.path.hasPrefix(basePath)
+                let existingIsLocal = existing.path.starts(with: basePath)
+                let newIsLocal = op.path.starts(with: basePath)
                 if !existingIsLocal && newIsLocal {
                     bestByAction[op.action] = op
                 }
@@ -592,8 +592,8 @@ struct ParamGenerator {
     /// /v1/payment_intents/{intent}/cancel → "Cancel"
     /// /v1/payment_intents/{intent}/capture → "Capture"
     private func deriveAction(path: String, pathPrefix: String, operationId: String?) -> String {
-        let basePrefixParamCount = pathPrefix.split(separator: "/").filter { $0.hasPrefix("{") }.count
-        let totalPathParams = path.split(separator: "/").filter { $0.hasPrefix("{") }.count
+        let basePrefixParamCount = pathPrefix.split(separator: "/").filter { $0.starts(with: "{") }.count
+        let totalPathParams = path.split(separator: "/").filter { $0.starts(with: "{") }.count
         
         // POST basePath (no path params beyond prefix) → Create
         if totalPathParams == basePrefixParamCount && path == pathPrefix {
@@ -601,8 +601,8 @@ struct ParamGenerator {
         }
         
         // POST basePath/{id} (one extra path param, no trailing action) → Update
-        let trailingParts = path.hasPrefix(pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : ""
-        let trailingNonParams = trailingParts.split(separator: "/").filter { !$0.hasPrefix("{") }
+        let trailingParts = path.starts(with: pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : ""
+        let trailingNonParams = trailingParts.split(separator: "/").filter { !$0.starts(with: "{") }
         
         if trailingNonParams.isEmpty && totalPathParams == basePrefixParamCount + 1 {
             return "Update"

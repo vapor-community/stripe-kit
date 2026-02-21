@@ -118,11 +118,11 @@ struct ModelGenerator {
         // Filter out Deleted* types (not generated) and cap DynamicExpandable at 2 type params
         switch property.type {
         case .expandable(let wrappedType):
-            if !wrappedType.hasPrefix("Deleted") {
+            if !wrappedType.starts(with: "Deleted") {
                 lines.append("    @Expandable<\(wrappedType)>")
             }
         case .dynamicExpandable(let types):
-            let validTypes = types.filter { !$0.hasPrefix("Deleted") }
+            let validTypes = types.filter { !$0.starts(with: "Deleted") }
             if let first = validTypes.first, validTypes.count == 1 {
                 lines.append("    @Expandable<\(first)>")
             } else if validTypes.count == 2 {
@@ -131,7 +131,7 @@ struct ModelGenerator {
             }
             // 0 or 3+ types: fall back to plain String (no annotation)
         case .expandableCollection(let wrappedType):
-            if !wrappedType.hasPrefix("Deleted") {
+            if !wrappedType.starts(with: "Deleted") {
                 lines.append("    @ExpandableCollection<\(wrappedType)>")
             }
         default:

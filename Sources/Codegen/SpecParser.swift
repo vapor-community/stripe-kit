@@ -15,7 +15,7 @@ struct SpecParser {
         // Detect which base names collide across different schemas
         var baseNameToSchemas: [String: [String]] = [:]
         for (schemaName, schema) in spec.components.schemas {
-            guard !schemaName.hasPrefix("deleted_") else { continue }
+            guard !schemaName.starts(with: "deleted_") else { continue }
             let name = schema.xResourceId ?? schemaName
             let baseName = SpecParser.baseSwiftType(name)
             baseNameToSchemas[baseName, default: []].append(name)
@@ -71,7 +71,7 @@ struct SpecParser {
         
         for (schemaName, schema) in spec.components.schemas {
             guard let resourceId = schema.xResourceId else { continue }
-            guard !resourceId.hasPrefix("deleted_") else { continue }
+            guard !resourceId.starts(with: "deleted_") else { continue }
             
             let domain = StripeDomain.from(resourceId: resourceId)
             let required = schema.required ?? []
@@ -115,7 +115,7 @@ struct SpecParser {
         
         for (schemaName, schema) in spec.components.schemas {
             guard schema.xResourceId == nil else { continue }
-            guard !schemaName.hasPrefix("deleted_") else { continue }
+            guard !schemaName.starts(with: "deleted_") else { continue }
             
             let required = schema.required ?? []
             let expandable = schema.xExpandableFields ?? []
@@ -166,7 +166,7 @@ struct SpecParser {
             name: name,
             swiftName: snakeToCamel(name),
             description: (property.description ?? "")
-                .replacingOccurrences(of: "\n", with: " ")
+                .replacing("\n", with: " ")
                 .trimmingCharacters(in: .whitespaces),
             type: type,
             isRequired: isRequired,
@@ -363,7 +363,7 @@ struct SpecParser {
             // Include namespace: "checkout.session" → "CheckoutSession"
             // "financial_connections.session" → "FinancialConnectionsSession"
             return name
-                .replacingOccurrences(of: ".", with: "_")
+                .replacing(".", with: "_")
                 .split(separator: "_")
                 .map { $0.capitalized }
                 .joined()

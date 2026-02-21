@@ -15,6 +15,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.1.0"),
         .package(url: "https://github.com/apple/swift-crypto.git", "1.0.0" ..< "4.0.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.4.0"),
     ],
     targets: [
         .target(name: "StripeKit", dependencies: [
@@ -23,6 +24,9 @@ let package = Package(
         ]),
         .executableTarget(
             name: "stripe-kit-codegen",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            ],
             path: "Sources/Codegen"
         ),
         .testTarget(name: "StripeKitTests", dependencies: [

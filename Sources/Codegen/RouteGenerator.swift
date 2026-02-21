@@ -131,7 +131,7 @@ struct RouteGenerator {
             // Build path string
             var apiPath = op.path
             for param in op.pathParams {
-                apiPath = apiPath.replacingOccurrences(of: "{\(param)}", with: "\\(\(snakeToCamel(param)))")
+                apiPath = apiPath.replacing("{\(param)}", with: "\\(\(snakeToCamel(param)))")
             }
             
             // Build the handler.send call
@@ -230,7 +230,7 @@ struct RouteGenerator {
             let sorted = uniquePaths.sorted { $0.count < $1.count }
             for candidate in sorted {
                 let isPrefix = sorted.contains { other in
-                    other != candidate && other.hasPrefix(candidate + "/")
+                    other != candidate && other.starts(with: candidate + "/")
                 }
                 if isPrefix { return candidate }
             }
@@ -300,8 +300,8 @@ struct RouteGenerator {
         var bestByFunc: [String: RouteOperation] = [:]
         for op in results {
             if let existing = bestByFunc[op.funcName] {
-                let existingIsLocal = existing.path.hasPrefix(basePath)
-                let newIsLocal = op.path.hasPrefix(basePath)
+                let existingIsLocal = existing.path.starts(with: basePath)
+                let newIsLocal = op.path.starts(with: basePath)
                 // Replace only if existing is non-local and new is local
                 if !existingIsLocal && newIsLocal {
                     bestByFunc[op.funcName] = op
@@ -365,8 +365,8 @@ struct RouteGenerator {
             }
             
             // If path has more segments than basePath params, check for sub-actions
-            let nonParamSegments = pathSegments.filter { !$0.hasPrefix("{") }
-            let basePrefixSegments = pathPrefix.split(separator: "/").filter { $0 != "v1" }.map(String.init).filter { !$0.hasPrefix("{") }
+            let nonParamSegments = pathSegments.filter { !$0.starts(with: "{") }
+            let basePrefixSegments = pathPrefix.split(separator: "/").filter { $0 != "v1" }.map(String.init).filter { !$0.starts(with: "{") }
             let extraNonParams = nonParamSegments.count - basePrefixSegments.count
             
             if extraNonParams > 0 {
@@ -379,14 +379,14 @@ struct RouteGenerator {
             
             // GET with path param after basePath → retrieve
             // GET basePath (no extra segments) → list
-            if pathParams.count > pathPrefix.split(separator: "/").filter({ $0.hasPrefix("{") }).count {
+            if pathParams.count > pathPrefix.split(separator: "/").filter({ $0.starts(with: "{") }).count {
                 return ("retrieve", "Retrieve")
             }
             
             return ("list", "List")
             
         case "POST":
-            let basePrefixParamCount = pathPrefix.split(separator: "/").filter { $0.hasPrefix("{") }.count
+            let basePrefixParamCount = pathPrefix.split(separator: "/").filter { $0.starts(with: "{") }.count
             let totalPathParams = pathParams.count
             
             // POST basePath (no path params beyond prefix) → create
@@ -395,8 +395,8 @@ struct RouteGenerator {
             }
             
             // POST basePath/{id} (one extra path param, no trailing action) → update
-            let trailingParts = path.hasPrefix(pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : ""
-            let trailingNonParams = trailingParts.split(separator: "/").filter { !$0.hasPrefix("{") }
+            let trailingParts = path.starts(with: pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : ""
+            let trailingNonParams = trailingParts.split(separator: "/").filter { !$0.starts(with: "{") }
             
             if trailingNonParams.isEmpty && totalPathParams == basePrefixParamCount + 1 {
                 return ("update", "Update")

@@ -6,10 +6,10 @@ import Foundation
 /// Strip HTML tags, normalize whitespace, collapse newlines
 func cleanDescription(_ text: String) -> String {
     var cleaned = text
-    cleaned = cleaned.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
-    cleaned = cleaned.replacingOccurrences(of: "\n", with: " ")
-    cleaned = cleaned.replacingOccurrences(of: "  +", with: " ", options: .regularExpression)
-    return cleaned.trimmingCharacters(in: .whitespaces)
+    cleaned = cleaned.replacing(/<[^>]+>/, with: "")
+    cleaned = cleaned.replacing("\n", with: " ")
+    cleaned = cleaned.replacing(#/  +/#, with: " ")
+    return String(cleaned.trimmingCharacters(in: .whitespaces))
 }
 
 /// Backtick-escape Swift reserved keywords
@@ -37,10 +37,10 @@ func enumCaseToSwift(_ rawValue: String) -> String {
     if rawValue == "*" { return "all" }
     
     let sanitized = rawValue
-        .replacingOccurrences(of: ".", with: "_")
-        .replacingOccurrences(of: "-", with: "_")
-        .replacingOccurrences(of: "/", with: "_")
-        .replacingOccurrences(of: " ", with: "_")
+        .replacing(".", with: "_")
+        .replacing("-", with: "_")
+        .replacing("/", with: "_")
+        .replacing(" ", with: "_")
     
     let cleaned = sanitized.unicodeScalars.filter {
         CharacterSet.alphanumerics.contains($0) || $0 == "_"
