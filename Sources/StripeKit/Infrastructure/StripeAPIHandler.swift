@@ -60,7 +60,7 @@ public struct StripeAPIHandler: Sendable {
 
         let response = try await httpClient.execute(request, timeout: .seconds(60))
         let responseBody = try await response.body.collect(upTo: 1024 * 1024 * 10)
-        let data = Data(buffer: responseBody)
+        let data = Data(responseBody.readableBytesView)
 
         guard (200..<300).contains(response.status.code) else {
             let decoder = JSONDecoder()
@@ -119,11 +119,11 @@ public struct StripeAPIHandler: Sendable {
             request.headers.add(name: "Stripe-Account", value: account)
         }
 
-        request.body = .bytes(ByteBuffer(data: body))
+        request.body = .bytes(ByteBuffer(bytes: body))
 
         let response = try await httpClient.execute(request, timeout: .seconds(120))
         let responseBody = try await response.body.collect(upTo: 1024 * 1024 * 50)
-        let data = Data(buffer: responseBody)
+        let data = Data(responseBody.readableBytesView)
 
         guard (200..<300).contains(response.status.code) else {
             let decoder = JSONDecoder()
