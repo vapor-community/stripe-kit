@@ -1,401 +1,371 @@
 # StripeKit
-![](https://img.shields.io/badge/Swift-5.7-lightgrey.svg?style=svg)
-![](https://img.shields.io/badge/SwiftNio-2-lightgrey.svg?style=svg)
-![Test](https://github.com/vapor-community/stripe-kit/workflows/Test/badge.svg)
 
-### StripeKit is a Swift package used to communicate with the [Stripe](https://stripe.com) API for Server Side Swift Apps.
+A fully-typed, spec-generated Swift SDK for the [Stripe API](https://docs.stripe.com/api).
+**API Version:** `2026-01-28.clover`
 
-## Version support
+## Overview
 
-Stripe API version `2022-11-15` -> StripeKit: 22.0.0
+StripeKit is split into two parts:
+
+| Layer | Description |
+|-------|-------------|
+| **Generated** (`Sources/StripeKit/Generated/`) | 1,500+ Swift types generated from Stripe's OpenAPI spec. Models, routes, params, and inline types. Regenerated on every API version bump. |
+| **Infrastructure** (`Sources/StripeKit/Infrastructure/`) | Hand-written transport, error types, webhook verification, and property wrappers. Stable across regeneration cycles. |
+
+```
+Sources/StripeKit/
+├── Generated/
+│   ├── Models/           
+│   ├── Routes/           
+│   ├── Params/           
+│   ├── Types/            
+│   └── StripeClient.swift  
+└── Infrastructure/
+    ├── StripeAPIHandler.swift    
+    ├── StripeClient.swift        
+    ├── StripeError.swift          
+    ├── StripeEvent.swift          
+    ├── StripeExpandable.swift     
+    ├── StripeParams.swift         
+    └── Helpers.swift              
+```
 
 ## Installation
-To start using StripeKit, in your `Package.swift`, add the following
+
+Add to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/vapor-community/stripe-kit.git", from: "22.0.0")
+dependencies: [
+    .package(url: "https://github.com/anthropics/stripe-kit.git", from: "2026.1.0")
+]
 ```
-
-## Using the API
-Initialize the `StripeClient`
 
 ```swift
-let httpClient = HTTPClient(..)
-let stripe = StripeClient(httpClient: httpClient, apiKey: "sk_12345")
+.target(name: "MyApp", dependencies: [
+    .product(name: "StripeKit", package: "stripe-kit")
+])
 ```
 
-And now you have acess to the APIs via `stripe`.
+**Requirements:** Swift 6.0+, macOS 14+ / Linux
 
-The APIs you have available correspond to what's implemented.
+## Quick Start
 
-For example to use the `charges` API, the stripeclient has a property to access that API via routes.
+```swift
+import StripeKit
+import AsyncHTTPClient
+
+let httpClient = HTTPClient.shared
+let stripe = StripeClient.live(
+    httpClient: httpClient,
+    apiKey: "sk_test_..."
+)
+
+// Create a customer
+var params = CustomerCreateParams()
+params.email = "jane@example.com"
+params.name = "Jane Doe"
+let customer = try await stripe.customers.create(params)
+
+// Retrieve with expanded fields
+let full = try await stripe.customers.retrieve(customer.id, ["default_source"])
+
+// Create a payment intent
+var piParams = PaymentIntentCreateParams()
+piParams.amount = 2000
+piParams.currency = "usd"
+piParams.customer = customer.id
+let intent = try await stripe.paymentIntents.create(piParams)
+
+// List all charges
+let charges = try await stripe.charges.list(nil)
+for charge in charges.data ?? [] {
+    print("\(charge.id): \(charge.amount ?? 0)")
+}
+```
+
+## API Design
+
+### Routes (Closure-Based)
+
+Every route struct uses `@Sendable` closures:
+
+```swift
+public struct CustomerRoutes: Sendable {
+    public var create:   @Sendable (_ params: CustomerCreateParams?) async throws -> Customer
+    public var retrieve: @Sendable (_ customer: String, _ expand: [String]?) async throws -> Customer
+    public var update:   @Sendable (_ customer: String, _ params: CustomerUpdateParams?) async throws -> Customer
+    public var list:     @Sendable (_ expand: [String]?) async throws -> CustomerList
+    public var delete:   @Sendable (_ customer: String, _ expand: [String]?) async throws -> Customer
+}
+```
+
+### Params (Typed + Form-Encoded)
+
+All POST bodies are typed structs conforming to `StripeParams`, which auto-encodes to `application/x-www-form-urlencoded`:
+
+```swift
+var params = CustomerCreateParams()
+params.email = "jane@example.com"
+params.metadata = ["source": "ios_app"]
+params.invoiceSettings = CustomerCreateParamsInvoiceSettings()
+params.invoiceSettings?.defaultPaymentMethod = "pm_..."
+
+let customer = try await stripe.customers.create(params)
+```
+
+### Expandable Fields
+
+Stripe returns IDs by default but can expand nested objects on request. StripeKit handles this transparently with property wrappers:
+
+#### `@Expandable<T>` — Single ID ↔ Object
+
+The most common pattern. A field is either a string ID or a fully expanded object:
+
+```swift
+let customer = try await stripe.customers.retrieve("cus_xxx", ["default_source"])
+
+// wrappedValue → the ID (always available)
+let sourceId: String? = customer.defaultSource
+
+// projectedValue ($) → the expanded object (only when requested)
+let source: PaymentSource? = customer.$defaultSource
+```
+
+#### `@ExpandableCollection<T>` — Array of IDs ↔ Objects
+
+For fields like `discounts`, `tax_rates`, or `balances` where the API returns an array that can be either string IDs or expanded objects:
+
+```swift
+let invoice = try await stripe.invoices.retrieve("in_xxx", ["discounts", "default_tax_rates"])
+
+// wrappedValue → array of IDs
+let discountIds: [String]? = invoice.discounts
+
+// projectedValue ($) → array of expanded objects
+let discounts: [DiscountsResourceDiscountAmount]? = invoice.$discounts
+let taxRates: [TaxRate]? = invoice.$defaultTaxRates
+```
+
+#### `@DynamicExpandable<A, B>` — Polymorphic Expansion
+
+For fields that can expand to one of multiple concrete types (e.g., a source that could be a `BankAccount` or `Card`):
+
+```swift
+// wrappedValue → the ID
+let externalAccountId: String? = account.externalAccount
+
+// projectedValue ($) → use callAsFunction to cast
+let bankAccount: BankAccount? = account.$externalAccount(as: BankAccount.self)
+let card: Card? = account.$externalAccount(as: Card.self)
+```
+
+### Idempotency
+
+Stripe supports [idempotency keys](https://docs.stripe.com/api/idempotent_requests) to safely retry requests:
+
+```swift
+let customer = try await stripe.idempotent("unique-key-\(UUID())").customers.create(params)
+```
+
+### Stripe Connect (`onBehalfOf`)
+
+Scope requests to a connected account:
+
+```swift
+let payout = try await stripe.onBehalfOf("acct_connected_123").payouts.create(payoutParams)
+```
+
+### File Uploads
+
+Upload files to the Stripe Files API using multipart form data:
+
+```swift
+let file = try await stripe.files.create(
+    fileData: imageData,
+    fileName: "receipt.png",
+    mimeType: "image/png",
+    purpose: "dispute_evidence"
+)
+```
+
+## Webhook Verification
+
+Verify and decode webhook events with HMAC-SHA256 signature checking:
+
+```swift
+let event = try StripeEvent.verify(
+    payload: requestBody,
+    header: request.headers["Stripe-Signature"],
+    secret: "whsec_...",
+    tolerance: 300  // seconds
+)
+
+switch event.type {
+case "payment_intent.succeeded":
+    let intent = try event.data.object(as: PaymentIntent.self)
+    print("Payment succeeded: \(intent.id)")
+
+case "payment_intent.payment_failed":
+    let intent = try event.data.object(as: PaymentIntent.self)
+    print("Payment failed: \(intent.lastPaymentError?.message ?? "unknown")")
+
+case "customer.subscription.created",
+     "customer.subscription.updated":
+    let sub = try event.data.object(as: Subscription.self)
+    print("Subscription \(sub.id) status: \(sub.status)")
+
+case "customer.updated":
+    let customer = try event.data.object(as: Customer.self)
+    let previous = try event.data.previousAttributes(as: Customer.self)
+    print("Customer \(customer.id) updated")
+
+case "invoice.paid":
+    let invoice = try event.data.object(as: Invoice.self)
+    print("Invoice \(invoice.id) paid: \(invoice.amountPaid ?? 0)")
+
+default:
+    print("Unhandled event: \(event.type)")
+}
+```
+
+## Testing
+
+Every route struct includes a `.test` stub with unimplemented closures. Override only what your tests need:
+
+```swift
+var client = StripeClient.test
+
+// Override the customer create route
+client.customers.create = { params in
+    return Customer(created: 0, id: "cus_test_123", livemode: false, object: .customer)
+}
+
+// Inject into your service
+let service = PaymentService(stripe: client)
+```
+
+## Error Handling
+
+All API errors decode into typed `StripeError` with structured codes:
 
 ```swift
 do {
-    let charge = try await stripe.charges.create(amount: 2500,
-                                                 currency: .usd,
-                                                 description: "A server written in swift.",
-                                                 source: "tok_visa")
-    if charge.status == .succeeded {
-        print("New swift servers are on the way 🚀")
-    } else {
-        print("Sorry you have to use Node.js 🤢")
-    }
-} catch {
-    // Handle error
-}
-```
-
-## Expandable objects
-
-StripeKit supports [expandable objects](https://stripe.com/docs/api/expanding_objects) via 3 property wrappers:
-
-`@Expandable`, `@DynamicExpandable` and `@ExpandableCollection`
-
-All API routes that can return expanded objects have an extra parameter `expand: [String]?` that allows specifying which objects to expand. 
-
-### Usage with `@Expandable`:
-1. Expanding a single field.
-```swift
-// Expanding a customer from creating a `PaymentIntent`.
-let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer"])
-// Accessing the expanded `Customer` object
-paymentIntent.$customer.email
-```
-
-2. Expanding multiple fields.
-```swift
-// Expanding a customer and payment method from creating a `PaymentIntent`.
-let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["customer", "paymentMethod"])
-// Accessing the expanded `StripeCustomer` object   
- paymentIntent.$customer?.email // "stripe@example.com"
-// Accessing the expanded `StripePaymentMethod` object
- paymentIntent.$paymentMethod?.card?.last4 // "1234"
-```
-
-3. Expanding nested fields.
-```swift
-// Expanding a payment method and its nested customer from creating a `PaymentIntent`.
-let paymentIntent = try await stripeclient.paymentIntents.create(amount: 2500, currency: .usd, expand: ["paymentMethod.customer"])
-// Accessing the expanded `PaymentMethod` object
- paymentIntent.$paymentMethod?.card?.last4 // "1234"
-// Accessing the nested expanded `Customer` object   
- paymentIntent.$paymentMethod?.$customer?.email // "stripe@example.com"
-```
-
-4. Usage with list all. 
-> Note: For list operations [expanded fields must start with `data`](https://stripe.com/docs/api/expanding_objects?lang=curl)
-```swift
-// Expanding a customer from listing all `PaymentIntent`s.
-let list = try await stripeclient.paymentIntents.listAll(filter: ["expand": ["data.customer"...]])
-// Accessing the first `StripePaymentIntent`'s expanded `Customer` property
-list.data?.first?.$customer?.email // "stripe@example.com"
-
-```
-
-### Usage with `@DynamicExpandable`:
-
-Some objects in stripe can be expanded into different objects.
-For example:
-
-An `ApplicationFee` has an `originatingTransaction` property that can be expanded into either a [charge or a transfer](https://stripe.com/docs/api/application_fees/object#application_fee_object-originating_transaction).
-
-When expanding it you can specify which object you expect by doing the following:
-
-```swift
-let applicationfee = try await stripeclient.applicationFees.retrieve(fee: "fee_1234", expand: ["originatingTransaction"])
-// Access the originatingTransaction as a Charge
-applicationfee.$originatingTransaction(as: Charge.self)?.amount // 2500
-...
-// Access the originatingTransaction as a Transfer
-applicationfee.$originatingTransaction(as: Transfer.self)?.destination // acc_1234
-```
-
-### Usage with `@ExpandableCollection`:
-1. Expanding an array of `id`s 
-
-```swift
-let invoice = try await stripeClient.retrieve(invoice: "in_12345", expand: ["discounts"])
-
-// Access the discounts array as `String`s
-invoice.discounts.map { print($0) } // "","","",..
-
-// Access the array of `Discount`s
-invoice.$discounts.compactMap(\.id).map { print($0) } // "di_1","di_2","di_3",...  
-```
-
-## Nuances with parameters and type safety
-Stripe has a habit of changing APIs and having dynamic parameters for a lot of their APIs.
-To accomadate for these changes, certain routes that take arguments that are `hash`s or `Dictionaries`, are represented by a Swift dictionary `[String: Any]`.
-
-For example consider the Connect account API. 
-
-```swift
-// We define a custom dictionary to represent the paramaters stripe requires.
-// This allows us to avoid having to add updates to the library when a paramater or structure changes.
-let individual: [String: Any] = ["address": ["city": "New York",
-					     "country": "US",
-                                             "line1": "1551 Broadway",
-                                             "postal_code": "10036",
-	                  	             "state": "NY"],
-				 "first_name": "Taylor",
-			         "last_name": "Swift",
-                                 "ssn_last_4": "0000",
-				 "dob": ["day": "13",
-					 "month": "12",
-					 "year": "1989"]] 
-												 
-let businessSettings: [String: Any] = ["payouts": ["statement_descriptor": "SWIFTFORALL"]]
-
-let tosDictionary: [String: Any] = ["date": Int(Date().timeIntervalSince1970), "ip": "127.0.0.1"]
-
-let connectAccount = try await stripe.connectAccounts.create(type: .custom,									
-                                  country: "US",
-				  email: "a@example.com",
-				  businessType: .individual,
-			          defaultCurrency: .usd,
-				  externalAccount: "bank_token",
-			          individual: individual,
-				  requestedCapabilities: ["platform_payments"],
-				  settings: businessSettings,
-				  tosAcceptance: tosDictionary)
-print("New Stripe Connect account ID: \(connectAccount.id)")
-```
-
-## Authentication via the Stripe-Account header
-The first, preferred, authentication option is to use your (the platform account’s) secret key and pass a `Stripe-Account` header identifying the connected account for which the request is being made. The example request performs a refund of a  charge on behalf of a connected account using a builder style API:
-```swift
-   stripe.refunds
-    .addHeaders(["Stripe-Account": "acc_12345",
-             "Authorization": "Bearer different_api_key",
-             "Stripe-Version": "older-api-version"])
-    .create(charge: "ch_12345", reason: .requestedByCustomer)
-```
-**NOTE:** The modified headers will remain on the route instance _(refunds in this case)_ of the `StripeClient` if a reference to it is held. If you're accessing the StripeClient in the scope of a function, the headers will not be retained.
-
-## Idempotent Requests
-Similar to the account header, you can use the same builder style API to attach Idempotency Keys to your requests.
-
-```swift
-    let key = UUID().uuidString
-    stripe.refunds
-    .addHeaders(["Idempotency-Key": key])
-    .create(charge: "ch_12345", reason: .requestedByCustomer)
-```
-
-## Webhooks
-The webhooks API is available to use in a typesafe way to pull out entities. Here's an example of listening for the payment intent webhook.
-```swift
-func handleStripeWebhooks(req: Request) async throws -> HTTPResponse {
-
-    let signature = req.headers["Stripe-Signature"]
-
-    try StripeClient.verifySignature(payload: req.body, header: signature, secret: "whsec_1234") 
-    // Stripe dates come back from the Stripe API as epoch and the StripeModels convert these into swift `Date` types.
-    // Use a date and key decoding strategy to successfully parse out the `created` property and snake case strpe properties. 
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .secondsSince1970
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
-    
-    let event = try decoder.decode(StripeEvent.self, from: req.bodyData)
-    
-    switch (event.type, event.data?.object) {
-    case (.paymentIntentSucceeded, .paymentIntent(let paymentIntent)):
-        print("Payment capture method: \(paymentIntent.captureMethod?.rawValue)")
-        return HTTPResponse(status: .ok)
-        
-    default: return HTTPResponse(status: .ok)
+    let charge = try await stripe.charges.create(params)
+} catch let error as StripeError {
+    switch error.error?.type {
+    case .cardError:
+        print("Card declined: \(error.error?.message ?? "")")
+        print("Decline code: \(error.error?.declineCode ?? "")")
+        print("Error code: \(error.error?.code?.rawValue ?? "")")
+    case .invalidRequestError:
+        print("Bad request: \(error.error?.param ?? "")")
+        print("Details: \(error.error?.message ?? "")")
+    case .apiError, .idempotencyError:
+        print("Stripe error: \(error.error?.message ?? "")")
+    default:
+        print("Unknown error: \(error.error?.message ?? "")")
     }
 }
 ```
 
-## Using with Vapor
-StripeKit is pretty easy to use but to better integrate with Vapor these are some helpful extensions
+---
+
+## Codegen
+
+The `stripe-kit-codegen` CLI regenerates all files under `Generated/` from Stripe's OpenAPI spec. Infrastructure files are never touched.
+
+### Running
+
+```bash
+# Default: reads spec3.sdk.json, outputs to Sources/StripeKit/
+swift run stripe-kit-codegen
+
+# Custom paths
+swift run stripe-kit-codegen --spec path/to/spec3.sdk.json --output Sources/StripeKit
+```
+
+### What Gets Generated
+
+| Directory | Contents | Count |
+|-----------|----------|-------|
+| `Models/` | `Codable` structs per resource, organized by Stripe domain | 137 |
+| `Routes/` | `@Sendable` closure-based route structs + `.live()` implementations | 136 |
+| `Params/` | Typed `StripeParams` structs for create/update/action operations | 102 |
+| `Types/` | Inline schemas (shared sub-types referenced across resources) | 1,415 |
+| `StripeClient.swift` | Auto-wired client connecting all route structs | 1 |
+
+### How It Works
+
+The codegen pipeline is fully deterministic — no heuristics, no pluralization guessing:
+
+```
+spec3.sdk.json
+     │
+     ▼
+┌─────────────┐     ┌──────────────────┐
+│  SpecParser │────▶│ buildPathMapping │  Scans response $refs
+│             │     │schemaName → paths│  (direct + list-wrapped)
+└──────┬──────┘     └──────────────────┘
+       │
+       ▼
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌───────────────┐
+│ ModelGenerator│  │ RouteGenerator│  │ ParamGenerator│  │ InfraGenerator│
+│  (models)    │  │  (routes)    │  │  (params)    │  │ (client wire) │
+└──────────────┘  └──────────────┘  └──────────────┘  └───────────────┘
+```
+
+1. **SpecParser** parses the OpenAPI spec into `StripeResource` structs and builds a deterministic `pathMapping` by scanning response `$ref`s
+2. **ModelGenerator** emits `Codable` structs from schema properties, handling enums, nested objects, and `@Expandable` fields
+3. **RouteGenerator** uses the `pathMapping` to find all API operations for each resource
+4. **ParamGenerator** extracts `requestBody` schemas from POST operations and generates typed param structs
+5. **InfraGenerator** wires all route structs into `StripeClient` with `.live()` and `.test` factories
+
+### Updating to a New API Version
+
+```bash
+# 1. Download the latest spec
+curl -o spec3.sdk.json https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.sdk.json
+
+# 2. Regenerate
+swift run stripe-kit-codegen
+
+# 3. Review and commit
+git diff Sources/StripeKit/Generated/
+git add -A && git commit -m "Update to Stripe API vXXXX-XX-XX"
+```
+
+---
+
+## Versioning
+
+StripeKit uses **calendar-based semver** tied to the Stripe API version:
+
+```
+{YEAR}.{QUARTER}.{PATCH}
+```
+
+| Component | Meaning | Example |
+|-----------|---------|---------|
+| `YEAR` | Stripe API year | `2026` |
+| `QUARTER` | Sequential release within the year | `1`, `2`, `3` |
+| `PATCH` | Bug fixes, infra improvements (no spec change) | `0`, `1`, `2` |
+
+### Examples
+
+| Tag | What Changed |
+|-----|-------------|
+| `2026.1.0` | Initial release, Stripe API `2026-01-28.clover` |
+| `2026.1.1` | Bug fix in route codegen, no API version change |
+| `2026.2.0` | Regenerated from a new Stripe API version |
+
+### SwiftPM Compatibility
+
+SwiftPM fully supports semver ranges, so consumers get bug fixes automatically:
+
 ```swift
-import Vapor
-import StripeKit
+// Gets 2026.1.x bug fixes, won't jump to 2026.2.0
+.package(url: "...", from: "2026.1.0")
 
-extension Application {
-    public var stripe: StripeClient {
-        guard let stripeKey = Environment.get("STRIPE_API_KEY") else {
-            fatalError("STRIPE_API_KEY env var required")
-        }
-        return .init(httpClient: self.http.client.shared, apiKey: stripeKey)
-    }
-}
-
-extension Request {
-    private struct StripeKey: StorageKey {
-        typealias Value = StripeClient
-    }
-    
-    public var stripe: StripeClient {
-        if let existing = application.storage[StripeKey.self] {
-            return existing
-        } else {
-            guard let stripeKey = Environment.get("STRIPE_API_KEY") else {
-                fatalError("STRIPE_API_KEY env var required")
-            }
-            let new = StripeClient(httpClient: self.application.http.client.shared, apiKey: stripeKey)
-            self.application.storage[StripeKey.self] = new
-            return new
-        }
-    }
-}
-
-extension StripeClient {
-    /// Verifies a Stripe signature for a given `Request`. This automatically looks for the header in the headers of the request and the body.
-    /// - Parameters:
-    ///     - req: The `Request` object to check header and body for
-    ///     - secret: The webhook secret used to verify the signature
-    ///     - tolerance: In seconds the time difference tolerance to prevent replay attacks: Default 300 seconds
-    /// - Throws: `StripeSignatureError`
-    public static func verifySignature(for req: Request, secret: String, tolerance: Double = 300) throws {
-        guard let header = req.headers.first(name: "Stripe-Signature") else {
-            throw StripeSignatureError.unableToParseHeader
-        }
-        
-        guard let data = req.body.data else {
-            throw StripeSignatureError.noMatchingSignatureFound
-        }
-        
-        try StripeClient.verifySignature(payload: Data(data.readableBytesView), header: header, secret: secret, tolerance: tolerance)
-    }
-}
-
-extension StripeSignatureError: AbortError {
-    public var reason: String {
-        switch self {
-        case .noMatchingSignatureFound:
-            return "No matching signature was found"
-        case .timestampNotTolerated:
-            return "Timestamp was not tolerated"
-        case .unableToParseHeader:
-            return "Unable to parse Stripe-Signature header"
-        }
-    }
-    
-    public var status: HTTPResponseStatus {
-        .badRequest
-    }
-}
-``` 
-
-## Whats Implemented
-
-### Core Resources
-* [x] Balance
-* [x] Balance Transactions
-* [x] Charges
-* [x] Customers
-* [x] Disputes  
-* [x] Events
-* [x] Files
-* [x] File Links
-* [x] Mandates
-* [x] PaymentIntents
-* [x] SetupIntents
-* [x] SetupAttempts
-* [x] Payouts
-* [x] Refunds
-* [x] Tokens
-* [x] EphemeralKeys
----
-### Payment Methods
-* [x] Payment Methods
-* [x] Bank Accounts
-* [x] Cash Balance
-* [x] Cards
-* [x] Sources
----
-### Products
-* [x] Products
-* [x] Prices
-* [x] Coupons
-* [x] Promotion Codes
-* [x] Discounts
-* [x] Tax Codes
-* [x] Tax Rates
-* [x] Shipping Rates
----
-### Checkout
-* [x] Sessions
----
-### Payment Links
-* [x] Payment Links
----
-### Billing
-* [x] Credit Notes
-* [x] Customer Balance Transactions
-* [x] Customer Portal
-* [x] Customer Tax IDs
-* [x] Invoices
-* [x] Invoice Items
-* [x] Plans
-* [x] Quotes
-* [x] Quote Line Items
-* [x] Subscriptions
-* [x] Subscription items
-* [x] Subscription Schedule
-* [x] Test Clocks
-* [x] Usage Records
----
-### Connect
-* [x] Account
-* [x] Account Links
-* [x] Account Sessions
-* [x] Application Fees
-* [x] Application Fee Refunds
-* [x] Capabilities
-* [x] Country Specs
-* [x] External Accounts
-* [x] Persons
-* [x] Top-ups
-* [x] Transfers
-* [x] Transfer Reversals
-* [x] Secret Management
----
-### Fraud
-* [x] Early Fraud Warnings
-* [x] Reviews
-* [x] Value Lists
-* [x] Value List Items
----
-### Issuing
-* [x] Authorizations
-* [x] Cardholders
-* [x] Cards
-* [x] Disputes
-* [x] Funding Instructions
-* [x] Transactions
----
-### Terminal
-* [x] Connection Tokens
-* [x] Locations
-* [x] Readers
-* [x] Hardware Orders
-* [x] Hardware Products
-* [x] Hardware SKUs
-* [x] Hardware Shipping Methods
-* [x] Configurations
----
-### Sigma
-* [x] Scheduled Queries
----
-### Reporting
-* [x] Report Runs
-* [x] Report Types
----
-### Identity
-* [x] VerificationSessions
-* [x] VerificationReports
----
-### Webhooks
-* [x] Webhook Endpoints
-* [x] Signature Verification
-
-## Idempotent Requests
-* [x] [Idempotent Requests](https://stripe.com/docs/api/idempotent_requests)
-
-## License
-StripeKit is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
+// Pin to exact version
+.package(url: "...", exact: "2026.1.0")
+```

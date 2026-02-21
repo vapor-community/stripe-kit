@@ -5,137 +5,30 @@ class ExpandableTests: XCTestCase {
     
     func testDynamicExpandable_decodesProperly() throws {
         
-        let fee = """
+        // Self-contained test: DynamicExpandable works independently of generated models
+        struct TypeA: Codable { var id: String; var name: String }
+        struct TypeB: Codable { var id: String; var code: Int }
+        struct TestFee: Codable {
+            @DynamicExpandable<TypeA, TypeB> var item: String?
+        }
+        
+        let expandedJSON = """
         {
-            "id": "fee_1G7XzFEnR8BaFqPrBOEk9R5P",
-            "object": "application_fee",
-            "account": "acct_1G7UfdEnR8BaFqPr",
-            "amount": 110,
-            "amount_refunded": 0,
-            "application": "ca_Azct53hw5RUQJekiTbu7ScUpfgxZTrQ6",
-            "balance_transaction": "txn_1G7XzFAU9AiAmxbB9hgAoDPs",
-            "charge": "py_1G7XzFEnR8BaFqPrdwtxZovX",
-            "created": 1580609701,
-            "currency": "usd",
-            "livemode": false,
-            "originating_transaction": {
-              "id": "ch_1G7XzFAU9AiAmxbBuFTA65QG",
-              "object": "charge",
-              "livemode": false,
-              "payment_intent": "pi_1G7XzEAU9AiAmxbBYdTBI9fz",
-              "status": "succeeded",
-              "amount": 2500,
-              "amount_refunded": 0,
-              "application": null,
-              "application_fee": "fee_1G7XzFEnR8BaFqPrBOEk9R5P",
-              "application_fee_amount": 110,
-              "balance_transaction": "txn_1G7XzFAU9AiAmxbBrfsM5Doj",
-              "billing_details": {
-                "address": {
-                  "city": null,
-                  "country": null,
-                  "line1": null,
-                  "line2": null,
-                  "postal_code": null,
-                  "state": null
-                },
-                "email": null,
-                "name": null,
-                "phone": null
-              },
-              "captured": true,
-              "created": 1580609701,
-              "currency": "usd",
-              "customer": null,
-              "description": null,
-              "destination": "acct_1G7UfdEnR8BaFqPr",
-              "dispute": null,
-              "disputed": false,
-              "failure_code": null,
-              "failure_message": null,
-              "fraud_details": {
-              },
-              "invoice": null,
-              "metadata": {
-              },
-              "on_behalf_of": null,
-              "order": null,
-              "outcome": {
-                "network_status": "approved_by_network",
-                "reason": null,
-                "risk_level": "normal",
-                "risk_score": 38,
-                "seller_message": "Payment complete.",
-                "type": "authorized"
-              },
-              "paid": true,
-              "payment_method": "pm_1G7XzEAU9AiAmxbBsEmn60pS",
-              "payment_method_details": {
-                "card": {
-                  "brand": "visa",
-                  "checks": {
-                    "address_line1_check": null,
-                    "address_postal_code_check": null,
-                    "cvc_check": null
-                  },
-                  "country": "US",
-                  "exp_month": 2,
-                  "exp_year": 2021,
-                  "fingerprint": "3ZiXEfr0TJ2bSd62",
-                  "funding": "debit",
-                  "installments": null,
-                  "last4": "5556",
-                  "network": "visa",
-                  "three_d_secure": null,
-                  "wallet": null
-                },
-                "type": "card"
-              },
-              "receipt_email": null,
-              "receipt_number": null,
-              "receipt_url": "https://pay.stripe.com/receipts/acct_16Ds3sAU9AiAmxbB/ch_1G7XzFAU9AiAmxbBuFTA65QG/rcpt_GeriQEf4RhBGA7n5cy3VVWpBHCBBnlF",
-              "refunded": false,
-              "refunds": {
-                "object": "list",
-                "data": [
-                ],
-                "has_more": false,
-                "total_count": 0,
-                "url": "/v1/charges/ch_1G7XzFAU9AiAmxbBuFTA65QG/refunds"
-              },
-              "review": null,
-              "shipping": null,
-              "source": null,
-              "source_transfer": null,
-              "statement_descriptor": null,
-              "statement_descriptor_suffix": null,
-              "transfer": "tr_1G7XzFAU9AiAmxbBHBoCr6IG",
-              "transfer_data": {
-                "amount": null,
-                "destination": "acct_1G7UfdEnR8BaFqPr"
-              },
-              "transfer_group": "group_pi_1G7XzEAU9AiAmxbBYdTBI9fz"
-            },
-            "refunded": false,
-            "refunds": {
-              "object": "list",
-              "data": [
-              ],
-              "has_more": false,
-              "total_count": 0,
-              "url": "/v1/application_fees/fee_1G7XzFEnR8BaFqPrBOEk9R5P/refunds"
+            "item": {
+              "id": "item_123",
+              "name": "Test Item"
             }
         }
         """.data(using: .utf8)!
         
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        let appFee = try decoder.decode(ApplicationFee.self, from: fee)
+        let fee = try decoder.decode(TestFee.self, from: expandedJSON)
         
-        XCTAssertNotNil(appFee.$originatingTransaction(as: Charge.self))
-        XCTAssertNil(appFee.$originatingTransaction(as: Transfer.self))
+        XCTAssertNotNil(fee.$item(as: TypeA.self))
+        XCTAssertNil(fee.$item(as: TypeB.self))
+        XCTAssertEqual(fee.$item(as: TypeA.self)?.name, "Test Item")
     }
     
     func testExpandable_decodesProperly_whenTopLevelField_isMissing() throws {
@@ -326,67 +219,53 @@ class ExpandableTests: XCTestCase {
     }
     
     func testExpandable_nullEncodingDecoding() throws {
-        let session = """
+        struct TestSession: Codable {
+            var id: String
+            @Expandable<TestRef> var customer: String?
+        }
+        struct TestRef: Codable, Sendable { var id: String }
+        
+        let json = """
         {
-          "amountTotal": 100,
           "id": "cs_test_ffff",
-          "successUrl": "https://example.com",
-          "livemode": false,
-          "customer": null,
-          "created": 1588268981,
-          "metadata": {},
-          "totalDetails": {
-            "amountShipping": 0,
-            "amountTax": 0,
-            "amountDiscount": 0
-          },
-          "setupIntent": null,
-          "object": "checkout.session",
-          "mode": "payment",
-          "amountSubtotal": 100,
-          "paymentIntent": "pi_ffff",
-          "paymentMethodTypes": [
-            "card"
-          ],
-          "cancelUrl": "https://example.com",
-          "subscription": null,
-          "currency": "usd",
-          "paymentStatus": "unpaid"
+          "customer": null
         }
         """.data(using: .utf8)!
-        let sess = try JSONDecoder().decode(Session.self, from: session)
-        _ = try JSONDecoder().decode(Session.self, from: JSONEncoder().encode(sess))
+        let sess = try JSONDecoder().decode(TestSession.self, from: json)
+        XCTAssertNil(sess.customer)
+        XCTAssertNil(sess.$customer)
+        _ = try JSONDecoder().decode(TestSession.self, from: JSONEncoder().encode(sess))
     }
     
     func testExpandableCollection_decodesProperly() throws {
         
+        struct TestItem: Codable, Sendable {
+            var id: String
+        }
         struct SimpleType: Codable {
-            @ExpandableCollection<Discount> var discounts: [String]?
+            @ExpandableCollection<TestItem> var items: [String]?
         }
         
-        let discounts = """
+        let json = """
         {
-            "discounts": [
+            "items": [
                 {
-                    "id": "di_1234",
-                    "object": "discount"
+                    "id": "item_1234"
                 },
                 {
-                    "id": "di_12345",
-                    "object": "discount"
-                },
+                    "id": "item_12345"
+                }
             ]
         }
         """.data(using: .utf8)!
         
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        let simple = try decoder.decode(SimpleType.self, from: discounts)
+        let simple = try decoder.decode(SimpleType.self, from: json)
         
-        XCTAssertEqual(simple.$discounts?.count, 2)
-        XCTAssertEqual(simple.$discounts?[0].id, "di_1234")
-        XCTAssertEqual(simple.$discounts?[1].id, "di_12345")
+        XCTAssertEqual(simple.$items?.count, 2)
+        XCTAssertEqual(simple.$items?[0].id, "item_1234")
+        XCTAssertEqual(simple.$items?[1].id, "item_12345")
     }
 }

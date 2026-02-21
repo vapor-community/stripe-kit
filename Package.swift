@@ -1,10 +1,10 @@
-// swift-tools-version:5.7
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
     name: "stripe-kit",
     platforms: [
-        .macOS(.v12),
+        .macOS(.v14),
         .iOS(.v15),
         .tvOS(.v15),
         .watchOS(.v8)
@@ -21,6 +21,10 @@ let package = Package(
             .product(name: "AsyncHTTPClient", package: "async-http-client"),
             .product(name: "Crypto", package: "swift-crypto"),
         ]),
+        .executableTarget(
+            name: "stripe-kit-codegen",
+            path: "Sources/Codegen"
+        ),
         .testTarget(name: "StripeKitTests", dependencies: [
             .target(name: "StripeKit")
         ])
