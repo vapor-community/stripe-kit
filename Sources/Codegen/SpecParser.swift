@@ -116,6 +116,12 @@ struct SpecParser {
         for (schemaName, schema) in spec.components.schemas {
             guard schema.xResourceId == nil else { continue }
             guard !schemaName.starts(with: "deleted_") else { continue }
+            // Skip dot-named schemas that collide with a real underscore-named schema
+            // e.g. "payment_intent.processing" → "payment_intent_processing" already exists
+            if schemaName.contains(".") {
+                let normalized = schemaName.replacing(".", with: "_")
+                if spec.components.schemas[normalized] != nil { continue }
+            }
             
             let required = schema.required ?? []
             let expandable = schema.xExpandableFields ?? []

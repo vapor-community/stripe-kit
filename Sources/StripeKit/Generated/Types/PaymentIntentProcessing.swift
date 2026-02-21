@@ -7,9 +7,16 @@
 
 import Foundation
 
-/// Occurs when a PaymentIntent has started processing.
 public struct PaymentIntentProcessing: Codable, Sendable {
-    public var object: PaymentIntent
+    @Expandable<PaymentIntentCardProcessing>
+    public var card: String?
+    /// Type of the payment method for which payment is in `processing` state, one of `card`.
+    public var type: PaymentIntentProcessingType
+}
+
+/// Type of the payment method for which payment is in `processing` state, one of `card`.
+public enum PaymentIntentProcessingType: String, Codable, Sendable {
+    case card
 }
 
 public struct PaymentIntentProcessingList: Codable, Sendable {
