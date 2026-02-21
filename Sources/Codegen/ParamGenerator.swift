@@ -41,9 +41,9 @@ struct ParamGenerator {
         var allSubStructs: [(name: String, lines: [String])] = []
         
         for (action, schema, requiredFields) in operations {
-            let structName = "\(resource.swiftTypeName)\(action)Params"
+            let stem = "\(resource.swiftTypeName)\(action)"
             let (structLines, subStructs) = generateParamStruct(
-                name: structName,
+                stem: stem,
                 schema: schema,
                 requiredFields: requiredFields,
                 depth: 0
@@ -65,13 +65,16 @@ struct ParamGenerator {
     // MARK: - Struct Generation
     
     /// Generate a single param struct from an inline schema.
-    /// Returns the struct lines and any sub-structs that need to be emitted.
+    /// `stem` is the name without "Params" suffix, e.g. "AccountCreate".
+    /// Top-level structs get "Params" suffix: "AccountCreateParams".
+    /// Sub-structs use plain stem: "AccountCreateBusinessProfile".
     private func generateParamStruct(
-        name: String,
+        stem: String,
         schema: PropertyObject,
         requiredFields: Set<String>,
         depth: Int
     ) -> (lines: [String], subStructs: [(name: String, lines: [String])]) {
+        let structName = depth == 0 ? "\(stem)Params" : stem
         var lines: [String] = []
         var subStructs: [(name: String, lines: [String])] = []
         
@@ -87,7 +90,7 @@ struct ParamGenerator {
             }
         }
         
-        lines.append("public struct \(name): StripeParams {")
+        lines.append("public struct \(structName): StripeParams {")
         
         // Required fields first, then optional, sorted alphabetically within each group
         let requiredProps = sorted.filter { requiredFields.contains($0.key) }
@@ -98,7 +101,7 @@ struct ParamGenerator {
                 name: propName,
                 prop: prop,
                 isRequired: true,
-                parentStructName: name,
+                parentStem: stem,
                 depth: depth,
                 subStructs: &subStructs
             ))
@@ -109,14 +112,14 @@ struct ParamGenerator {
                 name: propName,
                 prop: prop,
                 isRequired: false,
-                parentStructName: name,
+                parentStem: stem,
                 depth: depth,
                 subStructs: &subStructs
             ))
         }
         
-        // Always include expand
-        if !properties.keys.contains("expand") {
+        // Only top-level params have expand (sub-types don't make separate API calls)
+        if depth == 0 && !properties.keys.contains("expand") {
             lines.append("    /// Specifies which fields to expand in the response.")
             lines.append("    public var expand: [String]?")
         }
@@ -130,23 +133,59 @@ struct ParamGenerator {
                 let swiftType: String
                 if let anyOf = prop.anyOf, !anyOf.isEmpty {
                     var dummySubStructs: [(name: String, lines: [String])] = []
-                    swiftType = resolveAnyOfParam(anyOf, parentStructName: name, propName: propName, depth: depth, subStructs: &dummySubStructs)
+                    swiftType = resolveAnyOfParam(anyOf, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
                 } else {
-                    swiftType = paramTypeString(prop, parentStructName: name, propName: propName, depth: depth)
+                    swiftType = paramTypeString(prop, parentStem: stem, propName: propName, depth: depth)
                 }
-                return "\(swiftName): \(swiftType)"
+                return "\(escapedSwiftName(swiftName)): \(swiftType)"
+            }.joined(separator: ", ")
+            
+            // Add optional params with defaults
+            let optionalInitParams = optionalProps.map { (propName, prop) -> String in
+                let swiftName = snakeToCamel(propName)
+                let swiftType: String
+                if let anyOf = prop.anyOf, !anyOf.isEmpty {
+                    var dummySubStructs: [(name: String, lines: [String])] = []
+                    swiftType = resolveAnyOfParam(anyOf, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
+                } else {
+                    swiftType = paramTypeString(prop, parentStem: stem, propName: propName, depth: depth)
+                }
+                return "\(escapedSwiftName(swiftName)): \(swiftType)? = nil"
+            }.joined(separator: ", ")
+            
+            let allParams = optionalInitParams.isEmpty ? initParams : "\(initParams), \(optionalInitParams)"
+            
+            lines.append("    public init(\(allParams)) {")
+            for (propName, _) in requiredProps {
+                let swiftName = snakeToCamel(propName)
+                lines.append("        self.\(escapedSwiftName(swiftName)) = \(escapedSwiftName(swiftName))")
+            }
+            for (propName, _) in optionalProps {
+                let swiftName = snakeToCamel(propName)
+                lines.append("        self.\(escapedSwiftName(swiftName)) = \(escapedSwiftName(swiftName))")
+            }
+            lines.append("    }")
+        } else if !optionalProps.isEmpty {
+            // All-optional: memberwise init with nil defaults
+            let initParams = optionalProps.map { (propName, prop) -> String in
+                let swiftName = snakeToCamel(propName)
+                let swiftType: String
+                if let anyOf = prop.anyOf, !anyOf.isEmpty {
+                    var dummySubStructs: [(name: String, lines: [String])] = []
+                    swiftType = resolveAnyOfParam(anyOf, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
+                } else {
+                    swiftType = paramTypeString(prop, parentStem: stem, propName: propName, depth: depth)
+                }
+                return "\(escapedSwiftName(swiftName)): \(swiftType)? = nil"
             }.joined(separator: ", ")
             
             lines.append("    public init(\(initParams)) {")
-            for (propName, _) in requiredProps {
+            for (propName, _) in optionalProps {
                 let swiftName = snakeToCamel(propName)
-                lines.append("        self.\(swiftName) = \(swiftName)")
+                lines.append("        self.\(escapedSwiftName(swiftName)) = \(escapedSwiftName(swiftName))")
             }
             lines.append("    }")
         } else {
-            // All-optional struct: emit default init so consumers don't have to
-            // spell out every nil parameter (CodingKeys suppresses Swift's
-            // synthesized memberwise init).
             lines.append("    public init() {}")
         }
         
@@ -157,13 +196,13 @@ struct ParamGenerator {
             lines.append("    public enum CodingKeys: String, CodingKey {")
             for (propName, _) in sorted {
                 let swiftName = snakeToCamel(propName)
-                if swiftName != propName {
-                    lines.append("        case \(escapedSwiftName(swiftName)) = \"\(propName)\"")
-                } else {
+                if swiftName == propName {
                     lines.append("        case \(escapedSwiftName(swiftName))")
+                } else {
+                    lines.append("        case \(escapedSwiftName(swiftName)) = \"\(propName)\"")
                 }
             }
-            if !properties.keys.contains("expand") {
+            if depth == 0 && !properties.keys.contains("expand") {
                 lines.append("        case expand")
             }
             lines.append("    }")
@@ -180,7 +219,7 @@ struct ParamGenerator {
         name: String,
         prop: PropertyObject,
         isRequired: Bool,
-        parentStructName: String,
+        parentStem: String,
         depth: Int,
         subStructs: inout [(name: String, lines: [String])]
     ) -> [String] {
@@ -196,20 +235,20 @@ struct ParamGenerator {
             }
         }
         
-        let swiftType = paramTypeString(prop, parentStructName: parentStructName, propName: name, depth: depth)
+        let swiftType = paramTypeString(prop, parentStem: parentStem, propName: name, depth: depth)
         let optionalMark = isRequired ? "" : "?"
         
         // If this is a nested object type, generate a sub-struct
         if let props = prop.properties, !props.isEmpty, depth < maxDepth {
-            let subStructName = "\(parentStructName)\(capitalize(snakeToCamel(name)))"
+            let childStem = "\(parentStem)\(capitalize(snakeToCamel(name)))"
             let subRequired = Set(prop.required ?? [])
             let (subLines, nestedSubs) = generateParamStruct(
-                name: subStructName,
+                stem: childStem,
                 schema: prop,
                 requiredFields: subRequired,
                 depth: depth + 1
             )
-            subStructs.append((subStructName, subLines))
+            subStructs.append((childStem, subLines))
             subStructs.append(contentsOf: nestedSubs)
         }
         
@@ -218,21 +257,21 @@ struct ParamGenerator {
            let items = prop.items,
            let itemProps = items.properties, !itemProps.isEmpty,
            depth < maxDepth {
-            let subStructName = "\(parentStructName)\(capitalize(snakeToCamel(name)))"
+            let childStem = "\(parentStem)\(capitalize(snakeToCamel(name)))"
             let subRequired = Set(items.required ?? [])
             let (subLines, nestedSubs) = generateParamStruct(
-                name: subStructName,
+                stem: childStem,
                 schema: items,
                 requiredFields: subRequired,
                 depth: depth + 1
             )
-            subStructs.append((subStructName, subLines))
+            subStructs.append((childStem, subLines))
             subStructs.append(contentsOf: nestedSubs)
         }
         
         // Handle anyOf — resolve to the most specific non-string variant
         if let anyOf = prop.anyOf, !anyOf.isEmpty {
-            let resolved = resolveAnyOfParam(anyOf, parentStructName: parentStructName, propName: name, depth: depth, subStructs: &subStructs)
+            let resolved = resolveAnyOfParam(anyOf, parentStem: parentStem, propName: name, depth: depth, subStructs: &subStructs)
             lines.append("    public var \(escapedSwiftName(swiftName)): \(resolved)\(optionalMark)")
             return lines
         }
@@ -245,7 +284,7 @@ struct ParamGenerator {
     
     private func paramTypeString(
         _ prop: PropertyObject,
-        parentStructName: String,
+        parentStem: String,
         propName: String,
         depth: Int
     ) -> String {
@@ -257,8 +296,7 @@ struct ParamGenerator {
         
         // Handle enum
         if let enumCases = prop.enum, !enumCases.isEmpty {
-            // Generate inline enum name based on parent + property
-            return "\(parentStructName)\(capitalize(snakeToCamel(propName)))"
+            return "\(parentStem)\(capitalize(snakeToCamel(propName)))"
         }
         
         switch prop.type {
@@ -272,7 +310,7 @@ struct ParamGenerator {
             return "Bool"
         case "array":
             if let items = prop.items {
-                let elementType = paramTypeString(items, parentStructName: parentStructName, propName: propName, depth: depth)
+                let elementType = paramTypeString(items, parentStem: parentStem, propName: propName, depth: depth)
                 return "[\(elementType)]"
             }
             return "[String]"
@@ -282,7 +320,7 @@ struct ParamGenerator {
             }
             if let props = prop.properties, !props.isEmpty {
                 if depth < maxDepth {
-                    return "\(parentStructName)\(capitalize(snakeToCamel(propName)))"
+                    return "\(parentStem)\(capitalize(snakeToCamel(propName)))"
                 } else {
                     return "[String: String]"
                 }
@@ -295,7 +333,7 @@ struct ParamGenerator {
     
     private func resolveAnyOfParam(
         _ variants: [PropertyObject],
-        parentStructName: String,
+        parentStem: String,
         propName: String,
         depth: Int,
         subStructs: inout [(name: String, lines: [String])]
@@ -310,36 +348,38 @@ struct ParamGenerator {
         if nonEmpty.count == 1, let single = nonEmpty.first {
             // If it's an object with properties, generate sub-struct
             if let props = single.properties, !props.isEmpty, depth < maxDepth {
-                let subStructName = "\(parentStructName)\(capitalize(snakeToCamel(propName)))"
+                let childStem = "\(parentStem)\(capitalize(snakeToCamel(propName)))"
                 let subRequired = Set(single.required ?? [])
                 let (subLines, nestedSubs) = generateParamStruct(
-                    name: subStructName,
+                    stem: childStem,
                     schema: single,
                     requiredFields: subRequired,
                     depth: depth + 1
                 )
-                subStructs.append((subStructName, subLines))
+                let structName = childStem
+                subStructs.append((structName, subLines))
                 subStructs.append(contentsOf: nestedSubs)
-                return subStructName
+                return structName
             }
             // If it's an array of objects, generate sub-struct for the items
             if single.type == "array",
                let items = single.items,
                let itemProps = items.properties, !itemProps.isEmpty,
                depth < maxDepth {
-                let subStructName = "\(parentStructName)\(capitalize(snakeToCamel(propName)))"
+                let childStem = "\(parentStem)\(capitalize(snakeToCamel(propName)))"
                 let subRequired = Set(items.required ?? [])
                 let (subLines, nestedSubs) = generateParamStruct(
-                    name: subStructName,
+                    stem: childStem,
                     schema: items,
                     requiredFields: subRequired,
                     depth: depth + 1
                 )
-                subStructs.append((subStructName, subLines))
+                let structName = childStem
+                subStructs.append((structName, subLines))
                 subStructs.append(contentsOf: nestedSubs)
-                return "[\(subStructName)]"
+                return "[\(structName)]"
             }
-            return paramTypeString(single, parentStructName: parentStructName, propName: propName, depth: depth)
+            return paramTypeString(single, parentStem: parentStem, propName: propName, depth: depth)
         }
         
         // Multiple variants — fall back to String
@@ -355,12 +395,12 @@ struct ParamGenerator {
         var seenEnumNames = Set<String>()
         
         for (action, schema, _) in operations {
-            let structName = "\(resource.swiftTypeName)\(action)Params"
+            let stem = "\(resource.swiftTypeName)\(action)"
             let props = schema.properties ?? [:]
             
             for (propName, prop) in props.sorted(by: { $0.key < $1.key }) {
                 if let enumCases = prop.enum, !enumCases.isEmpty {
-                    let enumName = "\(structName)\(capitalize(snakeToCamel(propName)))"
+                    let enumName = "\(stem)\(capitalize(snakeToCamel(propName)))"
                     guard !seenEnumNames.contains(enumName) else { continue }
                     seenEnumNames.insert(enumName)
                     lines.append(contentsOf: generateEnum(name: enumName, cases: enumCases))
@@ -369,7 +409,7 @@ struct ParamGenerator {
                 // Also check anyOf for nested enum cases
                 collectNestedEnums(
                     prop: prop,
-                    parentName: structName,
+                    parentName: stem,
                     propName: propName,
                     lines: &lines,
                     depth: 0,
@@ -489,16 +529,27 @@ struct ParamGenerator {
     
     /// Find all POST operations for a resource, returning (action, bodySchema, requiredFields)
     func findOperations(for resource: StripeResource) -> [(action: String, schema: PropertyObject, required: Set<String>)] {
-        var results: [(String, PropertyObject, Set<String>)] = []
+        var results: [(action: String, path: String, schema: PropertyObject, required: Set<String>)] = []
         
         // Deterministic: look up paths directly from the spec-derived mapping
         guard let resourcePaths = pathMapping[resource.schemaName] else { return [] }
-        
-        // Get unique paths and derive basePath (shortest = collection endpoint)
+        // Get unique paths
         let uniquePaths = Set(resourcePaths.map { $0.path })
-        let basePath = uniquePaths.min(by: { $0.count < $1.count }) ?? ""
         
-        for path in uniquePaths {
+        // Derive basePath: shortest path that is a segment-aligned prefix of at least
+        // one other path.  Deterministic — no scoring, no tie-breaking ambiguity.
+        let basePath: String = {
+            let sorted = uniquePaths.sorted { $0.count < $1.count }
+            for candidate in sorted {
+                let isPrefix = sorted.contains { other in
+                    other != candidate && other.hasPrefix(candidate + "/")
+                }
+                if isPrefix { return candidate }
+            }
+            return sorted.first ?? ""
+        }()
+        
+        for path in uniquePaths.sorted() {
             guard let pathItem = spec.paths[path] else { continue }
             
             // Only POST operations have requestBody we care about
@@ -512,18 +563,27 @@ struct ParamGenerator {
             let action = deriveAction(path: path, pathPrefix: basePath, operationId: post.operationId)
             let required = Set(schema.required ?? [])
             
-            results.append((action, schema, required))
+            results.append((action, path, schema, required))
         }
         
-        // Deduplicate by action name (keep first)
-        var seen = Set<String>()
-        results = results.filter { op in
-            if seen.contains(op.0) { return false }
-            seen.insert(op.0)
-            return true
+        // Deduplicate by action — prefer operations whose path starts with basePath
+        // (the resource's own namespace) over cross-resource aliases.
+        var bestByAction: [String: (action: String, path: String, schema: PropertyObject, required: Set<String>)] = [:]
+        for op in results {
+            if let existing = bestByAction[op.action] {
+                let existingIsLocal = existing.path.hasPrefix(basePath)
+                let newIsLocal = op.path.hasPrefix(basePath)
+                if !existingIsLocal && newIsLocal {
+                    bestByAction[op.action] = op
+                }
+            } else {
+                bestByAction[op.action] = op
+            }
         }
         
-        return results.sorted { $0.0 < $1.0 }
+        return bestByAction.values
+            .sorted { $0.action < $1.action }
+            .map { ($0.action, $0.schema, $0.required) }
     }
     
     /// Derive a friendly action name from the path
@@ -532,33 +592,28 @@ struct ParamGenerator {
     /// /v1/payment_intents/{intent}/cancel → "Cancel"
     /// /v1/payment_intents/{intent}/capture → "Capture"
     private func deriveAction(path: String, pathPrefix: String, operationId: String?) -> String {
-        let rawSuffix = path.hasPrefix(pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : nil
-        // Ensure prefix match is segment-aligned: suffix must start with "/" or be empty
-        let suffix: String
-        if let rawSuffix, rawSuffix.isEmpty || rawSuffix.hasPrefix("/") {
-            suffix = rawSuffix
-        } else {
-            suffix = ""
-        }
+        let basePrefixParamCount = pathPrefix.split(separator: "/").filter { $0.hasPrefix("{") }.count
+        let totalPathParams = path.split(separator: "/").filter { $0.hasPrefix("{") }.count
         
-        if suffix.isEmpty {
+        // POST basePath (no path params beyond prefix) → Create
+        if totalPathParams == basePrefixParamCount && path == pathPrefix {
             return "Create"
         }
         
-        // Remove leading slash and path params
-        let parts = suffix
-            .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-            .split(separator: "/")
-            .filter { !$0.hasPrefix("{") }
+        // POST basePath/{id} (one extra path param, no trailing action) → Update
+        let trailingParts = path.hasPrefix(pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : ""
+        let trailingNonParams = trailingParts.split(separator: "/").filter { !$0.hasPrefix("{") }
         
-        if parts.isEmpty {
-            // Only had path params: /v1/resource/{id} → Update
+        if trailingNonParams.isEmpty && totalPathParams == basePrefixParamCount + 1 {
             return "Update"
         }
         
-        // Use the last non-param segment as action name
-        let actionSlug = String(parts.last!)
-        return capitalize(snakeToCamel(actionSlug))
+        // POST with trailing action segment → named action
+        if let actionSlug = trailingNonParams.last {
+            return capitalize(snakeToCamel(String(actionSlug)))
+        }
+        
+        return "Create"
     }
     
     // MARK: - Helpers

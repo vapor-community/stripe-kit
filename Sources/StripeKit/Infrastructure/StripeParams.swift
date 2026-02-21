@@ -17,17 +17,23 @@ public protocol StripeParams: Codable, Sendable {
 extension StripeParams {
     public func toFormBody() -> String {
         var pairs: [(String, String)] = []
-        let mirror = Mirror(reflecting: self)
-        
+        encodeFields(of: self, prefix: "", into: &pairs)
+        return pairs
+            .map { "\($0.0)=\($0.1.addingPercentEncoding(withAllowedCharacters: .stripeQueryAllowed) ?? $0.1)" }
+            .joined(separator: "&")
+    }
+
+    private func encodeFields(of value: Any, prefix: String, into pairs: inout [(String, String)]) {
+        let mirror = Mirror(reflecting: value)
+
         for child in mirror.children {
             guard let label = child.label else { continue }
-            // Convert camelCase property name to snake_case
-            let key = camelToSnake(label)
-            
+            let key = prefix.isEmpty ? camelToSnake(label) : "\(prefix)[\(camelToSnake(label))]"
+
             // Skip nil optionals
             let valueMirror = Mirror(reflecting: child.value)
             if valueMirror.displayStyle == .optional && valueMirror.children.isEmpty { continue }
-            
+
             // Unwrap optional
             let unwrapped: Any
             if valueMirror.displayStyle == .optional, let (_, some) = valueMirror.children.first {
@@ -35,25 +41,43 @@ extension StripeParams {
             } else {
                 unwrapped = child.value
             }
-            
-            // Encode value preserving Bool as true/false
-            switch unwrapped {
-            case let b as Bool:
-                pairs.append((key, b ? "true" : "false"))
-            case let n as any Numeric:
-                pairs.append((key, "\(n)"))
-            case let s as String:
-                pairs.append((key, s))
-            default:
-                pairs.append((key, "\(unwrapped)"))
+
+            encodeSingleValue(unwrapped, key: key, into: &pairs)
+        }
+    }
+
+    private func encodeSingleValue(_ value: Any, key: String, into pairs: inout [(String, String)]) {
+        switch value {
+        case let b as Bool:
+            pairs.append((key, b ? "true" : "false"))
+        case let n as any Numeric:
+            pairs.append((key, "\(n)"))
+        case let s as String:
+            pairs.append((key, s))
+        case let dict as [String: String]:
+            // Stripe bracket notation: metadata[key]=value
+            for (k, v) in dict.sorted(by: { $0.key < $1.key }) {
+                pairs.append(("\(key)[\(k)]", v))
+            }
+        case let arr as [String]:
+            // Stripe array notation: expand[]=value
+            for item in arr {
+                pairs.append(("\(key)[]", item))
+            }
+        case let nested as any StripeParams:
+            // Recurse into sub-structs: parent[child_field]=value
+            encodeFields(of: nested, prefix: key, into: &pairs)
+        default:
+            // Handles RawRepresentable enums and other types
+            let m = Mirror(reflecting: value)
+            if let rawChild = m.children.first(where: { $0.label == "rawValue" }) {
+                pairs.append((key, "\(rawChild.value)"))
+            } else {
+                pairs.append((key, "\(value)"))
             }
         }
-        
-        return pairs
-            .map { "\($0.0)=\($0.1.addingPercentEncoding(withAllowedCharacters: .stripeQueryAllowed) ?? $0.1)" }
-            .joined(separator: "&")
     }
-    
+
     private func camelToSnake(_ input: String) -> String {
         var result = ""
         for char in input {

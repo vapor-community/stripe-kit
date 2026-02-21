@@ -224,11 +224,20 @@ struct RouteGenerator {
         // Get unique paths (a path may appear multiple times for list + direct refs)
         let uniquePaths = Set(resourcePaths.map { $0.path })
         
-        // Derive basePath: the shortest path is the resource's collection endpoint
-        // e.g., /v1/payment_intents or /v1/accounts/{account}/external_accounts
-        let basePath = uniquePaths.min(by: { $0.count < $1.count }) ?? ""
+        // Derive basePath: shortest path that is a segment-aligned prefix of at least
+        // one other path.  Deterministic — no scoring, no tie-breaking ambiguity.
+        let basePath: String = {
+            let sorted = uniquePaths.sorted { $0.count < $1.count }
+            for candidate in sorted {
+                let isPrefix = sorted.contains { other in
+                    other != candidate && other.hasPrefix(candidate + "/")
+                }
+                if isPrefix { return candidate }
+            }
+            return sorted.first ?? ""
+        }()
         
-        for path in uniquePaths {
+        for path in uniquePaths.sorted() {
             guard let pathItem = spec.paths[path] else { continue }
             
             let methods: [(String, OperationObject?)] = [
@@ -286,13 +295,22 @@ struct RouteGenerator {
             }
         }
         
-        // Deduplicate by funcName (keep first occurrence)
-        var seen = Set<String>()
-        results = results.filter { op in
-            if seen.contains(op.funcName) { return false }
-            seen.insert(op.funcName)
-            return true
+        // Deduplicate by funcName — prefer operations whose path starts with basePath
+        // (the resource's own namespace) over cross-resource aliases.
+        var bestByFunc: [String: RouteOperation] = [:]
+        for op in results {
+            if let existing = bestByFunc[op.funcName] {
+                let existingIsLocal = existing.path.hasPrefix(basePath)
+                let newIsLocal = op.path.hasPrefix(basePath)
+                // Replace only if existing is non-local and new is local
+                if !existingIsLocal && newIsLocal {
+                    bestByFunc[op.funcName] = op
+                }
+            } else {
+                bestByFunc[op.funcName] = op
+            }
         }
+        results = Array(bestByFunc.values)
         
         return results.sorted { a, b in
             // Sort by: create, retrieve, update, list, delete, then alphabetical
@@ -311,47 +329,86 @@ struct RouteGenerator {
         pathParams: [String],
         operationId: String?
     ) -> (funcName: String, action: String) {
-        let rawSuffix = path.hasPrefix(pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : nil
-        // Ensure prefix match is segment-aligned: suffix must start with "/" or be empty
-        let suffix: String
-        if let rawSuffix, rawSuffix.isEmpty || rawSuffix.hasPrefix("/") {
-            suffix = rawSuffix
-        } else {
-            suffix = ""
+        // Use operationId from the spec — it's the canonical source of truth.
+        // Pattern: {Method}{PascalSegments}
+        //   GetRefunds           → list
+        //   PostRefunds          → create
+        //   GetRefundsRefund     → retrieve
+        //   PostRefundsRefund    → update
+        //   DeleteRefundsRefund  → delete
+        //   GetCustomersSearch   → search
+        //   PostRefundsRefundCancel → cancel
+        //   PostAccountsAccountReject → reject
+        
+        guard let _ = operationId else {
+            return ("unknown", "Unknown")
         }
-        let nonParamParts = suffix
-            .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-            .split(separator: "/")
-            .filter { !$0.hasPrefix("{") }
+        
+        // Use the path structure relative to basePath to classify the operation.
+        // The basePath is scored as the path that is a segment-aligned prefix of the most other paths.
+        let pathSegments = path.split(separator: "/")
+            .filter { $0 != "v1" }
+            .map { String($0) }
         
         switch method {
-        case "POST":
-            if suffix.isEmpty || suffix == "/" {
-                return ("create", "Create")
-            }
-            if nonParamParts.isEmpty {
-                return ("update", "Update")
-            }
-            let actionSlug = String(nonParamParts.last!)
-            let camelAction = snakeToCamel(actionSlug)
-            return (camelAction, capitalize(camelAction))
-            
-        case "GET":
-            if suffix.isEmpty || suffix == "/" {
-                return ("list", "List")
-            }
-            if nonParamParts.isEmpty {
-                return ("retrieve", "Retrieve")
-            }
-            let actionSlug = String(nonParamParts.last!)
-            if actionSlug == "search" {
-                return ("search", "Search")
-            }
-            let camelAction = snakeToCamel(actionSlug)
-            return ("list\(capitalize(camelAction))", "List\(capitalize(camelAction))")
-            
         case "DELETE":
             return ("delete", "Delete")
+            
+        case "GET":
+            // GET with no path params beyond basePath → list
+            // GET {basePath}/{id} → retrieve  
+            // GET {basePath}/search → search
+            
+            // Check if this is a search endpoint
+            if path.hasSuffix("/search") {
+                return ("search", "Search")
+            }
+            
+            // If path has more segments than basePath params, check for sub-actions
+            let nonParamSegments = pathSegments.filter { !$0.hasPrefix("{") }
+            let basePrefixSegments = pathPrefix.split(separator: "/").filter { $0 != "v1" }.map(String.init).filter { !$0.hasPrefix("{") }
+            let extraNonParams = nonParamSegments.count - basePrefixSegments.count
+            
+            if extraNonParams > 0 {
+                // Has extra non-param segments beyond basePath — named sub-resource or action
+                if let lastSeg = nonParamSegments.last, !basePrefixSegments.contains(lastSeg) {
+                    let camelAction = snakeToCamel(lastSeg)
+                    return ("list\(capitalize(camelAction))", "List\(capitalize(camelAction))")
+                }
+            }
+            
+            // GET with path param after basePath → retrieve
+            // GET basePath (no extra segments) → list
+            if pathParams.count > pathPrefix.split(separator: "/").filter({ $0.hasPrefix("{") }).count {
+                return ("retrieve", "Retrieve")
+            }
+            
+            return ("list", "List")
+            
+        case "POST":
+            let basePrefixParamCount = pathPrefix.split(separator: "/").filter { $0.hasPrefix("{") }.count
+            let totalPathParams = pathParams.count
+            
+            // POST basePath (no path params beyond prefix) → create
+            if totalPathParams == basePrefixParamCount && path == pathPrefix {
+                return ("create", "Create")
+            }
+            
+            // POST basePath/{id} (one extra path param, no trailing action) → update
+            let trailingParts = path.hasPrefix(pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : ""
+            let trailingNonParams = trailingParts.split(separator: "/").filter { !$0.hasPrefix("{") }
+            
+            if trailingNonParams.isEmpty && totalPathParams == basePrefixParamCount + 1 {
+                return ("update", "Update")
+            }
+            
+            // POST with trailing action segment → named action
+            if let actionSlug = trailingNonParams.last {
+                let camelAction = snakeToCamel(String(actionSlug))
+                return (camelAction, capitalize(camelAction))
+            }
+            
+            return ("create", "Create")
             
         default:
             return (snakeToCamel(operationId ?? "unknown"), capitalize(snakeToCamel(operationId ?? "Unknown")))

@@ -38,4 +38,10 @@ extension StripeClient {
             idempotencyKey: key
         )
     }
+
+    /// A test client with a placeholder API key.
+    /// Suitable for `swift-dependencies` `testValue` — actual API calls will fail.
+    public static var test: StripeClient {
+        .live(httpClient: .shared, apiKey: "sk_test_placeholder")
+    }
 }
