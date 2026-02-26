@@ -8,23 +8,33 @@
 import Foundation
 import Crypto
 
-/// A Stripe webhook event with typed object extraction.
+/// A Stripe webhook event with typed event type and object extraction.
+/// Generated from the OpenAPI spec's `event` schema.
 public struct StripeEvent: Codable, Sendable {
-    public var id: String
-    public var object: String
+    public var account: String?
     public var apiVersion: String?
+    public var context: String?
     public var created: Date
     public var data: EventData
+    public var id: String
     public var livemode: Bool
+    public var object: String
     public var pendingWebhooks: Int
     public var request: EventRequest?
-    public var type: String
+    public var type: StripeEventType
 
     public enum CodingKeys: String, CodingKey {
-        case id, object, created, data, livemode, type
+        case account
         case apiVersion = "api_version"
+        case context
+        case created
+        case data
+        case id
+        case livemode
+        case object
         case pendingWebhooks = "pending_webhooks"
         case request
+        case type
     }
 }
 

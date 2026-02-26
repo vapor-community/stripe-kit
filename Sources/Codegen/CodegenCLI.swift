@@ -161,6 +161,22 @@ struct CodegenCLI: AsyncParsableCommand {
             encoding: .utf8
         )
         
+        // ── 7. Generate StripeEventType enum ──────────────────────
+        let eventTypeSource = infraGen.generateEventType()
+        try eventTypeSource.write(
+            to: generatedURL.appending(path: "StripeEventType.swift"),
+            atomically: true,
+            encoding: .utf8
+        )
+        
+        // ── 8. Generate StripeEvent struct ────────────────────────
+        let eventSource = infraGen.generateStripeEvent()
+        try eventSource.write(
+            to: generatedURL.appending(path: "StripeEvent.swift"),
+            atomically: true,
+            encoding: .utf8
+        )
+        
         // ── Summary ───────────────────────────────────────────────
         print()
         print("  Generated/")
@@ -168,10 +184,13 @@ struct CodegenCLI: AsyncParsableCommand {
         print("  ├── Routes/       \(routeCount) route files")
         print("  ├── Params/       \(paramCount) param files")
         print("  ├── Types/        \(inlineCount) inline schemas")
-        print("  └── StripeClient.swift")
+        print("  ├── StripeClient.swift")
+        print("  ├── StripeEventType.swift")
+        print("  └── StripeEvent.swift")
         print()
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         print("📦 \(modelCount + inlineCount) types, \(routeCount) routes, \(paramCount) params")
+        print("🔔 StripeEventType enum + StripeEvent struct")
         print(" API Version: \(openAPISpec.info.version)")
         print("📂 Output: \(output)/Generated/")
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
