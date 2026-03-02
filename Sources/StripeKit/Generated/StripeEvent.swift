@@ -54,7 +54,6 @@ public struct EventData: Codable, Sendable {
         let data = try JSONSerialization.data(withJSONObject: _object?.value ?? [:] as [String: Any])
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return try decoder.decode(T.self, from: data)
     }
 
@@ -66,7 +65,6 @@ public struct EventData: Codable, Sendable {
         let data = try JSONSerialization.data(withJSONObject: prev)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return try decoder.decode(T.self, from: data)
     }
 }
