@@ -99,10 +99,10 @@ extension StripeEvent {
     ) throws -> StripeEvent {
         try verifySignature(payload: payload, header: header, secret: secret, tolerance: tolerance)
 
-        // Decode the event — CodingKeys handle snake_case mapping,
-        // so do NOT use .convertFromSnakeCase (it double-converts).
+        // Decode the event
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return try decoder.decode(StripeEvent.self, from: payload)
     }
 
