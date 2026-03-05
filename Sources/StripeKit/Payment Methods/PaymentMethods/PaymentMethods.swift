@@ -1024,6 +1024,8 @@ public enum PaymentMethodUSBankAccountStatusDetailsBlockedReason: String, Codabl
     case bankAccountRestricted = "bank_account_restricted"
     /// Bank account has been blocked by Stripe. Please contact Support.
     case bankAccountUnusable = "bank_account_unusable"
+    /// Tokenized account number deactivated
+    case tokenizedAccountNumberDeactivated = "tokenized_account_number_deactivated"
 }
 
 // MARK: WechatPay
