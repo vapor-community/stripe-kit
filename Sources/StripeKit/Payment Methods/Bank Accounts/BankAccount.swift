@@ -20,6 +20,8 @@ public struct BankAccount: Codable {
     public var country: String?
     /// Three-letter ISO code for the currency paid out to the bank account.
     public var currency: Currency?
+    /// Whether this bank account is the default external account for its currency.
+    public var defaultForCurrency: Bool?
     /// The customer that this bank account belongs to.
     @Expandable<Customer> public var customer: String?
     /// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
@@ -49,6 +51,7 @@ public struct BankAccount: Codable {
                 bankName: String? = nil,
                 country: String? = nil,
                 currency: Currency? = nil,
+                defaultForCurrency: Bool? = nil,
                 customer: String? = nil,
                 fingerprint: String? = nil,
                 last4: String? = nil,
@@ -65,6 +68,7 @@ public struct BankAccount: Codable {
         self.bankName = bankName
         self.country = country
         self.currency = currency
+        self.defaultForCurrency = defaultForCurrency
         self._customer = Expandable(id: customer)
         self.fingerprint = fingerprint
         self.last4 = last4

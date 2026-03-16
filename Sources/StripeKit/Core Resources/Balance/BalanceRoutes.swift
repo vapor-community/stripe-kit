@@ -12,6 +12,7 @@ import NIOHTTP1
 public protocol BalanceRoutes: StripeAPIRoute {
     /// Retrieves the current account balance, based on the authentication that was used to make the request. For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances) .
     func retrieve() async throws -> Balance
+    func retrieve(expand: [String]?) async throws -> Balance
 }
 
 public struct StripeBalanceRoutes: BalanceRoutes {
@@ -28,5 +29,17 @@ public struct StripeBalanceRoutes: BalanceRoutes {
         try await apiHandler.send(method: .GET,
                                   path: balance,
                                   headers: headers)
+    }
+    
+    public func retrieve(expand: [String]? = nil) async throws -> Balance {
+        var queryParams = ""
+        if let expand {
+            queryParams = ["expand": expand].queryParameters
+        }
+                
+        return try await apiHandler.send(method: .GET,
+                                         path: balance,
+                                         query: queryParams,
+                                         headers: headers)
     }
 }
