@@ -197,7 +197,7 @@ func handleStripeWebhooks(req: Request) async throws -> HTTPResponse {
     decoder.dateDecodingStrategy = .secondsSince1970
     decoder.keyDecodingStrategy = .convertFromSnakeCase
     
-    let event = try decoder.decode(StripeEvent.self, from: req.bodyData)
+    let event = try decoder.decode(Event.self, from: req.bodyData)
     
     switch (event.type, event.data?.object) {
     case (.paymentIntentSucceeded, .paymentIntent(let paymentIntent)):
