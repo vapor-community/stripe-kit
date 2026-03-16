@@ -14,6 +14,7 @@ public final class StripeClient {
     public var balanceTransactions: BalanceTransactionRoutes
     public var charges: ChargeRoutes
     public var customers: CustomerRoutes
+    public var customerSessions: CustomerSessionRoutes
     public var disputes: DisputeRoutes
     public var events: EventRoutes
     public var files: FileRoutes
@@ -132,6 +133,7 @@ public final class StripeClient {
         balanceTransactions = StripeBalanceTransactionRoutes(apiHandler: handler)
         charges = StripeChargeRoutes(apiHandler: handler)
         customers = StripeCustomerRoutes(apiHandler: handler)
+        customerSessions = StripeCustomerSessionRoutes(apiHandler: handler)
         disputes = StripeDisputeRoutes(apiHandler: handler)
         events = StripeEventRoutes(apiHandler: handler)
         files = StripeFileRoutes(apiHandler: handler)
