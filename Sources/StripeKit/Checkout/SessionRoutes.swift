@@ -45,6 +45,7 @@ public protocol SessionRoutes: StripeAPIRoute {
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in `payment` mode, but not Checkout Sessions in `subscription` or `setup` mode.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation for Checkout Sessions in subscription mode.
     ///   - taxIdCollection: Controls tax ID collection settings for the session.
+    ///   - managedPayments: Controls managed payment settings for the session.
     ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a Session object.
     func create(lineItems: [[String: Any]]?,
@@ -80,6 +81,7 @@ public protocol SessionRoutes: StripeAPIRoute {
                 submitType: SessionSubmitType?,
                 subscriptionData: [String: Any]?,
                 taxIdCollection: [String: Any]?,
+                managedPayments: [String: Any]?,
                 expand: [String]?) async throws -> Session
     
     /// A Session can be expired when it is in one of these statuses: `open`
@@ -154,6 +156,7 @@ public struct StripeSessionRoutes: SessionRoutes {
                        submitType: SessionSubmitType? = nil,
                        subscriptionData: [String: Any]? = nil,
                        taxIdCollection: [String: Any]? = nil,
+                       managedPayments: [String: Any]? = nil,
                        expand: [String]? = nil) async throws -> Session {
         var body: [String: Any] = ["mode": mode.rawValue,
                                    "success_url": successUrl]
@@ -280,7 +283,11 @@ public struct StripeSessionRoutes: SessionRoutes {
         if let taxIdCollection {
             taxIdCollection.forEach { body["tax_id_collection[\($0)]"] = $1 }
         }
-        
+
+        if let managedPayments {
+            managedPayments.forEach { body["managed_payments[\($0)]"] = $1 }
+        }
+
         if let expand {
             body["expand"] = expand
         }
