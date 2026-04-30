@@ -9,7 +9,7 @@ import NIO
 import NIOHTTP1
 import Foundation
 
-public protocol SessionRoutes {
+public protocol SessionRoutes: StripeAPIRoute {
     /// Creates a Session object.
     /// - Parameters:
     ///   - lineItems: A list of items the customer is purchasing. Use this parameter to pass one-time or recurring Prices. For payment mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen. For subscription mode, there is a maximum of 20 line items with recurring Prices and 20 line items with one-time Prices. Line items with one-time Prices will be on the initial invoice only.
@@ -45,6 +45,7 @@ public protocol SessionRoutes {
     ///   - submitType: Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in `payment` mode, but not Checkout Sessions in `subscription` or `setup` mode.
     ///   - subscriptionData: A subset of parameters to be passed to subscription creation for Checkout Sessions in subscription mode.
     ///   - taxIdCollection: Controls tax ID collection settings for the session.
+    ///   - managedPayments: Controls managed payment settings for the session.
     ///   - expand: Specifies which fields in the response should be expanded.
     /// - Returns: Returns a Session object.
     func create(lineItems: [[String: Any]]?,
@@ -80,6 +81,7 @@ public protocol SessionRoutes {
                 submitType: SessionSubmitType?,
                 subscriptionData: [String: Any]?,
                 taxIdCollection: [String: Any]?,
+                managedPayments: [String: Any]?,
                 expand: [String]?) async throws -> Session
     
     /// A Session can be expired when it is in one of these statuses: `open`
@@ -154,6 +156,7 @@ public struct StripeSessionRoutes: SessionRoutes {
                        submitType: SessionSubmitType? = nil,
                        subscriptionData: [String: Any]? = nil,
                        taxIdCollection: [String: Any]? = nil,
+                       managedPayments: [String: Any]? = nil,
                        expand: [String]? = nil) async throws -> Session {
         var body: [String: Any] = ["mode": mode.rawValue,
                                    "success_url": successUrl]
@@ -280,7 +283,11 @@ public struct StripeSessionRoutes: SessionRoutes {
         if let taxIdCollection {
             taxIdCollection.forEach { body["tax_id_collection[\($0)]"] = $1 }
         }
-        
+
+        if let managedPayments {
+            managedPayments.forEach { body["managed_payments[\($0)]"] = $1 }
+        }
+
         if let expand {
             body["expand"] = expand
         }
