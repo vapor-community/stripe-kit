@@ -174,7 +174,7 @@ public struct StripeSubscriptionItemRoutes: SubscriptionItemRoutes {
         }
 
         if let paymentBehavior {
-            body["payment_behavior"] = paymentBehavior
+            body["payment_behavior"] = paymentBehavior.rawValue
         }
         
         if let price {
