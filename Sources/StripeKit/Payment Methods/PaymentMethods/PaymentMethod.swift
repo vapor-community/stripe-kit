@@ -170,6 +170,7 @@ public enum PaymentMethodType: String, Codable {
     case affirm
     case afterpayClearpay = "afterpay_clearpay"
     case alipay
+    case amazonPay = "amazon_pay"
     case auBecsDebit = "au_becs_debit"
     case bacsDebit = "bacs_debit"
     case bancontact
