@@ -1030,3 +1030,9 @@ public enum PaymentMethodUSBankAccountStatusDetailsBlockedReason: String, Codabl
 public struct PaymentMethodWechatPay: Codable {
     public init() {}
 }
+
+
+// MARK: Paypal
+public struct PaymentMethodPaypal: Codable {
+    public init() {}
+}
