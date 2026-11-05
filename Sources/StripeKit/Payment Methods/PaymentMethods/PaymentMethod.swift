@@ -193,6 +193,7 @@ public enum PaymentMethodType: String, Codable {
     case paynow
     case pix
     case promptpay
+    case revolutPay = "revolut_pay"
     case sepaDebit = "sepa_debit"
     case sofort
     case usBankAccount = "us_bank_account"

@@ -45,6 +45,21 @@ class SignatureVerificationTests: XCTestCase {
             XCTAssertEqual(error as? StripeSignatureError, StripeSignatureError.timestampNotTolerated)
         }
     }
+    
+    func testVerificationWithNonUTF8PayloadThrowsInsteadOfTrapping() throws {
+        let payload = Data([0xFF, 0xFE, 0x00, 0xC3])
+        XCTAssertThrowsError(try StripeClient.verifySignature(payload: payload, header: "t=123,v1=abc", secret: secret, tolerance: -1)) { error in
+            XCTAssertEqual(error as? StripeSignatureError, StripeSignatureError.noMatchingSignatureFound)
+        }
+    }
+    
+    func testVerificationOfNonUTF8PayloadSignedAsBytes() throws {
+        let payload = Data([0xFF, 0xFE, 0x00, 0xC3])
+        var signed = Data("123.".utf8)
+        signed.append(payload)
+        let hash = Data(HMAC<SHA256>.authenticationCode(for: signed, using: SymmetricKey(data: Data(secret.utf8)))).hexString
+        XCTAssertNoThrow(try StripeClient.verifySignature(payload: payload, header: "t=123,v1=\(hash)", secret: secret, tolerance: -1))
+    }
 }
 
 extension Data {

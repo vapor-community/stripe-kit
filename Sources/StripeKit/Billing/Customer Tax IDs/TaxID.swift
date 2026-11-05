@@ -76,6 +76,7 @@ public enum TaxIDType: String, Codable {
     case ilVat = "il_vat"
     case inGst = "in_gst"
     case isVat = "is_vat"
+    case itCf = "it_cf"
     case jpCn = "jp_cn"
     case jpRn = "jp_rn"
     case jpTrn = "jp_trn"
@@ -102,6 +103,13 @@ public enum TaxIDType: String, Codable {
     case usEin = "us_ein"
     case zaVat = "za_vat"
     case unknown
+
+    /// Stripe keeps adding tax ID types. One this list does not know yet decodes as `unknown`
+    /// rather than failing the whole customer, invoice or checkout session that carries it.
+    public init(from decoder: Decoder) throws {
+        let rawValue = try decoder.singleValueContainer().decode(String.self)
+        self = TaxIDType(rawValue: rawValue) ?? .unknown
+    }
 }
 
 public struct TaxIDVerififcation: Codable {

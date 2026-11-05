@@ -20,7 +20,7 @@ extension StripeClient {
             
             guard kvPair.count == 2 else { return }
             
-            if kvPair.first == "v1" { result.append(kvPair.last!) }
+            if kvPair.first == "v1", let signature = kvPair.last { result.append(signature) }
         }
         
         guard let timestamp = signaturePairs
@@ -31,10 +31,14 @@ extension StripeClient {
                 throw StripeSignatureError.unableToParseHeader
         }
         
-        let payloadString = String(data: payload, encoding: .utf8)!
-        let combinedPayload = [timestamp, payloadString].joined(separator: ".").data(using: .utf8)!
+        // Stripe signs "<timestamp>.<raw body>" as bytes. Building it from the bytes
+        // never decodes the body, so a body that is not UTF-8 fails the HMAC instead
+        // of trapping on a force unwrap before it.
+        var combinedPayload = Data(timestamp.utf8)
+        combinedPayload.append(UInt8(ascii: "."))
+        combinedPayload.append(payload)
         
-        let secretKey = SymmetricKey(data: secret.data(using: .utf8)!)
+        let secretKey = SymmetricKey(data: Data(secret.utf8))
         
         let result = signatures.map { signature -> Bool in
             guard let data = signature.data(using: .hexadecimal) else {
