@@ -37,7 +37,7 @@ struct FixtureDecodingTests {
     @Test("Delete routes return deleted objects")
     func deleteRoutesReturnDeletedObjects() throws {
         let _: KeyPath<CustomerRoutes, @Sendable (String, [String]?) async throws -> DeletedCustomer> = \.delete
-        let _: KeyPath<LocationRoutes, @Sendable (String, [String]?) async throws -> DeletedLocation> = \.delete
+        let _: KeyPath<TerminalLocationRoutes, @Sendable (String, [String]?) async throws -> DeletedTerminalLocation> = \.delete
         let _: KeyPath<PaymentSourceRoutes, @Sendable (String, String, [String]?) async throws -> ObjectOrDeleted<PaymentSource, DeletedPaymentSource>> = \.delete
 
         let card = try Fixtures.decode("deleted_card", as: ObjectOrDeleted<PaymentSource, DeletedPaymentSource>.self)
@@ -52,7 +52,7 @@ struct FixtureDecodingTests {
     @Test("Retrieve routes return the object or a deleted object")
     func retrieveRoutesReturnObjectOrDeleted() throws {
         let _: KeyPath<CustomerRoutes, @Sendable (String, [String]?) async throws -> ObjectOrDeleted<Customer, DeletedCustomer>> = \.retrieve
-        let _: KeyPath<LocationRoutes, @Sendable (String, [String]?) async throws -> ObjectOrDeleted<Location, DeletedLocation>> = \.retrieve
+        let _: KeyPath<TerminalLocationRoutes, @Sendable (String, [String]?) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>> = \.retrieve
         let _: KeyPath<ReaderRoutes, @Sendable (String, ReaderUpdateParams?) async throws -> ObjectOrDeleted<Reader, DeletedReader>> = \.update
 
         let live = try Fixtures.decode("customer", as: ObjectOrDeleted<Customer, DeletedCustomer>.self)

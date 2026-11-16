@@ -77,7 +77,9 @@ struct CodegenCLI: AsyncParsableCommand {
         
         // Clean generated directory (preserves hand-written Infrastructure/)
         let generatedURL = outputURL.appending(path: "Generated")
-        if FileManager.default.fileExists(atPath: generatedURL.path()) {
+        // path(percentEncoded: false): path() percent-encodes, so a checkout path containing a
+        // space never matched and stale files from earlier runs were left behind.
+        if FileManager.default.fileExists(atPath: generatedURL.path(percentEncoded: false)) {
             try FileManager.default.removeItem(at: generatedURL)
         }
         
