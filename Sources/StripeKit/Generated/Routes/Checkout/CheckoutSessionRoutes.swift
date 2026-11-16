@@ -29,6 +29,11 @@ public struct CheckoutSessionRoutes: Sendable {
     /// customer can’t complete a Checkout Session and customers loading the Checkout Session see a message
     /// saying the Checkout Session is expired.
     public var expire: @Sendable (_ session: String, _ params: CheckoutSessionExpireParams?) async throws -> CheckoutSession
+
+    /// When retrieving a Checkout Session, there is an includable line_items property containing the first
+    /// handful of those items. There is also a URL where you can retrieve the full (paginated) list of line
+    /// items.
+    public var listLineItems: @Sendable (_ session: String, _ params: CheckoutSessionListLineItemsParams?) async throws -> ItemList
 }
 
 extension CheckoutSessionRoutes {
@@ -74,6 +79,14 @@ extension CheckoutSessionRoutes {
                     path: "/v1/checkout/sessions/\(session)/expire",
                     body: .bytes(ByteBuffer(string: body))
                 ) as CheckoutSession
+            },
+            listLineItems: { session, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/checkout/sessions/\(session)/line_items" : "/v1/checkout/sessions/\(session)/line_items?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as ItemList
             }
         )
     }

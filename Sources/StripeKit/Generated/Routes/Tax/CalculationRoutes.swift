@@ -18,6 +18,9 @@ public struct CalculationRoutes: Sendable {
 
     /// Retrieves a Tax Calculation object, if the calculation hasn’t expired.
     public var retrieve: @Sendable (_ calculation: String, _ expand: [String]?) async throws -> Calculation
+
+    /// Retrieves the line items of a tax calculation as a collection, if the calculation hasn’t expired.
+    public var listLineItems: @Sendable (_ calculation: String, _ params: CalculationListLineItemsParams?) async throws -> CalculationLineItemList
 }
 
 extension CalculationRoutes {
@@ -39,6 +42,14 @@ extension CalculationRoutes {
                     method: .GET,
                     path: path
                 ) as Calculation
+            },
+            listLineItems: { calculation, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/tax/calculations/\(calculation)/line_items" : "/v1/tax/calculations/\(calculation)/line_items?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as CalculationLineItemList
             }
         )
     }

@@ -55,8 +55,17 @@ struct ParamGenerator {
             allSubStructs.append(contentsOf: subStructs)
         }
         
-        // Emit all sub-structs
-        for (_, subLines) in allSubStructs {
+        // Emit all sub-structs. Two operations can reach the same nested params under the same
+        // name (POST /v1/treasury/financial_accounts/{id} `features` and the `updateFeatures`
+        // route both give FinancialAccountUpdateFeatures…); emit those once. A name reused for a
+        // different shape would be ambiguous Swift, so stop generation instead.
+        var emitted: [String: [String]] = [:]
+        for (name, subLines) in allSubStructs {
+            if let existing = emitted[name] {
+                precondition(existing == subLines, "Params struct \(name) generated twice with different fields")
+                continue
+            }
+            emitted[name] = subLines
             lines.append(contentsOf: subLines)
             lines.append("")
         }

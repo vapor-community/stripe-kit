@@ -34,6 +34,15 @@ public struct QuoteRoutes: Sendable {
 
     /// Finalizes the quote.
     public var finalizeQuote: @Sendable (_ quote: String, _ params: QuoteFinalizeQuoteParams?) async throws -> Quote
+
+    /// When retrieving a quote, there is an includable computed.upfront.line_items property containing the
+    /// first handful of those items. There is also a URL where you can retrieve the full (paginated) list
+    /// of upfront line items.
+    public var listComputedUpfrontLineItems: @Sendable (_ quote: String, _ params: QuoteListComputedUpfrontLineItemsParams?) async throws -> ItemList
+
+    /// When retrieving a quote, there is an includable line_items property containing the first handful of
+    /// those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+    public var listLineItems: @Sendable (_ quote: String, _ params: QuoteListLineItemsParams?) async throws -> ItemList
 }
 
 extension QuoteRoutes {
@@ -95,6 +104,22 @@ extension QuoteRoutes {
                     path: "/v1/quotes/\(quote)/finalize",
                     body: .bytes(ByteBuffer(string: body))
                 ) as Quote
+            },
+            listComputedUpfrontLineItems: { quote, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/quotes/\(quote)/computed_upfront_line_items" : "/v1/quotes/\(quote)/computed_upfront_line_items?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as ItemList
+            },
+            listLineItems: { quote, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/quotes/\(quote)/line_items" : "/v1/quotes/\(quote)/line_items?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as ItemList
             }
         )
     }

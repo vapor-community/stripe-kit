@@ -114,6 +114,56 @@ public struct CustomerCreateParams: StripeParams {
     }
 }
 
+public struct CustomerCreateFundingInstructionsParams: StripeParams {
+    /// Additional parameters for `bank_transfer` funding types
+    public var bankTransfer: CustomerCreateFundingInstructionsBankTransfer
+    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+    /// Must be a [supported currency](https://stripe.com/docs/currencies).
+    public var currency: String
+    /// The `funding_type` to get the instructions for.
+    public var fundingType: CustomerCreateFundingInstructionsFundingType
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(bankTransfer: CustomerCreateFundingInstructionsBankTransfer, currency: String, fundingType: CustomerCreateFundingInstructionsFundingType, expand: [String]? = nil) {
+        self.bankTransfer = bankTransfer
+        self.currency = currency
+        self.fundingType = fundingType
+        self.expand = expand
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case bankTransfer = "bank_transfer"
+        case currency
+        case expand
+        case fundingType = "funding_type"
+    }
+}
+
+public struct CustomerFundCashBalanceParams: StripeParams {
+    /// Amount to be used for this test cash balance transaction. A positive integer representing how much
+    /// to fund in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100
+    /// cents to fund $1.00 or 100 to fund ¥100, a zero-decimal currency).
+    public var amount: Int
+    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+    /// Must be a [supported currency](https://stripe.com/docs/currencies).
+    public var currency: String
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A description of the test funding. This simulates free-text references supplied by customers when
+    /// making bank transfers to their cash balance. You can use this to test how Stripe's [reconciliation
+    /// algorithm](https://docs.stripe.com/payments/customer-balance/reconciliation) applies to different
+    /// user inputs.
+    public var reference: String?
+
+    public init(amount: Int, currency: String, expand: [String]? = nil, reference: String? = nil) {
+        self.amount = amount
+        self.currency = currency
+        self.expand = expand
+        self.reference = reference
+    }
+}
+
 /// Query parameters for `GET /v1/customers`.
 public struct CustomerListParams: StripeParams {
     /// Only return customers that were created during the given date interval.
@@ -156,6 +206,49 @@ public struct CustomerListParams: StripeParams {
         case limit
         case startingAfter = "starting_after"
         case testClock = "test_clock"
+    }
+}
+
+/// Query parameters for `GET /v1/customers/{customer}/payment_methods`.
+public struct CustomerListPaymentMethodsParams: StripeParams {
+    /// This field indicates whether this payment method can be shown again to its customer in a checkout
+    /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
+    /// method can be shown as a saved payment method in a checkout flow.
+    public var allowRedisplay: CustomerListPaymentMethodsAllowRedisplay?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// An optional filter on the list, based on the object `type` field. Without the filter, the list
+    /// includes all current and future payment method types. If your integration expects only one type of
+    /// payment method in the response, make sure to provide a type value in the request.
+    public var type: CustomerListPaymentMethodsType?
+
+    public init(allowRedisplay: CustomerListPaymentMethodsAllowRedisplay? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, type: CustomerListPaymentMethodsType? = nil) {
+        self.allowRedisplay = allowRedisplay
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+        self.type = type
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case allowRedisplay = "allow_redisplay"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+        case type
     }
 }
 
@@ -505,6 +598,41 @@ public struct CustomerCreateTaxIdData: StripeParams {
     public init(type: CustomerCreateTaxIdDataType, value: String) {
         self.type = type
         self.value = value
+    }
+}
+
+/// Additional parameters for `bank_transfer` funding types
+public struct CustomerCreateFundingInstructionsBankTransfer: StripeParams {
+    /// The type of the `bank_transfer`
+    public var type: CustomerCreateFundingInstructionsBankTransferType
+    /// Configuration for eu_bank_transfer funding type.
+    public var euBankTransfer: CustomerCreateFundingInstructionsBankTransferEuBankTransfer?
+    /// List of address types that should be returned in the financial_addresses response. If not specified,
+    /// all valid types will be returned. Permitted values include: `sort_code`, `zengin`, `iban`, or
+    /// `spei`.
+    public var requestedAddressTypes: [CustomerCreateFundingInstructionsBankTransferRequestedAddressTypes]?
+
+    public init(type: CustomerCreateFundingInstructionsBankTransferType, euBankTransfer: CustomerCreateFundingInstructionsBankTransferEuBankTransfer? = nil, requestedAddressTypes: [CustomerCreateFundingInstructionsBankTransferRequestedAddressTypes]? = nil) {
+        self.type = type
+        self.euBankTransfer = euBankTransfer
+        self.requestedAddressTypes = requestedAddressTypes
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case euBankTransfer = "eu_bank_transfer"
+        case requestedAddressTypes = "requested_address_types"
+        case type
+    }
+}
+
+/// Configuration for eu_bank_transfer funding type.
+public struct CustomerCreateFundingInstructionsBankTransferEuBankTransfer: StripeParams {
+    /// The desired country code of the bank account information. Permitted values include: `DE`, `FR`,
+    /// `IE`, or `NL`.
+    public var country: String
+
+    public init(country: String) {
+        self.country = country
     }
 }
 

@@ -23,6 +23,9 @@ public struct FinancialConnectionsAccountRoutes: Sendable {
     /// associated with the account (e.g. balances, transactions).
     public var disconnect: @Sendable (_ account: String, _ params: FinancialConnectionsAccountDisconnectParams?) async throws -> FinancialConnectionsAccount
 
+    /// Lists all owners for a given Account
+    public var listOwners: @Sendable (_ account: String, _ params: FinancialConnectionsAccountListOwnersParams) async throws -> AccountOwnerList
+
     /// Refreshes the data associated with a Financial Connections Account.
     public var refresh: @Sendable (_ account: String, _ params: FinancialConnectionsAccountRefreshParams) async throws -> FinancialConnectionsAccount
 
@@ -61,6 +64,14 @@ extension FinancialConnectionsAccountRoutes {
                     path: "/v1/financial_connections/accounts/\(account)/disconnect",
                     body: .bytes(ByteBuffer(string: body))
                 ) as FinancialConnectionsAccount
+            },
+            listOwners: { account, params in
+                let query = params.toFormBody()
+                let path = query.isEmpty ? "/v1/financial_connections/accounts/\(account)/owners" : "/v1/financial_connections/accounts/\(account)/owners?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as AccountOwnerList
             },
             refresh: { account, params in
                 let body = params.toFormBody()

@@ -19,7 +19,6 @@ public struct StripeClient: Sendable {
 
     public var accounts: AccountRoutes
     public var accountLinks: AccountLinkRoutes
-    public var accountOwners: AccountOwnerRoutes
     public var accountSessions: AccountSessionRoutes
     public var activeEntitlements: ActiveEntitlementRoutes
     public var alerts: AlertRoutes
@@ -34,7 +33,6 @@ public struct StripeClient: Sendable {
     public var billingPortalConfigurations: BillingPortalConfigurationRoutes
     public var billingPortalSessions: BillingPortalSessionRoutes
     public var calculations: CalculationRoutes
-    public var calculationLineItems: CalculationLineItemRoutes
     public var capabilities: CapabilityRoutes
     public var cardholders: CardholderRoutes
     public var cashBalances: CashBalanceRoutes
@@ -68,12 +66,10 @@ public struct StripeClient: Sendable {
     public var files: FileRoutes
     public var fileLinks: FileLinkRoutes
     public var financialAccounts: FinancialAccountRoutes
-    public var financialAccountFeatures: FinancialAccountFeaturesRoutes
     public var financialConnectionsAccounts: FinancialConnectionsAccountRoutes
     public var financialConnectionsSessions: FinancialConnectionsSessionRoutes
     public var financialConnectionsTransactions: FinancialConnectionsTransactionRoutes
     public var forwardingRequests: ForwardingRequestRoutes
-    public var fundingInstructions: FundingInstructionsRoutes
     public var inboundTransfers: InboundTransferRoutes
     public var installs: InstallRoutes
     public var invoices: InvoiceRoutes
@@ -85,7 +81,6 @@ public struct StripeClient: Sendable {
     public var issuingDisputes: IssuingDisputeRoutes
     public var issuingTokens: IssuingTokenRoutes
     public var issuingTransactions: IssuingTransactionRoutes
-    public var items: ItemRoutes
     public var lineItems: LineItemRoutes
     public var loginLinks: LoginLinkRoutes
     public var mandates: MandateRoutes
@@ -132,7 +127,6 @@ public struct StripeClient: Sendable {
     public var setupIntents: SetupIntentRoutes
     public var shippingRates: ShippingRateRoutes
     public var sources: SourceRoutes
-    public var sourceTransactions: SourceTransactionRoutes
     public var subscriptions: SubscriptionRoutes
     public var subscriptionItems: SubscriptionItemRoutes
     public var subscriptionSchedules: SubscriptionScheduleRoutes
@@ -148,7 +142,6 @@ public struct StripeClient: Sendable {
     public var tokens: TokenRoutes
     public var topups: TopupRoutes
     public var transactionEntries: TransactionEntryRoutes
-    public var transactionLineItems: TransactionLineItemRoutes
     public var transfers: TransferRoutes
     public var transferReversals: TransferReversalRoutes
     public var treasuryTransactions: TreasuryTransactionRoutes
@@ -168,7 +161,6 @@ extension StripeClient {
             handler: handler,
             accounts: AccountRoutes.live(handler: handler),
             accountLinks: AccountLinkRoutes.live(handler: handler),
-            accountOwners: AccountOwnerRoutes.live(handler: handler),
             accountSessions: AccountSessionRoutes.live(handler: handler),
             activeEntitlements: ActiveEntitlementRoutes.live(handler: handler),
             alerts: AlertRoutes.live(handler: handler),
@@ -183,7 +175,6 @@ extension StripeClient {
             billingPortalConfigurations: BillingPortalConfigurationRoutes.live(handler: handler),
             billingPortalSessions: BillingPortalSessionRoutes.live(handler: handler),
             calculations: CalculationRoutes.live(handler: handler),
-            calculationLineItems: CalculationLineItemRoutes.live(handler: handler),
             capabilities: CapabilityRoutes.live(handler: handler),
             cardholders: CardholderRoutes.live(handler: handler),
             cashBalances: CashBalanceRoutes.live(handler: handler),
@@ -217,12 +208,10 @@ extension StripeClient {
             files: FileRoutes.live(handler: handler),
             fileLinks: FileLinkRoutes.live(handler: handler),
             financialAccounts: FinancialAccountRoutes.live(handler: handler),
-            financialAccountFeatures: FinancialAccountFeaturesRoutes.live(handler: handler),
             financialConnectionsAccounts: FinancialConnectionsAccountRoutes.live(handler: handler),
             financialConnectionsSessions: FinancialConnectionsSessionRoutes.live(handler: handler),
             financialConnectionsTransactions: FinancialConnectionsTransactionRoutes.live(handler: handler),
             forwardingRequests: ForwardingRequestRoutes.live(handler: handler),
-            fundingInstructions: FundingInstructionsRoutes.live(handler: handler),
             inboundTransfers: InboundTransferRoutes.live(handler: handler),
             installs: InstallRoutes.live(handler: handler),
             invoices: InvoiceRoutes.live(handler: handler),
@@ -234,7 +223,6 @@ extension StripeClient {
             issuingDisputes: IssuingDisputeRoutes.live(handler: handler),
             issuingTokens: IssuingTokenRoutes.live(handler: handler),
             issuingTransactions: IssuingTransactionRoutes.live(handler: handler),
-            items: ItemRoutes.live(handler: handler),
             lineItems: LineItemRoutes.live(handler: handler),
             loginLinks: LoginLinkRoutes.live(handler: handler),
             mandates: MandateRoutes.live(handler: handler),
@@ -281,7 +269,6 @@ extension StripeClient {
             setupIntents: SetupIntentRoutes.live(handler: handler),
             shippingRates: ShippingRateRoutes.live(handler: handler),
             sources: SourceRoutes.live(handler: handler),
-            sourceTransactions: SourceTransactionRoutes.live(handler: handler),
             subscriptions: SubscriptionRoutes.live(handler: handler),
             subscriptionItems: SubscriptionItemRoutes.live(handler: handler),
             subscriptionSchedules: SubscriptionScheduleRoutes.live(handler: handler),
@@ -297,7 +284,6 @@ extension StripeClient {
             tokens: TokenRoutes.live(handler: handler),
             topups: TopupRoutes.live(handler: handler),
             transactionEntries: TransactionEntryRoutes.live(handler: handler),
-            transactionLineItems: TransactionLineItemRoutes.live(handler: handler),
             transfers: TransferRoutes.live(handler: handler),
             transferReversals: TransferReversalRoutes.live(handler: handler),
             treasuryTransactions: TreasuryTransactionRoutes.live(handler: handler),

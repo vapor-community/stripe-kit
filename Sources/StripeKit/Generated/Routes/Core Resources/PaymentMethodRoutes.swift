@@ -43,12 +43,6 @@ public struct PaymentMethodRoutes: Sendable {
     /// Detaches a PaymentMethod object from a Customer. Detachment is permanent and irreversible — once
     /// detached, a PaymentMethod can no longer be used for payments or re-attached to a Customer.
     public var detach: @Sendable (_ paymentMethod: String, _ params: PaymentMethodDetachParams?) async throws -> PaymentMethod
-
-    /// Returns a list of PaymentMethods for a given Customer
-    public var listPaymentMethods: @Sendable (_ customer: String, _ params: PaymentMethodListPaymentMethodsParams?) async throws -> PaymentMethodList
-
-    /// Retrieves a PaymentMethod object for a given Customer.
-    public var retrievePaymentMethod: @Sendable (_ customer: String, _ paymentMethod: String, _ expand: [String]?) async throws -> PaymentMethod
 }
 
 extension PaymentMethodRoutes {
@@ -101,23 +95,6 @@ extension PaymentMethodRoutes {
                     method: .POST,
                     path: "/v1/payment_methods/\(paymentMethod)/detach",
                     body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethod
-            },
-            listPaymentMethods: { customer, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/customers/\(customer)/payment_methods" : "/v1/customers/\(customer)/payment_methods?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentMethodList
-            },
-            retrievePaymentMethod: { customer, paymentMethod, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)/payment_methods/\(paymentMethod)" : "/v1/customers/\(customer)/payment_methods/\(paymentMethod)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
                 ) as PaymentMethod
             }
         )

@@ -44,6 +44,24 @@ public struct CustomerRoutes: Sendable {
     /// Permanently deletes a customer. It cannot be undone. Also immediately cancels any active
     /// subscriptions on the customer.
     public var delete: @Sendable (_ customer: String, _ expand: [String]?) async throws -> DeletedCustomer
+
+    /// Retrieve funding instructions for a customer cash balance. If funding instructions do not yet exist
+    /// for the customer, new funding instructions will be created. If funding instructions have already
+    /// been created for a given customer, the same funding instructions will be retrieved. In other words,
+    /// we will return the same funding instructions each time.
+    public var createFundingInstructions: @Sendable (_ customer: String, _ params: CustomerCreateFundingInstructionsParams) async throws -> FundingInstructions
+
+    /// Removes the currently applied discount on a customer.
+    public var deleteDiscount: @Sendable (_ customer: String, _ expand: [String]?) async throws -> DeletedDiscount
+
+    /// Create a test incoming bank transfer
+    public var fundCashBalance: @Sendable (_ customer: String, _ params: CustomerFundCashBalanceParams) async throws -> CustomerCashBalanceTransaction
+
+    /// Returns a list of PaymentMethods for a given Customer
+    public var listPaymentMethods: @Sendable (_ customer: String, _ params: CustomerListPaymentMethodsParams?) async throws -> PaymentMethodList
+
+    /// Retrieves a PaymentMethod object for a given Customer.
+    public var retrievePaymentMethod: @Sendable (_ customer: String, _ paymentMethod: String, _ expand: [String]?) async throws -> PaymentMethod
 }
 
 extension CustomerRoutes {
@@ -98,6 +116,48 @@ extension CustomerRoutes {
                     method: .DELETE,
                     path: path
                 ) as DeletedCustomer
+            },
+            createFundingInstructions: { customer, params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/customers/\(customer)/funding_instructions",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as FundingInstructions
+            },
+            deleteDiscount: { customer, expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/customers/\(customer)/discount" : "/v1/customers/\(customer)/discount?\(query)"
+                return try await handler.send(
+                    method: .DELETE,
+                    path: path
+                ) as DeletedDiscount
+            },
+            fundCashBalance: { customer, params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/customers/\(customer)/fund_cash_balance",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as CustomerCashBalanceTransaction
+            },
+            listPaymentMethods: { customer, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/customers/\(customer)/payment_methods" : "/v1/customers/\(customer)/payment_methods?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as PaymentMethodList
+            },
+            retrievePaymentMethod: { customer, paymentMethod, expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/customers/\(customer)/payment_methods/\(paymentMethod)" : "/v1/customers/\(customer)/payment_methods/\(paymentMethod)?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as PaymentMethod
             }
         )
     }

@@ -26,6 +26,9 @@ public struct SourceRoutes: Sendable {
     /// payment method guides for more detail.
     public var update: @Sendable (_ source: String, _ params: SourceUpdateParams?) async throws -> Source
 
+    /// List source transactions for a given source.
+    public var sourceTransactions: @Sendable (_ source: String, _ params: SourceSourceTransactionsParams?) async throws -> SourceTransactionList
+
     /// Verify a given source.
     public var verify: @Sendable (_ source: String, _ params: SourceVerifyParams) async throws -> Source
 }
@@ -56,6 +59,14 @@ extension SourceRoutes {
                     path: "/v1/sources/\(source)",
                     body: .bytes(ByteBuffer(string: body))
                 ) as Source
+            },
+            sourceTransactions: { source, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/sources/\(source)/source_transactions" : "/v1/sources/\(source)/source_transactions?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as SourceTransactionList
             },
             verify: { source, params in
                 let body = params.toFormBody()

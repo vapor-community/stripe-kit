@@ -134,6 +134,53 @@ public struct FinancialAccountUpdateParams: StripeParams {
     }
 }
 
+public struct FinancialAccountUpdateFeaturesParams: StripeParams {
+    /// Encodes the FinancialAccount's ability to be used with the Issuing product, including attaching
+    /// cards to and drawing funds from the FinancialAccount.
+    public var cardIssuing: FinancialAccountUpdateFeaturesCardIssuing?
+    /// Represents whether this FinancialAccount is eligible for deposit insurance. Various factors
+    /// determine the insurance amount.
+    public var depositInsurance: FinancialAccountUpdateFeaturesDepositInsurance?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// Contains Features that add FinancialAddresses to the FinancialAccount.
+    public var financialAddresses: FinancialAccountUpdateFeaturesFinancialAddresses?
+    /// Contains settings related to adding funds to a FinancialAccount from another Account with the same
+    /// owner.
+    public var inboundTransfers: FinancialAccountUpdateFeaturesInboundTransfers?
+    /// Represents the ability for the FinancialAccount to send money to, or receive money from other
+    /// FinancialAccounts (for example, via OutboundPayment).
+    public var intraStripeFlows: FinancialAccountUpdateFeaturesIntraStripeFlows?
+    /// Includes Features related to initiating money movement out of the FinancialAccount to someone else's
+    /// bucket of money.
+    public var outboundPayments: FinancialAccountUpdateFeaturesOutboundPayments?
+    /// Contains a Feature and settings related to moving money out of the FinancialAccount into another
+    /// Account with the same owner.
+    public var outboundTransfers: FinancialAccountUpdateFeaturesOutboundTransfers?
+
+    public init(cardIssuing: FinancialAccountUpdateFeaturesCardIssuing? = nil, depositInsurance: FinancialAccountUpdateFeaturesDepositInsurance? = nil, expand: [String]? = nil, financialAddresses: FinancialAccountUpdateFeaturesFinancialAddresses? = nil, inboundTransfers: FinancialAccountUpdateFeaturesInboundTransfers? = nil, intraStripeFlows: FinancialAccountUpdateFeaturesIntraStripeFlows? = nil, outboundPayments: FinancialAccountUpdateFeaturesOutboundPayments? = nil, outboundTransfers: FinancialAccountUpdateFeaturesOutboundTransfers? = nil) {
+        self.cardIssuing = cardIssuing
+        self.depositInsurance = depositInsurance
+        self.expand = expand
+        self.financialAddresses = financialAddresses
+        self.inboundTransfers = inboundTransfers
+        self.intraStripeFlows = intraStripeFlows
+        self.outboundPayments = outboundPayments
+        self.outboundTransfers = outboundTransfers
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case cardIssuing = "card_issuing"
+        case depositInsurance = "deposit_insurance"
+        case expand
+        case financialAddresses = "financial_addresses"
+        case inboundTransfers = "inbound_transfers"
+        case intraStripeFlows = "intra_stripe_flows"
+        case outboundPayments = "outbound_payments"
+        case outboundTransfers = "outbound_transfers"
+    }
+}
+
 /// A different bank account where funds can be deposited/debited in order to get the closing FA's
 /// balance to $0
 public struct FinancialAccountCloseForwardingSettings: StripeParams {

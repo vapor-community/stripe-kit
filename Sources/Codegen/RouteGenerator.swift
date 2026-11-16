@@ -268,6 +268,19 @@ struct RouteGenerator {
         return "ObjectOrDeleted<\(parser.schemaNameToSwiftType(objects[0])), \(parser.schemaNameToSwiftType(deleted[0]))>"
     }
 
+    /// Swift type of a list/search response's items (`data.items.$ref`), if it names one.
+    private func listItemType(_ op: OperationObject) -> String? {
+        guard let ref = op.responses?["200"]?.content?["application/json"]?.schema?.properties?["data"]?.items?.ref
+        else { return nil }
+        return parser.schemaNameToSwiftType(String(ref.split(separator: "/").last ?? Substring(ref)))
+    }
+
+    /// Swift type of a response that is a plain `$ref`.
+    private func referencedResponseType(_ op: OperationObject) -> String? {
+        guard let ref = op.responses?["200"]?.content?["application/json"]?.schema?.ref else { return nil }
+        return parser.schemaNameToSwiftType(String(ref.split(separator: "/").last ?? Substring(ref)))
+    }
+
     /// The 200 response's wrapper kind, read from its `object` enum.
     private func responseWrapper(_ op: OperationObject) -> String? {
         guard let schema = op.responses?["200"]?.content?["application/json"]?.schema,
@@ -285,6 +298,12 @@ struct RouteGenerator {
         
         // Get unique paths (a path may appear multiple times for list + direct refs)
         let uniquePaths = Set(resourcePaths.map { $0.path })
+        // Paths mapped here by response type. On these, every method not owned by another
+        // resource is generated; on paths mapped here only through spec ownership, just the
+        // owned methods are.
+        let responseMappedPaths = Set(resourcePaths
+            .filter { parser.reassignedOwner(method: $0.method, path: $0.path) == nil }
+            .map(\.path))
         
         // Derive basePath: shortest path that is a segment-aligned prefix of at least
         // one other path.  Deterministic — no scoring, no tie-breaking ambiguity.
@@ -310,6 +329,11 @@ struct RouteGenerator {
             
             for (method, operation) in methods {
                 guard let op = operation else { continue }
+                if let owner = parser.reassignedOwner(method: method, path: path) {
+                    guard owner == resource.schemaName else { continue }
+                } else {
+                    guard responseMappedPaths.contains(path) else { continue }
+                }
                 
                 let pathParams = extractPathParams(path)
                 // Name from the spec's x-stripeOperations (what Stripe's own SDKs use),
@@ -345,14 +369,18 @@ struct RouteGenerator {
 
                 // Return type, from the 200 response's shape
                 let returnType: String?
+                // An operation grouped under its spec owner can return another type
+                // (customers.listPaymentMethods → PaymentMethodList), so use the response's types.
+                let itemType = listItemType(op) ?? resource.swiftTypeName
                 switch responseWrapper(op) {
                 case "list":
-                    returnType = "\(resource.swiftTypeName)List"
+                    returnType = "\(itemType)List"
                 case "search_result":
-                    returnType = "StripeSearchResult<\(resource.swiftTypeName)>"
+                    returnType = "StripeSearchResult<\(itemType)>"
                 default:
-                    // A deleted object type when the spec's response can be one; otherwise the resource type
-                    returnType = deletedResponseType(op)
+                    // A deleted object type when the spec's response can be one; otherwise the
+                    // referenced type, or the resource type
+                    returnType = deletedResponseType(op) ?? referencedResponseType(op)
                 }
                 
                 results.append(RouteOperation(

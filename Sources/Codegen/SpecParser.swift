@@ -53,8 +53,50 @@ struct SpecParser {
         return nil
     }
 
+    /// The resource an operation belongs to per the spec's `x-stripeOperations`, when that
+    /// differs from the type it returns. Stripe's SDKs group methods by this owner, e.g.
+    /// GET /v1/customers/{customer}/payment_methods is `customers.listPaymentMethods`, though it
+    /// returns payment methods. Nil when the operation should stay grouped by its response
+    /// type: no single owner, the owner is what it returns, or the response isn't JSON.
+    func reassignedOwner(method: String, path: String) -> String? {
+        let owners = Set((stripeMethodNames["\(method) \(path)"] ?? []).filter { $0.methodOn == "service" }.map(\.schema))
+        guard owners.count == 1, let owner = owners.first, spec.components.schemas[owner] != nil,
+              let schema = operation(method: method, path: path)?.responses?["200"]?.content?["application/json"]?.schema
+        else { return nil }
+        return responseSchemaNames(schema).contains(owner) ? nil : owner
+    }
+
+    private func operation(method: String, path: String) -> OperationObject? {
+        guard let item = spec.paths[path] else { return nil }
+        switch method {
+        case "GET": return item.get
+        case "POST": return item.post
+        case "DELETE": return item.delete
+        default: return nil
+        }
+    }
+
+    /// Schemas a response is made of: a `$ref` (and the live type of a `deleted_X`), the live
+    /// type of `X | deleted_X`, or a list's item type.
+    private func responseSchemaNames(_ schema: PropertyObject) -> Set<String> {
+        var names = Set<String>()
+        if let ref = schema.ref {
+            let name = refToSchemaName(ref)
+            names.insert(name)
+            if name.starts(with: SpecParser.deletedPrefix) { names.insert(String(name.dropFirst(SpecParser.deletedPrefix.count))) }
+        }
+        for ref in (schema.anyOf ?? []).compactMap(\.ref) {
+            let name = refToSchemaName(ref)
+            if !name.starts(with: SpecParser.deletedPrefix) { names.insert(name) }
+        }
+        if let ref = schema.properties?["data"]?.items?.ref { names.insert(refToSchemaName(ref)) }
+        return names
+    }
+
     /// Build a deterministic mapping of schema name → API paths by scanning response $refs.
-    /// This replaces naive pluralization with the spec's actual data.
+    /// This replaces naive pluralization with the spec's actual data. Operations whose
+    /// `x-stripeOperations` owner differs from their response type go to the owner instead
+    /// (see `reassignedOwner`).
     func buildPathMapping() -> [String: [(method: String, path: String)]] {
         var mapping: [String: [(method: String, path: String)]] = [:]
         
@@ -70,6 +112,12 @@ struct SpecParser {
                       let response = op.responses?["200"],
                       let content = response.content?["application/json"],
                       let schema = content.schema else { continue }
+
+                // Grouped under its spec owner rather than its response type
+                if let owner = reassignedOwner(method: method, path: path) {
+                    mapping[owner, default: []].append((method, path))
+                    continue
+                }
                 
                 // Direct $ref → single resource endpoint
                 if let ref = schema.ref {

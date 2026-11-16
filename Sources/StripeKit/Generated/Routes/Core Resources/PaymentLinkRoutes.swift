@@ -24,6 +24,11 @@ public struct PaymentLinkRoutes: Sendable {
 
     /// Returns a list of your payment links.
     public var list: @Sendable (_ params: PaymentLinkListParams?) async throws -> PaymentLinkList
+
+    /// When retrieving a payment link, there is an includable line_items property containing the first
+    /// handful of those items. There is also a URL where you can retrieve the full (paginated) list of line
+    /// items.
+    public var listLineItems: @Sendable (_ paymentLink: String, _ params: PaymentLinkListLineItemsParams?) async throws -> ItemList
 }
 
 extension PaymentLinkRoutes {
@@ -61,6 +66,14 @@ extension PaymentLinkRoutes {
                     method: .GET,
                     path: path
                 ) as PaymentLinkList
+            },
+            listLineItems: { paymentLink, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/payment_links/\(paymentLink)/line_items" : "/v1/payment_links/\(paymentLink)/line_items?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as ItemList
             }
         )
     }

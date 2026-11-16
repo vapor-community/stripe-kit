@@ -50,3 +50,25 @@ public enum CreditNotePreviewRefundsType: String, Codable, Sendable {
     case paymentRecordRefund = "payment_record_refund"
     case refund
 }
+
+public enum CreditNotePreviewLinesEmailType: String, Codable, Sendable {
+    case creditNote = "credit_note"
+    case none
+}
+
+public enum CreditNotePreviewLinesLinesType: String, Codable, Sendable {
+    case customLineItem = "custom_line_item"
+    case invoiceLineItem = "invoice_line_item"
+}
+
+public enum CreditNotePreviewLinesReason: String, Codable, Sendable {
+    case duplicate
+    case fraudulent
+    case orderChange = "order_change"
+    case productUnsatisfactory = "product_unsatisfactory"
+}
+
+public enum CreditNotePreviewLinesRefundsType: String, Codable, Sendable {
+    case paymentRecordRefund = "payment_record_refund"
+    case refund
+}

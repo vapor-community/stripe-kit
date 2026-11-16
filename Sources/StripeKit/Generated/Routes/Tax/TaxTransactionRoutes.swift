@@ -22,6 +22,9 @@ public struct TaxTransactionRoutes: Sendable {
 
     /// Partially or fully reverses a previously created Transaction.
     public var createReversal: @Sendable (_ params: TaxTransactionCreateReversalParams) async throws -> TaxTransaction
+
+    /// Retrieves the line items of a committed standalone transaction as a collection.
+    public var listLineItems: @Sendable (_ transaction: String, _ params: TaxTransactionListLineItemsParams?) async throws -> TransactionLineItemList
 }
 
 extension TaxTransactionRoutes {
@@ -51,6 +54,14 @@ extension TaxTransactionRoutes {
                     path: "/v1/tax/transactions/create_reversal",
                     body: .bytes(ByteBuffer(string: body))
                 ) as TaxTransaction
+            },
+            listLineItems: { transaction, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/tax/transactions/\(transaction)/line_items" : "/v1/tax/transactions/\(transaction)/line_items?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as TransactionLineItemList
             }
         )
     }

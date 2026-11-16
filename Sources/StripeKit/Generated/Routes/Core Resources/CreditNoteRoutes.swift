@@ -42,6 +42,10 @@ public struct CreditNoteRoutes: Sendable {
     /// Get a preview of a credit note without creating it.
     public var preview: @Sendable (_ params: CreditNotePreviewParams) async throws -> CreditNote
 
+    /// When retrieving a credit note preview, you’ll get a lines property containing the first handful of
+    /// those items. This URL you can retrieve the full (paginated) list of line items.
+    public var previewLines: @Sendable (_ params: CreditNotePreviewLinesParams) async throws -> CreditNoteLineItemList
+
     /// Marks a credit note as void. Learn more about voiding credit notes.
     public var voidCreditNote: @Sendable (_ id: String, _ params: CreditNoteVoidCreditNoteParams?) async throws -> CreditNote
 }
@@ -89,6 +93,14 @@ extension CreditNoteRoutes {
                     method: .GET,
                     path: path
                 ) as CreditNote
+            },
+            previewLines: { params in
+                let query = params.toFormBody()
+                let path = query.isEmpty ? "/v1/credit_notes/preview/lines" : "/v1/credit_notes/preview/lines?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as CreditNoteLineItemList
             },
             voidCreditNote: { id, params in
                 let body = params?.toFormBody() ?? ""

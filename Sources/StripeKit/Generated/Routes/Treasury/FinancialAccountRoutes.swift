@@ -29,6 +29,12 @@ public struct FinancialAccountRoutes: Sendable {
     /// Closes a FinancialAccount. A FinancialAccount can only be closed if it has a zero balance, has no
     /// pending InboundTransfers, and has canceled all attached Issuing cards.
     public var close: @Sendable (_ financialAccount: String, _ params: FinancialAccountCloseParams?) async throws -> FinancialAccount
+
+    /// Retrieves Features information associated with the FinancialAccount.
+    public var retrieveFeatures: @Sendable (_ financialAccount: String, _ expand: [String]?) async throws -> FinancialAccountFeatures
+
+    /// Updates the Features associated with a FinancialAccount.
+    public var updateFeatures: @Sendable (_ financialAccount: String, _ params: FinancialAccountUpdateFeaturesParams?) async throws -> FinancialAccountFeatures
 }
 
 extension FinancialAccountRoutes {
@@ -74,6 +80,23 @@ extension FinancialAccountRoutes {
                     path: "/v1/treasury/financial_accounts/\(financialAccount)/close",
                     body: .bytes(ByteBuffer(string: body))
                 ) as FinancialAccount
+            },
+            retrieveFeatures: { financialAccount, expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/treasury/financial_accounts/\(financialAccount)/features" : "/v1/treasury/financial_accounts/\(financialAccount)/features?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as FinancialAccountFeatures
+            },
+            updateFeatures: { financialAccount, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/treasury/financial_accounts/\(financialAccount)/features",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as FinancialAccountFeatures
             }
         )
     }

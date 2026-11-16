@@ -76,6 +76,9 @@ public struct SubscriptionRoutes: Sendable {
     /// could check for unpaid invoices before allowing the customer to cancel the subscription at all.
     public var cancel: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?) async throws -> Subscription
 
+    /// Removes the currently applied discount on a subscription.
+    public var deleteDiscount: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?) async throws -> DeletedDiscount
+
     /// Upgrade the billing_mode of an existing subscription.
     public var migrate: @Sendable (_ subscription: String, _ params: SubscriptionMigrateParams) async throws -> Subscription
 
@@ -146,6 +149,15 @@ extension SubscriptionRoutes {
                     method: .DELETE,
                     path: path
                 ) as Subscription
+            },
+            deleteDiscount: { subscriptionExposedId, expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/subscriptions/\(subscriptionExposedId)/discount" : "/v1/subscriptions/\(subscriptionExposedId)/discount?\(query)"
+                return try await handler.send(
+                    method: .DELETE,
+                    path: path
+                ) as DeletedDiscount
             },
             migrate: { subscription, params in
                 let body = params.toFormBody()
