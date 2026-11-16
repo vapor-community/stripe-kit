@@ -23,6 +23,9 @@ extension Dictionary where Key == String, Value == Any {
             return array.enumerated().flatMap { flatten(key: "\(key)[\($0.offset)]", value: $0.element) }
         case let b as Bool:
             return [(key, b ? "true" : "false")]
+        case let raw as any RawRepresentable:
+            // Enums: send the raw value (`off_session`), not the Swift case name (`offSession`).
+            return flatten(key: key, value: raw.rawValue)
         default:
             return [(key, "\(value)")]
         }

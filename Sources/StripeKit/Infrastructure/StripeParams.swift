@@ -15,79 +15,95 @@ public protocol StripeParams: Codable, Sendable {
 }
 
 extension StripeParams {
+    /// Form-encodes the params using Stripe's bracket conventions.
+    ///
+    /// The params are encoded with `JSONEncoder` first, so the generated `CodingKeys`
+    /// decide the wire names (`ssnLast4` → `ssn_last_4`) and String-backed enums encode
+    /// their raw value (`.offSession` → `off_session`). The JSON is then flattened:
+    ///
+    /// - Nested objects and dictionaries: `parent[child]=value`
+    /// - Arrays of scalars (strings, numbers, enums): `key[]=value`
+    /// - Arrays of objects: `key[0][field]=value`
+    /// - `nil` optionals and empty arrays/objects are omitted.
     public func toFormBody() -> String {
+        let json: FormValue
+        do {
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .secondsSince1970
+            json = try JSONDecoder().decode(FormValue.self, from: encoder.encode(self))
+        } catch {
+            assertionFailure("StripeParams form encoding failed for \(Self.self): \(error)")
+            return ""
+        }
         var pairs: [(String, String)] = []
-        encodeFields(of: self, prefix: "", into: &pairs)
+        json.flatten(key: "", into: &pairs)
         return pairs
             .map { "\($0.0)=\($0.1.addingPercentEncoding(withAllowedCharacters: .stripeQueryAllowed) ?? $0.1)" }
             .joined(separator: "&")
     }
+}
 
-    private func encodeFields(of value: Any, prefix: String, into pairs: inout [(String, String)]) {
-        let mirror = Mirror(reflecting: value)
+/// A decoded JSON value, used as the intermediate form of `toFormBody()`.
+///
+/// `JSONDecoder` won't decode a JSON number as `Bool` (or the reverse), so `true`
+/// and `1` stay distinct on every platform.
+private enum FormValue: Decodable {
+    case null
+    case bool(Bool)
+    case int(Int)
+    case double(Double)
+    case string(String)
+    case array([FormValue])
+    case object([String: FormValue])
 
-        for child in mirror.children {
-            guard let label = child.label else { continue }
-            let key = prefix.isEmpty ? camelToSnake(label) : "\(prefix)[\(camelToSnake(label))]"
-
-            // Skip nil optionals
-            let valueMirror = Mirror(reflecting: child.value)
-            if valueMirror.displayStyle == .optional && valueMirror.children.isEmpty { continue }
-
-            // Unwrap optional
-            let unwrapped: Any
-            if valueMirror.displayStyle == .optional, let (_, some) = valueMirror.children.first {
-                unwrapped = some
-            } else {
-                unwrapped = child.value
-            }
-
-            encodeSingleValue(unwrapped, key: key, into: &pairs)
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if container.decodeNil() {
+            self = .null
+        } else if let value = try? container.decode(Bool.self) {
+            self = .bool(value)
+        } else if let value = try? container.decode(Int.self) {
+            self = .int(value)
+        } else if let value = try? container.decode(Double.self) {
+            self = .double(value)
+        } else if let value = try? container.decode(String.self) {
+            self = .string(value)
+        } else if let value = try? container.decode([FormValue].self) {
+            self = .array(value)
+        } else {
+            self = .object(try container.decode([String: FormValue].self))
         }
     }
 
-    private func encodeSingleValue(_ value: Any, key: String, into pairs: inout [(String, String)]) {
-        switch value {
-        case let b as Bool:
-            pairs.append((key, b ? "true" : "false"))
-        case let n as any Numeric:
-            pairs.append((key, "\(n)"))
-        case let s as String:
-            pairs.append((key, s))
-        case let dict as [String: String]:
-            // Stripe bracket notation: metadata[key]=value
-            for (k, v) in dict.sorted(by: { $0.key < $1.key }) {
-                pairs.append(("\(key)[\(k)]", v))
-            }
-        case let arr as [String]:
-            // Stripe array notation: expand[]=value
-            for item in arr {
-                pairs.append(("\(key)[]", item))
-            }
-        case let nested as any StripeParams:
-            // Recurse into sub-structs: parent[child_field]=value
-            encodeFields(of: nested, prefix: key, into: &pairs)
-        default:
-            // Handles RawRepresentable enums and other types
-            let m = Mirror(reflecting: value)
-            if let rawChild = m.children.first(where: { $0.label == "rawValue" }) {
-                pairs.append((key, "\(rawChild.value)"))
-            } else {
-                pairs.append((key, "\(value)"))
-            }
+    private var isContainer: Bool {
+        switch self {
+        case .array, .object: return true
+        default: return false
         }
     }
 
-    private func camelToSnake(_ input: String) -> String {
-        var result = ""
-        for char in input {
-            if char.isUppercase {
-                result += "_"
-                result += char.lowercased()
-            } else {
-                result += String(char)
+    func flatten(key: String, into pairs: inout [(String, String)]) {
+        switch self {
+        case .null:
+            return
+        case .bool(let value):
+            pairs.append((key, value ? "true" : "false"))
+        case .int(let value):
+            pairs.append((key, "\(value)"))
+        case .double(let value):
+            pairs.append((key, "\(value)"))
+        case .string(let value):
+            pairs.append((key, value))
+        case .array(let items):
+            for (index, item) in items.enumerated() {
+                item.flatten(key: item.isContainer ? "\(key)[\(index)]" : "\(key)[]", into: &pairs)
+            }
+        case .object(let fields):
+            // Sorted for deterministic output; Stripe doesn't care about field order.
+            for (name, value) in fields.sorted(by: { $0.key < $1.key }) {
+                let name = name.addingPercentEncoding(withAllowedCharacters: .stripeQueryAllowed) ?? name
+                value.flatten(key: key.isEmpty ? name : "\(key)[\(name)]", into: &pairs)
             }
         }
-        return result
     }
 }

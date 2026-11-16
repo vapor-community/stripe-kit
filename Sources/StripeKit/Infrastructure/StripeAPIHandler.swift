@@ -111,7 +111,7 @@ public struct StripeAPIHandler: Sendable {
 
         var request = HTTPClientRequest(url: filesBaseURL + path)
         request.method = .POST
-        request.headers.add(name: "Authorization", value: "Bearer \\(apiKey)")
+        request.headers.add(name: "Authorization", value: "Bearer \(apiKey)")
         request.headers.add(name: "Stripe-Version", value: apiVersion)
         request.headers.add(name: "Content-Type", value: "multipart/form-data; boundary=\(boundary)")
 
@@ -132,7 +132,7 @@ public struct StripeAPIHandler: Sendable {
             }
             throw StripeError(error: StripeAPIError(
                 type: .apiError,
-                message: "HTTP \\(response.status.code)"
+                message: "HTTP \(response.status.code)"
             ))
         }
 
@@ -141,7 +141,7 @@ public struct StripeAPIHandler: Sendable {
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
-            print("[StripeKit DEBUG] Multipart decode error for \\(T.self): \\(error)")
+            print("[StripeKit DEBUG] Multipart decode error for \(T.self): \(error)")
             throw error
         }
     }
