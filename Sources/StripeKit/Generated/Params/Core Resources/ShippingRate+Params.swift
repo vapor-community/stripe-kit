@@ -182,9 +182,9 @@ public struct ShippingRateCreateFixedAmount: StripeParams {
     /// Shipping rates defined in each available currency option. Each key must be a three-letter [ISO
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: ShippingRateCreateFixedAmountCurrencyOptions]?
 
-    public init(amount: Int, currency: String, currencyOptions: [String: String]? = nil) {
+    public init(amount: Int, currency: String, currencyOptions: [String: ShippingRateCreateFixedAmountCurrencyOptions]? = nil) {
         self.amount = amount
         self.currency = currency
         self.currencyOptions = currencyOptions
@@ -197,18 +197,54 @@ public struct ShippingRateCreateFixedAmount: StripeParams {
     }
 }
 
+public struct ShippingRateCreateFixedAmountCurrencyOptions: StripeParams {
+    /// A non-negative integer in cents representing how much to charge.
+    public var amount: Int
+    /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
+    /// `inclusive`, `exclusive`, or `unspecified`.
+    public var taxBehavior: ShippingRateCreateFixedAmountCurrencyOptionsTaxBehavior?
+
+    public init(amount: Int, taxBehavior: ShippingRateCreateFixedAmountCurrencyOptionsTaxBehavior? = nil) {
+        self.amount = amount
+        self.taxBehavior = taxBehavior
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case taxBehavior = "tax_behavior"
+    }
+}
+
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
 public struct ShippingRateUpdateFixedAmount: StripeParams {
     /// Shipping rates defined in each available currency option. Each key must be a three-letter [ISO
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: ShippingRateUpdateFixedAmountCurrencyOptions]?
 
-    public init(currencyOptions: [String: String]? = nil) {
+    public init(currencyOptions: [String: ShippingRateUpdateFixedAmountCurrencyOptions]? = nil) {
         self.currencyOptions = currencyOptions
     }
 
     public enum CodingKeys: String, CodingKey {
         case currencyOptions = "currency_options"
+    }
+}
+
+public struct ShippingRateUpdateFixedAmountCurrencyOptions: StripeParams {
+    /// A non-negative integer in cents representing how much to charge.
+    public var amount: Int?
+    /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
+    /// `inclusive`, `exclusive`, or `unspecified`.
+    public var taxBehavior: ShippingRateUpdateFixedAmountCurrencyOptionsTaxBehavior?
+
+    public init(amount: Int? = nil, taxBehavior: ShippingRateUpdateFixedAmountCurrencyOptionsTaxBehavior? = nil) {
+        self.amount = amount
+        self.taxBehavior = taxBehavior
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case taxBehavior = "tax_behavior"
     }
 }

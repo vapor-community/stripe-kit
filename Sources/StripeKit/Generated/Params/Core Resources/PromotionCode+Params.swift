@@ -162,7 +162,7 @@ public struct PromotionCodeCreateRestrictions: StripeParams {
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies). Each currency must be different from the
     /// `minimum_amount_currency` set on the promotion code.
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: PromotionCodeCreateRestrictionsCurrencyOptions]?
     /// A Boolean indicating if the Promotion Code should only be redeemed for Customers without any
     /// successful payments or invoices
     public var firstTimeTransaction: Bool?
@@ -172,7 +172,7 @@ public struct PromotionCodeCreateRestrictions: StripeParams {
     /// Three-letter [ISO code](https://stripe.com/docs/currencies) for minimum_amount
     public var minimumAmountCurrency: String?
 
-    public init(currencyOptions: [String: String]? = nil, firstTimeTransaction: Bool? = nil, minimumAmount: Int? = nil, minimumAmountCurrency: String? = nil) {
+    public init(currencyOptions: [String: PromotionCodeCreateRestrictionsCurrencyOptions]? = nil, firstTimeTransaction: Bool? = nil, minimumAmount: Int? = nil, minimumAmountCurrency: String? = nil) {
         self.currencyOptions = currencyOptions
         self.firstTimeTransaction = firstTimeTransaction
         self.minimumAmount = minimumAmount
@@ -187,19 +187,47 @@ public struct PromotionCodeCreateRestrictions: StripeParams {
     }
 }
 
+public struct PromotionCodeCreateRestrictionsCurrencyOptions: StripeParams {
+    /// Minimum amount required to redeem this Promotion Code into a Coupon (e.g., a purchase must be $100
+    /// or more to work).
+    public var minimumAmount: Int?
+
+    public init(minimumAmount: Int? = nil) {
+        self.minimumAmount = minimumAmount
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case minimumAmount = "minimum_amount"
+    }
+}
+
 /// Settings that restrict the redemption of the promotion code.
 public struct PromotionCodeUpdateRestrictions: StripeParams {
     /// Promotion codes defined in each available currency option. Each key must be a three-letter [ISO
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies). Each currency must be different from the
     /// `minimum_amount_currency` set on the promotion code.
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: PromotionCodeUpdateRestrictionsCurrencyOptions]?
 
-    public init(currencyOptions: [String: String]? = nil) {
+    public init(currencyOptions: [String: PromotionCodeUpdateRestrictionsCurrencyOptions]? = nil) {
         self.currencyOptions = currencyOptions
     }
 
     public enum CodingKeys: String, CodingKey {
         case currencyOptions = "currency_options"
+    }
+}
+
+public struct PromotionCodeUpdateRestrictionsCurrencyOptions: StripeParams {
+    /// Minimum amount required to redeem this Promotion Code into a Coupon (e.g., a purchase must be $100
+    /// or more to work).
+    public var minimumAmount: Int?
+
+    public init(minimumAmount: Int? = nil) {
+        self.minimumAmount = minimumAmount
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case minimumAmount = "minimum_amount"
     }
 }

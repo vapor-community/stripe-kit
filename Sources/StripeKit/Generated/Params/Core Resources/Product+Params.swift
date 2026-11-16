@@ -271,7 +271,7 @@ public struct ProductCreateDefaultPriceData: StripeParams {
     /// Prices defined in each available currency option. Each key must be a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: ProductCreateDefaultPriceDataCurrencyOptions]?
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
     /// Sessions and Payment Links.
     public var customUnitAmount: ProductCreateDefaultPriceDataCustomUnitAmount?
@@ -295,7 +295,7 @@ public struct ProductCreateDefaultPriceData: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, currencyOptions: [String: String]? = nil, customUnitAmount: ProductCreateDefaultPriceDataCustomUnitAmount? = nil, metadata: [String: String]? = nil, recurring: ProductCreateDefaultPriceDataRecurring? = nil, taxBehavior: ProductCreateDefaultPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, currencyOptions: [String: ProductCreateDefaultPriceDataCurrencyOptions]? = nil, customUnitAmount: ProductCreateDefaultPriceDataCustomUnitAmount? = nil, metadata: [String: String]? = nil, recurring: ProductCreateDefaultPriceDataRecurring? = nil, taxBehavior: ProductCreateDefaultPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.currencyOptions = currencyOptions
         self.customUnitAmount = customUnitAmount
@@ -315,6 +315,128 @@ public struct ProductCreateDefaultPriceData: StripeParams {
         case taxBehavior = "tax_behavior"
         case unitAmount = "unit_amount"
         case unitAmountDecimal = "unit_amount_decimal"
+    }
+}
+
+public struct ProductCreateDefaultPriceDataCurrencyOptions: StripeParams {
+    /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
+    /// Sessions and Payment Links.
+    public var customUnitAmount: ProductCreateDefaultPriceDataCurrencyOptionsCustomUnitAmount?
+    /// Only required if a [default tax
+    /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
+    /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
+    /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
+    /// either `inclusive` or `exclusive`, it cannot be changed.
+    public var taxBehavior: ProductCreateDefaultPriceDataCurrencyOptionsTaxBehavior?
+    /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
+    /// `tiered`. See also the documentation for `billing_scheme`.
+    public var tiers: [ProductCreateDefaultPriceDataCurrencyOptionsTiers]?
+    /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
+    /// charge.
+    public var unitAmount: Int?
+    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
+    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+    public var unitAmountDecimal: String?
+
+    public init(customUnitAmount: ProductCreateDefaultPriceDataCurrencyOptionsCustomUnitAmount? = nil, taxBehavior: ProductCreateDefaultPriceDataCurrencyOptionsTaxBehavior? = nil, tiers: [ProductCreateDefaultPriceDataCurrencyOptionsTiers]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+        self.customUnitAmount = customUnitAmount
+        self.taxBehavior = taxBehavior
+        self.tiers = tiers
+        self.unitAmount = unitAmount
+        self.unitAmountDecimal = unitAmountDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case customUnitAmount = "custom_unit_amount"
+        case taxBehavior = "tax_behavior"
+        case tiers
+        case unitAmount = "unit_amount"
+        case unitAmountDecimal = "unit_amount_decimal"
+    }
+}
+
+/// When set, provides configuration for the amount to be adjusted by the customer during Checkout
+/// Sessions and Payment Links.
+public struct ProductCreateDefaultPriceDataCurrencyOptionsCustomUnitAmount: StripeParams {
+    /// Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
+    public var enabled: Bool
+    /// The maximum unit amount the customer can specify for this item.
+    public var maximum: Int?
+    /// The minimum unit amount the customer can specify for this item. Must be at least the minimum charge
+    /// amount.
+    public var minimum: Int?
+    /// The starting unit amount which can be updated by the customer.
+    public var preset: Int?
+
+    public init(enabled: Bool, maximum: Int? = nil, minimum: Int? = nil, preset: Int? = nil) {
+        self.enabled = enabled
+        self.maximum = maximum
+        self.minimum = minimum
+        self.preset = preset
+    }
+}
+
+public struct ProductCreateDefaultPriceDataCurrencyOptionsTiers: StripeParams {
+    /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
+    /// tier adding one. Use `inf` to define a fallback tier.
+    public var upTo: ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo
+    /// The flat billing amount for an entire tier, regardless of the number of units in the tier.
+    public var flatAmount: Int?
+    /// Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the
+    /// currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
+    public var flatAmountDecimal: String?
+    /// The per unit billing amount for each individual unit for which this tier applies.
+    public var unitAmount: Int?
+    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
+    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+    public var unitAmountDecimal: String?
+
+    public init(upTo: ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+        self.upTo = upTo
+        self.flatAmount = flatAmount
+        self.flatAmountDecimal = flatAmountDecimal
+        self.unitAmount = unitAmount
+        self.unitAmountDecimal = unitAmountDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case flatAmount = "flat_amount"
+        case flatAmountDecimal = "flat_amount_decimal"
+        case unitAmount = "unit_amount"
+        case unitAmountDecimal = "unit_amount_decimal"
+        case upTo = "up_to"
+    }
+}
+
+/// One of the forms `up_to` accepts.
+public enum ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `inf`
+    case inf
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "inf": self = .inf; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .inf:
+            var container = encoder.singleValueContainer()
+            try container.encode("inf")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 

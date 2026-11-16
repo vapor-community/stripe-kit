@@ -115,8 +115,12 @@ public enum SetupIntentConfirmAllowedPaymentMethodTypes: String, Codable, Sendab
     case zip
 }
 
-public enum SetupIntentConfirmMandateDataCustomerAcceptanceType: String, Codable, Sendable {
+public enum SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType: String, Codable, Sendable {
     case offline
+    case online
+}
+
+public enum SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceType: String, Codable, Sendable {
     case online
 }
 

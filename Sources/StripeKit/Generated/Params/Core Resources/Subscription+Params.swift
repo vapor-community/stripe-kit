@@ -44,7 +44,7 @@ public struct SubscriptionCreateParams: StripeParams {
     /// A timestamp at which the subscription should cancel. If set to a date before the current period
     /// ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set
     /// during a future period, this will always cause a proration for that period.
-    public var cancelAt: String?
+    public var cancelAt: SubscriptionCreateCancelAt?
     /// Indicate whether this subscription should cancel at the end of the current period
     /// (`current_period_end`). Defaults to `false`.
     public var cancelAtPeriodEnd: Bool?
@@ -123,7 +123,7 @@ public struct SubscriptionCreateParams: StripeParams {
     /// customer is being subscribed to. The special value `now` can be provided to end the customer's trial
     /// immediately. Can be at most two years from `billing_cycle_anchor`. See [Using trial periods on
     /// subscriptions](https://docs.stripe.com/billing/subscriptions/trials/free-trials) to learn more.
-    public var trialEnd: String?
+    public var trialEnd: SubscriptionCreateTrialEnd?
     /// Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end`
     /// per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together
     /// with `trial_end` is not allowed. See [Using trial periods on
@@ -137,7 +137,7 @@ public struct SubscriptionCreateParams: StripeParams {
     /// Settings related to subscription trials.
     public var trialSettings: SubscriptionCreateTrialSettings?
 
-    public init(addInvoiceItems: [SubscriptionCreateAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionCreateAutomaticTax? = nil, backdateStartDate: Int? = nil, billingCycleAnchor: Int? = nil, billingCycleAnchorConfig: SubscriptionCreateBillingCycleAnchorConfig? = nil, billingMode: SubscriptionCreateBillingMode? = nil, billingSchedules: [SubscriptionCreateBillingSchedules]? = nil, billingThresholds: SubscriptionCreateBillingThresholds? = nil, cancelAt: String? = nil, cancelAtPeriodEnd: Bool? = nil, collectionMethod: SubscriptionCreateCollectionMethod? = nil, currency: String? = nil, customer: String? = nil, customerAccount: String? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionCreateDiscounts]? = nil, expand: [String]? = nil, invoiceSettings: SubscriptionCreateInvoiceSettings? = nil, items: [SubscriptionCreateItems]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, onBehalfOf: String? = nil, paymentBehavior: SubscriptionCreatePaymentBehavior? = nil, paymentSettings: SubscriptionCreatePaymentSettings? = nil, pendingInvoiceItemInterval: SubscriptionCreatePendingInvoiceItemInterval? = nil, prorationBehavior: SubscriptionCreateProrationBehavior? = nil, transferData: SubscriptionCreateTransferData? = nil, trialEnd: String? = nil, trialFromPlan: Bool? = nil, trialPeriodDays: Int? = nil, trialSettings: SubscriptionCreateTrialSettings? = nil) {
+    public init(addInvoiceItems: [SubscriptionCreateAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionCreateAutomaticTax? = nil, backdateStartDate: Int? = nil, billingCycleAnchor: Int? = nil, billingCycleAnchorConfig: SubscriptionCreateBillingCycleAnchorConfig? = nil, billingMode: SubscriptionCreateBillingMode? = nil, billingSchedules: [SubscriptionCreateBillingSchedules]? = nil, billingThresholds: SubscriptionCreateBillingThresholds? = nil, cancelAt: SubscriptionCreateCancelAt? = nil, cancelAtPeriodEnd: Bool? = nil, collectionMethod: SubscriptionCreateCollectionMethod? = nil, currency: String? = nil, customer: String? = nil, customerAccount: String? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionCreateDiscounts]? = nil, expand: [String]? = nil, invoiceSettings: SubscriptionCreateInvoiceSettings? = nil, items: [SubscriptionCreateItems]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, onBehalfOf: String? = nil, paymentBehavior: SubscriptionCreatePaymentBehavior? = nil, paymentSettings: SubscriptionCreatePaymentSettings? = nil, pendingInvoiceItemInterval: SubscriptionCreatePendingInvoiceItemInterval? = nil, prorationBehavior: SubscriptionCreateProrationBehavior? = nil, transferData: SubscriptionCreateTransferData? = nil, trialEnd: SubscriptionCreateTrialEnd? = nil, trialFromPlan: Bool? = nil, trialPeriodDays: Int? = nil, trialSettings: SubscriptionCreateTrialSettings? = nil) {
         self.addInvoiceItems = addInvoiceItems
         self.applicationFeePercent = applicationFeePercent
         self.automaticTax = automaticTax
@@ -431,7 +431,7 @@ public struct SubscriptionUpdateParams: StripeParams {
     /// A timestamp at which the subscription should cancel. If set to a date before the current period
     /// ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set
     /// during a future period, this will always cause a proration for that period.
-    public var cancelAt: String?
+    public var cancelAt: SubscriptionUpdateCancelAt?
     /// Indicate whether this subscription should cancel at the end of the current period
     /// (`current_period_end`).
     public var cancelAtPeriodEnd: Bool?
@@ -520,7 +520,7 @@ public struct SubscriptionUpdateParams: StripeParams {
     /// to. The `billing_cycle_anchor` will be updated to the `trial_end` value. The special value `now` can
     /// be provided to end the customer's trial immediately. Can be at most two years from
     /// `billing_cycle_anchor`.
-    public var trialEnd: String?
+    public var trialEnd: SubscriptionUpdateTrialEnd?
     /// Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end`
     /// per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together
     /// with `trial_end` is not allowed. See [Using trial periods on
@@ -529,7 +529,7 @@ public struct SubscriptionUpdateParams: StripeParams {
     /// Settings related to subscription trials.
     public var trialSettings: SubscriptionUpdateTrialSettings?
 
-    public init(addInvoiceItems: [SubscriptionUpdateAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionUpdateAutomaticTax? = nil, billingCycleAnchor: SubscriptionUpdateBillingCycleAnchor? = nil, billingSchedules: [SubscriptionUpdateBillingSchedules]? = nil, billingThresholds: SubscriptionUpdateBillingThresholds? = nil, cancelAt: String? = nil, cancelAtPeriodEnd: Bool? = nil, cancellationDetails: SubscriptionUpdateCancellationDetails? = nil, collectionMethod: SubscriptionUpdateCollectionMethod? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionUpdateDiscounts]? = nil, expand: [String]? = nil, invoiceSettings: SubscriptionUpdateInvoiceSettings? = nil, items: [SubscriptionUpdateItems]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, onBehalfOf: String? = nil, pauseCollection: SubscriptionUpdatePauseCollection? = nil, paymentBehavior: SubscriptionUpdatePaymentBehavior? = nil, paymentSettings: SubscriptionUpdatePaymentSettings? = nil, pendingInvoiceItemInterval: SubscriptionUpdatePendingInvoiceItemInterval? = nil, prorationBehavior: SubscriptionUpdateProrationBehavior? = nil, prorationDate: Int? = nil, transferData: SubscriptionUpdateTransferData? = nil, trialEnd: String? = nil, trialFromPlan: Bool? = nil, trialSettings: SubscriptionUpdateTrialSettings? = nil) {
+    public init(addInvoiceItems: [SubscriptionUpdateAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionUpdateAutomaticTax? = nil, billingCycleAnchor: SubscriptionUpdateBillingCycleAnchor? = nil, billingSchedules: [SubscriptionUpdateBillingSchedules]? = nil, billingThresholds: SubscriptionUpdateBillingThresholds? = nil, cancelAt: SubscriptionUpdateCancelAt? = nil, cancelAtPeriodEnd: Bool? = nil, cancellationDetails: SubscriptionUpdateCancellationDetails? = nil, collectionMethod: SubscriptionUpdateCollectionMethod? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionUpdateDiscounts]? = nil, expand: [String]? = nil, invoiceSettings: SubscriptionUpdateInvoiceSettings? = nil, items: [SubscriptionUpdateItems]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, onBehalfOf: String? = nil, pauseCollection: SubscriptionUpdatePauseCollection? = nil, paymentBehavior: SubscriptionUpdatePaymentBehavior? = nil, paymentSettings: SubscriptionUpdatePaymentSettings? = nil, pendingInvoiceItemInterval: SubscriptionUpdatePendingInvoiceItemInterval? = nil, prorationBehavior: SubscriptionUpdateProrationBehavior? = nil, prorationDate: Int? = nil, transferData: SubscriptionUpdateTransferData? = nil, trialEnd: SubscriptionUpdateTrialEnd? = nil, trialFromPlan: Bool? = nil, trialSettings: SubscriptionUpdateTrialSettings? = nil) {
         self.addInvoiceItems = addInvoiceItems
         self.applicationFeePercent = applicationFeePercent
         self.automaticTax = automaticTax
@@ -925,6 +925,50 @@ public struct SubscriptionCreateBillingThresholds: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case amountGte = "amount_gte"
         case resetBillingCycleAnchor = "reset_billing_cycle_anchor"
+    }
+}
+
+/// One of the forms `cancel_at` accepts.
+public enum SubscriptionCreateCancelAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `max_billed_until`
+    case maxBilledUntil
+    /// `max_period_end`
+    case maxPeriodEnd
+    /// `min_period_end`
+    case minPeriodEnd
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "max_billed_until": self = .maxBilledUntil; return
+            case "max_period_end": self = .maxPeriodEnd; return
+            case "min_period_end": self = .minPeriodEnd; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionCreateCancelAt matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .maxBilledUntil:
+            var container = encoder.singleValueContainer()
+            try container.encode("max_billed_until")
+        case .maxPeriodEnd:
+            var container = encoder.singleValueContainer()
+            try container.encode("max_period_end")
+        case .minPeriodEnd:
+            var container = encoder.singleValueContainer()
+            try container.encode("min_period_end")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -1717,6 +1761,38 @@ public struct SubscriptionCreateTransferData: StripeParams {
     }
 }
 
+/// One of the forms `trial_end` accepts.
+public enum SubscriptionCreateTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionCreateTrialEnd matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
+    }
+}
+
 /// Settings related to subscription trials.
 public struct SubscriptionCreateTrialSettings: StripeParams {
     /// Defines how the subscription should behave when the user's free trial ends.
@@ -2117,6 +2193,50 @@ public struct SubscriptionUpdateBillingThresholds: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case amountGte = "amount_gte"
         case resetBillingCycleAnchor = "reset_billing_cycle_anchor"
+    }
+}
+
+/// One of the forms `cancel_at` accepts.
+public enum SubscriptionUpdateCancelAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `max_billed_until`
+    case maxBilledUntil
+    /// `max_period_end`
+    case maxPeriodEnd
+    /// `min_period_end`
+    case minPeriodEnd
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "max_billed_until": self = .maxBilledUntil; return
+            case "max_period_end": self = .maxPeriodEnd; return
+            case "min_period_end": self = .minPeriodEnd; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionUpdateCancelAt matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .maxBilledUntil:
+            var container = encoder.singleValueContainer()
+            try container.encode("max_billed_until")
+        case .maxPeriodEnd:
+            var container = encoder.singleValueContainer()
+            try container.encode("max_period_end")
+        case .minPeriodEnd:
+            var container = encoder.singleValueContainer()
+            try container.encode("min_period_end")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -2968,6 +3088,38 @@ public struct SubscriptionUpdateTransferData: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case amountPercent = "amount_percent"
         case destination
+    }
+}
+
+/// One of the forms `trial_end` accepts.
+public enum SubscriptionUpdateTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionUpdateTrialEnd matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 

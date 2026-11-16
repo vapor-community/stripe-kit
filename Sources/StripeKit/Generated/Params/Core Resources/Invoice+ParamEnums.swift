@@ -275,6 +275,12 @@ public enum InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMinimumUnit
     case week
 }
 
+public enum InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public enum InvoiceCreateShippingCostShippingRateDataTaxBehavior: String, Codable, Sendable {
     case exclusive
     case inclusive
@@ -881,6 +887,12 @@ public enum InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMinimumUnit
     case hour
     case month
     case week
+}
+
+public enum InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }
 
 public enum InvoiceUpdateShippingCostShippingRateDataTaxBehavior: String, Codable, Sendable {

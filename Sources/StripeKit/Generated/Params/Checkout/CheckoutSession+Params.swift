@@ -3591,9 +3591,9 @@ public struct CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmount: S
     /// Shipping rates defined in each available currency option. Each key must be a three-letter [ISO
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCurrencyOptions]?
 
-    public init(amount: Int, currency: String, currencyOptions: [String: String]? = nil) {
+    public init(amount: Int, currency: String, currencyOptions: [String: CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCurrencyOptions]? = nil) {
         self.amount = amount
         self.currency = currency
         self.currencyOptions = currencyOptions
@@ -3603,6 +3603,24 @@ public struct CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmount: S
         case amount
         case currency
         case currencyOptions = "currency_options"
+    }
+}
+
+public struct CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCurrencyOptions: StripeParams {
+    /// A non-negative integer in cents representing how much to charge.
+    public var amount: Int
+    /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
+    /// `inclusive`, `exclusive`, or `unspecified`.
+    public var taxBehavior: CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior?
+
+    public init(amount: Int, taxBehavior: CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior? = nil) {
+        self.amount = amount
+        self.taxBehavior = taxBehavior
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case taxBehavior = "tax_behavior"
     }
 }
 
@@ -4367,9 +4385,9 @@ public struct CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmount: S
     /// Shipping rates defined in each available currency option. Each key must be a three-letter [ISO
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCurrencyOptions]?
 
-    public init(amount: Int, currency: String, currencyOptions: [String: String]? = nil) {
+    public init(amount: Int, currency: String, currencyOptions: [String: CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCurrencyOptions]? = nil) {
         self.amount = amount
         self.currency = currency
         self.currencyOptions = currencyOptions
@@ -4379,5 +4397,23 @@ public struct CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmount: S
         case amount
         case currency
         case currencyOptions = "currency_options"
+    }
+}
+
+public struct CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCurrencyOptions: StripeParams {
+    /// A non-negative integer in cents representing how much to charge.
+    public var amount: Int
+    /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
+    /// `inclusive`, `exclusive`, or `unspecified`.
+    public var taxBehavior: CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior?
+
+    public init(amount: Int, taxBehavior: CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior? = nil) {
+        self.amount = amount
+        self.taxBehavior = taxBehavior
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case taxBehavior = "tax_behavior"
     }
 }

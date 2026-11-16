@@ -10,7 +10,7 @@ import Foundation
 public struct RegistrationCreateParams: StripeParams {
     /// Time at which the Tax Registration becomes active. It can be either `now` to indicate the current
     /// time, or a future timestamp measured in seconds since the Unix epoch.
-    public var activeFrom: String
+    public var activeFrom: RegistrationCreateActiveFrom
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     public var country: String
     /// Specific options for a registration in the specified `country`.
@@ -21,7 +21,7 @@ public struct RegistrationCreateParams: StripeParams {
     /// be active indefinitely. Timestamp measured in seconds since the Unix epoch.
     public var expiresAt: Int?
 
-    public init(activeFrom: String, country: String, countryOptions: RegistrationCreateCountryOptions, expand: [String]? = nil, expiresAt: Int? = nil) {
+    public init(activeFrom: RegistrationCreateActiveFrom, country: String, countryOptions: RegistrationCreateCountryOptions, expand: [String]? = nil, expiresAt: Int? = nil) {
         self.activeFrom = activeFrom
         self.country = country
         self.countryOptions = countryOptions
@@ -76,15 +76,15 @@ public struct RegistrationListParams: StripeParams {
 public struct RegistrationUpdateParams: StripeParams {
     /// Time at which the registration becomes active. It can be either `now` to indicate the current time,
     /// or a timestamp measured in seconds since the Unix epoch.
-    public var activeFrom: String?
+    public var activeFrom: RegistrationUpdateActiveFrom?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// If set, the registration stops being active at this time. If not set, the registration will be
     /// active indefinitely. It can be either `now` to indicate the current time, or a timestamp measured in
     /// seconds since the Unix epoch.
-    public var expiresAt: String?
+    public var expiresAt: RegistrationUpdateExpiresAt?
 
-    public init(activeFrom: String? = nil, expand: [String]? = nil, expiresAt: String? = nil) {
+    public init(activeFrom: RegistrationUpdateActiveFrom? = nil, expand: [String]? = nil, expiresAt: RegistrationUpdateExpiresAt? = nil) {
         self.activeFrom = activeFrom
         self.expand = expand
         self.expiresAt = expiresAt
@@ -94,6 +94,38 @@ public struct RegistrationUpdateParams: StripeParams {
         case activeFrom = "active_from"
         case expand
         case expiresAt = "expires_at"
+    }
+}
+
+/// One of the forms `active_from` accepts.
+public enum RegistrationCreateActiveFrom: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of RegistrationCreateActiveFrom matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -2683,5 +2715,69 @@ public struct RegistrationCreateCountryOptionsZwStandard: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case placeOfSupplyScheme = "place_of_supply_scheme"
+    }
+}
+
+/// One of the forms `active_from` accepts.
+public enum RegistrationUpdateActiveFrom: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of RegistrationUpdateActiveFrom matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
+    }
+}
+
+/// One of the forms `expires_at` accepts.
+public enum RegistrationUpdateExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of RegistrationUpdateExpiresAt matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }

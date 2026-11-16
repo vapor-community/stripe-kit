@@ -1098,6 +1098,12 @@ public enum CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstimate
     case week
 }
 
+public enum CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public enum CheckoutSessionCreateShippingOptionsShippingRateDataTaxBehavior: String, Codable, Sendable {
     case exclusive
     case inclusive
@@ -1204,6 +1210,12 @@ public enum CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstimate
     case hour
     case month
     case week
+}
+
+public enum CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }
 
 public enum CheckoutSessionUpdateShippingOptionsShippingRateDataTaxBehavior: String, Codable, Sendable {

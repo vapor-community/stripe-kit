@@ -13,7 +13,7 @@ public enum PaymentMethodCreateAllowRedisplay: String, Codable, Sendable {
     case unspecified
 }
 
-public enum PaymentMethodCreateCardNetworksPreferred: String, Codable, Sendable {
+public enum PaymentMethodCreateCardCardDetailsNetworksPreferred: String, Codable, Sendable {
     case cartesBancaires = "cartes_bancaires"
     case mastercard
     case visa

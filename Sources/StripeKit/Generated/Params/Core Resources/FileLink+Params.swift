@@ -87,14 +87,14 @@ public struct FileLinkUpdateParams: StripeParams {
     public var expand: [String]?
     /// A future timestamp after which the link will no longer be usable, or `now` to expire the link
     /// immediately.
-    public var expiresAt: String?
+    public var expiresAt: FileLinkUpdateExpiresAt?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
 
-    public init(expand: [String]? = nil, expiresAt: String? = nil, metadata: [String: String]? = nil) {
+    public init(expand: [String]? = nil, expiresAt: FileLinkUpdateExpiresAt? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
         self.expiresAt = expiresAt
         self.metadata = metadata
@@ -104,5 +104,37 @@ public struct FileLinkUpdateParams: StripeParams {
         case expand
         case expiresAt = "expires_at"
         case metadata
+    }
+}
+
+/// One of the forms `expires_at` accepts.
+public enum FileLinkUpdateExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of FileLinkUpdateExpiresAt matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }

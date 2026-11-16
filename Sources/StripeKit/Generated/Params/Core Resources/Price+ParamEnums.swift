@@ -12,6 +12,12 @@ public enum PriceCreateBillingScheme: String, Codable, Sendable {
     case tiered
 }
 
+public enum PriceCreateCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public enum PriceCreateRecurringInterval: String, Codable, Sendable {
     case day
     case month
@@ -55,6 +61,12 @@ public enum PriceListRecurringUsageType: String, Codable, Sendable {
 public enum PriceListType: String, Codable, Sendable {
     case oneTime = "one_time"
     case recurring
+}
+
+public enum PriceUpdateCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }
 
 public enum PriceUpdateTaxBehavior: String, Codable, Sendable {

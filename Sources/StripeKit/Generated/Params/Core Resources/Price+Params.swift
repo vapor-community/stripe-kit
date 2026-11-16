@@ -22,7 +22,7 @@ public struct PriceCreateParams: StripeParams {
     /// Prices defined in each available currency option. Each key must be a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: PriceCreateCurrencyOptions]?
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
     /// Sessions and Payment Links.
     public var customUnitAmount: PriceCreateCustomUnitAmount?
@@ -72,7 +72,7 @@ public struct PriceCreateParams: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, active: Bool? = nil, billingScheme: PriceCreateBillingScheme? = nil, currencyOptions: [String: String]? = nil, customUnitAmount: PriceCreateCustomUnitAmount? = nil, expand: [String]? = nil, lookupKey: String? = nil, metadata: [String: String]? = nil, nickname: String? = nil, product: String? = nil, productData: PriceCreateProductData? = nil, recurring: PriceCreateRecurring? = nil, taxBehavior: PriceCreateTaxBehavior? = nil, tiers: [PriceCreateTiers]? = nil, tiersMode: PriceCreateTiersMode? = nil, transferLookupKey: Bool? = nil, transformQuantity: PriceCreateTransformQuantity? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, active: Bool? = nil, billingScheme: PriceCreateBillingScheme? = nil, currencyOptions: [String: PriceCreateCurrencyOptions]? = nil, customUnitAmount: PriceCreateCustomUnitAmount? = nil, expand: [String]? = nil, lookupKey: String? = nil, metadata: [String: String]? = nil, nickname: String? = nil, product: String? = nil, productData: PriceCreateProductData? = nil, recurring: PriceCreateRecurring? = nil, taxBehavior: PriceCreateTaxBehavior? = nil, tiers: [PriceCreateTiers]? = nil, tiersMode: PriceCreateTiersMode? = nil, transferLookupKey: Bool? = nil, transformQuantity: PriceCreateTransformQuantity? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.active = active
         self.billingScheme = billingScheme
@@ -206,7 +206,7 @@ public struct PriceUpdateParams: StripeParams {
     /// Prices defined in each available currency option. Each key must be a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: PriceUpdateCurrencyOptions]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// A lookup key used to retrieve prices dynamically from a static string. This may be up to 200
@@ -229,7 +229,7 @@ public struct PriceUpdateParams: StripeParams {
     /// price.
     public var transferLookupKey: Bool?
 
-    public init(active: Bool? = nil, currencyOptions: [String: String]? = nil, expand: [String]? = nil, lookupKey: String? = nil, metadata: [String: String]? = nil, nickname: String? = nil, taxBehavior: PriceUpdateTaxBehavior? = nil, transferLookupKey: Bool? = nil) {
+    public init(active: Bool? = nil, currencyOptions: [String: PriceUpdateCurrencyOptions]? = nil, expand: [String]? = nil, lookupKey: String? = nil, metadata: [String: String]? = nil, nickname: String? = nil, taxBehavior: PriceUpdateTaxBehavior? = nil, transferLookupKey: Bool? = nil) {
         self.active = active
         self.currencyOptions = currencyOptions
         self.expand = expand
@@ -249,6 +249,128 @@ public struct PriceUpdateParams: StripeParams {
         case nickname
         case taxBehavior = "tax_behavior"
         case transferLookupKey = "transfer_lookup_key"
+    }
+}
+
+public struct PriceCreateCurrencyOptions: StripeParams {
+    /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
+    /// Sessions and Payment Links.
+    public var customUnitAmount: PriceCreateCurrencyOptionsCustomUnitAmount?
+    /// Only required if a [default tax
+    /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
+    /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
+    /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
+    /// either `inclusive` or `exclusive`, it cannot be changed.
+    public var taxBehavior: PriceCreateCurrencyOptionsTaxBehavior?
+    /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
+    /// `tiered`. See also the documentation for `billing_scheme`.
+    public var tiers: [PriceCreateCurrencyOptionsTiers]?
+    /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
+    /// charge.
+    public var unitAmount: Int?
+    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
+    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+    public var unitAmountDecimal: String?
+
+    public init(customUnitAmount: PriceCreateCurrencyOptionsCustomUnitAmount? = nil, taxBehavior: PriceCreateCurrencyOptionsTaxBehavior? = nil, tiers: [PriceCreateCurrencyOptionsTiers]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+        self.customUnitAmount = customUnitAmount
+        self.taxBehavior = taxBehavior
+        self.tiers = tiers
+        self.unitAmount = unitAmount
+        self.unitAmountDecimal = unitAmountDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case customUnitAmount = "custom_unit_amount"
+        case taxBehavior = "tax_behavior"
+        case tiers
+        case unitAmount = "unit_amount"
+        case unitAmountDecimal = "unit_amount_decimal"
+    }
+}
+
+/// When set, provides configuration for the amount to be adjusted by the customer during Checkout
+/// Sessions and Payment Links.
+public struct PriceCreateCurrencyOptionsCustomUnitAmount: StripeParams {
+    /// Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
+    public var enabled: Bool
+    /// The maximum unit amount the customer can specify for this item.
+    public var maximum: Int?
+    /// The minimum unit amount the customer can specify for this item. Must be at least the minimum charge
+    /// amount.
+    public var minimum: Int?
+    /// The starting unit amount which can be updated by the customer.
+    public var preset: Int?
+
+    public init(enabled: Bool, maximum: Int? = nil, minimum: Int? = nil, preset: Int? = nil) {
+        self.enabled = enabled
+        self.maximum = maximum
+        self.minimum = minimum
+        self.preset = preset
+    }
+}
+
+public struct PriceCreateCurrencyOptionsTiers: StripeParams {
+    /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
+    /// tier adding one. Use `inf` to define a fallback tier.
+    public var upTo: PriceCreateCurrencyOptionsTiersUpTo
+    /// The flat billing amount for an entire tier, regardless of the number of units in the tier.
+    public var flatAmount: Int?
+    /// Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the
+    /// currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
+    public var flatAmountDecimal: String?
+    /// The per unit billing amount for each individual unit for which this tier applies.
+    public var unitAmount: Int?
+    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
+    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+    public var unitAmountDecimal: String?
+
+    public init(upTo: PriceCreateCurrencyOptionsTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+        self.upTo = upTo
+        self.flatAmount = flatAmount
+        self.flatAmountDecimal = flatAmountDecimal
+        self.unitAmount = unitAmount
+        self.unitAmountDecimal = unitAmountDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case flatAmount = "flat_amount"
+        case flatAmountDecimal = "flat_amount_decimal"
+        case unitAmount = "unit_amount"
+        case unitAmountDecimal = "unit_amount_decimal"
+        case upTo = "up_to"
+    }
+}
+
+/// One of the forms `up_to` accepts.
+public enum PriceCreateCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `inf`
+    case inf
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "inf": self = .inf; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceCreateCurrencyOptionsTiersUpTo matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .inf:
+            var container = encoder.singleValueContainer()
+            try container.encode("inf")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -384,7 +506,7 @@ public struct PriceCreateRecurring: StripeParams {
 public struct PriceCreateTiers: StripeParams {
     /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
     /// tier adding one. Use `inf` to define a fallback tier.
-    public var upTo: String
+    public var upTo: PriceCreateTiersUpTo
     /// The flat billing amount for an entire tier, regardless of the number of units in the tier.
     public var flatAmount: Int?
     /// Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the
@@ -396,7 +518,7 @@ public struct PriceCreateTiers: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(upTo: String, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(upTo: PriceCreateTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.upTo = upTo
         self.flatAmount = flatAmount
         self.flatAmountDecimal = flatAmountDecimal
@@ -410,6 +532,38 @@ public struct PriceCreateTiers: StripeParams {
         case unitAmount = "unit_amount"
         case unitAmountDecimal = "unit_amount_decimal"
         case upTo = "up_to"
+    }
+}
+
+/// One of the forms `up_to` accepts.
+public enum PriceCreateTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `inf`
+    case inf
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "inf": self = .inf; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceCreateTiersUpTo matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .inf:
+            var container = encoder.singleValueContainer()
+            try container.encode("inf")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -451,5 +605,127 @@ public struct PriceListRecurring: StripeParams {
         case interval
         case meter
         case usageType = "usage_type"
+    }
+}
+
+public struct PriceUpdateCurrencyOptions: StripeParams {
+    /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
+    /// Sessions and Payment Links.
+    public var customUnitAmount: PriceUpdateCurrencyOptionsCustomUnitAmount?
+    /// Only required if a [default tax
+    /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
+    /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
+    /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
+    /// either `inclusive` or `exclusive`, it cannot be changed.
+    public var taxBehavior: PriceUpdateCurrencyOptionsTaxBehavior?
+    /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
+    /// `tiered`. See also the documentation for `billing_scheme`.
+    public var tiers: [PriceUpdateCurrencyOptionsTiers]?
+    /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
+    /// charge.
+    public var unitAmount: Int?
+    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
+    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+    public var unitAmountDecimal: String?
+
+    public init(customUnitAmount: PriceUpdateCurrencyOptionsCustomUnitAmount? = nil, taxBehavior: PriceUpdateCurrencyOptionsTaxBehavior? = nil, tiers: [PriceUpdateCurrencyOptionsTiers]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+        self.customUnitAmount = customUnitAmount
+        self.taxBehavior = taxBehavior
+        self.tiers = tiers
+        self.unitAmount = unitAmount
+        self.unitAmountDecimal = unitAmountDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case customUnitAmount = "custom_unit_amount"
+        case taxBehavior = "tax_behavior"
+        case tiers
+        case unitAmount = "unit_amount"
+        case unitAmountDecimal = "unit_amount_decimal"
+    }
+}
+
+/// When set, provides configuration for the amount to be adjusted by the customer during Checkout
+/// Sessions and Payment Links.
+public struct PriceUpdateCurrencyOptionsCustomUnitAmount: StripeParams {
+    /// Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
+    public var enabled: Bool
+    /// The maximum unit amount the customer can specify for this item.
+    public var maximum: Int?
+    /// The minimum unit amount the customer can specify for this item. Must be at least the minimum charge
+    /// amount.
+    public var minimum: Int?
+    /// The starting unit amount which can be updated by the customer.
+    public var preset: Int?
+
+    public init(enabled: Bool, maximum: Int? = nil, minimum: Int? = nil, preset: Int? = nil) {
+        self.enabled = enabled
+        self.maximum = maximum
+        self.minimum = minimum
+        self.preset = preset
+    }
+}
+
+public struct PriceUpdateCurrencyOptionsTiers: StripeParams {
+    /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
+    /// tier adding one. Use `inf` to define a fallback tier.
+    public var upTo: PriceUpdateCurrencyOptionsTiersUpTo
+    /// The flat billing amount for an entire tier, regardless of the number of units in the tier.
+    public var flatAmount: Int?
+    /// Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the
+    /// currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
+    public var flatAmountDecimal: String?
+    /// The per unit billing amount for each individual unit for which this tier applies.
+    public var unitAmount: Int?
+    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
+    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+    public var unitAmountDecimal: String?
+
+    public init(upTo: PriceUpdateCurrencyOptionsTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+        self.upTo = upTo
+        self.flatAmount = flatAmount
+        self.flatAmountDecimal = flatAmountDecimal
+        self.unitAmount = unitAmount
+        self.unitAmountDecimal = unitAmountDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case flatAmount = "flat_amount"
+        case flatAmountDecimal = "flat_amount_decimal"
+        case unitAmount = "unit_amount"
+        case unitAmountDecimal = "unit_amount_decimal"
+        case upTo = "up_to"
+    }
+}
+
+/// One of the forms `up_to` accepts.
+public enum PriceUpdateCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `inf`
+    case inf
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "inf": self = .inf; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceUpdateCurrencyOptionsTiersUpTo matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .inf:
+            var container = encoder.singleValueContainer()
+            try container.encode("inf")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }

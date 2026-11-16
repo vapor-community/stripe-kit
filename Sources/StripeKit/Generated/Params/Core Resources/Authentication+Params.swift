@@ -489,7 +489,7 @@ public struct AuthenticationCreateFutureUsageRecurringExpiry: StripeParams {
 /// Hash used to generate the PaymentMethod to be used for this Authentication. This is mutually
 /// exclusive with the `payment_method` parameter.
 public struct AuthenticationCreatePaymentMethodData: StripeParams {
-    public var card: String
+    public var card: AuthenticationCreatePaymentMethodDataCard
     /// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name
     /// matching this value. It contains additional information specific to the PaymentMethod type.
     public var type: AuthenticationCreatePaymentMethodDataType
@@ -497,7 +497,7 @@ public struct AuthenticationCreatePaymentMethodData: StripeParams {
     /// types of payment methods.
     public var billingDetails: AuthenticationCreatePaymentMethodDataBillingDetails?
 
-    public init(card: String, type: AuthenticationCreatePaymentMethodDataType, billingDetails: AuthenticationCreatePaymentMethodDataBillingDetails? = nil) {
+    public init(card: AuthenticationCreatePaymentMethodDataCard, type: AuthenticationCreatePaymentMethodDataType, billingDetails: AuthenticationCreatePaymentMethodDataBillingDetails? = nil) {
         self.card = card
         self.type = type
         self.billingDetails = billingDetails
@@ -507,6 +507,57 @@ public struct AuthenticationCreatePaymentMethodData: StripeParams {
         case billingDetails = "billing_details"
         case card
         case type
+    }
+}
+
+public struct AuthenticationCreatePaymentMethodDataCardCard: StripeParams {
+    public var expMonth: Int
+    public var expYear: Int
+    public var number: String
+    public var cvc: String?
+
+    public init(expMonth: Int, expYear: Int, number: String, cvc: String? = nil) {
+        self.expMonth = expMonth
+        self.expYear = expYear
+        self.number = number
+        self.cvc = cvc
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case cvc
+        case expMonth = "exp_month"
+        case expYear = "exp_year"
+        case number
+    }
+}
+
+public struct AuthenticationCreatePaymentMethodDataCardCardToken: StripeParams {
+    public var token: String
+
+    public init(token: String) {
+        self.token = token
+    }
+}
+
+/// One of the forms `card` accepts.
+public enum AuthenticationCreatePaymentMethodDataCard: Codable, Sendable {
+    case card(AuthenticationCreatePaymentMethodDataCardCard)
+    case cardToken(AuthenticationCreatePaymentMethodDataCardCardToken)
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? AuthenticationCreatePaymentMethodDataCardCard(from: decoder) { self = .card(value); return }
+        if let value = try? AuthenticationCreatePaymentMethodDataCardCardToken(from: decoder) { self = .cardToken(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of AuthenticationCreatePaymentMethodDataCard matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .card(let value):
+            try value.encode(to: encoder)
+        case .cardToken(let value):
+            try value.encode(to: encoder)
+        }
     }
 }
 

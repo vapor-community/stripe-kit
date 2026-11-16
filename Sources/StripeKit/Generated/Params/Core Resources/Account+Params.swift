@@ -2945,7 +2945,7 @@ public struct AccountCreateSettingsPayoutsSchedule: StripeParams {
     /// representing the lowest available value for the account country. Default is `minimum`. The
     /// `delay_days` parameter remains at the last configured value if `interval` is `manual`. [Learn more
     /// about controlling payout delay days](/connect/manage-payout-schedule).
-    public var delayDays: String?
+    public var delayDays: AccountCreateSettingsPayoutsScheduleDelayDays?
     /// How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`.
     /// Default is `daily`.
     public var interval: AccountCreateSettingsPayoutsScheduleInterval?
@@ -2965,7 +2965,7 @@ public struct AccountCreateSettingsPayoutsSchedule: StripeParams {
     /// `tuesday`]. Required and applicable only if `interval` is `weekly`.
     public var weeklyPayoutDays: [AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays]?
 
-    public init(delayDays: String? = nil, interval: AccountCreateSettingsPayoutsScheduleInterval? = nil, monthlyAnchor: Int? = nil, monthlyPayoutDays: [Int]? = nil, weeklyAnchor: AccountCreateSettingsPayoutsScheduleWeeklyAnchor? = nil, weeklyPayoutDays: [AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays]? = nil) {
+    public init(delayDays: AccountCreateSettingsPayoutsScheduleDelayDays? = nil, interval: AccountCreateSettingsPayoutsScheduleInterval? = nil, monthlyAnchor: Int? = nil, monthlyPayoutDays: [Int]? = nil, weeklyAnchor: AccountCreateSettingsPayoutsScheduleWeeklyAnchor? = nil, weeklyPayoutDays: [AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays]? = nil) {
         self.delayDays = delayDays
         self.interval = interval
         self.monthlyAnchor = monthlyAnchor
@@ -2981,6 +2981,38 @@ public struct AccountCreateSettingsPayoutsSchedule: StripeParams {
         case monthlyPayoutDays = "monthly_payout_days"
         case weeklyAnchor = "weekly_anchor"
         case weeklyPayoutDays = "weekly_payout_days"
+    }
+}
+
+/// One of the forms `delay_days` accepts.
+public enum AccountCreateSettingsPayoutsScheduleDelayDays: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `minimum`
+    case minimum
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "minimum": self = .minimum; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of AccountCreateSettingsPayoutsScheduleDelayDays matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .minimum:
+            var container = encoder.singleValueContainer()
+            try container.encode("minimum")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -5737,7 +5769,7 @@ public struct AccountUpdateSettingsPayoutsSchedule: StripeParams {
     /// representing the lowest available value for the account country. Default is `minimum`. The
     /// `delay_days` parameter remains at the last configured value if `interval` is `manual`. [Learn more
     /// about controlling payout delay days](/connect/manage-payout-schedule).
-    public var delayDays: String?
+    public var delayDays: AccountUpdateSettingsPayoutsScheduleDelayDays?
     /// How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`.
     /// Default is `daily`.
     public var interval: AccountUpdateSettingsPayoutsScheduleInterval?
@@ -5757,7 +5789,7 @@ public struct AccountUpdateSettingsPayoutsSchedule: StripeParams {
     /// `tuesday`]. Required and applicable only if `interval` is `weekly`.
     public var weeklyPayoutDays: [AccountUpdateSettingsPayoutsScheduleWeeklyPayoutDays]?
 
-    public init(delayDays: String? = nil, interval: AccountUpdateSettingsPayoutsScheduleInterval? = nil, monthlyAnchor: Int? = nil, monthlyPayoutDays: [Int]? = nil, weeklyAnchor: AccountUpdateSettingsPayoutsScheduleWeeklyAnchor? = nil, weeklyPayoutDays: [AccountUpdateSettingsPayoutsScheduleWeeklyPayoutDays]? = nil) {
+    public init(delayDays: AccountUpdateSettingsPayoutsScheduleDelayDays? = nil, interval: AccountUpdateSettingsPayoutsScheduleInterval? = nil, monthlyAnchor: Int? = nil, monthlyPayoutDays: [Int]? = nil, weeklyAnchor: AccountUpdateSettingsPayoutsScheduleWeeklyAnchor? = nil, weeklyPayoutDays: [AccountUpdateSettingsPayoutsScheduleWeeklyPayoutDays]? = nil) {
         self.delayDays = delayDays
         self.interval = interval
         self.monthlyAnchor = monthlyAnchor
@@ -5773,6 +5805,38 @@ public struct AccountUpdateSettingsPayoutsSchedule: StripeParams {
         case monthlyPayoutDays = "monthly_payout_days"
         case weeklyAnchor = "weekly_anchor"
         case weeklyPayoutDays = "weekly_payout_days"
+    }
+}
+
+/// One of the forms `delay_days` accepts.
+public enum AccountUpdateSettingsPayoutsScheduleDelayDays: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `minimum`
+    case minimum
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "minimum": self = .minimum; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of AccountUpdateSettingsPayoutsScheduleDelayDays matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .minimum:
+            var container = encoder.singleValueContainer()
+            try container.encode("minimum")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 

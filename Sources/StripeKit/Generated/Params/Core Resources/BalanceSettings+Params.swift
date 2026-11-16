@@ -46,11 +46,11 @@ public struct BalanceSettingsUpdatePayments: StripeParams {
 public struct BalanceSettingsUpdatePaymentsPayouts: StripeParams {
     /// Configures per-currency rules for automatically transferring funds from the payments balance to a
     /// FinancialAccount.
-    public var automaticTransferRulesByCurrency: [String: String]?
+    public var automaticTransferRulesByCurrency: [String: [BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrency]]?
     /// The minimum balance amount to retain per currency after automatic payouts. Only funds that exceed
     /// these amounts are paid out. Learn more about the [minimum balances for automatic
     /// payouts](/payouts/minimum-balances-for-automatic-payouts).
-    public var minimumBalanceByCurrency: [String: String]?
+    public var minimumBalanceByCurrency: [String: Int]?
     /// Details on when funds from charges are available, and when they are paid out to an external account.
     /// For details, see our [Setting Bank and Debit Card
     /// Payouts](/connect/bank-transfers#payout-information) documentation.
@@ -59,7 +59,7 @@ public struct BalanceSettingsUpdatePaymentsPayouts: StripeParams {
     /// platform's bank descriptor as set in the Dashboard.
     public var statementDescriptor: String?
 
-    public init(automaticTransferRulesByCurrency: [String: String]? = nil, minimumBalanceByCurrency: [String: String]? = nil, schedule: BalanceSettingsUpdatePaymentsPayoutsSchedule? = nil, statementDescriptor: String? = nil) {
+    public init(automaticTransferRulesByCurrency: [String: [BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrency]]? = nil, minimumBalanceByCurrency: [String: Int]? = nil, schedule: BalanceSettingsUpdatePaymentsPayoutsSchedule? = nil, statementDescriptor: String? = nil) {
         self.automaticTransferRulesByCurrency = automaticTransferRulesByCurrency
         self.minimumBalanceByCurrency = minimumBalanceByCurrency
         self.schedule = schedule
@@ -71,6 +71,28 @@ public struct BalanceSettingsUpdatePaymentsPayouts: StripeParams {
         case minimumBalanceByCurrency = "minimum_balance_by_currency"
         case schedule
         case statementDescriptor = "statement_descriptor"
+    }
+}
+
+public struct BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrency: StripeParams {
+    /// The ID of the FinancialAccount that funds will be transferred to during automatic transfers.
+    public var payoutMethod: String
+    /// The type of automatic transfer rule.
+    public var type: BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrencyType
+    /// The maximum amount in minor units to transfer to the FinancialAccount. Required and only applicable
+    /// when `type` is `transfer_up_to_amount`.
+    public var transferUpToAmount: Int?
+
+    public init(payoutMethod: String, type: BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrencyType, transferUpToAmount: Int? = nil) {
+        self.payoutMethod = payoutMethod
+        self.type = type
+        self.transferUpToAmount = transferUpToAmount
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case payoutMethod = "payout_method"
+        case transferUpToAmount = "transfer_up_to_amount"
+        case type
     }
 }
 

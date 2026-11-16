@@ -142,27 +142,17 @@ struct ParamGenerator {
         if !requiredProps.isEmpty {
             let initParams = requiredProps.map { (propName, prop) -> String in
                 let swiftName = snakeToCamel(propName)
-                // Use anyOf resolution when available, matching property type
-                let swiftType: String
-                if let anyOf = prop.anyOf, !anyOf.isEmpty {
-                    var dummySubStructs: [(name: String, lines: [String])] = []
-                    swiftType = resolveAnyOfParam(anyOf, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
-                } else {
-                    swiftType = paramTypeString(prop, parentStem: stem, propName: propName, depth: depth)
-                }
+                // Same resolution as the property; nested types are already generated there
+                var dummySubStructs: [(name: String, lines: [String])] = []
+                let swiftType = resolveType(prop, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
                 return "\(escapedSwiftName(swiftName)): \(swiftType)"
             }.joined(separator: ", ")
             
             // Add optional params with defaults
             let optionalInitParams = optionalProps.map { (propName, prop) -> String in
                 let swiftName = snakeToCamel(propName)
-                let swiftType: String
-                if let anyOf = prop.anyOf, !anyOf.isEmpty {
-                    var dummySubStructs: [(name: String, lines: [String])] = []
-                    swiftType = resolveAnyOfParam(anyOf, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
-                } else {
-                    swiftType = paramTypeString(prop, parentStem: stem, propName: propName, depth: depth)
-                }
+                var dummySubStructs: [(name: String, lines: [String])] = []
+                let swiftType = resolveType(prop, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
                 return "\(escapedSwiftName(swiftName)): \(swiftType)? = nil"
             }.joined(separator: ", ")
             
@@ -182,13 +172,8 @@ struct ParamGenerator {
             // All-optional: memberwise init with nil defaults
             let initParams = optionalProps.map { (propName, prop) -> String in
                 let swiftName = snakeToCamel(propName)
-                let swiftType: String
-                if let anyOf = prop.anyOf, !anyOf.isEmpty {
-                    var dummySubStructs: [(name: String, lines: [String])] = []
-                    swiftType = resolveAnyOfParam(anyOf, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
-                } else {
-                    swiftType = paramTypeString(prop, parentStem: stem, propName: propName, depth: depth)
-                }
+                var dummySubStructs: [(name: String, lines: [String])] = []
+                let swiftType = resolveType(prop, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
                 return "\(escapedSwiftName(swiftName)): \(swiftType)? = nil"
             }.joined(separator: ", ")
             
@@ -249,70 +234,54 @@ struct ParamGenerator {
         }
         
         let optionalMark = isRequired ? "" : "?"
-        
-        // If this is a nested object type, generate a sub-struct
-        if let props = prop.properties, !props.isEmpty, depth < maxDepth {
-            let childStem = "\(parentStem)\(capitalize(snakeToCamel(name)))"
-            let subRequired = Set(prop.required ?? [])
-            let (subLines, nestedSubs) = generateParamStruct(
-                stem: childStem,
-                schema: prop,
-                requiredFields: subRequired,
-                depth: depth + 1
-            )
-            subStructs.append((childStem, subLines))
-            subStructs.append(contentsOf: nestedSubs)
-        }
-        
-        // If this is an array of objects, generate a sub-struct for the items
-        if prop.type == "array",
-           let items = prop.items,
-           let itemProps = items.properties, !itemProps.isEmpty,
-           depth < maxDepth {
-            let childStem = "\(parentStem)\(capitalize(snakeToCamel(name)))"
-            let subRequired = Set(items.required ?? [])
-            let (subLines, nestedSubs) = generateParamStruct(
-                stem: childStem,
-                schema: items,
-                requiredFields: subRequired,
-                depth: depth + 1
-            )
-            subStructs.append((childStem, subLines))
-            subStructs.append(contentsOf: nestedSubs)
-        }
-        
-        // Handle anyOf — resolve to the most specific non-string variant
-        if let anyOf = prop.anyOf, !anyOf.isEmpty {
-            let resolved = resolveAnyOfParam(anyOf, parentStem: parentStem, propName: name, depth: depth, subStructs: &subStructs)
-            lines.append("    public var \(escapedSwiftName(swiftName)): \(resolved)\(optionalMark)")
-            return lines
-        }
-        
-        // Resolved only here: for an anyOf property, paramTypeString's result isn't used, and
-        // calling it would record a fallback that doesn't happen.
-        let swiftType = paramTypeString(prop, parentStem: parentStem, propName: name, depth: depth)
+        let swiftType = resolveType(prop, parentStem: parentStem, propName: name, depth: depth, subStructs: &subStructs)
         lines.append("    public var \(escapedSwiftName(swiftName)): \(swiftType)\(optionalMark)")
         return lines
     }
     
     // MARK: - Type Resolution
     
-    private func paramTypeString(
+    /// The Swift type for a param schema. Generates the nested types it needs (structs for
+    /// objects, enums for `anyOf` unions) into `subStructs`, named `{parentStem}{PropName}`.
+    /// Every place the type is looser than the schema is recorded in `fallbacks`.
+    private func resolveType(
         _ prop: PropertyObject,
         parentStem: String,
         propName: String,
-        depth: Int
+        depth: Int,
+        subStructs: inout [(name: String, lines: [String])]
     ) -> String {
-        // Handle $ref
-        if let ref = prop.ref {
-            let typeName = refToTypeName(ref)
-            return parser.schemaNameToSwiftType(typeName)
+        let stem = "\(parentStem)\(capitalize(snakeToCamel(propName)))"
+        
+        if let anyOf = prop.anyOf, !anyOf.isEmpty {
+            return resolveAnyOf(anyOf, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs)
         }
         
-        // Handle enum. A "clear-only" enum whose sole value is "" gets no generated
-        // type (generateEnum drops ""), so fall through to the base type instead.
+        if let ref = prop.ref {
+            return parser.schemaNameToSwiftType(refToTypeName(ref))
+        }
+        
+        // Enum. A "clear-only" enum whose sole value is "" gets no generated type
+        // (generateEnum drops ""), so fall through to the base type instead.
         if let enumCases = prop.enum, enumCases.contains(where: { !$0.isEmpty }) {
-            return "\(parentStem)\(capitalize(snakeToCamel(propName)))"
+            return stem
+        }
+        
+        // Object with fields → generated struct
+        if let props = prop.properties, !props.isEmpty {
+            guard depth < maxDepth else {
+                fallbacks.record(parentStem, propName, "nested deeper than \(maxDepth) → [String: String]")
+                return "[String: String]"
+            }
+            let (subLines, nestedSubs) = generateParamStruct(
+                stem: stem,
+                schema: prop,
+                requiredFields: Set(prop.required ?? []),
+                depth: depth + 1
+            )
+            subStructs.append((stem, subLines))
+            subStructs.append(contentsOf: nestedSubs)
+            return stem
         }
         
         switch prop.type {
@@ -325,26 +294,15 @@ struct ParamGenerator {
         case "boolean":
             return "Bool"
         case "array":
-            if let items = prop.items {
-                let elementType = paramTypeString(items, parentStem: parentStem, propName: propName, depth: depth)
-                return "[\(elementType)]"
+            guard let items = prop.items else {
+                fallbacks.record(parentStem, propName, "array without items → [String]")
+                return "[String]"
             }
-            fallbacks.record(parentStem, propName, "array without items → [String]")
-            return "[String]"
+            return "[\(resolveType(items, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs))]"
         case "object":
+            // A map, e.g. metadata ([String: String]) or currency_options ([String: {Stem}])
             if let values = prop.additionalProperties {
-                if values.type != "string" {
-                    fallbacks.record(parentStem, propName, "map of \(values.type ?? "untyped") values → [String: String]")
-                }
-                return "[String: String]"
-            }
-            if let props = prop.properties, !props.isEmpty {
-                if depth < maxDepth {
-                    return "\(parentStem)\(capitalize(snakeToCamel(propName)))"
-                } else {
-                    fallbacks.record(parentStem, propName, "nested deeper than \(maxDepth) → [String: String]")
-                    return "[String: String]"
-                }
+                return "[String: \(resolveType(values, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs))]"
             }
             // `properties: {}` is a hash the spec defines as empty (e.g. payment_method_data[bizum]),
             // so nothing is lost; only an object with no shape at all is a fallback.
@@ -353,22 +311,12 @@ struct ParamGenerator {
             }
             return "[String: String]"
         default:
-            if let anyOf = prop.anyOf {
-                // Reached for anyOf array items; properties resolve anyOf via resolveAnyOfParam.
-                // `string | ""` (a value or the "unset" empty string) is exactly a String.
-                let variants = anyOf.filter { $0.enum != [""] }
-                if !variants.allSatisfy({ $0.type == "string" && $0.enum == nil }) {
-                    let kinds = variants.map { $0.title ?? $0.type ?? "?" }.joined(separator: " | ")
-                    fallbacks.record(parentStem, propName, "array items anyOf \(kinds) → String")
-                }
-            } else {
-                fallbacks.record(parentStem, propName, "type \(prop.type ?? "missing") → String")
-            }
+            fallbacks.record(parentStem, propName, "type \(prop.type ?? "missing") → String")
             return "String"
         }
     }
     
-    private func resolveAnyOfParam(
+    private func resolveAnyOf(
         _ variants: [PropertyObject],
         parentStem: String,
         propName: String,
@@ -376,47 +324,11 @@ struct ParamGenerator {
         subStructs: inout [(name: String, lines: [String])]
     ) -> String {
         // Filter out empty-string enum variants (Stripe uses "" to mean "unset")
-        let nonEmpty = variants.filter { variant in
-            if let enumVals = variant.enum, enumVals == [""] { return false }
-            return true
-        }
+        let nonEmpty = variants.filter { $0.enum != [""] }
         
-        // If only one non-empty variant, use it
+        // One real variant: it's that variant's type
         if nonEmpty.count == 1, let single = nonEmpty.first {
-            // If it's an object with properties, generate sub-struct
-            if let props = single.properties, !props.isEmpty, depth < maxDepth {
-                let childStem = "\(parentStem)\(capitalize(snakeToCamel(propName)))"
-                let subRequired = Set(single.required ?? [])
-                let (subLines, nestedSubs) = generateParamStruct(
-                    stem: childStem,
-                    schema: single,
-                    requiredFields: subRequired,
-                    depth: depth + 1
-                )
-                let structName = childStem
-                subStructs.append((structName, subLines))
-                subStructs.append(contentsOf: nestedSubs)
-                return structName
-            }
-            // If it's an array of objects, generate sub-struct for the items
-            if single.type == "array",
-               let items = single.items,
-               let itemProps = items.properties, !itemProps.isEmpty,
-               depth < maxDepth {
-                let childStem = "\(parentStem)\(capitalize(snakeToCamel(propName)))"
-                let subRequired = Set(items.required ?? [])
-                let (subLines, nestedSubs) = generateParamStruct(
-                    stem: childStem,
-                    schema: items,
-                    requiredFields: subRequired,
-                    depth: depth + 1
-                )
-                let structName = childStem
-                subStructs.append((structName, subLines))
-                subStructs.append(contentsOf: nestedSubs)
-                return "[\(structName)]"
-            }
-            return paramTypeString(single, parentStem: parentStem, propName: propName, depth: depth)
+            return resolveType(single, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs)
         }
         
         // `integer | range_query_specs` (list filters like `created`) → shared StripeRangeQuery
@@ -425,8 +337,12 @@ struct ParamGenerator {
            nonEmpty.contains(where: { $0.title == "range_query_specs" }) {
             return "StripeRangeQuery"
         }
-
-        // Multiple variants — fall back to String
+        
+        // Several forms → a generated enum with a case per form
+        if let union = generateUnion(nonEmpty, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs) {
+            return union
+        }
+        
         let kinds = nonEmpty.map { variant -> String in
             if let title = variant.title { return title }
             if variant.enum != nil { return "\(variant.type ?? "?") enum" }
@@ -434,6 +350,150 @@ struct ParamGenerator {
         }
         fallbacks.record(parentStem, propName, "anyOf \(kinds.joined(separator: " | ")) → String")
         return "String"
+    }
+    
+    // MARK: - Union Generation
+    
+    /// Swift scalar type and literal protocol for a plain (non-enum) scalar schema.
+    private func unionScalar(_ variant: PropertyObject) -> (type: String, literal: String, literalType: String)? {
+        guard variant.enum == nil, variant.properties?.isEmpty != false else { return nil }
+        switch variant.type {
+        case "integer": return ("Int", "ExpressibleByIntegerLiteral", "integerLiteral value: Int")
+        case "number": return ("Double", "ExpressibleByFloatLiteral", "floatLiteral value: Double")
+        case "boolean": return ("Bool", "ExpressibleByBooleanLiteral", "booleanLiteral value: Bool")
+        case "string": return ("String", "ExpressibleByStringLiteral", "stringLiteral value: String")
+        default: return nil
+        }
+    }
+    
+    /// Case name for an object variant, from its spec title minus a `_param(s)` suffix:
+    /// secret_key_param → secretKey, card_details_params → cardDetails, card_token → cardToken.
+    private func unionObjectCaseName(_ variant: PropertyObject, index: Int) -> String {
+        guard let title = variant.title else { return "variant\(index + 1)" }
+        var base = title
+        for suffix in ["_params", "_param"] where base.hasSuffix(suffix) && base.count > suffix.count {
+            base = String(base.dropLast(suffix.count))
+            break
+        }
+        return snakeToCamel(base)
+    }
+    
+    /// Generate an enum for an `anyOf` with several forms, e.g. `trial_end: "now" | timestamp`:
+    ///
+    ///     public enum SubscriptionCreateTrialEnd: …, ExpressibleByIntegerLiteral {
+    ///         case now
+    ///         case value(Int)
+    ///     }
+    ///
+    /// Keyword strings become plain cases, a scalar becomes `value(T)` (and the enum takes
+    /// that literal: `trialEnd: 1_700_000_000`), object forms become cases carrying a generated
+    /// struct. Returns nil for shapes it can't represent (e.g. two different scalars).
+    private func generateUnion(
+        _ variants: [PropertyObject],
+        parentStem: String,
+        propName: String,
+        depth: Int,
+        subStructs: inout [(name: String, lines: [String])]
+    ) -> String? {
+        let name = "\(parentStem)\(capitalize(snakeToCamel(propName)))"
+        
+        var keywords: [String] = []
+        var scalar: (type: String, literal: String, literalType: String)?
+        var objects: [(caseName: String, typeName: String)] = []
+        
+        for (index, variant) in variants.enumerated() {
+            if variant.type == "string", let values = variant.enum {
+                keywords.append(contentsOf: values.filter { !$0.isEmpty })
+            } else if let s = unionScalar(variant) {
+                guard scalar == nil else { return nil }
+                scalar = s
+            } else if let props = variant.properties, !props.isEmpty, depth < maxDepth {
+                let caseName = unionObjectCaseName(variant, index: index)
+                let typeName = "\(name)\(capitalize(caseName))"
+                let (subLines, nestedSubs) = generateParamStruct(
+                    stem: typeName,
+                    schema: variant,
+                    requiredFields: Set(variant.required ?? []),
+                    depth: depth + 1
+                )
+                subStructs.append((typeName, subLines))
+                subStructs.append(contentsOf: nestedSubs)
+                objects.append((caseName, typeName))
+            } else {
+                return nil
+            }
+        }
+        
+        let keywordCases = keywords.map { (raw: $0, name: enumCaseToSwift($0)) }
+        let caseNames = keywordCases.map(\.name) + objects.map(\.caseName) + (scalar == nil ? [] : ["value"])
+        guard Set(caseNames).count == caseNames.count else { return nil }
+        
+        var conformances = ["Codable", "Sendable"]
+        if let scalar { conformances.append(scalar.literal) }
+        
+        var lines: [String] = []
+        lines.append("/// One of the forms `\(propName)` accepts.")
+        lines.append("public enum \(name): \(conformances.joined(separator: ", ")) {")
+        for keyword in keywordCases {
+            lines.append("    /// `\(keyword.raw)`")
+            lines.append("    case \(escapedSwiftName(keyword.name))")
+        }
+        for object in objects {
+            lines.append("    case \(escapedSwiftName(object.caseName))(\(object.typeName))")
+        }
+        if let scalar {
+            lines.append("    case value(\(scalar.type))")
+            lines.append("")
+            lines.append("    public init(\(scalar.literalType)) { self = .value(value) }")
+        }
+        
+        // Decoding: keywords and the scalar from a single value, then each object form in turn
+        lines.append("")
+        lines.append("    public init(from decoder: Decoder) throws {")
+        lines.append("        let container = try decoder.singleValueContainer()")
+        if !keywordCases.isEmpty {
+            lines.append("        if let keyword = try? container.decode(String.self) {")
+            lines.append("            switch keyword {")
+            for keyword in keywordCases {
+                lines.append("            case \"\(keyword.raw)\": self = .\(escapedSwiftName(keyword.name)); return")
+            }
+            lines.append("            default: break")
+            lines.append("            }")
+            lines.append("        }")
+        }
+        if let scalar {
+            lines.append("        if let value = try? container.decode(\(scalar.type).self) { self = .value(value); return }")
+        }
+        for object in objects {
+            lines.append("        if let value = try? \(object.typeName)(from: decoder) { self = .\(escapedSwiftName(object.caseName))(value); return }")
+        }
+        lines.append("        throw DecodingError.dataCorruptedError(in: container, debugDescription: \"No form of \(name) matches\")")
+        lines.append("    }")
+        
+        // Encoding: keywords as their string, the scalar as itself, an object form as its fields
+        lines.append("")
+        lines.append("    public func encode(to encoder: Encoder) throws {")
+        lines.append("        switch self {")
+        for keyword in keywordCases {
+            lines.append("        case .\(escapedSwiftName(keyword.name)):")
+            lines.append("            var container = encoder.singleValueContainer()")
+            lines.append("            try container.encode(\"\(keyword.raw)\")")
+        }
+        for object in objects {
+            lines.append("        case .\(escapedSwiftName(object.caseName))(let value):")
+            lines.append("            try value.encode(to: encoder)")
+        }
+        if scalar != nil {
+            lines.append("        case .value(let value):")
+            lines.append("            var container = encoder.singleValueContainer()")
+            lines.append("            try container.encode(value)")
+        }
+        lines.append("        }")
+        lines.append("    }")
+        lines.append("}")
+        
+        subStructs.append((name, lines))
+        return name
     }
     
     // MARK: - Enum Generation for Params
@@ -538,18 +598,37 @@ struct ParamGenerator {
             }
         }
         
-        // Recurse into anyOf variants
+        // Recurse into anyOf variants. In a union (several real variants), each object
+        // variant's struct is named with a variant suffix (see generateUnion), so its enums are too.
         if let anyOf = prop.anyOf {
-            for variant in anyOf {
+            let isUnion = anyOf.filter { $0.enum != [""] }.count > 1
+            for (index, variant) in anyOf.enumerated() {
+                var variantPropName = propName
+                if isUnion, let props = variant.properties, !props.isEmpty {
+                    let caseName = unionObjectCaseName(variant, index: anyOf.filter { $0.enum != [""] }.firstIndex { $0 === variant } ?? index)
+                    variantPropName = propName + "_" + camelToSnakeForNames(caseName)
+                }
                 collectNestedEnums(
                     prop: variant,
                     parentName: parentName,
-                    propName: propName,
+                    propName: variantPropName,
                     lines: &lines,
                     depth: depth,
                     seenEnumNames: &seenEnumNames
                 )
             }
+        }
+
+        // Recurse into map values (currency_options → [String: {Parent}{Prop}])
+        if let values = prop.additionalProperties {
+            collectNestedEnums(
+                prop: values,
+                parentName: parentName,
+                propName: propName,
+                lines: &lines,
+                depth: depth,
+                seenEnumNames: &seenEnumNames
+            )
         }
     }
     
@@ -623,5 +702,12 @@ final class ParamFallbacks: @unchecked Sendable {
 
     func record(_ parentStem: String, _ propName: String, _ detail: String) {
         entries["\(parentStem).\(propName)"] = detail
+    }
+}
+
+/// cardDetails → card_details, so `snakeToCamel` round-trips a generated case name.
+private func camelToSnakeForNames(_ name: String) -> String {
+    name.reduce(into: "") { result, char in
+        if char.isUppercase { result += "_" + char.lowercased() } else { result.append(char) }
     }
 }

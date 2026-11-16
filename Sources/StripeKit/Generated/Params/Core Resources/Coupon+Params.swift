@@ -19,7 +19,7 @@ public struct CouponCreateParams: StripeParams {
     /// Coupons defined in each available currency option (only supported if `amount_off` is passed). Each
     /// key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and
     /// a [supported currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: CouponCreateCurrencyOptions]?
     /// Specifies how long the discount will be in effect if used on a subscription. Defaults to `once`.
     public var duration: CouponCreateDuration?
     /// Required only if `duration` is `repeating`, in which case it must be a positive integer that
@@ -50,7 +50,7 @@ public struct CouponCreateParams: StripeParams {
     /// customers.
     public var redeemBy: Int?
 
-    public init(amountOff: Int? = nil, appliesTo: CouponCreateAppliesTo? = nil, currency: String? = nil, currencyOptions: [String: String]? = nil, duration: CouponCreateDuration? = nil, durationInMonths: Int? = nil, expand: [String]? = nil, id: String? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, name: String? = nil, percentOff: Double? = nil, redeemBy: Int? = nil) {
+    public init(amountOff: Int? = nil, appliesTo: CouponCreateAppliesTo? = nil, currency: String? = nil, currencyOptions: [String: CouponCreateCurrencyOptions]? = nil, duration: CouponCreateDuration? = nil, durationInMonths: Int? = nil, expand: [String]? = nil, id: String? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, name: String? = nil, percentOff: Double? = nil, redeemBy: Int? = nil) {
         self.amountOff = amountOff
         self.appliesTo = appliesTo
         self.currency = currency
@@ -124,7 +124,7 @@ public struct CouponUpdateParams: StripeParams {
     /// Each key must be a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: CouponUpdateCurrencyOptions]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -136,7 +136,7 @@ public struct CouponUpdateParams: StripeParams {
     /// `id` is shown if `name` is not set.
     public var name: String?
 
-    public init(currencyOptions: [String: String]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil) {
+    public init(currencyOptions: [String: CouponUpdateCurrencyOptions]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.currencyOptions = currencyOptions
         self.expand = expand
         self.metadata = metadata
@@ -158,5 +158,31 @@ public struct CouponCreateAppliesTo: StripeParams {
 
     public init(products: [String]? = nil) {
         self.products = products
+    }
+}
+
+public struct CouponCreateCurrencyOptions: StripeParams {
+    /// A positive integer representing the amount to subtract from an invoice total.
+    public var amountOff: Int
+
+    public init(amountOff: Int) {
+        self.amountOff = amountOff
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amountOff = "amount_off"
+    }
+}
+
+public struct CouponUpdateCurrencyOptions: StripeParams {
+    /// A positive integer representing the amount to subtract from an invoice total.
+    public var amountOff: Int
+
+    public init(amountOff: Int) {
+        self.amountOff = amountOff
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amountOff = "amount_off"
     }
 }

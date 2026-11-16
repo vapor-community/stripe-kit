@@ -15,7 +15,7 @@ public struct TokenCreateParams: StripeParams {
     /// The card this token will represent. If you also pass in a customer, the card must be the ID of a
     /// card belonging to the customer. Otherwise, if you do not pass in a customer, this is a dictionary
     /// containing a user's credit card details, with the options described below.
-    public var card: String?
+    public var card: TokenCreateCard?
     /// Create a token for the customer, which is owned by the application's account. You can only use this
     /// with an [OAuth access token](https://docs.stripe.com/connect/standard-accounts) or [Stripe-Account
     /// header](https://docs.stripe.com/connect/authentication). Learn more about [cloning saved payment
@@ -30,7 +30,7 @@ public struct TokenCreateParams: StripeParams {
     /// The PII this token represents.
     public var pii: TokenCreatePii?
 
-    public init(account: TokenCreateAccount? = nil, bankAccount: TokenCreateBankAccount? = nil, card: String? = nil, customer: String? = nil, cvcUpdate: TokenCreateCvcUpdate? = nil, expand: [String]? = nil, person: TokenCreatePerson? = nil, pii: TokenCreatePii? = nil) {
+    public init(account: TokenCreateAccount? = nil, bankAccount: TokenCreateBankAccount? = nil, card: TokenCreateCard? = nil, customer: String? = nil, cvcUpdate: TokenCreateCvcUpdate? = nil, expand: [String]? = nil, person: TokenCreatePerson? = nil, pii: TokenCreatePii? = nil) {
         self.account = account
         self.bankAccount = bankAccount
         self.card = card
@@ -952,6 +952,106 @@ public struct TokenCreateBankAccount: StripeParams {
         case currency
         case paymentMethod = "payment_method"
         case routingNumber = "routing_number"
+    }
+}
+
+public struct TokenCreateCardCreditCardSpecs: StripeParams {
+    /// Two-digit number representing the card's expiration month.
+    public var expMonth: String
+    /// Two- or four-digit number representing the card's expiration year.
+    public var expYear: String
+    /// The card number, as a string without any separators.
+    public var number: String
+    /// City / District / Suburb / Town / Village.
+    public var addressCity: String?
+    /// Billing address country, if provided.
+    public var addressCountry: String?
+    /// Address line 1 (Street address / PO Box / Company name).
+    public var addressLine1: String?
+    /// Address line 2 (Apartment / Suite / Unit / Building).
+    public var addressLine2: String?
+    /// State / County / Province / Region.
+    public var addressState: String?
+    /// ZIP or postal code.
+    public var addressZip: String?
+    /// Required in order to add the card to an account; in all other cases, this parameter is not used.
+    /// When added to an account, the card (which must be a debit card) can be used as a transfer
+    /// destination for funds in this currency.
+    public var currency: String?
+    /// Card security code. Highly recommended to always include this value.
+    public var cvc: String?
+    /// Cardholder's full name.
+    public var name: String?
+    /// Contains information about card networks used to process the payment.
+    public var networks: TokenCreateCardCreditCardSpecsNetworks?
+
+    public init(expMonth: String, expYear: String, number: String, addressCity: String? = nil, addressCountry: String? = nil, addressLine1: String? = nil, addressLine2: String? = nil, addressState: String? = nil, addressZip: String? = nil, currency: String? = nil, cvc: String? = nil, name: String? = nil, networks: TokenCreateCardCreditCardSpecsNetworks? = nil) {
+        self.expMonth = expMonth
+        self.expYear = expYear
+        self.number = number
+        self.addressCity = addressCity
+        self.addressCountry = addressCountry
+        self.addressLine1 = addressLine1
+        self.addressLine2 = addressLine2
+        self.addressState = addressState
+        self.addressZip = addressZip
+        self.currency = currency
+        self.cvc = cvc
+        self.name = name
+        self.networks = networks
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case addressCity = "address_city"
+        case addressCountry = "address_country"
+        case addressLine1 = "address_line1"
+        case addressLine2 = "address_line2"
+        case addressState = "address_state"
+        case addressZip = "address_zip"
+        case currency
+        case cvc
+        case expMonth = "exp_month"
+        case expYear = "exp_year"
+        case name
+        case networks
+        case number
+    }
+}
+
+/// Contains information about card networks used to process the payment.
+public struct TokenCreateCardCreditCardSpecsNetworks: StripeParams {
+    /// The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`,
+    /// `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as
+    /// `invalid_preference` on the card.
+    public var preferred: TokenCreateCardCreditCardSpecsNetworksPreferred?
+
+    public init(preferred: TokenCreateCardCreditCardSpecsNetworksPreferred? = nil) {
+        self.preferred = preferred
+    }
+}
+
+/// One of the forms `card` accepts.
+public enum TokenCreateCard: Codable, Sendable, ExpressibleByStringLiteral {
+    case creditCardSpecs(TokenCreateCardCreditCardSpecs)
+    case value(String)
+
+    public init(stringLiteral value: String) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(String.self) { self = .value(value); return }
+        if let value = try? TokenCreateCardCreditCardSpecs(from: decoder) { self = .creditCardSpecs(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TokenCreateCard matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .creditCardSpecs(let value):
+            try value.encode(to: encoder)
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 

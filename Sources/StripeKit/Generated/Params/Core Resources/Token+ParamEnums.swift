@@ -62,7 +62,7 @@ public enum TokenCreateBankAccountAccountType: String, Codable, Sendable {
     case toza
 }
 
-public enum TokenCreateCardNetworksPreferred: String, Codable, Sendable {
+public enum TokenCreateCardCreditCardSpecsNetworksPreferred: String, Codable, Sendable {
     case cartesBancaires = "cartes_bancaires"
     case mastercard
     case visa

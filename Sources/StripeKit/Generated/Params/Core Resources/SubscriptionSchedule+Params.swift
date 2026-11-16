@@ -69,9 +69,9 @@ public struct SubscriptionScheduleCreateParams: StripeParams {
     /// slightly backdated or postdated start. You can also use a Unix timestamp to backdate the
     /// subscription so that it starts on a past date, or set a future date for the subscription to start
     /// on.
-    public var startDate: String?
+    public var startDate: SubscriptionScheduleCreateStartDate?
 
-    public init(billingMode: SubscriptionScheduleCreateBillingMode? = nil, customer: String? = nil, customerAccount: String? = nil, defaultSettings: SubscriptionScheduleCreateDefaultSettings? = nil, endBehavior: SubscriptionScheduleCreateEndBehavior? = nil, expand: [String]? = nil, fromSubscription: String? = nil, metadata: [String: String]? = nil, pauseSchedules: [SubscriptionScheduleCreatePauseSchedules]? = nil, phases: [SubscriptionScheduleCreatePhases]? = nil, startDate: String? = nil) {
+    public init(billingMode: SubscriptionScheduleCreateBillingMode? = nil, customer: String? = nil, customerAccount: String? = nil, defaultSettings: SubscriptionScheduleCreateDefaultSettings? = nil, endBehavior: SubscriptionScheduleCreateEndBehavior? = nil, expand: [String]? = nil, fromSubscription: String? = nil, metadata: [String: String]? = nil, pauseSchedules: [SubscriptionScheduleCreatePauseSchedules]? = nil, phases: [SubscriptionScheduleCreatePhases]? = nil, startDate: SubscriptionScheduleCreateStartDate? = nil) {
         self.billingMode = billingMode
         self.customer = customer
         self.customerAccount = customerAccount
@@ -1240,6 +1240,38 @@ public struct SubscriptionScheduleCreatePhasesTransferData: StripeParams {
     }
 }
 
+/// One of the forms `start_date` accepts.
+public enum SubscriptionScheduleCreateStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleCreateStartDate matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
+    }
+}
+
 /// Object representing the subscription schedule's default settings.
 public struct SubscriptionScheduleUpdateDefaultSettings: StripeParams {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
@@ -1678,7 +1710,7 @@ public struct SubscriptionScheduleUpdatePhases: StripeParams {
     /// The number of intervals the phase should last. If set, `end_date` must not be set.
     public var duration: SubscriptionScheduleUpdatePhasesDuration?
     /// The date at which this phase of the subscription schedule ends. If set, `duration` must not be set.
-    public var endDate: String?
+    public var endDate: SubscriptionScheduleUpdatePhasesEndDate?
     /// All invoices will be billed using the specified settings.
     public var invoiceSettings: SubscriptionScheduleUpdatePhasesInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a phase.
@@ -1701,7 +1733,7 @@ public struct SubscriptionScheduleUpdatePhases: StripeParams {
     /// phase. Prefer to specify `now` over an explicit timestamp when appropriate to avoid unexpected
     /// behavior due to request delays or clock skew resulting in the phase being slightly backdated or
     /// postdated.
-    public var startDate: String?
+    public var startDate: SubscriptionScheduleUpdatePhasesStartDate?
     /// The data with which to automatically create a Transfer for each of the associated subscription's
     /// invoices.
     public var transferData: SubscriptionScheduleUpdatePhasesTransferData?
@@ -1710,9 +1742,9 @@ public struct SubscriptionScheduleUpdatePhases: StripeParams {
     public var trial: Bool?
     /// Sets the phase to trialing from the start date to this date. Must be within the phase. When combined
     /// with `trial=true`, it must match the phase end date.
-    public var trialEnd: String?
+    public var trialEnd: SubscriptionScheduleUpdatePhasesTrialEnd?
 
-    public init(items: [SubscriptionScheduleUpdatePhasesItems], addInvoiceItems: [SubscriptionScheduleUpdatePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleUpdatePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleUpdatePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleUpdatePhasesBillingThresholds? = nil, collectionMethod: SubscriptionScheduleUpdatePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionScheduleUpdatePhasesDiscounts]? = nil, duration: SubscriptionScheduleUpdatePhasesDuration? = nil, endDate: String? = nil, invoiceSettings: SubscriptionScheduleUpdatePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionScheduleUpdatePhasesProrationBehavior? = nil, startDate: String? = nil, transferData: SubscriptionScheduleUpdatePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: String? = nil) {
+    public init(items: [SubscriptionScheduleUpdatePhasesItems], addInvoiceItems: [SubscriptionScheduleUpdatePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleUpdatePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleUpdatePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleUpdatePhasesBillingThresholds? = nil, collectionMethod: SubscriptionScheduleUpdatePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionScheduleUpdatePhasesDiscounts]? = nil, duration: SubscriptionScheduleUpdatePhasesDuration? = nil, endDate: SubscriptionScheduleUpdatePhasesEndDate? = nil, invoiceSettings: SubscriptionScheduleUpdatePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionScheduleUpdatePhasesProrationBehavior? = nil, startDate: SubscriptionScheduleUpdatePhasesStartDate? = nil, transferData: SubscriptionScheduleUpdatePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: SubscriptionScheduleUpdatePhasesTrialEnd? = nil) {
         self.items = items
         self.addInvoiceItems = addInvoiceItems
         self.applicationFeePercent = applicationFeePercent
@@ -2148,6 +2180,38 @@ public struct SubscriptionScheduleUpdatePhasesDuration: StripeParams {
     }
 }
 
+/// One of the forms `end_date` accepts.
+public enum SubscriptionScheduleUpdatePhasesEndDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleUpdatePhasesEndDate matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
+    }
+}
+
 /// All invoices will be billed using the specified settings.
 public struct SubscriptionScheduleUpdatePhasesInvoiceSettings: StripeParams {
     /// The account tax IDs associated with this phase of the subscription schedule. Will be set on invoices
@@ -2211,6 +2275,38 @@ public struct SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuer: StripeParam
     }
 }
 
+/// One of the forms `start_date` accepts.
+public enum SubscriptionScheduleUpdatePhasesStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleUpdatePhasesStartDate matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
+    }
+}
+
 /// The data with which to automatically create a Transfer for each of the associated subscription's
 /// invoices.
 public struct SubscriptionScheduleUpdatePhasesTransferData: StripeParams {
@@ -2229,5 +2325,37 @@ public struct SubscriptionScheduleUpdatePhasesTransferData: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case amountPercent = "amount_percent"
         case destination
+    }
+}
+
+/// One of the forms `trial_end` accepts.
+public enum SubscriptionScheduleUpdatePhasesTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleUpdatePhasesTrialEnd matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }

@@ -107,7 +107,7 @@ class StripeParamsTests: XCTestCase {
             automaticPaymentMethods: .init(enabled: true),
             confirm: true,
             metadata: ["order_id": "ord 1&2"],
-            offSession: "true",
+            offSession: true,
             setupFutureUsage: .offSession
         )
         let pairs = Set(params.toFormBody().split(separator: "&").map(String.init))

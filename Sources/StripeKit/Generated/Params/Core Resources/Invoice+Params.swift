@@ -1741,9 +1741,9 @@ public struct InvoiceCreateShippingCostShippingRateDataFixedAmount: StripeParams
     /// Shipping rates defined in each available currency option. Each key must be a three-letter [ISO
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOptions]?
 
-    public init(amount: Int, currency: String, currencyOptions: [String: String]? = nil) {
+    public init(amount: Int, currency: String, currencyOptions: [String: InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOptions]? = nil) {
         self.amount = amount
         self.currency = currency
         self.currencyOptions = currencyOptions
@@ -1753,6 +1753,24 @@ public struct InvoiceCreateShippingCostShippingRateDataFixedAmount: StripeParams
         case amount
         case currency
         case currencyOptions = "currency_options"
+    }
+}
+
+public struct InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOptions: StripeParams {
+    /// A non-negative integer in cents representing how much to charge.
+    public var amount: Int
+    /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
+    /// `inclusive`, `exclusive`, or `unspecified`.
+    public var taxBehavior: InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior?
+
+    public init(amount: Int, taxBehavior: InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior? = nil) {
+        self.amount = amount
+        self.taxBehavior = taxBehavior
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case taxBehavior = "tax_behavior"
     }
 }
 
@@ -2534,7 +2552,7 @@ public struct InvoiceCreatePreviewScheduleDetailsPhases: StripeParams {
     /// The number of intervals the phase should last. If set, `end_date` must not be set.
     public var duration: InvoiceCreatePreviewScheduleDetailsPhasesDuration?
     /// The date at which this phase of the subscription schedule ends. If set, `duration` must not be set.
-    public var endDate: String?
+    public var endDate: InvoiceCreatePreviewScheduleDetailsPhasesEndDate?
     /// All invoices will be billed using the specified settings.
     public var invoiceSettings: InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a phase.
@@ -2557,7 +2575,7 @@ public struct InvoiceCreatePreviewScheduleDetailsPhases: StripeParams {
     /// phase. Prefer to specify `now` over an explicit timestamp when appropriate to avoid unexpected
     /// behavior due to request delays or clock skew resulting in the phase being slightly backdated or
     /// postdated.
-    public var startDate: String?
+    public var startDate: InvoiceCreatePreviewScheduleDetailsPhasesStartDate?
     /// The data with which to automatically create a Transfer for each of the associated subscription's
     /// invoices.
     public var transferData: InvoiceCreatePreviewScheduleDetailsPhasesTransferData?
@@ -2566,9 +2584,9 @@ public struct InvoiceCreatePreviewScheduleDetailsPhases: StripeParams {
     public var trial: Bool?
     /// Sets the phase to trialing from the start date to this date. Must be within the phase. When
     /// previewing an update, if combined with `trial=true`, it must match the phase end date.
-    public var trialEnd: String?
+    public var trialEnd: InvoiceCreatePreviewScheduleDetailsPhasesTrialEnd?
 
-    public init(items: [InvoiceCreatePreviewScheduleDetailsPhasesItems], addInvoiceItems: [InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: InvoiceCreatePreviewScheduleDetailsPhasesAutomaticTax? = nil, billingCycleAnchor: InvoiceCreatePreviewScheduleDetailsPhasesBillingCycleAnchor? = nil, billingThresholds: InvoiceCreatePreviewScheduleDetailsPhasesBillingThresholds? = nil, collectionMethod: InvoiceCreatePreviewScheduleDetailsPhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [InvoiceCreatePreviewScheduleDetailsPhasesDiscounts]? = nil, duration: InvoiceCreatePreviewScheduleDetailsPhasesDuration? = nil, endDate: String? = nil, invoiceSettings: InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: InvoiceCreatePreviewScheduleDetailsPhasesProrationBehavior? = nil, startDate: String? = nil, transferData: InvoiceCreatePreviewScheduleDetailsPhasesTransferData? = nil, trial: Bool? = nil, trialEnd: String? = nil) {
+    public init(items: [InvoiceCreatePreviewScheduleDetailsPhasesItems], addInvoiceItems: [InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: InvoiceCreatePreviewScheduleDetailsPhasesAutomaticTax? = nil, billingCycleAnchor: InvoiceCreatePreviewScheduleDetailsPhasesBillingCycleAnchor? = nil, billingThresholds: InvoiceCreatePreviewScheduleDetailsPhasesBillingThresholds? = nil, collectionMethod: InvoiceCreatePreviewScheduleDetailsPhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [InvoiceCreatePreviewScheduleDetailsPhasesDiscounts]? = nil, duration: InvoiceCreatePreviewScheduleDetailsPhasesDuration? = nil, endDate: InvoiceCreatePreviewScheduleDetailsPhasesEndDate? = nil, invoiceSettings: InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: InvoiceCreatePreviewScheduleDetailsPhasesProrationBehavior? = nil, startDate: InvoiceCreatePreviewScheduleDetailsPhasesStartDate? = nil, transferData: InvoiceCreatePreviewScheduleDetailsPhasesTransferData? = nil, trial: Bool? = nil, trialEnd: InvoiceCreatePreviewScheduleDetailsPhasesTrialEnd? = nil) {
         self.items = items
         self.addInvoiceItems = addInvoiceItems
         self.applicationFeePercent = applicationFeePercent
@@ -3004,6 +3022,38 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesDuration: StripeParams {
     }
 }
 
+/// One of the forms `end_date` accepts.
+public enum InvoiceCreatePreviewScheduleDetailsPhasesEndDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewScheduleDetailsPhasesEndDate matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
+    }
+}
+
 /// All invoices will be billed using the specified settings.
 public struct InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettings: StripeParams {
     /// The account tax IDs associated with this phase of the subscription schedule. Will be set on invoices
@@ -3043,6 +3093,38 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettingsIssuer: St
     }
 }
 
+/// One of the forms `start_date` accepts.
+public enum InvoiceCreatePreviewScheduleDetailsPhasesStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewScheduleDetailsPhasesStartDate matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
+    }
+}
+
 /// The data with which to automatically create a Transfer for each of the associated subscription's
 /// invoices.
 public struct InvoiceCreatePreviewScheduleDetailsPhasesTransferData: StripeParams {
@@ -3064,6 +3146,38 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesTransferData: StripeParam
     }
 }
 
+/// One of the forms `trial_end` accepts.
+public enum InvoiceCreatePreviewScheduleDetailsPhasesTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewScheduleDetailsPhasesTrialEnd matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
+    }
+}
+
 /// The subscription creation or modification params to apply as a preview. Cannot be used with
 /// `schedule` or `schedule_details` fields.
 public struct InvoiceCreatePreviewSubscriptionDetails: StripeParams {
@@ -3079,7 +3193,7 @@ public struct InvoiceCreatePreviewSubscriptionDetails: StripeParams {
     /// A timestamp at which the subscription should cancel. If set to a date before the current period
     /// ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set
     /// during a future period, this will always cause a proration for that period.
-    public var cancelAt: String?
+    public var cancelAt: InvoiceCreatePreviewSubscriptionDetailsCancelAt?
     /// Indicate whether this subscription should cancel at the end of the current period
     /// (`current_period_end`). Defaults to `false`.
     public var cancelAtPeriodEnd: Bool?
@@ -3120,9 +3234,9 @@ public struct InvoiceCreatePreviewSubscriptionDetails: StripeParams {
     public var startDate: Int?
     /// If provided, the invoice returned will preview updating or creating a subscription with that trial
     /// end. If set, one of `subscription_details.items` or `subscription` is required.
-    public var trialEnd: String?
+    public var trialEnd: InvoiceCreatePreviewSubscriptionDetailsTrialEnd?
 
-    public init(billingCycleAnchor: InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchor? = nil, billingMode: InvoiceCreatePreviewSubscriptionDetailsBillingMode? = nil, billingSchedules: [InvoiceCreatePreviewSubscriptionDetailsBillingSchedules]? = nil, cancelAt: String? = nil, cancelAtPeriodEnd: Bool? = nil, cancelNow: Bool? = nil, defaultTaxRates: [String]? = nil, items: [InvoiceCreatePreviewSubscriptionDetailsItems]? = nil, metadata: [String: String]? = nil, pause: InvoiceCreatePreviewSubscriptionDetailsPause? = nil, prorationBehavior: InvoiceCreatePreviewSubscriptionDetailsProrationBehavior? = nil, prorationDate: Int? = nil, resumeAt: InvoiceCreatePreviewSubscriptionDetailsResumeAt? = nil, startDate: Int? = nil, trialEnd: String? = nil) {
+    public init(billingCycleAnchor: InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchor? = nil, billingMode: InvoiceCreatePreviewSubscriptionDetailsBillingMode? = nil, billingSchedules: [InvoiceCreatePreviewSubscriptionDetailsBillingSchedules]? = nil, cancelAt: InvoiceCreatePreviewSubscriptionDetailsCancelAt? = nil, cancelAtPeriodEnd: Bool? = nil, cancelNow: Bool? = nil, defaultTaxRates: [String]? = nil, items: [InvoiceCreatePreviewSubscriptionDetailsItems]? = nil, metadata: [String: String]? = nil, pause: InvoiceCreatePreviewSubscriptionDetailsPause? = nil, prorationBehavior: InvoiceCreatePreviewSubscriptionDetailsProrationBehavior? = nil, prorationDate: Int? = nil, resumeAt: InvoiceCreatePreviewSubscriptionDetailsResumeAt? = nil, startDate: Int? = nil, trialEnd: InvoiceCreatePreviewSubscriptionDetailsTrialEnd? = nil) {
         self.billingCycleAnchor = billingCycleAnchor
         self.billingMode = billingMode
         self.billingSchedules = billingSchedules
@@ -3271,6 +3385,50 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilDu
     public enum CodingKeys: String, CodingKey {
         case interval
         case intervalCount = "interval_count"
+    }
+}
+
+/// One of the forms `cancel_at` accepts.
+public enum InvoiceCreatePreviewSubscriptionDetailsCancelAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `max_billed_until`
+    case maxBilledUntil
+    /// `max_period_end`
+    case maxPeriodEnd
+    /// `min_period_end`
+    case minPeriodEnd
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "max_billed_until": self = .maxBilledUntil; return
+            case "max_period_end": self = .maxPeriodEnd; return
+            case "min_period_end": self = .minPeriodEnd; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewSubscriptionDetailsCancelAt matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .maxBilledUntil:
+            var container = encoder.singleValueContainer()
+            try container.encode("max_billed_until")
+        case .maxPeriodEnd:
+            var container = encoder.singleValueContainer()
+            try container.encode("max_period_end")
+        case .minPeriodEnd:
+            var container = encoder.singleValueContainer()
+            try container.encode("min_period_end")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -3520,6 +3678,38 @@ public struct InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFrom:
 
     public init(type: InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFromType) {
         self.type = type
+    }
+}
+
+/// One of the forms `trial_end` accepts.
+public enum InvoiceCreatePreviewSubscriptionDetailsTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `now`
+    case now
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "now": self = .now; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewSubscriptionDetailsTrialEnd matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .now:
+            var container = encoder.singleValueContainer()
+            try container.encode("now")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -4232,9 +4422,9 @@ public struct InvoiceUpdateShippingCostShippingRateDataFixedAmount: StripeParams
     /// Shipping rates defined in each available currency option. Each key must be a three-letter [ISO
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: String]?
+    public var currencyOptions: [String: InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOptions]?
 
-    public init(amount: Int, currency: String, currencyOptions: [String: String]? = nil) {
+    public init(amount: Int, currency: String, currencyOptions: [String: InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOptions]? = nil) {
         self.amount = amount
         self.currency = currency
         self.currencyOptions = currencyOptions
@@ -4244,6 +4434,24 @@ public struct InvoiceUpdateShippingCostShippingRateDataFixedAmount: StripeParams
         case amount
         case currency
         case currencyOptions = "currency_options"
+    }
+}
+
+public struct InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOptions: StripeParams {
+    /// A non-negative integer in cents representing how much to charge.
+    public var amount: Int
+    /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
+    /// `inclusive`, `exclusive`, or `unspecified`.
+    public var taxBehavior: InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior?
+
+    public init(amount: Int, taxBehavior: InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior? = nil) {
+        self.amount = amount
+        self.taxBehavior = taxBehavior
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case taxBehavior = "tax_behavior"
     }
 }
 

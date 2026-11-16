@@ -7,6 +7,11 @@
 
 import Foundation
 
+public enum BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrencyType: String, Codable, Sendable {
+    case transferAll = "transfer_all"
+    case transferUpToAmount = "transfer_up_to_amount"
+}
+
 public enum BalanceSettingsUpdatePaymentsPayoutsScheduleInterval: String, Codable, Sendable {
     case daily
     case manual

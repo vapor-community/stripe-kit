@@ -7,6 +7,12 @@
 
 import Foundation
 
+public enum ProductCreateDefaultPriceDataCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public enum ProductCreateDefaultPriceDataRecurringInterval: String, Codable, Sendable {
     case day
     case month

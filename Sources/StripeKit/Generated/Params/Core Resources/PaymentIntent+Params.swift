@@ -148,11 +148,11 @@ public struct PaymentIntentConfirmParams: StripeParams {
     public var hooks: PaymentIntentConfirmHooks?
     /// ID of the mandate that's used for this payment.
     public var mandate: String?
-    public var mandateData: String?
+    public var mandateData: PaymentIntentConfirmMandateData?
     /// Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt
     /// and can't authenticate. Use this parameter in scenarios where you collect payment method details and
     /// [charge them later](https://docs.stripe.com/payments/save-during-payment).
-    public var offSession: String?
+    public var offSession: PaymentIntentConfirmOffSession?
     /// Provides industry-specific information about the charge.
     public var paymentDetails: PaymentIntentConfirmPaymentDetails?
     /// The ID of a PaymentMethod to attach to this PaymentIntent. If the payment method is attached to a
@@ -198,7 +198,7 @@ public struct PaymentIntentConfirmParams: StripeParams {
     /// handle the next actions.
     public var useStripeSdk: Bool?
 
-    public init(allowedPaymentMethodTypes: [PaymentIntentConfirmAllowedPaymentMethodTypes]? = nil, amountDetails: PaymentIntentConfirmAmountDetails? = nil, amountToConfirm: Int? = nil, captureMethod: PaymentIntentConfirmCaptureMethod? = nil, confirmationToken: String? = nil, errorOnRequiresAction: Bool? = nil, excludedPaymentMethodTypes: [PaymentIntentConfirmExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, hooks: PaymentIntentConfirmHooks? = nil, mandate: String? = nil, mandateData: String? = nil, offSession: String? = nil, paymentDetails: PaymentIntentConfirmPaymentDetails? = nil, paymentMethod: String? = nil, paymentMethodData: PaymentIntentConfirmPaymentMethodData? = nil, paymentMethodOptions: PaymentIntentConfirmPaymentMethodOptions? = nil, radarOptions: PaymentIntentConfirmRadarOptions? = nil, receiptEmail: String? = nil, returnUrl: String? = nil, setupFutureUsage: PaymentIntentConfirmSetupFutureUsage? = nil, shipping: PaymentIntentConfirmShipping? = nil, useStripeSdk: Bool? = nil) {
+    public init(allowedPaymentMethodTypes: [PaymentIntentConfirmAllowedPaymentMethodTypes]? = nil, amountDetails: PaymentIntentConfirmAmountDetails? = nil, amountToConfirm: Int? = nil, captureMethod: PaymentIntentConfirmCaptureMethod? = nil, confirmationToken: String? = nil, errorOnRequiresAction: Bool? = nil, excludedPaymentMethodTypes: [PaymentIntentConfirmExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, hooks: PaymentIntentConfirmHooks? = nil, mandate: String? = nil, mandateData: PaymentIntentConfirmMandateData? = nil, offSession: PaymentIntentConfirmOffSession? = nil, paymentDetails: PaymentIntentConfirmPaymentDetails? = nil, paymentMethod: String? = nil, paymentMethodData: PaymentIntentConfirmPaymentMethodData? = nil, paymentMethodOptions: PaymentIntentConfirmPaymentMethodOptions? = nil, radarOptions: PaymentIntentConfirmRadarOptions? = nil, receiptEmail: String? = nil, returnUrl: String? = nil, setupFutureUsage: PaymentIntentConfirmSetupFutureUsage? = nil, shipping: PaymentIntentConfirmShipping? = nil, useStripeSdk: Bool? = nil) {
         self.allowedPaymentMethodTypes = allowedPaymentMethodTypes
         self.amountDetails = amountDetails
         self.amountToConfirm = amountToConfirm
@@ -337,7 +337,7 @@ public struct PaymentIntentCreateParams: StripeParams {
     /// [charge them later](https://docs.stripe.com/payments/save-during-payment). This parameter can only
     /// be used with
     /// [`confirm=true`](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-confirm).
-    public var offSession: String?
+    public var offSession: PaymentIntentCreateOffSession?
     /// The Stripe account ID that these funds are intended for. Learn more about the [use case for
     /// connected accounts](https://docs.stripe.com/payments/connected-accounts).
     public var onBehalfOf: String?
@@ -409,7 +409,7 @@ public struct PaymentIntentCreateParams: StripeParams {
     /// handle the next actions.
     public var useStripeSdk: Bool?
 
-    public init(amount: Int, currency: String, allowedPaymentMethodTypes: [PaymentIntentCreateAllowedPaymentMethodTypes]? = nil, amountDetails: PaymentIntentCreateAmountDetails? = nil, applicationFeeAmount: Int? = nil, automaticPaymentMethods: PaymentIntentCreateAutomaticPaymentMethods? = nil, captureMethod: PaymentIntentCreateCaptureMethod? = nil, confirm: Bool? = nil, confirmationMethod: PaymentIntentCreateConfirmationMethod? = nil, confirmationToken: String? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, errorOnRequiresAction: Bool? = nil, excludedPaymentMethodTypes: [PaymentIntentCreateExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, hooks: PaymentIntentCreateHooks? = nil, mandate: String? = nil, mandateData: PaymentIntentCreateMandateData? = nil, metadata: [String: String]? = nil, offSession: String? = nil, onBehalfOf: String? = nil, paymentDetails: PaymentIntentCreatePaymentDetails? = nil, paymentMethod: String? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: PaymentIntentCreatePaymentMethodData? = nil, paymentMethodOptions: PaymentIntentCreatePaymentMethodOptions? = nil, radarOptions: PaymentIntentCreateRadarOptions? = nil, receiptEmail: String? = nil, returnUrl: String? = nil, setupFutureUsage: PaymentIntentCreateSetupFutureUsage? = nil, shipping: PaymentIntentCreateShipping? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferData: PaymentIntentCreateTransferData? = nil, transferGroup: String? = nil, useStripeSdk: Bool? = nil) {
+    public init(amount: Int, currency: String, allowedPaymentMethodTypes: [PaymentIntentCreateAllowedPaymentMethodTypes]? = nil, amountDetails: PaymentIntentCreateAmountDetails? = nil, applicationFeeAmount: Int? = nil, automaticPaymentMethods: PaymentIntentCreateAutomaticPaymentMethods? = nil, captureMethod: PaymentIntentCreateCaptureMethod? = nil, confirm: Bool? = nil, confirmationMethod: PaymentIntentCreateConfirmationMethod? = nil, confirmationToken: String? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, errorOnRequiresAction: Bool? = nil, excludedPaymentMethodTypes: [PaymentIntentCreateExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, hooks: PaymentIntentCreateHooks? = nil, mandate: String? = nil, mandateData: PaymentIntentCreateMandateData? = nil, metadata: [String: String]? = nil, offSession: PaymentIntentCreateOffSession? = nil, onBehalfOf: String? = nil, paymentDetails: PaymentIntentCreatePaymentDetails? = nil, paymentMethod: String? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: PaymentIntentCreatePaymentMethodData? = nil, paymentMethodOptions: PaymentIntentCreatePaymentMethodOptions? = nil, radarOptions: PaymentIntentCreateRadarOptions? = nil, receiptEmail: String? = nil, returnUrl: String? = nil, setupFutureUsage: PaymentIntentCreateSetupFutureUsage? = nil, shipping: PaymentIntentCreateShipping? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferData: PaymentIntentCreateTransferData? = nil, transferGroup: String? = nil, useStripeSdk: Bool? = nil) {
         self.amount = amount
         self.currency = currency
         self.allowedPaymentMethodTypes = allowedPaymentMethodTypes
@@ -1411,6 +1411,168 @@ public struct PaymentIntentConfirmHooksInputsTax: StripeParams {
 
     public init(calculation: String) {
         self.calculation = calculation
+    }
+}
+
+public struct PaymentIntentConfirmMandateDataSecretKey: StripeParams {
+    /// This hash contains details about the customer acceptance of the Mandate.
+    public var customerAcceptance: PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptance
+
+    public init(customerAcceptance: PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptance) {
+        self.customerAcceptance = customerAcceptance
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case customerAcceptance = "customer_acceptance"
+    }
+}
+
+/// This hash contains details about the customer acceptance of the Mandate.
+public struct PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptance: StripeParams {
+    /// The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
+    public var type: PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptanceType
+    /// The time at which the customer accepted the Mandate.
+    public var acceptedAt: Int?
+    /// If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
+    public var offline: [String: String]?
+    /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
+    public var online: PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline?
+
+    public init(type: PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptanceType, acceptedAt: Int? = nil, offline: [String: String]? = nil, online: PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline? = nil) {
+        self.type = type
+        self.acceptedAt = acceptedAt
+        self.offline = offline
+        self.online = online
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case acceptedAt = "accepted_at"
+        case offline
+        case online
+        case type
+    }
+}
+
+/// If this is a Mandate accepted online, this hash contains details about the online acceptance.
+public struct PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline: StripeParams {
+    /// The IP address from which the Mandate was accepted by the customer.
+    public var ipAddress: String
+    /// The user agent of the browser from which the Mandate was accepted by the customer.
+    public var userAgent: String
+
+    public init(ipAddress: String, userAgent: String) {
+        self.ipAddress = ipAddress
+        self.userAgent = userAgent
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case ipAddress = "ip_address"
+        case userAgent = "user_agent"
+    }
+}
+
+/// This hash contains details about the Mandate to create
+public struct PaymentIntentConfirmMandateDataClientKey: StripeParams {
+    /// This hash contains details about the customer acceptance of the Mandate.
+    public var customerAcceptance: PaymentIntentConfirmMandateDataClientKeyCustomerAcceptance
+
+    public init(customerAcceptance: PaymentIntentConfirmMandateDataClientKeyCustomerAcceptance) {
+        self.customerAcceptance = customerAcceptance
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case customerAcceptance = "customer_acceptance"
+    }
+}
+
+/// This hash contains details about the customer acceptance of the Mandate.
+public struct PaymentIntentConfirmMandateDataClientKeyCustomerAcceptance: StripeParams {
+    /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
+    public var online: PaymentIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline
+    /// The type of customer acceptance information included with the Mandate.
+    public var type: PaymentIntentConfirmMandateDataClientKeyCustomerAcceptanceType
+
+    public init(online: PaymentIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline, type: PaymentIntentConfirmMandateDataClientKeyCustomerAcceptanceType) {
+        self.online = online
+        self.type = type
+    }
+}
+
+/// If this is a Mandate accepted online, this hash contains details about the online acceptance.
+public struct PaymentIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline: StripeParams {
+    /// The IP address from which the Mandate was accepted by the customer.
+    public var ipAddress: String?
+    /// The user agent of the browser from which the Mandate was accepted by the customer.
+    public var userAgent: String?
+
+    public init(ipAddress: String? = nil, userAgent: String? = nil) {
+        self.ipAddress = ipAddress
+        self.userAgent = userAgent
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case ipAddress = "ip_address"
+        case userAgent = "user_agent"
+    }
+}
+
+/// One of the forms `mandate_data` accepts.
+public enum PaymentIntentConfirmMandateData: Codable, Sendable {
+    case secretKey(PaymentIntentConfirmMandateDataSecretKey)
+    case clientKey(PaymentIntentConfirmMandateDataClientKey)
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? PaymentIntentConfirmMandateDataSecretKey(from: decoder) { self = .secretKey(value); return }
+        if let value = try? PaymentIntentConfirmMandateDataClientKey(from: decoder) { self = .clientKey(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentIntentConfirmMandateData matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .secretKey(let value):
+            try value.encode(to: encoder)
+        case .clientKey(let value):
+            try value.encode(to: encoder)
+        }
+    }
+}
+
+/// One of the forms `off_session` accepts.
+public enum PaymentIntentConfirmOffSession: Codable, Sendable, ExpressibleByBooleanLiteral {
+    /// `one_off`
+    case oneOff
+    /// `recurring`
+    case recurring
+    case value(Bool)
+
+    public init(booleanLiteral value: Bool) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "one_off": self = .oneOff; return
+            case "recurring": self = .recurring; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Bool.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentIntentConfirmOffSession matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .oneOff:
+            var container = encoder.singleValueContainer()
+            try container.encode("one_off")
+        case .recurring:
+            var container = encoder.singleValueContainer()
+            try container.encode("recurring")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -5253,6 +5415,44 @@ public struct PaymentIntentCreateMandateDataCustomerAcceptanceOnline: StripePara
     public enum CodingKeys: String, CodingKey {
         case ipAddress = "ip_address"
         case userAgent = "user_agent"
+    }
+}
+
+/// One of the forms `off_session` accepts.
+public enum PaymentIntentCreateOffSession: Codable, Sendable, ExpressibleByBooleanLiteral {
+    /// `one_off`
+    case oneOff
+    /// `recurring`
+    case recurring
+    case value(Bool)
+
+    public init(booleanLiteral value: Bool) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "one_off": self = .oneOff; return
+            case "recurring": self = .recurring; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Bool.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentIntentCreateOffSession matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .oneOff:
+            var container = encoder.singleValueContainer()
+            try container.encode("one_off")
+        case .recurring:
+            var container = encoder.singleValueContainer()
+            try container.encode("recurring")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 

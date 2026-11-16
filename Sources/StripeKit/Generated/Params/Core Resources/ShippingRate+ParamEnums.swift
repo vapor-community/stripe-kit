@@ -23,6 +23,12 @@ public enum ShippingRateCreateDeliveryEstimateMinimumUnit: String, Codable, Send
     case week
 }
 
+public enum ShippingRateCreateFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public enum ShippingRateCreateTaxBehavior: String, Codable, Sendable {
     case exclusive
     case inclusive
@@ -31,6 +37,12 @@ public enum ShippingRateCreateTaxBehavior: String, Codable, Sendable {
 
 public enum ShippingRateCreateType: String, Codable, Sendable {
     case fixedAmount = "fixed_amount"
+}
+
+public enum ShippingRateUpdateFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }
 
 public enum ShippingRateUpdateTaxBehavior: String, Codable, Sendable {

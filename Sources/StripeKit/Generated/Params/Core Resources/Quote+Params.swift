@@ -632,7 +632,7 @@ public struct QuoteCreateSubscriptionData: StripeParams {
     public var description: String?
     /// When creating a new subscription, the date of which the subscription schedule will start after the
     /// quote is accepted. The `effective_date` is ignored if it is in the past when the quote is accepted.
-    public var effectiveDate: String?
+    public var effectiveDate: QuoteCreateSubscriptionDataEffectiveDate?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on the
     /// subscription or subscription schedule when the quote is accepted. If a recurring price is included
     /// in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If
@@ -644,7 +644,7 @@ public struct QuoteCreateSubscriptionData: StripeParams {
     /// time.
     public var trialPeriodDays: Int?
 
-    public init(billingMode: QuoteCreateSubscriptionDataBillingMode? = nil, description: String? = nil, effectiveDate: String? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
+    public init(billingMode: QuoteCreateSubscriptionDataBillingMode? = nil, description: String? = nil, effectiveDate: QuoteCreateSubscriptionDataEffectiveDate? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
         self.billingMode = billingMode
         self.description = description
         self.effectiveDate = effectiveDate
@@ -686,6 +686,38 @@ public struct QuoteCreateSubscriptionDataBillingModeFlexible: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case prorationDiscounts = "proration_discounts"
+    }
+}
+
+/// One of the forms `effective_date` accepts.
+public enum QuoteCreateSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `current_period_end`
+    case currentPeriodEnd
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "current_period_end": self = .currentPeriodEnd; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of QuoteCreateSubscriptionDataEffectiveDate matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .currentPeriodEnd:
+            var container = encoder.singleValueContainer()
+            try container.encode("current_period_end")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 
@@ -955,7 +987,7 @@ public struct QuoteUpdateSubscriptionData: StripeParams {
     public var description: String?
     /// When creating a new subscription, the date of which the subscription schedule will start after the
     /// quote is accepted. The `effective_date` is ignored if it is in the past when the quote is accepted.
-    public var effectiveDate: String?
+    public var effectiveDate: QuoteUpdateSubscriptionDataEffectiveDate?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on the
     /// subscription or subscription schedule when the quote is accepted. If a recurring price is included
     /// in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If
@@ -967,7 +999,7 @@ public struct QuoteUpdateSubscriptionData: StripeParams {
     /// time.
     public var trialPeriodDays: Int?
 
-    public init(description: String? = nil, effectiveDate: String? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
+    public init(description: String? = nil, effectiveDate: QuoteUpdateSubscriptionDataEffectiveDate? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
         self.description = description
         self.effectiveDate = effectiveDate
         self.metadata = metadata
@@ -979,6 +1011,38 @@ public struct QuoteUpdateSubscriptionData: StripeParams {
         case effectiveDate = "effective_date"
         case metadata
         case trialPeriodDays = "trial_period_days"
+    }
+}
+
+/// One of the forms `effective_date` accepts.
+public enum QuoteUpdateSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+    /// `current_period_end`
+    case currentPeriodEnd
+    case value(Int)
+
+    public init(integerLiteral value: Int) { self = .value(value) }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let keyword = try? container.decode(String.self) {
+            switch keyword {
+            case "current_period_end": self = .currentPeriodEnd; return
+            default: break
+            }
+        }
+        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of QuoteUpdateSubscriptionDataEffectiveDate matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .currentPeriodEnd:
+            var container = encoder.singleValueContainer()
+            try container.encode("current_period_end")
+        case .value(let value):
+            var container = encoder.singleValueContainer()
+            try container.encode(value)
+        }
     }
 }
 

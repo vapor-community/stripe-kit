@@ -74,7 +74,7 @@ public struct PaymentMethodCreateParams: StripeParams {
     /// providing a card number, you must meet the requirements for [PCI
     /// compliance](https://stripe.com/docs/security#validating-pci-compliance). We strongly recommend using
     /// Stripe.js instead of interacting with this API directly.
-    public var card: String?
+    public var card: PaymentMethodCreateCard?
     /// If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment
     /// method.
     public var cashapp: [String: String]?
@@ -198,7 +198,7 @@ public struct PaymentMethodCreateParams: StripeParams {
     /// If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
     public var zip: [String: String]?
 
-    public init(acssDebit: PaymentMethodCreateAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: PaymentMethodCreateAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: PaymentMethodCreateAuBecsDebit? = nil, bacsDebit: PaymentMethodCreateBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: PaymentMethodCreateBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: PaymentMethodCreateBoleto? = nil, card: String? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, custom: PaymentMethodCreateCustom? = nil, customer: String? = nil, customerBalance: [String: String]? = nil, eps: PaymentMethodCreateEps? = nil, expand: [String]? = nil, fpx: PaymentMethodCreateFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: PaymentMethodCreateIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: PaymentMethodCreateKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: PaymentMethodCreateNaverPay? = nil, nzBankAccount: PaymentMethodCreateNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: PaymentMethodCreateP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paymentMethod: String? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: PaymentMethodCreatePayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: PaymentMethodCreateRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: PaymentMethodCreateSepaDebit? = nil, sequra: [String: String]? = nil, sofort: PaymentMethodCreateSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, type: PaymentMethodCreateType? = nil, upi: PaymentMethodCreateUpi? = nil, usBankAccount: PaymentMethodCreateUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
+    public init(acssDebit: PaymentMethodCreateAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: PaymentMethodCreateAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: PaymentMethodCreateAuBecsDebit? = nil, bacsDebit: PaymentMethodCreateBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: PaymentMethodCreateBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: PaymentMethodCreateBoleto? = nil, card: PaymentMethodCreateCard? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, custom: PaymentMethodCreateCustom? = nil, customer: String? = nil, customerBalance: [String: String]? = nil, eps: PaymentMethodCreateEps? = nil, expand: [String]? = nil, fpx: PaymentMethodCreateFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: PaymentMethodCreateIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: PaymentMethodCreateKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: PaymentMethodCreateNaverPay? = nil, nzBankAccount: PaymentMethodCreateNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: PaymentMethodCreateP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paymentMethod: String? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: PaymentMethodCreatePayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: PaymentMethodCreateRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: PaymentMethodCreateSepaDebit? = nil, sequra: [String: String]? = nil, sofort: PaymentMethodCreateSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, type: PaymentMethodCreateType? = nil, upi: PaymentMethodCreateUpi? = nil, usBankAccount: PaymentMethodCreateUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
         self.acssDebit = acssDebit
         self.affirm = affirm
         self.afterpayClearpay = afterpayClearpay
@@ -574,6 +574,79 @@ public struct PaymentMethodCreateBoleto: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case taxId = "tax_id"
+    }
+}
+
+public struct PaymentMethodCreateCardCardDetails: StripeParams {
+    /// Two-digit number representing the card's expiration month.
+    public var expMonth: Int
+    /// Four-digit number representing the card's expiration year.
+    public var expYear: Int
+    /// The card number, as a string without any separators.
+    public var number: String
+    /// The card's CVC. It is highly recommended to always include this value.
+    public var cvc: String?
+    /// Contains information about card networks used to process the payment.
+    public var networks: PaymentMethodCreateCardCardDetailsNetworks?
+
+    public init(expMonth: Int, expYear: Int, number: String, cvc: String? = nil, networks: PaymentMethodCreateCardCardDetailsNetworks? = nil) {
+        self.expMonth = expMonth
+        self.expYear = expYear
+        self.number = number
+        self.cvc = cvc
+        self.networks = networks
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case cvc
+        case expMonth = "exp_month"
+        case expYear = "exp_year"
+        case networks
+        case number
+    }
+}
+
+/// Contains information about card networks used to process the payment.
+public struct PaymentMethodCreateCardCardDetailsNetworks: StripeParams {
+    /// The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`,
+    /// `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as
+    /// `invalid_preference` on the card.
+    public var preferred: PaymentMethodCreateCardCardDetailsNetworksPreferred?
+
+    public init(preferred: PaymentMethodCreateCardCardDetailsNetworksPreferred? = nil) {
+        self.preferred = preferred
+    }
+}
+
+public struct PaymentMethodCreateCardToken: StripeParams {
+    /// For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex
+    /// Express Checkout, or legacy Checkout) into the card hash with format card: {token: "tok_visa"}.
+    public var token: String
+
+    public init(token: String) {
+        self.token = token
+    }
+}
+
+/// One of the forms `card` accepts.
+public enum PaymentMethodCreateCard: Codable, Sendable {
+    case cardDetails(PaymentMethodCreateCardCardDetails)
+    case token(PaymentMethodCreateCardToken)
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? PaymentMethodCreateCardCardDetails(from: decoder) { self = .cardDetails(value); return }
+        if let value = try? PaymentMethodCreateCardToken(from: decoder) { self = .token(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentMethodCreateCard matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .cardDetails(let value):
+            try value.encode(to: encoder)
+        case .token(let value):
+            try value.encode(to: encoder)
+        }
     }
 }
 

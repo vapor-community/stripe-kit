@@ -36,7 +36,7 @@ public struct SetupIntentConfirmParams: StripeParams {
     public var confirmationToken: String?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
-    public var mandateData: String?
+    public var mandateData: SetupIntentConfirmMandateData?
     /// The ID of a PaymentMethod to attach to this SetupIntent.
     public var paymentMethod: String?
     /// When included, this hash creates a PaymentMethod that is set as the
@@ -54,7 +54,7 @@ public struct SetupIntentConfirmParams: StripeParams {
     /// handle the next actions.
     public var useStripeSdk: Bool?
 
-    public init(allowedPaymentMethodTypes: [SetupIntentConfirmAllowedPaymentMethodTypes]? = nil, confirmationToken: String? = nil, expand: [String]? = nil, mandateData: String? = nil, paymentMethod: String? = nil, paymentMethodData: SetupIntentConfirmPaymentMethodData? = nil, paymentMethodOptions: SetupIntentConfirmPaymentMethodOptions? = nil, returnUrl: String? = nil, useStripeSdk: Bool? = nil) {
+    public init(allowedPaymentMethodTypes: [SetupIntentConfirmAllowedPaymentMethodTypes]? = nil, confirmationToken: String? = nil, expand: [String]? = nil, mandateData: SetupIntentConfirmMandateData? = nil, paymentMethod: String? = nil, paymentMethodData: SetupIntentConfirmPaymentMethodData? = nil, paymentMethodOptions: SetupIntentConfirmPaymentMethodOptions? = nil, returnUrl: String? = nil, useStripeSdk: Bool? = nil) {
         self.allowedPaymentMethodTypes = allowedPaymentMethodTypes
         self.confirmationToken = confirmationToken
         self.expand = expand
@@ -383,6 +383,130 @@ public struct SetupIntentVerifyMicrodepositsParams: StripeParams {
         case amounts
         case descriptorCode = "descriptor_code"
         case expand
+    }
+}
+
+public struct SetupIntentConfirmMandateDataSecretKey: StripeParams {
+    /// This hash contains details about the customer acceptance of the Mandate.
+    public var customerAcceptance: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptance
+
+    public init(customerAcceptance: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptance) {
+        self.customerAcceptance = customerAcceptance
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case customerAcceptance = "customer_acceptance"
+    }
+}
+
+/// This hash contains details about the customer acceptance of the Mandate.
+public struct SetupIntentConfirmMandateDataSecretKeyCustomerAcceptance: StripeParams {
+    /// The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
+    public var type: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType
+    /// The time at which the customer accepted the Mandate.
+    public var acceptedAt: Int?
+    /// If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
+    public var offline: [String: String]?
+    /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
+    public var online: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline?
+
+    public init(type: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType, acceptedAt: Int? = nil, offline: [String: String]? = nil, online: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline? = nil) {
+        self.type = type
+        self.acceptedAt = acceptedAt
+        self.offline = offline
+        self.online = online
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case acceptedAt = "accepted_at"
+        case offline
+        case online
+        case type
+    }
+}
+
+/// If this is a Mandate accepted online, this hash contains details about the online acceptance.
+public struct SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline: StripeParams {
+    /// The IP address from which the Mandate was accepted by the customer.
+    public var ipAddress: String
+    /// The user agent of the browser from which the Mandate was accepted by the customer.
+    public var userAgent: String
+
+    public init(ipAddress: String, userAgent: String) {
+        self.ipAddress = ipAddress
+        self.userAgent = userAgent
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case ipAddress = "ip_address"
+        case userAgent = "user_agent"
+    }
+}
+
+/// This hash contains details about the Mandate to create
+public struct SetupIntentConfirmMandateDataClientKey: StripeParams {
+    /// This hash contains details about the customer acceptance of the Mandate.
+    public var customerAcceptance: SetupIntentConfirmMandateDataClientKeyCustomerAcceptance
+
+    public init(customerAcceptance: SetupIntentConfirmMandateDataClientKeyCustomerAcceptance) {
+        self.customerAcceptance = customerAcceptance
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case customerAcceptance = "customer_acceptance"
+    }
+}
+
+/// This hash contains details about the customer acceptance of the Mandate.
+public struct SetupIntentConfirmMandateDataClientKeyCustomerAcceptance: StripeParams {
+    /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
+    public var online: SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline
+    /// The type of customer acceptance information included with the Mandate.
+    public var type: SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceType
+
+    public init(online: SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline, type: SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceType) {
+        self.online = online
+        self.type = type
+    }
+}
+
+/// If this is a Mandate accepted online, this hash contains details about the online acceptance.
+public struct SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline: StripeParams {
+    /// The IP address from which the Mandate was accepted by the customer.
+    public var ipAddress: String?
+    /// The user agent of the browser from which the Mandate was accepted by the customer.
+    public var userAgent: String?
+
+    public init(ipAddress: String? = nil, userAgent: String? = nil) {
+        self.ipAddress = ipAddress
+        self.userAgent = userAgent
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case ipAddress = "ip_address"
+        case userAgent = "user_agent"
+    }
+}
+
+/// One of the forms `mandate_data` accepts.
+public enum SetupIntentConfirmMandateData: Codable, Sendable {
+    case secretKey(SetupIntentConfirmMandateDataSecretKey)
+    case clientKey(SetupIntentConfirmMandateDataClientKey)
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? SetupIntentConfirmMandateDataSecretKey(from: decoder) { self = .secretKey(value); return }
+        if let value = try? SetupIntentConfirmMandateDataClientKey(from: decoder) { self = .clientKey(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SetupIntentConfirmMandateData matches")
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .secretKey(let value):
+            try value.encode(to: encoder)
+        case .clientKey(let value):
+            try value.encode(to: encoder)
+        }
     }
 }
 
