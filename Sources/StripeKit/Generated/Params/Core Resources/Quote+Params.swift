@@ -162,6 +162,54 @@ public struct QuoteFinalizeParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/quotes`.
+public struct QuoteListParams: StripeParams {
+    /// The ID of the customer whose quotes you're retrieving.
+    public var customer: String?
+    /// The ID of the account representing the customer whose quotes you're retrieving.
+    public var customerAccount: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// The status of the quote.
+    public var status: QuoteListStatus?
+    /// Provides a list of quotes that are associated with the specified test clock. The response will not
+    /// include quotes with test clocks if this and the customer parameter is not set.
+    public var testClock: String?
+
+    public init(customer: String? = nil, customerAccount: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, status: QuoteListStatus? = nil, testClock: String? = nil) {
+        self.customer = customer
+        self.customerAccount = customerAccount
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+        self.status = status
+        self.testClock = testClock
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case customer
+        case customerAccount = "customer_account"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+        case status
+        case testClock = "test_clock"
+    }
+}
+
 public struct QuoteUpdateParams: StripeParams {
     /// The amount of the application fee (if any) that will be requested to be applied to the payment and
     /// transferred to the application owner's Stripe account. There cannot be any line items with recurring

@@ -16,3 +16,13 @@ public enum SecretDeleteScopeType: String, Codable, Sendable {
     case account
     case user
 }
+
+public enum SecretListScopeType: String, Codable, Sendable {
+    case account
+    case user
+}
+
+public enum SecretListFindScopeType: String, Codable, Sendable {
+    case account
+    case user
+}

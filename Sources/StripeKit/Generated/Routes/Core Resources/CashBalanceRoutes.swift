@@ -17,7 +17,7 @@ public struct CashBalanceRoutes: Sendable {
     public var create: @Sendable (_ customer: String, _ params: CashBalanceCreateParams?) async throws -> CashBalance
 
     /// Retrieves a customer’s cash balance.
-    public var list: @Sendable (_ customer: String, _ expand: [String]?) async throws -> CashBalanceList
+    public var list: @Sendable (_ customer: String, _ expand: [String]?) async throws -> CashBalance
 }
 
 extension CashBalanceRoutes {
@@ -38,7 +38,7 @@ extension CashBalanceRoutes {
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as CashBalanceList
+                ) as CashBalance
             }
         )
     }

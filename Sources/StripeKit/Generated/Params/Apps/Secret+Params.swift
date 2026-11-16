@@ -53,6 +53,59 @@ public struct SecretDeleteParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/apps/secrets`.
+public struct SecretListParams: StripeParams {
+    /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
+    /// account-scoped secrets or secrets scoped to their own user.
+    public var scope: SecretListScope
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(scope: SecretListScope, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
+        self.scope = scope
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case scope
+        case startingAfter = "starting_after"
+    }
+}
+
+/// Query parameters for `GET /v1/apps/secrets/find`.
+public struct SecretListFindParams: StripeParams {
+    /// A name for the secret that's unique within the scope.
+    public var name: String
+    /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
+    /// account-scoped secrets or secrets scoped to their own user.
+    public var scope: SecretListFindScope
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(name: String, scope: SecretListFindScope, expand: [String]? = nil) {
+        self.name = name
+        self.scope = scope
+        self.expand = expand
+    }
+}
+
 /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
 /// account-scoped secrets or secrets scoped to their own user.
 public struct SecretCreateScope: StripeParams {
@@ -78,6 +131,36 @@ public struct SecretDeleteScope: StripeParams {
     public var user: String?
 
     public init(type: SecretDeleteScopeType, user: String? = nil) {
+        self.type = type
+        self.user = user
+    }
+}
+
+/// Specifies the scoping of the secret. Requests originating from UI extensions can only access
+/// account-scoped secrets or secrets scoped to their own user.
+public struct SecretListScope: StripeParams {
+    /// The secret scope type.
+    public var type: SecretListScopeType
+    /// The user ID. This field is required if `type` is set to `user`, and should not be provided if `type`
+    /// is set to `account`.
+    public var user: String?
+
+    public init(type: SecretListScopeType, user: String? = nil) {
+        self.type = type
+        self.user = user
+    }
+}
+
+/// Specifies the scoping of the secret. Requests originating from UI extensions can only access
+/// account-scoped secrets or secrets scoped to their own user.
+public struct SecretListFindScope: StripeParams {
+    /// The secret scope type.
+    public var type: SecretListFindScopeType
+    /// The user ID. This field is required if `type` is set to `user`, and should not be provided if `type`
+    /// is set to `account`.
+    public var user: String?
+
+    public init(type: SecretListFindScopeType, user: String? = nil) {
         self.type = type
         self.user = user
     }

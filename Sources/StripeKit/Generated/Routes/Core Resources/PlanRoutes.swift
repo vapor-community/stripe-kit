@@ -26,7 +26,7 @@ public struct PlanRoutes: Sendable {
     public var update: @Sendable (_ plan: String, _ params: PlanUpdateParams?) async throws -> Plan
 
     /// Returns a list of your plans.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PlanList
+    public var list: @Sendable (_ params: PlanListParams?) async throws -> PlanList
 
     /// Deleting plans means new subscribers can’t be added. Existing subscribers aren’t affected.
     public var delete: @Sendable (_ plan: String, _ expand: [String]?) async throws -> DeletedPlan
@@ -60,9 +60,8 @@ extension PlanRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Plan
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/plans" : "/v1/plans?\(query)"
                 return try await handler.send(
                     method: .GET,

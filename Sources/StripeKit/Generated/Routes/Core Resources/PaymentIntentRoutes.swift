@@ -24,7 +24,7 @@ public struct PaymentIntentRoutes: Sendable {
     /// PaymentIntent client-side using a publishable key when the client_secret is in the query string. If
     /// you retrieve a PaymentIntent with a publishable key, it only returns a subset of properties. Refer
     /// to the payment intent object reference for more details.
-    public var retrieve: @Sendable (_ intent: String, _ expand: [String]?) async throws -> PaymentIntent
+    public var retrieve: @Sendable (_ intent: String, _ params: PaymentIntentRetrieveParams?) async throws -> PaymentIntent
 
     /// Updates properties on a PaymentIntent object without confirming. Depending on which properties you
     /// update, you might need to confirm the PaymentIntent again. For example, updating the payment_method
@@ -33,14 +33,14 @@ public struct PaymentIntentRoutes: Sendable {
     public var update: @Sendable (_ intent: String, _ params: PaymentIntentUpdateParams?) async throws -> PaymentIntent
 
     /// Returns a list of PaymentIntents.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PaymentIntentList
+    public var list: @Sendable (_ params: PaymentIntentListParams?) async throws -> PaymentIntentList
 
     /// Search for PaymentIntents you’ve previously created using Stripe’s Search Query Language. Don’t use
     /// search in read-after-write flows where strict consistency is necessary. Under normal operating
     /// conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated
     /// data can be up to an hour behind during outages. Search functionality is not available to merchants
     /// in India.
-    public var search: @Sendable (_ expand: [String]?) async throws -> PaymentIntent
+    public var search: @Sendable (_ params: PaymentIntentSearchParams) async throws -> StripeSearchResult<PaymentIntent>
 
     /// Manually reconcile the remaining amount for a customer_balance PaymentIntent.
     public var applyCustomerBalance: @Sendable (_ intent: String, _ params: PaymentIntentApplyCustomerBalanceParams?) async throws -> PaymentIntent
@@ -105,9 +105,8 @@ extension PaymentIntentRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as PaymentIntent
             },
-            retrieve: { intent, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            retrieve: { intent, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/payment_intents/\(intent)" : "/v1/payment_intents/\(intent)?\(query)"
                 return try await handler.send(
                     method: .GET,
@@ -122,23 +121,21 @@ extension PaymentIntentRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as PaymentIntent
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/payment_intents" : "/v1/payment_intents?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
                 ) as PaymentIntentList
             },
-            search: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            search: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/payment_intents/search" : "/v1/payment_intents/search?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as PaymentIntent
+                ) as StripeSearchResult<PaymentIntent>
             },
             applyCustomerBalance: { intent, params in
                 let body = params?.toFormBody() ?? ""

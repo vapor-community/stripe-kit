@@ -24,7 +24,7 @@ public struct PersonRoutes: Sendable {
 
     /// Returns a list of people associated with the account’s legal entity. The people are returned sorted
     /// by creation date, with the most recent people appearing first.
-    public var list: @Sendable (_ account: String, _ expand: [String]?) async throws -> PersonList
+    public var list: @Sendable (_ account: String, _ params: PersonListParams?) async throws -> PersonList
 
     /// Deletes an existing person’s relationship to the account’s legal entity. Any person with a
     /// relationship for an account can be deleted through the API, except if the person is the
@@ -61,9 +61,8 @@ extension PersonRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Person
             },
-            list: { account, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { account, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/accounts/\(account)/persons" : "/v1/accounts/\(account)/persons?\(query)"
                 return try await handler.send(
                     method: .GET,

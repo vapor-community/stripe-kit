@@ -21,7 +21,7 @@ public struct ReportRunRoutes: Sendable {
     public var retrieve: @Sendable (_ reportRun: String, _ expand: [String]?) async throws -> ReportRun
 
     /// Returns a list of Report Runs, with the most recent appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ReportRunList
+    public var list: @Sendable (_ params: ReportRunListParams?) async throws -> ReportRunList
 }
 
 extension ReportRunRoutes {
@@ -44,9 +44,8 @@ extension ReportRunRoutes {
                     path: path
                 ) as ReportRun
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/reporting/report_runs" : "/v1/reporting/report_runs?\(query)"
                 return try await handler.send(
                     method: .GET,

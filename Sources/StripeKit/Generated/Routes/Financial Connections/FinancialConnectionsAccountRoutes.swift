@@ -17,7 +17,7 @@ public struct FinancialConnectionsAccountRoutes: Sendable {
     public var retrieve: @Sendable (_ account: String, _ expand: [String]?) async throws -> FinancialConnectionsAccount
 
     /// Returns a list of Financial Connections Account objects.
-    public var list: @Sendable (_ expand: [String]?) async throws -> FinancialConnectionsAccountList
+    public var list: @Sendable (_ params: FinancialConnectionsAccountListParams?) async throws -> FinancialConnectionsAccountList
 
     /// Disables your access to a Financial Connections Account. You will no longer be able to access data
     /// associated with the account (e.g. balances, transactions).
@@ -46,9 +46,8 @@ extension FinancialConnectionsAccountRoutes {
                     path: path
                 ) as FinancialConnectionsAccount
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/financial_connections/accounts" : "/v1/financial_connections/accounts?\(query)"
                 return try await handler.send(
                     method: .GET,

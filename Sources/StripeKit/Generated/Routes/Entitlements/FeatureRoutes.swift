@@ -23,7 +23,7 @@ public struct FeatureRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: FeatureUpdateParams?) async throws -> Feature
 
     /// Retrieve a list of features
-    public var list: @Sendable (_ expand: [String]?) async throws -> FeatureList
+    public var list: @Sendable (_ params: FeatureListParams?) async throws -> FeatureList
 }
 
 extension FeatureRoutes {
@@ -54,9 +54,8 @@ extension FeatureRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Feature
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/entitlements/features" : "/v1/entitlements/features?\(query)"
                 return try await handler.send(
                     method: .GET,

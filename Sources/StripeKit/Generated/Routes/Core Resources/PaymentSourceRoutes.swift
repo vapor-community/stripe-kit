@@ -26,7 +26,7 @@ public struct PaymentSourceRoutes: Sendable {
     public var update: @Sendable (_ customer: String, _ id: String, _ params: PaymentSourceUpdateParams?) async throws -> PaymentSource
 
     /// List sources for a specified customer.
-    public var list: @Sendable (_ customer: String, _ expand: [String]?) async throws -> PaymentSourceList
+    public var list: @Sendable (_ customer: String, _ params: PaymentSourceListParams?) async throws -> PaymentSourceList
 
     /// Delete a specified source for a given customer.
     public var delete: @Sendable (_ customer: String, _ id: String, _ expand: [String]?) async throws -> ObjectOrDeleted<PaymentSource, DeletedPaymentSource>
@@ -60,9 +60,8 @@ extension PaymentSourceRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as PaymentSource
             },
-            list: { customer, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { customer, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/customers/\(customer)/sources" : "/v1/customers/\(customer)/sources?\(query)"
                 return try await handler.send(
                     method: .GET,

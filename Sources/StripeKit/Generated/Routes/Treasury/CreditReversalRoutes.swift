@@ -21,7 +21,7 @@ public struct CreditReversalRoutes: Sendable {
     public var retrieve: @Sendable (_ creditReversal: String, _ expand: [String]?) async throws -> CreditReversal
 
     /// Returns a list of CreditReversals.
-    public var list: @Sendable (_ expand: [String]?) async throws -> CreditReversalList
+    public var list: @Sendable (_ params: CreditReversalListParams) async throws -> CreditReversalList
 }
 
 extension CreditReversalRoutes {
@@ -44,9 +44,8 @@ extension CreditReversalRoutes {
                     path: path
                 ) as CreditReversal
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/treasury/credit_reversals" : "/v1/treasury/credit_reversals?\(query)"
                 return try await handler.send(
                     method: .GET,

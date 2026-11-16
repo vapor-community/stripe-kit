@@ -43,6 +43,14 @@ public enum IssuingDisputeCreateEvidenceReason: String, Codable, Sendable {
     case serviceNotAsDescribed = "service_not_as_described"
 }
 
+public enum IssuingDisputeListStatus: String, Codable, Sendable {
+    case expired
+    case lost
+    case submitted
+    case unsubmitted
+    case won
+}
+
 public enum IssuingDisputeUpdateEvidenceCanceledProductType: String, Codable, Sendable {
     case merchandise
     case service

@@ -17,7 +17,7 @@ public struct PaymentRecordRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> PaymentRecord
 
     /// List all the Payment Records for a given merchant.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PaymentRecordList
+    public var list: @Sendable (_ params: PaymentRecordListParams?) async throws -> PaymentRecordList
 
     /// Report a new Payment Record. You may report a Payment Record as it is initialized and later report
     /// updates through the other report_* methods, or report Payment Records in a terminal state directly,
@@ -56,9 +56,8 @@ extension PaymentRecordRoutes {
                     path: path
                 ) as PaymentRecord
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/payment_records" : "/v1/payment_records?\(query)"
                 return try await handler.send(
                     method: .GET,

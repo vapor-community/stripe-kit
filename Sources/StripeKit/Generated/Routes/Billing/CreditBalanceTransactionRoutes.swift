@@ -17,7 +17,7 @@ public struct CreditBalanceTransactionRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> CreditBalanceTransaction
 
     /// Retrieve a list of credit balance transactions.
-    public var list: @Sendable (_ expand: [String]?) async throws -> CreditBalanceTransactionList
+    public var list: @Sendable (_ params: CreditBalanceTransactionListParams?) async throws -> CreditBalanceTransactionList
 }
 
 extension CreditBalanceTransactionRoutes {
@@ -32,9 +32,8 @@ extension CreditBalanceTransactionRoutes {
                     path: path
                 ) as CreditBalanceTransaction
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/billing/credit_balance_transactions" : "/v1/billing/credit_balance_transactions?\(query)"
                 return try await handler.send(
                     method: .GET,

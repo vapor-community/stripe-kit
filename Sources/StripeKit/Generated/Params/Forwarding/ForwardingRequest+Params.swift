@@ -44,6 +44,39 @@ public struct ForwardingRequestCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/forwarding/requests`.
+public struct ForwardingRequestListParams: StripeParams {
+    /// Similar to other List endpoints, filters results based on created timestamp. You can pass gt, gte,
+    /// lt, and lte timestamp values.
+    public var created: ForwardingRequestListCreated?
+    /// A pagination cursor to fetch the previous page of the list. The value must be a ForwardingRequest
+    /// ID.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A pagination cursor to fetch the next page of the list. The value must be a ForwardingRequest ID.
+    public var startingAfter: String?
+
+    public init(created: ForwardingRequestListCreated? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
+        self.created = created
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case created
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+    }
+}
+
 /// The request body and headers to be sent to the destination endpoint.
 public struct ForwardingRequestCreateRequest: StripeParams {
     /// The body payload to send to the destination endpoint.
@@ -67,5 +100,25 @@ public struct ForwardingRequestCreateRequestHeaders: StripeParams {
     public init(name: String, value: String) {
         self.name = name
         self.value = value
+    }
+}
+
+/// Similar to other List endpoints, filters results based on created timestamp. You can pass gt, gte,
+/// lt, and lte timestamp values.
+public struct ForwardingRequestListCreated: StripeParams {
+    /// Return results where the `created` field is greater than this value.
+    public var gt: Int?
+    /// Return results where the `created` field is greater than or equal to this value.
+    public var gte: Int?
+    /// Return results where the `created` field is less than this value.
+    public var lt: Int?
+    /// Return results where the `created` field is less than or equal to this value.
+    public var lte: Int?
+
+    public init(gt: Int? = nil, gte: Int? = nil, lt: Int? = nil, lte: Int? = nil) {
+        self.gt = gt
+        self.gte = gte
+        self.lt = lt
+        self.lte = lte
     }
 }

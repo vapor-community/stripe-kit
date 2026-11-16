@@ -37,10 +37,10 @@ public struct CreditNoteRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: CreditNoteUpdateParams?) async throws -> CreditNote
 
     /// Returns a list of credit notes.
-    public var list: @Sendable (_ expand: [String]?) async throws -> CreditNoteList
+    public var list: @Sendable (_ params: CreditNoteListParams?) async throws -> CreditNoteList
 
     /// Get a preview of a credit note without creating it.
-    public var listPreview: @Sendable (_ expand: [String]?) async throws -> CreditNote
+    public var listPreview: @Sendable (_ params: CreditNoteListPreviewParams) async throws -> CreditNote
 
     /// Marks a credit note as void. Learn more about voiding credit notes.
     public var void: @Sendable (_ id: String, _ params: CreditNoteVoidParams?) async throws -> CreditNote
@@ -74,18 +74,16 @@ extension CreditNoteRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as CreditNote
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/credit_notes" : "/v1/credit_notes?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
                 ) as CreditNoteList
             },
-            listPreview: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            listPreview: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/credit_notes/preview" : "/v1/credit_notes/preview?\(query)"
                 return try await handler.send(
                     method: .GET,

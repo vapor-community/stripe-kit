@@ -17,7 +17,7 @@ public struct FinancialAccountFeaturesRoutes: Sendable {
     public var create: @Sendable (_ financialAccount: String, _ params: FinancialAccountFeaturesCreateParams?) async throws -> FinancialAccountFeatures
 
     /// Retrieves Features information associated with the FinancialAccount.
-    public var list: @Sendable (_ financialAccount: String, _ expand: [String]?) async throws -> FinancialAccountFeaturesList
+    public var list: @Sendable (_ financialAccount: String, _ expand: [String]?) async throws -> FinancialAccountFeatures
 }
 
 extension FinancialAccountFeaturesRoutes {
@@ -38,7 +38,7 @@ extension FinancialAccountFeaturesRoutes {
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as FinancialAccountFeaturesList
+                ) as FinancialAccountFeatures
             }
         )
     }

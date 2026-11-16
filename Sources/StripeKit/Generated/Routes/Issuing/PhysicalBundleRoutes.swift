@@ -18,7 +18,7 @@ public struct PhysicalBundleRoutes: Sendable {
 
     /// Returns a list of physical bundle objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PhysicalBundleList
+    public var list: @Sendable (_ params: PhysicalBundleListParams?) async throws -> PhysicalBundleList
 }
 
 extension PhysicalBundleRoutes {
@@ -33,9 +33,8 @@ extension PhysicalBundleRoutes {
                     path: path
                 ) as PhysicalBundle
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/issuing/physical_bundles" : "/v1/issuing/physical_bundles?\(query)"
                 return try await handler.send(
                     method: .GET,

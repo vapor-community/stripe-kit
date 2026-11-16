@@ -24,7 +24,7 @@ public struct FileRoutes: Sendable {
 
     /// Returns a list of the files that your account has access to. Stripe sorts and returns the files by
     /// their creation dates, placing the most recently created files at the top.
-    public var list: @Sendable (_ expand: [String]?) async throws -> FileList
+    public var list: @Sendable (_ params: FileListParams?) async throws -> FileList
 }
 
 extension FileRoutes {
@@ -47,9 +47,8 @@ extension FileRoutes {
                     path: path
                 ) as File
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/files" : "/v1/files?\(query)"
                 return try await handler.send(
                     method: .GET,

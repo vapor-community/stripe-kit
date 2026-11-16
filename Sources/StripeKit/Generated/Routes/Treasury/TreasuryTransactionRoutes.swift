@@ -17,7 +17,7 @@ public struct TreasuryTransactionRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TreasuryTransaction
 
     /// Retrieves a list of Transaction objects.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TreasuryTransactionList
+    public var list: @Sendable (_ params: TreasuryTransactionListParams) async throws -> TreasuryTransactionList
 }
 
 extension TreasuryTransactionRoutes {
@@ -32,9 +32,8 @@ extension TreasuryTransactionRoutes {
                     path: path
                 ) as TreasuryTransaction
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/treasury/transactions" : "/v1/treasury/transactions?\(query)"
                 return try await handler.send(
                     method: .GET,

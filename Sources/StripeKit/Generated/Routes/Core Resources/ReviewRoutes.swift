@@ -18,7 +18,7 @@ public struct ReviewRoutes: Sendable {
 
     /// Returns a list of Review objects that have open set to true. The objects are sorted in descending
     /// order by creation date, with the most recently created object appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ReviewList
+    public var list: @Sendable (_ params: ReviewListParams?) async throws -> ReviewList
 
     /// Approves a Review object, closing it and removing it from the list of reviews.
     public var approve: @Sendable (_ review: String, _ params: ReviewApproveParams?) async throws -> Review
@@ -36,9 +36,8 @@ extension ReviewRoutes {
                     path: path
                 ) as Review
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/reviews" : "/v1/reviews?\(query)"
                 return try await handler.send(
                     method: .GET,

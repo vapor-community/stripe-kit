@@ -20,7 +20,7 @@ public struct EventRoutes: Sendable {
     /// List events, going back up to 30 days. Each event data is rendered according to Stripe API version
     /// at its creation time, specified in event object api_version attribute (not according to your current
     /// Stripe API version or Stripe-Version header).
-    public var list: @Sendable (_ expand: [String]?) async throws -> EventList
+    public var list: @Sendable (_ params: EventListParams?) async throws -> EventList
 }
 
 extension EventRoutes {
@@ -35,9 +35,8 @@ extension EventRoutes {
                     path: path
                 ) as Event
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/events" : "/v1/events?\(query)"
                 return try await handler.send(
                     method: .GET,

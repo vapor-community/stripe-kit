@@ -25,7 +25,7 @@ public struct TopupRoutes: Sendable {
     public var update: @Sendable (_ topup: String, _ params: TopupUpdateParams?) async throws -> Topup
 
     /// Returns a list of top-ups.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TopupList
+    public var list: @Sendable (_ params: TopupListParams?) async throws -> TopupList
 
     /// Cancels a top-up. Only pending top-ups can be canceled.
     public var cancel: @Sendable (_ topup: String, _ params: TopupCancelParams?) async throws -> Topup
@@ -59,9 +59,8 @@ extension TopupRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Topup
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/topups" : "/v1/topups?\(query)"
                 return try await handler.send(
                     method: .GET,

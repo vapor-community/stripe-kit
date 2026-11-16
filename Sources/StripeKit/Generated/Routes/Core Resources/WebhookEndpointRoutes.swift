@@ -28,7 +28,7 @@ public struct WebhookEndpointRoutes: Sendable {
     public var update: @Sendable (_ webhookEndpoint: String, _ params: WebhookEndpointUpdateParams?) async throws -> WebhookEndpoint
 
     /// Returns a list of your webhook endpoints.
-    public var list: @Sendable (_ expand: [String]?) async throws -> WebhookEndpointList
+    public var list: @Sendable (_ params: WebhookEndpointListParams?) async throws -> WebhookEndpointList
 
     /// You can also delete webhook endpoints via the webhook endpoint management page of the Stripe
     /// dashboard.
@@ -63,9 +63,8 @@ extension WebhookEndpointRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as WebhookEndpoint
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/webhook_endpoints" : "/v1/webhook_endpoints?\(query)"
                 return try await handler.send(
                     method: .GET,

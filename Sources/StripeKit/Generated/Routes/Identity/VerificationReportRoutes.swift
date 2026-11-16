@@ -17,7 +17,7 @@ public struct VerificationReportRoutes: Sendable {
     public var retrieve: @Sendable (_ report: String, _ expand: [String]?) async throws -> VerificationReport
 
     /// List all verification reports.
-    public var list: @Sendable (_ expand: [String]?) async throws -> VerificationReportList
+    public var list: @Sendable (_ params: VerificationReportListParams?) async throws -> VerificationReportList
 }
 
 extension VerificationReportRoutes {
@@ -32,9 +32,8 @@ extension VerificationReportRoutes {
                     path: path
                 ) as VerificationReport
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/identity/verification_reports" : "/v1/identity/verification_reports?\(query)"
                 return try await handler.send(
                     method: .GET,

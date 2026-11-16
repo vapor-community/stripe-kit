@@ -25,7 +25,7 @@ public struct SubscriptionScheduleRoutes: Sendable {
     public var update: @Sendable (_ schedule: String, _ params: SubscriptionScheduleUpdateParams?) async throws -> SubscriptionSchedule
 
     /// Retrieves the list of your subscription schedules.
-    public var list: @Sendable (_ expand: [String]?) async throws -> SubscriptionScheduleList
+    public var list: @Sendable (_ params: SubscriptionScheduleListParams?) async throws -> SubscriptionScheduleList
 
     /// Cancels a subscription schedule and its associated subscription immediately (if the subscription
     /// schedule has an active subscription). A subscription schedule can only be canceled if its status is
@@ -68,9 +68,8 @@ extension SubscriptionScheduleRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as SubscriptionSchedule
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/subscription_schedules" : "/v1/subscription_schedules?\(query)"
                 return try await handler.send(
                     method: .GET,

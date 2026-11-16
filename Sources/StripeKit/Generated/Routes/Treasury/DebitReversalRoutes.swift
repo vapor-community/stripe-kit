@@ -20,7 +20,7 @@ public struct DebitReversalRoutes: Sendable {
     public var retrieve: @Sendable (_ debitReversal: String, _ expand: [String]?) async throws -> DebitReversal
 
     /// Returns a list of DebitReversals.
-    public var list: @Sendable (_ expand: [String]?) async throws -> DebitReversalList
+    public var list: @Sendable (_ params: DebitReversalListParams) async throws -> DebitReversalList
 }
 
 extension DebitReversalRoutes {
@@ -43,9 +43,8 @@ extension DebitReversalRoutes {
                     path: path
                 ) as DebitReversal
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/treasury/debit_reversals" : "/v1/treasury/debit_reversals?\(query)"
                 return try await handler.send(
                     method: .GET,

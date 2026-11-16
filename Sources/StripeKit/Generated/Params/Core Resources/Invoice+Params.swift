@@ -339,6 +339,65 @@ public struct InvoiceFinalizeParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/invoices`.
+public struct InvoiceListParams: StripeParams {
+    /// The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
+    public var collectionMethod: InvoiceListCollectionMethod?
+    /// Only return invoices that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// Only return invoices for the customer specified by this customer ID.
+    public var customer: String?
+    /// Only return invoices for the account representing the customer specified by this account ID.
+    public var customerAccount: String?
+    public var dueDate: StripeRangeQuery?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn
+    /// more](https://docs.stripe.com/billing/invoices/workflow#workflow-overview)
+    public var status: InvoiceListStatus?
+    /// Only return invoices for the subscription specified by this subscription ID.
+    public var subscription: String?
+
+    public init(collectionMethod: InvoiceListCollectionMethod? = nil, created: StripeRangeQuery? = nil, customer: String? = nil, customerAccount: String? = nil, dueDate: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, status: InvoiceListStatus? = nil, subscription: String? = nil) {
+        self.collectionMethod = collectionMethod
+        self.created = created
+        self.customer = customer
+        self.customerAccount = customerAccount
+        self.dueDate = dueDate
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+        self.status = status
+        self.subscription = subscription
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case collectionMethod = "collection_method"
+        case created
+        case customer
+        case customerAccount = "customer_account"
+        case dueDate = "due_date"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+        case status
+        case subscription
+    }
+}
+
 public struct InvoiceMarkUncollectibleParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
@@ -418,6 +477,29 @@ public struct InvoiceRemoveLinesParams: StripeParams {
         case expand
         case invoiceMetadata = "invoice_metadata"
         case lines
+    }
+}
+
+/// Query parameters for `GET /v1/invoices/search`.
+public struct InvoiceSearchParams: StripeParams {
+    /// The search query string. See [search query
+    /// language](https://docs.stripe.com/search#search-query-language) and the list of supported [query
+    /// fields for invoices](https://docs.stripe.com/search#query-fields-for-invoices).
+    public var query: String
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for pagination across multiple pages of results. Don't include this parameter on the first
+    /// call. Use the next_page value returned in a previous response to request subsequent results.
+    public var page: String?
+
+    public init(query: String, expand: [String]? = nil, limit: Int? = nil, page: String? = nil) {
+        self.query = query
+        self.expand = expand
+        self.limit = limit
+        self.page = page
     }
 }
 

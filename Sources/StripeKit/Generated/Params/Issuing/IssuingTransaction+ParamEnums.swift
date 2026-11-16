@@ -334,3 +334,8 @@ public enum IssuingTransactionCreatePurchaseDetailsFuelUnit: String, Codable, Se
     case pound
     case usGallon = "us_gallon"
 }
+
+public enum IssuingTransactionListType: String, Codable, Sendable {
+    case capture
+    case refund
+}

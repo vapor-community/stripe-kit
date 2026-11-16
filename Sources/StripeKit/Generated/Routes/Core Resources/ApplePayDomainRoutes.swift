@@ -20,7 +20,7 @@ public struct ApplePayDomainRoutes: Sendable {
     public var retrieve: @Sendable (_ domain: String, _ expand: [String]?) async throws -> ApplePayDomain
 
     /// List apple pay domains.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ApplePayDomainList
+    public var list: @Sendable (_ params: ApplePayDomainListParams?) async throws -> ApplePayDomainList
 
     /// Delete an apple pay domain.
     public var delete: @Sendable (_ domain: String, _ expand: [String]?) async throws -> DeletedApplePayDomain
@@ -46,9 +46,8 @@ extension ApplePayDomainRoutes {
                     path: path
                 ) as ApplePayDomain
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/apple_pay/domains" : "/v1/apple_pay/domains?\(query)"
                 return try await handler.send(
                     method: .GET,

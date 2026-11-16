@@ -216,6 +216,90 @@ public struct SubscriptionCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/subscriptions`.
+public struct SubscriptionListParams: StripeParams {
+    /// Filter subscriptions by their automatic tax settings.
+    public var automaticTax: SubscriptionListAutomaticTax?
+    /// The collection method of the subscriptions to retrieve. Either `charge_automatically` or
+    /// `send_invoice`.
+    public var collectionMethod: SubscriptionListCollectionMethod?
+    /// Only return subscriptions that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// Only return subscriptions whose minimum item current_period_end falls within the given date
+    /// interval.
+    public var currentPeriodEnd: StripeRangeQuery?
+    /// Only return subscriptions whose maximum item current_period_start falls within the given date
+    /// interval.
+    public var currentPeriodStart: StripeRangeQuery?
+    /// The ID of the customer whose subscriptions you're retrieving.
+    public var customer: String?
+    /// The ID of the account representing the customer whose subscriptions you're retrieving.
+    public var customerAccount: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// The ID of the plan whose subscriptions will be retrieved.
+    public var plan: String?
+    /// Filter for subscriptions that contain this recurring price ID.
+    public var price: String?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// The status of the subscriptions to retrieve. Passing in a value of `canceled` will return all
+    /// canceled subscriptions, including those belonging to deleted customers. Pass `ended` to find
+    /// subscriptions that are canceled and subscriptions that are expired due to [incomplete
+    /// payment](https://docs.stripe.com/billing/subscriptions/overview#subscription-statuses). Passing in a
+    /// value of `all` will return subscriptions of all statuses. If no value is supplied, all subscriptions
+    /// that have not been canceled are returned.
+    public var status: SubscriptionListStatus?
+    /// Filter for subscriptions that are associated with the specified test clock. The response will not
+    /// include subscriptions with test clocks if this and the customer parameter is not set.
+    public var testClock: String?
+
+    public init(automaticTax: SubscriptionListAutomaticTax? = nil, collectionMethod: SubscriptionListCollectionMethod? = nil, created: StripeRangeQuery? = nil, currentPeriodEnd: StripeRangeQuery? = nil, currentPeriodStart: StripeRangeQuery? = nil, customer: String? = nil, customerAccount: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, plan: String? = nil, price: String? = nil, startingAfter: String? = nil, status: SubscriptionListStatus? = nil, testClock: String? = nil) {
+        self.automaticTax = automaticTax
+        self.collectionMethod = collectionMethod
+        self.created = created
+        self.currentPeriodEnd = currentPeriodEnd
+        self.currentPeriodStart = currentPeriodStart
+        self.customer = customer
+        self.customerAccount = customerAccount
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.plan = plan
+        self.price = price
+        self.startingAfter = startingAfter
+        self.status = status
+        self.testClock = testClock
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case automaticTax = "automatic_tax"
+        case collectionMethod = "collection_method"
+        case created
+        case currentPeriodEnd = "current_period_end"
+        case currentPeriodStart = "current_period_start"
+        case customer
+        case customerAccount = "customer_account"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case plan
+        case price
+        case startingAfter = "starting_after"
+        case status
+        case testClock = "test_clock"
+    }
+}
+
 public struct SubscriptionMigrateParams: StripeParams {
     /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
     public var billingMode: SubscriptionMigrateBillingMode
@@ -293,6 +377,29 @@ public struct SubscriptionResumeParams: StripeParams {
         case paymentBehavior = "payment_behavior"
         case prorationBehavior = "proration_behavior"
         case prorationDate = "proration_date"
+    }
+}
+
+/// Query parameters for `GET /v1/subscriptions/search`.
+public struct SubscriptionSearchParams: StripeParams {
+    /// The search query string. See [search query
+    /// language](https://docs.stripe.com/search#search-query-language) and the list of supported [query
+    /// fields for subscriptions](https://docs.stripe.com/search#query-fields-for-subscriptions).
+    public var query: String
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for pagination across multiple pages of results. Don't include this parameter on the first
+    /// call. Use the next_page value returned in a previous response to request subsequent results.
+    public var page: String?
+
+    public init(query: String, expand: [String]? = nil, limit: Int? = nil, page: String? = nil) {
+        self.query = query
+        self.expand = expand
+        self.limit = limit
+        self.page = page
     }
 }
 
@@ -1640,6 +1747,17 @@ public struct SubscriptionCreateTrialSettingsEndBehavior: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case billingCycleAnchor = "billing_cycle_anchor"
         case missingPaymentMethod = "missing_payment_method"
+    }
+}
+
+/// Filter subscriptions by their automatic tax settings.
+public struct SubscriptionListAutomaticTax: StripeParams {
+    /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
+    /// generated by the subscription.
+    public var enabled: Bool
+
+    public init(enabled: Bool) {
+        self.enabled = enabled
     }
 }
 

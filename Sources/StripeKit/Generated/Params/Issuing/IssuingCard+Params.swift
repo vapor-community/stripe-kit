@@ -94,6 +94,68 @@ public struct IssuingCardCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/issuing/cards`.
+public struct IssuingCardListParams: StripeParams {
+    /// Only return cards belonging to the Cardholder with the provided ID.
+    public var cardholder: String?
+    /// Only return cards that were issued during the given date interval.
+    public var created: StripeRangeQuery?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Only return cards that have the given expiration month.
+    public var expMonth: Int?
+    /// Only return cards that have the given expiration year.
+    public var expYear: Int?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// Only return cards that have the given last four digits.
+    public var last4: String?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    public var personalizationDesign: String?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return cards that have the given status. One of `active`, `inactive`, or `canceled`.
+    public var status: IssuingCardListStatus?
+    /// Only return cards that have the given type. One of `virtual` or `physical`.
+    public var type: IssuingCardListType?
+
+    public init(cardholder: String? = nil, created: StripeRangeQuery? = nil, endingBefore: String? = nil, expMonth: Int? = nil, expYear: Int? = nil, expand: [String]? = nil, last4: String? = nil, limit: Int? = nil, personalizationDesign: String? = nil, startingAfter: String? = nil, status: IssuingCardListStatus? = nil, type: IssuingCardListType? = nil) {
+        self.cardholder = cardholder
+        self.created = created
+        self.endingBefore = endingBefore
+        self.expMonth = expMonth
+        self.expYear = expYear
+        self.expand = expand
+        self.last4 = last4
+        self.limit = limit
+        self.personalizationDesign = personalizationDesign
+        self.startingAfter = startingAfter
+        self.status = status
+        self.type = type
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case cardholder
+        case created
+        case endingBefore = "ending_before"
+        case expMonth = "exp_month"
+        case expYear = "exp_year"
+        case expand
+        case last4
+        case limit
+        case personalizationDesign = "personalization_design"
+        case startingAfter = "starting_after"
+        case status
+        case type
+    }
+}
+
 public struct IssuingCardUpdateParams: StripeParams {
     /// Reason why the `status` of this card is `canceled`.
     public var cancellationReason: IssuingCardUpdateCancellationReason?

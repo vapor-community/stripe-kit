@@ -14,20 +14,19 @@ import NIOHTTP1
 public struct AssociationRoutes: Sendable {
 
     /// Finds a tax association object by PaymentIntent id.
-    public var list: @Sendable (_ expand: [String]?) async throws -> AssociationList
+    public var list: @Sendable (_ params: AssociationListParams) async throws -> Association
 }
 
 extension AssociationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AssociationRoutes(
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/tax/associations/find" : "/v1/tax/associations/find?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as AssociationList
+                ) as Association
             }
         )
     }

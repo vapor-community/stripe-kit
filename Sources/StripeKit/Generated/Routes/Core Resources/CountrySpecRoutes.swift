@@ -17,7 +17,7 @@ public struct CountrySpecRoutes: Sendable {
     public var retrieve: @Sendable (_ country: String, _ expand: [String]?) async throws -> CountrySpec
 
     /// Lists all Country Spec objects available in the API.
-    public var list: @Sendable (_ expand: [String]?) async throws -> CountrySpecList
+    public var list: @Sendable (_ params: CountrySpecListParams?) async throws -> CountrySpecList
 }
 
 extension CountrySpecRoutes {
@@ -32,9 +32,8 @@ extension CountrySpecRoutes {
                     path: path
                 ) as CountrySpec
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/country_specs" : "/v1/country_specs?\(query)"
                 return try await handler.send(
                     method: .GET,

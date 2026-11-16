@@ -18,7 +18,7 @@ public struct TaxTransactionRoutes: Sendable {
     public var create: @Sendable (_ params: TaxTransactionCreateParams) async throws -> TaxTransaction
 
     /// Retrieves a Tax Transaction object.
-    public var list: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> TaxTransactionList
+    public var list: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> TaxTransaction
 }
 
 extension TaxTransactionRoutes {
@@ -39,7 +39,7 @@ extension TaxTransactionRoutes {
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as TaxTransactionList
+                ) as TaxTransaction
             }
         )
     }

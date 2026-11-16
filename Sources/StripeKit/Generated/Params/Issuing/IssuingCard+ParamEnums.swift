@@ -954,6 +954,17 @@ public enum IssuingCardCreateType: String, Codable, Sendable {
     case virtual
 }
 
+public enum IssuingCardListStatus: String, Codable, Sendable {
+    case active
+    case canceled
+    case inactive
+}
+
+public enum IssuingCardListType: String, Codable, Sendable {
+    case physical
+    case virtual
+}
+
 public enum IssuingCardUpdateCancellationReason: String, Codable, Sendable {
     case lost
     case stolen

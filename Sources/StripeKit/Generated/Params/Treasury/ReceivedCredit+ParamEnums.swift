@@ -16,3 +16,16 @@ public enum ReceivedCreditCreateNetwork: String, Codable, Sendable {
     case rtp
     case usDomesticWire = "us_domestic_wire"
 }
+
+public enum ReceivedCreditListLinkedFlowsSourceFlowType: String, Codable, Sendable {
+    case creditReversal = "credit_reversal"
+    case other
+    case outboundPayment = "outbound_payment"
+    case outboundTransfer = "outbound_transfer"
+    case payout
+}
+
+public enum ReceivedCreditListStatus: String, Codable, Sendable {
+    case failed
+    case succeeded
+}

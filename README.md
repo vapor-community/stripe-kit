@@ -81,6 +81,17 @@ let charges = try await stripe.charges.list(nil)
 for charge in charges.data ?? [] {
     print("\(charge.id): \(charge.amount ?? 0)")
 }
+
+// List with filters (query params are typed too)
+let recent = try await stripe.customers.list(.init(
+    created: .range(gte: 1_700_000_000),
+    email: "jane@example.com",
+    limit: 10
+))
+
+// Search
+let results = try await stripe.customers.search(.init(query: "email:'jane@example.com'"))
+print(results.data.count, results.nextPage ?? "last page")
 ```
 
 ## API Design
@@ -94,7 +105,8 @@ public struct CustomerRoutes: Sendable {
     public var create:   @Sendable (_ params: CustomerCreateParams?) async throws -> Customer
     public var retrieve: @Sendable (_ customer: String, _ expand: [String]?) async throws -> ObjectOrDeleted<Customer, DeletedCustomer>
     public var update:   @Sendable (_ customer: String, _ params: CustomerUpdateParams?) async throws -> Customer
-    public var list:     @Sendable (_ expand: [String]?) async throws -> CustomerList
+    public var list:     @Sendable (_ params: CustomerListParams?) async throws -> CustomerList
+    public var search:   @Sendable (_ params: CustomerSearchParams) async throws -> StripeSearchResult<Customer>
     public var delete:   @Sendable (_ customer: String, _ expand: [String]?) async throws -> DeletedCustomer
 }
 ```
@@ -117,7 +129,9 @@ Expandable fields expand to the live object only.
 
 ### Params (Typed + Form-Encoded)
 
-All POST bodies are typed structs conforming to `StripeParams`, which auto-encodes to `application/x-www-form-urlencoded`:
+All POST bodies are typed structs conforming to `StripeParams`, which auto-encodes to `application/x-www-form-urlencoded`.
+GET routes with query params (list, search, …) take a `StripeParams` struct too, sent as the query string with the same
+encoding. Integer range filters such as `created` use `StripeRangeQuery` (`.equals(_)` or `.range(gt:gte:lt:lte:)`).
 
 ```swift
 var params = CustomerCreateParams()

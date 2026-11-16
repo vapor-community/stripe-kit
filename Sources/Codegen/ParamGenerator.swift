@@ -1,6 +1,8 @@
 // MARK: - Param Generator
-// Generates typed Swift parameter structs from OpenAPI requestBody schemas.
+// Generates typed Swift parameter structs from OpenAPI requestBody schemas and query parameters.
 // Each POST operation gets a {Resource}{Action}Params struct with all fields typed.
+// Each GET operation with query params beyond `expand` (list, search, …) gets one too,
+// e.g. CustomerListParams, CustomerSearchParams.
 // Nested objects become sub-structs up to 4 levels deep, then fall back to [String: String]?.
 //
 // Every params struct includes an optional `expand: [String]?` field.
@@ -19,7 +21,7 @@ struct ParamGenerator {
     // MARK: - Per-Resource Generation
     
     /// Generate param structs for a resource as an extension file.
-    /// Returns nil if the resource has no POST operations with requestBody.
+    /// Returns nil if the resource has no POST bodies or GET query params.
     func generate(resource: StripeResource) -> String? {
         let operations = findOperations(for: resource)
         guard !operations.isEmpty else { return nil }
@@ -383,6 +385,13 @@ struct ParamGenerator {
             return paramTypeString(single, parentStem: parentStem, propName: propName, depth: depth)
         }
         
+        // `integer | range_query_specs` (list filters like `created`) → shared StripeRangeQuery
+        if nonEmpty.count == 2,
+           nonEmpty.contains(where: { $0.type == "integer" && $0.enum == nil }),
+           nonEmpty.contains(where: { $0.title == "range_query_specs" }) {
+            return "StripeRangeQuery"
+        }
+
         // Multiple variants — fall back to String
         return "String"
     }
@@ -528,7 +537,8 @@ struct ParamGenerator {
     
     // MARK: - Operation Discovery
     
-    /// Find all POST operations for a resource, returning (action, bodySchema, requiredFields)
+    /// Find all POST operations with a body and GET operations with query params for a resource,
+    /// returning (action, schema, requiredFields)
     func findOperations(for resource: StripeResource) -> [(action: String, schema: PropertyObject, required: Set<String>)] {
         var results: [(action: String, path: String, schema: PropertyObject, required: Set<String>)] = []
         
@@ -582,6 +592,20 @@ struct ParamGenerator {
             }
         }
         
+        // GET operations with query params. Use the route generator's operations so the
+        // struct names match what the routes reference ({Resource}{Action}Params).
+        let routeGen = RouteGenerator(spec: spec, parser: parser, pathMapping: pathMapping)
+        for op in routeGen.findOperations(for: resource) where op.httpMethod == "GET" && op.hasQueryParams {
+            guard let get = spec.paths[op.path]?.get,
+                  let schema = get.queryParametersSchema(description: "Query parameters for `GET \(op.path)`.")
+            else { continue }
+            precondition(
+                bestByAction[op.action] == nil,
+                "\(resource.swiftTypeName)\(op.action)Params would be generated for both POST \(bestByAction[op.action]?.path ?? "") and GET \(op.path)"
+            )
+            bestByAction[op.action] = (op.action, op.path, schema, Set(schema.required ?? []))
+        }
+
         return bestByAction.values
             .sorted { $0.action < $1.action }
             .map { ($0.action, $0.schema, $0.required) }

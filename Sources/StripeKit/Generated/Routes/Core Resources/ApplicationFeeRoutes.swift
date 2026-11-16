@@ -19,7 +19,7 @@ public struct ApplicationFeeRoutes: Sendable {
 
     /// Returns a list of application fees you’ve previously collected. The application fees are returned in
     /// sorted order, with the most recent fees appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ApplicationFeeList
+    public var list: @Sendable (_ params: ApplicationFeeListParams?) async throws -> ApplicationFeeList
 }
 
 extension ApplicationFeeRoutes {
@@ -34,9 +34,8 @@ extension ApplicationFeeRoutes {
                     path: path
                 ) as ApplicationFee
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/application_fees" : "/v1/application_fees?\(query)"
                 return try await handler.send(
                     method: .GET,

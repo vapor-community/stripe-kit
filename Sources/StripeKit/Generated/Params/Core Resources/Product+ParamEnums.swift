@@ -24,3 +24,8 @@ public enum ProductCreateType: String, Codable, Sendable {
     case good
     case service
 }
+
+public enum ProductListType: String, Codable, Sendable {
+    case good
+    case service
+}

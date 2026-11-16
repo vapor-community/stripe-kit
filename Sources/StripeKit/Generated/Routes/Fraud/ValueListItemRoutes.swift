@@ -21,7 +21,7 @@ public struct ValueListItemRoutes: Sendable {
 
     /// Returns a list of ValueListItem objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ValueListItemList
+    public var list: @Sendable (_ params: ValueListItemListParams) async throws -> ValueListItemList
 
     /// Deletes a ValueListItem object, removing it from its parent value list.
     public var delete: @Sendable (_ item: String, _ expand: [String]?) async throws -> DeletedValueListItem
@@ -47,9 +47,8 @@ extension ValueListItemRoutes {
                     path: path
                 ) as ValueListItem
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/radar/value_list_items" : "/v1/radar/value_list_items?\(query)"
                 return try await handler.send(
                     method: .GET,

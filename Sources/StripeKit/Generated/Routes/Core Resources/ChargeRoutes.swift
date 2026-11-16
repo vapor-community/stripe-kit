@@ -28,13 +28,13 @@ public struct ChargeRoutes: Sendable {
 
     /// Returns a list of charges you’ve previously created. The charges are returned in sorted order, with
     /// the most recent charges appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ChargeList
+    public var list: @Sendable (_ params: ChargeListParams?) async throws -> ChargeList
 
     /// Search for charges you’ve previously created using Stripe’s Search Query Language. Don’t use search
     /// in read-after-write flows where strict consistency is necessary. Under normal operating conditions,
     /// data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
     /// to an hour behind during outages. Search functionality is not available to merchants in India.
-    public var search: @Sendable (_ expand: [String]?) async throws -> Charge
+    public var search: @Sendable (_ params: ChargeSearchParams) async throws -> StripeSearchResult<Charge>
 
     /// This method is deprecated and will be removed soon. If your integration uses it, you need to update
     /// it to use a different payment flow, such as the Payment Intents API.
@@ -69,23 +69,21 @@ extension ChargeRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Charge
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/charges" : "/v1/charges?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
                 ) as ChargeList
             },
-            search: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            search: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/charges/search" : "/v1/charges/search?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as Charge
+                ) as StripeSearchResult<Charge>
             },
             capture: { charge, params in
                 let body = params?.toFormBody() ?? ""

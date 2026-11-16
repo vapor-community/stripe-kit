@@ -126,6 +126,62 @@ public struct InvoiceitemCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/invoiceitems`.
+public struct InvoiceitemListParams: StripeParams {
+    /// Only return invoice items that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// The identifier of the customer whose invoice items to return. If none is provided, returns all
+    /// invoice items.
+    public var customer: String?
+    /// The identifier of the account representing the customer whose invoice items to return. If none is
+    /// provided, returns all invoice items.
+    public var customerAccount: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// Only return invoice items belonging to this invoice. If none is provided, all invoice items will be
+    /// returned. If specifying an invoice, no customer identifier is needed.
+    public var invoice: String?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Set to `true` to only show pending invoice items, which are not yet attached to any invoices. Set to
+    /// `false` to only show invoice items already attached to invoices. If unspecified, no filter is
+    /// applied.
+    public var pending: Bool?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(created: StripeRangeQuery? = nil, customer: String? = nil, customerAccount: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, invoice: String? = nil, limit: Int? = nil, pending: Bool? = nil, startingAfter: String? = nil) {
+        self.created = created
+        self.customer = customer
+        self.customerAccount = customerAccount
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.invoice = invoice
+        self.limit = limit
+        self.pending = pending
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case created
+        case customer
+        case customerAccount = "customer_account"
+        case endingBefore = "ending_before"
+        case expand
+        case invoice
+        case limit
+        case pending
+        case startingAfter = "starting_after"
+    }
+}
+
 public struct InvoiceitemUpdateParams: StripeParams {
     /// The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming
     /// invoice. If you want to apply a credit to the customer's account, pass a negative amount.

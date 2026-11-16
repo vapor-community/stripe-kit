@@ -26,7 +26,7 @@ public struct InvoiceitemRoutes: Sendable {
 
     /// Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the
     /// most recently created invoice items appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> InvoiceitemList
+    public var list: @Sendable (_ params: InvoiceitemListParams?) async throws -> InvoiceitemList
 
     /// Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when
     /// they’re not attached to invoices, or if it’s attached to a draft invoice.
@@ -61,9 +61,8 @@ extension InvoiceitemRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Invoiceitem
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/invoiceitems" : "/v1/invoiceitems?\(query)"
                 return try await handler.send(
                     method: .GET,

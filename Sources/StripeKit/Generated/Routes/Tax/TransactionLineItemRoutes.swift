@@ -14,15 +14,14 @@ import NIOHTTP1
 public struct TransactionLineItemRoutes: Sendable {
 
     /// Retrieves the line items of a committed standalone transaction as a collection.
-    public var list: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> TransactionLineItemList
+    public var list: @Sendable (_ transaction: String, _ params: TransactionLineItemListParams?) async throws -> TransactionLineItemList
 }
 
 extension TransactionLineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TransactionLineItemRoutes(
-            list: { transaction, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { transaction, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/tax/transactions/\(transaction)/line_items" : "/v1/tax/transactions/\(transaction)/line_items?\(query)"
                 return try await handler.send(
                     method: .GET,

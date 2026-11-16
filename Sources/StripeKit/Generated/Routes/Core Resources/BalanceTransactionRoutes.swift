@@ -21,7 +21,7 @@ public struct BalanceTransactionRoutes: Sendable {
     /// charges, transfers, and so on). The transactions return in sorted order, with the most recent
     /// transactions appearing first. The previous name of this endpoint was “Balance history,” and it used
     /// the path /v1/balance/history.
-    public var list: @Sendable (_ expand: [String]?) async throws -> BalanceTransactionList
+    public var list: @Sendable (_ params: BalanceTransactionListParams?) async throws -> BalanceTransactionList
 }
 
 extension BalanceTransactionRoutes {
@@ -36,9 +36,8 @@ extension BalanceTransactionRoutes {
                     path: path
                 ) as BalanceTransaction
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/balance_transactions" : "/v1/balance_transactions?\(query)"
                 return try await handler.send(
                     method: .GET,

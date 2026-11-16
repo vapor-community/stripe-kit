@@ -14,15 +14,14 @@ import NIOHTTP1
 public struct MeterEventSummaryRoutes: Sendable {
 
     /// Retrieve a list of billing meter event summaries.
-    public var list: @Sendable (_ id: String, _ expand: [String]?) async throws -> MeterEventSummaryList
+    public var list: @Sendable (_ id: String, _ params: MeterEventSummaryListParams) async throws -> MeterEventSummaryList
 }
 
 extension MeterEventSummaryRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         MeterEventSummaryRoutes(
-            list: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { id, params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/billing/meters/\(id)/event_summaries" : "/v1/billing/meters/\(id)/event_summaries?\(query)"
                 return try await handler.send(
                     method: .GET,

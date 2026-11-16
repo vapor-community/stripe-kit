@@ -25,13 +25,13 @@ public struct PriceRoutes: Sendable {
 
     /// Returns a list of your active prices, excluding inline prices. For the list of inactive prices, set
     /// active to false.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PriceList
+    public var list: @Sendable (_ params: PriceListParams?) async throws -> PriceList
 
     /// Search for prices you’ve previously created using Stripe’s Search Query Language. Don’t use search
     /// in read-after-write flows where strict consistency is necessary. Under normal operating conditions,
     /// data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
     /// to an hour behind during outages. Search functionality is not available to merchants in India.
-    public var search: @Sendable (_ expand: [String]?) async throws -> Price
+    public var search: @Sendable (_ params: PriceSearchParams) async throws -> StripeSearchResult<Price>
 }
 
 extension PriceRoutes {
@@ -62,23 +62,21 @@ extension PriceRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Price
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/prices" : "/v1/prices?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
                 ) as PriceList
             },
-            search: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            search: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/prices/search" : "/v1/prices/search?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as Price
+                ) as StripeSearchResult<Price>
             }
         )
     }

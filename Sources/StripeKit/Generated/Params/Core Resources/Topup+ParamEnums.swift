@@ -10,3 +10,10 @@ import Foundation
 public enum TopupCreatePaymentMethodOptionsUsBankAccountNetwork: String, Codable, Sendable {
     case ach
 }
+
+public enum TopupListStatus: String, Codable, Sendable {
+    case canceled
+    case failed
+    case pending
+    case succeeded
+}

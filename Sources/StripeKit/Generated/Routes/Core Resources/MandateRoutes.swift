@@ -14,7 +14,7 @@ import NIOHTTP1
 public struct MandateRoutes: Sendable {
 
     /// Retrieves a Mandate object.
-    public var list: @Sendable (_ mandate: String, _ expand: [String]?) async throws -> MandateList
+    public var list: @Sendable (_ mandate: String, _ expand: [String]?) async throws -> Mandate
 }
 
 extension MandateRoutes {
@@ -27,7 +27,7 @@ extension MandateRoutes {
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as MandateList
+                ) as Mandate
             }
         )
     }

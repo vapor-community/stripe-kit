@@ -28,7 +28,7 @@ public struct IssuingDisputeRoutes: Sendable {
 
     /// Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> IssuingDisputeList
+    public var list: @Sendable (_ params: IssuingDisputeListParams?) async throws -> IssuingDisputeList
 
     /// Submits an Issuing Dispute to the card network. Stripe validates that all evidence fields required
     /// for the dispute’s reason are present. For more details, see Dispute reasons and evidence.
@@ -63,9 +63,8 @@ extension IssuingDisputeRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as IssuingDispute
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/issuing/disputes" : "/v1/issuing/disputes?\(query)"
                 return try await handler.send(
                     method: .GET,

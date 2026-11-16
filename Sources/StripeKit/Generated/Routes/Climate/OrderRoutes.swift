@@ -25,7 +25,7 @@ public struct OrderRoutes: Sendable {
 
     /// Lists all Climate order objects. The orders are returned sorted by creation date, with the most
     /// recently created orders appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> OrderList
+    public var list: @Sendable (_ params: OrderListParams?) async throws -> OrderList
 
     /// Cancels a Climate order. You can cancel an order within 24 hours of creation. Stripe refunds the
     /// reservation amount_subtotal, but not the amount_fees for user-triggered cancellations. Frontier
@@ -62,9 +62,8 @@ extension OrderRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Order
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/climate/orders" : "/v1/climate/orders?\(query)"
                 return try await handler.send(
                     method: .GET,

@@ -30,7 +30,7 @@ public struct CouponRoutes: Sendable {
     public var update: @Sendable (_ coupon: String, _ params: CouponUpdateParams?) async throws -> Coupon
 
     /// Returns a list of your coupons.
-    public var list: @Sendable (_ expand: [String]?) async throws -> CouponList
+    public var list: @Sendable (_ params: CouponListParams?) async throws -> CouponList
 
     /// You can delete coupons via the coupon management page of the Stripe dashboard. However, deleting a
     /// coupon does not affect any customers who have already applied the coupon; it means that new
@@ -66,9 +66,8 @@ extension CouponRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Coupon
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/coupons" : "/v1/coupons?\(query)"
                 return try await handler.send(
                     method: .GET,

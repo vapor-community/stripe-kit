@@ -424,3 +424,10 @@ public enum IssuingAuthorizationCreateWallet: String, Codable, Sendable {
     case googlePay = "google_pay"
     case samsungPay = "samsung_pay"
 }
+
+public enum IssuingAuthorizationListStatus: String, Codable, Sendable {
+    case closed
+    case expired
+    case pending
+    case reversed
+}

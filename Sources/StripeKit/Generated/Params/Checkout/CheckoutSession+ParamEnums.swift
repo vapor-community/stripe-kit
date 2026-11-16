@@ -1166,6 +1166,12 @@ public enum CheckoutSessionCreateWalletOptionsLinkDisplay: String, Codable, Send
     case never
 }
 
+public enum CheckoutSessionListStatus: String, Codable, Sendable {
+    case complete
+    case expired
+    case `open` = "open"
+}
+
 public enum CheckoutSessionUpdateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
     case day
     case month

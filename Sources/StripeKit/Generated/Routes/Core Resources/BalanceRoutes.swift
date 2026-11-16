@@ -15,7 +15,7 @@ public struct BalanceRoutes: Sendable {
 
     /// Retrieves the current account balance, based on the authentication that was used to make the
     /// request. For a sample request, see Accounting for negative balances.
-    public var list: @Sendable (_ expand: [String]?) async throws -> BalanceList
+    public var list: @Sendable (_ expand: [String]?) async throws -> Balance
 }
 
 extension BalanceRoutes {
@@ -28,7 +28,7 @@ extension BalanceRoutes {
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as BalanceList
+                ) as Balance
             }
         )
     }

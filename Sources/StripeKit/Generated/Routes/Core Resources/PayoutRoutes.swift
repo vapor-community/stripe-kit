@@ -31,7 +31,7 @@ public struct PayoutRoutes: Sendable {
 
     /// Returns a list of existing payouts sent to third-party bank accounts or payouts that Stripe sent to
     /// you. The payouts return in sorted order, with the most recently created payouts appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PayoutList
+    public var list: @Sendable (_ params: PayoutListParams?) async throws -> PayoutList
 
     /// You can cancel a previously created payout if its status is pending. Stripe refunds the funds to
     /// your available balance. You can’t cancel automatic Stripe payouts.
@@ -73,9 +73,8 @@ extension PayoutRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Payout
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/payouts" : "/v1/payouts?\(query)"
                 return try await handler.send(
                     method: .GET,

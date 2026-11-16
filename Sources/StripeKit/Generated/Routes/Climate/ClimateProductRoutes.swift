@@ -17,7 +17,7 @@ public struct ClimateProductRoutes: Sendable {
     public var retrieve: @Sendable (_ product: String, _ expand: [String]?) async throws -> ClimateProduct
 
     /// Lists all available Climate product objects.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ClimateProductList
+    public var list: @Sendable (_ params: ClimateProductListParams?) async throws -> ClimateProductList
 }
 
 extension ClimateProductRoutes {
@@ -32,9 +32,8 @@ extension ClimateProductRoutes {
                     path: path
                 ) as ClimateProduct
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/climate/products" : "/v1/climate/products?\(query)"
                 return try await handler.send(
                     method: .GET,

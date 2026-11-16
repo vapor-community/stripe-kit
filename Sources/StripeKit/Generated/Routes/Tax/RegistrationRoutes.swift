@@ -24,7 +24,7 @@ public struct RegistrationRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: RegistrationUpdateParams?) async throws -> Registration
 
     /// Returns a list of Tax Registration objects.
-    public var list: @Sendable (_ expand: [String]?) async throws -> RegistrationList
+    public var list: @Sendable (_ params: RegistrationListParams?) async throws -> RegistrationList
 }
 
 extension RegistrationRoutes {
@@ -55,9 +55,8 @@ extension RegistrationRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Registration
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/tax/registrations" : "/v1/tax/registrations?\(query)"
                 return try await handler.send(
                     method: .GET,

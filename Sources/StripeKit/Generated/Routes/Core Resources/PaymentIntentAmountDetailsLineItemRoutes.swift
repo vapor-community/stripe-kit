@@ -14,15 +14,14 @@ import NIOHTTP1
 public struct PaymentIntentAmountDetailsLineItemRoutes: Sendable {
 
     /// Lists all LineItems of a given PaymentIntent.
-    public var list: @Sendable (_ intent: String, _ expand: [String]?) async throws -> PaymentIntentAmountDetailsLineItemList
+    public var list: @Sendable (_ intent: String, _ params: PaymentIntentAmountDetailsLineItemListParams?) async throws -> PaymentIntentAmountDetailsLineItemList
 }
 
 extension PaymentIntentAmountDetailsLineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentIntentAmountDetailsLineItemRoutes(
-            list: { intent, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { intent, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/payment_intents/\(intent)/amount_details_line_items" : "/v1/payment_intents/\(intent)/amount_details_line_items?\(query)"
                 return try await handler.send(
                     method: .GET,

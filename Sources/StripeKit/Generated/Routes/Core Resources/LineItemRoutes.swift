@@ -23,7 +23,7 @@ public struct LineItemRoutes: Sendable {
     /// When retrieving an invoice, you’ll get a lines property containing the total count of line items and
     /// the first handful of those items. There is also a URL where you can retrieve the full (paginated)
     /// list of line items.
-    public var list: @Sendable (_ invoice: String, _ expand: [String]?) async throws -> LineItemList
+    public var list: @Sendable (_ invoice: String, _ params: LineItemListParams?) async throws -> LineItemList
 }
 
 extension LineItemRoutes {
@@ -37,9 +37,8 @@ extension LineItemRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as LineItem
             },
-            list: { invoice, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { invoice, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/invoices/\(invoice)/lines" : "/v1/invoices/\(invoice)/lines?\(query)"
                 return try await handler.send(
                     method: .GET,

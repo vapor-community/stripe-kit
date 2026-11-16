@@ -62,6 +62,40 @@ public struct FinancialAccountCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/treasury/financial_accounts`.
+public struct FinancialAccountListParams: StripeParams {
+    /// Only return FinancialAccounts that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// An object ID cursor for use in pagination.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit ranging from 1 to 100 (defaults to 10).
+    public var limit: Int?
+    /// An object ID cursor for use in pagination.
+    public var startingAfter: String?
+    /// Only return FinancialAccounts that have the given status: `open` or `closed`
+    public var status: FinancialAccountListStatus?
+
+    public init(created: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, status: FinancialAccountListStatus? = nil) {
+        self.created = created
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+        self.status = status
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case created
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+        case status
+    }
+}
+
 public struct FinancialAccountUpdateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?

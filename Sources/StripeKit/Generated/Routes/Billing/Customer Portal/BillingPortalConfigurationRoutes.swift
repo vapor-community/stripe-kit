@@ -23,7 +23,7 @@ public struct BillingPortalConfigurationRoutes: Sendable {
     public var update: @Sendable (_ configuration: String, _ params: BillingPortalConfigurationUpdateParams?) async throws -> BillingPortalConfiguration
 
     /// Returns a list of configurations that describe the functionality of the customer portal.
-    public var list: @Sendable (_ expand: [String]?) async throws -> BillingPortalConfigurationList
+    public var list: @Sendable (_ params: BillingPortalConfigurationListParams?) async throws -> BillingPortalConfigurationList
 }
 
 extension BillingPortalConfigurationRoutes {
@@ -54,9 +54,8 @@ extension BillingPortalConfigurationRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as BillingPortalConfiguration
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/billing_portal/configurations" : "/v1/billing_portal/configurations?\(query)"
                 return try await handler.send(
                     method: .GET,

@@ -25,7 +25,7 @@ public struct IssuingAuthorizationRoutes: Sendable {
 
     /// Returns a list of Issuing Authorization objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> IssuingAuthorizationList
+    public var list: @Sendable (_ params: IssuingAuthorizationListParams?) async throws -> IssuingAuthorizationList
 
     /// [Deprecated] Approves a pending Issuing Authorization object. This request should be made within the
     /// timeout window of the real-time authorization flow. This method is deprecated. Instead, respond
@@ -68,9 +68,8 @@ extension IssuingAuthorizationRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as IssuingAuthorization
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/issuing/authorizations" : "/v1/issuing/authorizations?\(query)"
                 return try await handler.send(
                     method: .GET,

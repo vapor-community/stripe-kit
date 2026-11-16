@@ -24,7 +24,7 @@ public struct PersonalizationDesignRoutes: Sendable {
 
     /// Returns a list of personalization design objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PersonalizationDesignList
+    public var list: @Sendable (_ params: PersonalizationDesignListParams?) async throws -> PersonalizationDesignList
 }
 
 extension PersonalizationDesignRoutes {
@@ -55,9 +55,8 @@ extension PersonalizationDesignRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as PersonalizationDesign
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/issuing/personalization_designs" : "/v1/issuing/personalization_designs?\(query)"
                 return try await handler.send(
                     method: .GET,

@@ -33,6 +33,45 @@ public struct FeatureCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/entitlements/features`.
+public struct FeatureListParams: StripeParams {
+    /// If set, filter results to only include features with the given archive status.
+    public var archived: Bool?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// If set, filter results to only include features with the given lookup_key.
+    public var lookupKey: String?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(archived: Bool? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, lookupKey: String? = nil, startingAfter: String? = nil) {
+        self.archived = archived
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.lookupKey = lookupKey
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case archived
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case lookupKey = "lookup_key"
+        case startingAfter = "starting_after"
+    }
+}
+
 public struct FeatureUpdateParams: StripeParams {
     /// Inactive features cannot be attached to new products and will not be returned from the features list
     /// endpoint.

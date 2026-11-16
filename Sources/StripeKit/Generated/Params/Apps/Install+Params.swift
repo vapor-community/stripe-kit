@@ -42,6 +42,69 @@ public struct InstallCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/apps/installs`.
+public struct InstallListParams: StripeParams {
+    /// Only return installs made by this account. Only useful to an app developer filtering by its own app
+    /// with its own key, whose list spans the accounts that installed the app; other lists only accept the
+    /// authenticated account.
+    public var account: String?
+    /// Only return installs for the app specified by this app ID.
+    public var app: String?
+    /// Only return installs whose installer must authorize pending permissions, content security policy
+    /// entries, or endpoints.
+    public var approvalRequired: Bool?
+    /// Only return installs in the distribution channel specified by this channel name.
+    public var channel: InstallListChannel?
+    /// Only return app installs that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// Only return installs created by the embedding platform specified by this account ID.
+    public var createdBy: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return installs with the given status: `installed`, `installing`, `install_failed`,
+    /// `uninstalling`, or `uninstall_failed`.
+    public var status: InstallListStatus?
+
+    public init(account: String? = nil, app: String? = nil, approvalRequired: Bool? = nil, channel: InstallListChannel? = nil, created: StripeRangeQuery? = nil, createdBy: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, status: InstallListStatus? = nil) {
+        self.account = account
+        self.app = app
+        self.approvalRequired = approvalRequired
+        self.channel = channel
+        self.created = created
+        self.createdBy = createdBy
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+        self.status = status
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case account
+        case app
+        case approvalRequired = "approval_required"
+        case channel
+        case created
+        case createdBy = "created_by"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+        case status
+    }
+}
+
 public struct InstallUninstallParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?

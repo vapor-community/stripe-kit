@@ -938,6 +938,17 @@ public enum CardholderCreateType: String, Codable, Sendable {
     case individual
 }
 
+public enum CardholderListStatus: String, Codable, Sendable {
+    case active
+    case blocked
+    case inactive
+}
+
+public enum CardholderListType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
 public enum CardholderUpdatePreferredLocales: String, Codable, Sendable {
     case de
     case en

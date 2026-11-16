@@ -321,6 +321,69 @@ public struct CheckoutSessionExpireParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/checkout/sessions`.
+public struct CheckoutSessionListParams: StripeParams {
+    /// Only return Checkout Sessions that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// Only return the Checkout Sessions for the Customer specified.
+    public var customer: String?
+    /// Only return the Checkout Sessions for the Account specified.
+    public var customerAccount: String?
+    /// Only return the Checkout Sessions for the Customer details specified.
+    public var customerDetails: CheckoutSessionListCustomerDetails?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Only return the Checkout Session for the PaymentIntent specified.
+    public var paymentIntent: String?
+    /// Only return the Checkout Sessions for the Payment Link specified.
+    public var paymentLink: String?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return the Checkout Sessions matching the given status.
+    public var status: CheckoutSessionListStatus?
+    /// Only return the Checkout Session for the subscription specified.
+    public var subscription: String?
+
+    public init(created: StripeRangeQuery? = nil, customer: String? = nil, customerAccount: String? = nil, customerDetails: CheckoutSessionListCustomerDetails? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, paymentIntent: String? = nil, paymentLink: String? = nil, startingAfter: String? = nil, status: CheckoutSessionListStatus? = nil, subscription: String? = nil) {
+        self.created = created
+        self.customer = customer
+        self.customerAccount = customerAccount
+        self.customerDetails = customerDetails
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.paymentIntent = paymentIntent
+        self.paymentLink = paymentLink
+        self.startingAfter = startingAfter
+        self.status = status
+        self.subscription = subscription
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case created
+        case customer
+        case customerAccount = "customer_account"
+        case customerDetails = "customer_details"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case paymentIntent = "payment_intent"
+        case paymentLink = "payment_link"
+        case startingAfter = "starting_after"
+        case status
+        case subscription
+    }
+}
+
 public struct CheckoutSessionUpdateParams: StripeParams {
     /// Information about the customer collected within the Checkout Session. Can only be set when updating
     /// `embedded_page` or `elements` sessions.
@@ -3822,6 +3885,16 @@ public struct CheckoutSessionCreateWalletOptionsLink: StripeParams {
 
     public init(display: CheckoutSessionCreateWalletOptionsLinkDisplay? = nil) {
         self.display = display
+    }
+}
+
+/// Only return the Checkout Sessions for the Customer details specified.
+public struct CheckoutSessionListCustomerDetails: StripeParams {
+    /// Customer's email address.
+    public var email: String
+
+    public init(email: String) {
+        self.email = email
     }
 }
 

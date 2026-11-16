@@ -197,6 +197,76 @@ public struct ChargeCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/charges`.
+public struct ChargeListParams: StripeParams {
+    /// Only return charges that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// Only return charges for the customer specified by this customer ID.
+    public var customer: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Only return charges that were created by the PaymentIntent specified by this PaymentIntent ID.
+    public var paymentIntent: String?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return charges for this transfer group, limited to 100.
+    public var transferGroup: String?
+
+    public init(created: StripeRangeQuery? = nil, customer: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, paymentIntent: String? = nil, startingAfter: String? = nil, transferGroup: String? = nil) {
+        self.created = created
+        self.customer = customer
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.paymentIntent = paymentIntent
+        self.startingAfter = startingAfter
+        self.transferGroup = transferGroup
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case created
+        case customer
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case paymentIntent = "payment_intent"
+        case startingAfter = "starting_after"
+        case transferGroup = "transfer_group"
+    }
+}
+
+/// Query parameters for `GET /v1/charges/search`.
+public struct ChargeSearchParams: StripeParams {
+    /// The search query string. See [search query
+    /// language](https://docs.stripe.com/search#search-query-language) and the list of supported [query
+    /// fields for charges](https://docs.stripe.com/search#query-fields-for-charges).
+    public var query: String
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for pagination across multiple pages of results. Don't include this parameter on the first
+    /// call. Use the next_page value returned in a previous response to request subsequent results.
+    public var page: String?
+
+    public init(query: String, expand: [String]? = nil, limit: Int? = nil, page: String? = nil) {
+        self.query = query
+        self.expand = expand
+        self.limit = limit
+        self.page = page
+    }
+}
+
 public struct ChargeUpdateParams: StripeParams {
     /// The ID of an existing customer that will be associated with this request. This field may only be
     /// updated if there is no existing associated customer with this charge.

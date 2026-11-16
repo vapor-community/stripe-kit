@@ -13,3 +13,18 @@ public enum InstallCreateChannel: String, Codable, Sendable {
     case `public` = "public"
     case testing
 }
+
+public enum InstallListChannel: String, Codable, Sendable {
+    case privateLive = "private_live"
+    case privateTest = "private_test"
+    case `public` = "public"
+    case testing
+}
+
+public enum InstallListStatus: String, Codable, Sendable {
+    case installFailed = "install_failed"
+    case installed
+    case installing
+    case uninstallFailed = "uninstall_failed"
+    case uninstalling
+}

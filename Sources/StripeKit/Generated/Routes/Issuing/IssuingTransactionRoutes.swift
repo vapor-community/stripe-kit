@@ -25,7 +25,7 @@ public struct IssuingTransactionRoutes: Sendable {
 
     /// Returns a list of Issuing Transaction objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> IssuingTransactionList
+    public var list: @Sendable (_ params: IssuingTransactionListParams?) async throws -> IssuingTransactionList
 }
 
 extension IssuingTransactionRoutes {
@@ -56,9 +56,8 @@ extension IssuingTransactionRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as IssuingTransaction
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/issuing/transactions" : "/v1/issuing/transactions?\(query)"
                 return try await handler.send(
                     method: .GET,

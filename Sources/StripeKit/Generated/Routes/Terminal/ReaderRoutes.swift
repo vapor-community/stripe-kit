@@ -24,7 +24,7 @@ public struct ReaderRoutes: Sendable {
     public var update: @Sendable (_ reader: String, _ params: ReaderUpdateParams?) async throws -> ObjectOrDeleted<Reader, DeletedReader>
 
     /// Returns a list of Reader objects.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ReaderList
+    public var list: @Sendable (_ params: ReaderListParams?) async throws -> ReaderList
 
     /// Deletes a Reader object.
     public var delete: @Sendable (_ reader: String, _ expand: [String]?) async throws -> DeletedReader
@@ -84,9 +84,8 @@ extension ReaderRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as ObjectOrDeleted<Reader, DeletedReader>
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/terminal/readers" : "/v1/terminal/readers?\(query)"
                 return try await handler.send(
                     method: .GET,

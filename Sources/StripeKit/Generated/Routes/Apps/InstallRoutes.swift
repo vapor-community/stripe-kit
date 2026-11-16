@@ -42,7 +42,7 @@ public struct InstallRoutes: Sendable {
     /// callers see the installs on their own account. A live key lists live installs and a test key lists
     /// test installs; the key of an app’s managed sandbox filtering by app lists that app’s installs across
     /// every sandbox.
-    public var list: @Sendable (_ expand: [String]?) async throws -> InstallList
+    public var list: @Sendable (_ params: InstallListParams?) async throws -> InstallList
 
     /// Uninstalls an app from the account that installed it.
     public var uninstall: @Sendable (_ id: String, _ params: InstallUninstallParams?) async throws -> Install
@@ -76,9 +76,8 @@ extension InstallRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Install
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/apps/installs" : "/v1/apps/installs?\(query)"
                 return try await handler.send(
                     method: .GET,

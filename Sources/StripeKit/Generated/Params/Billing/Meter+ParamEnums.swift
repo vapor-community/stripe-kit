@@ -21,3 +21,8 @@ public enum MeterCreateEventTimeWindow: String, Codable, Sendable {
     case day
     case hour
 }
+
+public enum MeterListStatus: String, Codable, Sendable {
+    case active
+    case inactive
+}

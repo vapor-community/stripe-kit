@@ -94,3 +94,12 @@ public enum AuthenticationCreateSubmit: String, Codable, Sendable {
     case ifFingerprintingNotSupported = "if_fingerprinting_not_supported"
     case never
 }
+
+public enum AuthenticationListStatus: String, Codable, Sendable {
+    case canceled
+    case error
+    case failed
+    case requiresChallenge = "requires_challenge"
+    case requiresSubmission = "requires_submission"
+    case succeeded
+}

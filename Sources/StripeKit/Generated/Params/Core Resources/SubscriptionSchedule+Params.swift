@@ -100,6 +100,66 @@ public struct SubscriptionScheduleCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/subscription_schedules`.
+public struct SubscriptionScheduleListParams: StripeParams {
+    /// Only return subscription schedules that were created canceled the given date interval.
+    public var canceledAt: StripeRangeQuery?
+    /// Only return subscription schedules that completed during the given date interval.
+    public var completedAt: StripeRangeQuery?
+    /// Only return subscription schedules that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// Only return subscription schedules for the given customer. The response will not include
+    /// subscription schedules for customers with a test clock attached if this parameter is not set.
+    public var customer: String?
+    /// Only return subscription schedules for the given account.
+    public var customerAccount: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Only return subscription schedules that were released during the given date interval.
+    public var releasedAt: StripeRangeQuery?
+    /// Only return subscription schedules that have not started yet.
+    public var scheduled: Bool?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(canceledAt: StripeRangeQuery? = nil, completedAt: StripeRangeQuery? = nil, created: StripeRangeQuery? = nil, customer: String? = nil, customerAccount: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, releasedAt: StripeRangeQuery? = nil, scheduled: Bool? = nil, startingAfter: String? = nil) {
+        self.canceledAt = canceledAt
+        self.completedAt = completedAt
+        self.created = created
+        self.customer = customer
+        self.customerAccount = customerAccount
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.releasedAt = releasedAt
+        self.scheduled = scheduled
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case canceledAt = "canceled_at"
+        case completedAt = "completed_at"
+        case created
+        case customer
+        case customerAccount = "customer_account"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case releasedAt = "released_at"
+        case scheduled
+        case startingAfter = "starting_after"
+    }
+}
+
 public struct SubscriptionScheduleReleaseParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?

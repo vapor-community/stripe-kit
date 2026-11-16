@@ -17,7 +17,7 @@ public struct ScheduledQueryRunRoutes: Sendable {
     public var retrieve: @Sendable (_ scheduledQueryRun: String, _ expand: [String]?) async throws -> ScheduledQueryRun
 
     /// Returns a list of scheduled query runs.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ScheduledQueryRunList
+    public var list: @Sendable (_ params: ScheduledQueryRunListParams?) async throws -> ScheduledQueryRunList
 }
 
 extension ScheduledQueryRunRoutes {
@@ -32,9 +32,8 @@ extension ScheduledQueryRunRoutes {
                     path: path
                 ) as ScheduledQueryRun
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/sigma/scheduled_query_runs" : "/v1/sigma/scheduled_query_runs?\(query)"
                 return try await handler.send(
                     method: .GET,

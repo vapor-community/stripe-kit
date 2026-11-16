@@ -23,7 +23,7 @@ public struct TerminalConfigurationRoutes: Sendable {
     public var update: @Sendable (_ configuration: String, _ params: TerminalConfigurationUpdateParams?) async throws -> ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration>
 
     /// Returns a list of Configuration objects.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TerminalConfigurationList
+    public var list: @Sendable (_ params: TerminalConfigurationListParams?) async throws -> TerminalConfigurationList
 
     /// Deletes a Configuration object.
     public var delete: @Sendable (_ configuration: String, _ expand: [String]?) async throws -> DeletedTerminalConfiguration
@@ -57,9 +57,8 @@ extension TerminalConfigurationRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration>
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/terminal/configurations" : "/v1/terminal/configurations?\(query)"
                 return try await handler.send(
                     method: .GET,

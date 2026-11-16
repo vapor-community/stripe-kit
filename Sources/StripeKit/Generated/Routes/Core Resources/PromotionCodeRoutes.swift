@@ -26,7 +26,7 @@ public struct PromotionCodeRoutes: Sendable {
     public var update: @Sendable (_ promotionCode: String, _ params: PromotionCodeUpdateParams?) async throws -> PromotionCode
 
     /// Returns a list of your promotion codes.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PromotionCodeList
+    public var list: @Sendable (_ params: PromotionCodeListParams?) async throws -> PromotionCodeList
 }
 
 extension PromotionCodeRoutes {
@@ -57,9 +57,8 @@ extension PromotionCodeRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as PromotionCode
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/promotion_codes" : "/v1/promotion_codes?\(query)"
                 return try await handler.send(
                     method: .GET,

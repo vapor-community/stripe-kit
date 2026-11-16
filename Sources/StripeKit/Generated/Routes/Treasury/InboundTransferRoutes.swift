@@ -24,7 +24,7 @@ public struct InboundTransferRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: InboundTransferUpdateParams?) async throws -> InboundTransfer
 
     /// Returns a list of InboundTransfers sent from the specified FinancialAccount.
-    public var list: @Sendable (_ expand: [String]?) async throws -> InboundTransferList
+    public var list: @Sendable (_ params: InboundTransferListParams) async throws -> InboundTransferList
 
     /// Cancels an InboundTransfer.
     public var cancel: @Sendable (_ inboundTransfer: String, _ params: InboundTransferCancelParams?) async throws -> InboundTransfer
@@ -58,9 +58,8 @@ extension InboundTransferRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as InboundTransfer
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/treasury/inbound_transfers" : "/v1/treasury/inbound_transfers?\(query)"
                 return try await handler.send(
                     method: .GET,

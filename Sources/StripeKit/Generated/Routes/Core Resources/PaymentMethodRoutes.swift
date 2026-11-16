@@ -27,7 +27,7 @@ public struct PaymentMethodRoutes: Sendable {
     public var update: @Sendable (_ paymentMethod: String, _ params: PaymentMethodUpdateParams?) async throws -> PaymentMethod
 
     /// Returns a list of all PaymentMethods.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PaymentMethodList
+    public var list: @Sendable (_ params: PaymentMethodListParams?) async throws -> PaymentMethodList
 
     /// Attaches a PaymentMethod object to a Customer. To attach a new PaymentMethod to a customer for
     /// future payments, we recommend you use a SetupIntent or a PaymentIntent with setup_future_usage.
@@ -73,9 +73,8 @@ extension PaymentMethodRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as PaymentMethod
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/payment_methods" : "/v1/payment_methods?\(query)"
                 return try await handler.send(
                     method: .GET,

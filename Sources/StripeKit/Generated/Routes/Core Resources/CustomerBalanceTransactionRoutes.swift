@@ -24,7 +24,7 @@ public struct CustomerBalanceTransactionRoutes: Sendable {
     public var update: @Sendable (_ customer: String, _ transaction: String, _ params: CustomerBalanceTransactionUpdateParams?) async throws -> CustomerBalanceTransaction
 
     /// Returns a list of transactions that updated the customer’s balances.
-    public var list: @Sendable (_ customer: String, _ expand: [String]?) async throws -> CustomerBalanceTransactionList
+    public var list: @Sendable (_ customer: String, _ params: CustomerBalanceTransactionListParams?) async throws -> CustomerBalanceTransactionList
 }
 
 extension CustomerBalanceTransactionRoutes {
@@ -55,9 +55,8 @@ extension CustomerBalanceTransactionRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as CustomerBalanceTransaction
             },
-            list: { customer, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { customer, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/customers/\(customer)/balance_transactions" : "/v1/customers/\(customer)/balance_transactions?\(query)"
                 return try await handler.send(
                     method: .GET,

@@ -28,7 +28,7 @@ public struct ExternalAccountRoutes: Sendable {
     public var update: @Sendable (_ account: String, _ id: String, _ params: ExternalAccountUpdateParams?) async throws -> ExternalAccount
 
     /// List external accounts for an account.
-    public var list: @Sendable (_ account: String, _ expand: [String]?) async throws -> ExternalAccountList
+    public var list: @Sendable (_ account: String, _ params: ExternalAccountListParams?) async throws -> ExternalAccountList
 
     /// Delete a specified external account for a given account.
     public var delete: @Sendable (_ account: String, _ id: String, _ expand: [String]?) async throws -> DeletedExternalAccount
@@ -62,9 +62,8 @@ extension ExternalAccountRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as ExternalAccount
             },
-            list: { account, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { account, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/accounts/\(account)/external_accounts" : "/v1/accounts/\(account)/external_accounts?\(query)"
                 return try await handler.send(
                     method: .GET,

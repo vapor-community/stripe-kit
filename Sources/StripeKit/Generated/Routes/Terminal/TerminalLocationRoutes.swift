@@ -25,7 +25,7 @@ public struct TerminalLocationRoutes: Sendable {
     public var update: @Sendable (_ location: String, _ params: TerminalLocationUpdateParams?) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>
 
     /// Returns a list of Location objects.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TerminalLocationList
+    public var list: @Sendable (_ params: TerminalLocationListParams?) async throws -> TerminalLocationList
 
     /// Deletes a Location object.
     public var delete: @Sendable (_ location: String, _ expand: [String]?) async throws -> DeletedTerminalLocation
@@ -59,9 +59,8 @@ extension TerminalLocationRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/terminal/locations" : "/v1/terminal/locations?\(query)"
                 return try await handler.send(
                     method: .GET,

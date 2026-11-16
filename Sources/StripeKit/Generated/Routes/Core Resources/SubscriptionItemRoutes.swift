@@ -23,7 +23,7 @@ public struct SubscriptionItemRoutes: Sendable {
     public var update: @Sendable (_ item: String, _ params: SubscriptionItemUpdateParams?) async throws -> SubscriptionItem
 
     /// Returns a list of your subscription items for a given subscription.
-    public var list: @Sendable (_ expand: [String]?) async throws -> SubscriptionItemList
+    public var list: @Sendable (_ params: SubscriptionItemListParams) async throws -> SubscriptionItemList
 
     /// Deletes an item from the subscription. Removing a subscription item from a subscription will not
     /// cancel the subscription.
@@ -58,9 +58,8 @@ extension SubscriptionItemRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as SubscriptionItem
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/subscription_items" : "/v1/subscription_items?\(query)"
                 return try await handler.send(
                     method: .GET,

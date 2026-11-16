@@ -114,6 +114,74 @@ public struct CustomerCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/customers`.
+public struct CustomerListParams: StripeParams {
+    /// Only return customers that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// A case-sensitive filter on the list based on the customer's `email` field. The value must be a
+    /// string.
+    public var email: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Provides a list of customers that are associated with the specified test clock. The response will
+    /// not include customers with test clocks if this parameter is not set.
+    public var testClock: String?
+
+    public init(created: StripeRangeQuery? = nil, email: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, testClock: String? = nil) {
+        self.created = created
+        self.email = email
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+        self.testClock = testClock
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case created
+        case email
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+        case testClock = "test_clock"
+    }
+}
+
+/// Query parameters for `GET /v1/customers/search`.
+public struct CustomerSearchParams: StripeParams {
+    /// The search query string. See [search query
+    /// language](https://docs.stripe.com/search#search-query-language) and the list of supported [query
+    /// fields for customers](https://docs.stripe.com/search#query-fields-for-customers).
+    public var query: String
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for pagination across multiple pages of results. Don't include this parameter on the first
+    /// call. Use the next_page value returned in a previous response to request subsequent results.
+    public var page: String?
+
+    public init(query: String, expand: [String]? = nil, limit: Int? = nil, page: String? = nil) {
+        self.query = query
+        self.expand = expand
+        self.limit = limit
+        self.page = page
+    }
+}
+
 public struct CustomerUpdateParams: StripeParams {
     /// The customer's address. Learn about [country-specific requirements for calculating
     /// tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).

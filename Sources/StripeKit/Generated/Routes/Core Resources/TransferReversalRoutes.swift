@@ -32,7 +32,7 @@ public struct TransferReversalRoutes: Sendable {
     /// reversals are always available by default on the transfer object. If you need more than those 10,
     /// you can use this API method and the limit and starting_after parameters to page through additional
     /// reversals.
-    public var list: @Sendable (_ id: String, _ expand: [String]?) async throws -> TransferReversalList
+    public var list: @Sendable (_ id: String, _ params: TransferReversalListParams?) async throws -> TransferReversalList
 }
 
 extension TransferReversalRoutes {
@@ -63,9 +63,8 @@ extension TransferReversalRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as TransferReversal
             },
-            list: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { id, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/transfers/\(id)/reversals" : "/v1/transfers/\(id)/reversals?\(query)"
                 return try await handler.send(
                     method: .GET,

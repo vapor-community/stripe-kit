@@ -20,7 +20,7 @@ public struct ForwardingRequestRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> ForwardingRequest
 
     /// Lists all ForwardingRequest objects.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ForwardingRequestList
+    public var list: @Sendable (_ params: ForwardingRequestListParams?) async throws -> ForwardingRequestList
 }
 
 extension ForwardingRequestRoutes {
@@ -43,9 +43,8 @@ extension ForwardingRequestRoutes {
                     path: path
                 ) as ForwardingRequest
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/forwarding/requests" : "/v1/forwarding/requests?\(query)"
                 return try await handler.send(
                     method: .GET,

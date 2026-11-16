@@ -23,7 +23,7 @@ public struct AuthenticationRoutes: Sendable {
     public var retrieve: @Sendable (_ authentication: String, _ expand: [String]?) async throws -> Authentication
 
     /// Returns a list of 3D Secure Authentications.
-    public var list: @Sendable (_ expand: [String]?) async throws -> AuthenticationList
+    public var list: @Sendable (_ params: AuthenticationListParams?) async throws -> AuthenticationList
 
     /// This endpoint cancels a 3DS Authentication. You can cancel a 3DS Authentication object when it’s in
     /// a non-final status: requires_submission or requires_challenge.
@@ -55,9 +55,8 @@ extension AuthenticationRoutes {
                     path: path
                 ) as Authentication
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/three_d_secure/authentications" : "/v1/three_d_secure/authentications?\(query)"
                 return try await handler.send(
                     method: .GET,

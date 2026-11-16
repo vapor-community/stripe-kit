@@ -25,7 +25,7 @@ public struct OutboundTransferRoutes: Sendable {
     public var update: @Sendable (_ outboundTransfer: String, _ params: OutboundTransferUpdateParams) async throws -> OutboundTransfer
 
     /// Returns a list of OutboundTransfers sent from the specified FinancialAccount.
-    public var list: @Sendable (_ expand: [String]?) async throws -> OutboundTransferList
+    public var list: @Sendable (_ params: OutboundTransferListParams) async throws -> OutboundTransferList
 
     /// An OutboundTransfer can be canceled if the funds have not yet been paid out.
     public var cancel: @Sendable (_ outboundTransfer: String, _ params: OutboundTransferCancelParams?) async throws -> OutboundTransfer
@@ -59,9 +59,8 @@ extension OutboundTransferRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as OutboundTransfer
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/treasury/outbound_transfers" : "/v1/treasury/outbound_transfers?\(query)"
                 return try await handler.send(
                     method: .GET,

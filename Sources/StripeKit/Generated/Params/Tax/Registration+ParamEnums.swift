@@ -843,3 +843,10 @@ public enum RegistrationCreateCountryOptionsZwStandardPlaceOfSupplyScheme: Strin
 public enum RegistrationCreateCountryOptionsZwType: String, Codable, Sendable {
     case standard
 }
+
+public enum RegistrationListStatus: String, Codable, Sendable {
+    case active
+    case all
+    case expired
+    case scheduled
+}

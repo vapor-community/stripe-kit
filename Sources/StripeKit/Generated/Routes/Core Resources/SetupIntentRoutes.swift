@@ -21,13 +21,13 @@ public struct SetupIntentRoutes: Sendable {
     /// a publishable key is allowed when the client_secret is provided in the query string. When retrieved
     /// with a publishable key, only a subset of properties will be returned. Please refer to the
     /// SetupIntent object reference for more details.
-    public var retrieve: @Sendable (_ intent: String, _ expand: [String]?) async throws -> SetupIntent
+    public var retrieve: @Sendable (_ intent: String, _ params: SetupIntentRetrieveParams?) async throws -> SetupIntent
 
     /// Updates a SetupIntent object.
     public var update: @Sendable (_ intent: String, _ params: SetupIntentUpdateParams?) async throws -> SetupIntent
 
     /// Returns a list of SetupIntents.
-    public var list: @Sendable (_ expand: [String]?) async throws -> SetupIntentList
+    public var list: @Sendable (_ params: SetupIntentListParams?) async throws -> SetupIntentList
 
     /// You can cancel a SetupIntent object when it’s in one of these statuses: requires_payment_method,
     /// requires_confirmation, or requires_action. After you cancel it, setup is abandoned and any
@@ -59,9 +59,8 @@ extension SetupIntentRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as SetupIntent
             },
-            retrieve: { intent, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            retrieve: { intent, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/setup_intents/\(intent)" : "/v1/setup_intents/\(intent)?\(query)"
                 return try await handler.send(
                     method: .GET,
@@ -76,9 +75,8 @@ extension SetupIntentRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as SetupIntent
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/setup_intents" : "/v1/setup_intents?\(query)"
                 return try await handler.send(
                     method: .GET,

@@ -670,6 +670,19 @@ public enum InvoiceCreatePreviewSubscriptionDetailsResumeAt: String, Codable, Se
     case now
 }
 
+public enum InvoiceListCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
+}
+
+public enum InvoiceListStatus: String, Codable, Sendable {
+    case draft
+    case `open` = "open"
+    case paid
+    case uncollectible
+    case void
+}
+
 public enum InvoiceRemoveLinesLinesBehavior: String, Codable, Sendable {
     case delete
     case unassign

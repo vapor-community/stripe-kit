@@ -22,6 +22,11 @@ public enum FinancialAccountCreatePlatformRestrictionsOutboundFlows: String, Cod
     case unrestricted
 }
 
+public enum FinancialAccountListStatus: String, Codable, Sendable {
+    case closed
+    case `open` = "open"
+}
+
 public enum FinancialAccountUpdateForwardingSettingsType: String, Codable, Sendable {
     case financialAccount = "financial_account"
     case paymentMethod = "payment_method"

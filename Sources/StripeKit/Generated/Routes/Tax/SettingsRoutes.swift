@@ -18,7 +18,7 @@ public struct SettingsRoutes: Sendable {
     public var create: @Sendable (_ params: SettingsCreateParams?) async throws -> Settings
 
     /// Retrieves Tax Settings for a merchant.
-    public var list: @Sendable (_ expand: [String]?) async throws -> SettingsList
+    public var list: @Sendable (_ expand: [String]?) async throws -> Settings
 }
 
 extension SettingsRoutes {
@@ -39,7 +39,7 @@ extension SettingsRoutes {
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as SettingsList
+                ) as Settings
             }
         )
     }

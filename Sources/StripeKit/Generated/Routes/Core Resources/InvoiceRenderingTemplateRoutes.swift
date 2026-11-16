@@ -15,11 +15,11 @@ public struct InvoiceRenderingTemplateRoutes: Sendable {
 
     /// Retrieves an invoice rendering template with the given ID. It by default returns the latest version
     /// of the template. Optionally, specify a version to see previous versions.
-    public var retrieve: @Sendable (_ template: String, _ expand: [String]?) async throws -> InvoiceRenderingTemplate
+    public var retrieve: @Sendable (_ template: String, _ params: InvoiceRenderingTemplateRetrieveParams?) async throws -> InvoiceRenderingTemplate
 
     /// List all templates, ordered by creation date, with the most recently created template appearing
     /// first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> InvoiceRenderingTemplateList
+    public var list: @Sendable (_ params: InvoiceRenderingTemplateListParams?) async throws -> InvoiceRenderingTemplateList
 
     /// Updates the status of an invoice rendering template to ‘archived’ so no new Stripe objects
     /// (customers, invoices, etc.) can reference it. The template can also no longer be updated. However,
@@ -34,18 +34,16 @@ public struct InvoiceRenderingTemplateRoutes: Sendable {
 extension InvoiceRenderingTemplateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InvoiceRenderingTemplateRoutes(
-            retrieve: { template, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            retrieve: { template, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/invoice_rendering_templates/\(template)" : "/v1/invoice_rendering_templates/\(template)?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
                 ) as InvoiceRenderingTemplate
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/invoice_rendering_templates" : "/v1/invoice_rendering_templates?\(query)"
                 return try await handler.send(
                     method: .GET,

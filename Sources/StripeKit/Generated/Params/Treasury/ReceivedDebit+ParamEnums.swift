@@ -14,3 +14,8 @@ public enum ReceivedDebitCreateInitiatingPaymentMethodDetailsType: String, Codab
 public enum ReceivedDebitCreateNetwork: String, Codable, Sendable {
     case ach
 }
+
+public enum ReceivedDebitListStatus: String, Codable, Sendable {
+    case failed
+    case succeeded
+}

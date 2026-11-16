@@ -53,14 +53,14 @@ public struct SubscriptionRoutes: Sendable {
 
     /// By default, returns a list of subscriptions that have not been canceled. In order to list canceled
     /// subscriptions, specify status=canceled.
-    public var list: @Sendable (_ expand: [String]?) async throws -> SubscriptionList
+    public var list: @Sendable (_ params: SubscriptionListParams?) async throws -> SubscriptionList
 
     /// Search for subscriptions you’ve previously created using Stripe’s Search Query Language. Don’t use
     /// search in read-after-write flows where strict consistency is necessary. Under normal operating
     /// conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated
     /// data can be up to an hour behind during outages. Search functionality is not available to merchants
     /// in India.
-    public var search: @Sendable (_ expand: [String]?) async throws -> Subscription
+    public var search: @Sendable (_ params: SubscriptionSearchParams) async throws -> StripeSearchResult<Subscription>
 
     /// Cancels a customer’s subscription immediately. The customer won’t be charged again for the
     /// subscription. After it’s canceled, the subscription is largely immutable. You can still update its
@@ -122,23 +122,21 @@ extension SubscriptionRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Subscription
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/subscriptions" : "/v1/subscriptions?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
                 ) as SubscriptionList
             },
-            search: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            search: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/subscriptions/search" : "/v1/subscriptions/search?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as Subscription
+                ) as StripeSearchResult<Subscription>
             },
             delete: { subscriptionExposedId, expand in
                 var query = ""

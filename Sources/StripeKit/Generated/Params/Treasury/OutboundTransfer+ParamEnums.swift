@@ -16,6 +16,14 @@ public enum OutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccountNe
     case usDomesticWire = "us_domestic_wire"
 }
 
+public enum OutboundTransferListStatus: String, Codable, Sendable {
+    case canceled
+    case failed
+    case posted
+    case processing
+    case returned
+}
+
 public enum OutboundTransferUpdateTrackingDetailsType: String, Codable, Sendable {
     case ach
     case usDomesticWire = "us_domestic_wire"

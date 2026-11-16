@@ -45,6 +45,13 @@ public enum QuoteCreateSubscriptionDataBillingModeType: String, Codable, Sendabl
     case flexible
 }
 
+public enum QuoteListStatus: String, Codable, Sendable {
+    case accepted
+    case canceled
+    case draft
+    case `open` = "open"
+}
+
 public enum QuoteUpdateAutomaticTaxLiabilityType: String, Codable, Sendable {
     case account
     case `self` = "self"

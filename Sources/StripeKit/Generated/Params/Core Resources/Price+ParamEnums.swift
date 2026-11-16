@@ -40,6 +40,23 @@ public enum PriceCreateTransformQuantityRound: String, Codable, Sendable {
     case up
 }
 
+public enum PriceListRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum PriceListRecurringUsageType: String, Codable, Sendable {
+    case licensed
+    case metered
+}
+
+public enum PriceListType: String, Codable, Sendable {
+    case oneTime = "one_time"
+    case recurring
+}
+
 public enum PriceUpdateTaxBehavior: String, Codable, Sendable {
     case exclusive
     case inclusive

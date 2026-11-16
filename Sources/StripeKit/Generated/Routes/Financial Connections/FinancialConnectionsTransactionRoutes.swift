@@ -17,7 +17,7 @@ public struct FinancialConnectionsTransactionRoutes: Sendable {
     public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> FinancialConnectionsTransaction
 
     /// Returns a list of Financial Connections Transaction objects.
-    public var list: @Sendable (_ expand: [String]?) async throws -> FinancialConnectionsTransactionList
+    public var list: @Sendable (_ params: FinancialConnectionsTransactionListParams) async throws -> FinancialConnectionsTransactionList
 }
 
 extension FinancialConnectionsTransactionRoutes {
@@ -32,9 +32,8 @@ extension FinancialConnectionsTransactionRoutes {
                     path: path
                 ) as FinancialConnectionsTransaction
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/financial_connections/transactions" : "/v1/financial_connections/transactions?\(query)"
                 return try await handler.send(
                     method: .GET,

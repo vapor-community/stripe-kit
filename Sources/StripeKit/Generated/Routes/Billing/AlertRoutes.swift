@@ -20,7 +20,7 @@ public struct AlertRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> Alert
 
     /// Lists billing active and inactive alerts
-    public var list: @Sendable (_ expand: [String]?) async throws -> AlertList
+    public var list: @Sendable (_ params: AlertListParams?) async throws -> AlertList
 
     /// Reactivates this alert, allowing it to trigger again.
     public var activate: @Sendable (_ id: String, _ params: AlertActivateParams?) async throws -> Alert
@@ -52,9 +52,8 @@ extension AlertRoutes {
                     path: path
                 ) as Alert
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/billing/alerts" : "/v1/billing/alerts?\(query)"
                 return try await handler.send(
                     method: .GET,

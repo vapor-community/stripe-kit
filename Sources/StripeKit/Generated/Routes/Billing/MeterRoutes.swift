@@ -23,7 +23,7 @@ public struct MeterRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: MeterUpdateParams?) async throws -> Meter
 
     /// Retrieve a list of billing meters.
-    public var list: @Sendable (_ expand: [String]?) async throws -> MeterList
+    public var list: @Sendable (_ params: MeterListParams?) async throws -> MeterList
 
     /// When a meter is deactivated, no more meter events will be accepted for this meter. You can’t attach
     /// a deactivated meter to a price.
@@ -62,9 +62,8 @@ extension MeterRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Meter
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/billing/meters" : "/v1/billing/meters?\(query)"
                 return try await handler.send(
                     method: .GET,

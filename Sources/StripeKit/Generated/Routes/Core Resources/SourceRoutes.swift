@@ -18,7 +18,7 @@ public struct SourceRoutes: Sendable {
 
     /// Retrieves an existing source object. Supply the unique source ID from a source creation request and
     /// Stripe will return the corresponding up-to-date source object information.
-    public var retrieve: @Sendable (_ source: String, _ expand: [String]?) async throws -> Source
+    public var retrieve: @Sendable (_ source: String, _ params: SourceRetrieveParams?) async throws -> Source
 
     /// Updates the specified source by setting the values of the parameters passed. Any parameters not
     /// provided will be left unchanged. This request accepts the metadata and owner as arguments. It is
@@ -41,9 +41,8 @@ extension SourceRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Source
             },
-            retrieve: { source, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            retrieve: { source, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/sources/\(source)" : "/v1/sources/\(source)?\(query)"
                 return try await handler.send(
                     method: .GET,

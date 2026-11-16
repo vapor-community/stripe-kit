@@ -14,15 +14,14 @@ import NIOHTTP1
 public struct SetupAttemptRoutes: Sendable {
 
     /// Returns a list of SetupAttempts that associate with a provided SetupIntent.
-    public var list: @Sendable (_ expand: [String]?) async throws -> SetupAttemptList
+    public var list: @Sendable (_ params: SetupAttemptListParams) async throws -> SetupAttemptList
 }
 
 extension SetupAttemptRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SetupAttemptRoutes(
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/setup_attempts" : "/v1/setup_attempts?\(query)"
                 return try await handler.send(
                     method: .GET,

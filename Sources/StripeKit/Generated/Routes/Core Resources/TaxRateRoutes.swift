@@ -24,7 +24,7 @@ public struct TaxRateRoutes: Sendable {
 
     /// Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most
     /// recently created tax rates appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TaxRateList
+    public var list: @Sendable (_ params: TaxRateListParams?) async throws -> TaxRateList
 }
 
 extension TaxRateRoutes {
@@ -55,9 +55,8 @@ extension TaxRateRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as TaxRate
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/tax_rates" : "/v1/tax_rates?\(query)"
                 return try await handler.send(
                     method: .GET,

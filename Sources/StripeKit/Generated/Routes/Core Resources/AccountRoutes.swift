@@ -33,7 +33,7 @@ public struct AccountRoutes: Sendable {
 
     /// Returns a list of accounts connected to your platform via Connect. If you’re not a platform, the
     /// list is empty.
-    public var list: @Sendable (_ expand: [String]?) async throws -> AccountList
+    public var list: @Sendable (_ params: AccountListParams?) async throws -> AccountList
 
     /// With Connect, you can delete accounts you manage. Test-mode accounts can be deleted at any time.
     /// Live-mode accounts that have access to the standard dashboard and Stripe is responsible for negative
@@ -83,9 +83,8 @@ extension AccountRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Account
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/accounts" : "/v1/accounts?\(query)"
                 return try await handler.send(
                     method: .GET,

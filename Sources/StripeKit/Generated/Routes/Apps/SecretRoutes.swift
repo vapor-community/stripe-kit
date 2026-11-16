@@ -17,13 +17,13 @@ public struct SecretRoutes: Sendable {
     public var create: @Sendable (_ params: SecretCreateParams) async throws -> Secret
 
     /// List all secrets stored on the given scope.
-    public var list: @Sendable (_ expand: [String]?) async throws -> SecretList
+    public var list: @Sendable (_ params: SecretListParams) async throws -> SecretList
 
     /// Deletes a secret from the secret store by name and scope.
     public var delete: @Sendable (_ params: SecretDeleteParams) async throws -> Secret
 
     /// Finds a secret in the secret store by name and scope.
-    public var listFind: @Sendable (_ expand: [String]?) async throws -> Secret
+    public var listFind: @Sendable (_ params: SecretListFindParams) async throws -> Secret
 }
 
 extension SecretRoutes {
@@ -37,9 +37,8 @@ extension SecretRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Secret
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/apps/secrets" : "/v1/apps/secrets?\(query)"
                 return try await handler.send(
                     method: .GET,
@@ -54,9 +53,8 @@ extension SecretRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Secret
             },
-            listFind: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            listFind: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/apps/secrets/find" : "/v1/apps/secrets/find?\(query)"
                 return try await handler.send(
                     method: .GET,

@@ -23,7 +23,7 @@ public struct PaymentMethodConfigurationRoutes: Sendable {
     public var update: @Sendable (_ configuration: String, _ params: PaymentMethodConfigurationUpdateParams?) async throws -> PaymentMethodConfiguration
 
     /// List payment method configurations
-    public var list: @Sendable (_ expand: [String]?) async throws -> PaymentMethodConfigurationList
+    public var list: @Sendable (_ params: PaymentMethodConfigurationListParams?) async throws -> PaymentMethodConfigurationList
 }
 
 extension PaymentMethodConfigurationRoutes {
@@ -54,9 +54,8 @@ extension PaymentMethodConfigurationRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as PaymentMethodConfiguration
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/payment_method_configurations" : "/v1/payment_method_configurations?\(query)"
                 return try await handler.send(
                     method: .GET,

@@ -19,7 +19,7 @@ public struct BalanceSettingsRoutes: Sendable {
 
     /// Retrieves balance settings for a given connected account. Related guide: Making API calls for
     /// connected accounts
-    public var list: @Sendable (_ expand: [String]?) async throws -> BalanceSettingsList
+    public var list: @Sendable (_ expand: [String]?) async throws -> BalanceSettings
 }
 
 extension BalanceSettingsRoutes {
@@ -40,7 +40,7 @@ extension BalanceSettingsRoutes {
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as BalanceSettingsList
+                ) as BalanceSettings
             }
         )
     }

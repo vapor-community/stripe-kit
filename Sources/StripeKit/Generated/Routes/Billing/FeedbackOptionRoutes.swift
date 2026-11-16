@@ -23,7 +23,7 @@ public struct FeedbackOptionRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: FeedbackOptionUpdateParams?) async throws -> FeedbackOption
 
     /// Returns a list of your feedback options.
-    public var list: @Sendable (_ expand: [String]?) async throws -> FeedbackOptionList
+    public var list: @Sendable (_ params: FeedbackOptionListParams?) async throws -> FeedbackOptionList
 
     /// Deactivates a feedback option. Deactivated feedback options cannot be used in portal configurations.
     public var deactivate: @Sendable (_ id: String, _ params: FeedbackOptionDeactivateParams?) async throws -> FeedbackOption
@@ -57,9 +57,8 @@ extension FeedbackOptionRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as FeedbackOption
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/billing/feedback_options" : "/v1/billing/feedback_options?\(query)"
                 return try await handler.send(
                     method: .GET,

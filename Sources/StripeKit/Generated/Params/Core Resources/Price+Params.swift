@@ -117,6 +117,89 @@ public struct PriceCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/prices`.
+public struct PriceListParams: StripeParams {
+    /// Only return prices that are active or inactive (e.g., pass `false` to list all inactive prices).
+    public var active: Bool?
+    /// A filter on the list, based on the object `created` field. The value can be a string with an integer
+    /// Unix timestamp, or it can be a dictionary with a number of different query options.
+    public var created: StripeRangeQuery?
+    /// Only return prices for the given currency.
+    public var currency: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Only return the price with these lookup_keys, if any exist. You can specify up to 10 lookup_keys.
+    public var lookupKeys: [String]?
+    /// Only return prices for the given product.
+    public var product: String?
+    /// Only return prices with these recurring fields.
+    public var recurring: PriceListRecurring?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return prices of type `recurring` or `one_time`.
+    public var type: PriceListType?
+
+    public init(active: Bool? = nil, created: StripeRangeQuery? = nil, currency: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, lookupKeys: [String]? = nil, product: String? = nil, recurring: PriceListRecurring? = nil, startingAfter: String? = nil, type: PriceListType? = nil) {
+        self.active = active
+        self.created = created
+        self.currency = currency
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.lookupKeys = lookupKeys
+        self.product = product
+        self.recurring = recurring
+        self.startingAfter = startingAfter
+        self.type = type
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case active
+        case created
+        case currency
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case lookupKeys = "lookup_keys"
+        case product
+        case recurring
+        case startingAfter = "starting_after"
+        case type
+    }
+}
+
+/// Query parameters for `GET /v1/prices/search`.
+public struct PriceSearchParams: StripeParams {
+    /// The search query string. See [search query
+    /// language](https://docs.stripe.com/search#search-query-language) and the list of supported [query
+    /// fields for prices](https://docs.stripe.com/search#query-fields-for-prices).
+    public var query: String
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for pagination across multiple pages of results. Don't include this parameter on the first
+    /// call. Use the next_page value returned in a previous response to request subsequent results.
+    public var page: String?
+
+    public init(query: String, expand: [String]? = nil, limit: Int? = nil, page: String? = nil) {
+        self.query = query
+        self.expand = expand
+        self.limit = limit
+        self.page = page
+    }
+}
+
 public struct PriceUpdateParams: StripeParams {
     /// Whether the price can be used for new purchases. Defaults to `true`.
     public var active: Bool?
@@ -346,5 +429,27 @@ public struct PriceCreateTransformQuantity: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case divideBy = "divide_by"
         case round
+    }
+}
+
+/// Only return prices with these recurring fields.
+public struct PriceListRecurring: StripeParams {
+    /// Filter by billing frequency. Either `day`, `week`, `month` or `year`.
+    public var interval: PriceListRecurringInterval?
+    /// Filter by the price's meter.
+    public var meter: String?
+    /// Filter by the usage type for this price. Can be either `metered` or `licensed`.
+    public var usageType: PriceListRecurringUsageType?
+
+    public init(interval: PriceListRecurringInterval? = nil, meter: String? = nil, usageType: PriceListRecurringUsageType? = nil) {
+        self.interval = interval
+        self.meter = meter
+        self.usageType = usageType
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case interval
+        case meter
+        case usageType = "usage_type"
     }
 }

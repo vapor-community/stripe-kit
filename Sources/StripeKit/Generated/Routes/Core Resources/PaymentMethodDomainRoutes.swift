@@ -23,7 +23,7 @@ public struct PaymentMethodDomainRoutes: Sendable {
     public var update: @Sendable (_ paymentMethodDomain: String, _ params: PaymentMethodDomainUpdateParams?) async throws -> PaymentMethodDomain
 
     /// Lists the details of existing payment method domains.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PaymentMethodDomainList
+    public var list: @Sendable (_ params: PaymentMethodDomainListParams?) async throws -> PaymentMethodDomainList
 
     /// Some payment methods might require additional steps to register a domain. If the requirements
     /// weren’t satisfied when the domain was created, the payment method will be inactive on the domain.
@@ -62,9 +62,8 @@ extension PaymentMethodDomainRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as PaymentMethodDomain
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/payment_method_domains" : "/v1/payment_method_domains?\(query)"
                 return try await handler.send(
                     method: .GET,

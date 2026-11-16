@@ -17,7 +17,7 @@ public struct ActiveEntitlementRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> ActiveEntitlement
 
     /// Retrieve a list of active entitlements for a customer
-    public var list: @Sendable (_ expand: [String]?) async throws -> ActiveEntitlementList
+    public var list: @Sendable (_ params: ActiveEntitlementListParams) async throws -> ActiveEntitlementList
 }
 
 extension ActiveEntitlementRoutes {
@@ -32,9 +32,8 @@ extension ActiveEntitlementRoutes {
                     path: path
                 ) as ActiveEntitlement
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/entitlements/active_entitlements" : "/v1/entitlements/active_entitlements?\(query)"
                 return try await handler.send(
                     method: .GET,

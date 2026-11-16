@@ -24,7 +24,7 @@ public struct TrialOfferRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: TrialOfferUpdateParams?) async throws -> TrialOffer
 
     /// Returns a list of trial offers.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TrialOfferList
+    public var list: @Sendable (_ params: TrialOfferListParams?) async throws -> TrialOfferList
 }
 
 extension TrialOfferRoutes {
@@ -55,9 +55,8 @@ extension TrialOfferRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as TrialOffer
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/product_catalog/trial_offers" : "/v1/product_catalog/trial_offers?\(query)"
                 return try await handler.send(
                     method: .GET,

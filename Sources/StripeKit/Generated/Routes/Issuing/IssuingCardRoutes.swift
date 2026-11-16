@@ -25,7 +25,7 @@ public struct IssuingCardRoutes: Sendable {
 
     /// Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date,
     /// with the most recently created object appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> IssuingCardList
+    public var list: @Sendable (_ params: IssuingCardListParams?) async throws -> IssuingCardList
 }
 
 extension IssuingCardRoutes {
@@ -56,9 +56,8 @@ extension IssuingCardRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as IssuingCard
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/issuing/cards" : "/v1/issuing/cards?\(query)"
                 return try await handler.send(
                     method: .GET,

@@ -7,6 +7,11 @@
 
 import Foundation
 
+public enum ExternalAccountListObject: String, Codable, Sendable {
+    case bankAccount = "bank_account"
+    case card
+}
+
 public enum ExternalAccountUpdateAccountHolderType: String, Codable, Sendable {
     case company
     case individual

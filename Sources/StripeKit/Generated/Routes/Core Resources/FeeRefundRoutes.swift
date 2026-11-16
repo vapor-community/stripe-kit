@@ -33,7 +33,7 @@ public struct FeeRefundRoutes: Sendable {
     /// recent refunds are always available by default on the application fee object. If you need more than
     /// those 10, you can use this API method and the limit and starting_after parameters to page through
     /// additional refunds.
-    public var list: @Sendable (_ id: String, _ expand: [String]?) async throws -> FeeRefundList
+    public var list: @Sendable (_ id: String, _ params: FeeRefundListParams?) async throws -> FeeRefundList
 }
 
 extension FeeRefundRoutes {
@@ -64,9 +64,8 @@ extension FeeRefundRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as FeeRefund
             },
-            list: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { id, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/application_fees/\(id)/refunds" : "/v1/application_fees/\(id)/refunds?\(query)"
                 return try await handler.send(
                     method: .GET,

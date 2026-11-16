@@ -15,15 +15,14 @@ public struct ItemRoutes: Sendable {
 
     /// When retrieving a quote, there is an includable line_items property containing the first handful of
     /// those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-    public var list: @Sendable (_ quote: String, _ expand: [String]?) async throws -> ItemList
+    public var list: @Sendable (_ quote: String, _ params: ItemListParams?) async throws -> ItemList
 }
 
 extension ItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ItemRoutes(
-            list: { quote, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { quote, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/quotes/\(quote)/line_items" : "/v1/quotes/\(quote)/line_items?\(query)"
                 return try await handler.send(
                     method: .GET,

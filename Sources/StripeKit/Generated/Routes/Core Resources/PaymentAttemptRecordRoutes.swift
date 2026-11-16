@@ -17,7 +17,7 @@ public struct PaymentAttemptRecordRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> PaymentAttemptRecord
 
     /// List all the Payment Attempt Records attached to the specified Payment Record.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PaymentAttemptRecordList
+    public var list: @Sendable (_ params: PaymentAttemptRecordListParams) async throws -> PaymentAttemptRecordList
 }
 
 extension PaymentAttemptRecordRoutes {
@@ -32,9 +32,8 @@ extension PaymentAttemptRecordRoutes {
                     path: path
                 ) as PaymentAttemptRecord
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/payment_attempt_records" : "/v1/payment_attempt_records?\(query)"
                 return try await handler.send(
                     method: .GET,

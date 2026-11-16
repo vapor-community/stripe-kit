@@ -29,7 +29,7 @@ public struct VerificationSessionRoutes: Sendable {
     public var update: @Sendable (_ session: String, _ params: VerificationSessionUpdateParams?) async throws -> VerificationSession
 
     /// Returns a list of VerificationSessions
-    public var list: @Sendable (_ expand: [String]?) async throws -> VerificationSessionList
+    public var list: @Sendable (_ params: VerificationSessionListParams?) async throws -> VerificationSessionList
 
     /// A VerificationSession object can be canceled when it is in requires_input status. Once canceled,
     /// future submission attempts are disabled. This cannot be undone. Learn more.
@@ -77,9 +77,8 @@ extension VerificationSessionRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as VerificationSession
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/identity/verification_sessions" : "/v1/identity/verification_sessions?\(query)"
                 return try await handler.send(
                     method: .GET,

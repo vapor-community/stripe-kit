@@ -18,7 +18,7 @@ public struct TaxCodeRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TaxCode
 
     /// A list of all tax codes available to add to Products in order to allow specific tax calculations.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TaxCodeList
+    public var list: @Sendable (_ params: TaxCodeListParams?) async throws -> TaxCodeList
 }
 
 extension TaxCodeRoutes {
@@ -33,9 +33,8 @@ extension TaxCodeRoutes {
                     path: path
                 ) as TaxCode
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/tax_codes" : "/v1/tax_codes?\(query)"
                 return try await handler.send(
                     method: .GET,

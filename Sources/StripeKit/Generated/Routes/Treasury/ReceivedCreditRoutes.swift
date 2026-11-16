@@ -22,7 +22,7 @@ public struct ReceivedCreditRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> ReceivedCredit
 
     /// Returns a list of ReceivedCredits.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ReceivedCreditList
+    public var list: @Sendable (_ params: ReceivedCreditListParams) async throws -> ReceivedCreditList
 }
 
 extension ReceivedCreditRoutes {
@@ -45,9 +45,8 @@ extension ReceivedCreditRoutes {
                     path: path
                 ) as ReceivedCredit
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/treasury/received_credits" : "/v1/treasury/received_credits?\(query)"
                 return try await handler.send(
                     method: .GET,

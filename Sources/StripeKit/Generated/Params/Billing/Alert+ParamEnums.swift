@@ -18,3 +18,7 @@ public enum AlertCreateUsageThresholdFiltersType: String, Codable, Sendable {
 public enum AlertCreateUsageThresholdRecurrence: String, Codable, Sendable {
     case oneTime = "one_time"
 }
+
+public enum AlertListAlertType: String, Codable, Sendable {
+    case usageThreshold = "usage_threshold"
+}

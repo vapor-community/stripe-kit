@@ -23,7 +23,7 @@ public struct ShippingRateRoutes: Sendable {
     public var update: @Sendable (_ shippingRateToken: String, _ params: ShippingRateUpdateParams?) async throws -> ShippingRate
 
     /// Returns a list of your shipping rates.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ShippingRateList
+    public var list: @Sendable (_ params: ShippingRateListParams?) async throws -> ShippingRateList
 }
 
 extension ShippingRateRoutes {
@@ -54,9 +54,8 @@ extension ShippingRateRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as ShippingRate
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/shipping_rates" : "/v1/shipping_rates?\(query)"
                 return try await handler.send(
                     method: .GET,

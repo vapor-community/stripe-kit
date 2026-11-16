@@ -14,15 +14,14 @@ import NIOHTTP1
 public struct CalculationLineItemRoutes: Sendable {
 
     /// Retrieves the line items of a tax calculation as a collection, if the calculation hasn’t expired.
-    public var list: @Sendable (_ calculation: String, _ expand: [String]?) async throws -> CalculationLineItemList
+    public var list: @Sendable (_ calculation: String, _ params: CalculationLineItemListParams?) async throws -> CalculationLineItemList
 }
 
 extension CalculationLineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CalculationLineItemRoutes(
-            list: { calculation, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { calculation, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/tax/calculations/\(calculation)/line_items" : "/v1/tax/calculations/\(calculation)/line_items?\(query)"
                 return try await handler.send(
                     method: .GET,

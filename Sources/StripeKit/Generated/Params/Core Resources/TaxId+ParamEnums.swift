@@ -152,6 +152,13 @@ public enum TaxIdCreateType: String, Codable, Sendable {
     case zwTin = "zw_tin"
 }
 
+public enum TaxIdListOwnerType: String, Codable, Sendable {
+    case account
+    case application
+    case customer
+    case `self` = "self"
+}
+
 public enum TaxIdUpdateType: String, Codable, Sendable {
     case adNrt = "ad_nrt"
     case aeTrn = "ae_trn"

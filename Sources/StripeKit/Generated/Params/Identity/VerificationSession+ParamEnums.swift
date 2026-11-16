@@ -18,6 +18,13 @@ public enum VerificationSessionCreateType: String, Codable, Sendable {
     case idNumber = "id_number"
 }
 
+public enum VerificationSessionListStatus: String, Codable, Sendable {
+    case canceled
+    case processing
+    case requiresInput = "requires_input"
+    case verified
+}
+
 public enum VerificationSessionUpdateOptionsDocumentAllowedTypes: String, Codable, Sendable {
     case drivingLicense = "driving_license"
     case idCard = "id_card"

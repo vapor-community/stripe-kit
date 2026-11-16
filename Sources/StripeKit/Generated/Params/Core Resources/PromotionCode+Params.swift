@@ -65,6 +65,62 @@ public struct PromotionCodeCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/promotion_codes`.
+public struct PromotionCodeListParams: StripeParams {
+    /// Filter promotion codes by whether they are active.
+    public var active: Bool?
+    /// Only return promotion codes that have this case-insensitive code.
+    public var code: String?
+    /// Only return promotion codes for this coupon.
+    public var coupon: String?
+    /// A filter on the list, based on the object `created` field. The value can be a string with an integer
+    /// Unix timestamp, or it can be a dictionary with a number of different query options.
+    public var created: StripeRangeQuery?
+    /// Only return promotion codes that are restricted to this customer.
+    public var customer: String?
+    /// Only return promotion codes that are restricted to this account representing the customer.
+    public var customerAccount: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(active: Bool? = nil, code: String? = nil, coupon: String? = nil, created: StripeRangeQuery? = nil, customer: String? = nil, customerAccount: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
+        self.active = active
+        self.code = code
+        self.coupon = coupon
+        self.created = created
+        self.customer = customer
+        self.customerAccount = customerAccount
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case active
+        case code
+        case coupon
+        case created
+        case customer
+        case customerAccount = "customer_account"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+    }
+}
+
 public struct PromotionCodeUpdateParams: StripeParams {
     /// Whether the promotion code is currently active. A promotion code can only be reactivated when the
     /// coupon is still valid and the promotion code is otherwise redeemable.

@@ -20,7 +20,7 @@ public struct IssuingTokenRoutes: Sendable {
     public var update: @Sendable (_ token: String, _ params: IssuingTokenUpdateParams) async throws -> IssuingToken
 
     /// Lists all Issuing Token objects for a given card.
-    public var list: @Sendable (_ expand: [String]?) async throws -> IssuingTokenList
+    public var list: @Sendable (_ params: IssuingTokenListParams) async throws -> IssuingTokenList
 }
 
 extension IssuingTokenRoutes {
@@ -43,9 +43,8 @@ extension IssuingTokenRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as IssuingToken
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/issuing/tokens" : "/v1/issuing/tokens?\(query)"
                 return try await handler.send(
                     method: .GET,

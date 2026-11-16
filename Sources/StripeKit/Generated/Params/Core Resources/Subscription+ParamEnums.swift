@@ -286,6 +286,24 @@ public enum SubscriptionCreateTrialSettingsEndBehaviorMissingPaymentMethod: Stri
     case pause
 }
 
+public enum SubscriptionListCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
+}
+
+public enum SubscriptionListStatus: String, Codable, Sendable {
+    case active
+    case all
+    case canceled
+    case ended
+    case incomplete
+    case incompleteExpired = "incomplete_expired"
+    case pastDue = "past_due"
+    case paused
+    case trialing
+    case unpaid
+}
+
 public enum SubscriptionMigrateBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
     case included
     case itemized

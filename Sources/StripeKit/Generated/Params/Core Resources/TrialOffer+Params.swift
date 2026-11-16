@@ -40,6 +40,50 @@ public struct TrialOfferCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/product_catalog/trial_offers`.
+public struct TrialOfferListParams: StripeParams {
+    /// Only return trial offers that are active (`true`) or archived (`false`). If omitted, both active and
+    /// archived trial offers are returned.
+    public var active: Bool?
+    /// Only return trial offers that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Only return trial offers that reference these prices (during the trial period).
+    public var prices: [String]?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(active: Bool? = nil, created: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, prices: [String]? = nil, startingAfter: String? = nil) {
+        self.active = active
+        self.created = created
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.prices = prices
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case active
+        case created
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case prices
+        case startingAfter = "starting_after"
+    }
+}
+
 public struct TrialOfferUpdateParams: StripeParams {
     /// Whether the trial offer can be used for new purchases.
     public var active: Bool?

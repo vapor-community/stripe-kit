@@ -18,7 +18,7 @@ public struct InvoicePaymentRoutes: Sendable {
 
     /// When retrieving an invoice, there is an includable payments property containing the first handful of
     /// those items. There is also a URL where you can retrieve the full (paginated) list of payments.
-    public var list: @Sendable (_ expand: [String]?) async throws -> InvoicePaymentList
+    public var list: @Sendable (_ params: InvoicePaymentListParams?) async throws -> InvoicePaymentList
 }
 
 extension InvoicePaymentRoutes {
@@ -33,9 +33,8 @@ extension InvoicePaymentRoutes {
                     path: path
                 ) as InvoicePayment
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/invoice_payments" : "/v1/invoice_payments?\(query)"
                 return try await handler.send(
                     method: .GET,

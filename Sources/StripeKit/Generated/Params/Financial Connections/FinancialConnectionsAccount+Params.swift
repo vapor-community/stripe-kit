@@ -16,6 +16,46 @@ public struct FinancialConnectionsAccountDisconnectParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/financial_connections/accounts`.
+public struct FinancialConnectionsAccountListParams: StripeParams {
+    /// If present, only return accounts that belong to the specified account holder.
+    /// `account_holder[customer]` and `account_holder[account]` are mutually exclusive.
+    public var accountHolder: FinancialConnectionsAccountListAccountHolder?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// If present, only return accounts that were collected as part of the given session.
+    public var session: String?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(accountHolder: FinancialConnectionsAccountListAccountHolder? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, session: String? = nil, startingAfter: String? = nil) {
+        self.accountHolder = accountHolder
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.session = session
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case accountHolder = "account_holder"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case session
+        case startingAfter = "starting_after"
+    }
+}
+
 public struct FinancialConnectionsAccountRefreshParams: StripeParams {
     /// The list of account features that you would like to refresh.
     public var features: [FinancialConnectionsAccountRefreshFeatures]
@@ -49,5 +89,28 @@ public struct FinancialConnectionsAccountUnsubscribeParams: StripeParams {
     public init(features: [FinancialConnectionsAccountUnsubscribeFeatures], expand: [String]? = nil) {
         self.features = features
         self.expand = expand
+    }
+}
+
+/// If present, only return accounts that belong to the specified account holder.
+/// `account_holder[customer]` and `account_holder[account]` are mutually exclusive.
+public struct FinancialConnectionsAccountListAccountHolder: StripeParams {
+    /// The ID of the Stripe account whose accounts you will retrieve.
+    public var account: String?
+    /// The ID of the Stripe customer whose accounts you will retrieve.
+    public var customer: String?
+    /// The ID of the Account representing a customer whose accounts you will retrieve.
+    public var customerAccount: String?
+
+    public init(account: String? = nil, customer: String? = nil, customerAccount: String? = nil) {
+        self.account = account
+        self.customer = customer
+        self.customerAccount = customerAccount
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case account
+        case customer
+        case customerAccount = "customer_account"
     }
 }

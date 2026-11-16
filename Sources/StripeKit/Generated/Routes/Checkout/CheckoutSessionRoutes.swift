@@ -23,7 +23,7 @@ public struct CheckoutSessionRoutes: Sendable {
     public var update: @Sendable (_ session: String, _ params: CheckoutSessionUpdateParams?) async throws -> CheckoutSession
 
     /// Returns a list of Checkout Sessions.
-    public var list: @Sendable (_ expand: [String]?) async throws -> CheckoutSessionList
+    public var list: @Sendable (_ params: CheckoutSessionListParams?) async throws -> CheckoutSessionList
 
     /// A Checkout Session can be expired when it is in one of these statuses: open After it expires, a
     /// customer can’t complete a Checkout Session and customers loading the Checkout Session see a message
@@ -59,9 +59,8 @@ extension CheckoutSessionRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as CheckoutSession
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/checkout/sessions" : "/v1/checkout/sessions?\(query)"
                 return try await handler.send(
                     method: .GET,

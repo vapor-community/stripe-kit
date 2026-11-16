@@ -550,6 +550,92 @@ public struct PaymentIntentIncrementAuthorizationParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/payment_intents`.
+public struct PaymentIntentListParams: StripeParams {
+    /// A filter on the list, based on the object `created` field. The value can be a string with an integer
+    /// Unix timestamp or a dictionary with a number of different query options.
+    public var created: StripeRangeQuery?
+    /// Only return PaymentIntents for the customer that this customer ID specifies.
+    public var customer: String?
+    /// Only return PaymentIntents for the account representing the customer that this ID specifies.
+    public var customerAccount: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(created: StripeRangeQuery? = nil, customer: String? = nil, customerAccount: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
+        self.created = created
+        self.customer = customer
+        self.customerAccount = customerAccount
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case created
+        case customer
+        case customerAccount = "customer_account"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+    }
+}
+
+/// Query parameters for `GET /v1/payment_intents/{intent}`.
+public struct PaymentIntentRetrieveParams: StripeParams {
+    /// The client secret of the PaymentIntent. We require it if you use a publishable key to retrieve the
+    /// source.
+    public var clientSecret: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(clientSecret: String? = nil, expand: [String]? = nil) {
+        self.clientSecret = clientSecret
+        self.expand = expand
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case clientSecret = "client_secret"
+        case expand
+    }
+}
+
+/// Query parameters for `GET /v1/payment_intents/search`.
+public struct PaymentIntentSearchParams: StripeParams {
+    /// The search query string. See [search query
+    /// language](https://docs.stripe.com/search#search-query-language) and the list of supported [query
+    /// fields for payment intents](https://docs.stripe.com/search#query-fields-for-paymentintents).
+    public var query: String
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for pagination across multiple pages of results. Don't include this parameter on the first
+    /// call. Use the next_page value returned in a previous response to request subsequent results.
+    public var page: String?
+
+    public init(query: String, expand: [String]? = nil, limit: Int? = nil, page: String? = nil) {
+        self.query = query
+        self.expand = expand
+        self.limit = limit
+        self.page = page
+    }
+}
+
 public struct PaymentIntentUpdateParams: StripeParams {
     /// The list of payment method types allowed for use with this payment. Stripe automatically returns
     /// compatible payment methods from this list in the `payment_method_types` field of the response, based

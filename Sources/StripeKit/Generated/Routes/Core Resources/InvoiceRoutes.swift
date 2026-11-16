@@ -29,13 +29,13 @@ public struct InvoiceRoutes: Sendable {
 
     /// You can list all invoices, or list the invoices for a specific customer. The invoices are returned
     /// sorted by creation date, with the most recently created invoices appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> InvoiceList
+    public var list: @Sendable (_ params: InvoiceListParams?) async throws -> InvoiceList
 
     /// Search for invoices you’ve previously created using Stripe’s Search Query Language. Don’t use search
     /// in read-after-write flows where strict consistency is necessary. Under normal operating conditions,
     /// data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
     /// to an hour behind during outages. Search functionality is not available to merchants in India.
-    public var search: @Sendable (_ expand: [String]?) async throws -> Invoice
+    public var search: @Sendable (_ params: InvoiceSearchParams) async throws -> StripeSearchResult<Invoice>
 
     /// Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that
     /// are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for
@@ -132,23 +132,21 @@ extension InvoiceRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Invoice
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/invoices" : "/v1/invoices?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
                 ) as InvoiceList
             },
-            search: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            search: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/invoices/search" : "/v1/invoices/search?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as Invoice
+                ) as StripeSearchResult<Invoice>
             },
             delete: { invoice, expand in
                 var query = ""

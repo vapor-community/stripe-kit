@@ -209,6 +209,80 @@ public struct SetupIntentCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/setup_intents`.
+public struct SetupIntentListParams: StripeParams {
+    /// If present, the SetupIntent's payment method will be attached to the in-context Stripe Account. It
+    /// can only be used for this Stripe Account’s own money movement flows like InboundTransfer and
+    /// OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and
+    /// defaults to false when attaching a PaymentMethod to a Customer.
+    public var attachToSelf: Bool?
+    /// A filter on the list, based on the object `created` field. The value can be a string with an integer
+    /// Unix timestamp, or it can be a dictionary with a number of different query options.
+    public var created: StripeRangeQuery?
+    /// Only return SetupIntents for the customer specified by this customer ID.
+    public var customer: String?
+    /// Only return SetupIntents for the account specified by this customer ID.
+    public var customerAccount: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Only return SetupIntents that associate with the specified payment method.
+    public var paymentMethod: String?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(attachToSelf: Bool? = nil, created: StripeRangeQuery? = nil, customer: String? = nil, customerAccount: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, paymentMethod: String? = nil, startingAfter: String? = nil) {
+        self.attachToSelf = attachToSelf
+        self.created = created
+        self.customer = customer
+        self.customerAccount = customerAccount
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.paymentMethod = paymentMethod
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case attachToSelf = "attach_to_self"
+        case created
+        case customer
+        case customerAccount = "customer_account"
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case paymentMethod = "payment_method"
+        case startingAfter = "starting_after"
+    }
+}
+
+/// Query parameters for `GET /v1/setup_intents/{intent}`.
+public struct SetupIntentRetrieveParams: StripeParams {
+    /// The client secret of the SetupIntent. We require this string if you use a publishable key to
+    /// retrieve the SetupIntent.
+    public var clientSecret: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(clientSecret: String? = nil, expand: [String]? = nil) {
+        self.clientSecret = clientSecret
+        self.expand = expand
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case clientSecret = "client_secret"
+        case expand
+    }
+}
+
 public struct SetupIntentUpdateParams: StripeParams {
     /// The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this
     /// list when determining the payment methods to offer. A list of valid payment method types can be

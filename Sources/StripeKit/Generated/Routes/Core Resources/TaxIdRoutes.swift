@@ -23,7 +23,7 @@ public struct TaxIdRoutes: Sendable {
     public var update: @Sendable (_ customer: String, _ params: TaxIdUpdateParams) async throws -> TaxId
 
     /// Returns a list of tax IDs.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TaxIdList
+    public var list: @Sendable (_ params: TaxIdListParams?) async throws -> TaxIdList
 
     /// Deletes an existing account or customer tax_id object.
     public var delete: @Sendable (_ id: String, _ expand: [String]?) async throws -> DeletedTaxId
@@ -57,9 +57,8 @@ extension TaxIdRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as TaxId
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/tax_ids" : "/v1/tax_ids?\(query)"
                 return try await handler.send(
                     method: .GET,

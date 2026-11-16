@@ -23,7 +23,7 @@ public struct PaymentLinkRoutes: Sendable {
     public var update: @Sendable (_ paymentLink: String, _ params: PaymentLinkUpdateParams?) async throws -> PaymentLink
 
     /// Returns a list of your payment links.
-    public var list: @Sendable (_ expand: [String]?) async throws -> PaymentLinkList
+    public var list: @Sendable (_ params: PaymentLinkListParams?) async throws -> PaymentLinkList
 }
 
 extension PaymentLinkRoutes {
@@ -54,9 +54,8 @@ extension PaymentLinkRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as PaymentLink
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/payment_links" : "/v1/payment_links?\(query)"
                 return try await handler.send(
                     method: .GET,

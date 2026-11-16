@@ -23,7 +23,7 @@ public struct FileLinkRoutes: Sendable {
     public var update: @Sendable (_ link: String, _ params: FileLinkUpdateParams?) async throws -> FileLink
 
     /// Returns a list of file links.
-    public var list: @Sendable (_ expand: [String]?) async throws -> FileLinkList
+    public var list: @Sendable (_ params: FileLinkListParams?) async throws -> FileLinkList
 }
 
 extension FileLinkRoutes {
@@ -54,9 +54,8 @@ extension FileLinkRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as FileLink
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/file_links" : "/v1/file_links?\(query)"
                 return try await handler.send(
                     method: .GET,

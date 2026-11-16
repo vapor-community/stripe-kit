@@ -24,7 +24,7 @@ public struct QuoteRoutes: Sendable {
     public var update: @Sendable (_ quote: String, _ params: QuoteUpdateParams?) async throws -> Quote
 
     /// Returns a list of your quotes.
-    public var list: @Sendable (_ expand: [String]?) async throws -> QuoteList
+    public var list: @Sendable (_ params: QuoteListParams?) async throws -> QuoteList
 
     /// Accepts the specified quote.
     public var accept: @Sendable (_ quote: String, _ params: QuoteAcceptParams?) async throws -> Quote
@@ -64,9 +64,8 @@ extension QuoteRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Quote
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/quotes" : "/v1/quotes?\(query)"
                 return try await handler.send(
                     method: .GET,

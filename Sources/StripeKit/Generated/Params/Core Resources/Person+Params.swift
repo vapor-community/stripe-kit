@@ -150,6 +150,41 @@ public struct PersonCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/accounts/{account}/persons`.
+public struct PersonListParams: StripeParams {
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Filters on the list of people returned based on the person's relationship to the account's company.
+    public var relationship: PersonListRelationship?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, relationship: PersonListRelationship? = nil, startingAfter: String? = nil) {
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.relationship = relationship
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case relationship
+        case startingAfter = "starting_after"
+    }
+}
+
 public struct PersonUpdateParams: StripeParams {
     /// Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
     public var additionalTosAcceptances: PersonUpdateAdditionalTosAcceptances?
@@ -699,6 +734,46 @@ public struct PersonCreateVerificationDocument: StripeParams {
     public init(back: String? = nil, front: String? = nil) {
         self.back = back
         self.front = front
+    }
+}
+
+/// Filters on the list of people returned based on the person's relationship to the account's company.
+public struct PersonListRelationship: StripeParams {
+    /// A filter on the list of people returned based on whether these people are authorizers of the
+    /// account's representative.
+    public var authorizer: Bool?
+    /// A filter on the list of people returned based on whether these people are directors of the account's
+    /// company.
+    public var director: Bool?
+    /// A filter on the list of people returned based on whether these people are executives of the
+    /// account's company.
+    public var executive: Bool?
+    /// A filter on the list of people returned based on whether these people are legal guardians of the
+    /// account's representative.
+    public var legalGuardian: Bool?
+    /// A filter on the list of people returned based on whether these people are owners of the account's
+    /// company.
+    public var owner: Bool?
+    /// A filter on the list of people returned based on whether these people are the representative of the
+    /// account's company.
+    public var representative: Bool?
+
+    public init(authorizer: Bool? = nil, director: Bool? = nil, executive: Bool? = nil, legalGuardian: Bool? = nil, owner: Bool? = nil, representative: Bool? = nil) {
+        self.authorizer = authorizer
+        self.director = director
+        self.executive = executive
+        self.legalGuardian = legalGuardian
+        self.owner = owner
+        self.representative = representative
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case authorizer
+        case director
+        case executive
+        case legalGuardian = "legal_guardian"
+        case owner
+        case representative
     }
 }
 

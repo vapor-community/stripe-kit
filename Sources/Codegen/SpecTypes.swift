@@ -101,6 +101,44 @@ final class PropertyObject: Decodable {
             additionalProperties = nil
         }
     }
+
+    /// Build a schema in code, e.g. an object synthesized from an operation's query parameters.
+    init(
+        type: String? = nil,
+        description: String? = nil,
+        title: String? = nil,
+        enum: [String]? = nil,
+        ref: String? = nil,
+        anyOf: [PropertyObject]? = nil,
+        oneOf: [PropertyObject]? = nil,
+        nullable: Bool? = nil,
+        items: PropertyObject? = nil,
+        properties: [String: PropertyObject]? = nil,
+        required: [String]? = nil,
+        additionalProperties: PropertyObject? = nil
+    ) {
+        self.type = type
+        self.description = description
+        self.title = title
+        self.enum = `enum`
+        self.ref = ref
+        self.anyOf = anyOf
+        self.oneOf = oneOf
+        self.nullable = nullable
+        self.items = items
+        self.properties = properties
+        self.required = required
+        self.additionalProperties = additionalProperties
+    }
+
+    /// A copy of this schema with a different description.
+    func withDescription(_ description: String?) -> PropertyObject {
+        PropertyObject(
+            type: type, description: description, title: title, enum: `enum`, ref: ref,
+            anyOf: anyOf, oneOf: oneOf, nullable: nullable, items: items,
+            properties: properties, required: required, additionalProperties: additionalProperties
+        )
+    }
 }
 
 /// Handles Stripe's mixed-type enum arrays: `["string_val", true, 123, ""]`
@@ -176,5 +214,28 @@ struct ParameterObject: Decodable {
     let name: String?
     let `in`: String?
     let required: Bool?
+    let description: String?
     let schema: PropertyObject?
+}
+
+extension OperationObject {
+    /// Query parameters other than `expand` (which every operation handles on its own).
+    var queryParameters: [ParameterObject] {
+        (parameters ?? []).filter { $0.in == "query" && $0.name != nil && $0.name != "expand" && $0.schema != nil }
+    }
+
+    /// The operation's query parameters as an object schema, so `ParamGenerator` can turn
+    /// them into a params struct the same way it does request bodies. Nil when there are none.
+    /// Includes `expand`, so it lands in the struct's initializer like it does for request bodies.
+    func queryParametersSchema(description: String?) -> PropertyObject? {
+        guard !queryParameters.isEmpty else { return nil }
+        let params = (parameters ?? []).filter { $0.in == "query" && $0.name != nil && $0.schema != nil }
+        var properties: [String: PropertyObject] = [:]
+        for param in params {
+            guard let name = param.name, let schema = param.schema else { continue }
+            properties[name] = schema.description == nil ? schema.withDescription(param.description) : schema
+        }
+        let required = params.filter { $0.required == true }.compactMap(\.name)
+        return PropertyObject(type: "object", description: description, properties: properties, required: required)
+    }
 }

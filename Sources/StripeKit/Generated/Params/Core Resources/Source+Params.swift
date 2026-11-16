@@ -93,6 +93,24 @@ public struct SourceCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/sources/{source}`.
+public struct SourceRetrieveParams: StripeParams {
+    /// The client secret of the source. Required if a publishable key is used to retrieve the source.
+    public var clientSecret: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(clientSecret: String? = nil, expand: [String]? = nil) {
+        self.clientSecret = clientSecret
+        self.expand = expand
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case clientSecret = "client_secret"
+        case expand
+    }
+}
+
 public struct SourceUpdateParams: StripeParams {
     /// Amount associated with the source.
     public var amount: Int?

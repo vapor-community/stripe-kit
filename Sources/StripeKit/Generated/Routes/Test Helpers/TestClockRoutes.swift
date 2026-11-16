@@ -20,7 +20,7 @@ public struct TestClockRoutes: Sendable {
     public var retrieve: @Sendable (_ testClock: String, _ expand: [String]?) async throws -> TestClock
 
     /// Returns a list of your test clocks.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TestClockList
+    public var list: @Sendable (_ params: TestClockListParams?) async throws -> TestClockList
 
     /// Deletes a test clock.
     public var delete: @Sendable (_ testClock: String, _ expand: [String]?) async throws -> DeletedTestClock
@@ -50,9 +50,8 @@ extension TestClockRoutes {
                     path: path
                 ) as TestClock
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/test_helpers/test_clocks" : "/v1/test_helpers/test_clocks?\(query)"
                 return try await handler.send(
                     method: .GET,

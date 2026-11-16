@@ -75,6 +75,59 @@ public struct VerificationSessionCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/identity/verification_sessions`.
+public struct VerificationSessionListParams: StripeParams {
+    /// A string to reference this user. This can be a customer ID, a session ID, or similar, and can be
+    /// used to reconcile this verification with your internal systems.
+    public var clientReferenceId: String?
+    /// Only return VerificationSessions that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Customer ID
+    public var relatedCustomer: String?
+    /// The ID of the Account representing a customer.
+    public var relatedCustomerAccount: String?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return VerificationSessions with this status. [Learn more about the lifecycle of
+    /// sessions](https://docs.stripe.com/identity/how-sessions-work).
+    public var status: VerificationSessionListStatus?
+
+    public init(clientReferenceId: String? = nil, created: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, relatedCustomer: String? = nil, relatedCustomerAccount: String? = nil, startingAfter: String? = nil, status: VerificationSessionListStatus? = nil) {
+        self.clientReferenceId = clientReferenceId
+        self.created = created
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.relatedCustomer = relatedCustomer
+        self.relatedCustomerAccount = relatedCustomerAccount
+        self.startingAfter = startingAfter
+        self.status = status
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case clientReferenceId = "client_reference_id"
+        case created
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case relatedCustomer = "related_customer"
+        case relatedCustomerAccount = "related_customer_account"
+        case startingAfter = "starting_after"
+        case status
+    }
+}
+
 public struct VerificationSessionRedactParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?

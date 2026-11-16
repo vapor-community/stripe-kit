@@ -59,6 +59,49 @@ public struct PersonalizationDesignCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/issuing/personalization_designs`.
+public struct PersonalizationDesignListParams: StripeParams {
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Only return personalization designs with the given lookup keys.
+    public var lookupKeys: [String]?
+    /// Only return personalization designs with the given preferences.
+    public var preferences: PersonalizationDesignListPreferences?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return personalization designs with the given status.
+    public var status: PersonalizationDesignListStatus?
+
+    public init(endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, lookupKeys: [String]? = nil, preferences: PersonalizationDesignListPreferences? = nil, startingAfter: String? = nil, status: PersonalizationDesignListStatus? = nil) {
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.lookupKeys = lookupKeys
+        self.preferences = preferences
+        self.startingAfter = startingAfter
+        self.status = status
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case lookupKeys = "lookup_keys"
+        case preferences
+        case startingAfter = "starting_after"
+        case status
+    }
+}
+
 public struct PersonalizationDesignUpdateParams: StripeParams {
     /// The file for the card logo, for use with physical bundles that support card logos. Must have a
     /// `purpose` value of `issuing_logo`.
@@ -151,6 +194,26 @@ public struct PersonalizationDesignCreatePreferences: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case isDefault = "is_default"
+    }
+}
+
+/// Only return personalization designs with the given preferences.
+public struct PersonalizationDesignListPreferences: StripeParams {
+    /// Only return the personalization design that's set as the default. A connected account uses the
+    /// Connect platform's default design if no personalization design is set as the default.
+    public var isDefault: Bool?
+    /// Only return the personalization design that is set as the Connect platform's default. This parameter
+    /// is only applicable to connected accounts.
+    public var isPlatformDefault: Bool?
+
+    public init(isDefault: Bool? = nil, isPlatformDefault: Bool? = nil) {
+        self.isDefault = isDefault
+        self.isPlatformDefault = isPlatformDefault
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case isDefault = "is_default"
+        case isPlatformDefault = "is_platform_default"
     }
 }
 

@@ -24,7 +24,7 @@ public struct DisputeRoutes: Sendable {
     public var update: @Sendable (_ dispute: String, _ params: DisputeUpdateParams?) async throws -> Dispute
 
     /// Returns a list of your disputes.
-    public var list: @Sendable (_ expand: [String]?) async throws -> DisputeList
+    public var list: @Sendable (_ params: DisputeListParams?) async throws -> DisputeList
 
     /// Closing the dispute for a charge indicates that you do not have any evidence to submit and are
     /// essentially dismissing the dispute (accepting it), acknowledging it as lost. The status of the
@@ -52,9 +52,8 @@ extension DisputeRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Dispute
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/disputes" : "/v1/disputes?\(query)"
                 return try await handler.send(
                     method: .GET,

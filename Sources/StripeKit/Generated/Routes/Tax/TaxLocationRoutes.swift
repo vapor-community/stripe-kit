@@ -26,7 +26,7 @@ public struct TaxLocationRoutes: Sendable {
     /// or other product types. The response includes detailed information for each tax location, such as
     /// its address, type, and description. You can paginate through the list by using the limit parameter
     /// to control the number of results returned in each request.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TaxLocationList
+    public var list: @Sendable (_ params: TaxLocationListParams) async throws -> TaxLocationList
 }
 
 extension TaxLocationRoutes {
@@ -49,9 +49,8 @@ extension TaxLocationRoutes {
                     path: path
                 ) as TaxLocation
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/tax/locations" : "/v1/tax/locations?\(query)"
                 return try await handler.send(
                     method: .GET,

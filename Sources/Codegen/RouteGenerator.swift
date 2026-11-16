@@ -88,8 +88,16 @@ struct RouteGenerator {
             } else {
                 paramParts.append("_ params: \(structName)?")
             }
+        } else if op.hasQueryParams {
+            // Query params struct (GET operations with query params beyond `expand`)
+            let structName = "\(resource.swiftTypeName)\(op.action)Params"
+            if op.hasRequiredQueryParams {
+                paramParts.append("_ params: \(structName)")
+            } else {
+                paramParts.append("_ params: \(structName)?")
+            }
         } else {
-            // All non-body operations just take expand
+            // Operations with no body and no other query params just take expand
             paramParts.append("_ expand: [String]?")
         }
         
@@ -118,7 +126,7 @@ struct RouteGenerator {
             }
             if op.isMultipart {
                 closureParams.append(contentsOf: ["fileData", "fileName", "mimeType", "purpose"])
-            } else if op.hasBody {
+            } else if op.hasBody || op.hasQueryParams {
                 closureParams.append("params")
             } else {
                 closureParams.append("expand")
@@ -167,8 +175,17 @@ struct RouteGenerator {
                 }
                 
             case "GET":
-                lines.append("                var query = \"\"")
-                lines.append("                if let expand { query = expand.map { \"expand[]=\\($0)\" }.joined(separator: \"&\") }")
+                if op.hasQueryParams {
+                    // Same bracket encoding as form bodies, sent as the query string
+                    if op.hasRequiredQueryParams {
+                        lines.append("                let query = params.toFormBody()")
+                    } else {
+                        lines.append("                let query = params?.toFormBody() ?? \"\"")
+                    }
+                } else {
+                    lines.append("                var query = \"\"")
+                    lines.append("                if let expand { query = expand.map { \"expand[]=\\($0)\" }.joined(separator: \"&\") }")
+                }
                 lines.append("                let path = query.isEmpty ? \"\(apiPath)\" : \"\(apiPath)?\\(query)\"")
                 lines.append("                return try await handler.send(")
                 lines.append("                    method: .GET,")
@@ -212,6 +229,9 @@ struct RouteGenerator {
         let hasRequiredBodyFields: Bool
         let isListOrSearch: Bool
         let isMultipart: Bool
+        /// GET with query params beyond `expand`: takes a `{Resource}{Action}Params` struct
+        let hasQueryParams: Bool
+        let hasRequiredQueryParams: Bool
         let returnType: String?  // nil means use resource type
     }
     
@@ -236,7 +256,16 @@ struct RouteGenerator {
         return "ObjectOrDeleted<\(parser.schemaNameToSwiftType(objects[0])), \(parser.schemaNameToSwiftType(deleted[0]))>"
     }
 
-    private func findOperations(for resource: StripeResource) -> [RouteOperation] {
+    /// The 200 response's wrapper kind, read from its `object` enum.
+    private func responseWrapper(_ op: OperationObject) -> String? {
+        guard let schema = op.responses?["200"]?.content?["application/json"]?.schema,
+              let values = schema.properties?["object"]?.enum, values.count == 1 else { return nil }
+        return values[0]
+    }
+
+    /// The operations generated for a resource. `ParamGenerator` uses this too, so query
+    /// params structs get the same names the routes refer to.
+    func findOperations(for resource: StripeResource) -> [RouteOperation] {
         var results: [RouteOperation] = []
         
         // Deterministic: look up paths directly from the spec-derived mapping
@@ -291,11 +320,17 @@ struct RouteGenerator {
                     path == basePath  // GET /v1/resources (no path param)
                 )
                 
-                // Determine return type
+                // Query params (GET only; no other method has any besides `expand`)
+                let queryParams = method == "GET" ? op.queryParameters : []
+
+                // Return type, from the 200 response's shape
                 let returnType: String?
-                if funcName == "list" || (isListOrSearch && !path.contains("search")) {
+                switch responseWrapper(op) {
+                case "list":
                     returnType = "\(resource.swiftTypeName)List"
-                } else {
+                case "search_result":
+                    returnType = "StripeSearchResult<\(resource.swiftTypeName)>"
+                default:
                     // A deleted object type when the spec's response can be one; otherwise the resource type
                     returnType = deletedResponseType(op)
                 }
@@ -312,6 +347,8 @@ struct RouteGenerator {
                     hasRequiredBodyFields: !requiredFields.isEmpty,
                     isListOrSearch: isListOrSearch,
                     isMultipart: isMultipart,
+                    hasQueryParams: !queryParams.isEmpty,
+                    hasRequiredQueryParams: queryParams.contains { $0.required == true },
                     returnType: returnType
                 ))
             }

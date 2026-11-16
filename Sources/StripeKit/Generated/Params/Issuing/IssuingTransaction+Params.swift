@@ -45,6 +45,53 @@ public struct IssuingTransactionCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/issuing/transactions`.
+public struct IssuingTransactionListParams: StripeParams {
+    /// Only return transactions that belong to the given card.
+    public var card: String?
+    /// Only return transactions that belong to the given cardholder.
+    public var cardholder: String?
+    /// Only return transactions that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return transactions that have the given type. One of `capture` or `refund`.
+    public var type: IssuingTransactionListType?
+
+    public init(card: String? = nil, cardholder: String? = nil, created: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, type: IssuingTransactionListType? = nil) {
+        self.card = card
+        self.cardholder = cardholder
+        self.created = created
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+        self.type = type
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case card
+        case cardholder
+        case created
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+        case type
+    }
+}
+
 public struct IssuingTransactionUpdateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?

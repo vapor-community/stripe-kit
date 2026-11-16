@@ -20,7 +20,7 @@ public struct ProductFeatureRoutes: Sendable {
     public var retrieve: @Sendable (_ product: String, _ id: String, _ expand: [String]?) async throws -> ProductFeature
 
     /// Retrieve a list of features for a product
-    public var list: @Sendable (_ product: String, _ expand: [String]?) async throws -> ProductFeatureList
+    public var list: @Sendable (_ product: String, _ params: ProductFeatureListParams?) async throws -> ProductFeatureList
 
     /// Deletes the feature attachment to a product
     public var delete: @Sendable (_ product: String, _ id: String, _ expand: [String]?) async throws -> DeletedProductFeature
@@ -46,9 +46,8 @@ extension ProductFeatureRoutes {
                     path: path
                 ) as ProductFeature
             },
-            list: { product, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { product, params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/products/\(product)/features" : "/v1/products/\(product)/features?\(query)"
                 return try await handler.send(
                     method: .GET,

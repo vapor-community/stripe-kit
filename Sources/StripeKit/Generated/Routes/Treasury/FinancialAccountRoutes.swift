@@ -24,7 +24,7 @@ public struct FinancialAccountRoutes: Sendable {
     public var update: @Sendable (_ financialAccount: String, _ params: FinancialAccountUpdateParams?) async throws -> FinancialAccount
 
     /// Returns a list of FinancialAccounts.
-    public var list: @Sendable (_ expand: [String]?) async throws -> FinancialAccountList
+    public var list: @Sendable (_ params: FinancialAccountListParams?) async throws -> FinancialAccountList
 
     /// Closes a FinancialAccount. A FinancialAccount can only be closed if it has a zero balance, has no
     /// pending InboundTransfers, and has canceled all attached Issuing cards.
@@ -59,9 +59,8 @@ extension FinancialAccountRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as FinancialAccount
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/treasury/financial_accounts" : "/v1/treasury/financial_accounts?\(query)"
                 return try await handler.send(
                     method: .GET,

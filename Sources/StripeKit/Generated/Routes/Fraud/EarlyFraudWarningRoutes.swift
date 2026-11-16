@@ -18,7 +18,7 @@ public struct EarlyFraudWarningRoutes: Sendable {
     public var retrieve: @Sendable (_ earlyFraudWarning: String, _ expand: [String]?) async throws -> EarlyFraudWarning
 
     /// Returns a list of early fraud warnings.
-    public var list: @Sendable (_ expand: [String]?) async throws -> EarlyFraudWarningList
+    public var list: @Sendable (_ params: EarlyFraudWarningListParams?) async throws -> EarlyFraudWarningList
 }
 
 extension EarlyFraudWarningRoutes {
@@ -33,9 +33,8 @@ extension EarlyFraudWarningRoutes {
                     path: path
                 ) as EarlyFraudWarning
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/radar/early_fraud_warnings" : "/v1/radar/early_fraud_warnings?\(query)"
                 return try await handler.send(
                     method: .GET,

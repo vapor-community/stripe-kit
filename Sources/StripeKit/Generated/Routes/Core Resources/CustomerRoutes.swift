@@ -32,14 +32,14 @@ public struct CustomerRoutes: Sendable {
 
     /// Returns a list of your customers. The customers are returned sorted by creation date, with the most
     /// recent customers appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> CustomerList
+    public var list: @Sendable (_ params: CustomerListParams?) async throws -> CustomerList
 
     /// Search for customers you’ve previously created using Stripe’s Search Query Language. Don’t use
     /// search in read-after-write flows where strict consistency is necessary. Under normal operating
     /// conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated
     /// data can be up to an hour behind during outages. Search functionality is not available to merchants
     /// in India.
-    public var search: @Sendable (_ expand: [String]?) async throws -> Customer
+    public var search: @Sendable (_ params: CustomerSearchParams) async throws -> StripeSearchResult<Customer>
 
     /// Permanently deletes a customer. It cannot be undone. Also immediately cancels any active
     /// subscriptions on the customer.
@@ -74,23 +74,21 @@ extension CustomerRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Customer
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/customers" : "/v1/customers?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
                 ) as CustomerList
             },
-            search: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            search: { params in
+                let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/customers/search" : "/v1/customers/search?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
-                ) as Customer
+                ) as StripeSearchResult<Customer>
             },
             delete: { customer, expand in
                 var query = ""

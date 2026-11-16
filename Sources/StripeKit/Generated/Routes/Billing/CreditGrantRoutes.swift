@@ -23,7 +23,7 @@ public struct CreditGrantRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: CreditGrantUpdateParams?) async throws -> CreditGrant
 
     /// Retrieve a list of credit grants.
-    public var list: @Sendable (_ expand: [String]?) async throws -> CreditGrantList
+    public var list: @Sendable (_ params: CreditGrantListParams?) async throws -> CreditGrantList
 
     /// Expires a credit grant.
     public var expire: @Sendable (_ id: String, _ params: CreditGrantExpireParams?) async throws -> CreditGrant
@@ -60,9 +60,8 @@ extension CreditGrantRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as CreditGrant
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/billing/credit_grants" : "/v1/billing/credit_grants?\(query)"
                 return try await handler.send(
                     method: .GET,

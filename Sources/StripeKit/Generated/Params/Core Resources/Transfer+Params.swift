@@ -63,6 +63,49 @@ public struct TransferCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/transfers`.
+public struct TransferListParams: StripeParams {
+    /// Only return transfers that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// Only return transfers for the destination specified by this account ID.
+    public var destination: String?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return transfers with the specified transfer group.
+    public var transferGroup: String?
+
+    public init(created: StripeRangeQuery? = nil, destination: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, transferGroup: String? = nil) {
+        self.created = created
+        self.destination = destination
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+        self.transferGroup = transferGroup
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case created
+        case destination
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+        case transferGroup = "transfer_group"
+    }
+}
+
 public struct TransferUpdateParams: StripeParams {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?

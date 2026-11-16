@@ -39,6 +39,41 @@ public struct TaxIdCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/tax_ids`.
+public struct TaxIdListParams: StripeParams {
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// The account or customer the tax ID belongs to. Defaults to `owner[type]=self`.
+    public var owner: TaxIdListOwner?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, owner: TaxIdListOwner? = nil, startingAfter: String? = nil) {
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.owner = owner
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case owner
+        case startingAfter = "starting_after"
+    }
+}
+
 public struct TaxIdUpdateParams: StripeParams {
     /// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`,
     /// `au_acn`, `au_arn`, `au_wpn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`,
@@ -81,6 +116,33 @@ public struct TaxIdCreateOwner: StripeParams {
     public var customerAccount: String?
 
     public init(type: TaxIdCreateOwnerType, account: String? = nil, customer: String? = nil, customerAccount: String? = nil) {
+        self.type = type
+        self.account = account
+        self.customer = customer
+        self.customerAccount = customerAccount
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case account
+        case customer
+        case customerAccount = "customer_account"
+        case type
+    }
+}
+
+/// The account or customer the tax ID belongs to. Defaults to `owner[type]=self`.
+public struct TaxIdListOwner: StripeParams {
+    /// Type of owner referenced.
+    public var type: TaxIdListOwnerType
+    /// Connected Account the tax ID belongs to. Required when `type=account`
+    public var account: String?
+    /// Customer the tax ID belongs to. Required when `type=customer`
+    public var customer: String?
+    /// ID of the Account representing the customer that the tax ID belongs to. Can be used in place of
+    /// `customer` when `type=customer`
+    public var customerAccount: String?
+
+    public init(type: TaxIdListOwnerType, account: String? = nil, customer: String? = nil, customerAccount: String? = nil) {
         self.type = type
         self.account = account
         self.customer = customer

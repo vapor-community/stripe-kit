@@ -29,7 +29,7 @@ public struct TransferRoutes: Sendable {
 
     /// Returns a list of existing transfers sent to connected accounts. The transfers are returned in
     /// sorted order, with the most recently created transfers appearing first.
-    public var list: @Sendable (_ expand: [String]?) async throws -> TransferList
+    public var list: @Sendable (_ params: TransferListParams?) async throws -> TransferList
 }
 
 extension TransferRoutes {
@@ -60,9 +60,8 @@ extension TransferRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Transfer
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/transfers" : "/v1/transfers?\(query)"
                 return try await handler.send(
                     method: .GET,

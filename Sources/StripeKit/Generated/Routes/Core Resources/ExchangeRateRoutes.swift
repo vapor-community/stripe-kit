@@ -20,7 +20,7 @@ public struct ExchangeRateRoutes: Sendable {
     /// [Deprecated] The ExchangeRate APIs are deprecated. Please use the FX Quotes API instead. Returns a
     /// list of objects that contain the rates at which foreign currencies are converted to one another.
     /// Only shows the currencies for which Stripe supports.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ExchangeRateList
+    public var list: @Sendable (_ params: ExchangeRateListParams?) async throws -> ExchangeRateList
 }
 
 extension ExchangeRateRoutes {
@@ -35,9 +35,8 @@ extension ExchangeRateRoutes {
                     path: path
                 ) as ExchangeRate
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/exchange_rates" : "/v1/exchange_rates?\(query)"
                 return try await handler.send(
                     method: .GET,

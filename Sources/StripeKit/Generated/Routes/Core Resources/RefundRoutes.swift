@@ -32,7 +32,7 @@ public struct RefundRoutes: Sendable {
     /// Returns a list of all refunds you created. We return the refunds in sorted order, with the most
     /// recent refunds appearing first. The 10 most recent refunds are always available by default on the
     /// Charge object.
-    public var list: @Sendable (_ expand: [String]?) async throws -> RefundList
+    public var list: @Sendable (_ params: RefundListParams?) async throws -> RefundList
 
     /// Cancels a refund with a status of requires_action. You can’t cancel refunds in other states. Only
     /// refunds for payment methods that require customer action can enter the requires_action state.
@@ -67,9 +67,8 @@ extension RefundRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Refund
             },
-            list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+            list: { params in
+                let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/refunds" : "/v1/refunds?\(query)"
                 return try await handler.send(
                     method: .GET,

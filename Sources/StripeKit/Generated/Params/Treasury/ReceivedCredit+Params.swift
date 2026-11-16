@@ -47,6 +47,49 @@ public struct ReceivedCreditCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/treasury/received_credits`.
+public struct ReceivedCreditListParams: StripeParams {
+    /// The FinancialAccount that received the funds.
+    public var financialAccount: String
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Only return ReceivedCredits described by the flow.
+    public var linkedFlows: ReceivedCreditListLinkedFlows?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return ReceivedCredits that have the given status: `succeeded` or `failed`.
+    public var status: ReceivedCreditListStatus?
+
+    public init(financialAccount: String, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, linkedFlows: ReceivedCreditListLinkedFlows? = nil, startingAfter: String? = nil, status: ReceivedCreditListStatus? = nil) {
+        self.financialAccount = financialAccount
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.linkedFlows = linkedFlows
+        self.startingAfter = startingAfter
+        self.status = status
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case endingBefore = "ending_before"
+        case expand
+        case financialAccount = "financial_account"
+        case limit
+        case linkedFlows = "linked_flows"
+        case startingAfter = "starting_after"
+        case status
+    }
+}
+
 /// Initiating payment method details for the object.
 public struct ReceivedCreditCreateInitiatingPaymentMethodDetails: StripeParams {
     /// The source type.
@@ -84,5 +127,19 @@ public struct ReceivedCreditCreateInitiatingPaymentMethodDetailsUsBankAccount: S
         case accountHolderName = "account_holder_name"
         case accountNumber = "account_number"
         case routingNumber = "routing_number"
+    }
+}
+
+/// Only return ReceivedCredits described by the flow.
+public struct ReceivedCreditListLinkedFlows: StripeParams {
+    /// The source flow type.
+    public var sourceFlowType: ReceivedCreditListLinkedFlowsSourceFlowType
+
+    public init(sourceFlowType: ReceivedCreditListLinkedFlowsSourceFlowType) {
+        self.sourceFlowType = sourceFlowType
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case sourceFlowType = "source_flow_type"
     }
 }

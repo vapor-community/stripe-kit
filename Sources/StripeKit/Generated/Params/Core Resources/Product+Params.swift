@@ -100,6 +100,86 @@ public struct ProductCreateParams: StripeParams {
     }
 }
 
+/// Query parameters for `GET /v1/products`.
+public struct ProductListParams: StripeParams {
+    /// Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
+    public var active: Bool?
+    /// Only return products that were created during the given date interval.
+    public var created: StripeRangeQuery?
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// Only return products with the given IDs. Cannot be used with
+    /// [starting_after](https://docs.stripe.com/api#list_products-starting_after) or
+    /// [ending_before](https://docs.stripe.com/api#list_products-ending_before).
+    public var ids: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// Only return products that can be shipped (i.e., physical, not digital products).
+    public var shippable: Bool?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+    /// Only return products of this type.
+    public var type: ProductListType?
+    /// Only return products with the given url.
+    public var url: String?
+
+    public init(active: Bool? = nil, created: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, ids: [String]? = nil, limit: Int? = nil, shippable: Bool? = nil, startingAfter: String? = nil, type: ProductListType? = nil, url: String? = nil) {
+        self.active = active
+        self.created = created
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.ids = ids
+        self.limit = limit
+        self.shippable = shippable
+        self.startingAfter = startingAfter
+        self.type = type
+        self.url = url
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case active
+        case created
+        case endingBefore = "ending_before"
+        case expand
+        case ids
+        case limit
+        case shippable
+        case startingAfter = "starting_after"
+        case type
+        case url
+    }
+}
+
+/// Query parameters for `GET /v1/products/search`.
+public struct ProductSearchParams: StripeParams {
+    /// The search query string. See [search query
+    /// language](https://docs.stripe.com/search#search-query-language) and the list of supported [query
+    /// fields for products](https://docs.stripe.com/search#query-fields-for-products).
+    public var query: String
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for pagination across multiple pages of results. Don't include this parameter on the first
+    /// call. Use the next_page value returned in a previous response to request subsequent results.
+    public var page: String?
+
+    public init(query: String, expand: [String]? = nil, limit: Int? = nil, page: String? = nil) {
+        self.query = query
+        self.expand = expand
+        self.limit = limit
+        self.page = page
+    }
+}
+
 public struct ProductUpdateParams: StripeParams {
     /// Whether the product is available for purchase.
     public var active: Bool?
