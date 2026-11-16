@@ -15,13 +15,13 @@ public struct BalanceRoutes: Sendable {
 
     /// Retrieves the current account balance, based on the authentication that was used to make the
     /// request. For a sample request, see Accounting for negative balances.
-    public var list: @Sendable (_ expand: [String]?) async throws -> Balance
+    public var retrieve: @Sendable (_ expand: [String]?) async throws -> Balance
 }
 
 extension BalanceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BalanceRoutes(
-            list: { expand in
+            retrieve: { expand in
                 var query = ""
                 if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
                 let path = query.isEmpty ? "/v1/balance" : "/v1/balance?\(query)"

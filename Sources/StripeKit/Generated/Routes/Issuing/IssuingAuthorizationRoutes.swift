@@ -33,11 +33,31 @@ public struct IssuingAuthorizationRoutes: Sendable {
     @available(*, deprecated, message: "This API is deprecated by Stripe.")
     public var approve: @Sendable (_ authorization: String, _ params: IssuingAuthorizationApproveParams?) async throws -> IssuingAuthorization
 
+    /// Capture a test-mode authorization.
+    public var capture: @Sendable (_ authorization: String, _ params: IssuingAuthorizationCaptureParams?) async throws -> IssuingAuthorization
+
     /// [Deprecated] Declines a pending Issuing Authorization object. This request should be made within the
     /// timeout window of the real time authorization flow. This method is deprecated. Instead, respond
     /// directly to the webhook request to decline an authorization.
     @available(*, deprecated, message: "This API is deprecated by Stripe.")
     public var decline: @Sendable (_ authorization: String, _ params: IssuingAuthorizationDeclineParams?) async throws -> IssuingAuthorization
+
+    /// Expire a test-mode Authorization.
+    public var expire: @Sendable (_ authorization: String, _ params: IssuingAuthorizationExpireParams?) async throws -> IssuingAuthorization
+
+    /// Finalize the amount on an Authorization prior to capture, when the initial authorization was for an
+    /// estimated amount.
+    public var finalizeAmount: @Sendable (_ authorization: String, _ params: IssuingAuthorizationFinalizeAmountParams) async throws -> IssuingAuthorization
+
+    /// Increment a test-mode Authorization.
+    public var increment: @Sendable (_ authorization: String, _ params: IssuingAuthorizationIncrementParams) async throws -> IssuingAuthorization
+
+    /// Respond to a fraud challenge on a testmode Issuing authorization, simulating either a confirmation
+    /// of fraud or a correction of legitimacy.
+    public var respond: @Sendable (_ authorization: String, _ params: IssuingAuthorizationRespondParams) async throws -> IssuingAuthorization
+
+    /// Reverse a test-mode Authorization.
+    public var reverse: @Sendable (_ authorization: String, _ params: IssuingAuthorizationReverseParams?) async throws -> IssuingAuthorization
 }
 
 extension IssuingAuthorizationRoutes {
@@ -84,11 +104,59 @@ extension IssuingAuthorizationRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as IssuingAuthorization
             },
+            capture: { authorization, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/capture",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingAuthorization
+            },
             decline: { authorization, params in
                 let body = params?.toFormBody() ?? ""
                 return try await handler.send(
                     method: .POST,
                     path: "/v1/issuing/authorizations/\(authorization)/decline",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingAuthorization
+            },
+            expire: { authorization, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/expire",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingAuthorization
+            },
+            finalizeAmount: { authorization, params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/finalize_amount",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingAuthorization
+            },
+            increment: { authorization, params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/increment",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingAuthorization
+            },
+            respond: { authorization, params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/fraud_challenges/respond",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingAuthorization
+            },
+            reverse: { authorization, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/reverse",
                     body: .bytes(ByteBuffer(string: body))
                 ) as IssuingAuthorization
             }

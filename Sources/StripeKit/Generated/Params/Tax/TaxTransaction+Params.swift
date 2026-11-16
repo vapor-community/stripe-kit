@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TaxTransactionCreateParams: StripeParams {
+public struct TaxTransactionCreateFromCalculationParams: StripeParams {
     /// Tax Calculation ID to be used as input when creating the transaction.
     public var calculation: String
     /// A custom order or sale identifier, such as 'myOrder_123'. Must be unique across all transactions,
@@ -40,5 +40,111 @@ public struct TaxTransactionCreateParams: StripeParams {
         case metadata
         case postedAt = "posted_at"
         case reference
+    }
+}
+
+public struct TaxTransactionCreateReversalParams: StripeParams {
+    /// If `partial`, the provided line item or shipping cost amounts are reversed. If `full`, the original
+    /// transaction is fully reversed.
+    public var mode: TaxTransactionCreateReversalMode
+    /// The ID of the Transaction to partially or fully reverse.
+    public var originalTransaction: String
+    /// A custom identifier for this reversal, such as `myOrder_123-refund_1`, which must be unique across
+    /// all transactions. The reference helps identify this reversal transaction in exported [tax
+    /// reports](https://docs.stripe.com/tax/reports).
+    public var reference: String
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A flat amount to reverse across the entire transaction, in the [smallest currency
+    /// unit](https://docs.stripe.com/currencies#minor-units) in negative. This value represents the total
+    /// amount to refund from the transaction, including taxes.
+    public var flatAmount: Int?
+    /// The line item amounts to reverse.
+    public var lineItems: [TaxTransactionCreateReversalLineItems]?
+    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
+    /// This can be useful for storing additional information about the object in a structured format.
+    /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
+    /// empty value to `metadata`.
+    public var metadata: [String: String]?
+    /// The shipping cost to reverse.
+    public var shippingCost: TaxTransactionCreateReversalShippingCost?
+
+    public init(mode: TaxTransactionCreateReversalMode, originalTransaction: String, reference: String, expand: [String]? = nil, flatAmount: Int? = nil, lineItems: [TaxTransactionCreateReversalLineItems]? = nil, metadata: [String: String]? = nil, shippingCost: TaxTransactionCreateReversalShippingCost? = nil) {
+        self.mode = mode
+        self.originalTransaction = originalTransaction
+        self.reference = reference
+        self.expand = expand
+        self.flatAmount = flatAmount
+        self.lineItems = lineItems
+        self.metadata = metadata
+        self.shippingCost = shippingCost
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case flatAmount = "flat_amount"
+        case lineItems = "line_items"
+        case metadata
+        case mode
+        case originalTransaction = "original_transaction"
+        case reference
+        case shippingCost = "shipping_cost"
+    }
+}
+
+public struct TaxTransactionCreateReversalLineItems: StripeParams {
+    /// The amount to reverse, in the [smallest currency
+    /// unit](https://docs.stripe.com/currencies#minor-units) in negative.
+    public var amount: Int
+    /// The amount of tax to reverse, in the [smallest currency
+    /// unit](https://docs.stripe.com/currencies#minor-units) in negative.
+    public var amountTax: Int
+    /// The `id` of the line item to reverse in the original transaction.
+    public var originalLineItem: String
+    /// A custom identifier for this line item in the reversal transaction, such as 'L1-refund'.
+    public var reference: String
+    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
+    /// This can be useful for storing additional information about the object in a structured format.
+    public var metadata: [String: String]?
+    /// The quantity reversed. Appears in [tax exports](https://docs.stripe.com/tax/reports), but does not
+    /// affect the amount of tax reversed.
+    public var quantity: Int?
+
+    public init(amount: Int, amountTax: Int, originalLineItem: String, reference: String, metadata: [String: String]? = nil, quantity: Int? = nil) {
+        self.amount = amount
+        self.amountTax = amountTax
+        self.originalLineItem = originalLineItem
+        self.reference = reference
+        self.metadata = metadata
+        self.quantity = quantity
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case amountTax = "amount_tax"
+        case metadata
+        case originalLineItem = "original_line_item"
+        case quantity
+        case reference
+    }
+}
+
+/// The shipping cost to reverse.
+public struct TaxTransactionCreateReversalShippingCost: StripeParams {
+    /// The amount to reverse, in the [smallest currency
+    /// unit](https://docs.stripe.com/currencies#minor-units) in negative.
+    public var amount: Int
+    /// The amount of tax to reverse, in the [smallest currency
+    /// unit](https://docs.stripe.com/currencies#minor-units) in negative.
+    public var amountTax: Int
+
+    public init(amount: Int, amountTax: Int) {
+        self.amount = amount
+        self.amountTax = amountTax
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case amountTax = "amount_tax"
     }
 }

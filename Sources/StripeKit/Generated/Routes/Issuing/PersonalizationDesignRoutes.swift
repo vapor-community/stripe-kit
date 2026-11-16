@@ -25,6 +25,15 @@ public struct PersonalizationDesignRoutes: Sendable {
     /// Returns a list of personalization design objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
     public var list: @Sendable (_ params: PersonalizationDesignListParams?) async throws -> PersonalizationDesignList
+
+    /// Updates the status of the specified testmode personalization design object to active.
+    public var activate: @Sendable (_ personalizationDesign: String, _ params: PersonalizationDesignActivateParams?) async throws -> PersonalizationDesign
+
+    /// Updates the status of the specified testmode personalization design object to inactive.
+    public var deactivate: @Sendable (_ personalizationDesign: String, _ params: PersonalizationDesignDeactivateParams?) async throws -> PersonalizationDesign
+
+    /// Updates the status of the specified testmode personalization design object to rejected.
+    public var reject: @Sendable (_ personalizationDesign: String, _ params: PersonalizationDesignRejectParams) async throws -> PersonalizationDesign
 }
 
 extension PersonalizationDesignRoutes {
@@ -62,6 +71,30 @@ extension PersonalizationDesignRoutes {
                     method: .GET,
                     path: path
                 ) as PersonalizationDesignList
+            },
+            activate: { personalizationDesign, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/activate",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as PersonalizationDesign
+            },
+            deactivate: { personalizationDesign, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/deactivate",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as PersonalizationDesign
+            },
+            reject: { personalizationDesign, params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/reject",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as PersonalizationDesign
             }
         )
     }

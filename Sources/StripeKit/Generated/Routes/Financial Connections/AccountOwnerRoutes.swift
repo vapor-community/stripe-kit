@@ -14,13 +14,13 @@ import NIOHTTP1
 public struct AccountOwnerRoutes: Sendable {
 
     /// Lists all owners for a given Account
-    public var list: @Sendable (_ account: String, _ params: AccountOwnerListParams) async throws -> AccountOwnerList
+    public var listOwners: @Sendable (_ account: String, _ params: AccountOwnerListOwnersParams) async throws -> AccountOwnerList
 }
 
 extension AccountOwnerRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AccountOwnerRoutes(
-            list: { account, params in
+            listOwners: { account, params in
                 let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/financial_connections/accounts/\(account)/owners" : "/v1/financial_connections/accounts/\(account)/owners?\(query)"
                 return try await handler.send(

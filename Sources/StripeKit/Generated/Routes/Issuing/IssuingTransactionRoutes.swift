@@ -13,9 +13,6 @@ import NIOHTTP1
 
 public struct IssuingTransactionRoutes: Sendable {
 
-    /// Allows the user to capture an arbitrary amount, also known as a forced capture.
-    public var create: @Sendable (_ params: IssuingTransactionCreateParams) async throws -> IssuingTransaction
-
     /// Retrieves an Issuing Transaction object.
     public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> IssuingTransaction
 
@@ -26,19 +23,20 @@ public struct IssuingTransactionRoutes: Sendable {
     /// Returns a list of Issuing Transaction objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
     public var list: @Sendable (_ params: IssuingTransactionListParams?) async throws -> IssuingTransactionList
+
+    /// Allows the user to capture an arbitrary amount, also known as a forced capture.
+    public var createForceCapture: @Sendable (_ params: IssuingTransactionCreateForceCaptureParams) async throws -> IssuingTransaction
+
+    /// Allows the user to refund an arbitrary amount, also known as a unlinked refund.
+    public var createUnlinkedRefund: @Sendable (_ params: IssuingTransactionCreateUnlinkedRefundParams) async throws -> IssuingTransaction
+
+    /// Refund a test-mode Transaction.
+    public var refund: @Sendable (_ transaction: String, _ params: IssuingTransactionRefundParams?) async throws -> IssuingTransaction
 }
 
 extension IssuingTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingTransactionRoutes(
-            create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/transactions/create_force_capture",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingTransaction
-            },
             retrieve: { transaction, expand in
                 var query = ""
                 if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
@@ -63,6 +61,30 @@ extension IssuingTransactionRoutes {
                     method: .GET,
                     path: path
                 ) as IssuingTransactionList
+            },
+            createForceCapture: { params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/transactions/create_force_capture",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingTransaction
+            },
+            createUnlinkedRefund: { params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/transactions/create_unlinked_refund",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingTransaction
+            },
+            refund: { transaction, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/transactions/\(transaction)/refund",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingTransaction
             }
         )
     }

@@ -7,14 +7,7 @@
 
 import Foundation
 
-public enum InboundTransferListStatus: String, Codable, Sendable {
-    case canceled
-    case failed
-    case processing
-    case succeeded
-}
-
-public enum InboundTransferUpdateFailureDetailsCode: String, Codable, Sendable {
+public enum InboundTransferFailFailureDetailsCode: String, Codable, Sendable {
     case accountClosed = "account_closed"
     case accountFrozen = "account_frozen"
     case bankAccountRestricted = "bank_account_restricted"
@@ -28,4 +21,11 @@ public enum InboundTransferUpdateFailureDetailsCode: String, Codable, Sendable {
     case invalidCurrency = "invalid_currency"
     case noAccount = "no_account"
     case other
+}
+
+public enum InboundTransferListStatus: String, Codable, Sendable {
+    case canceled
+    case failed
+    case processing
+    case succeeded
 }

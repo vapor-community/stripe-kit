@@ -13,27 +13,19 @@ import NIOHTTP1
 
 public struct CustomerCashBalanceTransactionRoutes: Sendable {
 
-    /// Create a test incoming bank transfer
-    public var create: @Sendable (_ customer: String, _ params: CustomerCashBalanceTransactionCreateParams) async throws -> CustomerCashBalanceTransaction
-
     /// Retrieves a specific cash balance transaction, which updated the customer’s cash balance.
     public var retrieve: @Sendable (_ customer: String, _ transaction: String, _ expand: [String]?) async throws -> CustomerCashBalanceTransaction
 
     /// Returns a list of transactions that modified the customer’s cash balance.
     public var list: @Sendable (_ customer: String, _ params: CustomerCashBalanceTransactionListParams?) async throws -> CustomerCashBalanceTransactionList
+
+    /// Create a test incoming bank transfer
+    public var fundCashBalance: @Sendable (_ customer: String, _ params: CustomerCashBalanceTransactionFundCashBalanceParams) async throws -> CustomerCashBalanceTransaction
 }
 
 extension CustomerCashBalanceTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CustomerCashBalanceTransactionRoutes(
-            create: { customer, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/customers/\(customer)/fund_cash_balance",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CustomerCashBalanceTransaction
-            },
             retrieve: { customer, transaction, expand in
                 var query = ""
                 if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
@@ -50,6 +42,14 @@ extension CustomerCashBalanceTransactionRoutes {
                     method: .GET,
                     path: path
                 ) as CustomerCashBalanceTransactionList
+            },
+            fundCashBalance: { customer, params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/customers/\(customer)/fund_cash_balance",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as CustomerCashBalanceTransaction
             }
         )
     }

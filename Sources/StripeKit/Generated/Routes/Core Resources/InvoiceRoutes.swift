@@ -71,7 +71,7 @@ public struct InvoiceRoutes: Sendable {
 
     /// Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if
     /// you’d like to finalize a draft invoice manually, you can do so using this method.
-    public var finalize: @Sendable (_ invoice: String, _ params: InvoiceFinalizeParams?) async throws -> Invoice
+    public var finalizeInvoice: @Sendable (_ invoice: String, _ params: InvoiceFinalizeInvoiceParams?) async throws -> Invoice
 
     /// Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off
     /// for accounting purposes.
@@ -90,7 +90,7 @@ public struct InvoiceRoutes: Sendable {
     /// can do so. When sending invoices that have already been paid, there will be no reference to the
     /// payment in the email. Requests made in test-mode result in no emails being sent, despite sending an
     /// invoice.sent event.
-    public var send: @Sendable (_ invoice: String, _ params: InvoiceSendParams?) async throws -> Invoice
+    public var sendInvoice: @Sendable (_ invoice: String, _ params: InvoiceSendInvoiceParams?) async throws -> Invoice
 
     /// Updates multiple line items on an invoice. This is only possible when an invoice is still a draft.
     public var updateLines: @Sendable (_ invoice: String, _ params: InvoiceUpdateLinesParams) async throws -> Invoice
@@ -101,7 +101,7 @@ public struct InvoiceRoutes: Sendable {
     /// canceled, or voided in the jurisdiction you’re doing business in. You might need to issue another
     /// invoice or credit note instead. Stripe recommends that you consult with your legal counsel for
     /// advice specific to your business.
-    public var void: @Sendable (_ invoice: String, _ params: InvoiceVoidParams?) async throws -> Invoice
+    public var voidInvoice: @Sendable (_ invoice: String, _ params: InvoiceVoidInvoiceParams?) async throws -> Invoice
 }
 
 extension InvoiceRoutes {
@@ -181,7 +181,7 @@ extension InvoiceRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Invoice
             },
-            finalize: { invoice, params in
+            finalizeInvoice: { invoice, params in
                 let body = params?.toFormBody() ?? ""
                 return try await handler.send(
                     method: .POST,
@@ -213,7 +213,7 @@ extension InvoiceRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Invoice
             },
-            send: { invoice, params in
+            sendInvoice: { invoice, params in
                 let body = params?.toFormBody() ?? ""
                 return try await handler.send(
                     method: .POST,
@@ -229,7 +229,7 @@ extension InvoiceRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Invoice
             },
-            void: { invoice, params in
+            voidInvoice: { invoice, params in
                 let body = params?.toFormBody() ?? ""
                 return try await handler.send(
                     method: .POST,

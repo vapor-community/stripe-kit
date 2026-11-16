@@ -43,6 +43,10 @@ public struct ReaderRoutes: Sendable {
     /// Finalizes a payment on a Reader. See Confirming a Payment for more details.
     public var confirmPaymentIntent: @Sendable (_ reader: String, _ params: ReaderConfirmPaymentIntentParams) async throws -> Reader
 
+    /// Presents a payment method on a simulated reader. Can be used to simulate accepting a payment, saving
+    /// a card or refunding a transaction.
+    public var presentPaymentMethod: @Sendable (_ reader: String, _ params: ReaderPresentPaymentMethodParams?) async throws -> Reader
+
     /// Initiates a payment flow on a Reader. See process the payment for more details.
     public var processPaymentIntent: @Sendable (_ reader: String, _ params: ReaderProcessPaymentIntentParams) async throws -> Reader
 
@@ -54,6 +58,12 @@ public struct ReaderRoutes: Sendable {
 
     /// Sets the reader display to show cart details.
     public var setReaderDisplay: @Sendable (_ reader: String, _ params: ReaderSetReaderDisplayParams) async throws -> Reader
+
+    /// Use this endpoint to trigger a successful input collection on a simulated reader.
+    public var succeedInputCollection: @Sendable (_ reader: String, _ params: ReaderSucceedInputCollectionParams?) async throws -> Reader
+
+    /// Use this endpoint to complete an input collection with a timeout error on a simulated reader.
+    public var timeoutInputCollection: @Sendable (_ reader: String, _ params: ReaderTimeoutInputCollectionParams?) async throws -> Reader
 }
 
 extension ReaderRoutes {
@@ -133,6 +143,14 @@ extension ReaderRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Reader
             },
+            presentPaymentMethod: { reader, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/terminal/readers/\(reader)/present_payment_method",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as Reader
+            },
             processPaymentIntent: { reader, params in
                 let body = params.toFormBody()
                 return try await handler.send(
@@ -162,6 +180,22 @@ extension ReaderRoutes {
                 return try await handler.send(
                     method: .POST,
                     path: "/v1/terminal/readers/\(reader)/set_reader_display",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as Reader
+            },
+            succeedInputCollection: { reader, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/terminal/readers/\(reader)/succeed_input_collection",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as Reader
+            },
+            timeoutInputCollection: { reader, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/terminal/readers/\(reader)/timeout_input_collection",
                     body: .bytes(ByteBuffer(string: body))
                 ) as Reader
             }

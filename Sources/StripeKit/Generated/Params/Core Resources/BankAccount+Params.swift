@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct BankAccountCreateParams: StripeParams {
+public struct BankAccountVerifyParams: StripeParams {
     /// Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank
     /// account.
     public var amounts: [Int]?

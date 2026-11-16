@@ -62,6 +62,23 @@ public struct InboundTransferCreateParams: StripeParams {
     }
 }
 
+public struct InboundTransferFailParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// Details about a failed InboundTransfer.
+    public var failureDetails: InboundTransferFailFailureDetails?
+
+    public init(expand: [String]? = nil, failureDetails: InboundTransferFailFailureDetails? = nil) {
+        self.expand = expand
+        self.failureDetails = failureDetails
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case failureDetails = "failure_details"
+    }
+}
+
 /// Query parameters for `GET /v1/treasury/inbound_transfers`.
 public struct InboundTransferListParams: StripeParams {
     /// Returns objects associated with this FinancialAccount.
@@ -102,29 +119,30 @@ public struct InboundTransferListParams: StripeParams {
     }
 }
 
-public struct InboundTransferUpdateParams: StripeParams {
+public struct InboundTransferReturnInboundTransferParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
-    /// Details about a failed InboundTransfer.
-    public var failureDetails: InboundTransferUpdateFailureDetails?
 
-    public init(expand: [String]? = nil, failureDetails: InboundTransferUpdateFailureDetails? = nil) {
+    public init(expand: [String]? = nil) {
         self.expand = expand
-        self.failureDetails = failureDetails
     }
+}
 
-    public enum CodingKeys: String, CodingKey {
-        case expand
-        case failureDetails = "failure_details"
+public struct InboundTransferSucceedParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
     }
 }
 
 /// Details about a failed InboundTransfer.
-public struct InboundTransferUpdateFailureDetails: StripeParams {
+public struct InboundTransferFailFailureDetails: StripeParams {
     /// Reason for the failure.
-    public var code: InboundTransferUpdateFailureDetailsCode?
+    public var code: InboundTransferFailFailureDetailsCode?
 
-    public init(code: InboundTransferUpdateFailureDetailsCode? = nil) {
+    public init(code: InboundTransferFailFailureDetailsCode? = nil) {
         self.code = code
     }
 }

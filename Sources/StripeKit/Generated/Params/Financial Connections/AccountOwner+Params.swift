@@ -8,7 +8,7 @@
 import Foundation
 
 /// Query parameters for `GET /v1/financial_connections/accounts/{account}/owners`.
-public struct AccountOwnerListParams: StripeParams {
+public struct AccountOwnerListOwnersParams: StripeParams {
     /// The ID of the ownership object to fetch owners from.
     public var ownership: String
     /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.

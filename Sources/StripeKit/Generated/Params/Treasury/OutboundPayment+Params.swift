@@ -83,6 +83,15 @@ public struct OutboundPaymentCreateParams: StripeParams {
     }
 }
 
+public struct OutboundPaymentFailParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
 /// Query parameters for `GET /v1/treasury/outbound_payments`.
 public struct OutboundPaymentListParams: StripeParams {
     /// Returns objects associated with this FinancialAccount.
@@ -128,6 +137,32 @@ public struct OutboundPaymentListParams: StripeParams {
         case limit
         case startingAfter = "starting_after"
         case status
+    }
+}
+
+public struct OutboundPaymentPostParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
+public struct OutboundPaymentReturnOutboundPaymentParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// Optional hash to set the return code.
+    public var returnedDetails: OutboundPaymentReturnOutboundPaymentReturnedDetails?
+
+    public init(expand: [String]? = nil, returnedDetails: OutboundPaymentReturnOutboundPaymentReturnedDetails? = nil) {
+        self.expand = expand
+        self.returnedDetails = returnedDetails
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case returnedDetails = "returned_details"
     }
 }
 
@@ -309,6 +344,16 @@ public struct OutboundPaymentCreateEndUserDetails: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case ipAddress = "ip_address"
         case present
+    }
+}
+
+/// Optional hash to set the return code.
+public struct OutboundPaymentReturnOutboundPaymentReturnedDetails: StripeParams {
+    /// The return code to be set on the OutboundPayment object.
+    public var code: OutboundPaymentReturnOutboundPaymentReturnedDetailsCode?
+
+    public init(code: OutboundPaymentReturnOutboundPaymentReturnedDetailsCode? = nil) {
+        self.code = code
     }
 }
 

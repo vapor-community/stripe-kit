@@ -24,6 +24,19 @@ public enum OutboundTransferListStatus: String, Codable, Sendable {
     case returned
 }
 
+public enum OutboundTransferReturnOutboundTransferReturnedDetailsCode: String, Codable, Sendable {
+    case accountClosed = "account_closed"
+    case accountFrozen = "account_frozen"
+    case bankAccountRestricted = "bank_account_restricted"
+    case bankOwnershipChanged = "bank_ownership_changed"
+    case declined
+    case incorrectAccountHolderName = "incorrect_account_holder_name"
+    case invalidAccountNumber = "invalid_account_number"
+    case invalidCurrency = "invalid_currency"
+    case noAccount = "no_account"
+    case other
+}
+
 public enum OutboundTransferUpdateTrackingDetailsType: String, Codable, Sendable {
     case ach
     case usDomesticWire = "us_domestic_wire"

@@ -29,6 +29,18 @@ public struct OutboundTransferRoutes: Sendable {
 
     /// An OutboundTransfer can be canceled if the funds have not yet been paid out.
     public var cancel: @Sendable (_ outboundTransfer: String, _ params: OutboundTransferCancelParams?) async throws -> OutboundTransfer
+
+    /// Transitions a test mode created OutboundTransfer to the failed status. The OutboundTransfer must
+    /// already be in the processing state.
+    public var fail: @Sendable (_ outboundTransfer: String, _ params: OutboundTransferFailParams?) async throws -> OutboundTransfer
+
+    /// Transitions a test mode created OutboundTransfer to the posted status. The OutboundTransfer must
+    /// already be in the processing state.
+    public var post: @Sendable (_ outboundTransfer: String, _ params: OutboundTransferPostParams?) async throws -> OutboundTransfer
+
+    /// Transitions a test mode created OutboundTransfer to the returned status. The OutboundTransfer must
+    /// already be in the processing state.
+    public var returnOutboundTransfer: @Sendable (_ outboundTransfer: String, _ params: OutboundTransferReturnOutboundTransferParams?) async throws -> OutboundTransfer
 }
 
 extension OutboundTransferRoutes {
@@ -72,6 +84,30 @@ extension OutboundTransferRoutes {
                 return try await handler.send(
                     method: .POST,
                     path: "/v1/treasury/outbound_transfers/\(outboundTransfer)/cancel",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as OutboundTransfer
+            },
+            fail: { outboundTransfer, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/fail",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as OutboundTransfer
+            },
+            post: { outboundTransfer, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/post",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as OutboundTransfer
+            },
+            returnOutboundTransfer: { outboundTransfer, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/return",
                     body: .bytes(ByteBuffer(string: body))
                 ) as OutboundTransfer
             }

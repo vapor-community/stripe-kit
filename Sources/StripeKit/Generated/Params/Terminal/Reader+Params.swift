@@ -157,6 +157,39 @@ public struct ReaderListParams: StripeParams {
     }
 }
 
+public struct ReaderPresentPaymentMethodParams: StripeParams {
+    /// Simulated on-reader tip amount.
+    public var amountTip: Int?
+    /// Simulated data for the card payment method.
+    public var card: ReaderPresentPaymentMethodCard?
+    /// Simulated data for the card_present payment method.
+    public var cardPresent: ReaderPresentPaymentMethodCardPresent?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// Simulated data for the interac_present payment method.
+    public var interacPresent: ReaderPresentPaymentMethodInteracPresent?
+    /// Simulated payment type.
+    public var type: ReaderPresentPaymentMethodType?
+
+    public init(amountTip: Int? = nil, card: ReaderPresentPaymentMethodCard? = nil, cardPresent: ReaderPresentPaymentMethodCardPresent? = nil, expand: [String]? = nil, interacPresent: ReaderPresentPaymentMethodInteracPresent? = nil, type: ReaderPresentPaymentMethodType? = nil) {
+        self.amountTip = amountTip
+        self.card = card
+        self.cardPresent = cardPresent
+        self.expand = expand
+        self.interacPresent = interacPresent
+        self.type = type
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amountTip = "amount_tip"
+        case card
+        case cardPresent = "card_present"
+        case expand
+        case interacPresent = "interac_present"
+        case type
+    }
+}
+
 public struct ReaderProcessPaymentIntentParams: StripeParams {
     /// The ID of the PaymentIntent to process on the reader.
     public var paymentIntent: String
@@ -265,6 +298,32 @@ public struct ReaderSetReaderDisplayParams: StripeParams {
     public init(type: ReaderSetReaderDisplayType, cart: ReaderSetReaderDisplayCart? = nil, expand: [String]? = nil) {
         self.type = type
         self.cart = cart
+        self.expand = expand
+    }
+}
+
+public struct ReaderSucceedInputCollectionParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// This parameter defines the skip behavior for input collection.
+    public var skipNonRequiredInputs: ReaderSucceedInputCollectionSkipNonRequiredInputs?
+
+    public init(expand: [String]? = nil, skipNonRequiredInputs: ReaderSucceedInputCollectionSkipNonRequiredInputs? = nil) {
+        self.expand = expand
+        self.skipNonRequiredInputs = skipNonRequiredInputs
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case skipNonRequiredInputs = "skip_non_required_inputs"
+    }
+}
+
+public struct ReaderTimeoutInputCollectionParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
         self.expand = expand
     }
 }
@@ -448,6 +507,52 @@ public struct ReaderConfirmPaymentIntentConfirmConfig: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case returnUrl = "return_url"
+    }
+}
+
+/// Simulated data for the card payment method.
+public struct ReaderPresentPaymentMethodCard: StripeParams {
+    /// Two-digit number representing the card's expiration month.
+    public var expMonth: Int
+    /// Two- or four-digit number representing the card's expiration year.
+    public var expYear: Int
+    /// The card number, as a string without any separators.
+    public var number: String
+    /// Card security code.
+    public var cvc: String?
+
+    public init(expMonth: Int, expYear: Int, number: String, cvc: String? = nil) {
+        self.expMonth = expMonth
+        self.expYear = expYear
+        self.number = number
+        self.cvc = cvc
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case cvc
+        case expMonth = "exp_month"
+        case expYear = "exp_year"
+        case number
+    }
+}
+
+/// Simulated data for the card_present payment method.
+public struct ReaderPresentPaymentMethodCardPresent: StripeParams {
+    /// The card number, as a string without any separators.
+    public var number: String?
+
+    public init(number: String? = nil) {
+        self.number = number
+    }
+}
+
+/// Simulated data for the interac_present payment method.
+public struct ReaderPresentPaymentMethodInteracPresent: StripeParams {
+    /// The Interac card number.
+    public var number: String?
+
+    public init(number: String? = nil) {
+        self.number = number
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum CashBalanceCreateSettingsReconciliationMode: String, Codable, Sendable {
+public enum CashBalanceUpdateSettingsReconciliationMode: String, Codable, Sendable {
     case automatic
     case manual
     case merchantDefault = "merchant_default"

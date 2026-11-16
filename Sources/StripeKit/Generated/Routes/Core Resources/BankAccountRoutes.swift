@@ -14,13 +14,13 @@ import NIOHTTP1
 public struct BankAccountRoutes: Sendable {
 
     /// Verify a specified bank account for a given customer.
-    public var create: @Sendable (_ customer: String, _ id: String, _ params: BankAccountCreateParams?) async throws -> BankAccount
+    public var verify: @Sendable (_ customer: String, _ id: String, _ params: BankAccountVerifyParams?) async throws -> BankAccount
 }
 
 extension BankAccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BankAccountRoutes(
-            create: { customer, id, params in
+            verify: { customer, id, params in
                 let body = params?.toFormBody() ?? ""
                 return try await handler.send(
                     method: .POST,

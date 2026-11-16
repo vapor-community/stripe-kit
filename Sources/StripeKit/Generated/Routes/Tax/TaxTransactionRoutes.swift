@@ -13,18 +13,30 @@ import NIOHTTP1
 
 public struct TaxTransactionRoutes: Sendable {
 
+    /// Retrieves a Tax Transaction object.
+    public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> TaxTransaction
+
     /// Creates a Tax Transaction from a calculation, if that calculation hasn’t expired. Calculations
     /// expire after 90 days.
-    public var create: @Sendable (_ params: TaxTransactionCreateParams) async throws -> TaxTransaction
+    public var createFromCalculation: @Sendable (_ params: TaxTransactionCreateFromCalculationParams) async throws -> TaxTransaction
 
-    /// Retrieves a Tax Transaction object.
-    public var list: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> TaxTransaction
+    /// Partially or fully reverses a previously created Transaction.
+    public var createReversal: @Sendable (_ params: TaxTransactionCreateReversalParams) async throws -> TaxTransaction
 }
 
 extension TaxTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxTransactionRoutes(
-            create: { params in
+            retrieve: { transaction, expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/tax/transactions/\(transaction)" : "/v1/tax/transactions/\(transaction)?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as TaxTransaction
+            },
+            createFromCalculation: { params in
                 let body = params.toFormBody()
                 return try await handler.send(
                     method: .POST,
@@ -32,13 +44,12 @@ extension TaxTransactionRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as TaxTransaction
             },
-            list: { transaction, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tax/transactions/\(transaction)" : "/v1/tax/transactions/\(transaction)?\(query)"
+            createReversal: { params in
+                let body = params.toFormBody()
                 return try await handler.send(
-                    method: .GET,
-                    path: path
+                    method: .POST,
+                    path: "/v1/tax/transactions/create_reversal",
+                    body: .bytes(ByteBuffer(string: body))
                 ) as TaxTransaction
             }
         )

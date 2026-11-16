@@ -94,6 +94,24 @@ public struct IssuingCardCreateParams: StripeParams {
     }
 }
 
+public struct IssuingCardDeliverCardParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
+public struct IssuingCardFailCardParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
 /// Query parameters for `GET /v1/issuing/cards`.
 public struct IssuingCardListParams: StripeParams {
     /// Only return cards belonging to the Cardholder with the provided ID.
@@ -153,6 +171,33 @@ public struct IssuingCardListParams: StripeParams {
         case startingAfter = "starting_after"
         case status
         case type
+    }
+}
+
+public struct IssuingCardReturnCardParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
+public struct IssuingCardShipCardParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
+public struct IssuingCardSubmitCardParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
     }
 }
 

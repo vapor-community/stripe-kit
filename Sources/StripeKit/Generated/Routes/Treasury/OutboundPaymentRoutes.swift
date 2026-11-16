@@ -29,6 +29,18 @@ public struct OutboundPaymentRoutes: Sendable {
 
     /// Cancel an OutboundPayment.
     public var cancel: @Sendable (_ id: String, _ params: OutboundPaymentCancelParams?) async throws -> OutboundPayment
+
+    /// Transitions a test mode created OutboundPayment to the failed status. The OutboundPayment must
+    /// already be in the processing state.
+    public var fail: @Sendable (_ id: String, _ params: OutboundPaymentFailParams?) async throws -> OutboundPayment
+
+    /// Transitions a test mode created OutboundPayment to the posted status. The OutboundPayment must
+    /// already be in the processing state.
+    public var post: @Sendable (_ id: String, _ params: OutboundPaymentPostParams?) async throws -> OutboundPayment
+
+    /// Transitions a test mode created OutboundPayment to the returned status. The OutboundPayment must
+    /// already be in the processing state.
+    public var returnOutboundPayment: @Sendable (_ id: String, _ params: OutboundPaymentReturnOutboundPaymentParams?) async throws -> OutboundPayment
 }
 
 extension OutboundPaymentRoutes {
@@ -72,6 +84,30 @@ extension OutboundPaymentRoutes {
                 return try await handler.send(
                     method: .POST,
                     path: "/v1/treasury/outbound_payments/\(id)/cancel",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as OutboundPayment
+            },
+            fail: { id, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/treasury/outbound_payments/\(id)/fail",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as OutboundPayment
+            },
+            post: { id, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/treasury/outbound_payments/\(id)/post",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as OutboundPayment
+            },
+            returnOutboundPayment: { id, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/treasury/outbound_payments/\(id)/return",
                     body: .bytes(ByteBuffer(string: body))
                 ) as OutboundPayment
             }

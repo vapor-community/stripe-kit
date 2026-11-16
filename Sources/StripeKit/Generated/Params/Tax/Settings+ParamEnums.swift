@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SettingsCreateDefaultsTaxBehavior: String, Codable, Sendable {
+public enum SettingsUpdateDefaultsTaxBehavior: String, Codable, Sendable {
     case exclusive
     case inclusive
     case inferredByCurrency = "inferred_by_currency"

@@ -14,13 +14,13 @@ import NIOHTTP1
 public struct CreditBalanceSummaryRoutes: Sendable {
 
     /// Retrieves the credit balance summary for a customer.
-    public var list: @Sendable (_ params: CreditBalanceSummaryListParams) async throws -> CreditBalanceSummary
+    public var retrieve: @Sendable (_ params: CreditBalanceSummaryRetrieveParams) async throws -> CreditBalanceSummary
 }
 
 extension CreditBalanceSummaryRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CreditBalanceSummaryRoutes(
-            list: { params in
+            retrieve: { params in
                 let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/billing/credit_balance_summary" : "/v1/billing/credit_balance_summary?\(query)"
                 return try await handler.send(

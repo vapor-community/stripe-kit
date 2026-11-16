@@ -320,7 +320,7 @@ public struct InvoiceCreatePreviewParams: StripeParams {
     }
 }
 
-public struct InvoiceFinalizeParams: StripeParams {
+public struct InvoiceFinalizeInvoiceParams: StripeParams {
     /// Controls whether Stripe performs [automatic
     /// collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the
     /// invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
@@ -503,7 +503,7 @@ public struct InvoiceSearchParams: StripeParams {
     }
 }
 
-public struct InvoiceSendParams: StripeParams {
+public struct InvoiceSendInvoiceParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
@@ -694,7 +694,7 @@ public struct InvoiceUpdateLinesParams: StripeParams {
     }
 }
 
-public struct InvoiceVoidParams: StripeParams {
+public struct InvoiceVoidInvoiceParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 

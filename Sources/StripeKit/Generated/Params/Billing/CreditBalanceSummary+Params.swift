@@ -8,9 +8,9 @@
 import Foundation
 
 /// Query parameters for `GET /v1/billing/credit_balance_summary`.
-public struct CreditBalanceSummaryListParams: StripeParams {
+public struct CreditBalanceSummaryRetrieveParams: StripeParams {
     /// The filter criteria for the credit balance summary.
-    public var filter: CreditBalanceSummaryListFilter
+    public var filter: CreditBalanceSummaryRetrieveFilter
     /// The customer whose credit balance summary you're retrieving.
     public var customer: String?
     /// The account representing the customer whose credit balance summary you're retrieving.
@@ -18,7 +18,7 @@ public struct CreditBalanceSummaryListParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(filter: CreditBalanceSummaryListFilter, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil) {
+    public init(filter: CreditBalanceSummaryRetrieveFilter, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil) {
         self.filter = filter
         self.customer = customer
         self.customerAccount = customerAccount
@@ -34,15 +34,15 @@ public struct CreditBalanceSummaryListParams: StripeParams {
 }
 
 /// The filter criteria for the credit balance summary.
-public struct CreditBalanceSummaryListFilter: StripeParams {
+public struct CreditBalanceSummaryRetrieveFilter: StripeParams {
     /// Specify the type of this filter.
-    public var type: CreditBalanceSummaryListFilterType
+    public var type: CreditBalanceSummaryRetrieveFilterType
     /// The billing credit applicability scope for which to fetch credit balance summary.
-    public var applicabilityScope: CreditBalanceSummaryListFilterApplicabilityScope?
+    public var applicabilityScope: CreditBalanceSummaryRetrieveFilterApplicabilityScope?
     /// The credit grant for which to fetch credit balance summary.
     public var creditGrant: String?
 
-    public init(type: CreditBalanceSummaryListFilterType, applicabilityScope: CreditBalanceSummaryListFilterApplicabilityScope? = nil, creditGrant: String? = nil) {
+    public init(type: CreditBalanceSummaryRetrieveFilterType, applicabilityScope: CreditBalanceSummaryRetrieveFilterApplicabilityScope? = nil, creditGrant: String? = nil) {
         self.type = type
         self.applicabilityScope = applicabilityScope
         self.creditGrant = creditGrant
@@ -56,15 +56,15 @@ public struct CreditBalanceSummaryListFilter: StripeParams {
 }
 
 /// The billing credit applicability scope for which to fetch credit balance summary.
-public struct CreditBalanceSummaryListFilterApplicabilityScope: StripeParams {
+public struct CreditBalanceSummaryRetrieveFilterApplicabilityScope: StripeParams {
     /// The price type that credit grants can apply to. We currently only support the `metered` price type.
     /// Cannot be used in combination with `prices`.
-    public var priceType: CreditBalanceSummaryListFilterApplicabilityScopePriceType?
+    public var priceType: CreditBalanceSummaryRetrieveFilterApplicabilityScopePriceType?
     /// A list of prices that the credit grant can apply to. We currently only support the `metered` prices.
     /// Cannot be used in combination with `price_type`. Limit 20 prices.
-    public var prices: [CreditBalanceSummaryListFilterApplicabilityScopePrices]?
+    public var prices: [CreditBalanceSummaryRetrieveFilterApplicabilityScopePrices]?
 
-    public init(priceType: CreditBalanceSummaryListFilterApplicabilityScopePriceType? = nil, prices: [CreditBalanceSummaryListFilterApplicabilityScopePrices]? = nil) {
+    public init(priceType: CreditBalanceSummaryRetrieveFilterApplicabilityScopePriceType? = nil, prices: [CreditBalanceSummaryRetrieveFilterApplicabilityScopePrices]? = nil) {
         self.priceType = priceType
         self.prices = prices
     }
@@ -75,7 +75,7 @@ public struct CreditBalanceSummaryListFilterApplicabilityScope: StripeParams {
     }
 }
 
-public struct CreditBalanceSummaryListFilterApplicabilityScopePrices: StripeParams {
+public struct CreditBalanceSummaryRetrieveFilterApplicabilityScopePrices: StripeParams {
     /// The price ID this credit grant should apply to.
     public var id: String
 

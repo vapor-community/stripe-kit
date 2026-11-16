@@ -40,10 +40,10 @@ public struct CreditNoteRoutes: Sendable {
     public var list: @Sendable (_ params: CreditNoteListParams?) async throws -> CreditNoteList
 
     /// Get a preview of a credit note without creating it.
-    public var listPreview: @Sendable (_ params: CreditNoteListPreviewParams) async throws -> CreditNote
+    public var preview: @Sendable (_ params: CreditNotePreviewParams) async throws -> CreditNote
 
     /// Marks a credit note as void. Learn more about voiding credit notes.
-    public var void: @Sendable (_ id: String, _ params: CreditNoteVoidParams?) async throws -> CreditNote
+    public var voidCreditNote: @Sendable (_ id: String, _ params: CreditNoteVoidCreditNoteParams?) async throws -> CreditNote
 }
 
 extension CreditNoteRoutes {
@@ -82,7 +82,7 @@ extension CreditNoteRoutes {
                     path: path
                 ) as CreditNoteList
             },
-            listPreview: { params in
+            preview: { params in
                 let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/credit_notes/preview" : "/v1/credit_notes/preview?\(query)"
                 return try await handler.send(
@@ -90,7 +90,7 @@ extension CreditNoteRoutes {
                     path: path
                 ) as CreditNote
             },
-            void: { id, params in
+            voidCreditNote: { id, params in
                 let body = params?.toFormBody() ?? ""
                 return try await handler.send(
                     method: .POST,

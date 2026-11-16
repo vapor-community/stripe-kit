@@ -8,7 +8,7 @@
 import Foundation
 
 /// Query parameters for `GET /v1/tax/associations/find`.
-public struct AssociationListParams: StripeParams {
+public struct AssociationFindParams: StripeParams {
     /// Valid [PaymentIntent](https://docs.stripe.com/api/payment_intents/object) id
     public var paymentIntent: String
     /// Specifies which fields in the response should be expanded.

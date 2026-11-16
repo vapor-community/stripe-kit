@@ -7,14 +7,14 @@
 
 import Foundation
 
-public enum BalanceSettingsCreatePaymentsPayoutsScheduleInterval: String, Codable, Sendable {
+public enum BalanceSettingsUpdatePaymentsPayoutsScheduleInterval: String, Codable, Sendable {
     case daily
     case manual
     case monthly
     case weekly
 }
 
-public enum BalanceSettingsCreatePaymentsPayoutsScheduleWeeklyPayoutDays: String, Codable, Sendable {
+public enum BalanceSettingsUpdatePaymentsPayoutsScheduleWeeklyPayoutDays: String, Codable, Sendable {
     case friday
     case monday
     case thursday

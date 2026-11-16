@@ -20,10 +20,10 @@ public struct SecretRoutes: Sendable {
     public var list: @Sendable (_ params: SecretListParams) async throws -> SecretList
 
     /// Deletes a secret from the secret store by name and scope.
-    public var delete: @Sendable (_ params: SecretDeleteParams) async throws -> Secret
+    public var deleteWhere: @Sendable (_ params: SecretDeleteWhereParams) async throws -> Secret
 
     /// Finds a secret in the secret store by name and scope.
-    public var listFind: @Sendable (_ params: SecretListFindParams) async throws -> Secret
+    public var find: @Sendable (_ params: SecretFindParams) async throws -> Secret
 }
 
 extension SecretRoutes {
@@ -45,7 +45,7 @@ extension SecretRoutes {
                     path: path
                 ) as SecretList
             },
-            delete: { params in
+            deleteWhere: { params in
                 let body = params.toFormBody()
                 return try await handler.send(
                     method: .POST,
@@ -53,7 +53,7 @@ extension SecretRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Secret
             },
-            listFind: { params in
+            find: { params in
                 let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/apps/secrets/find" : "/v1/apps/secrets/find?\(query)"
                 return try await handler.send(

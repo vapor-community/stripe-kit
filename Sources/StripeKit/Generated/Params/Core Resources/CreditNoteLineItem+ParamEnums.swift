@@ -7,24 +7,24 @@
 
 import Foundation
 
-public enum CreditNoteLineItemListEmailType: String, Codable, Sendable {
+public enum CreditNoteLineItemPreviewLinesEmailType: String, Codable, Sendable {
     case creditNote = "credit_note"
     case none
 }
 
-public enum CreditNoteLineItemListLinesType: String, Codable, Sendable {
+public enum CreditNoteLineItemPreviewLinesLinesType: String, Codable, Sendable {
     case customLineItem = "custom_line_item"
     case invoiceLineItem = "invoice_line_item"
 }
 
-public enum CreditNoteLineItemListReason: String, Codable, Sendable {
+public enum CreditNoteLineItemPreviewLinesReason: String, Codable, Sendable {
     case duplicate
     case fraudulent
     case orderChange = "order_change"
     case productUnsatisfactory = "product_unsatisfactory"
 }
 
-public enum CreditNoteLineItemListRefundsType: String, Codable, Sendable {
+public enum CreditNoteLineItemPreviewLinesRefundsType: String, Codable, Sendable {
     case paymentRecordRefund = "payment_record_refund"
     case refund
 }

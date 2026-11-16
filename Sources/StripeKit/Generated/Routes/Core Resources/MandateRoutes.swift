@@ -14,13 +14,13 @@ import NIOHTTP1
 public struct MandateRoutes: Sendable {
 
     /// Retrieves a Mandate object.
-    public var list: @Sendable (_ mandate: String, _ expand: [String]?) async throws -> Mandate
+    public var retrieve: @Sendable (_ mandate: String, _ expand: [String]?) async throws -> Mandate
 }
 
 extension MandateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         MandateRoutes(
-            list: { mandate, expand in
+            retrieve: { mandate, expand in
                 var query = ""
                 if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
                 let path = query.isEmpty ? "/v1/mandates/\(mandate)" : "/v1/mandates/\(mandate)?\(query)"

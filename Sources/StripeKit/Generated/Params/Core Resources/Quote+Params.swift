@@ -144,7 +144,7 @@ public struct QuoteCreateParams: StripeParams {
     }
 }
 
-public struct QuoteFinalizeParams: StripeParams {
+public struct QuoteFinalizeQuoteParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in

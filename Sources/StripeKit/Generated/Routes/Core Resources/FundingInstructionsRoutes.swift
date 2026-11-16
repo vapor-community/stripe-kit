@@ -17,13 +17,13 @@ public struct FundingInstructionsRoutes: Sendable {
     /// for the customer, new funding instructions will be created. If funding instructions have already
     /// been created for a given customer, the same funding instructions will be retrieved. In other words,
     /// we will return the same funding instructions each time.
-    public var create: @Sendable (_ customer: String, _ params: FundingInstructionsCreateParams) async throws -> FundingInstructions
+    public var createFundingInstructions: @Sendable (_ customer: String, _ params: FundingInstructionsCreateFundingInstructionsParams) async throws -> FundingInstructions
 }
 
 extension FundingInstructionsRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FundingInstructionsRoutes(
-            create: { customer, params in
+            createFundingInstructions: { customer, params in
                 let body = params.toFormBody()
                 return try await handler.send(
                     method: .POST,

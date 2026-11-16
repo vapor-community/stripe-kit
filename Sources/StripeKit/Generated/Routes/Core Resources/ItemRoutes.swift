@@ -13,17 +13,56 @@ import NIOHTTP1
 
 public struct ItemRoutes: Sendable {
 
+    /// When retrieving a quote, there is an includable computed.upfront.line_items property containing the
+    /// first handful of those items. There is also a URL where you can retrieve the full (paginated) list
+    /// of upfront line items.
+    public var listComputedUpfrontLineItems: @Sendable (_ quote: String, _ params: ItemListComputedUpfrontLineItemsParams?) async throws -> ItemList
+
     /// When retrieving a quote, there is an includable line_items property containing the first handful of
     /// those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-    public var list: @Sendable (_ quote: String, _ params: ItemListParams?) async throws -> ItemList
+    public var listLineItems: @Sendable (_ quote: String, _ params: ItemListLineItemsParams?) async throws -> ItemList
+
+    /// When retrieving a payment link, there is an includable line_items property containing the first
+    /// handful of those items. There is also a URL where you can retrieve the full (paginated) list of line
+    /// items.
+    public var listLineItemsForPaymentLink: @Sendable (_ paymentLink: String, _ params: ItemListLineItemsForPaymentLinkParams?) async throws -> ItemList
+
+    /// When retrieving a Checkout Session, there is an includable line_items property containing the first
+    /// handful of those items. There is also a URL where you can retrieve the full (paginated) list of line
+    /// items.
+    public var listLineItemsForSession: @Sendable (_ session: String, _ params: ItemListLineItemsForSessionParams?) async throws -> ItemList
 }
 
 extension ItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ItemRoutes(
-            list: { quote, params in
+            listComputedUpfrontLineItems: { quote, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/quotes/\(quote)/computed_upfront_line_items" : "/v1/quotes/\(quote)/computed_upfront_line_items?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as ItemList
+            },
+            listLineItems: { quote, params in
                 let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/quotes/\(quote)/line_items" : "/v1/quotes/\(quote)/line_items?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as ItemList
+            },
+            listLineItemsForPaymentLink: { paymentLink, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/payment_links/\(paymentLink)/line_items" : "/v1/payment_links/\(paymentLink)/line_items?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as ItemList
+            },
+            listLineItemsForSession: { session, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/checkout/sessions/\(session)/line_items" : "/v1/checkout/sessions/\(session)/line_items?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path

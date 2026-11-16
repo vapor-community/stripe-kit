@@ -29,7 +29,7 @@ public struct CreditGrantRoutes: Sendable {
     public var expire: @Sendable (_ id: String, _ params: CreditGrantExpireParams?) async throws -> CreditGrant
 
     /// Voids a credit grant.
-    public var void: @Sendable (_ id: String, _ params: CreditGrantVoidParams?) async throws -> CreditGrant
+    public var voidGrant: @Sendable (_ id: String, _ params: CreditGrantVoidGrantParams?) async throws -> CreditGrant
 }
 
 extension CreditGrantRoutes {
@@ -76,7 +76,7 @@ extension CreditGrantRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as CreditGrant
             },
-            void: { id, params in
+            voidGrant: { id, params in
                 let body = params?.toFormBody() ?? ""
                 return try await handler.send(
                     method: .POST,

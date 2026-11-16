@@ -15,17 +15,17 @@ public struct CreditNoteLineItemRoutes: Sendable {
 
     /// When retrieving a credit note, you’ll get a lines property containing the first handful of those
     /// items. There is also a URL where you can retrieve the full (paginated) list of line items.
-    public var retrieve: @Sendable (_ creditNote: String, _ params: CreditNoteLineItemRetrieveParams?) async throws -> CreditNoteLineItemList
+    public var list: @Sendable (_ creditNote: String, _ params: CreditNoteLineItemListParams?) async throws -> CreditNoteLineItemList
 
     /// When retrieving a credit note preview, you’ll get a lines property containing the first handful of
     /// those items. This URL you can retrieve the full (paginated) list of line items.
-    public var list: @Sendable (_ params: CreditNoteLineItemListParams) async throws -> CreditNoteLineItemList
+    public var previewLines: @Sendable (_ params: CreditNoteLineItemPreviewLinesParams) async throws -> CreditNoteLineItemList
 }
 
 extension CreditNoteLineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CreditNoteLineItemRoutes(
-            retrieve: { creditNote, params in
+            list: { creditNote, params in
                 let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/credit_notes/\(creditNote)/lines" : "/v1/credit_notes/\(creditNote)/lines?\(query)"
                 return try await handler.send(
@@ -33,7 +33,7 @@ extension CreditNoteLineItemRoutes {
                     path: path
                 ) as CreditNoteLineItemList
             },
-            list: { params in
+            previewLines: { params in
                 let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/credit_notes/preview/lines" : "/v1/credit_notes/preview/lines?\(query)"
                 return try await handler.send(

@@ -135,7 +135,7 @@ public struct CreditGrantUpdateParams: StripeParams {
     }
 }
 
-public struct CreditGrantVoidParams: StripeParams {
+public struct CreditGrantVoidGrantParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 

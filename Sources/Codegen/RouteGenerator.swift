@@ -233,6 +233,18 @@ struct RouteGenerator {
         let hasQueryParams: Bool
         let hasRequiredQueryParams: Bool
         let returnType: String?  // nil means use resource type
+
+        /// The same operation under another name (its params struct is named after it too).
+        func renamed(_ name: String) -> RouteOperation {
+            RouteOperation(
+                funcName: name, action: capitalize(name), httpMethod: httpMethod, path: path,
+                pathParams: pathParams, description: description, isDeprecated: isDeprecated,
+                hasBody: hasBody, hasRequiredBodyFields: hasRequiredBodyFields,
+                isListOrSearch: isListOrSearch, isMultipart: isMultipart,
+                hasQueryParams: hasQueryParams, hasRequiredQueryParams: hasRequiredQueryParams,
+                returnType: returnType
+            )
+        }
     }
     
     /// The return type an operation declares when its response is, or can be, a deleted object:
@@ -300,13 +312,21 @@ struct RouteGenerator {
                 guard let op = operation else { continue }
                 
                 let pathParams = extractPathParams(path)
-                let (funcName, action) = deriveFuncAndAction(
-                    method: method,
-                    path: path,
-                    pathPrefix: basePath,
-                    pathParams: pathParams,
-                    operationId: op.operationId
-                )
+                // Name from the spec's x-stripeOperations (what Stripe's own SDKs use),
+                // falling back to deriving one from the path.
+                let (funcName, action): (String, String) = {
+                    if let specName = parser.stripeMethodName(method: method, path: path, schemaName: resource.schemaName) {
+                        let name = snakeToCamel(specName)
+                        return (name, capitalize(name))
+                    }
+                    return deriveFuncAndAction(
+                        method: method,
+                        path: path,
+                        pathPrefix: basePath,
+                        pathParams: pathParams,
+                        operationId: op.operationId
+                    )
+                }()
                 
                 // Check if POST has a requestBody with properties
                 let isMultipart = method == "POST" && op.requestBody?.content?["multipart/form-data"] != nil
@@ -354,22 +374,32 @@ struct RouteGenerator {
             }
         }
         
-        // Deduplicate by funcName — prefer operations whose path starts with basePath
-        // (the resource's own namespace) over cross-resource aliases.
-        var bestByFunc: [String: RouteOperation] = [:]
-        for op in results {
-            if let existing = bestByFunc[op.funcName] {
-                let existingIsLocal = existing.path.starts(with: basePath)
-                let newIsLocal = op.path.starts(with: basePath)
-                // Replace only if existing is non-local and new is local
-                if !existingIsLocal && newIsLocal {
-                    bestByFunc[op.funcName] = op
+        // Resolve name collisions. The spec reuses a method name for the same resource under
+        // different parents (tax_id `create` is both POST /v1/tax_ids and
+        // POST /v1/customers/{customer}/tax_ids); Stripe's SDKs put those on different services.
+        // The operation in the resource's own namespace keeps the name; the others get a
+        // parent suffix (`createForCustomer`). Without a local one, all get a suffix.
+        // Operations with no path param to name a parent by are dropped as before.
+        var byFunc: [String: [RouteOperation]] = [:]
+        for op in results { byFunc[op.funcName, default: []].append(op) }
+        var resolved: [String: RouteOperation] = [:]
+        for funcName in byFunc.keys.sorted() {
+            let group = byFunc[funcName]!
+            guard group.count > 1 else { resolved[funcName] = group[0]; continue }
+            let local = group.filter { $0.path.starts(with: basePath) }
+            let keeper = local.count == 1 ? local[0] : nil
+            for op in group {
+                if let keeper, op.path == keeper.path {
+                    resolved[funcName] = op
+                    continue
                 }
-            } else {
-                bestByFunc[op.funcName] = op
+                guard let parent = op.pathParams.first else { continue }
+                let name = funcName + "For" + capitalize(snakeToCamel(parent))
+                guard resolved[name] == nil, byFunc[name] == nil else { continue }
+                resolved[name] = op.renamed(name)
             }
         }
-        results = Array(bestByFunc.values)
+        results = Array(resolved.values)
         
         return results.sorted { a, b in
             // Sort by: create, retrieve, update, list, delete, then alphabetical

@@ -7,31 +7,31 @@
 
 import Foundation
 
-public struct FinancialAccountFeaturesCreateParams: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesParams: StripeParams {
     /// Encodes the FinancialAccount's ability to be used with the Issuing product, including attaching
     /// cards to and drawing funds from the FinancialAccount.
-    public var cardIssuing: FinancialAccountFeaturesCreateCardIssuing?
+    public var cardIssuing: FinancialAccountFeaturesUpdateFeaturesCardIssuing?
     /// Represents whether this FinancialAccount is eligible for deposit insurance. Various factors
     /// determine the insurance amount.
-    public var depositInsurance: FinancialAccountFeaturesCreateDepositInsurance?
+    public var depositInsurance: FinancialAccountFeaturesUpdateFeaturesDepositInsurance?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Contains Features that add FinancialAddresses to the FinancialAccount.
-    public var financialAddresses: FinancialAccountFeaturesCreateFinancialAddresses?
+    public var financialAddresses: FinancialAccountFeaturesUpdateFeaturesFinancialAddresses?
     /// Contains settings related to adding funds to a FinancialAccount from another Account with the same
     /// owner.
-    public var inboundTransfers: FinancialAccountFeaturesCreateInboundTransfers?
+    public var inboundTransfers: FinancialAccountFeaturesUpdateFeaturesInboundTransfers?
     /// Represents the ability for the FinancialAccount to send money to, or receive money from other
     /// FinancialAccounts (for example, via OutboundPayment).
-    public var intraStripeFlows: FinancialAccountFeaturesCreateIntraStripeFlows?
+    public var intraStripeFlows: FinancialAccountFeaturesUpdateFeaturesIntraStripeFlows?
     /// Includes Features related to initiating money movement out of the FinancialAccount to someone else's
     /// bucket of money.
-    public var outboundPayments: FinancialAccountFeaturesCreateOutboundPayments?
+    public var outboundPayments: FinancialAccountFeaturesUpdateFeaturesOutboundPayments?
     /// Contains a Feature and settings related to moving money out of the FinancialAccount into another
     /// Account with the same owner.
-    public var outboundTransfers: FinancialAccountFeaturesCreateOutboundTransfers?
+    public var outboundTransfers: FinancialAccountFeaturesUpdateFeaturesOutboundTransfers?
 
-    public init(cardIssuing: FinancialAccountFeaturesCreateCardIssuing? = nil, depositInsurance: FinancialAccountFeaturesCreateDepositInsurance? = nil, expand: [String]? = nil, financialAddresses: FinancialAccountFeaturesCreateFinancialAddresses? = nil, inboundTransfers: FinancialAccountFeaturesCreateInboundTransfers? = nil, intraStripeFlows: FinancialAccountFeaturesCreateIntraStripeFlows? = nil, outboundPayments: FinancialAccountFeaturesCreateOutboundPayments? = nil, outboundTransfers: FinancialAccountFeaturesCreateOutboundTransfers? = nil) {
+    public init(cardIssuing: FinancialAccountFeaturesUpdateFeaturesCardIssuing? = nil, depositInsurance: FinancialAccountFeaturesUpdateFeaturesDepositInsurance? = nil, expand: [String]? = nil, financialAddresses: FinancialAccountFeaturesUpdateFeaturesFinancialAddresses? = nil, inboundTransfers: FinancialAccountFeaturesUpdateFeaturesInboundTransfers? = nil, intraStripeFlows: FinancialAccountFeaturesUpdateFeaturesIntraStripeFlows? = nil, outboundPayments: FinancialAccountFeaturesUpdateFeaturesOutboundPayments? = nil, outboundTransfers: FinancialAccountFeaturesUpdateFeaturesOutboundTransfers? = nil) {
         self.cardIssuing = cardIssuing
         self.depositInsurance = depositInsurance
         self.expand = expand
@@ -56,7 +56,7 @@ public struct FinancialAccountFeaturesCreateParams: StripeParams {
 
 /// Encodes the FinancialAccount's ability to be used with the Issuing product, including attaching
 /// cards to and drawing funds from the FinancialAccount.
-public struct FinancialAccountFeaturesCreateCardIssuing: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesCardIssuing: StripeParams {
     /// Whether the FinancialAccount should have the Feature.
     public var requested: Bool
 
@@ -67,7 +67,7 @@ public struct FinancialAccountFeaturesCreateCardIssuing: StripeParams {
 
 /// Represents whether this FinancialAccount is eligible for deposit insurance. Various factors
 /// determine the insurance amount.
-public struct FinancialAccountFeaturesCreateDepositInsurance: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesDepositInsurance: StripeParams {
     /// Whether the FinancialAccount should have the Feature.
     public var requested: Bool
 
@@ -77,17 +77,17 @@ public struct FinancialAccountFeaturesCreateDepositInsurance: StripeParams {
 }
 
 /// Contains Features that add FinancialAddresses to the FinancialAccount.
-public struct FinancialAccountFeaturesCreateFinancialAddresses: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesFinancialAddresses: StripeParams {
     /// Adds an ABA FinancialAddress to the FinancialAccount.
-    public var aba: FinancialAccountFeaturesCreateFinancialAddressesAba?
+    public var aba: FinancialAccountFeaturesUpdateFeaturesFinancialAddressesAba?
 
-    public init(aba: FinancialAccountFeaturesCreateFinancialAddressesAba? = nil) {
+    public init(aba: FinancialAccountFeaturesUpdateFeaturesFinancialAddressesAba? = nil) {
         self.aba = aba
     }
 }
 
 /// Adds an ABA FinancialAddress to the FinancialAccount.
-public struct FinancialAccountFeaturesCreateFinancialAddressesAba: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesFinancialAddressesAba: StripeParams {
     /// Whether the FinancialAccount should have the Feature.
     public var requested: Bool
 
@@ -98,17 +98,17 @@ public struct FinancialAccountFeaturesCreateFinancialAddressesAba: StripeParams 
 
 /// Contains settings related to adding funds to a FinancialAccount from another Account with the same
 /// owner.
-public struct FinancialAccountFeaturesCreateInboundTransfers: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesInboundTransfers: StripeParams {
     /// Enables ACH Debits via the InboundTransfers API.
-    public var ach: FinancialAccountFeaturesCreateInboundTransfersAch?
+    public var ach: FinancialAccountFeaturesUpdateFeaturesInboundTransfersAch?
 
-    public init(ach: FinancialAccountFeaturesCreateInboundTransfersAch? = nil) {
+    public init(ach: FinancialAccountFeaturesUpdateFeaturesInboundTransfersAch? = nil) {
         self.ach = ach
     }
 }
 
 /// Enables ACH Debits via the InboundTransfers API.
-public struct FinancialAccountFeaturesCreateInboundTransfersAch: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesInboundTransfersAch: StripeParams {
     /// Whether the FinancialAccount should have the Feature.
     public var requested: Bool
 
@@ -119,7 +119,7 @@ public struct FinancialAccountFeaturesCreateInboundTransfersAch: StripeParams {
 
 /// Represents the ability for the FinancialAccount to send money to, or receive money from other
 /// FinancialAccounts (for example, via OutboundPayment).
-public struct FinancialAccountFeaturesCreateIntraStripeFlows: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesIntraStripeFlows: StripeParams {
     /// Whether the FinancialAccount should have the Feature.
     public var requested: Bool
 
@@ -130,13 +130,13 @@ public struct FinancialAccountFeaturesCreateIntraStripeFlows: StripeParams {
 
 /// Includes Features related to initiating money movement out of the FinancialAccount to someone else's
 /// bucket of money.
-public struct FinancialAccountFeaturesCreateOutboundPayments: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesOutboundPayments: StripeParams {
     /// Enables ACH transfers via the OutboundPayments API.
-    public var ach: FinancialAccountFeaturesCreateOutboundPaymentsAch?
+    public var ach: FinancialAccountFeaturesUpdateFeaturesOutboundPaymentsAch?
     /// Enables US domestic wire transfers via the OutboundPayments API.
-    public var usDomesticWire: FinancialAccountFeaturesCreateOutboundPaymentsUsDomesticWire?
+    public var usDomesticWire: FinancialAccountFeaturesUpdateFeaturesOutboundPaymentsUsDomesticWire?
 
-    public init(ach: FinancialAccountFeaturesCreateOutboundPaymentsAch? = nil, usDomesticWire: FinancialAccountFeaturesCreateOutboundPaymentsUsDomesticWire? = nil) {
+    public init(ach: FinancialAccountFeaturesUpdateFeaturesOutboundPaymentsAch? = nil, usDomesticWire: FinancialAccountFeaturesUpdateFeaturesOutboundPaymentsUsDomesticWire? = nil) {
         self.ach = ach
         self.usDomesticWire = usDomesticWire
     }
@@ -148,7 +148,7 @@ public struct FinancialAccountFeaturesCreateOutboundPayments: StripeParams {
 }
 
 /// Enables ACH transfers via the OutboundPayments API.
-public struct FinancialAccountFeaturesCreateOutboundPaymentsAch: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesOutboundPaymentsAch: StripeParams {
     /// Whether the FinancialAccount should have the Feature.
     public var requested: Bool
 
@@ -158,7 +158,7 @@ public struct FinancialAccountFeaturesCreateOutboundPaymentsAch: StripeParams {
 }
 
 /// Enables US domestic wire transfers via the OutboundPayments API.
-public struct FinancialAccountFeaturesCreateOutboundPaymentsUsDomesticWire: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesOutboundPaymentsUsDomesticWire: StripeParams {
     /// Whether the FinancialAccount should have the Feature.
     public var requested: Bool
 
@@ -169,13 +169,13 @@ public struct FinancialAccountFeaturesCreateOutboundPaymentsUsDomesticWire: Stri
 
 /// Contains a Feature and settings related to moving money out of the FinancialAccount into another
 /// Account with the same owner.
-public struct FinancialAccountFeaturesCreateOutboundTransfers: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesOutboundTransfers: StripeParams {
     /// Enables ACH transfers via the OutboundTransfers API.
-    public var ach: FinancialAccountFeaturesCreateOutboundTransfersAch?
+    public var ach: FinancialAccountFeaturesUpdateFeaturesOutboundTransfersAch?
     /// Enables US domestic wire transfers via the OutboundTransfers API.
-    public var usDomesticWire: FinancialAccountFeaturesCreateOutboundTransfersUsDomesticWire?
+    public var usDomesticWire: FinancialAccountFeaturesUpdateFeaturesOutboundTransfersUsDomesticWire?
 
-    public init(ach: FinancialAccountFeaturesCreateOutboundTransfersAch? = nil, usDomesticWire: FinancialAccountFeaturesCreateOutboundTransfersUsDomesticWire? = nil) {
+    public init(ach: FinancialAccountFeaturesUpdateFeaturesOutboundTransfersAch? = nil, usDomesticWire: FinancialAccountFeaturesUpdateFeaturesOutboundTransfersUsDomesticWire? = nil) {
         self.ach = ach
         self.usDomesticWire = usDomesticWire
     }
@@ -187,7 +187,7 @@ public struct FinancialAccountFeaturesCreateOutboundTransfers: StripeParams {
 }
 
 /// Enables ACH transfers via the OutboundTransfers API.
-public struct FinancialAccountFeaturesCreateOutboundTransfersAch: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesOutboundTransfersAch: StripeParams {
     /// Whether the FinancialAccount should have the Feature.
     public var requested: Bool
 
@@ -197,7 +197,7 @@ public struct FinancialAccountFeaturesCreateOutboundTransfersAch: StripeParams {
 }
 
 /// Enables US domestic wire transfers via the OutboundTransfers API.
-public struct FinancialAccountFeaturesCreateOutboundTransfersUsDomesticWire: StripeParams {
+public struct FinancialAccountFeaturesUpdateFeaturesOutboundTransfersUsDomesticWire: StripeParams {
     /// Whether the FinancialAccount should have the Feature.
     public var requested: Bool
 

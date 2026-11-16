@@ -7,18 +7,18 @@
 
 import Foundation
 
-public struct FundingInstructionsCreateParams: StripeParams {
+public struct FundingInstructionsCreateFundingInstructionsParams: StripeParams {
     /// Additional parameters for `bank_transfer` funding types
-    public var bankTransfer: FundingInstructionsCreateBankTransfer
+    public var bankTransfer: FundingInstructionsCreateFundingInstructionsBankTransfer
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// The `funding_type` to get the instructions for.
-    public var fundingType: FundingInstructionsCreateFundingType
+    public var fundingType: FundingInstructionsCreateFundingInstructionsFundingType
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(bankTransfer: FundingInstructionsCreateBankTransfer, currency: String, fundingType: FundingInstructionsCreateFundingType, expand: [String]? = nil) {
+    public init(bankTransfer: FundingInstructionsCreateFundingInstructionsBankTransfer, currency: String, fundingType: FundingInstructionsCreateFundingInstructionsFundingType, expand: [String]? = nil) {
         self.bankTransfer = bankTransfer
         self.currency = currency
         self.fundingType = fundingType
@@ -34,17 +34,17 @@ public struct FundingInstructionsCreateParams: StripeParams {
 }
 
 /// Additional parameters for `bank_transfer` funding types
-public struct FundingInstructionsCreateBankTransfer: StripeParams {
+public struct FundingInstructionsCreateFundingInstructionsBankTransfer: StripeParams {
     /// The type of the `bank_transfer`
-    public var type: FundingInstructionsCreateBankTransferType
+    public var type: FundingInstructionsCreateFundingInstructionsBankTransferType
     /// Configuration for eu_bank_transfer funding type.
-    public var euBankTransfer: FundingInstructionsCreateBankTransferEuBankTransfer?
+    public var euBankTransfer: FundingInstructionsCreateFundingInstructionsBankTransferEuBankTransfer?
     /// List of address types that should be returned in the financial_addresses response. If not specified,
     /// all valid types will be returned. Permitted values include: `sort_code`, `zengin`, `iban`, or
     /// `spei`.
-    public var requestedAddressTypes: [FundingInstructionsCreateBankTransferRequestedAddressTypes]?
+    public var requestedAddressTypes: [FundingInstructionsCreateFundingInstructionsBankTransferRequestedAddressTypes]?
 
-    public init(type: FundingInstructionsCreateBankTransferType, euBankTransfer: FundingInstructionsCreateBankTransferEuBankTransfer? = nil, requestedAddressTypes: [FundingInstructionsCreateBankTransferRequestedAddressTypes]? = nil) {
+    public init(type: FundingInstructionsCreateFundingInstructionsBankTransferType, euBankTransfer: FundingInstructionsCreateFundingInstructionsBankTransferEuBankTransfer? = nil, requestedAddressTypes: [FundingInstructionsCreateFundingInstructionsBankTransferRequestedAddressTypes]? = nil) {
         self.type = type
         self.euBankTransfer = euBankTransfer
         self.requestedAddressTypes = requestedAddressTypes
@@ -58,7 +58,7 @@ public struct FundingInstructionsCreateBankTransfer: StripeParams {
 }
 
 /// Configuration for eu_bank_transfer funding type.
-public struct FundingInstructionsCreateBankTransferEuBankTransfer: StripeParams {
+public struct FundingInstructionsCreateFundingInstructionsBankTransferEuBankTransfer: StripeParams {
     /// The desired country code of the bank account information. Permitted values include: `DE`, `FR`,
     /// `IE`, or `NL`.
     public var country: String

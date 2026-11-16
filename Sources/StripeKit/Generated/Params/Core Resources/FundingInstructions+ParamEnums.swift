@@ -7,14 +7,14 @@
 
 import Foundation
 
-public enum FundingInstructionsCreateBankTransferRequestedAddressTypes: String, Codable, Sendable {
+public enum FundingInstructionsCreateFundingInstructionsBankTransferRequestedAddressTypes: String, Codable, Sendable {
     case iban
     case sortCode = "sort_code"
     case spei
     case zengin
 }
 
-public enum FundingInstructionsCreateBankTransferType: String, Codable, Sendable {
+public enum FundingInstructionsCreateFundingInstructionsBankTransferType: String, Codable, Sendable {
     case euBankTransfer = "eu_bank_transfer"
     case gbBankTransfer = "gb_bank_transfer"
     case jpBankTransfer = "jp_bank_transfer"
@@ -22,6 +22,6 @@ public enum FundingInstructionsCreateBankTransferType: String, Codable, Sendable
     case usBankTransfer = "us_bank_transfer"
 }
 
-public enum FundingInstructionsCreateFundingType: String, Codable, Sendable {
+public enum FundingInstructionsCreateFundingInstructionsFundingType: String, Codable, Sendable {
     case bankTransfer = "bank_transfer"
 }

@@ -7,27 +7,27 @@
 
 import Foundation
 
-public struct CashBalanceCreateParams: StripeParams {
+public struct CashBalanceUpdateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// A hash of settings for this cash balance.
-    public var settings: CashBalanceCreateSettings?
+    public var settings: CashBalanceUpdateSettings?
 
-    public init(expand: [String]? = nil, settings: CashBalanceCreateSettings? = nil) {
+    public init(expand: [String]? = nil, settings: CashBalanceUpdateSettings? = nil) {
         self.expand = expand
         self.settings = settings
     }
 }
 
 /// A hash of settings for this cash balance.
-public struct CashBalanceCreateSettings: StripeParams {
+public struct CashBalanceUpdateSettings: StripeParams {
     /// Controls how funds transferred by the customer are applied to payment intents and invoices. Valid
     /// options are `automatic`, `manual`, or `merchant_default`. For more information about these
     /// reconciliation modes, see
     /// [Reconciliation](https://docs.stripe.com/payments/customer-balance/reconciliation).
-    public var reconciliationMode: CashBalanceCreateSettingsReconciliationMode?
+    public var reconciliationMode: CashBalanceUpdateSettingsReconciliationMode?
 
-    public init(reconciliationMode: CashBalanceCreateSettingsReconciliationMode? = nil) {
+    public init(reconciliationMode: CashBalanceUpdateSettingsReconciliationMode? = nil) {
         self.reconciliationMode = reconciliationMode
     }
 

@@ -19,15 +19,23 @@ public struct InboundTransferRoutes: Sendable {
     /// Retrieves the details of an existing InboundTransfer.
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> InboundTransfer
 
-    /// Transitions a test mode created InboundTransfer to the failed status. The InboundTransfer must
-    /// already be in the processing state.
-    public var update: @Sendable (_ id: String, _ params: InboundTransferUpdateParams?) async throws -> InboundTransfer
-
     /// Returns a list of InboundTransfers sent from the specified FinancialAccount.
     public var list: @Sendable (_ params: InboundTransferListParams) async throws -> InboundTransferList
 
     /// Cancels an InboundTransfer.
     public var cancel: @Sendable (_ inboundTransfer: String, _ params: InboundTransferCancelParams?) async throws -> InboundTransfer
+
+    /// Transitions a test mode created InboundTransfer to the failed status. The InboundTransfer must
+    /// already be in the processing state.
+    public var fail: @Sendable (_ id: String, _ params: InboundTransferFailParams?) async throws -> InboundTransfer
+
+    /// Marks the test mode InboundTransfer object as returned and links the InboundTransfer to a
+    /// ReceivedDebit. The InboundTransfer must already be in the succeeded state.
+    public var returnInboundTransfer: @Sendable (_ id: String, _ params: InboundTransferReturnInboundTransferParams?) async throws -> InboundTransfer
+
+    /// Transitions a test mode created InboundTransfer to the succeeded status. The InboundTransfer must
+    /// already be in the processing state.
+    public var succeed: @Sendable (_ id: String, _ params: InboundTransferSucceedParams?) async throws -> InboundTransfer
 }
 
 extension InboundTransferRoutes {
@@ -50,14 +58,6 @@ extension InboundTransferRoutes {
                     path: path
                 ) as InboundTransfer
             },
-            update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/inbound_transfers/\(id)/fail",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as InboundTransfer
-            },
             list: { params in
                 let query = params.toFormBody()
                 let path = query.isEmpty ? "/v1/treasury/inbound_transfers" : "/v1/treasury/inbound_transfers?\(query)"
@@ -71,6 +71,30 @@ extension InboundTransferRoutes {
                 return try await handler.send(
                     method: .POST,
                     path: "/v1/treasury/inbound_transfers/\(inboundTransfer)/cancel",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as InboundTransfer
+            },
+            fail: { id, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/treasury/inbound_transfers/\(id)/fail",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as InboundTransfer
+            },
+            returnInboundTransfer: { id, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/treasury/inbound_transfers/\(id)/return",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as InboundTransfer
+            },
+            succeed: { id, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/treasury/inbound_transfers/\(id)/succeed",
                     body: .bytes(ByteBuffer(string: body))
                 ) as InboundTransfer
             }

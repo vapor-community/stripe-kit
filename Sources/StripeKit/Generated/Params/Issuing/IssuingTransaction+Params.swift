@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct IssuingTransactionCreateParams: StripeParams {
+public struct IssuingTransactionCreateForceCaptureParams: StripeParams {
     /// The total amount to attempt to capture. This amount is in the provided currency, or defaults to the
     /// cards currency, and in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal).
@@ -22,11 +22,49 @@ public struct IssuingTransactionCreateParams: StripeParams {
     public var expand: [String]?
     /// Details about the seller (grocery store, e-commerce website, etc.) where the card authorization
     /// happened.
-    public var merchantData: IssuingTransactionCreateMerchantData?
+    public var merchantData: IssuingTransactionCreateForceCaptureMerchantData?
     /// Additional purchase information that is optionally provided by the merchant.
-    public var purchaseDetails: IssuingTransactionCreatePurchaseDetails?
+    public var purchaseDetails: IssuingTransactionCreateForceCapturePurchaseDetails?
 
-    public init(amount: Int, card: String, currency: String? = nil, expand: [String]? = nil, merchantData: IssuingTransactionCreateMerchantData? = nil, purchaseDetails: IssuingTransactionCreatePurchaseDetails? = nil) {
+    public init(amount: Int, card: String, currency: String? = nil, expand: [String]? = nil, merchantData: IssuingTransactionCreateForceCaptureMerchantData? = nil, purchaseDetails: IssuingTransactionCreateForceCapturePurchaseDetails? = nil) {
+        self.amount = amount
+        self.card = card
+        self.currency = currency
+        self.expand = expand
+        self.merchantData = merchantData
+        self.purchaseDetails = purchaseDetails
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case card
+        case currency
+        case expand
+        case merchantData = "merchant_data"
+        case purchaseDetails = "purchase_details"
+    }
+}
+
+public struct IssuingTransactionCreateUnlinkedRefundParams: StripeParams {
+    /// The total amount to attempt to refund. This amount is in the provided currency, or defaults to the
+    /// cards currency, and in the [smallest currency
+    /// unit](https://docs.stripe.com/currencies#zero-decimal).
+    public var amount: Int
+    /// Card associated with this unlinked refund transaction.
+    public var card: String
+    /// The currency of the unlinked refund. If not provided, defaults to the currency of the card.
+    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+    /// Must be a [supported currency](https://stripe.com/docs/currencies).
+    public var currency: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// Details about the seller (grocery store, e-commerce website, etc.) where the card authorization
+    /// happened.
+    public var merchantData: IssuingTransactionCreateUnlinkedRefundMerchantData?
+    /// Additional purchase information that is optionally provided by the merchant.
+    public var purchaseDetails: IssuingTransactionCreateUnlinkedRefundPurchaseDetails?
+
+    public init(amount: Int, card: String, currency: String? = nil, expand: [String]? = nil, merchantData: IssuingTransactionCreateUnlinkedRefundMerchantData? = nil, purchaseDetails: IssuingTransactionCreateUnlinkedRefundPurchaseDetails? = nil) {
         self.amount = amount
         self.card = card
         self.currency = currency
@@ -92,6 +130,25 @@ public struct IssuingTransactionListParams: StripeParams {
     }
 }
 
+public struct IssuingTransactionRefundParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// The total amount to attempt to refund. This amount is in the provided currency, or defaults to the
+    /// cards currency, and in the [smallest currency
+    /// unit](https://docs.stripe.com/currencies#zero-decimal).
+    public var refundAmount: Int?
+
+    public init(expand: [String]? = nil, refundAmount: Int? = nil) {
+        self.expand = expand
+        self.refundAmount = refundAmount
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case refundAmount = "refund_amount"
+    }
+}
+
 public struct IssuingTransactionUpdateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
@@ -109,10 +166,10 @@ public struct IssuingTransactionUpdateParams: StripeParams {
 
 /// Details about the seller (grocery store, e-commerce website, etc.) where the card authorization
 /// happened.
-public struct IssuingTransactionCreateMerchantData: StripeParams {
+public struct IssuingTransactionCreateForceCaptureMerchantData: StripeParams {
     /// A categorization of the seller's type of business. See our [merchant categories
     /// guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
-    public var category: IssuingTransactionCreateMerchantDataCategory?
+    public var category: IssuingTransactionCreateForceCaptureMerchantDataCategory?
     /// City where the seller is located
     public var city: String?
     /// Country where the seller is located
@@ -131,7 +188,7 @@ public struct IssuingTransactionCreateMerchantData: StripeParams {
     /// URL provided by the merchant on a 3DS request
     public var url: String?
 
-    public init(category: IssuingTransactionCreateMerchantDataCategory? = nil, city: String? = nil, country: String? = nil, name: String? = nil, networkId: String? = nil, postalCode: String? = nil, state: String? = nil, terminalId: String? = nil, url: String? = nil) {
+    public init(category: IssuingTransactionCreateForceCaptureMerchantDataCategory? = nil, city: String? = nil, country: String? = nil, name: String? = nil, networkId: String? = nil, postalCode: String? = nil, state: String? = nil, terminalId: String? = nil, url: String? = nil) {
         self.category = category
         self.city = city
         self.country = country
@@ -157,21 +214,21 @@ public struct IssuingTransactionCreateMerchantData: StripeParams {
 }
 
 /// Additional purchase information that is optionally provided by the merchant.
-public struct IssuingTransactionCreatePurchaseDetails: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetails: StripeParams {
     /// Fleet-specific information for transactions using Fleet cards.
-    public var fleet: IssuingTransactionCreatePurchaseDetailsFleet?
+    public var fleet: IssuingTransactionCreateForceCapturePurchaseDetailsFleet?
     /// Information about the flight that was purchased with this transaction.
-    public var flight: IssuingTransactionCreatePurchaseDetailsFlight?
+    public var flight: IssuingTransactionCreateForceCapturePurchaseDetailsFlight?
     /// Information about fuel that was purchased with this transaction.
-    public var fuel: IssuingTransactionCreatePurchaseDetailsFuel?
+    public var fuel: IssuingTransactionCreateForceCapturePurchaseDetailsFuel?
     /// Information about lodging that was purchased with this transaction.
-    public var lodging: IssuingTransactionCreatePurchaseDetailsLodging?
+    public var lodging: IssuingTransactionCreateForceCapturePurchaseDetailsLodging?
     /// The line items in the purchase.
-    public var receipt: [IssuingTransactionCreatePurchaseDetailsReceipt]?
+    public var receipt: [IssuingTransactionCreateForceCapturePurchaseDetailsReceipt]?
     /// A merchant-specific order number.
     public var reference: String?
 
-    public init(fleet: IssuingTransactionCreatePurchaseDetailsFleet? = nil, flight: IssuingTransactionCreatePurchaseDetailsFlight? = nil, fuel: IssuingTransactionCreatePurchaseDetailsFuel? = nil, lodging: IssuingTransactionCreatePurchaseDetailsLodging? = nil, receipt: [IssuingTransactionCreatePurchaseDetailsReceipt]? = nil, reference: String? = nil) {
+    public init(fleet: IssuingTransactionCreateForceCapturePurchaseDetailsFleet? = nil, flight: IssuingTransactionCreateForceCapturePurchaseDetailsFlight? = nil, fuel: IssuingTransactionCreateForceCapturePurchaseDetailsFuel? = nil, lodging: IssuingTransactionCreateForceCapturePurchaseDetailsLodging? = nil, receipt: [IssuingTransactionCreateForceCapturePurchaseDetailsReceipt]? = nil, reference: String? = nil) {
         self.fleet = fleet
         self.flight = flight
         self.fuel = fuel
@@ -182,20 +239,20 @@ public struct IssuingTransactionCreatePurchaseDetails: StripeParams {
 }
 
 /// Fleet-specific information for transactions using Fleet cards.
-public struct IssuingTransactionCreatePurchaseDetailsFleet: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleet: StripeParams {
     /// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
     /// on the configuration of your physical fleet cards. Typical points of sale support only numeric
     /// entry.
-    public var cardholderPromptData: IssuingTransactionCreatePurchaseDetailsFleetCardholderPromptData?
+    public var cardholderPromptData: IssuingTransactionCreateForceCapturePurchaseDetailsFleetCardholderPromptData?
     /// The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
-    public var purchaseType: IssuingTransactionCreatePurchaseDetailsFleetPurchaseType?
+    public var purchaseType: IssuingTransactionCreateForceCapturePurchaseDetailsFleetPurchaseType?
     /// More information about the total amount. This information is not guaranteed to be accurate as some
     /// merchants may provide unreliable data.
-    public var reportedBreakdown: IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdown?
+    public var reportedBreakdown: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdown?
     /// The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
-    public var serviceType: IssuingTransactionCreatePurchaseDetailsFleetServiceType?
+    public var serviceType: IssuingTransactionCreateForceCapturePurchaseDetailsFleetServiceType?
 
-    public init(cardholderPromptData: IssuingTransactionCreatePurchaseDetailsFleetCardholderPromptData? = nil, purchaseType: IssuingTransactionCreatePurchaseDetailsFleetPurchaseType? = nil, reportedBreakdown: IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdown? = nil, serviceType: IssuingTransactionCreatePurchaseDetailsFleetServiceType? = nil) {
+    public init(cardholderPromptData: IssuingTransactionCreateForceCapturePurchaseDetailsFleetCardholderPromptData? = nil, purchaseType: IssuingTransactionCreateForceCapturePurchaseDetailsFleetPurchaseType? = nil, reportedBreakdown: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdown? = nil, serviceType: IssuingTransactionCreateForceCapturePurchaseDetailsFleetServiceType? = nil) {
         self.cardholderPromptData = cardholderPromptData
         self.purchaseType = purchaseType
         self.reportedBreakdown = reportedBreakdown
@@ -213,7 +270,7 @@ public struct IssuingTransactionCreatePurchaseDetailsFleet: StripeParams {
 /// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
 /// on the configuration of your physical fleet cards. Typical points of sale support only numeric
 /// entry.
-public struct IssuingTransactionCreatePurchaseDetailsFleetCardholderPromptData: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetCardholderPromptData: StripeParams {
     /// Driver ID.
     public var driverId: String?
     /// Odometer reading.
@@ -245,15 +302,15 @@ public struct IssuingTransactionCreatePurchaseDetailsFleetCardholderPromptData: 
 
 /// More information about the total amount. This information is not guaranteed to be accurate as some
 /// merchants may provide unreliable data.
-public struct IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdown: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdown: StripeParams {
     /// Breakdown of fuel portion of the purchase.
-    public var fuel: IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownFuel?
+    public var fuel: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownFuel?
     /// Breakdown of non-fuel portion of the purchase.
-    public var nonFuel: IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownNonFuel?
+    public var nonFuel: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownNonFuel?
     /// Information about tax included in this transaction.
-    public var tax: IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownTax?
+    public var tax: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownTax?
 
-    public init(fuel: IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownFuel? = nil, nonFuel: IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownNonFuel? = nil, tax: IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownTax? = nil) {
+    public init(fuel: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownFuel? = nil, nonFuel: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownNonFuel? = nil, tax: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownTax? = nil) {
         self.fuel = fuel
         self.nonFuel = nonFuel
         self.tax = tax
@@ -267,7 +324,7 @@ public struct IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdown: Str
 }
 
 /// Breakdown of fuel portion of the purchase.
-public struct IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownFuel: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownFuel: StripeParams {
     /// Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
     public var grossAmountDecimal: String?
 
@@ -281,7 +338,7 @@ public struct IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownFuel:
 }
 
 /// Breakdown of non-fuel portion of the purchase.
-public struct IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownNonFuel: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownNonFuel: StripeParams {
     /// Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
     public var grossAmountDecimal: String?
 
@@ -295,7 +352,7 @@ public struct IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownNonFu
 }
 
 /// Information about tax included in this transaction.
-public struct IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownTax: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownTax: StripeParams {
     /// Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by
     /// merchant or not subject to tax.
     public var localAmountDecimal: String?
@@ -315,7 +372,7 @@ public struct IssuingTransactionCreatePurchaseDetailsFleetReportedBreakdownTax: 
 }
 
 /// Information about the flight that was purchased with this transaction.
-public struct IssuingTransactionCreatePurchaseDetailsFlight: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsFlight: StripeParams {
     /// The time that the flight departed.
     public var departureAt: Int?
     /// The name of the passenger.
@@ -323,11 +380,11 @@ public struct IssuingTransactionCreatePurchaseDetailsFlight: StripeParams {
     /// Whether the ticket is refundable.
     public var refundable: Bool?
     /// The legs of the trip.
-    public var segments: [IssuingTransactionCreatePurchaseDetailsFlightSegments]?
+    public var segments: [IssuingTransactionCreateForceCapturePurchaseDetailsFlightSegments]?
     /// The travel agency that issued the ticket.
     public var travelAgency: String?
 
-    public init(departureAt: Int? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionCreatePurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
+    public init(departureAt: Int? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionCreateForceCapturePurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
         self.departureAt = departureAt
         self.passengerName = passengerName
         self.refundable = refundable
@@ -344,7 +401,7 @@ public struct IssuingTransactionCreatePurchaseDetailsFlight: StripeParams {
     }
 }
 
-public struct IssuingTransactionCreatePurchaseDetailsFlightSegments: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsFlightSegments: StripeParams {
     /// The three-letter IATA airport code of the flight's destination.
     public var arrivalAirportCode: String?
     /// The airline carrier code.
@@ -378,7 +435,7 @@ public struct IssuingTransactionCreatePurchaseDetailsFlightSegments: StripeParam
 }
 
 /// Information about fuel that was purchased with this transaction.
-public struct IssuingTransactionCreatePurchaseDetailsFuel: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsFuel: StripeParams {
     /// [Conexxus Payment System Product
     /// Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel
     /// product purchased.
@@ -388,15 +445,15 @@ public struct IssuingTransactionCreatePurchaseDetailsFuel: StripeParams {
     public var quantityDecimal: String?
     /// The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`,
     /// `unleaded_super`, or `other`.
-    public var type: IssuingTransactionCreatePurchaseDetailsFuelType?
+    public var type: IssuingTransactionCreateForceCapturePurchaseDetailsFuelType?
     /// The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`,
     /// `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
-    public var unit: IssuingTransactionCreatePurchaseDetailsFuelUnit?
+    public var unit: IssuingTransactionCreateForceCapturePurchaseDetailsFuelUnit?
     /// The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal
     /// places.
     public var unitCostDecimal: String?
 
-    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingTransactionCreatePurchaseDetailsFuelType? = nil, unit: IssuingTransactionCreatePurchaseDetailsFuelUnit? = nil, unitCostDecimal: String? = nil) {
+    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingTransactionCreateForceCapturePurchaseDetailsFuelType? = nil, unit: IssuingTransactionCreateForceCapturePurchaseDetailsFuelUnit? = nil, unitCostDecimal: String? = nil) {
         self.industryProductCode = industryProductCode
         self.quantityDecimal = quantityDecimal
         self.type = type
@@ -414,7 +471,7 @@ public struct IssuingTransactionCreatePurchaseDetailsFuel: StripeParams {
 }
 
 /// Information about lodging that was purchased with this transaction.
-public struct IssuingTransactionCreatePurchaseDetailsLodging: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsLodging: StripeParams {
     /// The time of checking into the lodging.
     public var checkInAt: Int?
     /// The number of nights stayed at the lodging.
@@ -431,7 +488,352 @@ public struct IssuingTransactionCreatePurchaseDetailsLodging: StripeParams {
     }
 }
 
-public struct IssuingTransactionCreatePurchaseDetailsReceipt: StripeParams {
+public struct IssuingTransactionCreateForceCapturePurchaseDetailsReceipt: StripeParams {
+    public var description: String?
+    public var quantity: String?
+    public var total: Int?
+    public var unitCost: Int?
+
+    public init(description: String? = nil, quantity: String? = nil, total: Int? = nil, unitCost: Int? = nil) {
+        self.description = description
+        self.quantity = quantity
+        self.total = total
+        self.unitCost = unitCost
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case description
+        case quantity
+        case total
+        case unitCost = "unit_cost"
+    }
+}
+
+/// Details about the seller (grocery store, e-commerce website, etc.) where the card authorization
+/// happened.
+public struct IssuingTransactionCreateUnlinkedRefundMerchantData: StripeParams {
+    /// A categorization of the seller's type of business. See our [merchant categories
+    /// guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
+    public var category: IssuingTransactionCreateUnlinkedRefundMerchantDataCategory?
+    /// City where the seller is located
+    public var city: String?
+    /// Country where the seller is located
+    public var country: String?
+    /// Name of the seller
+    public var name: String?
+    /// Identifier assigned to the seller by the card network. Different card networks may assign different
+    /// network_id fields to the same merchant.
+    public var networkId: String?
+    /// Postal code where the seller is located
+    public var postalCode: String?
+    /// State where the seller is located
+    public var state: String?
+    /// An ID assigned by the seller to the location of the sale.
+    public var terminalId: String?
+    /// URL provided by the merchant on a 3DS request
+    public var url: String?
+
+    public init(category: IssuingTransactionCreateUnlinkedRefundMerchantDataCategory? = nil, city: String? = nil, country: String? = nil, name: String? = nil, networkId: String? = nil, postalCode: String? = nil, state: String? = nil, terminalId: String? = nil, url: String? = nil) {
+        self.category = category
+        self.city = city
+        self.country = country
+        self.name = name
+        self.networkId = networkId
+        self.postalCode = postalCode
+        self.state = state
+        self.terminalId = terminalId
+        self.url = url
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case category
+        case city
+        case country
+        case name
+        case networkId = "network_id"
+        case postalCode = "postal_code"
+        case state
+        case terminalId = "terminal_id"
+        case url
+    }
+}
+
+/// Additional purchase information that is optionally provided by the merchant.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetails: StripeParams {
+    /// Fleet-specific information for transactions using Fleet cards.
+    public var fleet: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleet?
+    /// Information about the flight that was purchased with this transaction.
+    public var flight: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlight?
+    /// Information about fuel that was purchased with this transaction.
+    public var fuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuel?
+    /// Information about lodging that was purchased with this transaction.
+    public var lodging: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsLodging?
+    /// The line items in the purchase.
+    public var receipt: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsReceipt]?
+    /// A merchant-specific order number.
+    public var reference: String?
+
+    public init(fleet: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleet? = nil, flight: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlight? = nil, fuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuel? = nil, lodging: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsLodging? = nil, receipt: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsReceipt]? = nil, reference: String? = nil) {
+        self.fleet = fleet
+        self.flight = flight
+        self.fuel = fuel
+        self.lodging = lodging
+        self.receipt = receipt
+        self.reference = reference
+    }
+}
+
+/// Fleet-specific information for transactions using Fleet cards.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleet: StripeParams {
+    /// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
+    /// on the configuration of your physical fleet cards. Typical points of sale support only numeric
+    /// entry.
+    public var cardholderPromptData: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetCardholderPromptData?
+    /// The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
+    public var purchaseType: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetPurchaseType?
+    /// More information about the total amount. This information is not guaranteed to be accurate as some
+    /// merchants may provide unreliable data.
+    public var reportedBreakdown: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdown?
+    /// The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
+    public var serviceType: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetServiceType?
+
+    public init(cardholderPromptData: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetCardholderPromptData? = nil, purchaseType: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetPurchaseType? = nil, reportedBreakdown: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdown? = nil, serviceType: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetServiceType? = nil) {
+        self.cardholderPromptData = cardholderPromptData
+        self.purchaseType = purchaseType
+        self.reportedBreakdown = reportedBreakdown
+        self.serviceType = serviceType
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case cardholderPromptData = "cardholder_prompt_data"
+        case purchaseType = "purchase_type"
+        case reportedBreakdown = "reported_breakdown"
+        case serviceType = "service_type"
+    }
+}
+
+/// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
+/// on the configuration of your physical fleet cards. Typical points of sale support only numeric
+/// entry.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetCardholderPromptData: StripeParams {
+    /// Driver ID.
+    public var driverId: String?
+    /// Odometer reading.
+    public var odometer: Int?
+    /// An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the
+    /// cardholder, but the merchant or card network did not specify the prompt type.
+    public var unspecifiedId: String?
+    /// User ID.
+    public var userId: String?
+    /// Vehicle number.
+    public var vehicleNumber: String?
+
+    public init(driverId: String? = nil, odometer: Int? = nil, unspecifiedId: String? = nil, userId: String? = nil, vehicleNumber: String? = nil) {
+        self.driverId = driverId
+        self.odometer = odometer
+        self.unspecifiedId = unspecifiedId
+        self.userId = userId
+        self.vehicleNumber = vehicleNumber
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case driverId = "driver_id"
+        case odometer
+        case unspecifiedId = "unspecified_id"
+        case userId = "user_id"
+        case vehicleNumber = "vehicle_number"
+    }
+}
+
+/// More information about the total amount. This information is not guaranteed to be accurate as some
+/// merchants may provide unreliable data.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdown: StripeParams {
+    /// Breakdown of fuel portion of the purchase.
+    public var fuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownFuel?
+    /// Breakdown of non-fuel portion of the purchase.
+    public var nonFuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownNonFuel?
+    /// Information about tax included in this transaction.
+    public var tax: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownTax?
+
+    public init(fuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownFuel? = nil, nonFuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownNonFuel? = nil, tax: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownTax? = nil) {
+        self.fuel = fuel
+        self.nonFuel = nonFuel
+        self.tax = tax
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case fuel
+        case nonFuel = "non_fuel"
+        case tax
+    }
+}
+
+/// Breakdown of fuel portion of the purchase.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownFuel: StripeParams {
+    /// Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
+    public var grossAmountDecimal: String?
+
+    public init(grossAmountDecimal: String? = nil) {
+        self.grossAmountDecimal = grossAmountDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case grossAmountDecimal = "gross_amount_decimal"
+    }
+}
+
+/// Breakdown of non-fuel portion of the purchase.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownNonFuel: StripeParams {
+    /// Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
+    public var grossAmountDecimal: String?
+
+    public init(grossAmountDecimal: String? = nil) {
+        self.grossAmountDecimal = grossAmountDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case grossAmountDecimal = "gross_amount_decimal"
+    }
+}
+
+/// Information about tax included in this transaction.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownTax: StripeParams {
+    /// Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by
+    /// merchant or not subject to tax.
+    public var localAmountDecimal: String?
+    /// Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by
+    /// merchant or not subject to tax.
+    public var nationalAmountDecimal: String?
+
+    public init(localAmountDecimal: String? = nil, nationalAmountDecimal: String? = nil) {
+        self.localAmountDecimal = localAmountDecimal
+        self.nationalAmountDecimal = nationalAmountDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case localAmountDecimal = "local_amount_decimal"
+        case nationalAmountDecimal = "national_amount_decimal"
+    }
+}
+
+/// Information about the flight that was purchased with this transaction.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlight: StripeParams {
+    /// The time that the flight departed.
+    public var departureAt: Int?
+    /// The name of the passenger.
+    public var passengerName: String?
+    /// Whether the ticket is refundable.
+    public var refundable: Bool?
+    /// The legs of the trip.
+    public var segments: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlightSegments]?
+    /// The travel agency that issued the ticket.
+    public var travelAgency: String?
+
+    public init(departureAt: Int? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
+        self.departureAt = departureAt
+        self.passengerName = passengerName
+        self.refundable = refundable
+        self.segments = segments
+        self.travelAgency = travelAgency
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case departureAt = "departure_at"
+        case passengerName = "passenger_name"
+        case refundable
+        case segments
+        case travelAgency = "travel_agency"
+    }
+}
+
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlightSegments: StripeParams {
+    /// The three-letter IATA airport code of the flight's destination.
+    public var arrivalAirportCode: String?
+    /// The airline carrier code.
+    public var carrier: String?
+    /// The three-letter IATA airport code that the flight departed from.
+    public var departureAirportCode: String?
+    /// The flight number.
+    public var flightNumber: String?
+    /// The flight's service class.
+    public var serviceClass: String?
+    /// Whether a stopover is allowed on this flight.
+    public var stopoverAllowed: Bool?
+
+    public init(arrivalAirportCode: String? = nil, carrier: String? = nil, departureAirportCode: String? = nil, flightNumber: String? = nil, serviceClass: String? = nil, stopoverAllowed: Bool? = nil) {
+        self.arrivalAirportCode = arrivalAirportCode
+        self.carrier = carrier
+        self.departureAirportCode = departureAirportCode
+        self.flightNumber = flightNumber
+        self.serviceClass = serviceClass
+        self.stopoverAllowed = stopoverAllowed
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case arrivalAirportCode = "arrival_airport_code"
+        case carrier
+        case departureAirportCode = "departure_airport_code"
+        case flightNumber = "flight_number"
+        case serviceClass = "service_class"
+        case stopoverAllowed = "stopover_allowed"
+    }
+}
+
+/// Information about fuel that was purchased with this transaction.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuel: StripeParams {
+    /// [Conexxus Payment System Product
+    /// Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel
+    /// product purchased.
+    public var industryProductCode: String?
+    /// The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12
+    /// decimal places.
+    public var quantityDecimal: String?
+    /// The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`,
+    /// `unleaded_super`, or `other`.
+    public var type: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelType?
+    /// The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`,
+    /// `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
+    public var unit: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelUnit?
+    /// The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal
+    /// places.
+    public var unitCostDecimal: String?
+
+    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelType? = nil, unit: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelUnit? = nil, unitCostDecimal: String? = nil) {
+        self.industryProductCode = industryProductCode
+        self.quantityDecimal = quantityDecimal
+        self.type = type
+        self.unit = unit
+        self.unitCostDecimal = unitCostDecimal
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case industryProductCode = "industry_product_code"
+        case quantityDecimal = "quantity_decimal"
+        case type
+        case unit
+        case unitCostDecimal = "unit_cost_decimal"
+    }
+}
+
+/// Information about lodging that was purchased with this transaction.
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsLodging: StripeParams {
+    /// The time of checking into the lodging.
+    public var checkInAt: Int?
+    /// The number of nights stayed at the lodging.
+    public var nights: Int?
+
+    public init(checkInAt: Int? = nil, nights: Int? = nil) {
+        self.checkInAt = checkInAt
+        self.nights = nights
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case checkInAt = "check_in_at"
+        case nights
+    }
+}
+
+public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsReceipt: StripeParams {
     public var description: String?
     public var quantity: String?
     public var total: Int?

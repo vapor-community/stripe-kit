@@ -37,6 +37,18 @@ public struct RefundRoutes: Sendable {
     /// Cancels a refund with a status of requires_action. You can’t cancel refunds in other states. Only
     /// refunds for payment methods that require customer action can enter the requires_action state.
     public var cancel: @Sendable (_ refund: String, _ params: RefundCancelParams?) async throws -> Refund
+
+    /// Expire a refund with a status of requires_action.
+    public var expire: @Sendable (_ refund: String, _ params: RefundExpireParams?) async throws -> Refund
+
+    /// You can see a list of the refunds belonging to a specific charge. Note that the 10 most recent
+    /// refunds are always available by default on the charge object. If you need more than those 10, you
+    /// can use this API method and the limit and starting_after parameters to page through additional
+    /// refunds.
+    public var listForCharge: @Sendable (_ charge: String, _ params: RefundListForChargeParams?) async throws -> RefundList
+
+    /// Retrieves the details of an existing refund.
+    public var retrieveForCharge: @Sendable (_ charge: String, _ refund: String, _ expand: [String]?) async throws -> Refund
 }
 
 extension RefundRoutes {
@@ -81,6 +93,31 @@ extension RefundRoutes {
                     method: .POST,
                     path: "/v1/refunds/\(refund)/cancel",
                     body: .bytes(ByteBuffer(string: body))
+                ) as Refund
+            },
+            expire: { refund, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/refunds/\(refund)/expire",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as Refund
+            },
+            listForCharge: { charge, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/charges/\(charge)/refunds" : "/v1/charges/\(charge)/refunds?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as RefundList
+            },
+            retrieveForCharge: { charge, refund, expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/charges/\(charge)/refunds/\(refund)" : "/v1/charges/\(charge)/refunds/\(refund)?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
                 ) as Refund
             }
         )

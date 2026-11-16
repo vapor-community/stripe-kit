@@ -13,32 +13,32 @@ import NIOHTTP1
 
 public struct SettingsRoutes: Sendable {
 
+    /// Retrieves Tax Settings for a merchant.
+    public var retrieve: @Sendable (_ expand: [String]?) async throws -> Settings
+
     /// Updates Tax Settings parameters used in tax calculations. All parameters are editable but none can
     /// be removed once set. Check the returned Tax Settings object and validate that its status is active.
-    public var create: @Sendable (_ params: SettingsCreateParams?) async throws -> Settings
-
-    /// Retrieves Tax Settings for a merchant.
-    public var list: @Sendable (_ expand: [String]?) async throws -> Settings
+    public var update: @Sendable (_ params: SettingsUpdateParams?) async throws -> Settings
 }
 
 extension SettingsRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SettingsRoutes(
-            create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax/settings",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Settings
-            },
-            list: { expand in
+            retrieve: { expand in
                 var query = ""
                 if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
                 let path = query.isEmpty ? "/v1/tax/settings" : "/v1/tax/settings?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
+                ) as Settings
+            },
+            update: { params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/tax/settings",
+                    body: .bytes(ByteBuffer(string: body))
                 ) as Settings
             }
         )

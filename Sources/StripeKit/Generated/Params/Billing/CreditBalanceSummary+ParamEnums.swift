@@ -7,11 +7,11 @@
 
 import Foundation
 
-public enum CreditBalanceSummaryListFilterApplicabilityScopePriceType: String, Codable, Sendable {
+public enum CreditBalanceSummaryRetrieveFilterApplicabilityScopePriceType: String, Codable, Sendable {
     case metered
 }
 
-public enum CreditBalanceSummaryListFilterType: String, Codable, Sendable {
+public enum CreditBalanceSummaryRetrieveFilterType: String, Codable, Sendable {
     case applicabilityScope = "applicability_scope"
     case creditGrant = "credit_grant"
 }

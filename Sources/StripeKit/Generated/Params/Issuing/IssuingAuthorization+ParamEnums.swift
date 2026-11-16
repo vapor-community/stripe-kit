@@ -7,6 +7,37 @@
 
 import Foundation
 
+public enum IssuingAuthorizationCapturePurchaseDetailsFleetPurchaseType: String, Codable, Sendable {
+    case fuelAndNonFuelPurchase = "fuel_and_non_fuel_purchase"
+    case fuelPurchase = "fuel_purchase"
+    case nonFuelPurchase = "non_fuel_purchase"
+}
+
+public enum IssuingAuthorizationCapturePurchaseDetailsFleetServiceType: String, Codable, Sendable {
+    case fullService = "full_service"
+    case nonFuelTransaction = "non_fuel_transaction"
+    case selfService = "self_service"
+}
+
+public enum IssuingAuthorizationCapturePurchaseDetailsFuelType: String, Codable, Sendable {
+    case diesel
+    case other
+    case unleadedPlus = "unleaded_plus"
+    case unleadedRegular = "unleaded_regular"
+    case unleadedSuper = "unleaded_super"
+}
+
+public enum IssuingAuthorizationCapturePurchaseDetailsFuelUnit: String, Codable, Sendable {
+    case chargingMinute = "charging_minute"
+    case imperialGallon = "imperial_gallon"
+    case kilogram
+    case kilowattHour = "kilowatt_hour"
+    case liter
+    case other
+    case pound
+    case usGallon = "us_gallon"
+}
+
 public enum IssuingAuthorizationCreateAuthorizationMethod: String, Codable, Sendable {
     case chip
     case contactless
@@ -423,6 +454,37 @@ public enum IssuingAuthorizationCreateWallet: String, Codable, Sendable {
     case applePay = "apple_pay"
     case googlePay = "google_pay"
     case samsungPay = "samsung_pay"
+}
+
+public enum IssuingAuthorizationFinalizeAmountFleetPurchaseType: String, Codable, Sendable {
+    case fuelAndNonFuelPurchase = "fuel_and_non_fuel_purchase"
+    case fuelPurchase = "fuel_purchase"
+    case nonFuelPurchase = "non_fuel_purchase"
+}
+
+public enum IssuingAuthorizationFinalizeAmountFleetServiceType: String, Codable, Sendable {
+    case fullService = "full_service"
+    case nonFuelTransaction = "non_fuel_transaction"
+    case selfService = "self_service"
+}
+
+public enum IssuingAuthorizationFinalizeAmountFuelType: String, Codable, Sendable {
+    case diesel
+    case other
+    case unleadedPlus = "unleaded_plus"
+    case unleadedRegular = "unleaded_regular"
+    case unleadedSuper = "unleaded_super"
+}
+
+public enum IssuingAuthorizationFinalizeAmountFuelUnit: String, Codable, Sendable {
+    case chargingMinute = "charging_minute"
+    case imperialGallon = "imperial_gallon"
+    case kilogram
+    case kilowattHour = "kilowatt_hour"
+    case liter
+    case other
+    case pound
+    case usGallon = "us_gallon"
 }
 
 public enum IssuingAuthorizationListStatus: String, Codable, Sendable {

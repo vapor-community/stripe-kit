@@ -8,9 +8,20 @@ struct SpecParser {
     
     /// Pre-computed set of Swift type names that collide (e.g. "Session", "Configuration")
     private let collidingBaseNames: Set<String>
+
+    /// "GET /v1/balance" → [(schema, method_name, method_on)] from every schema's `x-stripeOperations`
+    private let stripeMethodNames: [String: [(schema: String, name: String, methodOn: String)]]
     
     init(spec: OpenAPISpec) {
         self.spec = spec
+
+        var methodNames: [String: [(schema: String, name: String, methodOn: String)]] = [:]
+        for (schemaName, schema) in spec.components.schemas {
+            for op in schema.xStripeOperations ?? [] {
+                methodNames["\(op.operation.uppercased()) \(op.path)", default: []].append((schemaName, op.methodName, op.methodOn))
+            }
+        }
+        self.stripeMethodNames = methodNames
         
         // Detect which base names collide across different schemas
         var baseNameToSchemas: [String: [String]] = [:]
@@ -25,6 +36,23 @@ struct SpecParser {
         )
     }
     
+    /// The SDK method name Stripe gives an operation in `x-stripeOperations` (snake_case, e.g.
+    /// "retrieve", "void_invoice"), as used by Stripe's official SDKs. Prefers the name listed
+    /// on `schemaName` itself; otherwise uses the name if every schema listing the operation
+    /// agrees on it. `service` methods win over `collection` methods (nested lists such as
+    /// GET /v1/charges/{charge}/refunds only have the latter). Nil when the spec doesn't name it.
+    func stripeMethodName(method: String, path: String, schemaName: String) -> String? {
+        let all = stripeMethodNames["\(method) \(path)"] ?? []
+        for methodOn in ["service", "collection"] {
+            let entries = all.filter { $0.methodOn == methodOn }
+            guard !entries.isEmpty else { continue }
+            if let own = entries.first(where: { $0.schema == schemaName }) { return own.name }
+            let names = Set(entries.map(\.name))
+            if names.count == 1 { return names.first }
+        }
+        return nil
+    }
+
     /// Build a deterministic mapping of schema name → API paths by scanning response $refs.
     /// This replaces naive pluralization with the spec's actual data.
     func buildPathMapping() -> [String: [(method: String, path: String)]] {

@@ -14,13 +14,13 @@ import NIOHTTP1
 public struct SourceTransactionRoutes: Sendable {
 
     /// List source transactions for a given source.
-    public var list: @Sendable (_ source: String, _ params: SourceTransactionListParams?) async throws -> SourceTransactionList
+    public var sourceTransactions: @Sendable (_ source: String, _ params: SourceTransactionSourceTransactionsParams?) async throws -> SourceTransactionList
 }
 
 extension SourceTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SourceTransactionRoutes(
-            list: { source, params in
+            sourceTransactions: { source, params in
                 let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/sources/\(source)/source_transactions" : "/v1/sources/\(source)/source_transactions?\(query)"
                 return try await handler.send(

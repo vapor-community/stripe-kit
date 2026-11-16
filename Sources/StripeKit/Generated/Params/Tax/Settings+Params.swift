@@ -7,15 +7,15 @@
 
 import Foundation
 
-public struct SettingsCreateParams: StripeParams {
+public struct SettingsUpdateParams: StripeParams {
     /// Default configuration to be used on Stripe Tax calculations.
-    public var defaults: SettingsCreateDefaults?
+    public var defaults: SettingsUpdateDefaults?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The place where your business is located.
-    public var headOffice: SettingsCreateHeadOffice?
+    public var headOffice: SettingsUpdateHeadOffice?
 
-    public init(defaults: SettingsCreateDefaults? = nil, expand: [String]? = nil, headOffice: SettingsCreateHeadOffice? = nil) {
+    public init(defaults: SettingsUpdateDefaults? = nil, expand: [String]? = nil, headOffice: SettingsUpdateHeadOffice? = nil) {
         self.defaults = defaults
         self.expand = expand
         self.headOffice = headOffice
@@ -29,16 +29,16 @@ public struct SettingsCreateParams: StripeParams {
 }
 
 /// Default configuration to be used on Stripe Tax calculations.
-public struct SettingsCreateDefaults: StripeParams {
+public struct SettingsUpdateDefaults: StripeParams {
     /// Specifies the default [tax
     /// behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#tax-behavior) to
     /// be used when the item's price has unspecified tax behavior. One of inclusive, exclusive, or
     /// inferred_by_currency. Once specified, it cannot be changed back to null.
-    public var taxBehavior: SettingsCreateDefaultsTaxBehavior?
+    public var taxBehavior: SettingsUpdateDefaultsTaxBehavior?
     /// A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
     public var taxCode: String?
 
-    public init(taxBehavior: SettingsCreateDefaultsTaxBehavior? = nil, taxCode: String? = nil) {
+    public init(taxBehavior: SettingsUpdateDefaultsTaxBehavior? = nil, taxCode: String? = nil) {
         self.taxBehavior = taxBehavior
         self.taxCode = taxCode
     }
@@ -50,17 +50,17 @@ public struct SettingsCreateDefaults: StripeParams {
 }
 
 /// The place where your business is located.
-public struct SettingsCreateHeadOffice: StripeParams {
+public struct SettingsUpdateHeadOffice: StripeParams {
     /// The location of the business for tax purposes.
-    public var address: SettingsCreateHeadOfficeAddress
+    public var address: SettingsUpdateHeadOfficeAddress
 
-    public init(address: SettingsCreateHeadOfficeAddress) {
+    public init(address: SettingsUpdateHeadOfficeAddress) {
         self.address = address
     }
 }
 
 /// The location of the business for tax purposes.
-public struct SettingsCreateHeadOfficeAddress: StripeParams {
+public struct SettingsUpdateHeadOfficeAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).

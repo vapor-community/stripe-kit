@@ -7,8 +7,39 @@
 
 import Foundation
 
-/// Query parameters for `GET /v1/credit_notes/preview/lines`.
+/// Query parameters for `GET /v1/credit_notes/{credit_note}/lines`.
 public struct CreditNoteLineItemListParams: StripeParams {
+    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
+    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+    public var endingBefore: String?
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
+    /// is 10.
+    public var limit: Int?
+    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
+    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
+    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+    public var startingAfter: String?
+
+    public init(endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
+        self.endingBefore = endingBefore
+        self.expand = expand
+        self.limit = limit
+        self.startingAfter = startingAfter
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case endingBefore = "ending_before"
+        case expand
+        case limit
+        case startingAfter = "starting_after"
+    }
+}
+
+/// Query parameters for `GET /v1/credit_notes/preview/lines`.
+public struct CreditNoteLineItemPreviewLinesParams: StripeParams {
     /// ID of the invoice.
     public var invoice: String
     /// The integer amount in cents (or local equivalent) representing the total amount of the credit note.
@@ -22,7 +53,7 @@ public struct CreditNoteLineItemListParams: StripeParams {
     public var effectiveAt: Int?
     /// Type of email to send to the customer, one of `credit_note` or `none` and the default is
     /// `credit_note`.
-    public var emailType: CreditNoteLineItemListEmailType?
+    public var emailType: CreditNoteLineItemPreviewLinesEmailType?
     /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
     /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
     /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -34,7 +65,7 @@ public struct CreditNoteLineItemListParams: StripeParams {
     public var limit: Int?
     /// Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be
     /// provided.
-    public var lines: [CreditNoteLineItemListLines]?
+    public var lines: [CreditNoteLineItemPreviewLinesLines]?
     /// The credit note's memo appears on the credit note PDF.
     public var memo: String?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -47,21 +78,21 @@ public struct CreditNoteLineItemListParams: StripeParams {
     public var outOfBandAmount: Int?
     /// Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or
     /// `product_unsatisfactory`
-    public var reason: CreditNoteLineItemListReason?
+    public var reason: CreditNoteLineItemPreviewLinesReason?
     /// The integer amount in cents (or local equivalent) representing the amount to refund. If set, a
     /// refund will be created for the charge associated with the invoice.
     public var refundAmount: Int?
     /// Refunds to link to this credit note.
-    public var refunds: [CreditNoteLineItemListRefunds]?
+    public var refunds: [CreditNoteLineItemPreviewLinesRefunds]?
     /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
     /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
-    public var shippingCost: CreditNoteLineItemListShippingCost?
+    public var shippingCost: CreditNoteLineItemPreviewLinesShippingCost?
     /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
 
-    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Int? = nil, emailType: CreditNoteLineItemListEmailType? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, lines: [CreditNoteLineItemListLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNoteLineItemListReason? = nil, refundAmount: Int? = nil, refunds: [CreditNoteLineItemListRefunds]? = nil, shippingCost: CreditNoteLineItemListShippingCost? = nil, startingAfter: String? = nil) {
+    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Int? = nil, emailType: CreditNoteLineItemPreviewLinesEmailType? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, lines: [CreditNoteLineItemPreviewLinesLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNoteLineItemPreviewLinesReason? = nil, refundAmount: Int? = nil, refunds: [CreditNoteLineItemPreviewLinesRefunds]? = nil, shippingCost: CreditNoteLineItemPreviewLinesShippingCost? = nil, startingAfter: String? = nil) {
         self.invoice = invoice
         self.amount = amount
         self.creditAmount = creditAmount
@@ -102,41 +133,10 @@ public struct CreditNoteLineItemListParams: StripeParams {
     }
 }
 
-/// Query parameters for `GET /v1/credit_notes/{credit_note}/lines`.
-public struct CreditNoteLineItemRetrieveParams: StripeParams {
-    /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
-    /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
-    /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-    public var endingBefore: String?
-    /// Specifies which fields in the response should be expanded.
-    public var expand: [String]?
-    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default
-    /// is 10.
-    public var limit: Int?
-    /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
-    /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
-    /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-    public var startingAfter: String?
-
-    public init(endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
-        self.endingBefore = endingBefore
-        self.expand = expand
-        self.limit = limit
-        self.startingAfter = startingAfter
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case endingBefore = "ending_before"
-        case expand
-        case limit
-        case startingAfter = "starting_after"
-    }
-}
-
-public struct CreditNoteLineItemListLines: StripeParams {
+public struct CreditNoteLineItemPreviewLinesLines: StripeParams {
     /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
     /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
-    public var type: CreditNoteLineItemListLinesType
+    public var type: CreditNoteLineItemPreviewLinesLinesType
     /// The line item amount to credit. Only valid when `type` is `invoice_line_item`. If invoice is set up
     /// with `automatic_tax[enabled]=true`, this amount is tax exclusive
     public var amount: Int?
@@ -153,7 +153,7 @@ public struct CreditNoteLineItemListLines: StripeParams {
     public var quantity: Int?
     /// A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or
     /// if invoice is set up with `automatic_tax[enabled]=true`.
-    public var taxAmounts: [CreditNoteLineItemListLinesTaxAmounts]?
+    public var taxAmounts: [CreditNoteLineItemPreviewLinesLinesTaxAmounts]?
     /// The tax rates which apply to the credit note line item. Only valid when the `type` is
     /// `custom_line_item` and `tax_amounts` is not used.
     public var taxRates: [String]?
@@ -165,7 +165,7 @@ public struct CreditNoteLineItemListLines: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(type: CreditNoteLineItemListLinesType, amount: Int? = nil, description: String? = nil, invoiceLineItem: String? = nil, metadata: [String: String]? = nil, quantity: Int? = nil, taxAmounts: [CreditNoteLineItemListLinesTaxAmounts]? = nil, taxRates: [String]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(type: CreditNoteLineItemPreviewLinesLinesType, amount: Int? = nil, description: String? = nil, invoiceLineItem: String? = nil, metadata: [String: String]? = nil, quantity: Int? = nil, taxAmounts: [CreditNoteLineItemPreviewLinesLinesTaxAmounts]? = nil, taxRates: [String]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.type = type
         self.amount = amount
         self.description = description
@@ -192,7 +192,7 @@ public struct CreditNoteLineItemListLines: StripeParams {
     }
 }
 
-public struct CreditNoteLineItemListLinesTaxAmounts: StripeParams {
+public struct CreditNoteLineItemPreviewLinesLinesTaxAmounts: StripeParams {
     /// The amount, in cents (or local equivalent), of the tax.
     public var amount: Int
     /// The id of the tax rate for this tax amount. The tax rate must have been automatically created by
@@ -214,19 +214,19 @@ public struct CreditNoteLineItemListLinesTaxAmounts: StripeParams {
     }
 }
 
-public struct CreditNoteLineItemListRefunds: StripeParams {
+public struct CreditNoteLineItemPreviewLinesRefunds: StripeParams {
     /// Amount of the refund that applies to this credit note, in cents (or local equivalent). Defaults to
     /// the entire refund amount.
     public var amountRefunded: Int?
     /// The PaymentRecord refund details to link to this credit note. Required when `type` is
     /// `payment_record_refund`.
-    public var paymentRecordRefund: CreditNoteLineItemListRefundsPaymentRecordRefund?
+    public var paymentRecordRefund: CreditNoteLineItemPreviewLinesRefundsPaymentRecordRefund?
     /// ID of an existing refund to link this credit note to. Required when `type` is `refund`.
     public var refund: String?
     /// Type of the refund, one of `refund` or `payment_record_refund`. Defaults to `refund`.
-    public var type: CreditNoteLineItemListRefundsType?
+    public var type: CreditNoteLineItemPreviewLinesRefundsType?
 
-    public init(amountRefunded: Int? = nil, paymentRecordRefund: CreditNoteLineItemListRefundsPaymentRecordRefund? = nil, refund: String? = nil, type: CreditNoteLineItemListRefundsType? = nil) {
+    public init(amountRefunded: Int? = nil, paymentRecordRefund: CreditNoteLineItemPreviewLinesRefundsPaymentRecordRefund? = nil, refund: String? = nil, type: CreditNoteLineItemPreviewLinesRefundsType? = nil) {
         self.amountRefunded = amountRefunded
         self.paymentRecordRefund = paymentRecordRefund
         self.refund = refund
@@ -243,7 +243,7 @@ public struct CreditNoteLineItemListRefunds: StripeParams {
 
 /// The PaymentRecord refund details to link to this credit note. Required when `type` is
 /// `payment_record_refund`.
-public struct CreditNoteLineItemListRefundsPaymentRecordRefund: StripeParams {
+public struct CreditNoteLineItemPreviewLinesRefundsPaymentRecordRefund: StripeParams {
     /// The ID of the PaymentRecord with the refund to link to this credit note.
     public var paymentRecord: String
     /// The PaymentRecord refund group to link to this credit note. For refunds processed off-Stripe, this
@@ -264,7 +264,7 @@ public struct CreditNoteLineItemListRefundsPaymentRecordRefund: StripeParams {
 
 /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
 /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
-public struct CreditNoteLineItemListShippingCost: StripeParams {
+public struct CreditNoteLineItemPreviewLinesShippingCost: StripeParams {
     /// The ID of the shipping rate to use for this order.
     public var shippingRate: String?
 

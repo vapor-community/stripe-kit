@@ -72,6 +72,15 @@ public struct OutboundTransferCreateParams: StripeParams {
     }
 }
 
+public struct OutboundTransferFailParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
 /// Query parameters for `GET /v1/treasury/outbound_transfers`.
 public struct OutboundTransferListParams: StripeParams {
     /// Returns objects associated with this FinancialAccount.
@@ -109,6 +118,32 @@ public struct OutboundTransferListParams: StripeParams {
         case limit
         case startingAfter = "starting_after"
         case status
+    }
+}
+
+public struct OutboundTransferPostParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
+public struct OutboundTransferReturnOutboundTransferParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+    /// Details about a returned OutboundTransfer.
+    public var returnedDetails: OutboundTransferReturnOutboundTransferReturnedDetails?
+
+    public init(expand: [String]? = nil, returnedDetails: OutboundTransferReturnOutboundTransferReturnedDetails? = nil) {
+        self.expand = expand
+        self.returnedDetails = returnedDetails
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case returnedDetails = "returned_details"
     }
 }
 
@@ -170,6 +205,16 @@ public struct OutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccount
 
     public init(network: OutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccountNetwork? = nil) {
         self.network = network
+    }
+}
+
+/// Details about a returned OutboundTransfer.
+public struct OutboundTransferReturnOutboundTransferReturnedDetails: StripeParams {
+    /// Reason for the return.
+    public var code: OutboundTransferReturnOutboundTransferReturnedDetailsCode?
+
+    public init(code: OutboundTransferReturnOutboundTransferReturnedDetailsCode? = nil) {
+        self.code = code
     }
 }
 

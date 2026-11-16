@@ -19,14 +19,23 @@ public struct TaxIdRoutes: Sendable {
     /// Retrieves an account or customer tax_id object.
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TaxId
 
-    /// Creates a new tax_id object for a customer.
-    public var update: @Sendable (_ customer: String, _ params: TaxIdUpdateParams) async throws -> TaxId
-
     /// Returns a list of tax IDs.
     public var list: @Sendable (_ params: TaxIdListParams?) async throws -> TaxIdList
 
     /// Deletes an existing account or customer tax_id object.
     public var delete: @Sendable (_ id: String, _ expand: [String]?) async throws -> DeletedTaxId
+
+    /// Creates a new tax_id object for a customer.
+    public var createForCustomer: @Sendable (_ customer: String, _ params: TaxIdCreateForCustomerParams) async throws -> TaxId
+
+    /// Deletes an existing tax_id object.
+    public var deleteForCustomer: @Sendable (_ customer: String, _ id: String, _ expand: [String]?) async throws -> DeletedTaxId
+
+    /// Returns a list of tax IDs for a customer.
+    public var listForCustomer: @Sendable (_ customer: String, _ params: TaxIdListForCustomerParams?) async throws -> TaxIdList
+
+    /// Retrieves the tax_id object with the given identifier.
+    public var retrieveForCustomer: @Sendable (_ customer: String, _ id: String, _ expand: [String]?) async throws -> TaxId
 }
 
 extension TaxIdRoutes {
@@ -49,14 +58,6 @@ extension TaxIdRoutes {
                     path: path
                 ) as TaxId
             },
-            update: { customer, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)/tax_ids",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TaxId
-            },
             list: { params in
                 let query = params?.toFormBody() ?? ""
                 let path = query.isEmpty ? "/v1/tax_ids" : "/v1/tax_ids?\(query)"
@@ -73,6 +74,40 @@ extension TaxIdRoutes {
                     method: .DELETE,
                     path: path
                 ) as DeletedTaxId
+            },
+            createForCustomer: { customer, params in
+                let body = params.toFormBody()
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/customers/\(customer)/tax_ids",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as TaxId
+            },
+            deleteForCustomer: { customer, id, expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/customers/\(customer)/tax_ids/\(id)" : "/v1/customers/\(customer)/tax_ids/\(id)?\(query)"
+                return try await handler.send(
+                    method: .DELETE,
+                    path: path
+                ) as DeletedTaxId
+            },
+            listForCustomer: { customer, params in
+                let query = params?.toFormBody() ?? ""
+                let path = query.isEmpty ? "/v1/customers/\(customer)/tax_ids" : "/v1/customers/\(customer)/tax_ids?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as TaxIdList
+            },
+            retrieveForCustomer: { customer, id, expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/customers/\(customer)/tax_ids/\(id)" : "/v1/customers/\(customer)/tax_ids/\(id)?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
+                ) as TaxId
             }
         )
     }

@@ -538,108 +538,34 @@ struct ParamGenerator {
     // MARK: - Operation Discovery
     
     /// Find all POST operations with a body and GET operations with query params for a resource,
-    /// returning (action, schema, requiredFields)
+    /// returning (action, schema, requiredFields).
+    ///
+    /// Uses the route generator's operations, so each struct is named exactly as the route
+    /// that takes it refers to it: `{Resource}{Action}Params`.
     func findOperations(for resource: StripeResource) -> [(action: String, schema: PropertyObject, required: Set<String>)] {
-        var results: [(action: String, path: String, schema: PropertyObject, required: Set<String>)] = []
-        
-        // Deterministic: look up paths directly from the spec-derived mapping
-        guard let resourcePaths = pathMapping[resource.schemaName] else { return [] }
-        // Get unique paths
-        let uniquePaths = Set(resourcePaths.map { $0.path })
-        
-        // Derive basePath: shortest path that is a segment-aligned prefix of at least
-        // one other path.  Deterministic — no scoring, no tie-breaking ambiguity.
-        let basePath: String = {
-            let sorted = uniquePaths.sorted { $0.count < $1.count }
-            for candidate in sorted {
-                let isPrefix = sorted.contains { other in
-                    other != candidate && other.starts(with: candidate + "/")
-                }
-                if isPrefix { return candidate }
-            }
-            return sorted.first ?? ""
-        }()
-        
-        for path in uniquePaths.sorted() {
-            guard let pathItem = spec.paths[path] else { continue }
-            
-            // Only POST operations have requestBody we care about
-            guard let post = pathItem.post,
-                  let rb = post.requestBody,
-                  let content = rb.content?["application/x-www-form-urlencoded"],
-                  let schema = content.schema,
-                  let _ = schema.properties, !schema.properties!.isEmpty
-            else { continue }
-            
-            let action = deriveAction(path: path, pathPrefix: basePath, operationId: post.operationId)
-            let required = Set(schema.required ?? [])
-            
-            results.append((action, path, schema, required))
-        }
-        
-        // Deduplicate by action — prefer operations whose path starts with basePath
-        // (the resource's own namespace) over cross-resource aliases.
-        var bestByAction: [String: (action: String, path: String, schema: PropertyObject, required: Set<String>)] = [:]
-        for op in results {
-            if let existing = bestByAction[op.action] {
-                let existingIsLocal = existing.path.starts(with: basePath)
-                let newIsLocal = op.path.starts(with: basePath)
-                if !existingIsLocal && newIsLocal {
-                    bestByAction[op.action] = op
-                }
-            } else {
-                bestByAction[op.action] = op
-            }
-        }
-        
-        // GET operations with query params. Use the route generator's operations so the
-        // struct names match what the routes reference ({Resource}{Action}Params).
         let routeGen = RouteGenerator(spec: spec, parser: parser, pathMapping: pathMapping)
-        for op in routeGen.findOperations(for: resource) where op.httpMethod == "GET" && op.hasQueryParams {
-            guard let get = spec.paths[op.path]?.get,
-                  let schema = get.queryParametersSchema(description: "Query parameters for `GET \(op.path)`.")
-            else { continue }
+        var results: [(action: String, schema: PropertyObject, required: Set<String>)] = []
+
+        for op in routeGen.findOperations(for: resource) {
+            let schema: PropertyObject?
+            if op.httpMethod == "POST" && op.hasBody {
+                schema = spec.paths[op.path]?.post?.requestBody?.content?["application/x-www-form-urlencoded"]?.schema
+            } else if op.httpMethod == "GET" && op.hasQueryParams {
+                schema = spec.paths[op.path]?.get?.queryParametersSchema(description: "Query parameters for `GET \(op.path)`.")
+            } else {
+                schema = nil
+            }
+            guard let schema else { continue }
             precondition(
-                bestByAction[op.action] == nil,
-                "\(resource.swiftTypeName)\(op.action)Params would be generated for both POST \(bestByAction[op.action]?.path ?? "") and GET \(op.path)"
+                !results.contains { $0.action == op.action },
+                "\(resource.swiftTypeName)\(op.action)Params would be generated twice"
             )
-            bestByAction[op.action] = (op.action, op.path, schema, Set(schema.required ?? []))
+            results.append((op.action, schema, Set(schema.required ?? [])))
         }
 
-        return bestByAction.values
-            .sorted { $0.action < $1.action }
-            .map { ($0.action, $0.schema, $0.required) }
+        return results.sorted { $0.action < $1.action }
     }
-    
-    /// Derive a friendly action name from the path
-    /// /v1/payment_intents → "Create"
-    /// /v1/payment_intents/{intent} → "Update"
-    /// /v1/payment_intents/{intent}/cancel → "Cancel"
-    /// /v1/payment_intents/{intent}/capture → "Capture"
-    private func deriveAction(path: String, pathPrefix: String, operationId: String?) -> String {
-        let basePrefixParamCount = pathPrefix.split(separator: "/").filter { $0.starts(with: "{") }.count
-        let totalPathParams = path.split(separator: "/").filter { $0.starts(with: "{") }.count
-        
-        // POST basePath (no path params beyond prefix) → Create
-        if totalPathParams == basePrefixParamCount && path == pathPrefix {
-            return "Create"
-        }
-        
-        // POST basePath/{id} (one extra path param, no trailing action) → Update
-        let trailingParts = path.starts(with: pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : ""
-        let trailingNonParams = trailingParts.split(separator: "/").filter { !$0.starts(with: "{") }
-        
-        if trailingNonParams.isEmpty && totalPathParams == basePrefixParamCount + 1 {
-            return "Update"
-        }
-        
-        // POST with trailing action segment → named action
-        if let actionSlug = trailingNonParams.last {
-            return capitalize(snakeToCamel(String(actionSlug)))
-        }
-        
-        return "Create"
-    }
+
     
     // MARK: - Helpers
     

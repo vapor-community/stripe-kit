@@ -33,7 +33,7 @@ public struct QuoteRoutes: Sendable {
     public var cancel: @Sendable (_ quote: String, _ params: QuoteCancelParams?) async throws -> Quote
 
     /// Finalizes the quote.
-    public var finalize: @Sendable (_ quote: String, _ params: QuoteFinalizeParams?) async throws -> Quote
+    public var finalizeQuote: @Sendable (_ quote: String, _ params: QuoteFinalizeQuoteParams?) async throws -> Quote
 }
 
 extension QuoteRoutes {
@@ -88,7 +88,7 @@ extension QuoteRoutes {
                     body: .bytes(ByteBuffer(string: body))
                 ) as Quote
             },
-            finalize: { quote, params in
+            finalizeQuote: { quote, params in
                 let body = params?.toFormBody() ?? ""
                 return try await handler.send(
                     method: .POST,

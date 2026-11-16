@@ -13,33 +13,33 @@ import NIOHTTP1
 
 public struct BalanceSettingsRoutes: Sendable {
 
-    /// Updates balance settings for a given connected account. Related guide: Making API calls for
-    /// connected accounts
-    public var create: @Sendable (_ params: BalanceSettingsCreateParams?) async throws -> BalanceSettings
-
     /// Retrieves balance settings for a given connected account. Related guide: Making API calls for
     /// connected accounts
-    public var list: @Sendable (_ expand: [String]?) async throws -> BalanceSettings
+    public var retrieve: @Sendable (_ expand: [String]?) async throws -> BalanceSettings
+
+    /// Updates balance settings for a given connected account. Related guide: Making API calls for
+    /// connected accounts
+    public var update: @Sendable (_ params: BalanceSettingsUpdateParams?) async throws -> BalanceSettings
 }
 
 extension BalanceSettingsRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BalanceSettingsRoutes(
-            create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/balance_settings",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as BalanceSettings
-            },
-            list: { expand in
+            retrieve: { expand in
                 var query = ""
                 if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
                 let path = query.isEmpty ? "/v1/balance_settings" : "/v1/balance_settings?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
+                ) as BalanceSettings
+            },
+            update: { params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/balance_settings",
+                    body: .bytes(ByteBuffer(string: body))
                 ) as BalanceSettings
             }
         )

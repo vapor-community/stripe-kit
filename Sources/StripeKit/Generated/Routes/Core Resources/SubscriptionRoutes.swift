@@ -74,7 +74,7 @@ public struct SubscriptionRoutes: Sendable {
     /// payment attempts after the customer has canceled a subscription. However, you can resume automatic
     /// collection of the invoices manually after subscription cancellation to have us proceed. Or, you
     /// could check for unpaid invoices before allowing the customer to cancel the subscription at all.
-    public var delete: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?) async throws -> Subscription
+    public var cancel: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?) async throws -> Subscription
 
     /// Upgrade the billing_mode of an existing subscription.
     public var migrate: @Sendable (_ subscription: String, _ params: SubscriptionMigrateParams) async throws -> Subscription
@@ -138,7 +138,7 @@ extension SubscriptionRoutes {
                     path: path
                 ) as StripeSearchResult<Subscription>
             },
-            delete: { subscriptionExposedId, expand in
+            cancel: { subscriptionExposedId, expand in
                 var query = ""
                 if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
                 let path = query.isEmpty ? "/v1/subscriptions/\(subscriptionExposedId)" : "/v1/subscriptions/\(subscriptionExposedId)?\(query)"

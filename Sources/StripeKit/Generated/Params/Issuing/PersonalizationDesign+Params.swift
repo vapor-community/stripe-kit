@@ -7,6 +7,15 @@
 
 import Foundation
 
+public struct PersonalizationDesignActivateParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
 public struct PersonalizationDesignCreateParams: StripeParams {
     /// The physical bundle object belonging to this personalization design.
     public var physicalBundle: String
@@ -59,6 +68,15 @@ public struct PersonalizationDesignCreateParams: StripeParams {
     }
 }
 
+public struct PersonalizationDesignDeactivateParams: StripeParams {
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(expand: [String]? = nil) {
+        self.expand = expand
+    }
+}
+
 /// Query parameters for `GET /v1/issuing/personalization_designs`.
 public struct PersonalizationDesignListParams: StripeParams {
     /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
@@ -99,6 +117,23 @@ public struct PersonalizationDesignListParams: StripeParams {
         case preferences
         case startingAfter = "starting_after"
         case status
+    }
+}
+
+public struct PersonalizationDesignRejectParams: StripeParams {
+    /// The reason(s) the personalization design was rejected.
+    public var rejectionReasons: PersonalizationDesignRejectRejectionReasons
+    /// Specifies which fields in the response should be expanded.
+    public var expand: [String]?
+
+    public init(rejectionReasons: PersonalizationDesignRejectRejectionReasons, expand: [String]? = nil) {
+        self.rejectionReasons = rejectionReasons
+        self.expand = expand
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case rejectionReasons = "rejection_reasons"
     }
 }
 
@@ -214,6 +249,24 @@ public struct PersonalizationDesignListPreferences: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case isDefault = "is_default"
         case isPlatformDefault = "is_platform_default"
+    }
+}
+
+/// The reason(s) the personalization design was rejected.
+public struct PersonalizationDesignRejectRejectionReasons: StripeParams {
+    /// The reason(s) the card logo was rejected.
+    public var cardLogo: [PersonalizationDesignRejectRejectionReasonsCardLogo]?
+    /// The reason(s) the carrier text was rejected.
+    public var carrierText: [PersonalizationDesignRejectRejectionReasonsCarrierText]?
+
+    public init(cardLogo: [PersonalizationDesignRejectRejectionReasonsCardLogo]? = nil, carrierText: [PersonalizationDesignRejectRejectionReasonsCarrierText]? = nil) {
+        self.cardLogo = cardLogo
+        self.carrierText = carrierText
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case cardLogo = "card_logo"
+        case carrierText = "carrier_text"
     }
 }
 

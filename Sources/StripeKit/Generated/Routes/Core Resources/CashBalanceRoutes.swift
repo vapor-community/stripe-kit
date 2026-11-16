@@ -13,31 +13,31 @@ import NIOHTTP1
 
 public struct CashBalanceRoutes: Sendable {
 
-    /// Changes the settings on a customer’s cash balance.
-    public var create: @Sendable (_ customer: String, _ params: CashBalanceCreateParams?) async throws -> CashBalance
-
     /// Retrieves a customer’s cash balance.
-    public var list: @Sendable (_ customer: String, _ expand: [String]?) async throws -> CashBalance
+    public var retrieve: @Sendable (_ customer: String, _ expand: [String]?) async throws -> CashBalance
+
+    /// Changes the settings on a customer’s cash balance.
+    public var update: @Sendable (_ customer: String, _ params: CashBalanceUpdateParams?) async throws -> CashBalance
 }
 
 extension CashBalanceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CashBalanceRoutes(
-            create: { customer, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)/cash_balance",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CashBalance
-            },
-            list: { customer, expand in
+            retrieve: { customer, expand in
                 var query = ""
                 if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
                 let path = query.isEmpty ? "/v1/customers/\(customer)/cash_balance" : "/v1/customers/\(customer)/cash_balance?\(query)"
                 return try await handler.send(
                     method: .GET,
                     path: path
+                ) as CashBalance
+            },
+            update: { customer, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/customers/\(customer)/cash_balance",
+                    body: .bytes(ByteBuffer(string: body))
                 ) as CashBalance
             }
         )

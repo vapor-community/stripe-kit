@@ -26,6 +26,22 @@ public struct IssuingCardRoutes: Sendable {
     /// Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date,
     /// with the most recently created object appearing first.
     public var list: @Sendable (_ params: IssuingCardListParams?) async throws -> IssuingCardList
+
+    /// Updates the shipping status of the specified Issuing Card object to delivered.
+    public var deliverCard: @Sendable (_ card: String, _ params: IssuingCardDeliverCardParams?) async throws -> IssuingCard
+
+    /// Updates the shipping status of the specified Issuing Card object to failure.
+    public var failCard: @Sendable (_ card: String, _ params: IssuingCardFailCardParams?) async throws -> IssuingCard
+
+    /// Updates the shipping status of the specified Issuing Card object to returned.
+    public var returnCard: @Sendable (_ card: String, _ params: IssuingCardReturnCardParams?) async throws -> IssuingCard
+
+    /// Updates the shipping status of the specified Issuing Card object to shipped.
+    public var shipCard: @Sendable (_ card: String, _ params: IssuingCardShipCardParams?) async throws -> IssuingCard
+
+    /// Updates the shipping status of the specified Issuing Card object to submitted. This method requires
+    /// Stripe Version ‘2024-09-30.acacia’ or later.
+    public var submitCard: @Sendable (_ card: String, _ params: IssuingCardSubmitCardParams?) async throws -> IssuingCard
 }
 
 extension IssuingCardRoutes {
@@ -63,6 +79,46 @@ extension IssuingCardRoutes {
                     method: .GET,
                     path: path
                 ) as IssuingCardList
+            },
+            deliverCard: { card, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/deliver",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingCard
+            },
+            failCard: { card, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/fail",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingCard
+            },
+            returnCard: { card, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/return",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingCard
+            },
+            shipCard: { card, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/ship",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingCard
+            },
+            submitCard: { card, params in
+                let body = params?.toFormBody() ?? ""
+                return try await handler.send(
+                    method: .POST,
+                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/submit",
+                    body: .bytes(ByteBuffer(string: body))
+                ) as IssuingCard
             }
         )
     }

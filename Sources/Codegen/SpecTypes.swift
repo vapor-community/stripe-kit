@@ -34,12 +34,31 @@ struct SchemaObject: Decodable {
     // Stripe vendor extensions
     let xResourceId: String?
     let xExpandableFields: [String]?
+    /// The SDK methods Stripe defines on this resource (what stripe-node, stripe-go etc. are generated from)
+    let xStripeOperations: [StripeOperation]?
+
+    struct StripeOperation: Decodable {
+        /// e.g. "retrieve", "list_payment_methods", "void_invoice"
+        let methodName: String
+        /// "service" (the resource's API methods) or "collection" (methods on a list object)
+        let methodOn: String
+        /// HTTP method, lowercase
+        let operation: String
+        let path: String
+
+        enum CodingKeys: String, CodingKey {
+            case methodName = "method_name"
+            case methodOn = "method_on"
+            case operation, path
+        }
+    }
     
     enum CodingKeys: String, CodingKey {
         case type, description, properties, required
         case `enum`, anyOf, oneOf, nullable, items
         case xResourceId = "x-resourceId"
         case xExpandableFields = "x-expandableFields"
+        case xStripeOperations = "x-stripeOperations"
     }
     
     init(from decoder: Decoder) throws {
@@ -55,6 +74,7 @@ struct SchemaObject: Decodable {
         items = try container.decodeIfPresent(PropertyObject.self, forKey: .items)
         xResourceId = try container.decodeIfPresent(String.self, forKey: .xResourceId)
         xExpandableFields = try container.decodeIfPresent([String].self, forKey: .xExpandableFields)
+        xStripeOperations = try container.decodeIfPresent([StripeOperation].self, forKey: .xStripeOperations)
     }
 }
 

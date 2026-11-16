@@ -12,17 +12,17 @@ public enum SecretCreateScopeType: String, Codable, Sendable {
     case user
 }
 
-public enum SecretDeleteScopeType: String, Codable, Sendable {
+public enum SecretDeleteWhereScopeType: String, Codable, Sendable {
+    case account
+    case user
+}
+
+public enum SecretFindScopeType: String, Codable, Sendable {
     case account
     case user
 }
 
 public enum SecretListScopeType: String, Codable, Sendable {
-    case account
-    case user
-}
-
-public enum SecretListFindScopeType: String, Codable, Sendable {
     case account
     case user
 }
