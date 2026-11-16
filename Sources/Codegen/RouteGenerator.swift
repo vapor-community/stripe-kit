@@ -233,6 +233,9 @@ struct RouteGenerator {
         let hasQueryParams: Bool
         let hasRequiredQueryParams: Bool
         let returnType: String?  // nil means use resource type
+        /// False when the response's type couldn't be read from the spec and the route falls
+        /// back to the resource type (a polymorphic list or `anyOf` response, …)
+        let returnTypeFromSpec: Bool
 
         /// The same operation under another name (its params struct is named after it too).
         func renamed(_ name: String) -> RouteOperation {
@@ -242,7 +245,7 @@ struct RouteGenerator {
                 hasBody: hasBody, hasRequiredBodyFields: hasRequiredBodyFields,
                 isListOrSearch: isListOrSearch, isMultipart: isMultipart,
                 hasQueryParams: hasQueryParams, hasRequiredQueryParams: hasRequiredQueryParams,
-                returnType: returnType
+                returnType: returnType, returnTypeFromSpec: returnTypeFromSpec
             )
         }
     }
@@ -371,16 +374,21 @@ struct RouteGenerator {
                 let returnType: String?
                 // An operation grouped under its spec owner can return another type
                 // (customers.listPaymentMethods → PaymentMethodList), so use the response's types.
-                let itemType = listItemType(op) ?? resource.swiftTypeName
+                let listItem = listItemType(op)
+                let itemType = listItem ?? resource.swiftTypeName
+                let returnTypeFromSpec: Bool
                 switch responseWrapper(op) {
                 case "list":
                     returnType = "\(itemType)List"
+                    returnTypeFromSpec = listItem != nil
                 case "search_result":
                     returnType = "StripeSearchResult<\(itemType)>"
+                    returnTypeFromSpec = listItem != nil
                 default:
                     // A deleted object type when the spec's response can be one; otherwise the
                     // referenced type, or the resource type
                     returnType = deletedResponseType(op) ?? referencedResponseType(op)
+                    returnTypeFromSpec = returnType != nil
                 }
                 
                 results.append(RouteOperation(
@@ -397,7 +405,8 @@ struct RouteGenerator {
                     isMultipart: isMultipart,
                     hasQueryParams: !queryParams.isEmpty,
                     hasRequiredQueryParams: queryParams.contains { $0.required == true },
-                    returnType: returnType
+                    returnType: returnType,
+                    returnTypeFromSpec: returnTypeFromSpec
                 ))
             }
         }

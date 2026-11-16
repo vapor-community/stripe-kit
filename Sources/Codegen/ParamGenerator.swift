@@ -14,6 +14,8 @@ struct ParamGenerator {
     let parser: SpecParser
     /// Deterministic mapping of schema name → API paths, built by SpecParser.buildPathMapping()
     let pathMapping: [String: [(method: String, path: String)]]
+    /// Records every place a param falls back to a looser type than the spec describes
+    var fallbacks = ParamFallbacks()
     
     /// Maximum nesting depth for typed sub-structs
     private let maxDepth = 20
@@ -246,7 +248,6 @@ struct ParamGenerator {
             }
         }
         
-        let swiftType = paramTypeString(prop, parentStem: parentStem, propName: name, depth: depth)
         let optionalMark = isRequired ? "" : "?"
         
         // If this is a nested object type, generate a sub-struct
@@ -287,6 +288,9 @@ struct ParamGenerator {
             return lines
         }
         
+        // Resolved only here: for an anyOf property, paramTypeString's result isn't used, and
+        // calling it would record a fallback that doesn't happen.
+        let swiftType = paramTypeString(prop, parentStem: parentStem, propName: name, depth: depth)
         lines.append("    public var \(escapedSwiftName(swiftName)): \(swiftType)\(optionalMark)")
         return lines
     }
@@ -325,20 +329,41 @@ struct ParamGenerator {
                 let elementType = paramTypeString(items, parentStem: parentStem, propName: propName, depth: depth)
                 return "[\(elementType)]"
             }
+            fallbacks.record(parentStem, propName, "array without items → [String]")
             return "[String]"
         case "object":
-            if let _ = prop.additionalProperties {
+            if let values = prop.additionalProperties {
+                if values.type != "string" {
+                    fallbacks.record(parentStem, propName, "map of \(values.type ?? "untyped") values → [String: String]")
+                }
                 return "[String: String]"
             }
             if let props = prop.properties, !props.isEmpty {
                 if depth < maxDepth {
                     return "\(parentStem)\(capitalize(snakeToCamel(propName)))"
                 } else {
+                    fallbacks.record(parentStem, propName, "nested deeper than \(maxDepth) → [String: String]")
                     return "[String: String]"
                 }
             }
+            // `properties: {}` is a hash the spec defines as empty (e.g. payment_method_data[bizum]),
+            // so nothing is lost; only an object with no shape at all is a fallback.
+            if prop.properties == nil {
+                fallbacks.record(parentStem, propName, "free-form object → [String: String]")
+            }
             return "[String: String]"
         default:
+            if let anyOf = prop.anyOf {
+                // Reached for anyOf array items; properties resolve anyOf via resolveAnyOfParam.
+                // `string | ""` (a value or the "unset" empty string) is exactly a String.
+                let variants = anyOf.filter { $0.enum != [""] }
+                if !variants.allSatisfy({ $0.type == "string" && $0.enum == nil }) {
+                    let kinds = variants.map { $0.title ?? $0.type ?? "?" }.joined(separator: " | ")
+                    fallbacks.record(parentStem, propName, "array items anyOf \(kinds) → String")
+                }
+            } else {
+                fallbacks.record(parentStem, propName, "type \(prop.type ?? "missing") → String")
+            }
             return "String"
         }
     }
@@ -402,6 +427,12 @@ struct ParamGenerator {
         }
 
         // Multiple variants — fall back to String
+        let kinds = nonEmpty.map { variant -> String in
+            if let title = variant.title { return title }
+            if variant.enum != nil { return "\(variant.type ?? "?") enum" }
+            return variant.type ?? variant.ref.map { String($0.split(separator: "/").last ?? "") } ?? "?"
+        }
+        fallbacks.record(parentStem, propName, "anyOf \(kinds.joined(separator: " | ")) → String")
         return "String"
     }
     
@@ -580,5 +611,17 @@ struct ParamGenerator {
     
     private func refToTypeName(_ ref: String) -> String {
         ref.split(separator: "/").last.map(String.init) ?? ref
+    }
+}
+
+/// Params whose Swift type is looser than the spec's (a `String` for an `anyOf`, a
+/// `[String: String]` for a free-form object, …). Collected so the coverage check can
+/// require each one to be fixed or explicitly accepted.
+final class ParamFallbacks: @unchecked Sendable {
+    /// "PaymentIntentCreate.off_session" → "anyOf boolean | string enum → String"
+    private(set) var entries: [String: String] = [:]
+
+    func record(_ parentStem: String, _ propName: String, _ detail: String) {
+        entries["\(parentStem).\(propName)"] = detail
     }
 }

@@ -193,6 +193,21 @@ struct CodegenCLI: AsyncParsableCommand {
             encoding: .utf8
         )
 
+        // ── 10. Coverage check against the spec ───────────────────
+        let coverage = CoverageCheck(
+            spec: openAPISpec,
+            parser: parser,
+            routeGen: routeGen,
+            resources: resources,
+            paramFallbacks: paramGen.fallbacks.entries,
+            exceptions: coverageExceptions
+        ).run()
+        try CoverageCheck.manifestSource(coverage).write(
+            to: testsGeneratedURL.appending(path: "GeneratedOperations.swift"),
+            atomically: true,
+            encoding: .utf8
+        )
+
         // ── Summary ───────────────────────────────────────────────
         print()
         print("  Generated/")
@@ -210,6 +225,26 @@ struct CodegenCLI: AsyncParsableCommand {
         print(" API Version: \(openAPISpec.info.version)")
         print("📂 Output: \(output)/Generated/")
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        print()
+        print("🔍 Coverage: \(coverage.operations.count) operations generated, \(coverage.skipped.count) skipped, \(coverage.accepted.count) accepted deviations")
+
+        guard coverage.violations.isEmpty && coverage.unusedExceptions.isEmpty else {
+            if !coverage.violations.isEmpty {
+                print()
+                print("❌ \(coverage.violations.count) deviation(s) from the spec. Fix each, or add it with a reason to Sources/Codegen/CoverageExceptions.swift:")
+                for issue in coverage.violations {
+                    print("   \"\(issue.key)\"  — \(issue.detail)")
+                }
+            }
+            if !coverage.unusedExceptions.isEmpty {
+                print()
+                print("❌ \(coverage.unusedExceptions.count) exception(s) in CoverageExceptions.swift no longer match anything. Remove them:")
+                for key in coverage.unusedExceptions {
+                    print("   \"\(key)\"")
+                }
+            }
+            throw ExitCode.failure
+        }
     }
     
     private func printHeader() {
