@@ -38,19 +38,39 @@ struct SpecParser {
     
     /// The SDK method name Stripe gives an operation in `x-stripeOperations` (snake_case, e.g.
     /// "retrieve", "void_invoice"), as used by Stripe's official SDKs. Prefers the name listed
-    /// on `schemaName` itself; otherwise uses the name if every schema listing the operation
-    /// agrees on it. `service` methods win over `collection` methods (nested lists such as
-    /// GET /v1/charges/{charge}/refunds only have the latter). Nil when the spec doesn't name it.
+    /// on `schemaName` itself; otherwise the name most schemas listing the operation give it
+    /// (DELETE /v1/customers/{customer}/sources/{id} is `delete` on bank_account and card,
+    /// `detach` on source → `delete`). `service` methods win over `collection` methods (nested
+    /// lists such as GET /v1/charges/{charge}/refunds only have the latter). Nil when the spec
+    /// doesn't name it, or the most common names tie.
     func stripeMethodName(method: String, path: String, schemaName: String) -> String? {
         let all = stripeMethodNames["\(method) \(path)"] ?? []
         for methodOn in ["service", "collection"] {
             let entries = all.filter { $0.methodOn == methodOn }
             guard !entries.isEmpty else { continue }
             if let own = entries.first(where: { $0.schema == schemaName }) { return own.name }
-            let names = Set(entries.map(\.name))
-            if names.count == 1 { return names.first }
+            let counts = Dictionary(entries.map { ($0.name, 1) }, uniquingKeysWith: +)
+            let top = counts.values.max() ?? 0
+            let leaders = counts.filter { $0.value == top }.map(\.key)
+            if leaders.count == 1 { return leaders[0] }
         }
         return nil
+    }
+
+    /// The polymorphic schema a response of several object types decodes as: the smallest
+    /// schema whose `anyOf` includes every variant. POST /v1/customers/{customer}/sources/{id}
+    /// returns `card | bank_account | source`, which `payment_source` (`account | bank_account
+    /// | card | source`) covers. Nil when no single schema does.
+    func polymorphicSchema(covering variants: Set<String>) -> String? {
+        let candidates = spec.components.schemas.compactMap { name, schema -> (name: String, size: Int)? in
+            guard let anyOf = schema.anyOf else { return nil }
+            let refs = anyOf.compactMap { $0.ref.map(refToSchemaName) }
+            guard refs.count == anyOf.count, variants.isSubset(of: Set(refs)) else { return nil }
+            return (name, refs.count)
+        }
+        guard let smallest = candidates.map(\.size).min() else { return nil }
+        let best = candidates.filter { $0.size == smallest }
+        return best.count == 1 ? best[0].name : nil
     }
 
     /// The resource an operation belongs to per the spec's `x-stripeOperations`, when that
@@ -108,6 +128,15 @@ struct SpecParser {
             ]
             
             for (method, operation) in operations {
+                // A file response (the quote PDF) has no JSON type to group by: use its owner
+                if let op = operation, op.fileResponseContentType != nil {
+                    let owners = Set((stripeMethodNames["\(method) \(path)"] ?? []).filter { $0.methodOn == "service" }.map(\.schema))
+                    if owners.count == 1, let owner = owners.first {
+                        mapping[owner, default: []].append((method, path))
+                    }
+                    continue
+                }
+
                 guard let op = operation,
                       let response = op.responses?["200"],
                       let content = response.content?["application/json"],

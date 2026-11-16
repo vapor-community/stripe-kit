@@ -16,6 +16,7 @@ struct GeneratedOperation: Sendable {
 
 /// Every operation the generator emitted.
 let generatedOperations: [GeneratedOperation] = [
+    GeneratedOperation(method: "GET", path: "/v1/account", routes: "AccountRoutes", name: "retrieveCurrent", returnType: "Account"),
     GeneratedOperation(method: "POST", path: "/v1/account_links", routes: "AccountLinkRoutes", name: "create", returnType: "AccountLink"),
     GeneratedOperation(method: "POST", path: "/v1/account_sessions", routes: "AccountSessionRoutes", name: "create", returnType: "AccountSession"),
     GeneratedOperation(method: "GET", path: "/v1/accounts", routes: "AccountRoutes", name: "list", returnType: "AccountList"),
@@ -356,6 +357,7 @@ let generatedOperations: [GeneratedOperation] = [
     GeneratedOperation(method: "GET", path: "/v1/quotes/{quote}/computed_upfront_line_items", routes: "QuoteRoutes", name: "listComputedUpfrontLineItems", returnType: "ItemList"),
     GeneratedOperation(method: "POST", path: "/v1/quotes/{quote}/finalize", routes: "QuoteRoutes", name: "finalizeQuote", returnType: "Quote"),
     GeneratedOperation(method: "GET", path: "/v1/quotes/{quote}/line_items", routes: "QuoteRoutes", name: "listLineItems", returnType: "ItemList"),
+    GeneratedOperation(method: "GET", path: "/v1/quotes/{quote}/pdf", routes: "QuoteRoutes", name: "pdf", returnType: "Data"),
     GeneratedOperation(method: "GET", path: "/v1/radar/early_fraud_warnings", routes: "EarlyFraudWarningRoutes", name: "list", returnType: "EarlyFraudWarningList"),
     GeneratedOperation(method: "GET", path: "/v1/radar/early_fraud_warnings/{early_fraud_warning}", routes: "EarlyFraudWarningRoutes", name: "retrieve", returnType: "EarlyFraudWarning"),
     GeneratedOperation(method: "POST", path: "/v1/radar/payment_evaluations", routes: "PaymentEvaluationRoutes", name: "create", returnType: "PaymentEvaluation"),
@@ -576,7 +578,4 @@ let generatedOperations: [GeneratedOperation] = [
 ]
 
 /// Spec operations deliberately not generated ("METHOD /path" → reason), from CoverageExceptions.swift.
-let skippedOperations: [String: String] = [
-    "GET /v1/account": "Retrieves the API key's own account. Stripe names it `retrieve`, the same as GET /v1/accounts/{account}, and with no path param there's no parent to tell the two apart by.",
-    "GET /v1/quotes/{quote}/pdf": "The response is a PDF; StripeAPIHandler only decodes JSON.",
-]
+let skippedOperations: [String: String] = [:]

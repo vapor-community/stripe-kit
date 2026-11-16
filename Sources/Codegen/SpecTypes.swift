@@ -213,6 +213,18 @@ struct OperationObject: Decodable {
     let requestBody: RequestBody?
     let responses: [String: ResponseObject]?
     let parameters: [ParameterObject]?
+    /// Overrides the API host for this operation (e.g. https://files.stripe.com/)
+    let servers: [Server]?
+
+    struct Server: Decodable {
+        let url: String
+    }
+
+    /// The 200 response's content type when it's a file rather than JSON (e.g. application/pdf)
+    var fileResponseContentType: String? {
+        guard let content = responses?["200"]?.content, content["application/json"] == nil else { return nil }
+        return content.keys.sorted().first
+    }
     
     struct RequestBody: Decodable {
         let content: [String: MediaType]?

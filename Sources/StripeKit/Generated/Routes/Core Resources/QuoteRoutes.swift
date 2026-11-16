@@ -43,6 +43,9 @@ public struct QuoteRoutes: Sendable {
     /// When retrieving a quote, there is an includable line_items property containing the first handful of
     /// those items. There is also a URL where you can retrieve the full (paginated) list of line items.
     public var listLineItems: @Sendable (_ quote: String, _ params: QuoteListLineItemsParams?) async throws -> ItemList
+
+    /// Download the PDF for a finalized quote. Explanation for special handling can be found here
+    public var pdf: @Sendable (_ quote: String, _ expand: [String]?) async throws -> Data
 }
 
 extension QuoteRoutes {
@@ -120,6 +123,16 @@ extension QuoteRoutes {
                     method: .GET,
                     path: path
                 ) as ItemList
+            },
+            pdf: { quote, expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/quotes/\(quote)/pdf" : "/v1/quotes/\(quote)/pdf?\(query)"
+                return try await handler.sendForData(
+                    method: .GET,
+                    path: path,
+                    baseURL: "https://files.stripe.com"
+                )
             }
         )
     }

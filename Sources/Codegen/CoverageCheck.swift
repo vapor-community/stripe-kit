@@ -8,7 +8,7 @@
 //   missing   — a spec operation that isn't generated
 //   duplicate — an operation generated on more than one route
 //   name      — a route not named as the spec's x-stripeOperations names it
-//               (a `{name}For{Parent}` collision suffix counts as the spec name)
+//               (a `{name}For{Parent}` or `{name}Current` collision suffix counts as the spec name)
 //   return    — a route whose return type couldn't be read from the response schema
 //   param     — a param typed looser than the spec (see ParamFallbacks)
 
@@ -60,7 +60,7 @@ struct CoverageCheck {
                 let endpoint = "\(op.httpMethod) \(op.path)"
 
                 if let specName = parser.stripeMethodName(method: op.httpMethod, path: op.path, schemaName: resource.schemaName).map(snakeToCamel) {
-                    if op.funcName != specName && !op.funcName.hasPrefix(specName + "For") {
+                    if op.funcName != specName && !op.funcName.hasPrefix(specName + "For") && op.funcName != specName + "Current" {
                         issues.append(Issue(key: "name \(endpoint)", detail: "\(routes).\(op.funcName), spec names it \(specName)"))
                     }
                 } else {

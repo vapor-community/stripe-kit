@@ -187,10 +187,23 @@ struct RouteGenerator {
                     lines.append("                if let expand { query = expand.map { \"expand[]=\\($0)\" }.joined(separator: \"&\") }")
                 }
                 lines.append("                let path = query.isEmpty ? \"\(apiPath)\" : \"\(apiPath)?\\(query)\"")
-                lines.append("                return try await handler.send(")
-                lines.append("                    method: .GET,")
-                lines.append("                    path: path")
-                lines.append("                ) as \(opReturnType)")
+                if op.returnsFile {
+                    // A file (e.g. a PDF), possibly from another host (files.stripe.com)
+                    lines.append("                return try await handler.sendForData(")
+                    lines.append("                    method: .GET,")
+                    if let serverURL = op.serverURL {
+                        lines.append("                    path: path,")
+                        lines.append("                    baseURL: \"\(serverURL)\"")
+                    } else {
+                        lines.append("                    path: path")
+                    }
+                    lines.append("                )")
+                } else {
+                    lines.append("                return try await handler.send(")
+                    lines.append("                    method: .GET,")
+                    lines.append("                    path: path")
+                    lines.append("                ) as \(opReturnType)")
+                }
                 
             case "DELETE":
                 lines.append("                var query = \"\"")
@@ -236,6 +249,10 @@ struct RouteGenerator {
         /// False when the response's type couldn't be read from the spec and the route falls
         /// back to the resource type (a polymorphic list or `anyOf` response, …)
         let returnTypeFromSpec: Bool
+        /// Host from the operation's `servers` (no trailing slash), when it isn't the API host
+        let serverURL: String?
+        /// The response is a file (returned as `Data`), not JSON
+        let returnsFile: Bool
 
         /// The same operation under another name (its params struct is named after it too).
         func renamed(_ name: String) -> RouteOperation {
@@ -245,7 +262,8 @@ struct RouteGenerator {
                 hasBody: hasBody, hasRequiredBodyFields: hasRequiredBodyFields,
                 isListOrSearch: isListOrSearch, isMultipart: isMultipart,
                 hasQueryParams: hasQueryParams, hasRequiredQueryParams: hasRequiredQueryParams,
-                returnType: returnType, returnTypeFromSpec: returnTypeFromSpec
+                returnType: returnType, returnTypeFromSpec: returnTypeFromSpec,
+                serverURL: serverURL, returnsFile: returnsFile
             )
         }
     }
@@ -276,6 +294,17 @@ struct RouteGenerator {
         guard let ref = op.responses?["200"]?.content?["application/json"]?.schema?.properties?["data"]?.items?.ref
         else { return nil }
         return parser.schemaNameToSwiftType(String(ref.split(separator: "/").last ?? Substring(ref)))
+    }
+
+    /// Swift type of a response that is `anyOf` several object types (none deleted), as the
+    /// polymorphic schema covering them all.
+    private func polymorphicResponseType(_ op: OperationObject) -> String? {
+        guard let anyOf = op.responses?["200"]?.content?["application/json"]?.schema?.anyOf, anyOf.count > 1 else { return nil }
+        let refs = anyOf.compactMap { $0.ref.map { String($0.split(separator: "/").last ?? Substring($0)) } }
+        guard refs.count == anyOf.count, !refs.contains(where: { $0.starts(with: SpecParser.deletedPrefix) }),
+              let schema = parser.polymorphicSchema(covering: Set(refs))
+        else { return nil }
+        return parser.schemaNameToSwiftType(schema)
     }
 
     /// Swift type of a response that is a plain `$ref`.
@@ -377,7 +406,12 @@ struct RouteGenerator {
                 let listItem = listItemType(op)
                 let itemType = listItem ?? resource.swiftTypeName
                 let returnTypeFromSpec: Bool
+                let returnsFile = op.fileResponseContentType != nil
+                let serverURL = op.servers?.first.map { $0.url.hasSuffix("/") ? String($0.url.dropLast()) : $0.url }
                 switch responseWrapper(op) {
+                case _ where returnsFile:
+                    returnType = "Data"
+                    returnTypeFromSpec = true
                 case "list":
                     returnType = "\(itemType)List"
                     returnTypeFromSpec = listItem != nil
@@ -387,7 +421,7 @@ struct RouteGenerator {
                 default:
                     // A deleted object type when the spec's response can be one; otherwise the
                     // referenced type, or the resource type
-                    returnType = deletedResponseType(op) ?? referencedResponseType(op)
+                    returnType = deletedResponseType(op) ?? referencedResponseType(op) ?? polymorphicResponseType(op)
                     returnTypeFromSpec = returnType != nil
                 }
                 
@@ -406,7 +440,9 @@ struct RouteGenerator {
                     hasQueryParams: !queryParams.isEmpty,
                     hasRequiredQueryParams: queryParams.contains { $0.required == true },
                     returnType: returnType,
-                    returnTypeFromSpec: returnTypeFromSpec
+                    returnTypeFromSpec: returnTypeFromSpec,
+                    serverURL: serverURL,
+                    returnsFile: returnsFile
                 ))
             }
         }
@@ -416,7 +452,8 @@ struct RouteGenerator {
         // POST /v1/customers/{customer}/tax_ids); Stripe's SDKs put those on different services.
         // The operation in the resource's own namespace keeps the name; the others get a
         // parent suffix (`createForCustomer`). Without a local one, all get a suffix.
-        // Operations with no path param to name a parent by are dropped as before.
+        // One with no path param acts on the API key's own object (GET /v1/account next to
+        // GET /v1/accounts/{account}) and gets `Current`: `retrieveCurrent`.
         var byFunc: [String: [RouteOperation]] = [:]
         for op in results { byFunc[op.funcName, default: []].append(op) }
         var resolved: [String: RouteOperation] = [:]
@@ -430,8 +467,7 @@ struct RouteGenerator {
                     resolved[funcName] = op
                     continue
                 }
-                guard let parent = op.pathParams.first else { continue }
-                let name = funcName + "For" + capitalize(snakeToCamel(parent))
+                let name = op.pathParams.first.map { funcName + "For" + capitalize(snakeToCamel($0)) } ?? funcName + "Current"
                 guard resolved[name] == nil, byFunc[name] == nil else { continue }
                 resolved[name] = op.renamed(name)
             }

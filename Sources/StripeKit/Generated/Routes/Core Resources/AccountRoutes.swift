@@ -47,6 +47,9 @@ public struct AccountRoutes: Sendable {
     /// rejected.
     public var reject: @Sendable (_ account: String, _ params: AccountRejectParams) async throws -> Account
 
+    /// Retrieves the details of an account.
+    public var retrieveCurrent: @Sendable (_ expand: [String]?) async throws -> Account
+
     /// With Connect, you can unreject accounts that you have previously rejected. Only accounts that were
     /// rejected by your platform can be unrejected. This API cannot be used to unreject accounts that were
     /// rejected by Stripe. Unreject will only enable charges and/or payouts if there are no other
@@ -106,6 +109,15 @@ extension AccountRoutes {
                     method: .POST,
                     path: "/v1/accounts/\(account)/reject",
                     body: .bytes(ByteBuffer(string: body))
+                ) as Account
+            },
+            retrieveCurrent: { expand in
+                var query = ""
+                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
+                let path = query.isEmpty ? "/v1/account" : "/v1/account?\(query)"
+                return try await handler.send(
+                    method: .GET,
+                    path: path
                 ) as Account
             },
             unreject: { account, params in

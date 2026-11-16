@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+import StripeKit
 
 /// Checks the generated routes cover the spec: every operation in `spec3.sdk.json` is generated
 /// exactly once or deliberately skipped, and nothing generated is missing from the spec.
@@ -61,6 +62,16 @@ struct SpecCoverageTests {
             .map { "\($0.key): \($0.value.map { "\($0.routes).\($0.name)" }.joined(separator: ", "))" }
             .sorted()
         #expect(duplicates.isEmpty, "\(duplicates)")
+    }
+
+    /// Routes that need special handling in the generator. The key paths only compile if
+    /// the routes have these signatures.
+    @Test("File and current-object routes have their expected signatures")
+    func specialRouteSignatures() {
+        // application/pdf from files.stripe.com, returned as bytes
+        let _: KeyPath<QuoteRoutes, @Sendable (String, [String]?) async throws -> Data> = \.pdf
+        // GET /v1/account: the API key's own account, next to GET /v1/accounts/{account}
+        let _: KeyPath<AccountRoutes, @Sendable ([String]?) async throws -> Account> = \.retrieveCurrent
     }
 
     @Test("Skipped operations aren't also generated")

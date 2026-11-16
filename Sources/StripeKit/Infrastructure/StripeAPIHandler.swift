@@ -86,6 +86,38 @@ public struct StripeAPIHandler: Sendable {
 
     let filesBaseURL = "https://files.stripe.com"
 
+    /// Send a request whose response is a file, such as a quote PDF, and return its bytes.
+    /// `baseURL` overrides the API host for endpoints served elsewhere (files.stripe.com).
+    public func sendForData(
+        method: HTTPMethod,
+        path: String,
+        baseURL: String? = nil
+    ) async throws -> Data {
+        var request = HTTPClientRequest(url: (baseURL ?? self.baseURL) + path)
+        request.method = method
+        request.headers.add(name: "Authorization", value: "Bearer \(apiKey)")
+        request.headers.add(name: "Stripe-Version", value: apiVersion)
+        if let account = stripeAccount {
+            request.headers.add(name: "Stripe-Account", value: account)
+        }
+
+        let response = try await httpClient.execute(request, timeout: .seconds(120))
+        let responseBody = try await response.body.collect(upTo: 1024 * 1024 * 50)
+        let data = Data(responseBody.readableBytesView)
+
+        guard (200..<300).contains(response.status.code) else {
+            // Errors are JSON even when the success response is a file
+            if let stripeError = try? JSONDecoder().decode(StripeError.self, from: data) {
+                throw stripeError
+            }
+            throw StripeError(error: StripeAPIError(
+                type: .apiError,
+                message: "HTTP \(response.status.code)"
+            ))
+        }
+        return data
+    }
+
     /// Send a multipart file upload to the Stripe Files API.
     @discardableResult
     public func sendMultipart<T: Codable>(
