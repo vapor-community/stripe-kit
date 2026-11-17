@@ -9,11 +9,11 @@ import Foundation
 
 public struct TreasuryInboundTransfersResourceInboundTransferResourceStatusTransitions: Codable, Sendable {
     /// Timestamp describing when an InboundTransfer changed status to `canceled`.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Timestamp describing when an InboundTransfer changed status to `failed`.
-    public var failedAt: Int?
+    public var failedAt: Date?
     /// Timestamp describing when an InboundTransfer changed status to `succeeded`.
-    public var succeededAt: Int?
+    public var succeededAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case canceledAt = "canceled_at"

@@ -69,7 +69,7 @@ public struct InvoiceCreateParams: StripeParams {
     public var automaticTax: InvoiceCreateAutomaticTax?
     /// The time when this invoice should be scheduled to finalize (up to 5 years in the future). The
     /// invoice is finalized at this time if it's still in draft state.
-    public var automaticallyFinalizesAt: Int?
+    public var automaticallyFinalizesAt: Date?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay this invoice using the default source attached to the customer. When sending an invoice,
     /// Stripe will email this invoice to the customer with payment instructions. Defaults to
@@ -104,10 +104,10 @@ public struct InvoiceCreateParams: StripeParams {
     public var discounts: [InvoiceCreateDiscounts]?
     /// The date on which payment for this invoice is due. Valid only for invoices where
     /// `collection_method=send_invoice`.
-    public var dueDate: Int?
+    public var dueDate: Date?
     /// The date when this invoice is in effect. Same as `finalized_at` unless overwritten. When defined,
     /// this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
-    public var effectiveAt: Int?
+    public var effectiveAt: Date?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Footer to be displayed on the invoice.
@@ -160,7 +160,7 @@ public struct InvoiceCreateParams: StripeParams {
     /// resulting transfer will be found on the invoice's charge.
     public var transferData: InvoiceCreateTransferData?
 
-    public init(accountTaxIds: [String]? = nil, applicationFeeAmount: Int? = nil, autoAdvance: Bool? = nil, automaticTax: InvoiceCreateAutomaticTax? = nil, automaticallyFinalizesAt: Int? = nil, collectionMethod: InvoiceCreateCollectionMethod? = nil, currency: String? = nil, customFields: [InvoiceCreateCustomFields]? = nil, customer: String? = nil, customerAccount: String? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [InvoiceCreateDiscounts]? = nil, dueDate: Int? = nil, effectiveAt: Int? = nil, expand: [String]? = nil, footer: String? = nil, fromInvoice: InvoiceCreateFromInvoice? = nil, issuer: InvoiceCreateIssuer? = nil, metadata: [String: String]? = nil, number: String? = nil, onBehalfOf: String? = nil, paymentSettings: InvoiceCreatePaymentSettings? = nil, pendingInvoiceItemsBehavior: InvoiceCreatePendingInvoiceItemsBehavior? = nil, rendering: InvoiceCreateRendering? = nil, shippingCost: InvoiceCreateShippingCost? = nil, shippingDetails: InvoiceCreateShippingDetails? = nil, statementDescriptor: String? = nil, subscription: String? = nil, transferData: InvoiceCreateTransferData? = nil) {
+    public init(accountTaxIds: [String]? = nil, applicationFeeAmount: Int? = nil, autoAdvance: Bool? = nil, automaticTax: InvoiceCreateAutomaticTax? = nil, automaticallyFinalizesAt: Date? = nil, collectionMethod: InvoiceCreateCollectionMethod? = nil, currency: String? = nil, customFields: [InvoiceCreateCustomFields]? = nil, customer: String? = nil, customerAccount: String? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [InvoiceCreateDiscounts]? = nil, dueDate: Date? = nil, effectiveAt: Date? = nil, expand: [String]? = nil, footer: String? = nil, fromInvoice: InvoiceCreateFromInvoice? = nil, issuer: InvoiceCreateIssuer? = nil, metadata: [String: String]? = nil, number: String? = nil, onBehalfOf: String? = nil, paymentSettings: InvoiceCreatePaymentSettings? = nil, pendingInvoiceItemsBehavior: InvoiceCreatePendingInvoiceItemsBehavior? = nil, rendering: InvoiceCreateRendering? = nil, shippingCost: InvoiceCreateShippingCost? = nil, shippingDetails: InvoiceCreateShippingDetails? = nil, statementDescriptor: String? = nil, subscription: String? = nil, transferData: InvoiceCreateTransferData? = nil) {
         self.accountTaxIds = accountTaxIds
         self.applicationFeeAmount = applicationFeeAmount
         self.autoAdvance = autoAdvance
@@ -529,7 +529,7 @@ public struct InvoiceUpdateParams: StripeParams {
     /// The time when this invoice should be scheduled to finalize (up to 5 years in the future). The
     /// invoice is finalized at this time if it's still in draft state. To turn off automatic finalization,
     /// set `auto_advance` to false.
-    public var automaticallyFinalizesAt: Int?
+    public var automaticallyFinalizesAt: Date?
     /// Either `charge_automatically` or `send_invoice`. This field can be updated only on `draft` invoices.
     public var collectionMethod: InvoiceUpdateCollectionMethod?
     /// A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is
@@ -558,10 +558,10 @@ public struct InvoiceUpdateParams: StripeParams {
     public var discounts: [InvoiceUpdateDiscounts]?
     /// The date on which payment for this invoice is due. Only valid for invoices where
     /// `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
-    public var dueDate: Int?
+    public var dueDate: Date?
     /// The date when this invoice is in effect. Same as `finalized_at` unless overwritten. When defined,
     /// this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
-    public var effectiveAt: Int?
+    public var effectiveAt: Date?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Footer to be displayed on the invoice.
@@ -605,7 +605,7 @@ public struct InvoiceUpdateParams: StripeParams {
     /// value.
     public var transferData: InvoiceUpdateTransferData?
 
-    public init(accountTaxIds: [String]? = nil, applicationFeeAmount: Int? = nil, autoAdvance: Bool? = nil, automaticTax: InvoiceUpdateAutomaticTax? = nil, automaticallyFinalizesAt: Int? = nil, collectionMethod: InvoiceUpdateCollectionMethod? = nil, customFields: [InvoiceUpdateCustomFields]? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [InvoiceUpdateDiscounts]? = nil, dueDate: Int? = nil, effectiveAt: Int? = nil, expand: [String]? = nil, footer: String? = nil, issuer: InvoiceUpdateIssuer? = nil, metadata: [String: String]? = nil, number: String? = nil, onBehalfOf: String? = nil, paymentSettings: InvoiceUpdatePaymentSettings? = nil, rendering: InvoiceUpdateRendering? = nil, shippingCost: InvoiceUpdateShippingCost? = nil, shippingDetails: InvoiceUpdateShippingDetails? = nil, statementDescriptor: String? = nil, transferData: InvoiceUpdateTransferData? = nil) {
+    public init(accountTaxIds: [String]? = nil, applicationFeeAmount: Int? = nil, autoAdvance: Bool? = nil, automaticTax: InvoiceUpdateAutomaticTax? = nil, automaticallyFinalizesAt: Date? = nil, collectionMethod: InvoiceUpdateCollectionMethod? = nil, customFields: [InvoiceUpdateCustomFields]? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [InvoiceUpdateDiscounts]? = nil, dueDate: Date? = nil, effectiveAt: Date? = nil, expand: [String]? = nil, footer: String? = nil, issuer: InvoiceUpdateIssuer? = nil, metadata: [String: String]? = nil, number: String? = nil, onBehalfOf: String? = nil, paymentSettings: InvoiceUpdatePaymentSettings? = nil, rendering: InvoiceUpdateRendering? = nil, shippingCost: InvoiceUpdateShippingCost? = nil, shippingDetails: InvoiceUpdateShippingDetails? = nil, statementDescriptor: String? = nil, transferData: InvoiceUpdateTransferData? = nil) {
         self.accountTaxIds = accountTaxIds
         self.applicationFeeAmount = applicationFeeAmount
         self.autoAdvance = autoAdvance
@@ -815,11 +815,11 @@ public struct InvoiceAddLinesLinesDiscounts: StripeParams {
 /// for details.
 public struct InvoiceAddLinesLinesPeriod: StripeParams {
     /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
-    public var end: Int
+    public var end: Date
     /// The start of the period. This value is inclusive.
-    public var start: Int
+    public var start: Date
 
-    public init(end: Int, start: Int) {
+    public init(end: Date, start: Date) {
         self.end = end
         self.start = start
     }
@@ -1515,9 +1515,9 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptions:
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: InvoiceCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: InvoiceCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -2181,11 +2181,11 @@ public struct InvoiceCreatePreviewInvoiceItemsDiscounts: StripeParams {
 /// for details.
 public struct InvoiceCreatePreviewInvoiceItemsPeriod: StripeParams {
     /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
-    public var end: Int
+    public var end: Date
     /// The start of the period. This value is inclusive.
-    public var start: Int
+    public var start: Date
 
-    public init(end: Int, start: Int) {
+    public init(end: Date, start: Date) {
         self.end = end
         self.start = start
     }
@@ -2349,9 +2349,9 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPausePauseAt: Str
     /// time.
     public var type: InvoiceCreatePreviewScheduleDetailsPauseSchedulesPausePauseAtType
     /// The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: InvoiceCreatePreviewScheduleDetailsPauseSchedulesPausePauseAtType, timestamp: Int? = nil) {
+    public init(type: InvoiceCreatePreviewScheduleDetailsPauseSchedulesPausePauseAtType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -2446,9 +2446,9 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAt: S
     /// The duration after which to resume the subscription. Required when `type` is `duration`.
     public var duration: InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtDuration?
     /// The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtType, duration: InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtDuration? = nil, timestamp: Int? = nil) {
+    public init(type: InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtType, duration: InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtDuration? = nil, timestamp: Date? = nil) {
         self.type = type
         self.duration = duration
         self.timestamp = timestamp
@@ -2872,9 +2872,9 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodEnd:
     public var type: InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodEndType
     /// A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to
     /// `period.start`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodEndType, timestamp: Int? = nil) {
+    public init(type: InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodEndType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -2886,9 +2886,9 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStar
     public var type: InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStartType
     /// A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to
     /// `period.end`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStartType, timestamp: Int? = nil) {
+    public init(type: InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStartType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -3026,9 +3026,9 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesDuration: StripeParams {
 public enum InvoiceCreatePreviewScheduleDetailsPhasesEndDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -3038,7 +3038,7 @@ public enum InvoiceCreatePreviewScheduleDetailsPhasesEndDate: Codable, Sendable,
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewScheduleDetailsPhasesEndDate matches")
     }
 
@@ -3097,9 +3097,9 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettingsIssuer: St
 public enum InvoiceCreatePreviewScheduleDetailsPhasesStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -3109,7 +3109,7 @@ public enum InvoiceCreatePreviewScheduleDetailsPhasesStartDate: Codable, Sendabl
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewScheduleDetailsPhasesStartDate matches")
     }
 
@@ -3150,9 +3150,9 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesTransferData: StripeParam
 public enum InvoiceCreatePreviewScheduleDetailsPhasesTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -3162,7 +3162,7 @@ public enum InvoiceCreatePreviewScheduleDetailsPhasesTrialEnd: Codable, Sendable
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewScheduleDetailsPhasesTrialEnd matches")
     }
 
@@ -3226,17 +3226,17 @@ public struct InvoiceCreatePreviewSubscriptionDetails: StripeParams {
     /// the current phase of the schedule backing this subscription, if the schedule exists. If set,
     /// `subscription`, and one of `subscription_details.items`, or `subscription_details.trial_end` are
     /// required. Also, `subscription_details.proration_behavior` cannot be set to 'none'.
-    public var prorationDate: Int?
+    public var prorationDate: Date?
     /// For paused subscriptions, setting `subscription_details.resume_at` to `now` will preview the invoice
     /// that will be generated if the subscription is resumed.
     public var resumeAt: InvoiceCreatePreviewSubscriptionDetailsResumeAt?
     /// Date a subscription is intended to start (can be future or past).
-    public var startDate: Int?
+    public var startDate: Date?
     /// If provided, the invoice returned will preview updating or creating a subscription with that trial
     /// end. If set, one of `subscription_details.items` or `subscription` is required.
     public var trialEnd: InvoiceCreatePreviewSubscriptionDetailsTrialEnd?
 
-    public init(billingCycleAnchor: InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchor? = nil, billingMode: InvoiceCreatePreviewSubscriptionDetailsBillingMode? = nil, billingSchedules: [InvoiceCreatePreviewSubscriptionDetailsBillingSchedules]? = nil, cancelAt: InvoiceCreatePreviewSubscriptionDetailsCancelAt? = nil, cancelAtPeriodEnd: Bool? = nil, cancelNow: Bool? = nil, defaultTaxRates: [String]? = nil, items: [InvoiceCreatePreviewSubscriptionDetailsItems]? = nil, metadata: [String: String]? = nil, pause: InvoiceCreatePreviewSubscriptionDetailsPause? = nil, prorationBehavior: InvoiceCreatePreviewSubscriptionDetailsProrationBehavior? = nil, prorationDate: Int? = nil, resumeAt: InvoiceCreatePreviewSubscriptionDetailsResumeAt? = nil, startDate: Int? = nil, trialEnd: InvoiceCreatePreviewSubscriptionDetailsTrialEnd? = nil) {
+    public init(billingCycleAnchor: InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchor? = nil, billingMode: InvoiceCreatePreviewSubscriptionDetailsBillingMode? = nil, billingSchedules: [InvoiceCreatePreviewSubscriptionDetailsBillingSchedules]? = nil, cancelAt: InvoiceCreatePreviewSubscriptionDetailsCancelAt? = nil, cancelAtPeriodEnd: Bool? = nil, cancelNow: Bool? = nil, defaultTaxRates: [String]? = nil, items: [InvoiceCreatePreviewSubscriptionDetailsItems]? = nil, metadata: [String: String]? = nil, pause: InvoiceCreatePreviewSubscriptionDetailsPause? = nil, prorationBehavior: InvoiceCreatePreviewSubscriptionDetailsProrationBehavior? = nil, prorationDate: Date? = nil, resumeAt: InvoiceCreatePreviewSubscriptionDetailsResumeAt? = nil, startDate: Date? = nil, trialEnd: InvoiceCreatePreviewSubscriptionDetailsTrialEnd? = nil) {
         self.billingCycleAnchor = billingCycleAnchor
         self.billingMode = billingMode
         self.billingSchedules = billingSchedules
@@ -3282,9 +3282,9 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchor: StripeP
     public var type: InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchorType
     /// A timestamp to use as the subscription's billing cycle anchor. Only valid when `type` is
     /// `timestamp`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchorType, timestamp: Int? = nil) {
+    public init(type: InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchorType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -3361,9 +3361,9 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntil: 
     /// Specifies the billing period.
     public var duration: InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilDuration?
     /// The end date of the billing schedule.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilType, duration: InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilDuration? = nil, timestamp: Int? = nil) {
+    public init(type: InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilType, duration: InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilDuration? = nil, timestamp: Date? = nil) {
         self.type = type
         self.duration = duration
         self.timestamp = timestamp
@@ -3396,9 +3396,9 @@ public enum InvoiceCreatePreviewSubscriptionDetailsCancelAt: Codable, Sendable, 
     case maxPeriodEnd
     /// `min_period_end`
     case minPeriodEnd
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -3410,7 +3410,7 @@ public enum InvoiceCreatePreviewSubscriptionDetailsCancelAt: Codable, Sendable, 
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewSubscriptionDetailsCancelAt matches")
     }
 
@@ -3685,9 +3685,9 @@ public struct InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFrom:
 public enum InvoiceCreatePreviewSubscriptionDetailsTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -3697,7 +3697,7 @@ public enum InvoiceCreatePreviewSubscriptionDetailsTrialEnd: Codable, Sendable, 
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceCreatePreviewSubscriptionDetailsTrialEnd matches")
     }
 
@@ -4197,9 +4197,9 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptions:
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -4632,11 +4632,11 @@ public struct InvoiceUpdateLinesLinesDiscounts: StripeParams {
 /// for details.
 public struct InvoiceUpdateLinesLinesPeriod: StripeParams {
     /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
-    public var end: Int
+    public var end: Date
     /// The start of the period. This value is inclusive.
-    public var start: Int
+    public var start: Date
 
-    public init(end: Int, start: Int) {
+    public init(end: Date, start: Date) {
         self.end = end
         self.start = start
     }

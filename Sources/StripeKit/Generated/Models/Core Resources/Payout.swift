@@ -24,7 +24,7 @@ public struct Payout: Codable, Sendable {
     public var applicationFeeAmount: Int?
     /// Date that you can expect the payout to arrive in the bank. This factors in delays to account for
     /// weekends or bank holidays.
-    public var arrivalDate: Int
+    public var arrivalDate: Date
     /// Returns `true` if the payout is created by an [automated payout
     /// schedule](https://docs.stripe.com/payouts#payout-schedule) and `false` if it's [requested
     /// manually](https://stripe.com/docs/payouts#manual-payouts).
@@ -33,7 +33,7 @@ public struct Payout: Codable, Sendable {
     @Expandable<BalanceTransaction>
     public var balanceTransaction: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String

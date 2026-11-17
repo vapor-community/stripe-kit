@@ -28,7 +28,7 @@ public struct Install: Codable, Sendable {
     public var contentSecurityPolicyGranted: AppServiceResourceInstallContentSecurityPolicy
     public var contentSecurityPolicyPending: AppServiceResourceInstallContentSecurityPolicy
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The ID of the embedding platform that created the install, if applicable.
     public var createdBy: String?
     /// The endpoint URLs authorized by the installer.

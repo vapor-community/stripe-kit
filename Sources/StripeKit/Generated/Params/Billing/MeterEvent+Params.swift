@@ -25,9 +25,9 @@ public struct MeterEventCreateParams: StripeParams {
     public var identifier: String?
     /// The time of the event. Measured in seconds since the Unix epoch. Must be within the past 35 calendar
     /// days or up to 5 minutes in the future. Defaults to current timestamp if not specified.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(eventName: String, payload: [String: String], expand: [String]? = nil, identifier: String? = nil, timestamp: Int? = nil) {
+    public init(eventName: String, payload: [String: String], expand: [String]? = nil, identifier: String? = nil, timestamp: Date? = nil) {
         self.eventName = eventName
         self.payload = payload
         self.expand = expand

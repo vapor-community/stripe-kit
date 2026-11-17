@@ -34,7 +34,7 @@ public struct Quote: Codable, Sendable {
     public var collectionMethod: QuoteCollectionMethod
     public var computed: QuotesResourceComputed
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String?
@@ -55,7 +55,7 @@ public struct Quote: Codable, Sendable {
     public var discounts: [String]?
     /// The date on which the quote will be canceled if in `open` or `draft` status. Measured in seconds
     /// since the Unix epoch.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// A footer that will be displayed on the quote PDF.
     public var footer: String?
     /// Details of the quote that was cloned. See the [cloning

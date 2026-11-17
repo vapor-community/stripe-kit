@@ -34,7 +34,7 @@ public struct IssuingAuthorization: Codable, Sendable {
     @Expandable<Cardholder>
     public var cardholder: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The currency of the cardholder. This currency can be different from the currency presented at
     /// authorization and the `merchant_currency` field on this authorization. Three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported

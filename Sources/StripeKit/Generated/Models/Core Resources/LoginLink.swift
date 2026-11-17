@@ -13,7 +13,7 @@ import Foundation
 /// account](https://docs.stripe.com/connect/integrate-express-dashboard#create-login-link)
 public struct LoginLink: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: LoginLinkObject
     /// The URL for the login link.

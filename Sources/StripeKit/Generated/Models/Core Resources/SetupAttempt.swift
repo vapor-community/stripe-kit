@@ -22,7 +22,7 @@ public struct SetupAttempt: Codable, Sendable {
     /// defaults to false when attaching a PaymentMethod to a Customer.
     public var attachToSelf: Bool?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The value of
     /// [customer](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-customer) on the
     /// SetupIntent at the time of this confirmation.

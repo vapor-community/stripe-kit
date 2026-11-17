@@ -9,7 +9,7 @@ import Foundation
 
 public struct SetupIntentNextActionVerifyWithMicrodeposits: Codable, Sendable {
     /// The timestamp when the microdeposits are expected to land.
-    public var arrivalDate: Int
+    public var arrivalDate: Date
     /// The URL for the hosted verification page, which allows customers to verify their bank account.
     public var hostedVerificationUrl: String
     /// The type of the microdeposit sent to the customer. Used to distinguish between different

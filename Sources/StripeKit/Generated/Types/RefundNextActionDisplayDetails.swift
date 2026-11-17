@@ -10,7 +10,7 @@ import Foundation
 public struct RefundNextActionDisplayDetails: Codable, Sendable {
     public var emailSent: EmailSent
     /// The expiry timestamp.
-    public var expiresAt: Int
+    public var expiresAt: Date
 
     public enum CodingKeys: String, CodingKey {
         case emailSent = "email_sent"

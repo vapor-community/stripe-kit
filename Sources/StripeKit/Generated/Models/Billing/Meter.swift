@@ -12,7 +12,7 @@ import Foundation
 /// Related guide: [Usage based billing](https://docs.stripe.com/billing/subscriptions/usage-based)
 public struct Meter: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     public var customerMapping: BillingMeterResourceCustomerMappingSettings
     public var defaultAggregation: BillingMeterResourceAggregationSettings
     /// The meter's name.
@@ -33,7 +33,7 @@ public struct Meter: Codable, Sendable {
     public var status: MeterStatus
     public var statusTransitions: BillingMeterResourceBillingMeterStatusTransitions
     /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
-    public var updated: Int
+    public var updated: Date
     public var valueSettings: BillingMeterResourceBillingMeterValue
 
     public enum CodingKeys: String, CodingKey {

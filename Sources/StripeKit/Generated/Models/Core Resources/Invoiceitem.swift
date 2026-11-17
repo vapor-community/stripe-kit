@@ -32,7 +32,7 @@ public struct Invoiceitem: Codable, Sendable {
     /// The ID of the account to bill for this invoice item.
     public var customerAccount: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var date: Int
+    public var date: Date
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// If true, discounts will apply to this invoice item. Always false for prorations.

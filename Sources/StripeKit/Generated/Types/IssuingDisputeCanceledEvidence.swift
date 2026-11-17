@@ -13,13 +13,13 @@ public struct IssuingDisputeCanceledEvidence: Codable, Sendable {
     @Expandable<File>
     public var additionalDocumentation: String?
     /// Date when order was canceled.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Whether the cardholder was provided with a cancellation policy.
     public var cancellationPolicyProvided: Bool?
     /// Reason for canceling the order.
     public var cancellationReason: String?
     /// Date when the cardholder expected to receive the product.
-    public var expectedAt: Int?
+    public var expectedAt: Date?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Description of the merchandise or service that was purchased.
@@ -29,7 +29,7 @@ public struct IssuingDisputeCanceledEvidence: Codable, Sendable {
     /// Result of cardholder's attempt to return the product.
     public var returnStatus: IssuingDisputeCanceledEvidenceReturnStatus?
     /// Date when the product was returned or attempted to be returned.
-    public var returnedAt: Int?
+    public var returnedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case additionalDocumentation = "additional_documentation"

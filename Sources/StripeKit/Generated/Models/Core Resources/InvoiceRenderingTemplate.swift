@@ -12,7 +12,7 @@ import Foundation
 /// the API when creating invoices.
 public struct InvoiceRenderingTemplate: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

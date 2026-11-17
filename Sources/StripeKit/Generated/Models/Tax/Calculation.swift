@@ -21,7 +21,7 @@ public struct Calculation: Codable, Sendable {
     public var customer: String?
     public var customerDetails: TaxProductResourceCustomerDetails
     /// Timestamp of date at which the tax calculation will expire.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// Unique identifier for the calculation.
     public var id: String?
     /// The list of items the customer is purchasing.
@@ -46,7 +46,7 @@ public struct Calculation: Codable, Sendable {
     /// doesn't guarantee that the expected tax rules and rate being used match the actual rules and rate
     /// that will be in effect on that date. We deploy tax changes before their effective date, but not
     /// within a fixed window.
-    public var taxDate: Int
+    public var taxDate: Date
 
     public enum CodingKeys: String, CodingKey {
         case amountTotal = "amount_total"

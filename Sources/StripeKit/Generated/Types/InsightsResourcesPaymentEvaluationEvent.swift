@@ -12,7 +12,7 @@ public struct InsightsResourcesPaymentEvaluationEvent: Codable, Sendable {
     public var disputeOpened: InsightsResourcesPaymentEvaluationDisputeOpened?
     public var earlyFraudWarningReceived: InsightsResourcesPaymentEvaluationEarlyFraudWarningReceived?
     /// Timestamp when the event occurred.
-    public var occurredAt: Int
+    public var occurredAt: Date
     public var refunded: InsightsResourcesPaymentEvaluationRefunded?
     /// Indicates the type of event attached to the payment evaluation.
     public var type: InsightsResourcesPaymentEvaluationEventType

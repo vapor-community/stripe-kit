@@ -9,7 +9,7 @@ import Foundation
 
 public struct IssuingCardFraudWarning: Codable, Sendable {
     /// Timestamp of the most recent fraud warning.
-    public var startedAt: Int?
+    public var startedAt: Date?
     /// The type of fraud warning that most recently took place on this card. This field updates with every
     /// new fraud warning, so the value changes over time. If populated, cancel and reissue the card.
     public var type: IssuingCardFraudWarningType?

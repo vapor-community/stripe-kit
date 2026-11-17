@@ -10,7 +10,7 @@ import Foundation
 public struct SubscriptionPaymentMethodOptionsMandateOptionsBlik: Codable, Sendable {
     /// Date when the mandate expires and no further payments will be charged. If not provided, the mandate
     /// will be set to be indefinite.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case expiresAt = "expires_at"

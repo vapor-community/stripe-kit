@@ -15,7 +15,7 @@ public struct IssuingToken: Codable, Sendable {
     @Expandable<IssuingCard>
     public var card: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The hashed ID derived from the device ID from the card network associated with the token.
     public var deviceFingerprint: String?
     /// Unique identifier for the object.
@@ -30,7 +30,7 @@ public struct IssuingToken: Codable, Sendable {
     public var networkData: IssuingNetworkTokenNetworkData?
     /// Time at which the token was last updated by the card network. Measured in seconds since the Unix
     /// epoch.
-    public var networkUpdatedAt: Int
+    public var networkUpdatedAt: Date
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: IssuingTokenObject
     /// The usage state of the token.

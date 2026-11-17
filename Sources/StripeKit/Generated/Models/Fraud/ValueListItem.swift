@@ -12,7 +12,7 @@ import Foundation
 /// items](https://docs.stripe.com/radar/lists#managing-list-items)
 public struct ValueListItem: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The name or email address of the user who added this item to the value list.
     public var createdBy: String
     /// Unique identifier for the object.

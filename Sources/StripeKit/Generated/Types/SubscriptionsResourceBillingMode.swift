@@ -14,7 +14,7 @@ public struct SubscriptionsResourceBillingMode: Codable, Sendable {
     /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
     public var type: SubscriptionsResourceBillingModeType
     /// Details on when the current billing_mode was adopted.
-    public var updatedAt: Int?
+    public var updatedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case flexible

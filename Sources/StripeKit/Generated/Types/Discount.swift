@@ -22,7 +22,7 @@ public struct Discount: Codable, Sendable {
     public var customerAccount: String?
     /// If the coupon has a duration of `repeating`, the date that this discount will end. If the coupon has
     /// a duration of `once` or `forever`, this attribute will be null.
-    public var end: Int?
+    public var end: Date?
     /// The ID of the discount object. Discounts can't be fetched by ID. Use `expand[]=discounts` in API
     /// calls to expand discount IDs in an array.
     public var id: String
@@ -40,7 +40,7 @@ public struct Discount: Codable, Sendable {
     public var promotionCode: String?
     public var source: DiscountSource
     /// Date that the coupon was applied.
-    public var start: Int
+    public var start: Date
     /// The subscription that this coupon is applied to, if it is applied to a particular subscription.
     public var subscription: String?
     /// The subscription item that this coupon is applied to, if it is applied to a particular subscription

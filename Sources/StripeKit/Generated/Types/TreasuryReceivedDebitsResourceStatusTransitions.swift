@@ -9,7 +9,7 @@ import Foundation
 
 public struct TreasuryReceivedDebitsResourceStatusTransitions: Codable, Sendable {
     /// Timestamp describing when the DebitReversal changed status to `completed`.
-    public var completedAt: Int?
+    public var completedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case completedAt = "completed_at"

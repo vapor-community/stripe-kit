@@ -35,7 +35,7 @@ public struct DeletedDiscount: Codable, Sendable {
     public var promotionCode: String?
     public var source: DiscountSource
     /// Date that the coupon was applied.
-    public var start: Int
+    public var start: Date
     /// The subscription that this coupon is applied to, if it is applied to a particular subscription.
     public var subscription: String?
     /// The subscription item that this coupon is applied to, if it is applied to a particular subscription

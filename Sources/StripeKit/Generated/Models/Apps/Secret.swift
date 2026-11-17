@@ -18,11 +18,11 @@ import Foundation
 /// reloads](https://docs.stripe.com/stripe-apps/store-auth-data-custom-objects)
 public struct Secret: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// If true, indicates that this secret has been deleted
     public var deleted: Bool?
     /// The Unix timestamp for the expiry time of the secret, after which the secret deletes.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

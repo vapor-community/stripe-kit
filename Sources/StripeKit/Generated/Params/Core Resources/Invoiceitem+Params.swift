@@ -308,11 +308,11 @@ public struct InvoiceitemCreateDiscounts: StripeParams {
 /// for details.
 public struct InvoiceitemCreatePeriod: StripeParams {
     /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
-    public var end: Int
+    public var end: Date
     /// The start of the period. This value is inclusive.
-    public var start: Int
+    public var start: Date
 
-    public init(end: Int, start: Int) {
+    public init(end: Date, start: Date) {
         self.end = end
         self.start = start
     }
@@ -395,11 +395,11 @@ public struct InvoiceitemUpdateDiscounts: StripeParams {
 /// for details.
 public struct InvoiceitemUpdatePeriod: StripeParams {
     /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
-    public var end: Int
+    public var end: Date
     /// The start of the period. This value is inclusive.
-    public var start: Int
+    public var start: Date
 
-    public init(end: Int, start: Int) {
+    public init(end: Date, start: Date) {
         self.end = end
         self.start = start
     }

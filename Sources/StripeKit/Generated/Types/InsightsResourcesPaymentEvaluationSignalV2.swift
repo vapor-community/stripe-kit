@@ -10,7 +10,7 @@ import Foundation
 /// A payment evaluation signal with evaluated_at, risk_level, and score fields.
 public struct InsightsResourcesPaymentEvaluationSignalV2: Codable, Sendable {
     /// The time when this signal was evaluated.
-    public var evaluatedAt: Int
+    public var evaluatedAt: Date
     /// Risk level of this signal, based on the score.
     public var riskLevel: InsightsResourcesPaymentEvaluationSignalV2RiskLevel
     /// Numeric score for this signal, returned with two decimal places. Possible values for evaluated

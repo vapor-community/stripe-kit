@@ -12,11 +12,11 @@ import Foundation
 /// authentication.
 public struct FileLink: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Returns if the link is already expired.
     public var expired: Bool
     /// Time that the link expires.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// The file object this link points to.
     @Expandable<File>
     public var file: String?

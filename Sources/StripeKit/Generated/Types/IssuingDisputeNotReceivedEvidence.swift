@@ -13,7 +13,7 @@ public struct IssuingDisputeNotReceivedEvidence: Codable, Sendable {
     @Expandable<File>
     public var additionalDocumentation: String?
     /// Date when the cardholder expected to receive the product.
-    public var expectedAt: Int?
+    public var expectedAt: Date?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Description of the merchandise or service that was purchased.

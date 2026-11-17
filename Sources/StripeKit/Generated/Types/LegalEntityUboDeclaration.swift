@@ -9,7 +9,7 @@ import Foundation
 
 public struct LegalEntityUboDeclaration: Codable, Sendable {
     /// The Unix timestamp marking when the beneficial owner attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the beneficial owner attestation was made.
     public var ip: String?
     /// The user-agent string from the browser where the beneficial owner attestation was made.

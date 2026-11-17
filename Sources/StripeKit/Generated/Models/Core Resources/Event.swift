@@ -29,7 +29,7 @@ public struct Event: Codable, Sendable {
     /// Authentication context needed to fetch the event or related object.
     public var context: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     public var data: NotificationEventData
     /// Unique identifier for the object.
     public var id: String

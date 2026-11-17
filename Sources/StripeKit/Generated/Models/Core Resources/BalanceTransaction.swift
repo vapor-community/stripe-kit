@@ -15,11 +15,11 @@ public struct BalanceTransaction: Codable, Sendable {
     /// charged to another party, and a negative value represents funds sent to another party.
     public var amount: Int
     /// The date that the transaction's net funds become available in the Stripe balance.
-    public var availableOn: Int
+    public var availableOn: Date
     /// The balance that this transaction impacts.
     public var balanceType: BalanceTransactionBalanceType
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String

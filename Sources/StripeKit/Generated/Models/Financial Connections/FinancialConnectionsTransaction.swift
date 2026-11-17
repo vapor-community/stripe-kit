@@ -29,11 +29,11 @@ public struct FinancialConnectionsTransaction: Codable, Sendable {
     public var status: FinancialConnectionsTransactionStatus
     public var statusTransitions: BankConnectionsResourceTransactionResourceStatusTransitions
     /// Time at which the transaction was transacted. Measured in seconds since the Unix epoch.
-    public var transactedAt: Int
+    public var transactedAt: Date
     /// The token of the transaction refresh that last updated or created this transaction.
     public var transactionRefresh: String
     /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
-    public var updated: Int
+    public var updated: Date
 
     public enum CodingKeys: String, CodingKey {
         case account

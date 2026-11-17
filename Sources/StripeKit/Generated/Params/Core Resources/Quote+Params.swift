@@ -61,7 +61,7 @@ public struct QuoteCreateParams: StripeParams {
     /// A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in
     /// seconds since the Unix epoch. If no value is passed, the default expiration date configured in your
     /// [quote template settings](https://dashboard.stripe.com/settings/billing/quote) will be used.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// A footer that will be displayed on the quote PDF. If no value is passed, the default footer
     /// configured in your [quote template settings](https://dashboard.stripe.com/settings/billing/quote)
     /// will be used.
@@ -95,7 +95,7 @@ public struct QuoteCreateParams: StripeParams {
     /// The data with which to automatically create a Transfer for each of the invoices.
     public var transferData: QuoteCreateTransferData?
 
-    public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteCreateAutomaticTax? = nil, collectionMethod: QuoteCreateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteCreateDiscounts]? = nil, expand: [String]? = nil, expiresAt: Int? = nil, footer: String? = nil, fromQuote: QuoteCreateFromQuote? = nil, header: String? = nil, invoiceSettings: QuoteCreateInvoiceSettings? = nil, lineItems: [QuoteCreateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteCreateSubscriptionData? = nil, testClock: String? = nil, transferData: QuoteCreateTransferData? = nil) {
+    public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteCreateAutomaticTax? = nil, collectionMethod: QuoteCreateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteCreateDiscounts]? = nil, expand: [String]? = nil, expiresAt: Date? = nil, footer: String? = nil, fromQuote: QuoteCreateFromQuote? = nil, header: String? = nil, invoiceSettings: QuoteCreateInvoiceSettings? = nil, lineItems: [QuoteCreateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteCreateSubscriptionData? = nil, testClock: String? = nil, transferData: QuoteCreateTransferData? = nil) {
         self.applicationFeeAmount = applicationFeeAmount
         self.applicationFeePercent = applicationFeePercent
         self.automaticTax = automaticTax
@@ -149,9 +149,9 @@ public struct QuoteFinalizeQuoteParams: StripeParams {
     public var expand: [String]?
     /// A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in
     /// seconds since the Unix epoch.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(expand: [String]? = nil, expiresAt: Int? = nil) {
+    public init(expand: [String]? = nil, expiresAt: Date? = nil) {
         self.expand = expand
         self.expiresAt = expiresAt
     }
@@ -305,7 +305,7 @@ public struct QuoteUpdateParams: StripeParams {
     public var expand: [String]?
     /// A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in
     /// seconds since the Unix epoch.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// A footer that will be displayed on the quote PDF.
     public var footer: String?
     /// A header that will be displayed on the quote PDF.
@@ -330,7 +330,7 @@ public struct QuoteUpdateParams: StripeParams {
     /// The data with which to automatically create a Transfer for each of the invoices.
     public var transferData: QuoteUpdateTransferData?
 
-    public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteUpdateAutomaticTax? = nil, collectionMethod: QuoteUpdateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteUpdateDiscounts]? = nil, expand: [String]? = nil, expiresAt: Int? = nil, footer: String? = nil, header: String? = nil, invoiceSettings: QuoteUpdateInvoiceSettings? = nil, lineItems: [QuoteUpdateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteUpdateSubscriptionData? = nil, transferData: QuoteUpdateTransferData? = nil) {
+    public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteUpdateAutomaticTax? = nil, collectionMethod: QuoteUpdateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteUpdateDiscounts]? = nil, expand: [String]? = nil, expiresAt: Date? = nil, footer: String? = nil, header: String? = nil, invoiceSettings: QuoteUpdateInvoiceSettings? = nil, lineItems: [QuoteUpdateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteUpdateSubscriptionData? = nil, transferData: QuoteUpdateTransferData? = nil) {
         self.applicationFeeAmount = applicationFeeAmount
         self.applicationFeePercent = applicationFeePercent
         self.automaticTax = automaticTax
@@ -693,9 +693,9 @@ public struct QuoteCreateSubscriptionDataBillingModeFlexible: StripeParams {
 public enum QuoteCreateSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `current_period_end`
     case currentPeriodEnd
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -705,7 +705,7 @@ public enum QuoteCreateSubscriptionDataEffectiveDate: Codable, Sendable, Express
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of QuoteCreateSubscriptionDataEffectiveDate matches")
     }
 
@@ -1018,9 +1018,9 @@ public struct QuoteUpdateSubscriptionData: StripeParams {
 public enum QuoteUpdateSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `current_period_end`
     case currentPeriodEnd
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -1030,7 +1030,7 @@ public enum QuoteUpdateSubscriptionDataEffectiveDate: Codable, Sendable, Express
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of QuoteUpdateSubscriptionDataEffectiveDate matches")
     }
 

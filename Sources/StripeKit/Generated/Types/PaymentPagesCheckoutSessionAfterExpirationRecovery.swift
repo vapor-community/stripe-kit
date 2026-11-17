@@ -14,7 +14,7 @@ public struct PaymentPagesCheckoutSessionAfterExpirationRecovery: Codable, Senda
     /// transaction is completed. It will be attached to the Checkout Session object upon expiration.
     public var enabled: Bool
     /// The timestamp at which the recovery URL will expire.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// URL that creates a new Checkout Session when clicked that is a copy of this expired Checkout Session
     public var url: String?
 

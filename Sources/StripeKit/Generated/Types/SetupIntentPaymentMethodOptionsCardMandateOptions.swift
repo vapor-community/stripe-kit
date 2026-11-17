@@ -21,7 +21,7 @@ public struct SetupIntentPaymentMethodOptionsCardMandateOptions: Codable, Sendab
     public var description: String?
     /// End date of the mandate or subscription. If not provided, the mandate will be active until canceled.
     /// If provided, end date should be after start date.
-    public var endDate: Int?
+    public var endDate: Date?
     /// Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
     public var interval: SetupIntentPaymentMethodOptionsCardMandateOptionsInterval
     /// The number of intervals between payments. For example, `interval=month` and `interval_count=3`
@@ -31,7 +31,7 @@ public struct SetupIntentPaymentMethodOptionsCardMandateOptions: Codable, Sendab
     /// Unique identifier for the mandate or subscription.
     public var reference: String
     /// Start date of the mandate or subscription. Start date should not be lesser than yesterday.
-    public var startDate: Int
+    public var startDate: Date
     /// Specifies the type of mandates supported. Possible values are `india`.
     public var supportedTypes: [String]?
 

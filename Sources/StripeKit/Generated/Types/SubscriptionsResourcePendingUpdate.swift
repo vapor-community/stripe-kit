@@ -12,7 +12,7 @@ import Foundation
 public struct SubscriptionsResourcePendingUpdate: Codable, Sendable {
     /// If the update is applied, determines the date of the first full invoice, and, for plans with `month`
     /// or `year` intervals, the day of the month for subsequent invoices. The timestamp is in UTC format.
-    public var billingCycleAnchor: Int?
+    public var billingCycleAnchor: Date?
     /// Indicates whether this subscription should cancel at the end of the current period if the update is
     /// applied.
     public var cancelAtPeriodEnd: Bool?
@@ -23,7 +23,7 @@ public struct SubscriptionsResourcePendingUpdate: Codable, Sendable {
     @ExpandableCollection<Discount>
     public var discounts: [String]?
     /// The point after which the changes reflected by this update will be discarded and no longer applied.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
@@ -31,7 +31,7 @@ public struct SubscriptionsResourcePendingUpdate: Codable, Sendable {
     public var subscriptionItems: [SubscriptionItem]?
     /// Unix timestamp representing the end of the trial period the customer will get before being charged
     /// for the first time, if the update is applied.
-    public var trialEnd: Int?
+    public var trialEnd: Date?
     /// Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end`
     /// per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together
     /// with `trial_end` is not allowed. See [Using trial periods on

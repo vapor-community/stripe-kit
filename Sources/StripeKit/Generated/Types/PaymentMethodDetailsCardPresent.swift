@@ -18,7 +18,7 @@ public struct PaymentMethodDetailsCardPresent: Codable, Sendable {
     public var brandProduct: String?
     /// When using manual capture, a future timestamp after which the charge will be automatically refunded
     /// if uncaptured.
-    public var captureBefore: Int?
+    public var captureBefore: Date?
     /// The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813)
     /// format. May include alphanumeric characters, special characters and first/last name separator (`/`).
     /// In some cases, the cardholder name may not be available depending on how the issuer has configured

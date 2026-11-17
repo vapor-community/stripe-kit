@@ -18,9 +18,9 @@ public struct SecretCreateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The Unix timestamp for the expiry time of the secret, after which the secret deletes.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(name: String, payload: String, scope: SecretCreateScope, expand: [String]? = nil, expiresAt: Int? = nil) {
+    public init(name: String, payload: String, scope: SecretCreateScope, expand: [String]? = nil, expiresAt: Date? = nil) {
         self.name = name
         self.payload = payload
         self.scope = scope

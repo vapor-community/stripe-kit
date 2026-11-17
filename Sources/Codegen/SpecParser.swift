@@ -311,7 +311,7 @@ struct SpecParser {
             }
             return .string
         case "integer":
-            return .integer
+            return property.isUnixTime ? .date : .integer
         case "number":
             return .number
         case "boolean":

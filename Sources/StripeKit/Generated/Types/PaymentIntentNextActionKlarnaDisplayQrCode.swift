@@ -11,7 +11,7 @@ public struct PaymentIntentNextActionKlarnaDisplayQrCode: Codable, Sendable {
     /// The data being used to generate QR code
     public var data: String
     /// The timestamp at which the QR code expires.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// The image_url_png string used to render QR code
     public var imageUrlPng: String
     /// The image_url_svg string used to render QR code

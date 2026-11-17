@@ -25,7 +25,7 @@ public struct Reader: Codable, Sendable {
     /// The last time this reader reported to Stripe backend. Timestamp is measured in milliseconds since
     /// the Unix epoch. Unlike most other Stripe timestamp fields which use seconds, this field uses
     /// milliseconds.
-    public var lastSeenAt: Int?
+    public var lastSeenAt: Date?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool

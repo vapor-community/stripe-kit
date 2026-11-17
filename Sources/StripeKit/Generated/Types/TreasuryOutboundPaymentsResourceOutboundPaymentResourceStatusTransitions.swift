@@ -9,13 +9,13 @@ import Foundation
 
 public struct TreasuryOutboundPaymentsResourceOutboundPaymentResourceStatusTransitions: Codable, Sendable {
     /// Timestamp describing when an OutboundPayment changed status to `canceled`.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Timestamp describing when an OutboundPayment changed status to `failed`.
-    public var failedAt: Int?
+    public var failedAt: Date?
     /// Timestamp describing when an OutboundPayment changed status to `posted`.
-    public var postedAt: Int?
+    public var postedAt: Date?
     /// Timestamp describing when an OutboundPayment changed status to `returned`.
-    public var returnedAt: Int?
+    public var returnedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case canceledAt = "canceled_at"

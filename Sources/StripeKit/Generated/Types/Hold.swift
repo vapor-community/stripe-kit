@@ -15,7 +15,7 @@ public struct Hold: Codable, Sendable {
     /// Amount in cents that can be released from this ReserveHold
     public var amountReleasable: Int?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Indicates which party created this ReserveHold.
     public var createdBy: HoldCreatedBy
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.

@@ -11,16 +11,16 @@ import Foundation
 /// easy to represent complex billing relationships.
 public struct SubscriptionItem: Codable, Sendable {
     /// The time period the subscription item has been billed for.
-    public var billedUntil: Int?
+    public var billedUntil: Date?
     /// Define thresholds at which an invoice will be sent, and the related subscription advanced to a new
     /// billing period
     public var billingThresholds: SubscriptionItemBillingThresholds?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// The end time of this subscription item's current billing period.
-    public var currentPeriodEnd: Int
+    public var currentPeriodEnd: Date
     /// The start time of this subscription item's current billing period.
-    public var currentPeriodStart: Int
+    public var currentPeriodStart: Date
     /// The current trial that is applied to this subscription item.
     public var currentTrial: SubscriptionsTrialsResourceCurrentTrial?
     /// The discounts applied to the subscription item. Subscription item discounts are applied before

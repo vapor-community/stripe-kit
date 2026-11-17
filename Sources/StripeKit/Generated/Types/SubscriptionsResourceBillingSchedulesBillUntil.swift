@@ -10,11 +10,11 @@ import Foundation
 /// Specifies the end of billing period.
 public struct SubscriptionsResourceBillingSchedulesBillUntil: Codable, Sendable {
     /// The timestamp the billing schedule will apply until.
-    public var computedTimestamp: Int
+    public var computedTimestamp: Date
     /// Specifies the billing period.
     public var duration: SubscriptionsResourceBillingSchedulesBillUntilDuration?
     /// If specified, the billing schedule will apply until the specified timestamp.
-    public var timestamp: Int?
+    public var timestamp: Date?
     /// Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
     public var type: SubscriptionsResourceBillingSchedulesBillUntilType
 

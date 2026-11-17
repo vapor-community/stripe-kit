@@ -9,7 +9,7 @@ import Foundation
 
 public struct SubscriptionSchedulesResourcePauseSchedulePause: Codable, Sendable {
     /// Time at which the subscription pauses.
-    public var pauseAt: Int
+    public var pauseAt: Date
     /// Settings controlling billing behavior during the pause.
     public var settings: SubscriptionSchedulesResourcePauseSchedulePauseSettings?
     public var status: SubscriptionSchedulesResourcePauseSchedulePauseStatus

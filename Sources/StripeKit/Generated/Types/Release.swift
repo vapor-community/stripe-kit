@@ -13,7 +13,7 @@ public struct Release: Codable, Sendable {
     /// unit](https://docs.stripe.com/currencies#zero-decimal).
     public var amount: Int
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Indicates which party created this ReserveRelease.
     public var createdBy: ReleaseCreatedBy
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -34,7 +34,7 @@ public struct Release: Codable, Sendable {
     /// The reason for the ReserveRelease, indicating why the funds were released.
     public var reason: ReleaseReason
     /// The release timestamp of the funds.
-    public var releasedAt: Int
+    public var releasedAt: Date
     /// The ReserveHold this ReserveRelease is associated with.
     @Expandable<Hold>
     public var reserveHold: String?

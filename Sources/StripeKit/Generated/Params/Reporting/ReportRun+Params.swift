@@ -78,9 +78,9 @@ public struct ReportRunCreateParameters: StripeParams {
     /// Currency of objects to be included in the report run.
     public var currency: String?
     /// Ending timestamp of data to be included in the report run (exclusive).
-    public var intervalEnd: Int?
+    public var intervalEnd: Date?
     /// Starting timestamp of data to be included in the report run.
-    public var intervalStart: Int?
+    public var intervalStart: Date?
     /// Payout ID by which to filter the report run.
     public var payout: String?
     /// Category of balance transactions to be included in the report run.
@@ -90,7 +90,7 @@ public struct ReportRunCreateParameters: StripeParams {
     /// effect on `interval_start` or `interval_end`.
     public var timezone: ReportRunCreateParametersTimezone?
 
-    public init(columns: [String]? = nil, connectedAccount: String? = nil, currency: String? = nil, intervalEnd: Int? = nil, intervalStart: Int? = nil, payout: String? = nil, reportingCategory: ReportRunCreateParametersReportingCategory? = nil, timezone: ReportRunCreateParametersTimezone? = nil) {
+    public init(columns: [String]? = nil, connectedAccount: String? = nil, currency: String? = nil, intervalEnd: Date? = nil, intervalStart: Date? = nil, payout: String? = nil, reportingCategory: ReportRunCreateParametersReportingCategory? = nil, timezone: ReportRunCreateParametersTimezone? = nil) {
         self.columns = columns
         self.connectedAccount = connectedAccount
         self.currency = currency

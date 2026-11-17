@@ -19,9 +19,9 @@ public struct RegistrationCreateParams: StripeParams {
     public var expand: [String]?
     /// If set, the Tax Registration stops being active at this time. If not set, the Tax Registration will
     /// be active indefinitely. Timestamp measured in seconds since the Unix epoch.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(activeFrom: RegistrationCreateActiveFrom, country: String, countryOptions: RegistrationCreateCountryOptions, expand: [String]? = nil, expiresAt: Int? = nil) {
+    public init(activeFrom: RegistrationCreateActiveFrom, country: String, countryOptions: RegistrationCreateCountryOptions, expand: [String]? = nil, expiresAt: Date? = nil) {
         self.activeFrom = activeFrom
         self.country = country
         self.countryOptions = countryOptions
@@ -101,9 +101,9 @@ public struct RegistrationUpdateParams: StripeParams {
 public enum RegistrationCreateActiveFrom: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -113,7 +113,7 @@ public enum RegistrationCreateActiveFrom: Codable, Sendable, ExpressibleByIntege
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of RegistrationCreateActiveFrom matches")
     }
 
@@ -2722,9 +2722,9 @@ public struct RegistrationCreateCountryOptionsZwStandard: StripeParams {
 public enum RegistrationUpdateActiveFrom: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -2734,7 +2734,7 @@ public enum RegistrationUpdateActiveFrom: Codable, Sendable, ExpressibleByIntege
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of RegistrationUpdateActiveFrom matches")
     }
 
@@ -2754,9 +2754,9 @@ public enum RegistrationUpdateActiveFrom: Codable, Sendable, ExpressibleByIntege
 public enum RegistrationUpdateExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -2766,7 +2766,7 @@ public enum RegistrationUpdateExpiresAt: Codable, Sendable, ExpressibleByInteger
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of RegistrationUpdateExpiresAt matches")
     }
 

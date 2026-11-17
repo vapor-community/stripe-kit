@@ -25,7 +25,7 @@ public struct PromotionCodeCreateParams: StripeParams {
     public var expand: [String]?
     /// The timestamp at which this promotion code will expire. If the coupon has specified a `redeems_by`,
     /// then this value cannot be after the coupon's `redeems_by`.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// A positive integer specifying the number of times the promotion code can be redeemed. If the coupon
     /// has specified a `max_redemptions`, then this value cannot be greater than the coupon's
     /// `max_redemptions`.
@@ -38,7 +38,7 @@ public struct PromotionCodeCreateParams: StripeParams {
     /// Settings that restrict the redemption of the promotion code.
     public var restrictions: PromotionCodeCreateRestrictions?
 
-    public init(promotion: PromotionCodeCreatePromotion, active: Bool? = nil, code: String? = nil, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil, expiresAt: Int? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, restrictions: PromotionCodeCreateRestrictions? = nil) {
+    public init(promotion: PromotionCodeCreatePromotion, active: Bool? = nil, code: String? = nil, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil, expiresAt: Date? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, restrictions: PromotionCodeCreateRestrictions? = nil) {
         self.promotion = promotion
         self.active = active
         self.code = code

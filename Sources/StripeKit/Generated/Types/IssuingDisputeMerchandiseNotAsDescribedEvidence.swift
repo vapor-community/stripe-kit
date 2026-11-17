@@ -15,13 +15,13 @@ public struct IssuingDisputeMerchandiseNotAsDescribedEvidence: Codable, Sendable
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Date when the product was received.
-    public var receivedAt: Int?
+    public var receivedAt: Date?
     /// Description of the cardholder's attempt to return the product.
     public var returnDescription: String?
     /// Result of cardholder's attempt to return the product.
     public var returnStatus: IssuingDisputeMerchandiseNotAsDescribedEvidenceReturnStatus?
     /// Date when the product was returned or attempted to be returned.
-    public var returnedAt: Int?
+    public var returnedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case additionalDocumentation = "additional_documentation"

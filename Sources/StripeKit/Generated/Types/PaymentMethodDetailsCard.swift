@@ -17,7 +17,7 @@ public struct PaymentMethodDetailsCard: Codable, Sendable {
     public var brand: String?
     /// When using manual capture, a future timestamp at which the charge will be automatically refunded if
     /// uncaptured.
-    public var captureBefore: Int?
+    public var captureBefore: Date?
     /// Check results by Card networks on Card address and CVC at time of payment.
     public var checks: PaymentMethodDetailsCardChecks?
     /// Two-letter ISO code representing the country of the card. You could use this attribute to get a

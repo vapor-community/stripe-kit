@@ -9,7 +9,7 @@ import Foundation
 
 public struct PaymentIntentNextActionCashappQrCode: Codable, Sendable {
     /// The date (unix timestamp) when the QR code expires.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// The image_url_png string used to render QR code
     public var imageUrlPng: String
     /// The image_url_svg string used to render QR code

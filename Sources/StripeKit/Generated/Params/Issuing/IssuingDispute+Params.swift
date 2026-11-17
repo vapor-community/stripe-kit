@@ -168,13 +168,13 @@ public struct IssuingDisputeCreateEvidenceCanceled: StripeParams {
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Date when order was canceled.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Whether the cardholder was provided with a cancellation policy.
     public var cancellationPolicyProvided: Bool?
     /// Reason for canceling the order.
     public var cancellationReason: String?
     /// Date when the cardholder expected to receive the product.
-    public var expectedAt: Int?
+    public var expectedAt: Date?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Description of the merchandise or service that was purchased.
@@ -184,9 +184,9 @@ public struct IssuingDisputeCreateEvidenceCanceled: StripeParams {
     /// Result of cardholder's attempt to return the product.
     public var returnStatus: IssuingDisputeCreateEvidenceCanceledReturnStatus?
     /// Date when the product was returned or attempted to be returned.
-    public var returnedAt: Int?
+    public var returnedAt: Date?
 
-    public init(additionalDocumentation: String? = nil, canceledAt: Int? = nil, cancellationPolicyProvided: Bool? = nil, cancellationReason: String? = nil, expectedAt: Int? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeCreateEvidenceCanceledProductType? = nil, returnStatus: IssuingDisputeCreateEvidenceCanceledReturnStatus? = nil, returnedAt: Int? = nil) {
+    public init(additionalDocumentation: String? = nil, canceledAt: Date? = nil, cancellationPolicyProvided: Bool? = nil, cancellationReason: String? = nil, expectedAt: Date? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeCreateEvidenceCanceledProductType? = nil, returnStatus: IssuingDisputeCreateEvidenceCanceledReturnStatus? = nil, returnedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
         self.canceledAt = canceledAt
         self.cancellationPolicyProvided = cancellationPolicyProvided
@@ -276,15 +276,15 @@ public struct IssuingDisputeCreateEvidenceMerchandiseNotAsDescribed: StripeParam
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Date when the product was received.
-    public var receivedAt: Int?
+    public var receivedAt: Date?
     /// Description of the cardholder's attempt to return the product.
     public var returnDescription: String?
     /// Result of cardholder's attempt to return the product.
     public var returnStatus: IssuingDisputeCreateEvidenceMerchandiseNotAsDescribedReturnStatus?
     /// Date when the product was returned or attempted to be returned.
-    public var returnedAt: Int?
+    public var returnedAt: Date?
 
-    public init(additionalDocumentation: String? = nil, explanation: String? = nil, receivedAt: Int? = nil, returnDescription: String? = nil, returnStatus: IssuingDisputeCreateEvidenceMerchandiseNotAsDescribedReturnStatus? = nil, returnedAt: Int? = nil) {
+    public init(additionalDocumentation: String? = nil, explanation: String? = nil, receivedAt: Date? = nil, returnDescription: String? = nil, returnStatus: IssuingDisputeCreateEvidenceMerchandiseNotAsDescribedReturnStatus? = nil, returnedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
         self.explanation = explanation
         self.receivedAt = receivedAt
@@ -326,7 +326,7 @@ public struct IssuingDisputeCreateEvidenceNotReceived: StripeParams {
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Date when the cardholder expected to receive the product.
-    public var expectedAt: Int?
+    public var expectedAt: Date?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Description of the merchandise or service that was purchased.
@@ -334,7 +334,7 @@ public struct IssuingDisputeCreateEvidenceNotReceived: StripeParams {
     /// Whether the product was a merchandise or service.
     public var productType: IssuingDisputeCreateEvidenceNotReceivedProductType?
 
-    public init(additionalDocumentation: String? = nil, expectedAt: Int? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeCreateEvidenceNotReceivedProductType? = nil) {
+    public init(additionalDocumentation: String? = nil, expectedAt: Date? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeCreateEvidenceNotReceivedProductType? = nil) {
         self.additionalDocumentation = additionalDocumentation
         self.expectedAt = expectedAt
         self.explanation = explanation
@@ -382,15 +382,15 @@ public struct IssuingDisputeCreateEvidenceServiceNotAsDescribed: StripeParams {
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Date when order was canceled.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Reason for canceling the order.
     public var cancellationReason: String?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Date when the product was received.
-    public var receivedAt: Int?
+    public var receivedAt: Date?
 
-    public init(additionalDocumentation: String? = nil, canceledAt: Int? = nil, cancellationReason: String? = nil, explanation: String? = nil, receivedAt: Int? = nil) {
+    public init(additionalDocumentation: String? = nil, canceledAt: Date? = nil, cancellationReason: String? = nil, explanation: String? = nil, receivedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
         self.canceledAt = canceledAt
         self.cancellationReason = cancellationReason
@@ -472,13 +472,13 @@ public struct IssuingDisputeUpdateEvidenceCanceled: StripeParams {
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Date when order was canceled.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Whether the cardholder was provided with a cancellation policy.
     public var cancellationPolicyProvided: Bool?
     /// Reason for canceling the order.
     public var cancellationReason: String?
     /// Date when the cardholder expected to receive the product.
-    public var expectedAt: Int?
+    public var expectedAt: Date?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Description of the merchandise or service that was purchased.
@@ -488,9 +488,9 @@ public struct IssuingDisputeUpdateEvidenceCanceled: StripeParams {
     /// Result of cardholder's attempt to return the product.
     public var returnStatus: IssuingDisputeUpdateEvidenceCanceledReturnStatus?
     /// Date when the product was returned or attempted to be returned.
-    public var returnedAt: Int?
+    public var returnedAt: Date?
 
-    public init(additionalDocumentation: String? = nil, canceledAt: Int? = nil, cancellationPolicyProvided: Bool? = nil, cancellationReason: String? = nil, expectedAt: Int? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeUpdateEvidenceCanceledProductType? = nil, returnStatus: IssuingDisputeUpdateEvidenceCanceledReturnStatus? = nil, returnedAt: Int? = nil) {
+    public init(additionalDocumentation: String? = nil, canceledAt: Date? = nil, cancellationPolicyProvided: Bool? = nil, cancellationReason: String? = nil, expectedAt: Date? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeUpdateEvidenceCanceledProductType? = nil, returnStatus: IssuingDisputeUpdateEvidenceCanceledReturnStatus? = nil, returnedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
         self.canceledAt = canceledAt
         self.cancellationPolicyProvided = cancellationPolicyProvided
@@ -580,15 +580,15 @@ public struct IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribed: StripeParam
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Date when the product was received.
-    public var receivedAt: Int?
+    public var receivedAt: Date?
     /// Description of the cardholder's attempt to return the product.
     public var returnDescription: String?
     /// Result of cardholder's attempt to return the product.
     public var returnStatus: IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribedReturnStatus?
     /// Date when the product was returned or attempted to be returned.
-    public var returnedAt: Int?
+    public var returnedAt: Date?
 
-    public init(additionalDocumentation: String? = nil, explanation: String? = nil, receivedAt: Int? = nil, returnDescription: String? = nil, returnStatus: IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribedReturnStatus? = nil, returnedAt: Int? = nil) {
+    public init(additionalDocumentation: String? = nil, explanation: String? = nil, receivedAt: Date? = nil, returnDescription: String? = nil, returnStatus: IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribedReturnStatus? = nil, returnedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
         self.explanation = explanation
         self.receivedAt = receivedAt
@@ -630,7 +630,7 @@ public struct IssuingDisputeUpdateEvidenceNotReceived: StripeParams {
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Date when the cardholder expected to receive the product.
-    public var expectedAt: Int?
+    public var expectedAt: Date?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Description of the merchandise or service that was purchased.
@@ -638,7 +638,7 @@ public struct IssuingDisputeUpdateEvidenceNotReceived: StripeParams {
     /// Whether the product was a merchandise or service.
     public var productType: IssuingDisputeUpdateEvidenceNotReceivedProductType?
 
-    public init(additionalDocumentation: String? = nil, expectedAt: Int? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeUpdateEvidenceNotReceivedProductType? = nil) {
+    public init(additionalDocumentation: String? = nil, expectedAt: Date? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeUpdateEvidenceNotReceivedProductType? = nil) {
         self.additionalDocumentation = additionalDocumentation
         self.expectedAt = expectedAt
         self.explanation = explanation
@@ -686,15 +686,15 @@ public struct IssuingDisputeUpdateEvidenceServiceNotAsDescribed: StripeParams {
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Date when order was canceled.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Reason for canceling the order.
     public var cancellationReason: String?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Date when the product was received.
-    public var receivedAt: Int?
+    public var receivedAt: Date?
 
-    public init(additionalDocumentation: String? = nil, canceledAt: Int? = nil, cancellationReason: String? = nil, explanation: String? = nil, receivedAt: Int? = nil) {
+    public init(additionalDocumentation: String? = nil, canceledAt: Date? = nil, cancellationReason: String? = nil, explanation: String? = nil, receivedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
         self.canceledAt = canceledAt
         self.cancellationReason = cancellationReason

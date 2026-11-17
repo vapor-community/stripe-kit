@@ -48,9 +48,9 @@ public struct CouponCreateParams: StripeParams {
     /// Unix timestamp specifying the last time at which the coupon can be redeemed (cannot be set to more
     /// than 5 years in the future). After the redeem_by date, the coupon can no longer be applied to new
     /// customers.
-    public var redeemBy: Int?
+    public var redeemBy: Date?
 
-    public init(amountOff: Int? = nil, appliesTo: CouponCreateAppliesTo? = nil, currency: String? = nil, currencyOptions: [String: CouponCreateCurrencyOptions]? = nil, duration: CouponCreateDuration? = nil, durationInMonths: Int? = nil, expand: [String]? = nil, id: String? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, name: String? = nil, percentOff: Double? = nil, redeemBy: Int? = nil) {
+    public init(amountOff: Int? = nil, appliesTo: CouponCreateAppliesTo? = nil, currency: String? = nil, currencyOptions: [String: CouponCreateCurrencyOptions]? = nil, duration: CouponCreateDuration? = nil, durationInMonths: Int? = nil, expand: [String]? = nil, id: String? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, name: String? = nil, percentOff: Double? = nil, redeemBy: Date? = nil) {
         self.amountOff = amountOff
         self.appliesTo = appliesTo
         self.currency = currency

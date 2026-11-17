@@ -11,7 +11,7 @@ public struct PaymentIntentNextActionSwishQrCode: Codable, Sendable {
     /// The raw data string used to generate QR code, it should be used together with QR code library.
     public var data: String
     /// The timestamp at which the QR code expires.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// The image_url_png string used to render QR code
     public var imageUrlPng: String
     /// The image_url_svg string used to render QR code

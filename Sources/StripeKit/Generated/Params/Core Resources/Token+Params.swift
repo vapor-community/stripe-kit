@@ -369,13 +369,13 @@ public struct TokenCreateAccountCompanyAdministrativeAddress: StripeParams {
 /// correct.
 public struct TokenCreateAccountCompanyDirectorshipDeclaration: StripeParams {
     /// The Unix timestamp marking when the directorship declaration attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the directorship declaration attestation was made.
     public var ip: String?
     /// The user agent of the browser from which the directorship declaration attestation was made.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -392,13 +392,13 @@ public struct TokenCreateAccountCompanyDirectorshipDeclaration: StripeParams {
 /// and correct.
 public struct TokenCreateAccountCompanyOwnershipDeclaration: StripeParams {
     /// The Unix timestamp marking when the beneficial owner attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the beneficial owner attestation was made.
     public var ip: String?
     /// The user agent of the browser from which the beneficial owner attestation was made.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -498,13 +498,13 @@ public struct TokenCreateAccountCompanyRegistrationDate: StripeParams {
 /// their legal entity.
 public struct TokenCreateAccountCompanyRepresentativeDeclaration: StripeParams {
     /// The Unix timestamp marking when the representative declaration attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the representative declaration attestation was made.
     public var ip: String?
     /// The user agent of the browser from which the representative declaration attestation was made.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -1213,13 +1213,13 @@ public struct TokenCreatePersonAdditionalTosAcceptances: StripeParams {
 /// Details on the legal guardian's acceptance of the main Stripe service agreement.
 public struct TokenCreatePersonAdditionalTosAcceptancesAccount: StripeParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent

@@ -19,7 +19,7 @@ public struct Product: Codable, Sendable {
     /// Whether the product is currently available for purchase.
     public var active: Bool
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The ID of the [Price](https://docs.stripe.com/api/prices) object that is the default price for this
     /// product.
     @Expandable<Price>
@@ -65,7 +65,7 @@ public struct Product: Codable, Sendable {
     /// receipts, invoices, Checkout, and the customer portal.
     public var unitLabel: String?
     /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
-    public var updated: Int
+    public var updated: Date
     /// A URL of a publicly-accessible webpage for this product.
     public var url: String?
 

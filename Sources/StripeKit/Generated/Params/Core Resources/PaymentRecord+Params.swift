@@ -10,9 +10,9 @@ import Foundation
 /// Query parameters for `GET /v1/payment_records`.
 public struct PaymentRecordListParams: StripeParams {
     /// Only return Payment Records that were created after this unix timestamp.
-    public var createdAfter: Int?
+    public var createdAfter: Date?
     /// Only return Payment Records that were created before this unix timestamp.
-    public var createdBefore: Int?
+    public var createdBefore: Date?
     /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
     /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
     /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -27,7 +27,7 @@ public struct PaymentRecordListParams: StripeParams {
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
 
-    public init(createdAfter: Int? = nil, createdBefore: Int? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
+    public init(createdAfter: Date? = nil, createdBefore: Date? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
         self.createdAfter = createdAfter
         self.createdBefore = createdBefore
         self.endingBefore = endingBefore
@@ -50,7 +50,7 @@ public struct PaymentRecordReportPaymentParams: StripeParams {
     /// The amount you initially requested for this payment.
     public var amountRequested: PaymentRecordReportPaymentAmountRequested
     /// When the reported payment was initiated. Measured in seconds since the Unix epoch.
-    public var initiatedAt: Int
+    public var initiatedAt: Date
     /// Information about the Payment Method debited for this payment.
     public var paymentMethodDetails: PaymentRecordReportPaymentPaymentMethodDetails
     /// Information about the payment attempt cancelation.
@@ -79,7 +79,7 @@ public struct PaymentRecordReportPaymentParams: StripeParams {
     /// Shipping information for this payment.
     public var shippingDetails: PaymentRecordReportPaymentShippingDetails?
 
-    public init(amountRequested: PaymentRecordReportPaymentAmountRequested, initiatedAt: Int, paymentMethodDetails: PaymentRecordReportPaymentPaymentMethodDetails, canceled: PaymentRecordReportPaymentCanceled? = nil, customerDetails: PaymentRecordReportPaymentCustomerDetails? = nil, customerPresence: PaymentRecordReportPaymentCustomerPresence? = nil, description: String? = nil, expand: [String]? = nil, failed: PaymentRecordReportPaymentFailed? = nil, guaranteed: PaymentRecordReportPaymentGuaranteed? = nil, metadata: [String: String]? = nil, outcome: PaymentRecordReportPaymentOutcome? = nil, processorDetails: PaymentRecordReportPaymentProcessorDetails? = nil, shippingDetails: PaymentRecordReportPaymentShippingDetails? = nil) {
+    public init(amountRequested: PaymentRecordReportPaymentAmountRequested, initiatedAt: Date, paymentMethodDetails: PaymentRecordReportPaymentPaymentMethodDetails, canceled: PaymentRecordReportPaymentCanceled? = nil, customerDetails: PaymentRecordReportPaymentCustomerDetails? = nil, customerPresence: PaymentRecordReportPaymentCustomerPresence? = nil, description: String? = nil, expand: [String]? = nil, failed: PaymentRecordReportPaymentFailed? = nil, guaranteed: PaymentRecordReportPaymentGuaranteed? = nil, metadata: [String: String]? = nil, outcome: PaymentRecordReportPaymentOutcome? = nil, processorDetails: PaymentRecordReportPaymentProcessorDetails? = nil, shippingDetails: PaymentRecordReportPaymentShippingDetails? = nil) {
         self.amountRequested = amountRequested
         self.initiatedAt = initiatedAt
         self.paymentMethodDetails = paymentMethodDetails
@@ -116,7 +116,7 @@ public struct PaymentRecordReportPaymentParams: StripeParams {
 
 public struct PaymentRecordReportPaymentAttemptParams: StripeParams {
     /// When the reported payment was initiated. Measured in seconds since the Unix epoch.
-    public var initiatedAt: Int
+    public var initiatedAt: Date
     /// Information about the payment attempt cancelation.
     public var canceled: PaymentRecordReportPaymentAttemptCanceled?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
@@ -139,7 +139,7 @@ public struct PaymentRecordReportPaymentAttemptParams: StripeParams {
     /// Shipping information for this payment.
     public var shippingDetails: PaymentRecordReportPaymentAttemptShippingDetails?
 
-    public init(initiatedAt: Int, canceled: PaymentRecordReportPaymentAttemptCanceled? = nil, description: String? = nil, expand: [String]? = nil, failed: PaymentRecordReportPaymentAttemptFailed? = nil, guaranteed: PaymentRecordReportPaymentAttemptGuaranteed? = nil, metadata: [String: String]? = nil, outcome: PaymentRecordReportPaymentAttemptOutcome? = nil, paymentMethodDetails: PaymentRecordReportPaymentAttemptPaymentMethodDetails? = nil, shippingDetails: PaymentRecordReportPaymentAttemptShippingDetails? = nil) {
+    public init(initiatedAt: Date, canceled: PaymentRecordReportPaymentAttemptCanceled? = nil, description: String? = nil, expand: [String]? = nil, failed: PaymentRecordReportPaymentAttemptFailed? = nil, guaranteed: PaymentRecordReportPaymentAttemptGuaranteed? = nil, metadata: [String: String]? = nil, outcome: PaymentRecordReportPaymentAttemptOutcome? = nil, paymentMethodDetails: PaymentRecordReportPaymentAttemptPaymentMethodDetails? = nil, shippingDetails: PaymentRecordReportPaymentAttemptShippingDetails? = nil) {
         self.initiatedAt = initiatedAt
         self.canceled = canceled
         self.description = description
@@ -168,7 +168,7 @@ public struct PaymentRecordReportPaymentAttemptParams: StripeParams {
 
 public struct PaymentRecordReportPaymentAttemptCanceledParams: StripeParams {
     /// When the reported payment was canceled. Measured in seconds since the Unix epoch.
-    public var canceledAt: Int
+    public var canceledAt: Date
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -177,7 +177,7 @@ public struct PaymentRecordReportPaymentAttemptCanceledParams: StripeParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
 
-    public init(canceledAt: Int, expand: [String]? = nil, metadata: [String: String]? = nil) {
+    public init(canceledAt: Date, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.canceledAt = canceledAt
         self.expand = expand
         self.metadata = metadata
@@ -192,7 +192,7 @@ public struct PaymentRecordReportPaymentAttemptCanceledParams: StripeParams {
 
 public struct PaymentRecordReportPaymentAttemptFailedParams: StripeParams {
     /// When the reported payment failed. Measured in seconds since the Unix epoch.
-    public var failedAt: Int
+    public var failedAt: Date
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -201,7 +201,7 @@ public struct PaymentRecordReportPaymentAttemptFailedParams: StripeParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
 
-    public init(failedAt: Int, expand: [String]? = nil, metadata: [String: String]? = nil) {
+    public init(failedAt: Date, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.failedAt = failedAt
         self.expand = expand
         self.metadata = metadata
@@ -216,7 +216,7 @@ public struct PaymentRecordReportPaymentAttemptFailedParams: StripeParams {
 
 public struct PaymentRecordReportPaymentAttemptGuaranteedParams: StripeParams {
     /// When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
-    public var guaranteedAt: Int
+    public var guaranteedAt: Date
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -225,7 +225,7 @@ public struct PaymentRecordReportPaymentAttemptGuaranteedParams: StripeParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
 
-    public init(guaranteedAt: Int, expand: [String]? = nil, metadata: [String: String]? = nil) {
+    public init(guaranteedAt: Date, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.guaranteedAt = guaranteedAt
         self.expand = expand
         self.metadata = metadata
@@ -282,7 +282,7 @@ public struct PaymentRecordReportRefundParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// When the reported refund was initiated. Measured in seconds since the Unix epoch.
-    public var initiatedAt: Int?
+    public var initiatedAt: Date?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -291,7 +291,7 @@ public struct PaymentRecordReportRefundParams: StripeParams {
     /// Information about the payment attempt refund.
     public var refunded: PaymentRecordReportRefundRefunded?
 
-    public init(outcome: PaymentRecordReportRefundOutcome, processorDetails: PaymentRecordReportRefundProcessorDetails, amount: PaymentRecordReportRefundAmount? = nil, expand: [String]? = nil, initiatedAt: Int? = nil, metadata: [String: String]? = nil, refunded: PaymentRecordReportRefundRefunded? = nil) {
+    public init(outcome: PaymentRecordReportRefundOutcome, processorDetails: PaymentRecordReportRefundProcessorDetails, amount: PaymentRecordReportRefundAmount? = nil, expand: [String]? = nil, initiatedAt: Date? = nil, metadata: [String: String]? = nil, refunded: PaymentRecordReportRefundRefunded? = nil) {
         self.outcome = outcome
         self.processorDetails = processorDetails
         self.amount = amount
@@ -429,9 +429,9 @@ public struct PaymentRecordReportPaymentPaymentMethodDetailsCustom: StripeParams
 /// Information about the payment attempt cancelation.
 public struct PaymentRecordReportPaymentCanceled: StripeParams {
     /// When the reported payment was canceled. Measured in seconds since the Unix epoch.
-    public var canceledAt: Int
+    public var canceledAt: Date
 
-    public init(canceledAt: Int) {
+    public init(canceledAt: Date) {
         self.canceledAt = canceledAt
     }
 
@@ -462,9 +462,9 @@ public struct PaymentRecordReportPaymentCustomerDetails: StripeParams {
 /// Information about the payment attempt failure.
 public struct PaymentRecordReportPaymentFailed: StripeParams {
     /// When the reported payment failed. Measured in seconds since the Unix epoch.
-    public var failedAt: Int
+    public var failedAt: Date
 
-    public init(failedAt: Int) {
+    public init(failedAt: Date) {
         self.failedAt = failedAt
     }
 
@@ -476,9 +476,9 @@ public struct PaymentRecordReportPaymentFailed: StripeParams {
 /// Information about the payment attempt guarantee.
 public struct PaymentRecordReportPaymentGuaranteed: StripeParams {
     /// When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
-    public var guaranteedAt: Int
+    public var guaranteedAt: Date
 
-    public init(guaranteedAt: Int) {
+    public init(guaranteedAt: Date) {
         self.guaranteedAt = guaranteedAt
     }
 
@@ -569,9 +569,9 @@ public struct PaymentRecordReportPaymentShippingDetailsAddress: StripeParams {
 /// Information about the payment attempt cancelation.
 public struct PaymentRecordReportPaymentAttemptCanceled: StripeParams {
     /// When the reported payment was canceled. Measured in seconds since the Unix epoch.
-    public var canceledAt: Int
+    public var canceledAt: Date
 
-    public init(canceledAt: Int) {
+    public init(canceledAt: Date) {
         self.canceledAt = canceledAt
     }
 
@@ -583,9 +583,9 @@ public struct PaymentRecordReportPaymentAttemptCanceled: StripeParams {
 /// Information about the payment attempt failure.
 public struct PaymentRecordReportPaymentAttemptFailed: StripeParams {
     /// When the reported payment failed. Measured in seconds since the Unix epoch.
-    public var failedAt: Int
+    public var failedAt: Date
 
-    public init(failedAt: Int) {
+    public init(failedAt: Date) {
         self.failedAt = failedAt
     }
 
@@ -597,9 +597,9 @@ public struct PaymentRecordReportPaymentAttemptFailed: StripeParams {
 /// Information about the payment attempt guarantee.
 public struct PaymentRecordReportPaymentAttemptGuaranteed: StripeParams {
     /// When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
-    public var guaranteedAt: Int
+    public var guaranteedAt: Date
 
-    public init(guaranteedAt: Int) {
+    public init(guaranteedAt: Date) {
         self.guaranteedAt = guaranteedAt
     }
 
@@ -873,9 +873,9 @@ public struct PaymentRecordReportRefundAmount: StripeParams {
 /// Information about the payment attempt refund.
 public struct PaymentRecordReportRefundRefunded: StripeParams {
     /// When the reported refund completed. Measured in seconds since the Unix epoch.
-    public var refundedAt: Int
+    public var refundedAt: Date
 
-    public init(refundedAt: Int) {
+    public init(refundedAt: Date) {
         self.refundedAt = refundedAt
     }
 

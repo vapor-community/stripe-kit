@@ -18,7 +18,7 @@ public struct EarlyFraudWarning: Codable, Sendable {
     @Expandable<Charge>
     public var charge: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The type of fraud labelled by the issuer. One of `card_never_received`,
     /// `fraudulent_card_application`, `made_with_counterfeit_card`, `made_with_lost_card`,
     /// `made_with_stolen_card`, `misc`, `unauthorized_use_of_card`.

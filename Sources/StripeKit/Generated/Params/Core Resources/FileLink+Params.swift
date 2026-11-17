@@ -17,14 +17,14 @@ public struct FileLinkCreateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The link isn't usable after this future timestamp.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
 
-    public init(file: String, expand: [String]? = nil, expiresAt: Int? = nil, metadata: [String: String]? = nil) {
+    public init(file: String, expand: [String]? = nil, expiresAt: Date? = nil, metadata: [String: String]? = nil) {
         self.file = file
         self.expand = expand
         self.expiresAt = expiresAt
@@ -111,9 +111,9 @@ public struct FileLinkUpdateParams: StripeParams {
 public enum FileLinkUpdateExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -123,7 +123,7 @@ public enum FileLinkUpdateExpiresAt: Codable, Sendable, ExpressibleByIntegerLite
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of FileLinkUpdateExpiresAt matches")
     }
 

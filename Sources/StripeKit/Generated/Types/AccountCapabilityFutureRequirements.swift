@@ -17,7 +17,7 @@ public struct AccountCapabilityFutureRequirements: Codable, Sendable {
     /// becomes empty. After the transition, `currently_due` requirements may immediately become `past_due`,
     /// but the account may also be given a grace period depending on the capability's enablement state
     /// prior to transitioning.
-    public var currentDeadline: Int?
+    public var currentDeadline: Date?
     /// Fields that need to be resolved to keep the capability enabled. If not resolved by
     /// `future_requirements[current_deadline]`, these fields will transition to the main `requirements`
     /// hash.

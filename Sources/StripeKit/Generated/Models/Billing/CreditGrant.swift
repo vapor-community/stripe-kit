@@ -17,16 +17,16 @@ public struct CreditGrant: Codable, Sendable {
     /// customer.
     public var category: CreditGrantCategory
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// ID of the customer receiving the billing credits.
     @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// ID of the account representing the customer receiving the billing credits
     public var customerAccount: String?
     /// The time when the billing credits become effective-when they're eligible for use.
-    public var effectiveAt: Int?
+    public var effectiveAt: Date?
     /// The time when the billing credits expire. If not present, the billing credits don't expire.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -45,9 +45,9 @@ public struct CreditGrant: Codable, Sendable {
     @Expandable<TestClock>
     public var testClock: String?
     /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
-    public var updated: Int
+    public var updated: Date
     /// The time when this credit grant was voided. If not present, the credit grant hasn't been voided.
-    public var voidedAt: Int?
+    public var voidedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case amount

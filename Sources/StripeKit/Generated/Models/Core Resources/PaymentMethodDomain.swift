@@ -15,7 +15,7 @@ public struct PaymentMethodDomain: Codable, Sendable {
     public var amazonPay: PaymentMethodDomainResourcePaymentMethodStatus
     public var applePay: PaymentMethodDomainResourcePaymentMethodStatus
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The domain name that this payment method domain object represents.
     public var domainName: String
     /// Whether this payment method domain is enabled. If the domain is not enabled, payment methods that

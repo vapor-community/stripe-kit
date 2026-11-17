@@ -195,6 +195,7 @@ struct ModelGenerator {
         switch type {
         case .string: return "String"
         case .integer: return "Int"
+        case .date: return "Date"
         case .number: return "Double"
         case .boolean: return "Bool"
         case .object(let name): return name

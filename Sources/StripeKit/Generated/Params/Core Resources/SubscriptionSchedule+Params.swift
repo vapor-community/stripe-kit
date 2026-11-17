@@ -489,9 +489,9 @@ public struct SubscriptionScheduleCreatePauseSchedulesPausePauseAt: StripeParams
     /// time.
     public var type: SubscriptionScheduleCreatePauseSchedulesPausePauseAtType
     /// The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleCreatePauseSchedulesPausePauseAtType, timestamp: Int? = nil) {
+    public init(type: SubscriptionScheduleCreatePauseSchedulesPausePauseAtType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -587,9 +587,9 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAt: StripePara
     /// The duration after which to resume the subscription. Required when `type` is `duration`.
     public var duration: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDuration?
     /// The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtType, duration: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDuration? = nil, timestamp: Int? = nil) {
+    public init(type: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtType, duration: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDuration? = nil, timestamp: Date? = nil) {
         self.type = type
         self.duration = duration
         self.timestamp = timestamp
@@ -693,7 +693,7 @@ public struct SubscriptionScheduleCreatePhases: StripeParams {
     /// The number of intervals the phase should last. If set, `end_date` must not be set.
     public var duration: SubscriptionScheduleCreatePhasesDuration?
     /// The date at which this phase of the subscription schedule ends. If set, `duration` must not be set.
-    public var endDate: Int?
+    public var endDate: Date?
     /// All invoices will be billed using the specified settings.
     public var invoiceSettings: SubscriptionScheduleCreatePhasesInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a phase.
@@ -720,9 +720,9 @@ public struct SubscriptionScheduleCreatePhases: StripeParams {
     public var trial: Bool?
     /// Sets the phase to trialing from the start date to this date. Must be before the phase end date, can
     /// not be combined with `trial`
-    public var trialEnd: Int?
+    public var trialEnd: Date?
 
-    public init(items: [SubscriptionScheduleCreatePhasesItems], addInvoiceItems: [SubscriptionScheduleCreatePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleCreatePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleCreatePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleCreatePhasesBillingThresholds? = nil, collectionMethod: SubscriptionScheduleCreatePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionScheduleCreatePhasesDiscounts]? = nil, duration: SubscriptionScheduleCreatePhasesDuration? = nil, endDate: Int? = nil, invoiceSettings: SubscriptionScheduleCreatePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionScheduleCreatePhasesProrationBehavior? = nil, transferData: SubscriptionScheduleCreatePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: Int? = nil) {
+    public init(items: [SubscriptionScheduleCreatePhasesItems], addInvoiceItems: [SubscriptionScheduleCreatePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleCreatePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleCreatePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleCreatePhasesBillingThresholds? = nil, collectionMethod: SubscriptionScheduleCreatePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionScheduleCreatePhasesDiscounts]? = nil, duration: SubscriptionScheduleCreatePhasesDuration? = nil, endDate: Date? = nil, invoiceSettings: SubscriptionScheduleCreatePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionScheduleCreatePhasesProrationBehavior? = nil, transferData: SubscriptionScheduleCreatePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: Date? = nil) {
         self.items = items
         self.addInvoiceItems = addInvoiceItems
         self.applicationFeePercent = applicationFeePercent
@@ -1006,9 +1006,9 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEnd: StripePa
     public var type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEndType
     /// A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to
     /// `period.start`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEndType, timestamp: Int? = nil) {
+    public init(type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEndType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -1020,9 +1020,9 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStart: Stripe
     public var type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStartType
     /// A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to
     /// `period.end`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStartType, timestamp: Int? = nil) {
+    public init(type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStartType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -1244,9 +1244,9 @@ public struct SubscriptionScheduleCreatePhasesTransferData: StripeParams {
 public enum SubscriptionScheduleCreateStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -1256,7 +1256,7 @@ public enum SubscriptionScheduleCreateStartDate: Codable, Sendable, ExpressibleB
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleCreateStartDate matches")
     }
 
@@ -1507,9 +1507,9 @@ public struct SubscriptionScheduleUpdatePauseSchedulesPausePauseAt: StripeParams
     /// time.
     public var type: SubscriptionScheduleUpdatePauseSchedulesPausePauseAtType
     /// The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleUpdatePauseSchedulesPausePauseAtType, timestamp: Int? = nil) {
+    public init(type: SubscriptionScheduleUpdatePauseSchedulesPausePauseAtType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -1604,9 +1604,9 @@ public struct SubscriptionScheduleUpdatePauseSchedulesResumeResumeAt: StripePara
     /// The duration after which to resume the subscription. Required when `type` is `duration`.
     public var duration: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDuration?
     /// The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtType, duration: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDuration? = nil, timestamp: Int? = nil) {
+    public init(type: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtType, duration: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDuration? = nil, timestamp: Date? = nil) {
         self.type = type
         self.duration = duration
         self.timestamp = timestamp
@@ -2030,9 +2030,9 @@ public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEnd: StripePa
     public var type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEndType
     /// A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to
     /// `period.start`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEndType, timestamp: Int? = nil) {
+    public init(type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEndType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -2044,9 +2044,9 @@ public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStart: Stripe
     public var type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStartType
     /// A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to
     /// `period.end`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStartType, timestamp: Int? = nil) {
+    public init(type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStartType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -2184,9 +2184,9 @@ public struct SubscriptionScheduleUpdatePhasesDuration: StripeParams {
 public enum SubscriptionScheduleUpdatePhasesEndDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -2196,7 +2196,7 @@ public enum SubscriptionScheduleUpdatePhasesEndDate: Codable, Sendable, Expressi
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleUpdatePhasesEndDate matches")
     }
 
@@ -2279,9 +2279,9 @@ public struct SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuer: StripeParam
 public enum SubscriptionScheduleUpdatePhasesStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -2291,7 +2291,7 @@ public enum SubscriptionScheduleUpdatePhasesStartDate: Codable, Sendable, Expres
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleUpdatePhasesStartDate matches")
     }
 
@@ -2332,9 +2332,9 @@ public struct SubscriptionScheduleUpdatePhasesTransferData: StripeParams {
 public enum SubscriptionScheduleUpdatePhasesTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -2344,7 +2344,7 @@ public enum SubscriptionScheduleUpdatePhasesTrialEnd: Codable, Sendable, Express
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleUpdatePhasesTrialEnd matches")
     }
 

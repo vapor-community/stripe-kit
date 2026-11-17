@@ -11,7 +11,7 @@ import Foundation
 /// retrieve it to see the current price and availability.
 public struct ClimateProduct: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Current prices for a metric ton of carbon removal in a currency's smallest unit.
     public var currentPricesPerMetricTon: [String: ClimateRemovalsProductsPrice]
     /// The year in which the carbon removal is expected to be delivered. If the year is in the past, this

@@ -298,13 +298,13 @@ public struct CardholderCreateIndividualCardIssuing: StripeParams {
 /// Celtic program.
 public struct CardholderCreateIndividualCardIssuingUserTermsAcceptance: StripeParams {
     /// The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the cardholder accepted the Authorized User Terms.
     public var ip: String?
     /// The user agent of the browser from which the cardholder accepted the Authorized User Terms.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -546,13 +546,13 @@ public struct CardholderUpdateIndividualCardIssuing: StripeParams {
 /// Celtic program.
 public struct CardholderUpdateIndividualCardIssuingUserTermsAcceptance: StripeParams {
     /// The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the cardholder accepted the Authorized User Terms.
     public var ip: String?
     /// The user agent of the browser from which the cardholder accepted the Authorized User Terms.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent

@@ -17,7 +17,7 @@ public struct InvoicePaymentMethodOptionsMandateOptionsUpi: Codable, Sendable {
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
     public enum CodingKeys: String, CodingKey {
         case amount

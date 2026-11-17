@@ -11,7 +11,7 @@ import Foundation
 public struct SubscriptionsResourcePausedStatusDetailsPublic: Codable, Sendable {
     public var subscription: SubscriptionsResourcePausedStatusDetailsSubscription
     /// Unix timestamp in seconds of when the subscription status transitioned to `paused`.
-    public var transitionedAt: Int
+    public var transitionedAt: Date
     /// The type of pause.
     public var type: SubscriptionsResourcePausedStatusDetailsPublicType
 

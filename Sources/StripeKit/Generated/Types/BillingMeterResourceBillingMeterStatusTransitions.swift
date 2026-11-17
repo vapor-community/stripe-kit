@@ -9,7 +9,7 @@ import Foundation
 
 public struct BillingMeterResourceBillingMeterStatusTransitions: Codable, Sendable {
     /// The time the meter was deactivated, if any. Measured in seconds since Unix epoch.
-    public var deactivatedAt: Int?
+    public var deactivatedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case deactivatedAt = "deactivated_at"

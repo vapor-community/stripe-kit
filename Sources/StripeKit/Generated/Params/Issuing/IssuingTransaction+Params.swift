@@ -374,7 +374,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBr
 /// Information about the flight that was purchased with this transaction.
 public struct IssuingTransactionCreateForceCapturePurchaseDetailsFlight: StripeParams {
     /// The time that the flight departed.
-    public var departureAt: Int?
+    public var departureAt: Date?
     /// The name of the passenger.
     public var passengerName: String?
     /// Whether the ticket is refundable.
@@ -384,7 +384,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFlight: StripeP
     /// The travel agency that issued the ticket.
     public var travelAgency: String?
 
-    public init(departureAt: Int? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionCreateForceCapturePurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
+    public init(departureAt: Date? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionCreateForceCapturePurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
         self.departureAt = departureAt
         self.passengerName = passengerName
         self.refundable = refundable
@@ -473,11 +473,11 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFuel: StripePar
 /// Information about lodging that was purchased with this transaction.
 public struct IssuingTransactionCreateForceCapturePurchaseDetailsLodging: StripeParams {
     /// The time of checking into the lodging.
-    public var checkInAt: Int?
+    public var checkInAt: Date?
     /// The number of nights stayed at the lodging.
     public var nights: Int?
 
-    public init(checkInAt: Int? = nil, nights: Int? = nil) {
+    public init(checkInAt: Date? = nil, nights: Int? = nil) {
         self.checkInAt = checkInAt
         self.nights = nights
     }
@@ -719,7 +719,7 @@ public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReported
 /// Information about the flight that was purchased with this transaction.
 public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlight: StripeParams {
     /// The time that the flight departed.
-    public var departureAt: Int?
+    public var departureAt: Date?
     /// The name of the passenger.
     public var passengerName: String?
     /// Whether the ticket is refundable.
@@ -729,7 +729,7 @@ public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlight: Strip
     /// The travel agency that issued the ticket.
     public var travelAgency: String?
 
-    public init(departureAt: Int? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
+    public init(departureAt: Date? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
         self.departureAt = departureAt
         self.passengerName = passengerName
         self.refundable = refundable
@@ -818,11 +818,11 @@ public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuel: StripeP
 /// Information about lodging that was purchased with this transaction.
 public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsLodging: StripeParams {
     /// The time of checking into the lodging.
-    public var checkInAt: Int?
+    public var checkInAt: Date?
     /// The number of nights stayed at the lodging.
     public var nights: Int?
 
-    public init(checkInAt: Int? = nil, nights: Int? = nil) {
+    public init(checkInAt: Date? = nil, nights: Int? = nil) {
         self.checkInAt = checkInAt
         self.nights = nights
     }

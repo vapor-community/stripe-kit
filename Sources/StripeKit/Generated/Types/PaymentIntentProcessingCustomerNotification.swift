@@ -12,7 +12,7 @@ public struct PaymentIntentProcessingCustomerNotification: Codable, Sendable {
     /// or mandate amount, the customer must provide explicit approval of the payment with their bank.
     public var approvalRequested: Bool?
     /// If customer approval is required, they need to provide approval before this time.
-    public var completesAt: Int?
+    public var completesAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case approvalRequested = "approval_requested"

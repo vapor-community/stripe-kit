@@ -21,7 +21,7 @@ public struct FinancialConnectionsAccount: Codable, Sendable {
     /// The type of the account. Account category is further divided in `subcategory`.
     public var category: FinancialConnectionsAccountCategory
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// A human-readable name that has been assigned to this account, either by the account holder or by the
     /// institution.
     public var displayName: String?

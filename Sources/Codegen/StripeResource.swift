@@ -32,6 +32,7 @@ struct StripeProperty: Sendable {
 indirect enum StripePropertyType: Sendable {
     case string
     case integer
+    case date                               // integer with `format: unix-time` → Date
     case number
     case boolean
     case object(name: String)              // $ref to another schema

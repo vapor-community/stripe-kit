@@ -13,10 +13,10 @@ public struct MeterEventSummaryListParams: StripeParams {
     public var customer: String
     /// The timestamp from when to stop aggregating meter events (exclusive). Must be aligned with minute
     /// boundaries.
-    public var endTime: Int
+    public var endTime: Date
     /// The timestamp from when to start aggregating meter events (inclusive). Must be aligned with minute
     /// boundaries.
-    public var startTime: Int
+    public var startTime: Date
     /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
     /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
     /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -36,7 +36,7 @@ public struct MeterEventSummaryListParams: StripeParams {
     /// end times must align with UTC day boundaries (00:00 UTC).
     public var valueGroupingWindow: MeterEventSummaryListValueGroupingWindow?
 
-    public init(customer: String, endTime: Int, startTime: Int, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, valueGroupingWindow: MeterEventSummaryListValueGroupingWindow? = nil) {
+    public init(customer: String, endTime: Date, startTime: Date, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, valueGroupingWindow: MeterEventSummaryListValueGroupingWindow? = nil) {
         self.customer = customer
         self.endTime = endTime
         self.startTime = startTime

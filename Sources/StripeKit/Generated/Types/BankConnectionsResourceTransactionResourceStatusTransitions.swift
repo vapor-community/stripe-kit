@@ -9,9 +9,9 @@ import Foundation
 
 public struct BankConnectionsResourceTransactionResourceStatusTransitions: Codable, Sendable {
     /// Time at which this transaction posted. Measured in seconds since the Unix epoch.
-    public var postedAt: Int?
+    public var postedAt: Date?
     /// Time at which this transaction was voided. Measured in seconds since the Unix epoch.
-    public var voidAt: Int?
+    public var voidAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case postedAt = "posted_at"

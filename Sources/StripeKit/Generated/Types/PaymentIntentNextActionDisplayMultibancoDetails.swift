@@ -11,7 +11,7 @@ public struct PaymentIntentNextActionDisplayMultibancoDetails: Codable, Sendable
     /// Entity number associated with this Multibanco payment.
     public var entity: String?
     /// The timestamp at which the Multibanco voucher expires.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// The URL for the hosted Multibanco voucher page, which allows customers to view a Multibanco voucher.
     public var hostedVoucherUrl: String?
     /// Reference number associated with this Multibanco payment.

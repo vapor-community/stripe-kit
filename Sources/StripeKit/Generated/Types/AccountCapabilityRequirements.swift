@@ -17,7 +17,7 @@ public struct AccountCapabilityRequirements: Codable, Sendable {
     /// includes fields listed in `currently_due` as well as those in `pending_verification`. If any
     /// required information is missing or unverified by this date, the account may be disabled. Note that
     /// `current_deadline` may change if additional `currently_due` requirements are requested.
-    public var currentDeadline: Int?
+    public var currentDeadline: Date?
     /// Fields that need to be resolved to keep the capability enabled. If not resolved by
     /// `current_deadline`, these fields will appear in `past_due` as well, and the capability is disabled.
     public var currentlyDue: [String]

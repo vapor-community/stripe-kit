@@ -16,11 +16,11 @@ public struct SubscriptionSchedule: Codable, Sendable {
     public var application: String?
     public var billingMode: SubscriptionsResourceBillingMode
     /// Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Time at which the subscription schedule was completed. Measured in seconds since the Unix epoch.
-    public var completedAt: Int?
+    public var completedAt: Date?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Object representing the start and end dates for the current phase of the subscription schedule, if
     /// it is `active`.
     public var currentPhase: SubscriptionScheduleCurrentPhase?
@@ -50,7 +50,7 @@ public struct SubscriptionSchedule: Codable, Sendable {
     /// Configuration for the subscription schedule's phases.
     public var phases: [SubscriptionSchedulePhaseConfiguration]
     /// Time at which the subscription schedule was released. Measured in seconds since the Unix epoch.
-    public var releasedAt: Int?
+    public var releasedAt: Date?
     /// ID of the subscription once managed by the subscription schedule (if it is released).
     public var releasedSubscription: String?
     /// The present status of the subscription schedule. Possible values are `not_started`, `active`,

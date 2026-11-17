@@ -13,7 +13,7 @@ public struct SubscriptionsResourcePauseCollection: Codable, Sendable {
     /// The payment collection behavior for this subscription while paused.
     public var behavior: SubscriptionsResourcePauseCollectionBehavior
     /// The time after which the subscription will resume collecting payments.
-    public var resumesAt: Int?
+    public var resumesAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case behavior

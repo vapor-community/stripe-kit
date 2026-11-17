@@ -15,7 +15,7 @@ public struct TaxId: Codable, Sendable {
     /// Two-letter ISO code representing the country of the tax ID.
     public var country: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// ID of the customer.
     @Expandable<Customer>
     public var customer: String?

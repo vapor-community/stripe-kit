@@ -11,10 +11,10 @@ public struct BankConnectionsResourceTransactionRefresh: Codable, Sendable {
     /// Unique identifier for the object.
     public var id: String
     /// The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
-    public var lastAttemptedAt: Int
+    public var lastAttemptedAt: Date
     /// Time at which the next transaction refresh can be initiated. This value will be `null` when `status`
     /// is `pending`. Measured in seconds since the Unix epoch.
-    public var nextRefreshAvailableAt: Int?
+    public var nextRefreshAvailableAt: Date?
     /// The status of the last refresh attempt.
     public var status: BankConnectionsResourceTransactionRefreshStatus
 

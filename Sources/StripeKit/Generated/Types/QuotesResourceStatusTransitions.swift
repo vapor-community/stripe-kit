@@ -9,11 +9,11 @@ import Foundation
 
 public struct QuotesResourceStatusTransitions: Codable, Sendable {
     /// The time that the quote was accepted. Measured in seconds since Unix epoch.
-    public var acceptedAt: Int?
+    public var acceptedAt: Date?
     /// The time that the quote was canceled. Measured in seconds since Unix epoch.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// The time that the quote was finalized. Measured in seconds since Unix epoch.
-    public var finalizedAt: Int?
+    public var finalizedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case acceptedAt = "accepted_at"

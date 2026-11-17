@@ -20,14 +20,14 @@ public struct CustomerSession: Codable, Sendable {
     public var clientSecret: String
     public var components: CustomerSessionResourceComponents?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The Customer the Customer Session was created for.
     @Expandable<Customer>
     public var customer: String?
     /// The Account that the Customer Session was created for.
     public var customerAccount: String?
     /// The timestamp at which this Customer Session will expire.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool

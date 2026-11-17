@@ -862,9 +862,9 @@ public struct PaymentMethodCreateUpiMandateOptions: StripeParams {
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: PaymentMethodCreateUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: PaymentMethodCreateUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description

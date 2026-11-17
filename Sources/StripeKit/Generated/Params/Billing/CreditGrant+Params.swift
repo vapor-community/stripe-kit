@@ -21,11 +21,11 @@ public struct CreditGrantCreateParams: StripeParams {
     public var customerAccount: String?
     /// The time when the billing credits become effective-when they're eligible for use. It defaults to the
     /// current timestamp if not specified.
-    public var effectiveAt: Int?
+    public var effectiveAt: Date?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The time when the billing credits expire. If not specified, the billing credits don't expire.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// Set of key-value pairs that you can attach to an object. You can use this to store additional
     /// information about the object (for example, cost basis) in a structured format.
     public var metadata: [String: String]?
@@ -35,7 +35,7 @@ public struct CreditGrantCreateParams: StripeParams {
     /// value of 50. The highest priority is 0 and the lowest is 100.
     public var priority: Int?
 
-    public init(amount: CreditGrantCreateAmount, applicabilityConfig: CreditGrantCreateApplicabilityConfig, category: CreditGrantCreateCategory? = nil, customer: String? = nil, customerAccount: String? = nil, effectiveAt: Int? = nil, expand: [String]? = nil, expiresAt: Int? = nil, metadata: [String: String]? = nil, name: String? = nil, priority: Int? = nil) {
+    public init(amount: CreditGrantCreateAmount, applicabilityConfig: CreditGrantCreateApplicabilityConfig, category: CreditGrantCreateCategory? = nil, customer: String? = nil, customerAccount: String? = nil, effectiveAt: Date? = nil, expand: [String]? = nil, expiresAt: Date? = nil, metadata: [String: String]? = nil, name: String? = nil, priority: Int? = nil) {
         self.amount = amount
         self.applicabilityConfig = applicabilityConfig
         self.category = category
@@ -117,12 +117,12 @@ public struct CreditGrantUpdateParams: StripeParams {
     public var expand: [String]?
     /// The time when the billing credits created by this credit grant expire. If set to empty, the billing
     /// credits never expire.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// Set of key-value pairs you can attach to an object. You can use this to store additional information
     /// about the object (for example, cost basis) in a structured format.
     public var metadata: [String: String]?
 
-    public init(expand: [String]? = nil, expiresAt: Int? = nil, metadata: [String: String]? = nil) {
+    public init(expand: [String]? = nil, expiresAt: Date? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
         self.expiresAt = expiresAt
         self.metadata = metadata

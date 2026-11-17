@@ -404,13 +404,13 @@ public struct SetupIntentConfirmMandateDataSecretKeyCustomerAcceptance: StripePa
     /// The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
     public var type: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType
     /// The time at which the customer accepted the Mandate.
-    public var acceptedAt: Int?
+    public var acceptedAt: Date?
     /// If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
     public var offline: [String: String]?
     /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
     public var online: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline?
 
-    public init(type: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType, acceptedAt: Int? = nil, offline: [String: String]? = nil, online: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline? = nil) {
+    public init(type: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType, acceptedAt: Date? = nil, offline: [String: String]? = nil, online: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline? = nil) {
         self.type = type
         self.acceptedAt = acceptedAt
         self.offline = offline
@@ -1137,9 +1137,9 @@ public struct SetupIntentConfirmPaymentMethodDataUpiMandateOptions: StripeParams
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SetupIntentConfirmPaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: SetupIntentConfirmPaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -1376,9 +1376,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsBlik: StripeParams {
 /// Details of the BLIK mandate
 public struct SetupIntentConfirmPaymentMethodOptionsBlikMandateOptions: StripeParams {
     /// Expiry date of the mandate.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(expiresAt: Int? = nil) {
+    public init(expiresAt: Date? = nil) {
         self.expiresAt = expiresAt
     }
 
@@ -1447,12 +1447,12 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardMandateOptions: StripePa
     /// Unique identifier for the mandate or subscription.
     public var reference: String
     /// Start date of the mandate or subscription. Start date should not be lesser than yesterday.
-    public var startDate: Int
+    public var startDate: Date
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription. If not provided, the mandate will be active until canceled.
     /// If provided, end date should be after start date.
-    public var endDate: Int?
+    public var endDate: Date?
     /// The number of intervals between payments. For example, `interval=month` and `interval_count=3`
     /// indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months,
     /// or 52 weeks). This parameter is optional when `interval=sporadic`.
@@ -1460,7 +1460,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardMandateOptions: StripePa
     /// Specifies the type of mandates supported. Possible values are `india`.
     public var supportedTypes: [SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsSupportedTypes]?
 
-    public init(amount: Int, amountType: SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Int, description: String? = nil, endDate: Int? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
+    public init(amount: Int, amountType: SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Date, description: String? = nil, endDate: Date? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.currency = currency
@@ -1882,9 +1882,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsUpiMandateOptions: StripePar
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SetupIntentConfirmPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: SetupIntentConfirmPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -2035,13 +2035,13 @@ public struct SetupIntentCreateMandateDataCustomerAcceptance: StripeParams {
     /// The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
     public var type: SetupIntentCreateMandateDataCustomerAcceptanceType
     /// The time at which the customer accepted the Mandate.
-    public var acceptedAt: Int?
+    public var acceptedAt: Date?
     /// If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
     public var offline: [String: String]?
     /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
     public var online: SetupIntentCreateMandateDataCustomerAcceptanceOnline?
 
-    public init(type: SetupIntentCreateMandateDataCustomerAcceptanceType, acceptedAt: Int? = nil, offline: [String: String]? = nil, online: SetupIntentCreateMandateDataCustomerAcceptanceOnline? = nil) {
+    public init(type: SetupIntentCreateMandateDataCustomerAcceptanceType, acceptedAt: Date? = nil, offline: [String: String]? = nil, online: SetupIntentCreateMandateDataCustomerAcceptanceOnline? = nil) {
         self.type = type
         self.acceptedAt = acceptedAt
         self.offline = offline
@@ -2701,9 +2701,9 @@ public struct SetupIntentCreatePaymentMethodDataUpiMandateOptions: StripeParams 
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SetupIntentCreatePaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: SetupIntentCreatePaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -2940,9 +2940,9 @@ public struct SetupIntentCreatePaymentMethodOptionsBlik: StripeParams {
 /// Details of the BLIK mandate
 public struct SetupIntentCreatePaymentMethodOptionsBlikMandateOptions: StripeParams {
     /// Expiry date of the mandate.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(expiresAt: Int? = nil) {
+    public init(expiresAt: Date? = nil) {
         self.expiresAt = expiresAt
     }
 
@@ -3011,12 +3011,12 @@ public struct SetupIntentCreatePaymentMethodOptionsCardMandateOptions: StripePar
     /// Unique identifier for the mandate or subscription.
     public var reference: String
     /// Start date of the mandate or subscription. Start date should not be lesser than yesterday.
-    public var startDate: Int
+    public var startDate: Date
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription. If not provided, the mandate will be active until canceled.
     /// If provided, end date should be after start date.
-    public var endDate: Int?
+    public var endDate: Date?
     /// The number of intervals between payments. For example, `interval=month` and `interval_count=3`
     /// indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months,
     /// or 52 weeks). This parameter is optional when `interval=sporadic`.
@@ -3024,7 +3024,7 @@ public struct SetupIntentCreatePaymentMethodOptionsCardMandateOptions: StripePar
     /// Specifies the type of mandates supported. Possible values are `india`.
     public var supportedTypes: [SetupIntentCreatePaymentMethodOptionsCardMandateOptionsSupportedTypes]?
 
-    public init(amount: Int, amountType: SetupIntentCreatePaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentCreatePaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Int, description: String? = nil, endDate: Int? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentCreatePaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
+    public init(amount: Int, amountType: SetupIntentCreatePaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentCreatePaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Date, description: String? = nil, endDate: Date? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentCreatePaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.currency = currency
@@ -3446,9 +3446,9 @@ public struct SetupIntentCreatePaymentMethodOptionsUpiMandateOptions: StripePara
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SetupIntentCreatePaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: SetupIntentCreatePaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -4207,9 +4207,9 @@ public struct SetupIntentUpdatePaymentMethodDataUpiMandateOptions: StripeParams 
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SetupIntentUpdatePaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: SetupIntentUpdatePaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -4446,9 +4446,9 @@ public struct SetupIntentUpdatePaymentMethodOptionsBlik: StripeParams {
 /// Details of the BLIK mandate
 public struct SetupIntentUpdatePaymentMethodOptionsBlikMandateOptions: StripeParams {
     /// Expiry date of the mandate.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(expiresAt: Int? = nil) {
+    public init(expiresAt: Date? = nil) {
         self.expiresAt = expiresAt
     }
 
@@ -4517,12 +4517,12 @@ public struct SetupIntentUpdatePaymentMethodOptionsCardMandateOptions: StripePar
     /// Unique identifier for the mandate or subscription.
     public var reference: String
     /// Start date of the mandate or subscription. Start date should not be lesser than yesterday.
-    public var startDate: Int
+    public var startDate: Date
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription. If not provided, the mandate will be active until canceled.
     /// If provided, end date should be after start date.
-    public var endDate: Int?
+    public var endDate: Date?
     /// The number of intervals between payments. For example, `interval=month` and `interval_count=3`
     /// indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months,
     /// or 52 weeks). This parameter is optional when `interval=sporadic`.
@@ -4530,7 +4530,7 @@ public struct SetupIntentUpdatePaymentMethodOptionsCardMandateOptions: StripePar
     /// Specifies the type of mandates supported. Possible values are `india`.
     public var supportedTypes: [SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsSupportedTypes]?
 
-    public init(amount: Int, amountType: SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Int, description: String? = nil, endDate: Int? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
+    public init(amount: Int, amountType: SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Date, description: String? = nil, endDate: Date? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.currency = currency
@@ -4952,9 +4952,9 @@ public struct SetupIntentUpdatePaymentMethodOptionsUpiMandateOptions: StripePara
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SetupIntentUpdatePaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: SetupIntentUpdatePaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description

@@ -9,9 +9,9 @@ import Foundation
 
 public struct InvoiceLineItemPeriod: Codable, Sendable {
     /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
-    public var end: Int
+    public var end: Date
     /// The start of the period. This value is inclusive.
-    public var start: Int
+    public var start: Date
 }
 
 public struct InvoiceLineItemPeriodList: Codable, Sendable {

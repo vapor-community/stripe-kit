@@ -15,7 +15,7 @@ public struct AccountRequirements: Codable, Sendable {
     public var alternatives: [AccountRequirementsAlternative]?
     /// Date by which the fields in `currently_due` must be collected to keep the account enabled. These
     /// fields may disable the account sooner if the next threshold is reached before they are collected.
-    public var currentDeadline: Int?
+    public var currentDeadline: Date?
     /// Fields that need to be resolved to keep the account enabled. If not resolved by `current_deadline`,
     /// these fields will appear in `past_due` as well, and the account will be disabled.
     public var currentlyDue: [String]?

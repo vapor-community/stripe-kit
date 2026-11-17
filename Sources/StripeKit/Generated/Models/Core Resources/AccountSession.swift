@@ -25,7 +25,7 @@ public struct AccountSession: Codable, Sendable {
     public var clientSecret: String
     public var components: ConnectEmbeddedAccountSessionCreateComponents
     /// The timestamp at which this AccountSession will expire.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool

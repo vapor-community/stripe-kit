@@ -18,7 +18,7 @@ public struct TaxRate: Codable, Sendable {
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     public var country: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// An arbitrary string attached to the tax rate for your internal use only. It will not be visible to
     /// your customers.
     public var description: String?

@@ -11,7 +11,7 @@ public struct SetupIntentNextActionPixDisplayQrCode: Codable, Sendable {
     /// The raw data string used to generate QR code, it should be used together with QR code library.
     public var data: String
     /// The date (unix timestamp) when the PIX expires.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// The URL to the hosted pix instructions page, which allows customers to view the pix QR code.
     public var hostedInstructionsUrl: String
     /// The image_url_png string used to render png QR code

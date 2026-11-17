@@ -21,7 +21,7 @@ public struct Capability: Codable, Sendable {
     /// Whether the capability has been requested.
     public var requested: Bool
     /// Time at which the capability was requested. Measured in seconds since the Unix epoch.
-    public var requestedAt: Int?
+    public var requestedAt: Date?
     public var requirements: AccountCapabilityRequirements?
     /// The status of the capability.
     public var status: CapabilityStatus

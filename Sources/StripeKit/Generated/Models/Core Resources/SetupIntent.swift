@@ -49,7 +49,7 @@ public struct SetupIntent: Codable, Sendable {
     /// page that includes the client secret.
     public var clientSecret: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// ID of the Customer this SetupIntent belongs to, if one exists. If present, the SetupIntent's payment
     /// method will be attached to the Customer on successful setup. Payment methods attached to other
     /// Customers cannot be used with this SetupIntent.

@@ -13,13 +13,13 @@ public struct IssuingDisputeServiceNotAsDescribedEvidence: Codable, Sendable {
     @Expandable<File>
     public var additionalDocumentation: String?
     /// Date when order was canceled.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Reason for canceling the order.
     public var cancellationReason: String?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
     /// Date when the product was received.
-    public var receivedAt: Int?
+    public var receivedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case additionalDocumentation = "additional_documentation"

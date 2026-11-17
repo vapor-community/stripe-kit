@@ -9,10 +9,10 @@ import Foundation
 
 public struct ReservesReserveHoldsResourcesReleaseSchedule: Codable, Sendable {
     /// The time after which the ReserveHold is requested to be released.
-    public var releaseAfter: Int?
+    public var releaseAfter: Date?
     /// The time at which the ReserveHold is scheduled to be released, automatically set to midnight UTC of
     /// the day after `release_after`.
-    public var scheduledRelease: Int?
+    public var scheduledRelease: Date?
 
     public enum CodingKeys: String, CodingKey {
         case releaseAfter = "release_after"

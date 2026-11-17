@@ -10,7 +10,7 @@ import Foundation
 /// Metadata of an uploaded file
 public struct TerminalReaderReaderResourceFileMetadata: Codable, Sendable {
     /// Creation time of the object (in seconds since the Unix epoch).
-    public var createdAt: Int
+    public var createdAt: Date
     /// The original name of the uploaded file (e.g. `receipt.png`).
     public var filename: String
     /// The size (in bytes) of the uploaded file.

@@ -19,7 +19,7 @@ public struct WebhookEndpoint: Codable, Sendable {
     /// The ID of the associated Connect application.
     public var application: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// An optional description of what the webhook is used for.
     public var description: String?
     /// The list of events to enable for this endpoint. `['*']` indicates that all events are enabled,

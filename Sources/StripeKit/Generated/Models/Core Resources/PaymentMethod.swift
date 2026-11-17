@@ -36,7 +36,7 @@ public struct PaymentMethod: Codable, Sendable {
     public var cardPresent: PaymentMethodCardPresent?
     public var cashapp: PaymentMethodCashapp?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     public var crypto: PaymentMethodCrypto?
     public var custom: PaymentMethodCustom?
     /// The ID of the Customer to which this PaymentMethod is saved. This will not be set when the

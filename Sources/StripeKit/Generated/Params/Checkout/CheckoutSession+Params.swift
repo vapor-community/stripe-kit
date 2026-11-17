@@ -94,7 +94,7 @@ public struct CheckoutSessionCreateParams: StripeParams {
     /// The Epoch time in seconds at which the Checkout Session will expire. It can be anywhere from 30
     /// minutes to 24 hours after Checkout Session creation. By default, this value is 24 hours from
     /// creation.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// The integration identifier for this Checkout Session. Multiple Checkout Sessions can have the same
     /// integration identifier.
     public var integrationIdentifier: String?
@@ -203,7 +203,7 @@ public struct CheckoutSessionCreateParams: StripeParams {
     /// Wallet-specific configuration.
     public var walletOptions: CheckoutSessionCreateWalletOptions?
 
-    public init(adaptivePricing: CheckoutSessionCreateAdaptivePricing? = nil, afterExpiration: CheckoutSessionCreateAfterExpiration? = nil, allowPromotionCodes: Bool? = nil, allowedPaymentMethodTypes: [CheckoutSessionCreateAllowedPaymentMethodTypes]? = nil, automaticTax: CheckoutSessionCreateAutomaticTax? = nil, billingAddressCollection: CheckoutSessionCreateBillingAddressCollection? = nil, brandingSettings: CheckoutSessionCreateBrandingSettings? = nil, cancelUrl: String? = nil, clientReferenceId: String? = nil, consentCollection: CheckoutSessionCreateConsentCollection? = nil, currency: String? = nil, customFields: [CheckoutSessionCreateCustomFields]? = nil, customText: CheckoutSessionCreateCustomText? = nil, customer: String? = nil, customerAccount: String? = nil, customerCreation: CheckoutSessionCreateCustomerCreation? = nil, customerEmail: String? = nil, customerUpdate: CheckoutSessionCreateCustomerUpdate? = nil, discounts: [CheckoutSessionCreateDiscounts]? = nil, excludedPaymentMethodTypes: [CheckoutSessionCreateExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, expiresAt: Int? = nil, integrationIdentifier: String? = nil, invoiceCreation: CheckoutSessionCreateInvoiceCreation? = nil, lineItems: [CheckoutSessionCreateLineItems]? = nil, locale: CheckoutSessionCreateLocale? = nil, managedPayments: CheckoutSessionCreateManagedPayments? = nil, metadata: [String: String]? = nil, mode: CheckoutSessionCreateMode? = nil, nameCollection: CheckoutSessionCreateNameCollection? = nil, optionalItems: [CheckoutSessionCreateOptionalItems]? = nil, originContext: CheckoutSessionCreateOriginContext? = nil, paymentIntentData: CheckoutSessionCreatePaymentIntentData? = nil, paymentMethodCollection: CheckoutSessionCreatePaymentMethodCollection? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: CheckoutSessionCreatePaymentMethodData? = nil, paymentMethodOptions: CheckoutSessionCreatePaymentMethodOptions? = nil, permissions: CheckoutSessionCreatePermissions? = nil, phoneNumberCollection: CheckoutSessionCreatePhoneNumberCollection? = nil, redirectOnCompletion: CheckoutSessionCreateRedirectOnCompletion? = nil, returnUrl: String? = nil, savedPaymentMethodOptions: CheckoutSessionCreateSavedPaymentMethodOptions? = nil, setupIntentData: CheckoutSessionCreateSetupIntentData? = nil, shippingAddressCollection: CheckoutSessionCreateShippingAddressCollection? = nil, shippingOptions: [CheckoutSessionCreateShippingOptions]? = nil, submitType: CheckoutSessionCreateSubmitType? = nil, subscriptionData: CheckoutSessionCreateSubscriptionData? = nil, successUrl: String? = nil, taxIdCollection: CheckoutSessionCreateTaxIdCollection? = nil, uiMode: CheckoutSessionCreateUiMode? = nil, walletOptions: CheckoutSessionCreateWalletOptions? = nil) {
+    public init(adaptivePricing: CheckoutSessionCreateAdaptivePricing? = nil, afterExpiration: CheckoutSessionCreateAfterExpiration? = nil, allowPromotionCodes: Bool? = nil, allowedPaymentMethodTypes: [CheckoutSessionCreateAllowedPaymentMethodTypes]? = nil, automaticTax: CheckoutSessionCreateAutomaticTax? = nil, billingAddressCollection: CheckoutSessionCreateBillingAddressCollection? = nil, brandingSettings: CheckoutSessionCreateBrandingSettings? = nil, cancelUrl: String? = nil, clientReferenceId: String? = nil, consentCollection: CheckoutSessionCreateConsentCollection? = nil, currency: String? = nil, customFields: [CheckoutSessionCreateCustomFields]? = nil, customText: CheckoutSessionCreateCustomText? = nil, customer: String? = nil, customerAccount: String? = nil, customerCreation: CheckoutSessionCreateCustomerCreation? = nil, customerEmail: String? = nil, customerUpdate: CheckoutSessionCreateCustomerUpdate? = nil, discounts: [CheckoutSessionCreateDiscounts]? = nil, excludedPaymentMethodTypes: [CheckoutSessionCreateExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, expiresAt: Date? = nil, integrationIdentifier: String? = nil, invoiceCreation: CheckoutSessionCreateInvoiceCreation? = nil, lineItems: [CheckoutSessionCreateLineItems]? = nil, locale: CheckoutSessionCreateLocale? = nil, managedPayments: CheckoutSessionCreateManagedPayments? = nil, metadata: [String: String]? = nil, mode: CheckoutSessionCreateMode? = nil, nameCollection: CheckoutSessionCreateNameCollection? = nil, optionalItems: [CheckoutSessionCreateOptionalItems]? = nil, originContext: CheckoutSessionCreateOriginContext? = nil, paymentIntentData: CheckoutSessionCreatePaymentIntentData? = nil, paymentMethodCollection: CheckoutSessionCreatePaymentMethodCollection? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: CheckoutSessionCreatePaymentMethodData? = nil, paymentMethodOptions: CheckoutSessionCreatePaymentMethodOptions? = nil, permissions: CheckoutSessionCreatePermissions? = nil, phoneNumberCollection: CheckoutSessionCreatePhoneNumberCollection? = nil, redirectOnCompletion: CheckoutSessionCreateRedirectOnCompletion? = nil, returnUrl: String? = nil, savedPaymentMethodOptions: CheckoutSessionCreateSavedPaymentMethodOptions? = nil, setupIntentData: CheckoutSessionCreateSetupIntentData? = nil, shippingAddressCollection: CheckoutSessionCreateShippingAddressCollection? = nil, shippingOptions: [CheckoutSessionCreateShippingOptions]? = nil, submitType: CheckoutSessionCreateSubmitType? = nil, subscriptionData: CheckoutSessionCreateSubscriptionData? = nil, successUrl: String? = nil, taxIdCollection: CheckoutSessionCreateTaxIdCollection? = nil, uiMode: CheckoutSessionCreateUiMode? = nil, walletOptions: CheckoutSessionCreateWalletOptions? = nil) {
         self.adaptivePricing = adaptivePricing
         self.afterExpiration = afterExpiration
         self.allowPromotionCodes = allowPromotionCodes
@@ -2020,9 +2020,9 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBlik: StripeParams {
 public struct CheckoutSessionCreatePaymentMethodOptionsBlikMandateOptions: StripeParams {
     /// Date when the mandate expires and no further payments will be charged. If not provided, the mandate
     /// will be set to be indefinite.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(expiresAt: Int? = nil) {
+    public init(expiresAt: Date? = nil) {
         self.expiresAt = expiresAt
     }
 
@@ -3278,9 +3278,9 @@ public struct CheckoutSessionCreatePaymentMethodOptionsUpiMandateOptions: Stripe
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: CheckoutSessionCreatePaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: CheckoutSessionCreatePaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -3635,7 +3635,7 @@ public struct CheckoutSessionCreateSubscriptionData: StripeParams {
     /// [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
     public var applicationFeePercent: Double?
     /// A future timestamp to anchor the subscription's billing cycle for new subscriptions.
-    public var billingCycleAnchor: Int?
+    public var billingCycleAnchor: Date?
     /// Configures when the subscription schedule's billing cycle anchors to a specific day of the week or
     /// month.
     public var billingCycleAnchorConfig: CheckoutSessionCreateSubscriptionDataBillingCycleAnchorConfig?
@@ -3669,14 +3669,14 @@ public struct CheckoutSessionCreateSubscriptionData: StripeParams {
     public var transferData: CheckoutSessionCreateSubscriptionDataTransferData?
     /// Unix timestamp representing the end of the trial period the customer will get before being charged
     /// for the first time. Has to be at least 48 hours in the future.
-    public var trialEnd: Int?
+    public var trialEnd: Date?
     /// Integer representing the number of trial period days before the customer is charged for the first
     /// time. Has to be at least 1.
     public var trialPeriodDays: Int?
     /// Settings related to subscription trials.
     public var trialSettings: CheckoutSessionCreateSubscriptionDataTrialSettings?
 
-    public init(applicationFeePercent: Double? = nil, billingCycleAnchor: Int? = nil, billingCycleAnchorConfig: CheckoutSessionCreateSubscriptionDataBillingCycleAnchorConfig? = nil, billingMode: CheckoutSessionCreateSubscriptionDataBillingMode? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, invoiceSettings: CheckoutSessionCreateSubscriptionDataInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, pendingInvoiceItemInterval: CheckoutSessionCreateSubscriptionDataPendingInvoiceItemInterval? = nil, prorationBehavior: CheckoutSessionCreateSubscriptionDataProrationBehavior? = nil, transferData: CheckoutSessionCreateSubscriptionDataTransferData? = nil, trialEnd: Int? = nil, trialPeriodDays: Int? = nil, trialSettings: CheckoutSessionCreateSubscriptionDataTrialSettings? = nil) {
+    public init(applicationFeePercent: Double? = nil, billingCycleAnchor: Date? = nil, billingCycleAnchorConfig: CheckoutSessionCreateSubscriptionDataBillingCycleAnchorConfig? = nil, billingMode: CheckoutSessionCreateSubscriptionDataBillingMode? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, invoiceSettings: CheckoutSessionCreateSubscriptionDataInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, pendingInvoiceItemInterval: CheckoutSessionCreateSubscriptionDataPendingInvoiceItemInterval? = nil, prorationBehavior: CheckoutSessionCreateSubscriptionDataProrationBehavior? = nil, transferData: CheckoutSessionCreateSubscriptionDataTransferData? = nil, trialEnd: Date? = nil, trialPeriodDays: Int? = nil, trialSettings: CheckoutSessionCreateSubscriptionDataTrialSettings? = nil) {
         self.applicationFeePercent = applicationFeePercent
         self.billingCycleAnchor = billingCycleAnchor
         self.billingCycleAnchorConfig = billingCycleAnchorConfig

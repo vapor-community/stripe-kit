@@ -15,7 +15,7 @@ public struct Cardholder: Codable, Sendable {
     /// Additional information about a `company` cardholder.
     public var company: IssuingCardholderCompany?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The cardholder's email address.
     public var email: String?
     /// Unique identifier for the object.

@@ -236,7 +236,7 @@ public struct SourceCreateMandateAcceptance: StripeParams {
     /// mandate was refused).
     public var status: SourceCreateMandateAcceptanceStatus
     /// The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the mandate was accepted or refused by the customer.
     public var ip: String?
     /// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
@@ -250,7 +250,7 @@ public struct SourceCreateMandateAcceptance: StripeParams {
     /// The user agent of the browser from which the mandate was accepted or refused by the customer.
     public var userAgent: String?
 
-    public init(status: SourceCreateMandateAcceptanceStatus, date: Int? = nil, ip: String? = nil, offline: SourceCreateMandateAcceptanceOffline? = nil, online: SourceCreateMandateAcceptanceOnline? = nil, type: SourceCreateMandateAcceptanceType? = nil, userAgent: String? = nil) {
+    public init(status: SourceCreateMandateAcceptanceStatus, date: Date? = nil, ip: String? = nil, offline: SourceCreateMandateAcceptanceOffline? = nil, online: SourceCreateMandateAcceptanceOnline? = nil, type: SourceCreateMandateAcceptanceType? = nil, userAgent: String? = nil) {
         self.status = status
         self.date = date
         self.ip = ip
@@ -290,13 +290,13 @@ public struct SourceCreateMandateAcceptanceOffline: StripeParams {
 /// `online`
 public struct SourceCreateMandateAcceptanceOnline: StripeParams {
     /// The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the mandate was accepted or refused by the customer.
     public var ip: String?
     /// The user agent of the browser from which the mandate was accepted or refused by the customer.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -542,7 +542,7 @@ public struct SourceUpdateMandateAcceptance: StripeParams {
     /// mandate was refused).
     public var status: SourceUpdateMandateAcceptanceStatus
     /// The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the mandate was accepted or refused by the customer.
     public var ip: String?
     /// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
@@ -556,7 +556,7 @@ public struct SourceUpdateMandateAcceptance: StripeParams {
     /// The user agent of the browser from which the mandate was accepted or refused by the customer.
     public var userAgent: String?
 
-    public init(status: SourceUpdateMandateAcceptanceStatus, date: Int? = nil, ip: String? = nil, offline: SourceUpdateMandateAcceptanceOffline? = nil, online: SourceUpdateMandateAcceptanceOnline? = nil, type: SourceUpdateMandateAcceptanceType? = nil, userAgent: String? = nil) {
+    public init(status: SourceUpdateMandateAcceptanceStatus, date: Date? = nil, ip: String? = nil, offline: SourceUpdateMandateAcceptanceOffline? = nil, online: SourceUpdateMandateAcceptanceOnline? = nil, type: SourceUpdateMandateAcceptanceType? = nil, userAgent: String? = nil) {
         self.status = status
         self.date = date
         self.ip = ip
@@ -596,13 +596,13 @@ public struct SourceUpdateMandateAcceptanceOffline: StripeParams {
 /// `online`
 public struct SourceUpdateMandateAcceptanceOnline: StripeParams {
     /// The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the mandate was accepted or refused by the customer.
     public var ip: String?
     /// The user agent of the browser from which the mandate was accepted or refused by the customer.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent

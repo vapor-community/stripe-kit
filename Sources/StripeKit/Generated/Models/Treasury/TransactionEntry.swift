@@ -16,12 +16,12 @@ import Foundation
 public struct TransactionEntry: Codable, Sendable {
     public var balanceImpact: TreasuryTransactionsResourceBalanceImpact
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// When the TransactionEntry will impact the FinancialAccount's balance.
-    public var effectiveAt: Int
+    public var effectiveAt: Date
     /// The FinancialAccount associated with this object.
     public var financialAccount: String
     /// Token of the flow associated with the TransactionEntry.

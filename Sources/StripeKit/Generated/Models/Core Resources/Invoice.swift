@@ -79,7 +79,7 @@ public struct Invoice: Codable, Sendable {
     /// `null` if the invoice is not scheduled to finalize in the future. If the invoice is not in the draft
     /// state, this field will always be `null` - see `finalized_at` for the time when an already-finalized
     /// invoice was finalized.
-    public var automaticallyFinalizesAt: Int?
+    public var automaticallyFinalizesAt: Date?
     /// Indicates the reason why the invoice was created. * `manual`: Unrelated to a subscription, for
     /// example, created via the invoice editor. * `subscription`: No longer in use. Applies to
     /// subscriptions from before May 2018 where no distinction was made between updates, cycles, and
@@ -97,7 +97,7 @@ public struct Invoice: Codable, Sendable {
     /// the PaymentIntent that Stripe creates during invoice finalization.
     public var confirmationSecret: InvoicesResourceConfirmationSecret?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -150,10 +150,10 @@ public struct Invoice: Codable, Sendable {
     public var discounts: [String]?
     /// The date on which payment for this invoice is due. This value will be `null` for invoices where
     /// `collection_method=charge_automatically`.
-    public var dueDate: Int?
+    public var dueDate: Date?
     /// The date when this invoice is in effect. Same as `finalized_at` unless overwritten. When defined,
     /// this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
-    public var effectiveAt: Int?
+    public var effectiveAt: Date?
     /// Ending customer balance after the invoice is finalized. Invoices are finalized approximately an hour
     /// after successful webhook delivery or when payment collection is attempted for the invoice. If the
     /// invoice has not been finalized yet, this will be null.
@@ -193,7 +193,7 @@ public struct Invoice: Codable, Sendable {
     public var metadata: [String: String]?
     /// The time at which payment will next be attempted. This value will be `null` for invoices where
     /// `collection_method=send_invoice`.
-    public var nextPaymentAttempt: Int?
+    public var nextPaymentAttempt: Date?
     /// A unique, identifying string that appears on emails sent to the customer for this invoice. This
     /// starts with the customer's unique invoice_prefix if it is specified.
     public var number: String?
@@ -212,11 +212,11 @@ public struct Invoice: Codable, Sendable {
     /// The latest timestamp at which invoice items can be associated with this invoice. Use the [line item
     /// period](/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each
     /// price.
-    public var periodEnd: Int
+    public var periodEnd: Date
     /// The earliest timestamp at which invoice items can be associated with this invoice. Use the [line
     /// item period](/api/invoices/line_item#invoice_line_item_object-period) to get the service period for
     /// each price.
-    public var periodStart: Int
+    public var periodStart: Date
     /// Total amount of all post-payment credit notes issued for this invoice.
     public var postPaymentCreditNotesAmount: Int
     /// Total amount of all pre-payment credit notes issued for this invoice.
@@ -270,7 +270,7 @@ public struct Invoice: Codable, Sendable {
     /// delivery attempts have [been exhausted](https://docs.stripe.com/billing/webhooks#understand). This
     /// field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had
     /// no webhooks to deliver, this will be set while the invoice is being created.
-    public var webhooksDeliveredAt: Int?
+    public var webhooksDeliveredAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case accountCountry = "account_country"

@@ -10,7 +10,7 @@ import Foundation
 public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEnd: Codable, Sendable {
     /// A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to
     /// `period.start`.
-    public var timestamp: Int?
+    public var timestamp: Date?
     /// Select how to calculate the end of the invoice item period.
     public var type: SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEndType
 }

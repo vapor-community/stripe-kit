@@ -18,7 +18,7 @@ public struct CreditNoteCreateParams: StripeParams {
     public var creditAmount: Int?
     /// The date when this credit note is in effect. Same as `created` unless overwritten. When defined,
     /// this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
-    public var effectiveAt: Int?
+    public var effectiveAt: Date?
     /// Type of email to send to the customer, one of `credit_note` or `none` and the default is
     /// `credit_note`.
     public var emailType: CreditNoteCreateEmailType?
@@ -49,7 +49,7 @@ public struct CreditNoteCreateParams: StripeParams {
     /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
     public var shippingCost: CreditNoteCreateShippingCost?
 
-    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Int? = nil, emailType: CreditNoteCreateEmailType? = nil, expand: [String]? = nil, lines: [CreditNoteCreateLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNoteCreateReason? = nil, refundAmount: Int? = nil, refunds: [CreditNoteCreateRefunds]? = nil, shippingCost: CreditNoteCreateShippingCost? = nil) {
+    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Date? = nil, emailType: CreditNoteCreateEmailType? = nil, expand: [String]? = nil, lines: [CreditNoteCreateLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNoteCreateReason? = nil, refundAmount: Int? = nil, refunds: [CreditNoteCreateRefunds]? = nil, shippingCost: CreditNoteCreateShippingCost? = nil) {
         self.invoice = invoice
         self.amount = amount
         self.creditAmount = creditAmount
@@ -143,7 +143,7 @@ public struct CreditNotePreviewParams: StripeParams {
     public var creditAmount: Int?
     /// The date when this credit note is in effect. Same as `created` unless overwritten. When defined,
     /// this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
-    public var effectiveAt: Int?
+    public var effectiveAt: Date?
     /// Type of email to send to the customer, one of `credit_note` or `none` and the default is
     /// `credit_note`.
     public var emailType: CreditNotePreviewEmailType?
@@ -174,7 +174,7 @@ public struct CreditNotePreviewParams: StripeParams {
     /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
     public var shippingCost: CreditNotePreviewShippingCost?
 
-    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Int? = nil, emailType: CreditNotePreviewEmailType? = nil, expand: [String]? = nil, lines: [CreditNotePreviewLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNotePreviewReason? = nil, refundAmount: Int? = nil, refunds: [CreditNotePreviewRefunds]? = nil, shippingCost: CreditNotePreviewShippingCost? = nil) {
+    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Date? = nil, emailType: CreditNotePreviewEmailType? = nil, expand: [String]? = nil, lines: [CreditNotePreviewLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNotePreviewReason? = nil, refundAmount: Int? = nil, refunds: [CreditNotePreviewRefunds]? = nil, shippingCost: CreditNotePreviewShippingCost? = nil) {
         self.invoice = invoice
         self.amount = amount
         self.creditAmount = creditAmount
@@ -221,7 +221,7 @@ public struct CreditNotePreviewLinesParams: StripeParams {
     public var creditAmount: Int?
     /// The date when this credit note is in effect. Same as `created` unless overwritten. When defined,
     /// this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
-    public var effectiveAt: Int?
+    public var effectiveAt: Date?
     /// Type of email to send to the customer, one of `credit_note` or `none` and the default is
     /// `credit_note`.
     public var emailType: CreditNotePreviewLinesEmailType?
@@ -263,7 +263,7 @@ public struct CreditNotePreviewLinesParams: StripeParams {
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
 
-    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Int? = nil, emailType: CreditNotePreviewLinesEmailType? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, lines: [CreditNotePreviewLinesLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNotePreviewLinesReason? = nil, refundAmount: Int? = nil, refunds: [CreditNotePreviewLinesRefunds]? = nil, shippingCost: CreditNotePreviewLinesShippingCost? = nil, startingAfter: String? = nil) {
+    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Date? = nil, emailType: CreditNotePreviewLinesEmailType? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, lines: [CreditNotePreviewLinesLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNotePreviewLinesReason? = nil, refundAmount: Int? = nil, refunds: [CreditNotePreviewLinesRefunds]? = nil, shippingCost: CreditNotePreviewLinesShippingCost? = nil, startingAfter: String? = nil) {
         self.invoice = invoice
         self.amount = amount
         self.creditAmount = creditAmount

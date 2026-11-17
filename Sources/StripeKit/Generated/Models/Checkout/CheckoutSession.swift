@@ -52,7 +52,7 @@ public struct CheckoutSession: Codable, Sendable {
     /// When set, provides configuration for the Checkout Session to gather active consent from customers.
     public var consentCollection: PaymentPagesCheckoutSessionConsentCollection?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String?
@@ -89,7 +89,7 @@ public struct CheckoutSession: Codable, Sendable {
     /// the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
     public var excludedPaymentMethodTypes: [String]?
     /// The timestamp at which the Checkout Session will expire.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// Unique identifier for the object.
     public var id: String
     /// The integration identifier for this Checkout Session. Multiple Checkout Sessions can have the same

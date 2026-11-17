@@ -16,7 +16,7 @@ public struct QuotesResourceSubscriptionDataSubscriptionData: Codable, Sendable 
     /// When creating a new subscription, the date of which the subscription schedule will start after the
     /// quote is accepted. This date is ignored if it is in the past when the quote is accepted. Measured in
     /// seconds since the Unix epoch.
-    public var effectiveDate: Int?
+    public var effectiveDate: Date?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on the
     /// subscription or subscription schedule when the quote is accepted. If a recurring price is included
     /// in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If

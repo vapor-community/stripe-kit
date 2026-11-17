@@ -26,7 +26,7 @@ public struct Price: Codable, Sendable {
     /// strategy as defined using the `tiers` and `tiers_mode` attributes.
     public var billingScheme: PriceBillingScheme
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String

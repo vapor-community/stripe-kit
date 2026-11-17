@@ -9,13 +9,13 @@ import Foundation
 
 public struct InvoicesResourceStatusTransitions: Codable, Sendable {
     /// The time that the invoice draft was finalized.
-    public var finalizedAt: Int?
+    public var finalizedAt: Date?
     /// The time that the invoice was marked uncollectible.
-    public var markedUncollectibleAt: Int?
+    public var markedUncollectibleAt: Date?
     /// The time that the invoice was paid.
-    public var paidAt: Int?
+    public var paidAt: Date?
     /// The time that the invoice was voided.
-    public var voidedAt: Int?
+    public var voidedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case finalizedAt = "finalized_at"

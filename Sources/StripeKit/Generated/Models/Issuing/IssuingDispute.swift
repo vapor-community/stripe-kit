@@ -18,7 +18,7 @@ public struct IssuingDispute: Codable, Sendable {
     /// List of balance transactions associated with the dispute.
     public var balanceTransactions: [BalanceTransaction]?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The currency the `transaction` was made in.
     public var currency: String
     public var evidence: IssuingDisputeEvidence

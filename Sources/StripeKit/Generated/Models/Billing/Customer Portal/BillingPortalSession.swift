@@ -21,7 +21,7 @@ public struct BillingPortalSession: Codable, Sendable {
     @Expandable<BillingPortalConfiguration>
     public var configuration: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The ID of the customer for this session.
     public var customer: String
     /// The ID of the account for this session.

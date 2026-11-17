@@ -9,7 +9,7 @@ import Foundation
 
 public struct EmailSent: Codable, Sendable {
     /// The timestamp when the email was sent.
-    public var emailSentAt: Int
+    public var emailSentAt: Date
     /// The recipient's email address.
     public var emailSentTo: String
 

@@ -56,6 +56,15 @@ class ParamUnionTests: XCTestCase {
         ])
     }
 
+    // MARK: Timestamps
+
+    func testTimestampParamsEncodeAsWholeUnixSeconds() throws {
+        // Stripe rejects fractional seconds, which `Date()` almost always has
+        let date = Date(timeIntervalSince1970: 1_700_000_000.75)
+        XCTAssertEqual(SubscriptionCreateParams(billingCycleAnchor: date).toFormBody(), "billing_cycle_anchor=1700000000")
+        XCTAssertEqual(SubscriptionCreateParams(trialEnd: .value(date)).toFormBody(), "trial_end=1700000000")
+    }
+
     // MARK: Round trip
 
     func testUnionsDecodeWhatTheyEncode() throws {

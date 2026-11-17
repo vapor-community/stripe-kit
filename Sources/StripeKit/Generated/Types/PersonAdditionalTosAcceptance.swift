@@ -9,7 +9,7 @@ import Foundation
 
 public struct PersonAdditionalTosAcceptance: Codable, Sendable {
     /// The Unix timestamp marking when the legal guardian accepted the service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the legal guardian accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the legal guardian accepted the service agreement.

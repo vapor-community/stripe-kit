@@ -12,7 +12,7 @@ public struct ReservesReservePlansResourcesFixedRelease: Codable, Sendable {
     public var releaseAfter: Int
     /// The time at which reserved funds are scheduled for release, automatically set to midnight UTC of the
     /// day after `release_after`.
-    public var scheduledRelease: Int
+    public var scheduledRelease: Date
 
     public enum CodingKeys: String, CodingKey {
         case releaseAfter = "release_after"

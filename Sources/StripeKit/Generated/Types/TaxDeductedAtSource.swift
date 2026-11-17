@@ -14,10 +14,10 @@ public struct TaxDeductedAtSource: Codable, Sendable {
     public var object: TaxDeductedAtSourceObject
     /// The end of the invoicing period. This TDS applies to Stripe fees collected during this invoicing
     /// period.
-    public var periodEnd: Int
+    public var periodEnd: Date
     /// The start of the invoicing period. This TDS applies to Stripe fees collected during this invoicing
     /// period.
-    public var periodStart: Int
+    public var periodStart: Date
     /// The TAN that was supplied to Stripe when TDS was assessed
     public var taxDeductionAccountNumber: String
 

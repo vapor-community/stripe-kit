@@ -9,7 +9,7 @@ import Foundation
 
 public struct PortalAfterExpirationCustomerLogin: Codable, Sendable {
     /// The time after which the customer can no longer recover this session.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case expiresAt = "expires_at"

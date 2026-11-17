@@ -9,7 +9,7 @@ import Foundation
 
 public struct SetupIntentPaymentMethodOptionsMandateOptionsBlik: Codable, Sendable {
     /// Date at which the mandate expires.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// Type of the mandate.
     public var type: SetupIntentPaymentMethodOptionsMandateOptionsBlikType?
 

@@ -36,7 +36,7 @@ public struct Source: Codable, Sendable {
     public var clientSecret: String
     public var codeVerification: SourceCodeVerificationFlow?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the
     /// source. This is the currency for which the source will be chargeable once ready. Required for
     /// `single_use` sources.

@@ -23,7 +23,7 @@ public struct PaymentRecord: Codable, Sendable {
     /// ID of the Connect application that created the PaymentRecord.
     public var application: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Customer information for this payment.
     public var customerDetails: PaymentsPrimitivesPaymentRecordsResourceCustomerDetails?
     /// Indicates whether the customer was present in your checkout flow during this payment.

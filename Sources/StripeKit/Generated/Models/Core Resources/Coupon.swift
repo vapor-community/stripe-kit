@@ -20,7 +20,7 @@ public struct Coupon: Codable, Sendable {
     public var amountOff: Int?
     public var appliesTo: CouponAppliesTo?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// If `amount_off` has been set, the three-letter [ISO code for the
     /// currency](https://stripe.com/docs/currencies) of the amount to take off.
     public var currency: String?
@@ -54,7 +54,7 @@ public struct Coupon: Codable, Sendable {
     /// invoice $ (or local equivalent)50 instead.
     public var percentOff: Double?
     /// Date after which the coupon can no longer be redeemed.
-    public var redeemBy: Int?
+    public var redeemBy: Date?
     /// Number of times this coupon has been applied to a customer.
     public var timesRedeemed: Int
     /// Taking account of the above properties, whether this coupon can still be applied to a customer.

@@ -9,7 +9,7 @@ import Foundation
 
 public struct PaymentIntentNextActionBoleto: Codable, Sendable {
     /// The timestamp after which the boleto expires.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// The URL to the hosted boleto voucher page, which allows customers to view the boleto voucher.
     public var hostedVoucherUrl: String?
     /// The boleto number.

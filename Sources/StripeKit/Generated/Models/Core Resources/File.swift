@@ -13,9 +13,9 @@ import Foundation
 /// query](#scheduled_queries)). Related guide: [File upload guide](https://docs.stripe.com/file-upload)
 public struct File: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The file expires and isn't available at this time in epoch seconds.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// The suitable name for saving the file to a filesystem.
     public var filename: String?
     /// Unique identifier for the object.

@@ -17,7 +17,7 @@ public struct BillingPortalConfiguration: Codable, Sendable {
     public var application: String?
     public var businessProfile: PortalBusinessProfile
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The default URL to redirect customers to when they click on the portal's link to return to your
     /// website. This can be
     /// [overridden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url)
@@ -42,7 +42,7 @@ public struct BillingPortalConfiguration: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: BillingPortalConfigurationObject
     /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
-    public var updated: Int
+    public var updated: Date
 
     public enum CodingKeys: String, CodingKey {
         case active

@@ -19,23 +19,23 @@ public struct Order: Codable, Sendable {
     public var amountTotal: Int
     public var beneficiary: ClimateRemovalsBeneficiary?
     /// Time at which the order was canceled. Measured in seconds since the Unix epoch.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Reason for the cancellation of this order.
     public var cancellationReason: OrderCancellationReason?
     /// For delivered orders, a URL to a delivery certificate for the order.
     public var certificate: String?
     /// Time at which the order was confirmed. Measured in seconds since the Unix epoch.
-    public var confirmedAt: Int?
+    public var confirmedAt: Date?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase,
     /// representing the currency for this order.
     public var currency: String
     /// Time at which the order's expected_delivery_year was delayed. Measured in seconds since the Unix
     /// epoch.
-    public var delayedAt: Int?
+    public var delayedAt: Date?
     /// Time at which the order was delivered. Measured in seconds since the Unix epoch.
-    public var deliveredAt: Int?
+    public var deliveredAt: Date?
     /// Details about the delivery of carbon removal for this order.
     public var deliveryDetails: [ClimateRemovalsOrderDeliveries]
     /// The year this order is expected to be delivered. If the year is in the past, the order is a spot
@@ -58,7 +58,7 @@ public struct Order: Codable, Sendable {
     public var product: String?
     /// Time at which the order's product was substituted for a different product. Measured in seconds since
     /// the Unix epoch.
-    public var productSubstitutedAt: Int?
+    public var productSubstitutedAt: Date?
     /// The current status of this order.
     public var status: OrderStatus
 

@@ -26,9 +26,7 @@ struct FixtureDecodingTests {
     func resourceFixtureRoundTrips(_ key: String) throws {
         let type = try #require(resourceTypes[key] as? any Codable.Type)
         let decoded = try Fixtures.decode(key, as: type)
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .secondsSince1970
-        let reencoded = try encoder.encode(decoded)
+        let reencoded = try Fixtures.encoder.encode(decoded)
         #expect(throws: Never.self) { try Fixtures.decoder.decode(type, from: reencoded) }
     }
 
@@ -125,7 +123,7 @@ struct FixtureDecodingTests {
         #expect(invoice.$discounts?.map { $0.deleted != nil } == [false, true])
 
         // Still survives an encode/decode round trip
-        let roundTripped = try Fixtures.decoder.decode(Invoice.self, from: JSONEncoder().encode(invoice))
+        let roundTripped = try Fixtures.decoder.decode(Invoice.self, from: Fixtures.encoder.encode(invoice))
         #expect(roundTripped.$customer?.deleted?.id == "cus_QXg1o8vcGmoR32")
         #expect(roundTripped.$discounts?.count == 2)
     }
@@ -147,12 +145,24 @@ struct FixtureDecodingTests {
         #expect(intent.lastPaymentError?.code == .cardDeclined)
         #expect(intent.lastPaymentError?.paymentIntent?.id == intent.id)
 
-        let roundTripped = try Fixtures.decoder.decode(PaymentIntent.self, from: JSONEncoder().encode(intent))
+        let roundTripped = try Fixtures.decoder.decode(PaymentIntent.self, from: Fixtures.encoder.encode(intent))
         #expect(roundTripped.lastPaymentError?.paymentIntent?.id == intent.id)
 
         json.removeValue(forKey: "last_payment_error")
         let missing = try Fixtures.decoder.decode(PaymentIntent.self, from: JSONSerialization.data(withJSONObject: json))
         #expect(missing.lastPaymentError == nil)
+    }
+
+    /// Fields the spec marks `format: unix-time` are `Date`s, decoded from Unix seconds.
+    @Test("Timestamps decode as Dates")
+    func timestampsDecodeAsDates() throws {
+        let _: KeyPath<Customer, Date> = \.created
+        let _: KeyPath<Subscription, Date?> = \.trialEnd
+        let customer = try Fixtures.decode("customer", as: Customer.self)
+        #expect(customer.created == Date(timeIntervalSince1970: 1_234_567_890))
+
+        let roundTripped = try Fixtures.decoder.decode(Customer.self, from: Fixtures.encoder.encode(customer))
+        #expect(roundTripped.created == customer.created)
     }
 
     @Test("Every fixture has a generated type")
@@ -183,6 +193,13 @@ enum Fixtures {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         return decoder
+    }
+
+    /// Encodes models back into Stripe's JSON shape (dates as Unix seconds), for round trips.
+    static var encoder: JSONEncoder {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .secondsSince1970
+        return encoder
     }
 
     /// Fixture keys that have an entry in `types`, sorted for stable test ordering.

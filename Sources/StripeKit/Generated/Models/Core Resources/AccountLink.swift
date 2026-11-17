@@ -12,9 +12,9 @@ import Foundation
 /// Onboarding](https://docs.stripe.com/connect/custom/hosted-onboarding)
 public struct AccountLink: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The timestamp at which this account link will expire.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: AccountLinkObject
     /// The URL for the account link.

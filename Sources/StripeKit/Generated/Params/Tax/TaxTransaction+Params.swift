@@ -24,9 +24,9 @@ public struct TaxTransactionCreateFromCalculationParams: StripeParams {
     /// liability posting period and handling in tax liability reports. The timestamp must fall within the
     /// `tax_date` and the current time, unless the `tax_date` is scheduled in advance. Defaults to the
     /// current time.
-    public var postedAt: Int?
+    public var postedAt: Date?
 
-    public init(calculation: String, reference: String, expand: [String]? = nil, metadata: [String: String]? = nil, postedAt: Int? = nil) {
+    public init(calculation: String, reference: String, expand: [String]? = nil, metadata: [String: String]? = nil, postedAt: Date? = nil) {
         self.calculation = calculation
         self.reference = reference
         self.expand = expand

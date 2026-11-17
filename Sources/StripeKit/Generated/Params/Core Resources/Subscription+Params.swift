@@ -22,12 +22,12 @@ public struct SubscriptionCreateParams: StripeParams {
     /// A past timestamp to backdate the subscription's start date to. If set, the first invoice will
     /// contain line items for the timespan between the start date and the current time. Can be combined
     /// with trials and the billing cycle anchor.
-    public var backdateStartDate: Int?
+    public var backdateStartDate: Date?
     /// A future timestamp in UTC format to anchor the subscription's [billing
     /// cycle](https://docs.stripe.com/subscriptions/billing-cycle). The anchor is the reference point that
     /// aligns future billing cycle dates. It sets the day of week for `week` intervals, the day of month
     /// for `month` and `year` intervals, and the month of year for `year` intervals.
-    public var billingCycleAnchor: Int?
+    public var billingCycleAnchor: Date?
     /// Mutually exclusive with billing_cycle_anchor and only valid with monthly and yearly price intervals.
     /// When provided, the billing_cycle_anchor is set to the next occurrence of the day_of_month at the
     /// hour, minute, and second UTC.
@@ -137,7 +137,7 @@ public struct SubscriptionCreateParams: StripeParams {
     /// Settings related to subscription trials.
     public var trialSettings: SubscriptionCreateTrialSettings?
 
-    public init(addInvoiceItems: [SubscriptionCreateAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionCreateAutomaticTax? = nil, backdateStartDate: Int? = nil, billingCycleAnchor: Int? = nil, billingCycleAnchorConfig: SubscriptionCreateBillingCycleAnchorConfig? = nil, billingMode: SubscriptionCreateBillingMode? = nil, billingSchedules: [SubscriptionCreateBillingSchedules]? = nil, billingThresholds: SubscriptionCreateBillingThresholds? = nil, cancelAt: SubscriptionCreateCancelAt? = nil, cancelAtPeriodEnd: Bool? = nil, collectionMethod: SubscriptionCreateCollectionMethod? = nil, currency: String? = nil, customer: String? = nil, customerAccount: String? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionCreateDiscounts]? = nil, expand: [String]? = nil, invoiceSettings: SubscriptionCreateInvoiceSettings? = nil, items: [SubscriptionCreateItems]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, onBehalfOf: String? = nil, paymentBehavior: SubscriptionCreatePaymentBehavior? = nil, paymentSettings: SubscriptionCreatePaymentSettings? = nil, pendingInvoiceItemInterval: SubscriptionCreatePendingInvoiceItemInterval? = nil, prorationBehavior: SubscriptionCreateProrationBehavior? = nil, transferData: SubscriptionCreateTransferData? = nil, trialEnd: SubscriptionCreateTrialEnd? = nil, trialFromPlan: Bool? = nil, trialPeriodDays: Int? = nil, trialSettings: SubscriptionCreateTrialSettings? = nil) {
+    public init(addInvoiceItems: [SubscriptionCreateAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionCreateAutomaticTax? = nil, backdateStartDate: Date? = nil, billingCycleAnchor: Date? = nil, billingCycleAnchorConfig: SubscriptionCreateBillingCycleAnchorConfig? = nil, billingMode: SubscriptionCreateBillingMode? = nil, billingSchedules: [SubscriptionCreateBillingSchedules]? = nil, billingThresholds: SubscriptionCreateBillingThresholds? = nil, cancelAt: SubscriptionCreateCancelAt? = nil, cancelAtPeriodEnd: Bool? = nil, collectionMethod: SubscriptionCreateCollectionMethod? = nil, currency: String? = nil, customer: String? = nil, customerAccount: String? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionCreateDiscounts]? = nil, expand: [String]? = nil, invoiceSettings: SubscriptionCreateInvoiceSettings? = nil, items: [SubscriptionCreateItems]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, onBehalfOf: String? = nil, paymentBehavior: SubscriptionCreatePaymentBehavior? = nil, paymentSettings: SubscriptionCreatePaymentSettings? = nil, pendingInvoiceItemInterval: SubscriptionCreatePendingInvoiceItemInterval? = nil, prorationBehavior: SubscriptionCreateProrationBehavior? = nil, transferData: SubscriptionCreateTransferData? = nil, trialEnd: SubscriptionCreateTrialEnd? = nil, trialFromPlan: Bool? = nil, trialPeriodDays: Int? = nil, trialSettings: SubscriptionCreateTrialSettings? = nil) {
         self.addInvoiceItems = addInvoiceItems
         self.applicationFeePercent = applicationFeePercent
         self.automaticTax = automaticTax
@@ -361,9 +361,9 @@ public struct SubscriptionResumeParams: StripeParams {
     /// If set, prorations will be calculated as though the subscription was resumed at the given time. This
     /// can be used to apply exactly the same prorations that were previewed with the [create
     /// preview](https://stripe.com/docs/api/invoices/create_preview) endpoint.
-    public var prorationDate: Int?
+    public var prorationDate: Date?
 
-    public init(billingCycleAnchor: SubscriptionResumeBillingCycleAnchor? = nil, expand: [String]? = nil, paymentBehavior: SubscriptionResumePaymentBehavior? = nil, prorationBehavior: SubscriptionResumeProrationBehavior? = nil, prorationDate: Int? = nil) {
+    public init(billingCycleAnchor: SubscriptionResumeBillingCycleAnchor? = nil, expand: [String]? = nil, paymentBehavior: SubscriptionResumePaymentBehavior? = nil, prorationBehavior: SubscriptionResumeProrationBehavior? = nil, prorationDate: Date? = nil) {
         self.billingCycleAnchor = billingCycleAnchor
         self.expand = expand
         self.paymentBehavior = paymentBehavior
@@ -509,7 +509,7 @@ public struct SubscriptionUpdateParams: StripeParams {
     /// preview](https://stripe.com/docs/api/invoices/create_preview) endpoint. `proration_date` can also be
     /// used to implement custom proration logic, such as prorating by day instead of by second, by
     /// providing the time that you wish to use for proration calculations.
-    public var prorationDate: Int?
+    public var prorationDate: Date?
     /// If specified, the funds from the subscription's invoices will be transferred to the destination and
     /// the ID of the resulting transfers will be found on the resulting charges. This will be unset if you
     /// POST an empty value.
@@ -529,7 +529,7 @@ public struct SubscriptionUpdateParams: StripeParams {
     /// Settings related to subscription trials.
     public var trialSettings: SubscriptionUpdateTrialSettings?
 
-    public init(addInvoiceItems: [SubscriptionUpdateAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionUpdateAutomaticTax? = nil, billingCycleAnchor: SubscriptionUpdateBillingCycleAnchor? = nil, billingSchedules: [SubscriptionUpdateBillingSchedules]? = nil, billingThresholds: SubscriptionUpdateBillingThresholds? = nil, cancelAt: SubscriptionUpdateCancelAt? = nil, cancelAtPeriodEnd: Bool? = nil, cancellationDetails: SubscriptionUpdateCancellationDetails? = nil, collectionMethod: SubscriptionUpdateCollectionMethod? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionUpdateDiscounts]? = nil, expand: [String]? = nil, invoiceSettings: SubscriptionUpdateInvoiceSettings? = nil, items: [SubscriptionUpdateItems]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, onBehalfOf: String? = nil, pauseCollection: SubscriptionUpdatePauseCollection? = nil, paymentBehavior: SubscriptionUpdatePaymentBehavior? = nil, paymentSettings: SubscriptionUpdatePaymentSettings? = nil, pendingInvoiceItemInterval: SubscriptionUpdatePendingInvoiceItemInterval? = nil, prorationBehavior: SubscriptionUpdateProrationBehavior? = nil, prorationDate: Int? = nil, transferData: SubscriptionUpdateTransferData? = nil, trialEnd: SubscriptionUpdateTrialEnd? = nil, trialFromPlan: Bool? = nil, trialSettings: SubscriptionUpdateTrialSettings? = nil) {
+    public init(addInvoiceItems: [SubscriptionUpdateAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionUpdateAutomaticTax? = nil, billingCycleAnchor: SubscriptionUpdateBillingCycleAnchor? = nil, billingSchedules: [SubscriptionUpdateBillingSchedules]? = nil, billingThresholds: SubscriptionUpdateBillingThresholds? = nil, cancelAt: SubscriptionUpdateCancelAt? = nil, cancelAtPeriodEnd: Bool? = nil, cancellationDetails: SubscriptionUpdateCancellationDetails? = nil, collectionMethod: SubscriptionUpdateCollectionMethod? = nil, daysUntilDue: Int? = nil, defaultPaymentMethod: String? = nil, defaultSource: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionUpdateDiscounts]? = nil, expand: [String]? = nil, invoiceSettings: SubscriptionUpdateInvoiceSettings? = nil, items: [SubscriptionUpdateItems]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, onBehalfOf: String? = nil, pauseCollection: SubscriptionUpdatePauseCollection? = nil, paymentBehavior: SubscriptionUpdatePaymentBehavior? = nil, paymentSettings: SubscriptionUpdatePaymentSettings? = nil, pendingInvoiceItemInterval: SubscriptionUpdatePendingInvoiceItemInterval? = nil, prorationBehavior: SubscriptionUpdateProrationBehavior? = nil, prorationDate: Date? = nil, transferData: SubscriptionUpdateTransferData? = nil, trialEnd: SubscriptionUpdateTrialEnd? = nil, trialFromPlan: Bool? = nil, trialSettings: SubscriptionUpdateTrialSettings? = nil) {
         self.addInvoiceItems = addInvoiceItems
         self.applicationFeePercent = applicationFeePercent
         self.automaticTax = automaticTax
@@ -687,9 +687,9 @@ public struct SubscriptionCreateAddInvoiceItemsPeriodEnd: StripeParams {
     public var type: SubscriptionCreateAddInvoiceItemsPeriodEndType
     /// A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to
     /// `period.start`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionCreateAddInvoiceItemsPeriodEndType, timestamp: Int? = nil) {
+    public init(type: SubscriptionCreateAddInvoiceItemsPeriodEndType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -701,9 +701,9 @@ public struct SubscriptionCreateAddInvoiceItemsPeriodStart: StripeParams {
     public var type: SubscriptionCreateAddInvoiceItemsPeriodStartType
     /// A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to
     /// `period.end`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionCreateAddInvoiceItemsPeriodStartType, timestamp: Int? = nil) {
+    public init(type: SubscriptionCreateAddInvoiceItemsPeriodStartType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -870,9 +870,9 @@ public struct SubscriptionCreateBillingSchedulesBillUntil: StripeParams {
     /// Specifies the billing period.
     public var duration: SubscriptionCreateBillingSchedulesBillUntilDuration?
     /// The end date of the billing schedule.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionCreateBillingSchedulesBillUntilType, duration: SubscriptionCreateBillingSchedulesBillUntilDuration? = nil, timestamp: Int? = nil) {
+    public init(type: SubscriptionCreateBillingSchedulesBillUntilType, duration: SubscriptionCreateBillingSchedulesBillUntilDuration? = nil, timestamp: Date? = nil) {
         self.type = type
         self.duration = duration
         self.timestamp = timestamp
@@ -936,9 +936,9 @@ public enum SubscriptionCreateCancelAt: Codable, Sendable, ExpressibleByIntegerL
     case maxPeriodEnd
     /// `min_period_end`
     case minPeriodEnd
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -950,7 +950,7 @@ public enum SubscriptionCreateCancelAt: Codable, Sendable, ExpressibleByIntegerL
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionCreateCancelAt matches")
     }
 
@@ -1447,9 +1447,9 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBlik: StripeP
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBlikMandateOptions: StripeParams {
     /// Date when the mandate expires and no further payments will be charged. If not provided, the mandate
     /// will be set to be indefinite.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(expiresAt: Int? = nil) {
+    public init(expiresAt: Date? = nil) {
         self.expiresAt = expiresAt
     }
 
@@ -1655,9 +1655,9 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpiMandateOpt
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -1765,9 +1765,9 @@ public struct SubscriptionCreateTransferData: StripeParams {
 public enum SubscriptionCreateTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -1777,7 +1777,7 @@ public enum SubscriptionCreateTrialEnd: Codable, Sendable, ExpressibleByIntegerL
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionCreateTrialEnd matches")
     }
 
@@ -2001,9 +2001,9 @@ public struct SubscriptionUpdateAddInvoiceItemsPeriodEnd: StripeParams {
     public var type: SubscriptionUpdateAddInvoiceItemsPeriodEndType
     /// A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to
     /// `period.start`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionUpdateAddInvoiceItemsPeriodEndType, timestamp: Int? = nil) {
+    public init(type: SubscriptionUpdateAddInvoiceItemsPeriodEndType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -2015,9 +2015,9 @@ public struct SubscriptionUpdateAddInvoiceItemsPeriodStart: StripeParams {
     public var type: SubscriptionUpdateAddInvoiceItemsPeriodStartType
     /// A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to
     /// `period.end`.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionUpdateAddInvoiceItemsPeriodStartType, timestamp: Int? = nil) {
+    public init(type: SubscriptionUpdateAddInvoiceItemsPeriodStartType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
@@ -2150,9 +2150,9 @@ public struct SubscriptionUpdateBillingSchedulesBillUntil: StripeParams {
     /// Specifies the billing period.
     public var duration: SubscriptionUpdateBillingSchedulesBillUntilDuration?
     /// The end date of the billing schedule.
-    public var timestamp: Int?
+    public var timestamp: Date?
 
-    public init(type: SubscriptionUpdateBillingSchedulesBillUntilType, duration: SubscriptionUpdateBillingSchedulesBillUntilDuration? = nil, timestamp: Int? = nil) {
+    public init(type: SubscriptionUpdateBillingSchedulesBillUntilType, duration: SubscriptionUpdateBillingSchedulesBillUntilDuration? = nil, timestamp: Date? = nil) {
         self.type = type
         self.duration = duration
         self.timestamp = timestamp
@@ -2204,9 +2204,9 @@ public enum SubscriptionUpdateCancelAt: Codable, Sendable, ExpressibleByIntegerL
     case maxPeriodEnd
     /// `min_period_end`
     case minPeriodEnd
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -2218,7 +2218,7 @@ public enum SubscriptionUpdateCancelAt: Codable, Sendable, ExpressibleByIntegerL
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionUpdateCancelAt matches")
     }
 
@@ -2533,9 +2533,9 @@ public struct SubscriptionUpdatePauseCollection: StripeParams {
     /// The payment collection behavior for this subscription while paused.
     public var behavior: SubscriptionUpdatePauseCollectionBehavior
     /// The time after which the subscription will resume collecting payments.
-    public var resumesAt: Int?
+    public var resumesAt: Date?
 
-    public init(behavior: SubscriptionUpdatePauseCollectionBehavior, resumesAt: Int? = nil) {
+    public init(behavior: SubscriptionUpdatePauseCollectionBehavior, resumesAt: Date? = nil) {
         self.behavior = behavior
         self.resumesAt = resumesAt
     }
@@ -2779,9 +2779,9 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBlik: StripeP
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBlikMandateOptions: StripeParams {
     /// Date when the mandate expires and no further payments will be charged. If not provided, the mandate
     /// will be set to be indefinite.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(expiresAt: Int? = nil) {
+    public init(expiresAt: Date? = nil) {
         self.expiresAt = expiresAt
     }
 
@@ -2987,9 +2987,9 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOpt
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
-    public var endDate: Int?
+    public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Int? = nil) {
+    public init(amount: Int? = nil, amountType: SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -3095,9 +3095,9 @@ public struct SubscriptionUpdateTransferData: StripeParams {
 public enum SubscriptionUpdateTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
-    case value(Int)
+    case value(Date)
 
-    public init(integerLiteral value: Int) { self = .value(value) }
+    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -3107,7 +3107,7 @@ public enum SubscriptionUpdateTrialEnd: Codable, Sendable, ExpressibleByIntegerL
             default: break
             }
         }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
+        if let value = try? container.decode(Date.self) { self = .value(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionUpdateTrialEnd matches")
     }
 

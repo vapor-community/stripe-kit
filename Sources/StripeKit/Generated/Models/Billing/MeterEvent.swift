@@ -12,7 +12,7 @@ import Foundation
 /// the contents of the event’s payload and how to aggregate those events.
 public struct MeterEvent: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The name of the meter event. Corresponds with the `event_name` field on a meter.
     public var eventName: String
     /// A unique identifier for the event.
@@ -28,7 +28,7 @@ public struct MeterEvent: Codable, Sendable {
     /// [payload](https://docs.stripe.com/billing/subscriptions/usage-based/meters/configure#meter-configuration-attributes).
     public var payload: [String: String]
     /// The timestamp passed in when creating the event. Measured in seconds since the Unix epoch.
-    public var timestamp: Int
+    public var timestamp: Date
 
     public enum CodingKeys: String, CodingKey {
         case created

@@ -40,7 +40,7 @@ public struct SubscriptionItemCreateParams: StripeParams {
     /// If set, the proration will be calculated as though the subscription was updated at the given time.
     /// This can be used to apply the same proration that was previewed with the [upcoming
     /// invoice](/api/invoices/create_preview) endpoint.
-    public var prorationDate: Int?
+    public var prorationDate: Date?
     /// The quantity you'd like to apply to the subscription item you're creating.
     public var quantity: Int?
     /// A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the
@@ -48,7 +48,7 @@ public struct SubscriptionItemCreateParams: StripeParams {
     /// on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
     public var taxRates: [String]?
 
-    public init(subscription: String, billingThresholds: SubscriptionItemCreateBillingThresholds? = nil, currentTrial: SubscriptionItemCreateCurrentTrial? = nil, discounts: [SubscriptionItemCreateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentBehavior: SubscriptionItemCreatePaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemCreatePriceData? = nil, prorationBehavior: SubscriptionItemCreateProrationBehavior? = nil, prorationDate: Int? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
+    public init(subscription: String, billingThresholds: SubscriptionItemCreateBillingThresholds? = nil, currentTrial: SubscriptionItemCreateCurrentTrial? = nil, discounts: [SubscriptionItemCreateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentBehavior: SubscriptionItemCreatePaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemCreatePriceData? = nil, prorationBehavior: SubscriptionItemCreateProrationBehavior? = nil, prorationDate: Date? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.subscription = subscription
         self.billingThresholds = billingThresholds
         self.currentTrial = currentTrial
@@ -157,7 +157,7 @@ public struct SubscriptionItemUpdateParams: StripeParams {
     /// If set, the proration will be calculated as though the subscription was updated at the given time.
     /// This can be used to apply the same proration that was previewed with the [upcoming
     /// invoice](/api/invoices/create_preview) endpoint.
-    public var prorationDate: Int?
+    public var prorationDate: Date?
     /// The quantity you'd like to apply to the subscription item you're creating.
     public var quantity: Int?
     /// A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the
@@ -165,7 +165,7 @@ public struct SubscriptionItemUpdateParams: StripeParams {
     /// on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
     public var taxRates: [String]?
 
-    public init(billingThresholds: SubscriptionItemUpdateBillingThresholds? = nil, currentTrial: SubscriptionItemUpdateCurrentTrial? = nil, discounts: [SubscriptionItemUpdateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, paymentBehavior: SubscriptionItemUpdatePaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemUpdatePriceData? = nil, prorationBehavior: SubscriptionItemUpdateProrationBehavior? = nil, prorationDate: Int? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
+    public init(billingThresholds: SubscriptionItemUpdateBillingThresholds? = nil, currentTrial: SubscriptionItemUpdateCurrentTrial? = nil, discounts: [SubscriptionItemUpdateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, paymentBehavior: SubscriptionItemUpdatePaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemUpdatePriceData? = nil, prorationBehavior: SubscriptionItemUpdateProrationBehavior? = nil, prorationDate: Date? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.billingThresholds = billingThresholds
         self.currentTrial = currentTrial
         self.discounts = discounts

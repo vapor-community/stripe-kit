@@ -13,7 +13,7 @@ public struct BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatus
     /// The underlying cause of the Account becoming inactive.
     public var cause: BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetailsCause
     /// When the Account is expected to become inactive, if applicable.
-    public var expectedDeactivationDate: Int
+    public var expectedDeactivationDate: Date
 
     public enum CodingKeys: String, CodingKey {
         case action

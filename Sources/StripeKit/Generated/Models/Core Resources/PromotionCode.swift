@@ -21,14 +21,14 @@ public struct PromotionCode: Codable, Sendable {
     /// digits (0-9), and dashes (-).
     public var code: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The customer who can use this promotion code.
     @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// The account representing the customer who can use this promotion code.
     public var customerAccount: String?
     /// Date at which the promotion code can no longer be redeemed.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

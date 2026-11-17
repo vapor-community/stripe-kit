@@ -12,7 +12,7 @@ import Foundation
 /// account).
 public struct ReservePlan: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Indicates which party created this ReservePlan.
     public var createdBy: ReservePlanCreatedBy
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -22,7 +22,7 @@ public struct ReservePlan: Codable, Sendable {
     /// The balance destination to which the reserved funds are sent.
     public var destination: ReservePlanDestination
     /// Time at which the ReservePlan was disabled.
-    public var disabledAt: Int?
+    public var disabledAt: Date?
     public var fixedRelease: ReservesReservePlansResourcesFixedRelease?
     /// Unique identifier for the object.
     public var id: String

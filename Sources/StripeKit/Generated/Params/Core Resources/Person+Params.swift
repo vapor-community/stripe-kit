@@ -341,13 +341,13 @@ public struct PersonCreateAdditionalTosAcceptances: StripeParams {
 /// Details on the legal guardian's acceptance of the main Stripe service agreement.
 public struct PersonCreateAdditionalTosAcceptancesAccount: StripeParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -790,13 +790,13 @@ public struct PersonUpdateAdditionalTosAcceptances: StripeParams {
 /// Details on the legal guardian's acceptance of the main Stripe service agreement.
 public struct PersonUpdateAdditionalTosAcceptancesAccount: StripeParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent

@@ -16,7 +16,7 @@ public struct CreditNote: Codable, Sendable {
     /// This is the sum of all the shipping amounts.
     public var amountShipping: Int
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -35,7 +35,7 @@ public struct CreditNote: Codable, Sendable {
     public var discountAmounts: [DiscountsResourceDiscountAmount]
     /// The date when this credit note is in effect. Same as `created` unless overwritten. When defined,
     /// this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
-    public var effectiveAt: Int?
+    public var effectiveAt: Date?
     /// Unique identifier for the object.
     public var id: String
     /// ID of the invoice.
@@ -97,7 +97,7 @@ public struct CreditNote: Codable, Sendable {
     /// invoice was paid.
     public var type: CreditNoteType
     /// The time that the credit note was voided.
-    public var voidedAt: Int?
+    public var voidedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case amount

@@ -1877,13 +1877,13 @@ public struct AccountCreateCompanyAdministrativeAddress: StripeParams {
 /// correct.
 public struct AccountCreateCompanyDirectorshipDeclaration: StripeParams {
     /// The Unix timestamp marking when the directorship declaration attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the directorship declaration attestation was made.
     public var ip: String?
     /// The user agent of the browser from which the directorship declaration attestation was made.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -1900,13 +1900,13 @@ public struct AccountCreateCompanyDirectorshipDeclaration: StripeParams {
 /// and correct.
 public struct AccountCreateCompanyOwnershipDeclaration: StripeParams {
     /// The Unix timestamp marking when the beneficial owner attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the beneficial owner attestation was made.
     public var ip: String?
     /// The user agent of the browser from which the beneficial owner attestation was made.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -2006,13 +2006,13 @@ public struct AccountCreateCompanyRegistrationDate: StripeParams {
 /// their legal entity.
 public struct AccountCreateCompanyRepresentativeDeclaration: StripeParams {
     /// The Unix timestamp marking when the representative declaration attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the representative declaration attestation was made.
     public var ip: String?
     /// The user agent of the browser from which the representative declaration attestation was made.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -2788,13 +2788,13 @@ public struct AccountCreateSettingsCardIssuing: StripeParams {
 /// Disclosures](/issuing/connect/tos_acceptance).
 public struct AccountCreateSettingsCardIssuingTosAcceptance: StripeParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -3123,13 +3123,13 @@ public struct AccountCreateSettingsTreasury: StripeParams {
 /// Details on the account's acceptance of the Stripe Treasury Services Agreement.
 public struct AccountCreateSettingsTreasuryTosAcceptance: StripeParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -3150,7 +3150,7 @@ public struct AccountCreateSettingsTreasuryTosAcceptance: StripeParams {
 /// agreement when empty.
 public struct AccountCreateTosAcceptance: StripeParams {
     /// The Unix timestamp marking when the account representative accepted their service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted their service agreement.
     public var ip: String?
     /// The user's service agreement type.
@@ -3159,7 +3159,7 @@ public struct AccountCreateTosAcceptance: StripeParams {
     /// agreement.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, serviceAgreement: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, serviceAgreement: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.serviceAgreement = serviceAgreement
@@ -4735,13 +4735,13 @@ public struct AccountUpdateCompanyAdministrativeAddress: StripeParams {
 /// correct.
 public struct AccountUpdateCompanyDirectorshipDeclaration: StripeParams {
     /// The Unix timestamp marking when the directorship declaration attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the directorship declaration attestation was made.
     public var ip: String?
     /// The user agent of the browser from which the directorship declaration attestation was made.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -4758,13 +4758,13 @@ public struct AccountUpdateCompanyDirectorshipDeclaration: StripeParams {
 /// and correct.
 public struct AccountUpdateCompanyOwnershipDeclaration: StripeParams {
     /// The Unix timestamp marking when the beneficial owner attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the beneficial owner attestation was made.
     public var ip: String?
     /// The user agent of the browser from which the beneficial owner attestation was made.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -4864,13 +4864,13 @@ public struct AccountUpdateCompanyRegistrationDate: StripeParams {
 /// their legal entity.
 public struct AccountUpdateCompanyRepresentativeDeclaration: StripeParams {
     /// The Unix timestamp marking when the representative declaration attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the representative declaration attestation was made.
     public var ip: String?
     /// The user agent of the browser from which the representative declaration attestation was made.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -5607,13 +5607,13 @@ public struct AccountUpdateSettingsCardIssuing: StripeParams {
 /// Disclosures](/issuing/connect/tos_acceptance).
 public struct AccountUpdateSettingsCardIssuingTosAcceptance: StripeParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -5947,13 +5947,13 @@ public struct AccountUpdateSettingsTreasury: StripeParams {
 /// Details on the account's acceptance of the Stripe Treasury Services Agreement.
 public struct AccountUpdateSettingsTreasuryTosAcceptance: StripeParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.userAgent = userAgent
@@ -5974,7 +5974,7 @@ public struct AccountUpdateSettingsTreasuryTosAcceptance: StripeParams {
 /// agreement when empty.
 public struct AccountUpdateTosAcceptance: StripeParams {
     /// The Unix timestamp marking when the account representative accepted their service agreement.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted their service agreement.
     public var ip: String?
     /// The user's service agreement type.
@@ -5983,7 +5983,7 @@ public struct AccountUpdateTosAcceptance: StripeParams {
     /// agreement.
     public var userAgent: String?
 
-    public init(date: Int? = nil, ip: String? = nil, serviceAgreement: String? = nil, userAgent: String? = nil) {
+    public init(date: Date? = nil, ip: String? = nil, serviceAgreement: String? = nil, userAgent: String? = nil) {
         self.date = date
         self.ip = ip
         self.serviceAgreement = serviceAgreement

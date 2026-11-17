@@ -11,7 +11,7 @@ public struct BankConnectionsResourceAuthorizationStatusDetailsApiResourceActive
     /// The action (if any) to proactively relink the Authorization.
     public var action: BankConnectionsResourceAuthorizationStatusDetailsApiResourceActiveStatusDetailsAction
     /// When the Authorization is expected to become inactive, if applicable.
-    public var expectedDeactivationDate: Int
+    public var expectedDeactivationDate: Date
 
     public enum CodingKeys: String, CodingKey {
         case action

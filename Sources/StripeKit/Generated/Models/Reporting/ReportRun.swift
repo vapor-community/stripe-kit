@@ -15,7 +15,7 @@ import Foundation
 /// error when queried without a [live-mode API key](https://docs.stripe.com/keys#test-live-modes).
 public struct ReportRun: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// If something should go wrong during the run, a message about the failure (populated when
     /// `status=failed`).
     public var error: String?
@@ -39,7 +39,7 @@ public struct ReportRun: Codable, Sendable {
     public var status: String
     /// Timestamp at which this run successfully finished (populated when `status=succeeded`). Measured in
     /// seconds since the Unix epoch.
-    public var succeededAt: Int?
+    public var succeededAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case created

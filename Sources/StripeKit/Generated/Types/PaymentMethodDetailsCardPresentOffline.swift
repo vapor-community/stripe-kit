@@ -9,7 +9,7 @@ import Foundation
 
 public struct PaymentMethodDetailsCardPresentOffline: Codable, Sendable {
     /// Time at which the payment was collected while offline
-    public var storedAt: Int?
+    public var storedAt: Date?
     /// The method used to process this payment method offline. Only deferred is allowed.
     public var type: PaymentMethodDetailsCardPresentOfflineType?
 

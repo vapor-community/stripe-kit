@@ -21,7 +21,7 @@ public struct VerificationReport: Codable, Sendable {
     /// used to reconcile this verification with your internal systems.
     public var clientReferenceId: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     public var document: GelatoDocumentReport?
     public var email: GelatoEmailReport?
     /// Unique identifier for the object.

@@ -12,9 +12,9 @@ import Foundation
 /// a `ScheduledQueryRun` object, which you can use to retrieve the query results.
 public struct ScheduledQueryRun: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// When the query was run, Sigma contained a snapshot of your Stripe data at this time.
-    public var dataLoadTime: Int
+    public var dataLoadTime: Date
     public var error: SigmaScheduledQueryRunError?
     /// The file object representing the results of the query.
     @Indirect
@@ -27,7 +27,7 @@ public struct ScheduledQueryRun: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: ScheduledQueryRunObject
     /// Time at which the result expires and is no longer available for download.
-    public var resultAvailableUntil: Int
+    public var resultAvailableUntil: Date
     /// SQL for the query.
     public var sql: String
     /// The query's execution status, which will be `completed` for successful runs, and `canceled`,

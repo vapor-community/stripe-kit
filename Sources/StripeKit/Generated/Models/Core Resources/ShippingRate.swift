@@ -14,7 +14,7 @@ public struct ShippingRate: Codable, Sendable {
     /// Whether the shipping rate can be used for new purchases. Defaults to `true`.
     public var active: Bool
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The estimated range for how long shipping will take, meant to be displayable to the customer. This
     /// will appear on CheckoutSessions.
     public var deliveryEstimate: ShippingRateDeliveryEstimate?

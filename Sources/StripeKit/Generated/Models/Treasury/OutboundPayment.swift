@@ -25,7 +25,7 @@ public struct OutboundPayment: Codable, Sendable {
     /// Returns `true` if the object can be canceled, and `false` otherwise.
     public var cancelable: Bool
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -41,7 +41,7 @@ public struct OutboundPayment: Codable, Sendable {
     /// Details about the end user.
     public var endUserDetails: TreasuryOutboundPaymentsResourceOutboundPaymentResourceEndUserDetails?
     /// The date when funds are expected to arrive in the destination account.
-    public var expectedArrivalDate: Int
+    public var expectedArrivalDate: Date
     /// The FinancialAccount that funds were pulled from.
     public var financialAccount: String
     /// A [hosted transaction receipt](https://docs.stripe.com/treasury/moving-money/regulatory-receipts)

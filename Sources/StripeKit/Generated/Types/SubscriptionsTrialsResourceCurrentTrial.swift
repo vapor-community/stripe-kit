@@ -10,9 +10,9 @@ import Foundation
 /// The current trial attached to the subscription item.
 public struct SubscriptionsTrialsResourceCurrentTrial: Codable, Sendable {
     /// The time the current trial ends.
-    public var endDate: Int
+    public var endDate: Date
     /// The time the current trial started.
-    public var startDate: Int
+    public var startDate: Date
     /// The Trial Offer ID applied to the subscription item.
     public var trialOffer: String
 

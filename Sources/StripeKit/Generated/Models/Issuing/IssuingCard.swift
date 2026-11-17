@@ -17,7 +17,7 @@ public struct IssuingCard: Codable, Sendable {
     @Indirect
     public var cardholder: Cardholder
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Supported currencies are `usd` in the US, `eur` in the EU, and `gbp` in the UK.
     public var currency: String

@@ -9,7 +9,7 @@ import Foundation
 
 public struct LegalEntityRepresentativeDeclaration: Codable, Sendable {
     /// The Unix timestamp marking when the representative declaration attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the representative declaration attestation was made.
     public var ip: String?
     /// The user-agent string from the browser where the representative declaration attestation was made.

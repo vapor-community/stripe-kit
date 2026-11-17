@@ -29,7 +29,12 @@ extension StripeParams {
         let json: FormValue
         do {
             let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = .secondsSince1970
+            // Stripe takes timestamps as whole Unix seconds; `.secondsSince1970` would send
+            // fractions (`1700000000.25`), which it rejects.
+            encoder.dateEncodingStrategy = .custom { date, encoder in
+                var container = encoder.singleValueContainer()
+                try container.encode(Int64(date.timeIntervalSince1970.rounded(.down)))
+            }
             json = try JSONDecoder().decode(FormValue.self, from: encoder.encode(self))
         } catch {
             assertionFailure("StripeParams form encoding failed for \(Self.self): \(error)")

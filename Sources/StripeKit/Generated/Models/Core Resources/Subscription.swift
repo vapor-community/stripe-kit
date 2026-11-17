@@ -22,7 +22,7 @@ public struct Subscription: Codable, Sendable {
     /// cycle](https://docs.stripe.com/subscriptions/billing-cycle) dates. It sets the day of week for
     /// `week` intervals, the day of month for `month` and `year` intervals, and the month of year for
     /// `year` intervals. The timestamp is in UTC format.
-    public var billingCycleAnchor: Int
+    public var billingCycleAnchor: Date
     /// The fixed values used to calculate the `billing_cycle_anchor`.
     public var billingCycleAnchorConfig: SubscriptionsResourceBillingCycleAnchorConfig?
     public var billingMode: SubscriptionsResourceBillingMode
@@ -32,7 +32,7 @@ public struct Subscription: Codable, Sendable {
     /// period
     public var billingThresholds: SubscriptionBillingThresholds?
     /// A date in the future at which the subscription will automatically get canceled
-    public var cancelAt: Int?
+    public var cancelAt: Date?
     /// Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end
     /// of the current billing period.
     public var cancelAtPeriodEnd: Bool
@@ -40,7 +40,7 @@ public struct Subscription: Codable, Sendable {
     /// canceled with `cancel_at_period_end`, `canceled_at` will reflect the time of the most recent update
     /// request, not the end of the subscription period when the subscription is automatically moved to a
     /// canceled state.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// Details about why this subscription was cancelled
     public var cancellationDetails: CancellationDetails?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
@@ -49,7 +49,7 @@ public struct Subscription: Codable, Sendable {
     /// mark the subscription as `active`.
     public var collectionMethod: SubscriptionCollectionMethod
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -87,7 +87,7 @@ public struct Subscription: Codable, Sendable {
     @ExpandableCollection<Discount>
     public var discounts: [String]?
     /// If the subscription has ended, the date the subscription ended.
-    public var endedAt: Int?
+    public var endedAt: Date?
     /// Unique identifier for the object.
     public var id: String
     public var invoiceSettings: SubscriptionsResourceSubscriptionInvoiceSettings
@@ -108,7 +108,7 @@ public struct Subscription: Codable, Sendable {
     public var metadata: [String: String]
     /// Specifies the approximate timestamp on which any pending invoice items will be billed according to
     /// the schedule provided at `pending_invoice_item_interval`.
-    public var nextPendingInvoiceItemInvoice: Int?
+    public var nextPendingInvoiceItemInvoice: Date?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: SubscriptionObject
     /// The account (if any) the charge was made on behalf of for charges associated with this subscription.
@@ -141,7 +141,7 @@ public struct Subscription: Codable, Sendable {
     public var schedule: String?
     /// Date when the subscription was first created. The date might differ from the `created` date due to
     /// backdating.
-    public var startDate: Int
+    public var startDate: Date
     /// Possible values are `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`,
     /// `canceled`, `unpaid`, or `paused`. For `collection_method=charge_automatically` a subscription moves
     /// into `incomplete` if the initial payment attempt fails. A subscription in this status can only have
@@ -175,11 +175,11 @@ public struct Subscription: Codable, Sendable {
     /// funds from each payment will be transferred to for each of the subscription's invoices.
     public var transferData: SubscriptionTransferData?
     /// If the subscription has a trial, the end of that trial.
-    public var trialEnd: Int?
+    public var trialEnd: Date?
     /// Settings related to subscription trials.
     public var trialSettings: SubscriptionsResourceTrialSettingsTrialSettings?
     /// If the subscription has a trial, the beginning of that trial.
-    public var trialStart: Int?
+    public var trialStart: Date?
 
     public enum CodingKeys: String, CodingKey {
         case application

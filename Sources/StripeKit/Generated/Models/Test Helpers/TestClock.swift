@@ -14,11 +14,11 @@ import Foundation
 /// test more complex scenarios), or keep advancing forward in time.
 public struct TestClock: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Time at which this clock is scheduled to auto delete.
-    public var deletesAfter: Int
+    public var deletesAfter: Date
     /// Time at which all objects belonging to this clock are frozen.
-    public var frozenTime: Int
+    public var frozenTime: Date
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

@@ -50,7 +50,7 @@ public struct SubscriptionSchedulePhaseConfiguration: Codable, Sendable {
     /// discounts are applied before subscription discounts.
     public var discounts: [StackableDiscountWithDiscountSettingsAndDiscountEnd]
     /// The end of this phase of the subscription schedule.
-    public var endDate: Int
+    public var endDate: Date
     /// The invoice settings applicable during this phase.
     public var invoiceSettings: InvoiceSettingSubscriptionSchedulePhaseSetting?
     /// Subscription items to configure the subscription to during this phase of the subscription schedule.
@@ -68,7 +68,7 @@ public struct SubscriptionSchedulePhaseConfiguration: Codable, Sendable {
     /// `create_prorations`, `none`, and `always_invoice`.
     public var prorationBehavior: SubscriptionSchedulePhaseConfigurationProrationBehavior
     /// The start of this phase of the subscription schedule.
-    public var startDate: Int
+    public var startDate: Date
     /// The account (if any) the associated subscription's payments will be attributed to for tax reporting,
     /// and where funds from each payment will be transferred to for each of the subscription's invoices.
     public var transferData: SubscriptionTransferData?
@@ -76,7 +76,7 @@ public struct SubscriptionSchedulePhaseConfiguration: Codable, Sendable {
     /// fees.
     public var trial: Bool?
     /// When the trial ends within the phase.
-    public var trialEnd: Int?
+    public var trialEnd: Date?
 
     public enum CodingKeys: String, CodingKey {
         case addInvoiceItems = "add_invoice_items"

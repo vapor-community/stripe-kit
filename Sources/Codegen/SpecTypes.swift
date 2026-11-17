@@ -78,6 +78,8 @@ struct SchemaObject: Decodable {
 /// A property within a schema — must be a class due to recursive `items` field
 final class PropertyObject: Decodable {
     let type: String?
+    /// e.g. "unix-time" on integer timestamps
+    let format: String?
     let description: String?
     let title: String?
     let `enum`: [String]?
@@ -96,7 +98,7 @@ final class PropertyObject: Decodable {
     let expansionResources: [PropertyObject]?
     
     enum CodingKeys: String, CodingKey {
-        case type, description, title, `enum`
+        case type, format, description, title, `enum`
         case ref = "$ref"
         case anyOf, oneOf, nullable, items, properties, required
         case additionalProperties
@@ -110,6 +112,7 @@ final class PropertyObject: Decodable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         type = try container.decodeIfPresent(String.self, forKey: .type)
+        format = try container.decodeIfPresent(String.self, forKey: .format)
         description = try container.decodeIfPresent(String.self, forKey: .description)
         title = try container.decodeIfPresent(String.self, forKey: .title)
         `enum` = try container.decodeIfPresent(MixedEnumArray.self, forKey: .enum)?.values
@@ -133,6 +136,7 @@ final class PropertyObject: Decodable {
     /// Build a schema in code, e.g. an object synthesized from an operation's query parameters.
     init(
         type: String? = nil,
+        format: String? = nil,
         description: String? = nil,
         title: String? = nil,
         enum: [String]? = nil,
@@ -147,6 +151,7 @@ final class PropertyObject: Decodable {
         expansionResources: [PropertyObject]? = nil
     ) {
         self.type = type
+        self.format = format
         self.description = description
         self.title = title
         self.enum = `enum`
@@ -164,12 +169,15 @@ final class PropertyObject: Decodable {
     /// A copy of this schema with a different description.
     func withDescription(_ description: String?) -> PropertyObject {
         PropertyObject(
-            type: type, description: description, title: title, enum: `enum`, ref: ref,
+            type: type, format: format, description: description, title: title, enum: `enum`, ref: ref,
             anyOf: anyOf, oneOf: oneOf, nullable: nullable, items: items,
             properties: properties, required: required, additionalProperties: additionalProperties,
             expansionResources: expansionResources
         )
     }
+
+    /// An integer Unix timestamp (`format: unix-time`), generated as `Date`
+    var isUnixTime: Bool { type == "integer" && format == "unix-time" }
 }
 
 /// Handles Stripe's mixed-type enum arrays: `["string_val", true, 123, ""]`

@@ -9,9 +9,9 @@ import Foundation
 
 public struct SubscriptionScheduleCurrentPhase: Codable, Sendable {
     /// The end of this phase of the subscription schedule.
-    public var endDate: Int
+    public var endDate: Date
     /// The start of this phase of the subscription schedule.
-    public var startDate: Int
+    public var startDate: Date
 
     public enum CodingKeys: String, CodingKey {
         case endDate = "end_date"

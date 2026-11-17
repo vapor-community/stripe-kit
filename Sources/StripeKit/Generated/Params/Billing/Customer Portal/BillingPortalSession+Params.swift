@@ -84,9 +84,9 @@ public struct BillingPortalSessionCreateAfterExpiration: StripeParams {
 public struct BillingPortalSessionCreateAfterExpirationCustomerLogin: StripeParams {
     /// The Unix timestamp after which the customer can no longer recover this session. Leave unset to allow
     /// recovery without a deadline.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
 
-    public init(expiresAt: Int? = nil) {
+    public init(expiresAt: Date? = nil) {
         self.expiresAt = expiresAt
     }
 

@@ -17,7 +17,7 @@ public struct BillingBillResourceInvoicingParentsInvoiceSubscriptionParent: Coda
     @Expandable<Subscription>
     public var subscription: String?
     /// Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
-    public var subscriptionProrationDate: Int?
+    public var subscriptionProrationDate: Date?
 
     public enum CodingKeys: String, CodingKey {
         case metadata

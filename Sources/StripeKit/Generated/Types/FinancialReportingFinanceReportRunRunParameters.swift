@@ -17,11 +17,11 @@ public struct FinancialReportingFinanceReportRunRunParameters: Codable, Sendable
     /// Ending timestamp of data to be included in the report run. Can be any UTC timestamp between 1 second
     /// after the user specified `interval_start` and 1 second before this report's last
     /// `data_available_end` value.
-    public var intervalEnd: Int?
+    public var intervalEnd: Date?
     /// Starting timestamp of data to be included in the report run. Can be any UTC timestamp between 1
     /// second after this report's `data_available_start` and 1 second before the user specified
     /// `interval_end` value.
-    public var intervalStart: Int?
+    public var intervalStart: Date?
     /// Payout ID by which to filter the report run.
     public var payout: String?
     /// Category of balance transactions to be included in the report run.

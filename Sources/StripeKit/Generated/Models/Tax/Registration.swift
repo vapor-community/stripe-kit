@@ -15,15 +15,15 @@ import Foundation
 /// API](https://docs.stripe.com/tax/registrations-api)
 public struct Registration: Codable, Sendable {
     /// Time at which the registration becomes active. Measured in seconds since the Unix epoch.
-    public var activeFrom: Int
+    public var activeFrom: Date
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     public var country: String
     public var countryOptions: TaxProductRegistrationsResourceCountryOptions
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// If set, the registration stops being active at this time. If not set, the registration will be
     /// active indefinitely. Measured in seconds since the Unix epoch.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

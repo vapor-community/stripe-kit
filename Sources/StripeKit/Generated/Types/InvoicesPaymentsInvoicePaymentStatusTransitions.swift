@@ -9,9 +9,9 @@ import Foundation
 
 public struct InvoicesPaymentsInvoicePaymentStatusTransitions: Codable, Sendable {
     /// The time that the payment was canceled.
-    public var canceledAt: Int?
+    public var canceledAt: Date?
     /// The time that the payment succeeded.
-    public var paidAt: Int?
+    public var paidAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case canceledAt = "canceled_at"

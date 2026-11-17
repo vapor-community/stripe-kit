@@ -17,7 +17,7 @@ public struct PaymentMethodOptionsKonbini: Codable, Sendable {
     public var expiresAfterDays: Int?
     /// The timestamp at which the Konbini payment instructions will expire. Only one of
     /// `expires_after_days` or `expires_at` may be set.
-    public var expiresAt: Int?
+    public var expiresAt: Date?
     /// A product descriptor of up to 22 characters, which will appear to customers at the convenience
     /// store.
     public var productDescription: String?

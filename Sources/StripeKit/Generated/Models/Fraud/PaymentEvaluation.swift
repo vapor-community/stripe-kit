@@ -14,7 +14,7 @@ import Foundation
 public struct PaymentEvaluation: Codable, Sendable {
     public var clientDeviceMetadataDetails: InsightsResourcesPaymentEvaluationClientDeviceMetadata?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var createdAt: Int
+    public var createdAt: Date
     public var customerDetails: InsightsResourcesPaymentEvaluationCustomerDetails?
     /// Event information associated with the payment evaluation, such as refunds, dispute, early fraud
     /// warnings, or user interventions.

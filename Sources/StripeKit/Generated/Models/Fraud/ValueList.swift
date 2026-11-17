@@ -13,7 +13,7 @@ public struct ValueList: Codable, Sendable {
     /// The name of the value list for use in rules.
     public var alias: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// The name or email address of the user who created this value list.
     public var createdBy: String
     /// Unique identifier for the object.

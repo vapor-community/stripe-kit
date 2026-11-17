@@ -9,7 +9,7 @@ import Foundation
 
 public struct BillingClocksResourceStatusDetailsAdvancingStatusDetails: Codable, Sendable {
     /// The `frozen_time` that the Test Clock is advancing towards.
-    public var targetFrozenTime: Int
+    public var targetFrozenTime: Date
 
     public enum CodingKeys: String, CodingKey {
         case targetFrozenTime = "target_frozen_time"

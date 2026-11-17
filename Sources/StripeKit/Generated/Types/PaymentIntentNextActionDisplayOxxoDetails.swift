@@ -9,7 +9,7 @@ import Foundation
 
 public struct PaymentIntentNextActionDisplayOxxoDetails: Codable, Sendable {
     /// The timestamp after which the OXXO voucher expires.
-    public var expiresAfter: Int?
+    public var expiresAfter: Date?
     /// The URL for the hosted OXXO voucher page, which allows customers to view and print an OXXO voucher.
     public var hostedVoucherUrl: String?
     /// OXXO reference number.

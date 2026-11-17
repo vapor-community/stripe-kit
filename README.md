@@ -268,7 +268,7 @@ var client = StripeClient.test
 
 // Override the customer create route
 client.customers.create = { params in
-    return Customer(created: 0, id: "cus_test_123", livemode: false, object: .customer)
+    return Customer(created: Date(), id: "cus_test_123", livemode: false, object: .customer)
 }
 
 // Inject into your service

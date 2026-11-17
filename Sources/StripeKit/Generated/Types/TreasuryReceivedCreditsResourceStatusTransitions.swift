@@ -9,7 +9,7 @@ import Foundation
 
 public struct TreasuryReceivedCreditsResourceStatusTransitions: Codable, Sendable {
     /// Timestamp describing when the CreditReversal changed status to `posted`
-    public var postedAt: Int?
+    public var postedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case postedAt = "posted_at"

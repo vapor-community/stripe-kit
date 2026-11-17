@@ -9,7 +9,7 @@ import Foundation
 
 public struct LegalEntityDirectorshipDeclaration: Codable, Sendable {
     /// The Unix timestamp marking when the directorship declaration attestation was made.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the directorship declaration attestation was made.
     public var ip: String?
     /// The user-agent string from the browser where the directorship declaration attestation was made.

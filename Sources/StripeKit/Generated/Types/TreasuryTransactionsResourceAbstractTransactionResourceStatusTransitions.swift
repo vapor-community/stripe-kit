@@ -9,9 +9,9 @@ import Foundation
 
 public struct TreasuryTransactionsResourceAbstractTransactionResourceStatusTransitions: Codable, Sendable {
     /// Timestamp describing when the Transaction changed status to `posted`.
-    public var postedAt: Int?
+    public var postedAt: Date?
     /// Timestamp describing when the Transaction changed status to `void`.
-    public var voidAt: Int?
+    public var voidAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case postedAt = "posted_at"

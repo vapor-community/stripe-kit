@@ -9,7 +9,7 @@ import Foundation
 
 public struct BankConnectionsResourceAccountNumberDetails: Codable, Sendable {
     /// When the account number is expected to expire, if applicable.
-    public var expectedExpiryDate: Int?
+    public var expectedExpiryDate: Date?
     /// The type of account number associated with the account.
     public var identifierType: BankConnectionsResourceAccountNumberDetailsIdentifierType
     /// Whether the account number is currently active and usable for transactions.

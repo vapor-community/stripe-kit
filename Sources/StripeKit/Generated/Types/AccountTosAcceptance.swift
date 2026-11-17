@@ -9,7 +9,7 @@ import Foundation
 
 public struct AccountTosAcceptance: Codable, Sendable {
     /// The Unix timestamp marking when the account representative accepted their service agreement
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the account representative accepted their service agreement
     public var ip: String?
     /// The user's service agreement type

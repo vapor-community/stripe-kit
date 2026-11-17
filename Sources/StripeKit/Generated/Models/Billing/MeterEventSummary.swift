@@ -16,7 +16,7 @@ public struct MeterEventSummary: Codable, Sendable {
     /// aggregation strategy is defined on meter via `default_aggregation`.
     public var aggregatedValue: Double
     /// End timestamp for this event summary (exclusive). Must be aligned with minute boundaries.
-    public var endTime: Int
+    public var endTime: Date
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -27,7 +27,7 @@ public struct MeterEventSummary: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: MeterEventSummaryObject
     /// Start timestamp for this event summary (inclusive). Must be aligned with minute boundaries.
-    public var startTime: Int
+    public var startTime: Date
 
     public enum CodingKeys: String, CodingKey {
         case aggregatedValue = "aggregated_value"

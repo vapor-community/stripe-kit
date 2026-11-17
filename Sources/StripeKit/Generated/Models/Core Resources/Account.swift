@@ -31,7 +31,7 @@ public struct Account: Codable, Sendable {
     /// The account's country.
     public var country: String?
     /// Time at which the account was connected. Measured in seconds since the Unix epoch.
-    public var created: Int?
+    public var created: Date?
     /// Three-letter ISO currency code representing the default currency for the account. This must be a
     /// currency that [Stripe supports in the account's country](https://stripe.com/docs/payouts).
     public var defaultCurrency: String?

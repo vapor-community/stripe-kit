@@ -24,7 +24,7 @@ public struct AccountOwner: Codable, Sendable {
     /// The raw physical address of the owner.
     public var rawAddress: String?
     /// The timestamp of the refresh that updated this owner.
-    public var refreshedAt: Int?
+    public var refreshedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case email

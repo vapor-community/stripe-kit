@@ -9,7 +9,7 @@ import Foundation
 
 public struct PaymentIntentNextActionKonbini: Codable, Sendable {
     /// The timestamp at which the pending Konbini payment expires.
-    public var expiresAt: Int
+    public var expiresAt: Date
     /// The URL for the Konbini payment instructions page, which allows customers to view and print a
     /// Konbini voucher.
     public var hostedVoucherUrl: String?

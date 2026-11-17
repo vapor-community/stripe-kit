@@ -27,7 +27,7 @@ public struct VerificationSession: Codable, Sendable {
     /// frontend](https://docs.stripe.com/identity/verification-sessions#client-secret) to learn more.
     public var clientSecret: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Unique identifier for the object.
     public var id: String
     /// If present, this property tells you the last error encountered when processing the verification.

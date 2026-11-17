@@ -23,7 +23,7 @@ public struct IssuingAuthorizationRequest: Codable, Sendable {
     /// guaranteed to be unique across authorizations.
     public var authorizationCode: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -47,7 +47,7 @@ public struct IssuingAuthorizationRequest: Codable, Sendable {
     public var reasonMessage: String?
     /// Time when the card network received an authorization request from the acquirer in UTC. Referred to
     /// by networks as transmission time.
-    public var requestedAt: Int?
+    public var requestedAt: Date?
 
     public enum CodingKeys: String, CodingKey {
         case amount

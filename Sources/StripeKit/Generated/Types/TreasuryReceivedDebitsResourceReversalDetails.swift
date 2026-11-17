@@ -9,7 +9,7 @@ import Foundation
 
 public struct TreasuryReceivedDebitsResourceReversalDetails: Codable, Sendable {
     /// Time before which a ReceivedDebit can be reversed.
-    public var deadline: Int?
+    public var deadline: Date?
     /// Set if a ReceivedDebit can't be reversed.
     public var restrictedReason: TreasuryReceivedDebitsResourceReversalDetailsRestrictedReason?
 

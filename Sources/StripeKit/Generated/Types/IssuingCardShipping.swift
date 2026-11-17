@@ -20,9 +20,9 @@ public struct IssuingCardShipping: Codable, Sendable {
     public var customs: IssuingCardShippingCustoms?
     /// The time the card was reported as delivered. Null for undelivered or untracked shipments, or if
     /// Stripe has not recorded a delivery time.
-    public var deliveredAt: Int?
+    public var deliveredAt: Date?
     /// A unix timestamp representing a best estimate of when the card will be delivered.
-    public var eta: Int?
+    public var eta: Date?
     /// Recipient name.
     public var name: String
     /// The phone number of the receiver of the shipment. Our courier partners will use this number to
@@ -37,7 +37,7 @@ public struct IssuingCardShipping: Codable, Sendable {
     /// Shipment service, such as `standard` or `express`.
     public var service: IssuingCardShippingService
     /// The time the card was reported as shipped. Null if Stripe has not recorded a shipment time.
-    public var shippedAt: Int?
+    public var shippedAt: Date?
     /// The delivery status of the card.
     public var status: IssuingCardShippingStatus?
     /// A tracking number for a card shipment.

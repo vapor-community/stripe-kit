@@ -152,11 +152,11 @@ public struct LineItemUpdateDiscounts: StripeParams {
 /// for details.
 public struct LineItemUpdatePeriod: StripeParams {
     /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
-    public var end: Int
+    public var end: Date
     /// The start of the period. This value is inclusive.
-    public var start: Int
+    public var start: Date
 
-    public init(end: Int, start: Int) {
+    public init(end: Date, start: Date) {
         self.end = end
         self.start = start
     }

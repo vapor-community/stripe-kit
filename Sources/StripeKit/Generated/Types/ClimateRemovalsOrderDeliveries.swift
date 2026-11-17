@@ -10,7 +10,7 @@ import Foundation
 /// The delivery of a specified quantity of carbon for an order.
 public struct ClimateRemovalsOrderDeliveries: Codable, Sendable {
     /// Time at which the delivery occurred. Measured in seconds since the Unix epoch.
-    public var deliveredAt: Int
+    public var deliveredAt: Date
     /// Specific location of this delivery.
     public var location: ClimateRemovalsLocation?
     /// Quantity of carbon removal supplied by this delivery.

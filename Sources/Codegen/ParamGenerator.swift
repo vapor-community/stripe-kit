@@ -204,7 +204,7 @@ struct ParamGenerator {
         case "string":
             return "String"
         case "integer":
-            return "Int"
+            return prop.isUnixTime ? "Date" : "Int"
         case "number":
             return "Double"
         case "boolean":
@@ -270,14 +270,21 @@ struct ParamGenerator {
     
     // MARK: - Union Generation
     
-    /// Swift scalar type and literal protocol for a plain (non-enum) scalar schema.
-    private func unionScalar(_ variant: PropertyObject) -> (type: String, literal: String, literalType: String)? {
+    /// A union's scalar form: its Swift type, the literal protocol the union takes, that
+    /// protocol's init parameter, and how to make the scalar from the literal `value`.
+    private typealias UnionScalar = (type: String, literal: String, literalType: String, fromLiteral: String)
+
+    /// The scalar form for a plain (non-enum) scalar schema. A Unix timestamp is a `Date`, which
+    /// still takes an integer literal of seconds: `trialEnd: 1_700_000_000`.
+    private func unionScalar(_ variant: PropertyObject) -> UnionScalar? {
         guard variant.enum == nil, variant.properties?.isEmpty != false else { return nil }
         switch variant.type {
-        case "integer": return ("Int", "ExpressibleByIntegerLiteral", "integerLiteral value: Int")
-        case "number": return ("Double", "ExpressibleByFloatLiteral", "floatLiteral value: Double")
-        case "boolean": return ("Bool", "ExpressibleByBooleanLiteral", "booleanLiteral value: Bool")
-        case "string": return ("String", "ExpressibleByStringLiteral", "stringLiteral value: String")
+        case "integer" where variant.isUnixTime:
+            return ("Date", "ExpressibleByIntegerLiteral", "integerLiteral value: Int", "Date(timeIntervalSince1970: TimeInterval(value))")
+        case "integer": return ("Int", "ExpressibleByIntegerLiteral", "integerLiteral value: Int", "value")
+        case "number": return ("Double", "ExpressibleByFloatLiteral", "floatLiteral value: Double", "value")
+        case "boolean": return ("Bool", "ExpressibleByBooleanLiteral", "booleanLiteral value: Bool", "value")
+        case "string": return ("String", "ExpressibleByStringLiteral", "stringLiteral value: String", "value")
         default: return nil
         }
     }
@@ -314,7 +321,7 @@ struct ParamGenerator {
         let name = "\(parentStem)\(capitalize(snakeToCamel(propName)))"
         
         var keywords: [String] = []
-        var scalar: (type: String, literal: String, literalType: String)?
+        var scalar: UnionScalar?
         var objects: [(caseName: String, typeName: String)] = []
         
         for (index, variant) in variants.enumerated() {
@@ -360,7 +367,7 @@ struct ParamGenerator {
         if let scalar {
             lines.append("    case value(\(scalar.type))")
             lines.append("")
-            lines.append("    public init(\(scalar.literalType)) { self = .value(value) }")
+            lines.append("    public init(\(scalar.literalType)) { self = .value(\(scalar.fromLiteral)) }")
         }
         
         // Decoding: keywords and the scalar from a single value, then each object form in turn

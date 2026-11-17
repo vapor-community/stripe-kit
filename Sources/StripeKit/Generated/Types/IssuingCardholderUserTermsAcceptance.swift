@@ -9,7 +9,7 @@ import Foundation
 
 public struct IssuingCardholderUserTermsAcceptance: Codable, Sendable {
     /// The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
-    public var date: Int?
+    public var date: Date?
     /// The IP address from which the cardholder accepted the Authorized User Terms.
     public var ip: String?
     /// The user agent of the browser from which the cardholder accepted the Authorized User Terms.

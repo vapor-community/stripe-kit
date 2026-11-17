@@ -10,7 +10,7 @@ import Foundation
 /// Describes a snapshot of the owners of an account at a particular point in time.
 public struct AccountOwnership: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Unique identifier for the object.
     public var id: String
     /// String representing the object's type. Objects of the same type share the same value.

@@ -29,7 +29,7 @@ public struct Customer: Codable, Sendable {
     @Indirect
     public var cashBalance: CashBalance?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
-    public var created: Int
+    public var created: Date
     /// Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) the customer can be
     /// charged in for recurring billing purposes.
     public var currency: String?
