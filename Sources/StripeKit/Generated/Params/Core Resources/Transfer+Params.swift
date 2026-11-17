@@ -106,7 +106,7 @@ public struct TransferListParams: StripeParams {
     }
 }
 
-public struct TransferUpdateParams: StripeParams {
+public struct TransferUpdateParams: ClearableParams {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Specifies which fields in the response should be expanded.
@@ -116,11 +116,25 @@ public struct TransferUpdateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.description = description
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case description
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

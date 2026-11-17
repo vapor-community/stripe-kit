@@ -99,7 +99,7 @@ public struct ShippingRateListParams: StripeParams {
     }
 }
 
-public struct ShippingRateUpdateParams: StripeParams {
+public struct ShippingRateUpdateParams: ClearableParams {
     /// Whether the shipping rate can be used for new purchases. Defaults to `true`.
     public var active: Bool?
     /// Specifies which fields in the response should be expanded.
@@ -114,6 +114,8 @@ public struct ShippingRateUpdateParams: StripeParams {
     /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
     /// `inclusive`, `exclusive`, or `unspecified`.
     public var taxBehavior: ShippingRateUpdateTaxBehavior?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(active: Bool? = nil, expand: [String]? = nil, fixedAmount: ShippingRateUpdateFixedAmount? = nil, metadata: [String: String]? = nil, taxBehavior: ShippingRateUpdateTaxBehavior? = nil) {
         self.active = active
@@ -129,6 +131,12 @@ public struct ShippingRateUpdateParams: StripeParams {
         case fixedAmount = "fixed_amount"
         case metadata
         case taxBehavior = "tax_behavior"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

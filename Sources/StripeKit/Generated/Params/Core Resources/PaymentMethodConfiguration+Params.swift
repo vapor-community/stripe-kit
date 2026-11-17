@@ -420,7 +420,7 @@ public struct PaymentMethodConfigurationCreateParams: StripeParams {
 }
 
 /// Query parameters for `GET /v1/payment_method_configurations`.
-public struct PaymentMethodConfigurationListParams: StripeParams {
+public struct PaymentMethodConfigurationListParams: ClearableParams {
     /// Whether the configuration is active.
     public var active: Bool?
     /// The Connect application to filter by.
@@ -438,6 +438,8 @@ public struct PaymentMethodConfigurationListParams: StripeParams {
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
+    /// Fields to send empty, which clears them: `params.clear(.application)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(active: Bool? = nil, application: String? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
         self.active = active
@@ -455,6 +457,12 @@ public struct PaymentMethodConfigurationListParams: StripeParams {
         case expand
         case limit
         case startingAfter = "starting_after"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case application
     }
 }
 

@@ -149,7 +149,7 @@ public struct IssuingTransactionRefundParams: StripeParams {
     }
 }
 
-public struct IssuingTransactionUpdateParams: StripeParams {
+public struct IssuingTransactionUpdateParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -157,10 +157,23 @@ public struct IssuingTransactionUpdateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

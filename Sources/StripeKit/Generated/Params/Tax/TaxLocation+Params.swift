@@ -62,7 +62,7 @@ public struct TaxLocationListParams: StripeParams {
 }
 
 /// The physical address of the tax location.
-public struct TaxLocationCreateAddress: StripeParams {
+public struct TaxLocationCreateAddress: ClearableParams {
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     public var country: String
     /// City, district, suburb, town, or village.
@@ -76,6 +76,8 @@ public struct TaxLocationCreateAddress: StripeParams {
     /// State/province as an [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) subdivision code,
     /// without country prefix, such as "NY" or "TX".
     public var state: String?
+    /// Fields to send empty, which clears them: `params.clear(.city)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(country: String, city: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
         self.country = country
@@ -89,6 +91,16 @@ public struct TaxLocationCreateAddress: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case city
         case country
+        case line1
+        case line2
+        case postalCode = "postal_code"
+        case state
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case city
         case line1
         case line2
         case postalCode = "postal_code"

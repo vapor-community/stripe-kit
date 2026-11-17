@@ -72,7 +72,7 @@ public struct EntitlementsFeatureListParams: StripeParams {
     }
 }
 
-public struct EntitlementsFeatureUpdateParams: StripeParams {
+public struct EntitlementsFeatureUpdateParams: ClearableParams {
     /// Inactive features cannot be attached to new products and will not be returned from the features list
     /// endpoint.
     public var active: Bool?
@@ -83,11 +83,26 @@ public struct EntitlementsFeatureUpdateParams: StripeParams {
     public var metadata: [String: String]?
     /// The feature's name, for your own purpose, not meant to be displayable to the customer.
     public var name: String?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(active: Bool? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.active = active
         self.expand = expand
         self.metadata = metadata
         self.name = name
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case active
+        case expand
+        case metadata
+        case name
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }

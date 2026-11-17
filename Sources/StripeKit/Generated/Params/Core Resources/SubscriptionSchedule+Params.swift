@@ -30,7 +30,7 @@ public struct SubscriptionScheduleCancelParams: StripeParams {
     }
 }
 
-public struct SubscriptionScheduleCreateParams: StripeParams {
+public struct SubscriptionScheduleCreateParams: ClearableParams {
     /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
     public var billingMode: SubscriptionScheduleCreateBillingMode?
     /// The identifier of the customer to create the subscription schedule for.
@@ -70,6 +70,8 @@ public struct SubscriptionScheduleCreateParams: StripeParams {
     /// subscription so that it starts on a past date, or set a future date for the subscription to start
     /// on.
     public var startDate: SubscriptionScheduleCreateStartDate?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(billingMode: SubscriptionScheduleCreateBillingMode? = nil, customer: String? = nil, customerAccount: String? = nil, defaultSettings: SubscriptionScheduleCreateDefaultSettings? = nil, endBehavior: SubscriptionScheduleCreateEndBehavior? = nil, expand: [String]? = nil, fromSubscription: String? = nil, metadata: [String: String]? = nil, pauseSchedules: [SubscriptionScheduleCreatePauseSchedules]? = nil, phases: [SubscriptionScheduleCreatePhases]? = nil, startDate: SubscriptionScheduleCreateStartDate? = nil) {
         self.billingMode = billingMode
@@ -97,6 +99,12 @@ public struct SubscriptionScheduleCreateParams: StripeParams {
         case pauseSchedules = "pause_schedules"
         case phases
         case startDate = "start_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -177,7 +185,7 @@ public struct SubscriptionScheduleReleaseParams: StripeParams {
     }
 }
 
-public struct SubscriptionScheduleUpdateParams: StripeParams {
+public struct SubscriptionScheduleUpdateParams: ClearableParams {
     /// Object representing the subscription schedule's default settings.
     public var defaultSettings: SubscriptionScheduleUpdateDefaultSettings?
     /// Behavior of the subscription schedule and underlying subscription when it ends. Possible values are
@@ -204,6 +212,8 @@ public struct SubscriptionScheduleUpdateParams: StripeParams {
     /// indicates how prorations from this change should be handled. The default value is
     /// `create_prorations`.
     public var prorationBehavior: SubscriptionScheduleUpdateProrationBehavior?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(defaultSettings: SubscriptionScheduleUpdateDefaultSettings? = nil, endBehavior: SubscriptionScheduleUpdateEndBehavior? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, pauseSchedules: [SubscriptionScheduleUpdatePauseSchedules]? = nil, phases: [SubscriptionScheduleUpdatePhases]? = nil, prorationBehavior: SubscriptionScheduleUpdateProrationBehavior? = nil) {
         self.defaultSettings = defaultSettings
@@ -223,6 +233,13 @@ public struct SubscriptionScheduleUpdateParams: StripeParams {
         case pauseSchedules = "pause_schedules"
         case phases
         case prorationBehavior = "proration_behavior"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
+        case pauseSchedules = "pause_schedules"
     }
 }
 
@@ -279,7 +296,7 @@ public struct SubscriptionScheduleCreateBillingModeFlexibleProrationDiscounts: R
 }
 
 /// Object representing the subscription schedule's default settings.
-public struct SubscriptionScheduleCreateDefaultSettings: StripeParams {
+public struct SubscriptionScheduleCreateDefaultSettings: ClearableParams {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
     /// percentage of the subscription invoice total that will be transferred to the application owner's
     /// Stripe account. The request must be made by a platform account on a connected account in order to
@@ -317,6 +334,8 @@ public struct SubscriptionScheduleCreateDefaultSettings: StripeParams {
     /// The data with which to automatically create a Transfer for each of the associated subscription's
     /// invoices.
     public var transferData: SubscriptionScheduleCreateDefaultSettingsTransferData?
+    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleCreateDefaultSettingsAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleCreateDefaultSettingsBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleCreateDefaultSettingsBillingThresholds? = nil, collectionMethod: SubscriptionScheduleCreateDefaultSettingsCollectionMethod? = nil, defaultPaymentMethod: String? = nil, description: String? = nil, invoiceSettings: SubscriptionScheduleCreateDefaultSettingsInvoiceSettings? = nil, onBehalfOf: String? = nil, transferData: SubscriptionScheduleCreateDefaultSettingsTransferData? = nil) {
         self.applicationFeePercent = applicationFeePercent
@@ -340,6 +359,15 @@ public struct SubscriptionScheduleCreateDefaultSettings: StripeParams {
         case defaultPaymentMethod = "default_payment_method"
         case description
         case invoiceSettings = "invoice_settings"
+        case onBehalfOf = "on_behalf_of"
+        case transferData = "transfer_data"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case billingThresholds = "billing_thresholds"
+        case description
         case onBehalfOf = "on_behalf_of"
         case transferData = "transfer_data"
     }
@@ -429,7 +457,7 @@ public struct SubscriptionScheduleCreateDefaultSettingsCollectionMethod: RawRepr
 }
 
 /// All invoices will be billed using the specified settings.
-public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettings: StripeParams {
+public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettings: ClearableParams {
     /// The account tax IDs associated with the subscription schedule. Will be set on invoices generated by
     /// the subscription schedule.
     public var accountTaxIds: [String]?
@@ -442,6 +470,8 @@ public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettings: StripePa
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
     public var issuer: SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuer?
+    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuer? = nil) {
         self.accountTaxIds = accountTaxIds
@@ -459,6 +489,15 @@ public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettings: StripePa
         case description
         case footer
         case issuer
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accountTaxIds = "account_tax_ids"
+        case customFields = "custom_fields"
+        case description
+        case footer
     }
 }
 
@@ -856,7 +895,7 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeSettingsProrationBeh
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct SubscriptionScheduleCreatePhases: StripeParams {
+public struct SubscriptionScheduleCreatePhases: ClearableParams {
     /// List of configuration items, each with an attached price, to apply during this phase of the
     /// subscription schedule.
     public var items: [SubscriptionScheduleCreatePhasesItems]
@@ -937,6 +976,8 @@ public struct SubscriptionScheduleCreatePhases: StripeParams {
     /// Sets the phase to trialing from the start date to this date. Must be before the phase end date, can
     /// not be combined with `trial`
     public var trialEnd: Date?
+    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(items: [SubscriptionScheduleCreatePhasesItems], addInvoiceItems: [SubscriptionScheduleCreatePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleCreatePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleCreatePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleCreatePhasesBillingThresholds? = nil, collectionMethod: SubscriptionScheduleCreatePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionScheduleCreatePhasesDiscounts]? = nil, duration: SubscriptionScheduleCreatePhasesDuration? = nil, endDate: Date? = nil, invoiceSettings: SubscriptionScheduleCreatePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionScheduleCreatePhasesProrationBehavior? = nil, transferData: SubscriptionScheduleCreatePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: Date? = nil) {
         self.items = items
@@ -984,10 +1025,19 @@ public struct SubscriptionScheduleCreatePhases: StripeParams {
         case transferData = "transfer_data"
         case trial
         case trialEnd = "trial_end"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case billingThresholds = "billing_thresholds"
+        case defaultTaxRates = "default_tax_rates"
+        case description
+        case discounts
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesItems: StripeParams {
+public struct SubscriptionScheduleCreatePhasesItems: ClearableParams {
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period. Pass an empty string to remove previously-defined thresholds.
     public var billingThresholds: SubscriptionScheduleCreatePhasesItemsBillingThresholds?
@@ -1013,6 +1063,8 @@ public struct SubscriptionScheduleCreatePhasesItems: StripeParams {
     /// [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates)
     /// on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
     public var taxRates: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(billingThresholds: SubscriptionScheduleCreatePhasesItemsBillingThresholds? = nil, discounts: [SubscriptionScheduleCreatePhasesItemsDiscounts]? = nil, metadata: [String: String]? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionScheduleCreatePhasesItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.billingThresholds = billingThresholds
@@ -1033,6 +1085,14 @@ public struct SubscriptionScheduleCreatePhasesItems: StripeParams {
         case price
         case priceData = "price_data"
         case quantity
+        case taxRates = "tax_rates"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case billingThresholds = "billing_thresholds"
+        case discounts
         case taxRates = "tax_rates"
     }
 }
@@ -1160,7 +1220,7 @@ public struct SubscriptionScheduleCreatePhasesItemsPriceDataTaxBehavior: RawRepr
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItems: StripeParams {
+public struct SubscriptionScheduleCreatePhasesAddInvoiceItems: ClearableParams {
     /// Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
     public var discountable: Bool?
     /// The coupons to redeem into discounts for the item.
@@ -1182,6 +1242,8 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItems: StripeParams {
     public var quantity: Int?
     /// The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
     public var taxRates: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.taxRates)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(discountable: Bool? = nil, discounts: [SubscriptionScheduleCreatePhasesAddInvoiceItemsDiscounts]? = nil, metadata: [String: String]? = nil, period: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriod? = nil, price: String? = nil, priceData: SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.discountable = discountable
@@ -1202,6 +1264,12 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItems: StripeParams {
         case price
         case priceData = "price_data"
         case quantity
+        case taxRates = "tax_rates"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case taxRates = "tax_rates"
     }
 }
@@ -1480,7 +1548,7 @@ public struct SubscriptionScheduleCreatePhasesDurationInterval: RawRepresentable
 }
 
 /// All invoices will be billed using the specified settings.
-public struct SubscriptionScheduleCreatePhasesInvoiceSettings: StripeParams {
+public struct SubscriptionScheduleCreatePhasesInvoiceSettings: ClearableParams {
     /// The account tax IDs associated with this phase of the subscription schedule. Will be set on invoices
     /// generated by this phase of the subscription schedule.
     public var accountTaxIds: [String]?
@@ -1496,6 +1564,8 @@ public struct SubscriptionScheduleCreatePhasesInvoiceSettings: StripeParams {
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
     public var issuer: SubscriptionScheduleCreatePhasesInvoiceSettingsIssuer?
+    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionScheduleCreatePhasesInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionScheduleCreatePhasesInvoiceSettingsIssuer? = nil) {
         self.accountTaxIds = accountTaxIds
@@ -1513,6 +1583,15 @@ public struct SubscriptionScheduleCreatePhasesInvoiceSettings: StripeParams {
         case description
         case footer
         case issuer
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accountTaxIds = "account_tax_ids"
+        case customFields = "custom_fields"
+        case description
+        case footer
     }
 }
 
@@ -1619,7 +1698,7 @@ public enum SubscriptionScheduleCreateStartDate: Codable, Sendable, ExpressibleB
 }
 
 /// Object representing the subscription schedule's default settings.
-public struct SubscriptionScheduleUpdateDefaultSettings: StripeParams {
+public struct SubscriptionScheduleUpdateDefaultSettings: ClearableParams {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
     /// percentage of the subscription invoice total that will be transferred to the application owner's
     /// Stripe account. The request must be made by a platform account on a connected account in order to
@@ -1657,6 +1736,8 @@ public struct SubscriptionScheduleUpdateDefaultSettings: StripeParams {
     /// The data with which to automatically create a Transfer for each of the associated subscription's
     /// invoices.
     public var transferData: SubscriptionScheduleUpdateDefaultSettingsTransferData?
+    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleUpdateDefaultSettingsAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleUpdateDefaultSettingsBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleUpdateDefaultSettingsBillingThresholds? = nil, collectionMethod: SubscriptionScheduleUpdateDefaultSettingsCollectionMethod? = nil, defaultPaymentMethod: String? = nil, description: String? = nil, invoiceSettings: SubscriptionScheduleUpdateDefaultSettingsInvoiceSettings? = nil, onBehalfOf: String? = nil, transferData: SubscriptionScheduleUpdateDefaultSettingsTransferData? = nil) {
         self.applicationFeePercent = applicationFeePercent
@@ -1680,6 +1761,15 @@ public struct SubscriptionScheduleUpdateDefaultSettings: StripeParams {
         case defaultPaymentMethod = "default_payment_method"
         case description
         case invoiceSettings = "invoice_settings"
+        case onBehalfOf = "on_behalf_of"
+        case transferData = "transfer_data"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case billingThresholds = "billing_thresholds"
+        case description
         case onBehalfOf = "on_behalf_of"
         case transferData = "transfer_data"
     }
@@ -1769,7 +1859,7 @@ public struct SubscriptionScheduleUpdateDefaultSettingsCollectionMethod: RawRepr
 }
 
 /// All invoices will be billed using the specified settings.
-public struct SubscriptionScheduleUpdateDefaultSettingsInvoiceSettings: StripeParams {
+public struct SubscriptionScheduleUpdateDefaultSettingsInvoiceSettings: ClearableParams {
     /// The account tax IDs associated with the subscription schedule. Will be set on invoices generated by
     /// the subscription schedule.
     public var accountTaxIds: [String]?
@@ -1782,6 +1872,8 @@ public struct SubscriptionScheduleUpdateDefaultSettingsInvoiceSettings: StripePa
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
     public var issuer: SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuer?
+    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuer? = nil) {
         self.accountTaxIds = accountTaxIds
@@ -1799,6 +1891,15 @@ public struct SubscriptionScheduleUpdateDefaultSettingsInvoiceSettings: StripePa
         case description
         case footer
         case issuer
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accountTaxIds = "account_tax_ids"
+        case customFields = "custom_fields"
+        case description
+        case footer
     }
 }
 
@@ -1871,18 +1972,32 @@ public struct SubscriptionScheduleUpdateEndBehavior: RawRepresentable, Codable, 
     public static var renew: Self { .init(rawValue: "renew") }
 }
 
-public struct SubscriptionScheduleUpdatePauseSchedules: StripeParams {
+public struct SubscriptionScheduleUpdatePauseSchedules: ClearableParams {
     /// A unique identifier for this pause schedule entry.
     public var key: String?
     /// Configuration for when and how the subscription pauses.
     public var pause: SubscriptionScheduleUpdatePauseSchedulesPause?
     /// Configuration for when and how the subscription resumes.
     public var resume: SubscriptionScheduleUpdatePauseSchedulesResume?
+    /// Fields to send empty, which clears them: `params.clear(.resume)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(key: String? = nil, pause: SubscriptionScheduleUpdatePauseSchedulesPause? = nil, resume: SubscriptionScheduleUpdatePauseSchedulesResume? = nil) {
         self.key = key
         self.pause = pause
         self.resume = resume
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case key
+        case pause
+        case resume
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case resume
     }
 }
 
@@ -2195,7 +2310,7 @@ public struct SubscriptionScheduleUpdatePauseSchedulesResumeSettingsProrationBeh
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct SubscriptionScheduleUpdatePhases: StripeParams {
+public struct SubscriptionScheduleUpdatePhases: ClearableParams {
     /// List of configuration items, each with an attached price, to apply during this phase of the
     /// subscription schedule.
     public var items: [SubscriptionScheduleUpdatePhasesItems]
@@ -2281,6 +2396,8 @@ public struct SubscriptionScheduleUpdatePhases: StripeParams {
     /// Sets the phase to trialing from the start date to this date. Must be within the phase. When combined
     /// with `trial=true`, it must match the phase end date.
     public var trialEnd: SubscriptionScheduleUpdatePhasesTrialEnd?
+    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(items: [SubscriptionScheduleUpdatePhasesItems], addInvoiceItems: [SubscriptionScheduleUpdatePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleUpdatePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleUpdatePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleUpdatePhasesBillingThresholds? = nil, collectionMethod: SubscriptionScheduleUpdatePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionScheduleUpdatePhasesDiscounts]? = nil, duration: SubscriptionScheduleUpdatePhasesDuration? = nil, endDate: SubscriptionScheduleUpdatePhasesEndDate? = nil, invoiceSettings: SubscriptionScheduleUpdatePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionScheduleUpdatePhasesProrationBehavior? = nil, startDate: SubscriptionScheduleUpdatePhasesStartDate? = nil, transferData: SubscriptionScheduleUpdatePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: SubscriptionScheduleUpdatePhasesTrialEnd? = nil) {
         self.items = items
@@ -2330,10 +2447,19 @@ public struct SubscriptionScheduleUpdatePhases: StripeParams {
         case transferData = "transfer_data"
         case trial
         case trialEnd = "trial_end"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case billingThresholds = "billing_thresholds"
+        case defaultTaxRates = "default_tax_rates"
+        case description
+        case discounts
     }
 }
 
-public struct SubscriptionScheduleUpdatePhasesItems: StripeParams {
+public struct SubscriptionScheduleUpdatePhasesItems: ClearableParams {
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period. Pass an empty string to remove previously-defined thresholds.
     public var billingThresholds: SubscriptionScheduleUpdatePhasesItemsBillingThresholds?
@@ -2359,6 +2485,8 @@ public struct SubscriptionScheduleUpdatePhasesItems: StripeParams {
     /// [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates)
     /// on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
     public var taxRates: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(billingThresholds: SubscriptionScheduleUpdatePhasesItemsBillingThresholds? = nil, discounts: [SubscriptionScheduleUpdatePhasesItemsDiscounts]? = nil, metadata: [String: String]? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionScheduleUpdatePhasesItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.billingThresholds = billingThresholds
@@ -2379,6 +2507,14 @@ public struct SubscriptionScheduleUpdatePhasesItems: StripeParams {
         case price
         case priceData = "price_data"
         case quantity
+        case taxRates = "tax_rates"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case billingThresholds = "billing_thresholds"
+        case discounts
         case taxRates = "tax_rates"
     }
 }
@@ -2506,7 +2642,7 @@ public struct SubscriptionScheduleUpdatePhasesItemsPriceDataTaxBehavior: RawRepr
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItems: StripeParams {
+public struct SubscriptionScheduleUpdatePhasesAddInvoiceItems: ClearableParams {
     /// Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
     public var discountable: Bool?
     /// The coupons to redeem into discounts for the item.
@@ -2528,6 +2664,8 @@ public struct SubscriptionScheduleUpdatePhasesAddInvoiceItems: StripeParams {
     public var quantity: Int?
     /// The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
     public var taxRates: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.taxRates)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(discountable: Bool? = nil, discounts: [SubscriptionScheduleUpdatePhasesAddInvoiceItemsDiscounts]? = nil, metadata: [String: String]? = nil, period: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriod? = nil, price: String? = nil, priceData: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.discountable = discountable
@@ -2548,6 +2686,12 @@ public struct SubscriptionScheduleUpdatePhasesAddInvoiceItems: StripeParams {
         case price
         case priceData = "price_data"
         case quantity
+        case taxRates = "tax_rates"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case taxRates = "tax_rates"
     }
 }
@@ -2858,7 +3002,7 @@ public enum SubscriptionScheduleUpdatePhasesEndDate: Codable, Sendable, Expressi
 }
 
 /// All invoices will be billed using the specified settings.
-public struct SubscriptionScheduleUpdatePhasesInvoiceSettings: StripeParams {
+public struct SubscriptionScheduleUpdatePhasesInvoiceSettings: ClearableParams {
     /// The account tax IDs associated with this phase of the subscription schedule. Will be set on invoices
     /// generated by this phase of the subscription schedule.
     public var accountTaxIds: [String]?
@@ -2874,6 +3018,8 @@ public struct SubscriptionScheduleUpdatePhasesInvoiceSettings: StripeParams {
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
     public var issuer: SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuer?
+    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionScheduleUpdatePhasesInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuer? = nil) {
         self.accountTaxIds = accountTaxIds
@@ -2891,6 +3037,15 @@ public struct SubscriptionScheduleUpdatePhasesInvoiceSettings: StripeParams {
         case description
         case footer
         case issuer
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accountTaxIds = "account_tax_ids"
+        case customFields = "custom_fields"
+        case description
+        case footer
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SubscriptionItemCreateParams: StripeParams {
+public struct SubscriptionItemCreateParams: ClearableParams {
     /// The identifier of the subscription to modify.
     public var subscription: String
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
@@ -47,6 +47,8 @@ public struct SubscriptionItemCreateParams: StripeParams {
     /// [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates)
     /// on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
     public var taxRates: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(subscription: String, billingThresholds: SubscriptionItemCreateBillingThresholds? = nil, currentTrial: SubscriptionItemCreateCurrentTrial? = nil, discounts: [SubscriptionItemCreateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentBehavior: SubscriptionItemCreatePaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemCreatePriceData? = nil, prorationBehavior: SubscriptionItemCreateProrationBehavior? = nil, prorationDate: Date? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.subscription = subscription
@@ -79,6 +81,14 @@ public struct SubscriptionItemCreateParams: StripeParams {
         case prorationDate = "proration_date"
         case quantity
         case subscription
+        case taxRates = "tax_rates"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case billingThresholds = "billing_thresholds"
+        case discounts
         case taxRates = "tax_rates"
     }
 }
@@ -118,7 +128,7 @@ public struct SubscriptionItemListParams: StripeParams {
     }
 }
 
-public struct SubscriptionItemUpdateParams: StripeParams {
+public struct SubscriptionItemUpdateParams: ClearableParams {
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period. Pass an empty string to remove previously-defined thresholds.
     public var billingThresholds: SubscriptionItemUpdateBillingThresholds?
@@ -164,6 +174,8 @@ public struct SubscriptionItemUpdateParams: StripeParams {
     /// [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates)
     /// on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
     public var taxRates: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(billingThresholds: SubscriptionItemUpdateBillingThresholds? = nil, currentTrial: SubscriptionItemUpdateCurrentTrial? = nil, discounts: [SubscriptionItemUpdateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, paymentBehavior: SubscriptionItemUpdatePaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemUpdatePriceData? = nil, prorationBehavior: SubscriptionItemUpdateProrationBehavior? = nil, prorationDate: Date? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.billingThresholds = billingThresholds
@@ -196,6 +208,15 @@ public struct SubscriptionItemUpdateParams: StripeParams {
         case prorationBehavior = "proration_behavior"
         case prorationDate = "proration_date"
         case quantity
+        case taxRates = "tax_rates"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case billingThresholds = "billing_thresholds"
+        case discounts
+        case metadata
         case taxRates = "tax_rates"
     }
 }

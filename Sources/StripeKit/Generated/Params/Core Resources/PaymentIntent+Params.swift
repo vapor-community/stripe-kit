@@ -47,7 +47,7 @@ public struct PaymentIntentCancelParams: StripeParams {
     }
 }
 
-public struct PaymentIntentCaptureParams: StripeParams {
+public struct PaymentIntentCaptureParams: ClearableParams {
     /// Provides industry-specific information about the amount.
     public var amountDetails: PaymentIntentCaptureAmountDetails?
     /// The amount to capture from the PaymentIntent, which must be less than or equal to the original
@@ -90,6 +90,8 @@ public struct PaymentIntentCaptureParams: StripeParams {
     /// Learn more about the [use case for connected
     /// accounts](https://docs.stripe.com/payments/connected-accounts).
     public var transferData: PaymentIntentCaptureTransferData?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amountDetails: PaymentIntentCaptureAmountDetails? = nil, amountToCapture: Int? = nil, applicationFeeAmount: Int? = nil, expand: [String]? = nil, finalCapture: Bool? = nil, hooks: PaymentIntentCaptureHooks? = nil, metadata: [String: String]? = nil, paymentDetails: PaymentIntentCapturePaymentDetails? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferData: PaymentIntentCaptureTransferData? = nil) {
         self.amountDetails = amountDetails
@@ -117,10 +119,17 @@ public struct PaymentIntentCaptureParams: StripeParams {
         case statementDescriptor = "statement_descriptor"
         case statementDescriptorSuffix = "statement_descriptor_suffix"
         case transferData = "transfer_data"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
+        case paymentDetails = "payment_details"
     }
 }
 
-public struct PaymentIntentConfirmParams: StripeParams {
+public struct PaymentIntentConfirmParams: ClearableParams {
     /// The list of payment method types allowed for use with this payment. Stripe automatically returns
     /// compatible payment methods from this list in the `payment_method_types` field of the response, based
     /// on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
@@ -197,6 +206,8 @@ public struct PaymentIntentConfirmParams: StripeParams {
     /// Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to
     /// handle the next actions.
     public var useStripeSdk: Bool?
+    /// Fields to send empty, which clears them: `params.clear(.amountDetails)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(allowedPaymentMethodTypes: [PaymentIntentConfirmAllowedPaymentMethodTypes]? = nil, amountDetails: PaymentIntentConfirmAmountDetails? = nil, amountToConfirm: Int? = nil, captureMethod: PaymentIntentConfirmCaptureMethod? = nil, confirmationToken: String? = nil, errorOnRequiresAction: Bool? = nil, excludedPaymentMethodTypes: [PaymentIntentConfirmExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, hooks: PaymentIntentConfirmHooks? = nil, mandate: String? = nil, mandateData: PaymentIntentConfirmMandateData? = nil, offSession: PaymentIntentConfirmOffSession? = nil, paymentDetails: PaymentIntentConfirmPaymentDetails? = nil, paymentMethod: String? = nil, paymentMethodData: PaymentIntentConfirmPaymentMethodData? = nil, paymentMethodOptions: PaymentIntentConfirmPaymentMethodOptions? = nil, radarOptions: PaymentIntentConfirmRadarOptions? = nil, receiptEmail: String? = nil, returnUrl: String? = nil, setupFutureUsage: PaymentIntentConfirmSetupFutureUsage? = nil, shipping: PaymentIntentConfirmShipping? = nil, useStripeSdk: Bool? = nil) {
         self.allowedPaymentMethodTypes = allowedPaymentMethodTypes
@@ -246,10 +257,22 @@ public struct PaymentIntentConfirmParams: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case shipping
         case useStripeSdk = "use_stripe_sdk"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case amountDetails = "amount_details"
+        case excludedPaymentMethodTypes = "excluded_payment_method_types"
+        case mandateData = "mandate_data"
+        case paymentDetails = "payment_details"
+        case receiptEmail = "receipt_email"
+        case setupFutureUsage = "setup_future_usage"
+        case shipping
     }
 }
 
-public struct PaymentIntentCreateParams: StripeParams {
+public struct PaymentIntentCreateParams: ClearableParams {
     /// Amount intended to be collected by this PaymentIntent. A positive integer representing how much to
     /// charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100
     /// cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50
@@ -408,6 +431,8 @@ public struct PaymentIntentCreateParams: StripeParams {
     /// Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to
     /// handle the next actions.
     public var useStripeSdk: Bool?
+    /// Fields to send empty, which clears them: `params.clear(.mandateData)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int, currency: String, allowedPaymentMethodTypes: [PaymentIntentCreateAllowedPaymentMethodTypes]? = nil, amountDetails: PaymentIntentCreateAmountDetails? = nil, applicationFeeAmount: Int? = nil, automaticPaymentMethods: PaymentIntentCreateAutomaticPaymentMethods? = nil, captureMethod: PaymentIntentCreateCaptureMethod? = nil, confirm: Bool? = nil, confirmationMethod: PaymentIntentCreateConfirmationMethod? = nil, confirmationToken: String? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, errorOnRequiresAction: Bool? = nil, excludedPaymentMethodTypes: [PaymentIntentCreateExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, hooks: PaymentIntentCreateHooks? = nil, mandate: String? = nil, mandateData: PaymentIntentCreateMandateData? = nil, metadata: [String: String]? = nil, offSession: PaymentIntentCreateOffSession? = nil, onBehalfOf: String? = nil, paymentDetails: PaymentIntentCreatePaymentDetails? = nil, paymentMethod: String? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: PaymentIntentCreatePaymentMethodData? = nil, paymentMethodOptions: PaymentIntentCreatePaymentMethodOptions? = nil, radarOptions: PaymentIntentCreateRadarOptions? = nil, receiptEmail: String? = nil, returnUrl: String? = nil, setupFutureUsage: PaymentIntentCreateSetupFutureUsage? = nil, shipping: PaymentIntentCreateShipping? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferData: PaymentIntentCreateTransferData? = nil, transferGroup: String? = nil, useStripeSdk: Bool? = nil) {
         self.amount = amount
@@ -487,6 +512,12 @@ public struct PaymentIntentCreateParams: StripeParams {
         case transferData = "transfer_data"
         case transferGroup = "transfer_group"
         case useStripeSdk = "use_stripe_sdk"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case mandateData = "mandate_data"
     }
 }
 
@@ -636,7 +667,7 @@ public struct PaymentIntentSearchParams: StripeParams {
     }
 }
 
-public struct PaymentIntentUpdateParams: StripeParams {
+public struct PaymentIntentUpdateParams: ClearableParams {
     /// The list of payment method types allowed for use with this payment. Stripe automatically returns
     /// compatible payment methods from this list in the `payment_method_types` field of the response, based
     /// on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
@@ -746,6 +777,8 @@ public struct PaymentIntentUpdateParams: StripeParams {
     /// `transfer_group` if it hasn't been set. Learn more about the [use case for connected
     /// accounts](https://docs.stripe.com/payments/connected-accounts).
     public var transferGroup: String?
+    /// Fields to send empty, which clears them: `params.clear(.amountDetails)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(allowedPaymentMethodTypes: [PaymentIntentUpdateAllowedPaymentMethodTypes]? = nil, amount: Int? = nil, amountDetails: PaymentIntentUpdateAmountDetails? = nil, applicationFeeAmount: Int? = nil, captureMethod: PaymentIntentUpdateCaptureMethod? = nil, currency: String? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, excludedPaymentMethodTypes: [PaymentIntentUpdateExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, hooks: PaymentIntentUpdateHooks? = nil, metadata: [String: String]? = nil, paymentDetails: PaymentIntentUpdatePaymentDetails? = nil, paymentMethod: String? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: PaymentIntentUpdatePaymentMethodData? = nil, paymentMethodOptions: PaymentIntentUpdatePaymentMethodOptions? = nil, receiptEmail: String? = nil, setupFutureUsage: PaymentIntentUpdateSetupFutureUsage? = nil, shipping: PaymentIntentUpdateShipping? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferData: PaymentIntentUpdateTransferData? = nil, transferGroup: String? = nil) {
         self.allowedPaymentMethodTypes = allowedPaymentMethodTypes
@@ -801,6 +834,19 @@ public struct PaymentIntentUpdateParams: StripeParams {
         case statementDescriptorSuffix = "statement_descriptor_suffix"
         case transferData = "transfer_data"
         case transferGroup = "transfer_group"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case amountDetails = "amount_details"
+        case applicationFeeAmount = "application_fee_amount"
+        case excludedPaymentMethodTypes = "excluded_payment_method_types"
+        case metadata
+        case paymentDetails = "payment_details"
+        case receiptEmail = "receipt_email"
+        case setupFutureUsage = "setup_future_usage"
+        case shipping
     }
 }
 
@@ -840,7 +886,7 @@ public struct PaymentIntentCancelCancellationReason: RawRepresentable, Codable, 
 }
 
 /// Provides industry-specific information about the amount.
-public struct PaymentIntentCaptureAmountDetails: StripeParams {
+public struct PaymentIntentCaptureAmountDetails: ClearableParams {
     /// The total discount applied on the transaction represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0. This field is
     /// mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
@@ -859,6 +905,8 @@ public struct PaymentIntentCaptureAmountDetails: StripeParams {
     public var shipping: PaymentIntentCaptureAmountDetailsShipping?
     /// Contains information about the tax portion of the amount.
     public var tax: PaymentIntentCaptureAmountDetailsTax?
+    /// Fields to send empty, which clears them: `params.clear(.discountAmount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(discountAmount: Int? = nil, enforceArithmeticValidation: Bool? = nil, lineItems: [PaymentIntentCaptureAmountDetailsLineItems]? = nil, shipping: PaymentIntentCaptureAmountDetailsShipping? = nil, tax: PaymentIntentCaptureAmountDetailsTax? = nil) {
         self.discountAmount = discountAmount
@@ -871,6 +919,15 @@ public struct PaymentIntentCaptureAmountDetails: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case discountAmount = "discount_amount"
         case enforceArithmeticValidation = "enforce_arithmetic_validation"
+        case lineItems = "line_items"
+        case shipping
+        case tax
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discountAmount = "discount_amount"
         case lineItems = "line_items"
         case shipping
         case tax
@@ -1059,7 +1116,7 @@ public struct PaymentIntentCaptureAmountDetailsLineItemsTax: StripeParams {
     }
 }
 
-public struct PaymentIntentCaptureAmountDetailsShipping: StripeParams {
+public struct PaymentIntentCaptureAmountDetailsShipping: ClearableParams {
     /// If a physical good is being shipped, the cost of shipping represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than or equal to 0.
     public var amount: Int?
@@ -1069,6 +1126,8 @@ public struct PaymentIntentCaptureAmountDetailsShipping: StripeParams {
     /// If a physical good is being shipped, the postal code of where it is being shipped to. At most 10
     /// alphanumeric characters long, hyphens and spaces are allowed.
     public var toPostalCode: String?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, fromPostalCode: String? = nil, toPostalCode: String? = nil) {
         self.amount = amount
@@ -1077,6 +1136,14 @@ public struct PaymentIntentCaptureAmountDetailsShipping: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case amount
+        case fromPostalCode = "from_postal_code"
+        case toPostalCode = "to_postal_code"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case amount
         case fromPostalCode = "from_postal_code"
         case toPostalCode = "to_postal_code"
@@ -1120,16 +1187,28 @@ public struct PaymentIntentCaptureHooksInputs: StripeParams {
 }
 
 /// Tax arguments for automations
-public struct PaymentIntentCaptureHooksInputsTax: StripeParams {
+public struct PaymentIntentCaptureHooksInputsTax: ClearableParams {
     /// The [TaxCalculation](https://docs.stripe.com/api/tax/calculations) id
     public var calculation: String
+    /// Fields to send empty, which clears them: `params.clear(.calculation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(calculation: String) {
         self.calculation = calculation
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case calculation
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case calculation
+    }
 }
 
-public struct PaymentIntentCapturePaymentDetails: StripeParams {
+public struct PaymentIntentCapturePaymentDetails: ClearableParams {
     /// A unique value to identify the customer. This field is available only for card payments. This field
     /// is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
     public var customerReference: String?
@@ -1138,6 +1217,8 @@ public struct PaymentIntentCapturePaymentDetails: StripeParams {
     /// sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to
     /// customers when they view the order in the Klarna app.
     public var orderReference: String?
+    /// Fields to send empty, which clears them: `params.clear(.customerReference)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customerReference: String? = nil, orderReference: String? = nil) {
         self.customerReference = customerReference
@@ -1145,6 +1226,13 @@ public struct PaymentIntentCapturePaymentDetails: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case customerReference = "customer_reference"
+        case orderReference = "order_reference"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case customerReference = "customer_reference"
         case orderReference = "order_reference"
     }
@@ -1270,7 +1358,7 @@ public struct PaymentIntentConfirmAllowedPaymentMethodTypes: RawRepresentable, C
     public static var zip: Self { .init(rawValue: "zip") }
 }
 
-public struct PaymentIntentConfirmAmountDetails: StripeParams {
+public struct PaymentIntentConfirmAmountDetails: ClearableParams {
     /// The total discount applied on the transaction represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0. This field is
     /// mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
@@ -1289,6 +1377,8 @@ public struct PaymentIntentConfirmAmountDetails: StripeParams {
     public var shipping: PaymentIntentConfirmAmountDetailsShipping?
     /// Contains information about the tax portion of the amount.
     public var tax: PaymentIntentConfirmAmountDetailsTax?
+    /// Fields to send empty, which clears them: `params.clear(.discountAmount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(discountAmount: Int? = nil, enforceArithmeticValidation: Bool? = nil, lineItems: [PaymentIntentConfirmAmountDetailsLineItems]? = nil, shipping: PaymentIntentConfirmAmountDetailsShipping? = nil, tax: PaymentIntentConfirmAmountDetailsTax? = nil) {
         self.discountAmount = discountAmount
@@ -1301,6 +1391,15 @@ public struct PaymentIntentConfirmAmountDetails: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case discountAmount = "discount_amount"
         case enforceArithmeticValidation = "enforce_arithmetic_validation"
+        case lineItems = "line_items"
+        case shipping
+        case tax
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discountAmount = "discount_amount"
         case lineItems = "line_items"
         case shipping
         case tax
@@ -1489,7 +1588,7 @@ public struct PaymentIntentConfirmAmountDetailsLineItemsTax: StripeParams {
     }
 }
 
-public struct PaymentIntentConfirmAmountDetailsShipping: StripeParams {
+public struct PaymentIntentConfirmAmountDetailsShipping: ClearableParams {
     /// If a physical good is being shipped, the cost of shipping represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than or equal to 0.
     public var amount: Int?
@@ -1499,6 +1598,8 @@ public struct PaymentIntentConfirmAmountDetailsShipping: StripeParams {
     /// If a physical good is being shipped, the postal code of where it is being shipped to. At most 10
     /// alphanumeric characters long, hyphens and spaces are allowed.
     public var toPostalCode: String?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, fromPostalCode: String? = nil, toPostalCode: String? = nil) {
         self.amount = amount
@@ -1507,6 +1608,14 @@ public struct PaymentIntentConfirmAmountDetailsShipping: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case amount
+        case fromPostalCode = "from_postal_code"
+        case toPostalCode = "to_postal_code"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case amount
         case fromPostalCode = "from_postal_code"
         case toPostalCode = "to_postal_code"
@@ -1626,12 +1735,24 @@ public struct PaymentIntentConfirmHooksInputs: StripeParams {
 }
 
 /// Tax arguments for automations
-public struct PaymentIntentConfirmHooksInputsTax: StripeParams {
+public struct PaymentIntentConfirmHooksInputsTax: ClearableParams {
     /// The [TaxCalculation](https://docs.stripe.com/api/tax/calculations) id
     public var calculation: String
+    /// Fields to send empty, which clears them: `params.clear(.calculation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(calculation: String) {
         self.calculation = calculation
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case calculation
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case calculation
     }
 }
 
@@ -1818,7 +1939,7 @@ public enum PaymentIntentConfirmOffSession: Codable, Sendable, ExpressibleByBool
     }
 }
 
-public struct PaymentIntentConfirmPaymentDetails: StripeParams {
+public struct PaymentIntentConfirmPaymentDetails: ClearableParams {
     /// A unique value to identify the customer. This field is available only for card payments. This field
     /// is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
     public var customerReference: String?
@@ -1827,6 +1948,8 @@ public struct PaymentIntentConfirmPaymentDetails: StripeParams {
     /// sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to
     /// customers when they view the order in the Klarna app.
     public var orderReference: String?
+    /// Fields to send empty, which clears them: `params.clear(.customerReference)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customerReference: String? = nil, orderReference: String? = nil) {
         self.customerReference = customerReference
@@ -1834,6 +1957,13 @@ public struct PaymentIntentConfirmPaymentDetails: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case customerReference = "customer_reference"
+        case orderReference = "order_reference"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case customerReference = "customer_reference"
         case orderReference = "order_reference"
     }
@@ -2265,7 +2395,7 @@ public struct PaymentIntentConfirmPaymentMethodDataBacsDebit: StripeParams {
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct PaymentIntentConfirmPaymentMethodDataBillingDetails: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodDataBillingDetails: ClearableParams {
     /// Billing address.
     public var address: PaymentIntentConfirmPaymentMethodDataBillingDetailsAddress?
     /// Email address.
@@ -2277,6 +2407,8 @@ public struct PaymentIntentConfirmPaymentMethodDataBillingDetails: StripeParams 
     /// Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM
     /// sellers.
     public var taxId: String?
+    /// Fields to send empty, which clears them: `params.clear(.address)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: PaymentIntentConfirmPaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
         self.address = address
@@ -2292,6 +2424,15 @@ public struct PaymentIntentConfirmPaymentMethodDataBillingDetails: StripeParams 
         case name
         case phone
         case taxId = "tax_id"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case address
+        case email
+        case name
+        case phone
     }
 }
 
@@ -2797,7 +2938,7 @@ public struct PaymentIntentConfirmPaymentMethodDataUsBankAccountAccountType: Raw
 }
 
 /// Payment method-specific configuration for this PaymentIntent.
-public struct PaymentIntentConfirmPaymentMethodOptions: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptions: ClearableParams {
     /// If this is a `acss_debit` PaymentMethod, this sub-hash contains details about the ACSS Debit payment
     /// method options.
     public var acssDebit: PaymentIntentConfirmPaymentMethodOptionsAcssDebit?
@@ -2971,6 +3112,8 @@ public struct PaymentIntentConfirmPaymentMethodOptions: StripeParams {
     /// If this is a `zip` PaymentMethod, this sub-hash contains details about the Zip payment method
     /// options.
     public var zip: PaymentIntentConfirmPaymentMethodOptionsZip?
+    /// Fields to send empty, which clears them: `params.clear(.acssDebit)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(acssDebit: PaymentIntentConfirmPaymentMethodOptionsAcssDebit? = nil, affirm: PaymentIntentConfirmPaymentMethodOptionsAffirm? = nil, afterpayClearpay: PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpay? = nil, alipay: PaymentIntentConfirmPaymentMethodOptionsAlipay? = nil, alma: PaymentIntentConfirmPaymentMethodOptionsAlma? = nil, amazonPay: PaymentIntentConfirmPaymentMethodOptionsAmazonPay? = nil, auBecsDebit: PaymentIntentConfirmPaymentMethodOptionsAuBecsDebit? = nil, bacsDebit: PaymentIntentConfirmPaymentMethodOptionsBacsDebit? = nil, bancontact: PaymentIntentConfirmPaymentMethodOptionsBancontact? = nil, billie: PaymentIntentConfirmPaymentMethodOptionsBillie? = nil, bizum: [String: String]? = nil, blik: PaymentIntentConfirmPaymentMethodOptionsBlik? = nil, boleto: PaymentIntentConfirmPaymentMethodOptionsBoleto? = nil, card: PaymentIntentConfirmPaymentMethodOptionsCard? = nil, cardPresent: PaymentIntentConfirmPaymentMethodOptionsCardPresent? = nil, cashapp: PaymentIntentConfirmPaymentMethodOptionsCashapp? = nil, crypto: PaymentIntentConfirmPaymentMethodOptionsCrypto? = nil, customerBalance: PaymentIntentConfirmPaymentMethodOptionsCustomerBalance? = nil, eps: PaymentIntentConfirmPaymentMethodOptionsEps? = nil, fpx: PaymentIntentConfirmPaymentMethodOptionsFpx? = nil, giropay: PaymentIntentConfirmPaymentMethodOptionsGiropay? = nil, grabpay: PaymentIntentConfirmPaymentMethodOptionsGrabpay? = nil, ideal: PaymentIntentConfirmPaymentMethodOptionsIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: PaymentIntentConfirmPaymentMethodOptionsKakaoPay? = nil, klarna: PaymentIntentConfirmPaymentMethodOptionsKlarna? = nil, konbini: PaymentIntentConfirmPaymentMethodOptionsKonbini? = nil, krCard: PaymentIntentConfirmPaymentMethodOptionsKrCard? = nil, link: PaymentIntentConfirmPaymentMethodOptionsLink? = nil, mbWay: PaymentIntentConfirmPaymentMethodOptionsMbWay? = nil, mobilepay: PaymentIntentConfirmPaymentMethodOptionsMobilepay? = nil, multibanco: PaymentIntentConfirmPaymentMethodOptionsMultibanco? = nil, naverPay: PaymentIntentConfirmPaymentMethodOptionsNaverPay? = nil, nzBankAccount: PaymentIntentConfirmPaymentMethodOptionsNzBankAccount? = nil, oxxo: PaymentIntentConfirmPaymentMethodOptionsOxxo? = nil, p24: PaymentIntentConfirmPaymentMethodOptionsP24? = nil, payByBank: [String: String]? = nil, payco: PaymentIntentConfirmPaymentMethodOptionsPayco? = nil, paynow: PaymentIntentConfirmPaymentMethodOptionsPaynow? = nil, paypal: PaymentIntentConfirmPaymentMethodOptionsPaypal? = nil, paypay: [String: String]? = nil, payto: PaymentIntentConfirmPaymentMethodOptionsPayto? = nil, pix: PaymentIntentConfirmPaymentMethodOptionsPix? = nil, promptpay: PaymentIntentConfirmPaymentMethodOptionsPromptpay? = nil, revolutPay: PaymentIntentConfirmPaymentMethodOptionsRevolutPay? = nil, samsungPay: PaymentIntentConfirmPaymentMethodOptionsSamsungPay? = nil, satispay: PaymentIntentConfirmPaymentMethodOptionsSatispay? = nil, scalapay: PaymentIntentConfirmPaymentMethodOptionsScalapay? = nil, sepaDebit: PaymentIntentConfirmPaymentMethodOptionsSepaDebit? = nil, sequra: PaymentIntentConfirmPaymentMethodOptionsSequra? = nil, sofort: PaymentIntentConfirmPaymentMethodOptionsSofort? = nil, sunbit: PaymentIntentConfirmPaymentMethodOptionsSunbit? = nil, swish: PaymentIntentConfirmPaymentMethodOptionsSwish? = nil, twint: PaymentIntentConfirmPaymentMethodOptionsTwint? = nil, upi: PaymentIntentConfirmPaymentMethodOptionsUpi? = nil, usBankAccount: PaymentIntentConfirmPaymentMethodOptionsUsBankAccount? = nil, wechatPay: PaymentIntentConfirmPaymentMethodOptionsWechatPay? = nil, zip: PaymentIntentConfirmPaymentMethodOptionsZip? = nil) {
         self.acssDebit = acssDebit
@@ -3092,10 +3235,73 @@ public struct PaymentIntentConfirmPaymentMethodOptions: StripeParams {
         case usBankAccount = "us_bank_account"
         case wechatPay = "wechat_pay"
         case zip
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case acssDebit = "acss_debit"
+        case affirm
+        case afterpayClearpay = "afterpay_clearpay"
+        case alipay
+        case alma
+        case amazonPay = "amazon_pay"
+        case auBecsDebit = "au_becs_debit"
+        case bacsDebit = "bacs_debit"
+        case bancontact
+        case billie
+        case bizum
+        case blik
+        case boleto
+        case card
+        case cardPresent = "card_present"
+        case cashapp
+        case crypto
+        case customerBalance = "customer_balance"
+        case eps
+        case fpx
+        case giropay
+        case grabpay
+        case ideal
+        case interacPresent = "interac_present"
+        case kakaoPay = "kakao_pay"
+        case klarna
+        case konbini
+        case krCard = "kr_card"
+        case link
+        case mbWay = "mb_way"
+        case mobilepay
+        case multibanco
+        case naverPay = "naver_pay"
+        case nzBankAccount = "nz_bank_account"
+        case oxxo
+        case p24
+        case payByBank = "pay_by_bank"
+        case payco
+        case paynow
+        case paypal
+        case paypay
+        case payto
+        case pix
+        case promptpay
+        case revolutPay = "revolut_pay"
+        case samsungPay = "samsung_pay"
+        case satispay
+        case scalapay
+        case sepaDebit = "sepa_debit"
+        case sequra
+        case sofort
+        case sunbit
+        case swish
+        case twint
+        case upi
+        case usBankAccount = "us_bank_account"
+        case wechatPay = "wechat_pay"
+        case zip
     }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebit: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebit: ClearableParams {
     /// Additional fields for Mandate creation
     public var mandateOptions: PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -3118,6 +3324,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebit: StripeParams {
     public var targetDate: String?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: PaymentIntentConfirmPaymentMethodOptionsAcssDebitVerificationMethod?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAcssDebitSetupFutureUsage? = nil, targetDate: String? = nil, verificationMethod: PaymentIntentConfirmPaymentMethodOptionsAcssDebitVerificationMethod? = nil) {
         self.mandateOptions = mandateOptions
@@ -3131,11 +3339,17 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebit: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
         case verificationMethod = "verification_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions: ClearableParams {
     /// A URL for custom mandate text to render during confirmation step. The URL will be rendered with
     /// additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a
     /// Payment Intent, or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
@@ -3147,6 +3361,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions: S
     public var paymentSchedule: PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule?
     /// Transaction type of the mandate.
     public var transactionType: PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
+    /// Fields to send empty, which clears them: `params.clear(.customMandateUrl)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customMandateUrl: String? = nil, intervalDescription: String? = nil, paymentSchedule: PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule? = nil, transactionType: PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsTransactionType? = nil) {
         self.customMandateUrl = customMandateUrl
@@ -3160,6 +3376,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions: S
         case intervalDescription = "interval_description"
         case paymentSchedule = "payment_schedule"
         case transactionType = "transaction_type"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case customMandateUrl = "custom_mandate_url"
     }
 }
 
@@ -3210,7 +3432,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebitVerificationMetho
     public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsAffirm: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsAffirm: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -3234,6 +3456,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAffirm: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAffirmSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsAffirmCaptureMethod? = nil, preferredLocale: String? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAffirmSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -3245,6 +3469,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAffirm: StripeParams {
         case captureMethod = "capture_method"
         case preferredLocale = "preferred_locale"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -3268,7 +3498,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAffirmSetupFutureUsage: Ra
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -3294,6 +3524,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpay: StripePa
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpayCaptureMethod? = nil, reference: String? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -3305,6 +3537,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpay: StripePa
         case captureMethod = "capture_method"
         case reference
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -3328,7 +3566,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpaySetupFutur
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsAlipay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsAlipay: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -3343,12 +3581,20 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAlipay: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAlipaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAlipaySetupFutureUsage? = nil) {
         self.setupFutureUsage = setupFutureUsage
     }
 
     public enum CodingKeys: String, CodingKey {
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -3364,7 +3610,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAlipaySetupFutureUsage: Ra
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsAlma: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsAlma: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -3372,12 +3618,20 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAlma: StripeParams {
     /// already set on the PaymentIntent, providing an empty value for this parameter unsets the stored
     /// value for this payment method type.
     public var captureMethod: PaymentIntentConfirmPaymentMethodOptionsAlmaCaptureMethod?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsAlmaCaptureMethod? = nil) {
         self.captureMethod = captureMethod
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
     }
 }
@@ -3392,7 +3646,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAlmaCaptureMethod: RawRepr
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsAmazonPay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsAmazonPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -3412,6 +3666,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAmazonPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAmazonPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsAmazonPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAmazonPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -3419,6 +3675,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAmazonPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -3445,7 +3708,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAmazonPaySetupFutureUsage:
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsAuBecsDebit: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsAuBecsDebit: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -3464,6 +3727,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAuBecsDebit: StripeParams 
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsAuBecsDebitSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.setupFutureUsage = setupFutureUsage
@@ -3473,6 +3738,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAuBecsDebit: StripeParams 
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
@@ -3488,7 +3759,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAuBecsDebitSetupFutureUsag
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsBacsDebit: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsBacsDebit: ClearableParams {
     /// Additional fields for Mandate creation
     public var mandateOptions: PaymentIntentConfirmPaymentMethodOptionsBacsDebitMandateOptions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -3509,6 +3780,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBacsDebit: StripeParams {
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentConfirmPaymentMethodOptionsBacsDebitMandateOptions? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsBacsDebitSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.mandateOptions = mandateOptions
@@ -3520,21 +3793,35 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBacsDebit: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentConfirmPaymentMethodOptionsBacsDebitMandateOptions: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsBacsDebitMandateOptions: ClearableParams {
     /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
     /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
     /// '.'. Cannot begin with 'DDIC' or 'STRIPE'.
     public var referencePrefix: String?
+    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(referencePrefix: String? = nil) {
         self.referencePrefix = referencePrefix
     }
 
     public enum CodingKeys: String, CodingKey {
+        case referencePrefix = "reference_prefix"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case referencePrefix = "reference_prefix"
     }
 }
@@ -3551,7 +3838,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBacsDebitSetupFutureUsage:
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsBancontact: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsBancontact: ClearableParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: PaymentIntentConfirmPaymentMethodOptionsBancontactPreferredLanguage?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -3568,6 +3855,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBancontact: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsBancontactSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(preferredLanguage: PaymentIntentConfirmPaymentMethodOptionsBancontactPreferredLanguage? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsBancontactSetupFutureUsage? = nil) {
         self.preferredLanguage = preferredLanguage
@@ -3576,6 +3865,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBancontact: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case preferredLanguage = "preferred_language"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -3604,7 +3899,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBancontactSetupFutureUsage
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsBillie: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsBillie: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -3616,6 +3911,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBillie: StripeParams {
     public var companyDetails: PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetails?
     /// An identifier or reference that this payment corresponds to.
     public var reference: String?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsBillieCaptureMethod? = nil, companyDetails: PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetails? = nil, reference: String? = nil) {
         self.captureMethod = captureMethod
@@ -3627,6 +3924,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBillie: StripeParams {
         case captureMethod = "capture_method"
         case companyDetails = "company_details"
         case reference
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
+        case companyDetails = "company_details"
     }
 }
 
@@ -3640,7 +3944,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBillieCaptureMethod: RawRe
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetails: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetails: ClearableParams {
     /// The address the company or entity is registered with.
     public var registeredAddress: PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetailsRegisteredAddress?
     /// Company or entity name.
@@ -3651,6 +3955,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetails: Stri
     public var registrationType: PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetailsRegistrationType?
     /// VAT id number
     public var vat: String?
+    /// Fields to send empty, which clears them: `params.clear(.registeredAddress)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(registeredAddress: PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetailsRegisteredAddress? = nil, registeredName: String? = nil, registrationNumber: String? = nil, registrationType: PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetailsRegistrationType? = nil, vat: String? = nil) {
         self.registeredAddress = registeredAddress
@@ -3666,6 +3972,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetails: Stri
         case registrationNumber = "registration_number"
         case registrationType = "registration_type"
         case vat
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case registeredAddress = "registered_address"
+        case registrationType = "registration_type"
     }
 }
 
@@ -3725,7 +4038,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetailsRegist
     public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsBlik: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsBlik: ClearableParams {
     /// The 6-digit BLIK code that a customer has generated using their banking application. Can only be set
     /// on confirmation.
     public var code: String?
@@ -3745,6 +4058,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBlik: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsBlikSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(code: String? = nil, mandateOptions: PaymentIntentConfirmPaymentMethodOptionsBlikMandateOptions? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsBlikSetupFutureUsage? = nil) {
         self.code = code
@@ -3755,6 +4070,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBlik: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case code
         case mandateOptions = "mandate_options"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -3784,7 +4105,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBlikSetupFutureUsage: RawR
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsBoleto: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsBoleto: ClearableParams {
     /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto
     /// voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday
     /// at 23:59 America/Sao_Paulo time.
@@ -3803,6 +4124,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBoleto: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsBoletoSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expiresAfterDays: Int? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsBoletoSetupFutureUsage? = nil) {
         self.expiresAfterDays = expiresAfterDays
@@ -3811,6 +4134,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBoleto: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case expiresAfterDays = "expires_after_days"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -3827,7 +4156,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBoletoSetupFutureUsage: Ra
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsCard: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsCard: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -3913,6 +4242,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCard: StripeParams {
     /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
     /// use for this payment.
     public var threeDSecure: PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecure?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsCardCaptureMethod? = nil, cvcToken: String? = nil, installments: PaymentIntentConfirmPaymentMethodOptionsCardInstallments? = nil, mandateOptions: PaymentIntentConfirmPaymentMethodOptionsCardMandateOptions? = nil, moto: Bool? = nil, network: PaymentIntentConfirmPaymentMethodOptionsCardNetwork? = nil, requestExtendedAuthorization: PaymentIntentConfirmPaymentMethodOptionsCardRequestExtendedAuthorization? = nil, requestIncrementalAuthorization: PaymentIntentConfirmPaymentMethodOptionsCardRequestIncrementalAuthorization? = nil, requestMulticapture: PaymentIntentConfirmPaymentMethodOptionsCardRequestMulticapture? = nil, requestOvercapture: PaymentIntentConfirmPaymentMethodOptionsCardRequestOvercapture? = nil, requestThreeDSecure: PaymentIntentConfirmPaymentMethodOptionsCardRequestThreeDSecure? = nil, requireCvcRecollection: Bool? = nil, setupCredentialUsage: PaymentIntentConfirmPaymentMethodOptionsCardSetupCredentialUsage? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsCardSetupFutureUsage? = nil, statementDescriptorSuffixKana: String? = nil, statementDescriptorSuffixKanji: String? = nil, storedCredentialUsage: PaymentIntentConfirmPaymentMethodOptionsCardStoredCredentialUsage? = nil, threeDSecure: PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecure? = nil) {
         self.captureMethod = captureMethod
@@ -3954,6 +4285,15 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCard: StripeParams {
         case statementDescriptorSuffixKanji = "statement_descriptor_suffix_kanji"
         case storedCredentialUsage = "stored_credential_usage"
         case threeDSecure = "three_d_secure"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case statementDescriptorSuffixKana = "statement_descriptor_suffix_kana"
+        case statementDescriptorSuffixKanji = "statement_descriptor_suffix_kanji"
     }
 }
 
@@ -3969,7 +4309,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCardCaptureMethod: RawRepr
 
 /// Installment configuration for payments attempted on this PaymentIntent. For more information, see
 /// the [installments integration guide](https://docs.stripe.com/payments/installments).
-public struct PaymentIntentConfirmPaymentMethodOptionsCardInstallments: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsCardInstallments: ClearableParams {
     /// Setting to true enables installments for this PaymentIntent. This will cause the response to contain
     /// a list of available installment plans. Setting to false will prevent any selected plan from applying
     /// to a charge.
@@ -3977,10 +4317,23 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCardInstallments: StripePa
     /// The selected installment plan to use for this payment attempt. This parameter can only be provided
     /// during confirmation.
     public var plan: PaymentIntentConfirmPaymentMethodOptionsCardInstallmentsPlan?
+    /// Fields to send empty, which clears them: `params.clear(.plan)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabled: Bool? = nil, plan: PaymentIntentConfirmPaymentMethodOptionsCardInstallmentsPlan? = nil) {
         self.enabled = enabled
         self.plan = plan
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case enabled
+        case plan
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case plan
     }
 }
 
@@ -4468,7 +4821,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCardPresentRoutingRequeste
     public static var international: Self { .init(rawValue: "international") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsCashapp: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsCashapp: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -4490,6 +4843,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCashapp: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsCashappSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsCashappCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsCashappSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -4497,6 +4852,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCashapp: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -4820,7 +5182,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsGrabpaySetupFutureUsage: R
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsIdeal: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsIdeal: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -4835,12 +5197,20 @@ public struct PaymentIntentConfirmPaymentMethodOptionsIdeal: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsIdealSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsIdealSetupFutureUsage? = nil) {
         self.setupFutureUsage = setupFutureUsage
     }
 
     public enum CodingKeys: String, CodingKey {
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -4856,7 +5226,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsIdealSetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsKakaoPay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsKakaoPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -4876,6 +5246,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKakaoPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsKakaoPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsKakaoPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsKakaoPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -4883,6 +5255,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKakaoPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -4909,7 +5288,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKakaoPaySetupFutureUsage: 
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsKlarna: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsKlarna: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -4937,6 +5316,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKlarna: StripeParams {
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsKlarnaSetupFutureUsage?
     /// Subscription details if setting up or charging a subscription.
     public var subscriptions: [PaymentIntentConfirmPaymentMethodOptionsKlarnaSubscriptions]?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsKlarnaCaptureMethod? = nil, onDemand: PaymentIntentConfirmPaymentMethodOptionsKlarnaOnDemand? = nil, preferredLocale: PaymentIntentConfirmPaymentMethodOptionsKlarnaPreferredLocale? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsKlarnaSetupFutureUsage? = nil, subscriptions: [PaymentIntentConfirmPaymentMethodOptionsKlarnaSubscriptions]? = nil) {
         self.captureMethod = captureMethod
@@ -4951,6 +5332,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKlarna: StripeParams {
         case onDemand = "on_demand"
         case preferredLocale = "preferred_locale"
         case setupFutureUsage = "setup_future_usage"
+        case subscriptions
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
         case subscriptions
     }
 }
@@ -5135,7 +5523,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsNextBil
     }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsKonbini: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsKonbini: ClearableParams {
     /// An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable
     /// convenience stores. Must not consist of only zeroes and could be rejected in case of insufficient
     /// uniqueness. We recommend to use the customer's phone number.
@@ -5164,6 +5552,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKonbini: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsKonbiniSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.confirmationNumber)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(confirmationNumber: String? = nil, expiresAfterDays: Int? = nil, expiresAt: Date? = nil, productDescription: String? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsKonbiniSetupFutureUsage? = nil) {
         self.confirmationNumber = confirmationNumber
@@ -5179,6 +5569,15 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKonbini: StripeParams {
         case expiresAt = "expires_at"
         case productDescription = "product_description"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case confirmationNumber = "confirmation_number"
+        case expiresAfterDays = "expires_after_days"
+        case expiresAt = "expires_at"
+        case productDescription = "product_description"
     }
 }
 
@@ -5192,7 +5591,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKonbiniSetupFutureUsage: R
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsKrCard: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsKrCard: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -5212,6 +5611,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKrCard: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsKrCardSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsKrCardCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsKrCardSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -5219,6 +5620,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKrCard: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -5245,7 +5653,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKrCardSetupFutureUsage: Ra
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsLink: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsLink: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -5269,6 +5677,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsLink: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsLinkSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsLinkCaptureMethod? = nil, persistentToken: String? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsLinkSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -5279,6 +5689,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsLink: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case persistentToken = "persistent_token"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -5339,7 +5756,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsMbWaySetupFutureUsage: Raw
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsMobilepay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsMobilepay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -5361,6 +5778,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsMobilepay: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsMobilepaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsMobilepayCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsMobilepaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -5370,6 +5789,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsMobilepay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -5428,7 +5853,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsMultibancoSetupFutureUsage
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsNaverPay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsNaverPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -5448,6 +5873,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsNaverPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsNaverPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsNaverPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsNaverPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -5455,6 +5882,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsNaverPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -5481,7 +5915,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsNaverPaySetupFutureUsage: 
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsNzBankAccount: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsNzBankAccount: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -5500,6 +5934,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsNzBankAccount: StripeParam
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsNzBankAccountSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.setupFutureUsage = setupFutureUsage
@@ -5509,6 +5945,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsNzBankAccount: StripeParam
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
@@ -5604,7 +6046,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsP24SetupFutureUsage: RawRe
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsPayco: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsPayco: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -5624,6 +6066,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPayco: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsPaycoSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsPaycoCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsPaycoSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -5633,6 +6077,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPayco: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -5691,7 +6141,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPaynowSetupFutureUsage: Ra
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsPaypal: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsPaypal: ClearableParams {
     /// Controls when the funds will be captured from the customer's account.
     public var captureMethod: PaymentIntentConfirmPaymentMethodOptionsPaypalCaptureMethod?
     /// [Preferred locale](https://docs.stripe.com/payments/paypal/supported-locales) of the PayPal checkout
@@ -5717,6 +6167,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPaypal: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsPaypalSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsPaypalCaptureMethod? = nil, preferredLocale: PaymentIntentConfirmPaymentMethodOptionsPaypalPreferredLocale? = nil, reference: String? = nil, riskCorrelationId: String? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsPaypalSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -5731,6 +6183,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPaypal: StripeParams {
         case preferredLocale = "preferred_locale"
         case reference
         case riskCorrelationId = "risk_correlation_id"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -5786,7 +6245,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPaypalSetupFutureUsage: Ra
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsPayto: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsPayto: ClearableParams {
     /// Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent
     /// with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with
     /// `setup_future_usage=off_session`
@@ -5805,6 +6264,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPayto: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsPaytoSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptions? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsPaytoSetupFutureUsage? = nil) {
         self.mandateOptions = mandateOptions
@@ -5814,13 +6275,19 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPayto: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent
 /// with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with
 /// `setup_future_usage=off_session`
-public struct PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptions: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptions: ClearableParams {
     /// Amount that will be collected. It is required when `amount_type` is `fixed`.
     public var amount: Int?
     /// The type of amount that will be collected. The amount charged must be exact or up to the value of
@@ -5835,6 +6302,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptions: Strip
     public var paymentsPerPeriod: Int?
     /// The purpose for which payments are made. Has a default value based on your merchant category code.
     public var purpose: PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPurpose?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, amountType: PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptionsAmountType? = nil, endDate: String? = nil, paymentSchedule: PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPaymentSchedule? = nil, paymentsPerPeriod: Int? = nil, purpose: PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPurpose? = nil) {
         self.amount = amount
@@ -5846,6 +6315,17 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptions: Strip
     }
 
     public enum CodingKeys: String, CodingKey {
+        case amount
+        case amountType = "amount_type"
+        case endDate = "end_date"
+        case paymentSchedule = "payment_schedule"
+        case paymentsPerPeriod = "payments_per_period"
+        case purpose
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case amount
         case amountType = "amount_type"
         case endDate = "end_date"
@@ -6097,7 +6577,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPromptpaySetupFutureUsage:
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsRevolutPay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsRevolutPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -6117,6 +6597,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsRevolutPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsRevolutPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsRevolutPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsRevolutPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -6124,6 +6606,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsRevolutPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -6153,7 +6642,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsRevolutPaySetupFutureUsage
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsSamsungPay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsSamsungPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -6173,6 +6662,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSamsungPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSamsungPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsSamsungPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSamsungPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -6182,6 +6673,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSamsungPay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -6205,7 +6702,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSamsungPaySetupFutureUsage
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsSatispay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsSatispay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -6225,6 +6722,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSatispay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSatispaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsSatispayCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSatispaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -6232,6 +6731,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSatispay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -6259,7 +6765,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSatispaySetupFutureUsage: 
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsScalapay: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsScalapay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -6267,12 +6773,20 @@ public struct PaymentIntentConfirmPaymentMethodOptionsScalapay: StripeParams {
     /// already set on the PaymentIntent, providing an empty value for this parameter unsets the stored
     /// value for this payment method type.
     public var captureMethod: PaymentIntentConfirmPaymentMethodOptionsScalapayCaptureMethod?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsScalapayCaptureMethod? = nil) {
         self.captureMethod = captureMethod
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
     }
 }
@@ -6287,7 +6801,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsScalapayCaptureMethod: Raw
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsSepaDebit: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsSepaDebit: ClearableParams {
     /// Additional fields for Mandate creation
     public var mandateOptions: PaymentIntentConfirmPaymentMethodOptionsSepaDebitMandateOptions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -6308,6 +6822,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSepaDebit: StripeParams {
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentConfirmPaymentMethodOptionsSepaDebitMandateOptions? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSepaDebitSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.mandateOptions = mandateOptions
@@ -6319,21 +6835,35 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSepaDebit: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentConfirmPaymentMethodOptionsSepaDebitMandateOptions: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsSepaDebitMandateOptions: ClearableParams {
     /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
     /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
     /// '.'. Cannot begin with 'STRIPE'.
     public var referencePrefix: String?
+    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(referencePrefix: String? = nil) {
         self.referencePrefix = referencePrefix
     }
 
     public enum CodingKeys: String, CodingKey {
+        case referencePrefix = "reference_prefix"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case referencePrefix = "reference_prefix"
     }
 }
@@ -6350,7 +6880,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSepaDebitSetupFutureUsage:
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsSequra: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsSequra: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -6372,6 +6902,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSequra: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSequraSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsSequraCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSequraSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -6381,6 +6913,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSequra: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -6404,7 +6942,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSequraSetupFutureUsage: Ra
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsSofort: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsSofort: ClearableParams {
     /// Language shown to the payer on redirect.
     public var preferredLanguage: PaymentIntentConfirmPaymentMethodOptionsSofortPreferredLanguage?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -6421,6 +6959,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSofort: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSofortSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.preferredLanguage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(preferredLanguage: PaymentIntentConfirmPaymentMethodOptionsSofortPreferredLanguage? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSofortSetupFutureUsage? = nil) {
         self.preferredLanguage = preferredLanguage
@@ -6428,6 +6968,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSofort: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case preferredLanguage = "preferred_language"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case preferredLanguage = "preferred_language"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -6460,7 +7007,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSofortSetupFutureUsage: Ra
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsSunbit: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsSunbit: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -6480,6 +7027,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSunbit: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSunbitSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentConfirmPaymentMethodOptionsSunbitCaptureMethod? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSunbitSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -6489,6 +7038,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSunbit: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -6512,7 +7067,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSunbitSetupFutureUsage: Ra
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsSwish: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsSwish: ClearableParams {
     /// A reference for this payment to be displayed in the Swish app.
     public var reference: String?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -6529,6 +7084,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSwish: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSwishSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.reference)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(reference: String? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsSwishSetupFutureUsage? = nil) {
         self.reference = reference
@@ -6538,6 +7095,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSwish: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case reference
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case reference
     }
 }
 
@@ -6587,10 +7150,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsTwintSetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsUpi: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsUpi: ClearableParams {
     /// Configuration options for setting up an eMandate
     public var mandateOptions: PaymentIntentConfirmPaymentMethodOptionsUpiMandateOptions?
     public var setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsUpiSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentConfirmPaymentMethodOptionsUpiMandateOptions? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsUpiSetupFutureUsage? = nil) {
         self.mandateOptions = mandateOptions
@@ -6599,6 +7164,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsUpi: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -6654,7 +7225,7 @@ public struct PaymentIntentConfirmPaymentMethodOptionsUpiSetupFutureUsage: RawRe
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccount: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccount: ClearableParams {
     /// Additional fields for Financial Connections Session creation
     public var financialConnections: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnections?
     /// Additional fields for Mandate creation
@@ -6683,6 +7254,8 @@ public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccount: StripeParam
     public var transactionPurpose: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountTransactionPurpose?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountVerificationMethod?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(financialConnections: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnections? = nil, mandateOptions: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptions? = nil, networks: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountNetworks? = nil, setupFutureUsage: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountSetupFutureUsage? = nil, targetDate: String? = nil, transactionPurpose: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountTransactionPurpose? = nil, verificationMethod: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountVerificationMethod? = nil) {
         self.financialConnections = financialConnections
@@ -6702,6 +7275,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccount: StripeParam
         case targetDate = "target_date"
         case transactionPurpose = "transaction_purpose"
         case verificationMethod = "verification_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
+        case transactionPurpose = "transaction_purpose"
     }
 }
 
@@ -6786,15 +7366,23 @@ public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConn
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptions: StripeParams {
+public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptions: ClearableParams {
     /// The method used to collect offline mandate customer acceptance.
     public var collectionMethod: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod?
+    /// Fields to send empty, which clears them: `params.clear(.collectionMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(collectionMethod: PaymentIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod? = nil) {
         self.collectionMethod = collectionMethod
     }
 
     public enum CodingKeys: String, CodingKey {
+        case collectionMethod = "collection_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case collectionMethod = "collection_method"
     }
 }
@@ -6966,17 +7554,30 @@ public struct PaymentIntentConfirmPaymentMethodOptionsZipSetupFutureUsage: RawRe
 
 /// Options to configure Radar. Learn more about [Radar
 /// Sessions](https://docs.stripe.com/radar/radar-session).
-public struct PaymentIntentConfirmRadarOptions: StripeParams {
+public struct PaymentIntentConfirmRadarOptions: ClearableParams {
     /// The referrer URL of the current checkout session. You can use this to supply session-level referrer
     /// data when a Radar Session isn't available or doesn't contain a referrer.
     public var referrer: String?
     /// A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata
     /// and device details that help Radar make more accurate predictions on your payments.
     public var session: String?
+    /// Fields to send empty, which clears them: `params.clear(.referrer)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(referrer: String? = nil, session: String? = nil) {
         self.referrer = referrer
         self.session = session
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case referrer
+        case session
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case referrer
     }
 }
 
@@ -7164,7 +7765,7 @@ public struct PaymentIntentCreateAllowedPaymentMethodTypes: RawRepresentable, Co
 }
 
 /// Provides industry-specific information about the amount.
-public struct PaymentIntentCreateAmountDetails: StripeParams {
+public struct PaymentIntentCreateAmountDetails: ClearableParams {
     /// The total discount applied on the transaction represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0. This field is
     /// mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
@@ -7183,6 +7784,8 @@ public struct PaymentIntentCreateAmountDetails: StripeParams {
     public var shipping: PaymentIntentCreateAmountDetailsShipping?
     /// Contains information about the tax portion of the amount.
     public var tax: PaymentIntentCreateAmountDetailsTax?
+    /// Fields to send empty, which clears them: `params.clear(.discountAmount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(discountAmount: Int? = nil, enforceArithmeticValidation: Bool? = nil, lineItems: [PaymentIntentCreateAmountDetailsLineItems]? = nil, shipping: PaymentIntentCreateAmountDetailsShipping? = nil, tax: PaymentIntentCreateAmountDetailsTax? = nil) {
         self.discountAmount = discountAmount
@@ -7195,6 +7798,15 @@ public struct PaymentIntentCreateAmountDetails: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case discountAmount = "discount_amount"
         case enforceArithmeticValidation = "enforce_arithmetic_validation"
+        case lineItems = "line_items"
+        case shipping
+        case tax
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discountAmount = "discount_amount"
         case lineItems = "line_items"
         case shipping
         case tax
@@ -7383,7 +7995,7 @@ public struct PaymentIntentCreateAmountDetailsLineItemsTax: StripeParams {
     }
 }
 
-public struct PaymentIntentCreateAmountDetailsShipping: StripeParams {
+public struct PaymentIntentCreateAmountDetailsShipping: ClearableParams {
     /// If a physical good is being shipped, the cost of shipping represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than or equal to 0.
     public var amount: Int?
@@ -7393,6 +8005,8 @@ public struct PaymentIntentCreateAmountDetailsShipping: StripeParams {
     /// If a physical good is being shipped, the postal code of where it is being shipped to. At most 10
     /// alphanumeric characters long, hyphens and spaces are allowed.
     public var toPostalCode: String?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, fromPostalCode: String? = nil, toPostalCode: String? = nil) {
         self.amount = amount
@@ -7401,6 +8015,14 @@ public struct PaymentIntentCreateAmountDetailsShipping: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case amount
+        case fromPostalCode = "from_postal_code"
+        case toPostalCode = "to_postal_code"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case amount
         case fromPostalCode = "from_postal_code"
         case toPostalCode = "to_postal_code"
@@ -7566,12 +8188,24 @@ public struct PaymentIntentCreateHooksInputs: StripeParams {
 }
 
 /// Tax arguments for automations
-public struct PaymentIntentCreateHooksInputsTax: StripeParams {
+public struct PaymentIntentCreateHooksInputsTax: ClearableParams {
     /// The [TaxCalculation](https://docs.stripe.com/api/tax/calculations) id
     public var calculation: String
+    /// Fields to send empty, which clears them: `params.clear(.calculation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(calculation: String) {
         self.calculation = calculation
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case calculation
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case calculation
     }
 }
 
@@ -7682,7 +8316,7 @@ public enum PaymentIntentCreateOffSession: Codable, Sendable, ExpressibleByBoole
 }
 
 /// Provides industry-specific information about the charge.
-public struct PaymentIntentCreatePaymentDetails: StripeParams {
+public struct PaymentIntentCreatePaymentDetails: ClearableParams {
     /// A unique value to identify the customer. This field is available only for card payments. This field
     /// is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
     public var customerReference: String?
@@ -7691,6 +8325,8 @@ public struct PaymentIntentCreatePaymentDetails: StripeParams {
     /// sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to
     /// customers when they view the order in the Klarna app.
     public var orderReference: String?
+    /// Fields to send empty, which clears them: `params.clear(.customerReference)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customerReference: String? = nil, orderReference: String? = nil) {
         self.customerReference = customerReference
@@ -7698,6 +8334,13 @@ public struct PaymentIntentCreatePaymentDetails: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case customerReference = "customer_reference"
+        case orderReference = "order_reference"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case customerReference = "customer_reference"
         case orderReference = "order_reference"
     }
@@ -8129,7 +8772,7 @@ public struct PaymentIntentCreatePaymentMethodDataBacsDebit: StripeParams {
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct PaymentIntentCreatePaymentMethodDataBillingDetails: StripeParams {
+public struct PaymentIntentCreatePaymentMethodDataBillingDetails: ClearableParams {
     /// Billing address.
     public var address: PaymentIntentCreatePaymentMethodDataBillingDetailsAddress?
     /// Email address.
@@ -8141,6 +8784,8 @@ public struct PaymentIntentCreatePaymentMethodDataBillingDetails: StripeParams {
     /// Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM
     /// sellers.
     public var taxId: String?
+    /// Fields to send empty, which clears them: `params.clear(.address)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: PaymentIntentCreatePaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
         self.address = address
@@ -8156,6 +8801,15 @@ public struct PaymentIntentCreatePaymentMethodDataBillingDetails: StripeParams {
         case name
         case phone
         case taxId = "tax_id"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case address
+        case email
+        case name
+        case phone
     }
 }
 
@@ -8661,7 +9315,7 @@ public struct PaymentIntentCreatePaymentMethodDataUsBankAccountAccountType: RawR
 }
 
 /// Payment method-specific configuration for this PaymentIntent.
-public struct PaymentIntentCreatePaymentMethodOptions: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptions: ClearableParams {
     /// If this is a `acss_debit` PaymentMethod, this sub-hash contains details about the ACSS Debit payment
     /// method options.
     public var acssDebit: PaymentIntentCreatePaymentMethodOptionsAcssDebit?
@@ -8835,6 +9489,8 @@ public struct PaymentIntentCreatePaymentMethodOptions: StripeParams {
     /// If this is a `zip` PaymentMethod, this sub-hash contains details about the Zip payment method
     /// options.
     public var zip: PaymentIntentCreatePaymentMethodOptionsZip?
+    /// Fields to send empty, which clears them: `params.clear(.acssDebit)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(acssDebit: PaymentIntentCreatePaymentMethodOptionsAcssDebit? = nil, affirm: PaymentIntentCreatePaymentMethodOptionsAffirm? = nil, afterpayClearpay: PaymentIntentCreatePaymentMethodOptionsAfterpayClearpay? = nil, alipay: PaymentIntentCreatePaymentMethodOptionsAlipay? = nil, alma: PaymentIntentCreatePaymentMethodOptionsAlma? = nil, amazonPay: PaymentIntentCreatePaymentMethodOptionsAmazonPay? = nil, auBecsDebit: PaymentIntentCreatePaymentMethodOptionsAuBecsDebit? = nil, bacsDebit: PaymentIntentCreatePaymentMethodOptionsBacsDebit? = nil, bancontact: PaymentIntentCreatePaymentMethodOptionsBancontact? = nil, billie: PaymentIntentCreatePaymentMethodOptionsBillie? = nil, bizum: [String: String]? = nil, blik: PaymentIntentCreatePaymentMethodOptionsBlik? = nil, boleto: PaymentIntentCreatePaymentMethodOptionsBoleto? = nil, card: PaymentIntentCreatePaymentMethodOptionsCard? = nil, cardPresent: PaymentIntentCreatePaymentMethodOptionsCardPresent? = nil, cashapp: PaymentIntentCreatePaymentMethodOptionsCashapp? = nil, crypto: PaymentIntentCreatePaymentMethodOptionsCrypto? = nil, customerBalance: PaymentIntentCreatePaymentMethodOptionsCustomerBalance? = nil, eps: PaymentIntentCreatePaymentMethodOptionsEps? = nil, fpx: PaymentIntentCreatePaymentMethodOptionsFpx? = nil, giropay: PaymentIntentCreatePaymentMethodOptionsGiropay? = nil, grabpay: PaymentIntentCreatePaymentMethodOptionsGrabpay? = nil, ideal: PaymentIntentCreatePaymentMethodOptionsIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: PaymentIntentCreatePaymentMethodOptionsKakaoPay? = nil, klarna: PaymentIntentCreatePaymentMethodOptionsKlarna? = nil, konbini: PaymentIntentCreatePaymentMethodOptionsKonbini? = nil, krCard: PaymentIntentCreatePaymentMethodOptionsKrCard? = nil, link: PaymentIntentCreatePaymentMethodOptionsLink? = nil, mbWay: PaymentIntentCreatePaymentMethodOptionsMbWay? = nil, mobilepay: PaymentIntentCreatePaymentMethodOptionsMobilepay? = nil, multibanco: PaymentIntentCreatePaymentMethodOptionsMultibanco? = nil, naverPay: PaymentIntentCreatePaymentMethodOptionsNaverPay? = nil, nzBankAccount: PaymentIntentCreatePaymentMethodOptionsNzBankAccount? = nil, oxxo: PaymentIntentCreatePaymentMethodOptionsOxxo? = nil, p24: PaymentIntentCreatePaymentMethodOptionsP24? = nil, payByBank: [String: String]? = nil, payco: PaymentIntentCreatePaymentMethodOptionsPayco? = nil, paynow: PaymentIntentCreatePaymentMethodOptionsPaynow? = nil, paypal: PaymentIntentCreatePaymentMethodOptionsPaypal? = nil, paypay: [String: String]? = nil, payto: PaymentIntentCreatePaymentMethodOptionsPayto? = nil, pix: PaymentIntentCreatePaymentMethodOptionsPix? = nil, promptpay: PaymentIntentCreatePaymentMethodOptionsPromptpay? = nil, revolutPay: PaymentIntentCreatePaymentMethodOptionsRevolutPay? = nil, samsungPay: PaymentIntentCreatePaymentMethodOptionsSamsungPay? = nil, satispay: PaymentIntentCreatePaymentMethodOptionsSatispay? = nil, scalapay: PaymentIntentCreatePaymentMethodOptionsScalapay? = nil, sepaDebit: PaymentIntentCreatePaymentMethodOptionsSepaDebit? = nil, sequra: PaymentIntentCreatePaymentMethodOptionsSequra? = nil, sofort: PaymentIntentCreatePaymentMethodOptionsSofort? = nil, sunbit: PaymentIntentCreatePaymentMethodOptionsSunbit? = nil, swish: PaymentIntentCreatePaymentMethodOptionsSwish? = nil, twint: PaymentIntentCreatePaymentMethodOptionsTwint? = nil, upi: PaymentIntentCreatePaymentMethodOptionsUpi? = nil, usBankAccount: PaymentIntentCreatePaymentMethodOptionsUsBankAccount? = nil, wechatPay: PaymentIntentCreatePaymentMethodOptionsWechatPay? = nil, zip: PaymentIntentCreatePaymentMethodOptionsZip? = nil) {
         self.acssDebit = acssDebit
@@ -8956,10 +9612,73 @@ public struct PaymentIntentCreatePaymentMethodOptions: StripeParams {
         case usBankAccount = "us_bank_account"
         case wechatPay = "wechat_pay"
         case zip
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case acssDebit = "acss_debit"
+        case affirm
+        case afterpayClearpay = "afterpay_clearpay"
+        case alipay
+        case alma
+        case amazonPay = "amazon_pay"
+        case auBecsDebit = "au_becs_debit"
+        case bacsDebit = "bacs_debit"
+        case bancontact
+        case billie
+        case bizum
+        case blik
+        case boleto
+        case card
+        case cardPresent = "card_present"
+        case cashapp
+        case crypto
+        case customerBalance = "customer_balance"
+        case eps
+        case fpx
+        case giropay
+        case grabpay
+        case ideal
+        case interacPresent = "interac_present"
+        case kakaoPay = "kakao_pay"
+        case klarna
+        case konbini
+        case krCard = "kr_card"
+        case link
+        case mbWay = "mb_way"
+        case mobilepay
+        case multibanco
+        case naverPay = "naver_pay"
+        case nzBankAccount = "nz_bank_account"
+        case oxxo
+        case p24
+        case payByBank = "pay_by_bank"
+        case payco
+        case paynow
+        case paypal
+        case paypay
+        case payto
+        case pix
+        case promptpay
+        case revolutPay = "revolut_pay"
+        case samsungPay = "samsung_pay"
+        case satispay
+        case scalapay
+        case sepaDebit = "sepa_debit"
+        case sequra
+        case sofort
+        case sunbit
+        case swish
+        case twint
+        case upi
+        case usBankAccount = "us_bank_account"
+        case wechatPay = "wechat_pay"
+        case zip
     }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsAcssDebit: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsAcssDebit: ClearableParams {
     /// Additional fields for Mandate creation
     public var mandateOptions: PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -8982,6 +9701,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsAcssDebit: StripeParams {
     public var targetDate: String?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: PaymentIntentCreatePaymentMethodOptionsAcssDebitVerificationMethod?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptions? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAcssDebitSetupFutureUsage? = nil, targetDate: String? = nil, verificationMethod: PaymentIntentCreatePaymentMethodOptionsAcssDebitVerificationMethod? = nil) {
         self.mandateOptions = mandateOptions
@@ -8995,11 +9716,17 @@ public struct PaymentIntentCreatePaymentMethodOptionsAcssDebit: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
         case verificationMethod = "verification_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptions: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptions: ClearableParams {
     /// A URL for custom mandate text to render during confirmation step. The URL will be rendered with
     /// additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a
     /// Payment Intent, or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
@@ -9011,6 +9738,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptions: St
     public var paymentSchedule: PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule?
     /// Transaction type of the mandate.
     public var transactionType: PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
+    /// Fields to send empty, which clears them: `params.clear(.customMandateUrl)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customMandateUrl: String? = nil, intervalDescription: String? = nil, paymentSchedule: PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule? = nil, transactionType: PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType? = nil) {
         self.customMandateUrl = customMandateUrl
@@ -9024,6 +9753,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptions: St
         case intervalDescription = "interval_description"
         case paymentSchedule = "payment_schedule"
         case transactionType = "transaction_type"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case customMandateUrl = "custom_mandate_url"
     }
 }
 
@@ -9074,7 +9809,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsAcssDebitVerificationMethod
     public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsAffirm: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsAffirm: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -9098,6 +9833,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsAffirm: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAffirmSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsAffirmCaptureMethod? = nil, preferredLocale: String? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAffirmSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -9109,6 +9846,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsAffirm: StripeParams {
         case captureMethod = "capture_method"
         case preferredLocale = "preferred_locale"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -9132,7 +9875,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsAffirmSetupFutureUsage: Raw
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsAfterpayClearpay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsAfterpayClearpay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -9158,6 +9901,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsAfterpayClearpay: StripePar
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAfterpayClearpaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsAfterpayClearpayCaptureMethod? = nil, reference: String? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAfterpayClearpaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -9169,6 +9914,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsAfterpayClearpay: StripePar
         case captureMethod = "capture_method"
         case reference
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -9192,7 +9943,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsAfterpayClearpaySetupFuture
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsAlipay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsAlipay: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -9207,12 +9958,20 @@ public struct PaymentIntentCreatePaymentMethodOptionsAlipay: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAlipaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAlipaySetupFutureUsage? = nil) {
         self.setupFutureUsage = setupFutureUsage
     }
 
     public enum CodingKeys: String, CodingKey {
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -9228,7 +9987,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsAlipaySetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsAlma: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsAlma: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -9236,12 +9995,20 @@ public struct PaymentIntentCreatePaymentMethodOptionsAlma: StripeParams {
     /// already set on the PaymentIntent, providing an empty value for this parameter unsets the stored
     /// value for this payment method type.
     public var captureMethod: PaymentIntentCreatePaymentMethodOptionsAlmaCaptureMethod?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsAlmaCaptureMethod? = nil) {
         self.captureMethod = captureMethod
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
     }
 }
@@ -9256,7 +10023,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsAlmaCaptureMethod: RawRepre
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsAmazonPay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsAmazonPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -9276,6 +10043,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsAmazonPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAmazonPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsAmazonPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAmazonPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -9283,6 +10052,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsAmazonPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -9309,7 +10085,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsAmazonPaySetupFutureUsage: 
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsAuBecsDebit: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsAuBecsDebit: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -9328,6 +10104,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsAuBecsDebit: StripeParams {
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsAuBecsDebitSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.setupFutureUsage = setupFutureUsage
@@ -9337,6 +10115,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsAuBecsDebit: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
@@ -9352,7 +10136,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsAuBecsDebitSetupFutureUsage
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsBacsDebit: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsBacsDebit: ClearableParams {
     /// Additional fields for Mandate creation
     public var mandateOptions: PaymentIntentCreatePaymentMethodOptionsBacsDebitMandateOptions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -9373,6 +10157,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsBacsDebit: StripeParams {
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentCreatePaymentMethodOptionsBacsDebitMandateOptions? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsBacsDebitSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.mandateOptions = mandateOptions
@@ -9384,21 +10170,35 @@ public struct PaymentIntentCreatePaymentMethodOptionsBacsDebit: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentCreatePaymentMethodOptionsBacsDebitMandateOptions: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsBacsDebitMandateOptions: ClearableParams {
     /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
     /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
     /// '.'. Cannot begin with 'DDIC' or 'STRIPE'.
     public var referencePrefix: String?
+    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(referencePrefix: String? = nil) {
         self.referencePrefix = referencePrefix
     }
 
     public enum CodingKeys: String, CodingKey {
+        case referencePrefix = "reference_prefix"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case referencePrefix = "reference_prefix"
     }
 }
@@ -9415,7 +10215,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsBacsDebitSetupFutureUsage: 
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsBancontact: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsBancontact: ClearableParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: PaymentIntentCreatePaymentMethodOptionsBancontactPreferredLanguage?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -9432,6 +10232,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsBancontact: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsBancontactSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(preferredLanguage: PaymentIntentCreatePaymentMethodOptionsBancontactPreferredLanguage? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsBancontactSetupFutureUsage? = nil) {
         self.preferredLanguage = preferredLanguage
@@ -9440,6 +10242,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsBancontact: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case preferredLanguage = "preferred_language"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -9468,7 +10276,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsBancontactSetupFutureUsage:
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsBillie: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsBillie: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -9480,6 +10288,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsBillie: StripeParams {
     public var companyDetails: PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetails?
     /// An identifier or reference that this payment corresponds to.
     public var reference: String?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsBillieCaptureMethod? = nil, companyDetails: PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetails? = nil, reference: String? = nil) {
         self.captureMethod = captureMethod
@@ -9491,6 +10301,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsBillie: StripeParams {
         case captureMethod = "capture_method"
         case companyDetails = "company_details"
         case reference
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
+        case companyDetails = "company_details"
     }
 }
 
@@ -9504,7 +10321,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsBillieCaptureMethod: RawRep
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetails: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetails: ClearableParams {
     /// The address the company or entity is registered with.
     public var registeredAddress: PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetailsRegisteredAddress?
     /// Company or entity name.
@@ -9515,6 +10332,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetails: Strip
     public var registrationType: PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetailsRegistrationType?
     /// VAT id number
     public var vat: String?
+    /// Fields to send empty, which clears them: `params.clear(.registeredAddress)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(registeredAddress: PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetailsRegisteredAddress? = nil, registeredName: String? = nil, registrationNumber: String? = nil, registrationType: PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetailsRegistrationType? = nil, vat: String? = nil) {
         self.registeredAddress = registeredAddress
@@ -9530,6 +10349,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetails: Strip
         case registrationNumber = "registration_number"
         case registrationType = "registration_type"
         case vat
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case registeredAddress = "registered_address"
+        case registrationType = "registration_type"
     }
 }
 
@@ -9589,7 +10415,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetailsRegistr
     public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsBlik: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsBlik: ClearableParams {
     /// The 6-digit BLIK code that a customer has generated using their banking application. Can only be set
     /// on confirmation.
     public var code: String?
@@ -9609,6 +10435,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsBlik: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsBlikSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(code: String? = nil, mandateOptions: PaymentIntentCreatePaymentMethodOptionsBlikMandateOptions? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsBlikSetupFutureUsage? = nil) {
         self.code = code
@@ -9619,6 +10447,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsBlik: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case code
         case mandateOptions = "mandate_options"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -9648,7 +10482,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsBlikSetupFutureUsage: RawRe
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsBoleto: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsBoleto: ClearableParams {
     /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto
     /// voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday
     /// at 23:59 America/Sao_Paulo time.
@@ -9667,6 +10501,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsBoleto: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsBoletoSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expiresAfterDays: Int? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsBoletoSetupFutureUsage? = nil) {
         self.expiresAfterDays = expiresAfterDays
@@ -9675,6 +10511,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsBoleto: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case expiresAfterDays = "expires_after_days"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -9691,7 +10533,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsBoletoSetupFutureUsage: Raw
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsCard: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsCard: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -9777,6 +10619,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsCard: StripeParams {
     /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
     /// use for this payment.
     public var threeDSecure: PaymentIntentCreatePaymentMethodOptionsCardThreeDSecure?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsCardCaptureMethod? = nil, cvcToken: String? = nil, installments: PaymentIntentCreatePaymentMethodOptionsCardInstallments? = nil, mandateOptions: PaymentIntentCreatePaymentMethodOptionsCardMandateOptions? = nil, moto: Bool? = nil, network: PaymentIntentCreatePaymentMethodOptionsCardNetwork? = nil, requestExtendedAuthorization: PaymentIntentCreatePaymentMethodOptionsCardRequestExtendedAuthorization? = nil, requestIncrementalAuthorization: PaymentIntentCreatePaymentMethodOptionsCardRequestIncrementalAuthorization? = nil, requestMulticapture: PaymentIntentCreatePaymentMethodOptionsCardRequestMulticapture? = nil, requestOvercapture: PaymentIntentCreatePaymentMethodOptionsCardRequestOvercapture? = nil, requestThreeDSecure: PaymentIntentCreatePaymentMethodOptionsCardRequestThreeDSecure? = nil, requireCvcRecollection: Bool? = nil, setupCredentialUsage: PaymentIntentCreatePaymentMethodOptionsCardSetupCredentialUsage? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsCardSetupFutureUsage? = nil, statementDescriptorSuffixKana: String? = nil, statementDescriptorSuffixKanji: String? = nil, storedCredentialUsage: PaymentIntentCreatePaymentMethodOptionsCardStoredCredentialUsage? = nil, threeDSecure: PaymentIntentCreatePaymentMethodOptionsCardThreeDSecure? = nil) {
         self.captureMethod = captureMethod
@@ -9818,6 +10662,15 @@ public struct PaymentIntentCreatePaymentMethodOptionsCard: StripeParams {
         case statementDescriptorSuffixKanji = "statement_descriptor_suffix_kanji"
         case storedCredentialUsage = "stored_credential_usage"
         case threeDSecure = "three_d_secure"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case statementDescriptorSuffixKana = "statement_descriptor_suffix_kana"
+        case statementDescriptorSuffixKanji = "statement_descriptor_suffix_kanji"
     }
 }
 
@@ -9833,7 +10686,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsCardCaptureMethod: RawRepre
 
 /// Installment configuration for payments attempted on this PaymentIntent. For more information, see
 /// the [installments integration guide](https://docs.stripe.com/payments/installments).
-public struct PaymentIntentCreatePaymentMethodOptionsCardInstallments: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsCardInstallments: ClearableParams {
     /// Setting to true enables installments for this PaymentIntent. This will cause the response to contain
     /// a list of available installment plans. Setting to false will prevent any selected plan from applying
     /// to a charge.
@@ -9841,10 +10694,23 @@ public struct PaymentIntentCreatePaymentMethodOptionsCardInstallments: StripePar
     /// The selected installment plan to use for this payment attempt. This parameter can only be provided
     /// during confirmation.
     public var plan: PaymentIntentCreatePaymentMethodOptionsCardInstallmentsPlan?
+    /// Fields to send empty, which clears them: `params.clear(.plan)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabled: Bool? = nil, plan: PaymentIntentCreatePaymentMethodOptionsCardInstallmentsPlan? = nil) {
         self.enabled = enabled
         self.plan = plan
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case enabled
+        case plan
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case plan
     }
 }
 
@@ -10332,7 +11198,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsCardPresentRoutingRequested
     public static var international: Self { .init(rawValue: "international") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsCashapp: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsCashapp: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -10354,6 +11220,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsCashapp: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsCashappSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsCashappCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsCashappSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -10361,6 +11229,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsCashapp: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -10684,7 +11559,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsGrabpaySetupFutureUsage: Ra
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsIdeal: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsIdeal: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -10699,12 +11574,20 @@ public struct PaymentIntentCreatePaymentMethodOptionsIdeal: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsIdealSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsIdealSetupFutureUsage? = nil) {
         self.setupFutureUsage = setupFutureUsage
     }
 
     public enum CodingKeys: String, CodingKey {
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -10720,7 +11603,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsIdealSetupFutureUsage: RawR
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsKakaoPay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsKakaoPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -10740,6 +11623,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsKakaoPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsKakaoPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsKakaoPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsKakaoPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -10747,6 +11632,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsKakaoPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -10773,7 +11665,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsKakaoPaySetupFutureUsage: R
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsKlarna: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsKlarna: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -10801,6 +11693,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsKlarna: StripeParams {
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsKlarnaSetupFutureUsage?
     /// Subscription details if setting up or charging a subscription.
     public var subscriptions: [PaymentIntentCreatePaymentMethodOptionsKlarnaSubscriptions]?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsKlarnaCaptureMethod? = nil, onDemand: PaymentIntentCreatePaymentMethodOptionsKlarnaOnDemand? = nil, preferredLocale: PaymentIntentCreatePaymentMethodOptionsKlarnaPreferredLocale? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsKlarnaSetupFutureUsage? = nil, subscriptions: [PaymentIntentCreatePaymentMethodOptionsKlarnaSubscriptions]? = nil) {
         self.captureMethod = captureMethod
@@ -10815,6 +11709,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsKlarna: StripeParams {
         case onDemand = "on_demand"
         case preferredLocale = "preferred_locale"
         case setupFutureUsage = "setup_future_usage"
+        case subscriptions
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
         case subscriptions
     }
 }
@@ -10999,7 +11900,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsKlarnaSubscriptionsNextBill
     }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsKonbini: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsKonbini: ClearableParams {
     /// An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable
     /// convenience stores. Must not consist of only zeroes and could be rejected in case of insufficient
     /// uniqueness. We recommend to use the customer's phone number.
@@ -11028,6 +11929,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsKonbini: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsKonbiniSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.confirmationNumber)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(confirmationNumber: String? = nil, expiresAfterDays: Int? = nil, expiresAt: Date? = nil, productDescription: String? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsKonbiniSetupFutureUsage? = nil) {
         self.confirmationNumber = confirmationNumber
@@ -11043,6 +11946,15 @@ public struct PaymentIntentCreatePaymentMethodOptionsKonbini: StripeParams {
         case expiresAt = "expires_at"
         case productDescription = "product_description"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case confirmationNumber = "confirmation_number"
+        case expiresAfterDays = "expires_after_days"
+        case expiresAt = "expires_at"
+        case productDescription = "product_description"
     }
 }
 
@@ -11056,7 +11968,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsKonbiniSetupFutureUsage: Ra
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsKrCard: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsKrCard: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -11076,6 +11988,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsKrCard: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsKrCardSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsKrCardCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsKrCardSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -11083,6 +11997,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsKrCard: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -11109,7 +12030,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsKrCardSetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsLink: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsLink: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -11133,6 +12054,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsLink: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsLinkSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsLinkCaptureMethod? = nil, persistentToken: String? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsLinkSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -11143,6 +12066,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsLink: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case persistentToken = "persistent_token"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -11203,7 +12133,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsMbWaySetupFutureUsage: RawR
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsMobilepay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsMobilepay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -11225,6 +12155,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsMobilepay: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsMobilepaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsMobilepayCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsMobilepaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -11234,6 +12166,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsMobilepay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -11292,7 +12230,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsMultibancoSetupFutureUsage:
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsNaverPay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsNaverPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -11312,6 +12250,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsNaverPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsNaverPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsNaverPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsNaverPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -11319,6 +12259,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsNaverPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -11345,7 +12292,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsNaverPaySetupFutureUsage: R
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsNzBankAccount: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsNzBankAccount: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -11364,6 +12311,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsNzBankAccount: StripeParams
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsNzBankAccountSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.setupFutureUsage = setupFutureUsage
@@ -11373,6 +12322,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsNzBankAccount: StripeParams
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
@@ -11468,7 +12423,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsP24SetupFutureUsage: RawRep
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsPayco: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsPayco: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -11488,6 +12443,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsPayco: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsPaycoSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsPaycoCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsPaycoSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -11497,6 +12454,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsPayco: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -11555,7 +12518,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsPaynowSetupFutureUsage: Raw
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsPaypal: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsPaypal: ClearableParams {
     /// Controls when the funds will be captured from the customer's account.
     public var captureMethod: PaymentIntentCreatePaymentMethodOptionsPaypalCaptureMethod?
     /// [Preferred locale](https://docs.stripe.com/payments/paypal/supported-locales) of the PayPal checkout
@@ -11581,6 +12544,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsPaypal: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsPaypalSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsPaypalCaptureMethod? = nil, preferredLocale: PaymentIntentCreatePaymentMethodOptionsPaypalPreferredLocale? = nil, reference: String? = nil, riskCorrelationId: String? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsPaypalSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -11595,6 +12560,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsPaypal: StripeParams {
         case preferredLocale = "preferred_locale"
         case reference
         case riskCorrelationId = "risk_correlation_id"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -11650,7 +12622,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsPaypalSetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsPayto: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsPayto: ClearableParams {
     /// Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent
     /// with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with
     /// `setup_future_usage=off_session`
@@ -11669,6 +12641,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsPayto: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsPaytoSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptions? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsPaytoSetupFutureUsage? = nil) {
         self.mandateOptions = mandateOptions
@@ -11678,13 +12652,19 @@ public struct PaymentIntentCreatePaymentMethodOptionsPayto: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent
 /// with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with
 /// `setup_future_usage=off_session`
-public struct PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptions: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptions: ClearableParams {
     /// Amount that will be collected. It is required when `amount_type` is `fixed`.
     public var amount: Int?
     /// The type of amount that will be collected. The amount charged must be exact or up to the value of
@@ -11699,6 +12679,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptions: Stripe
     public var paymentsPerPeriod: Int?
     /// The purpose for which payments are made. Has a default value based on your merchant category code.
     public var purpose: PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptionsPurpose?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, amountType: PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptionsAmountType? = nil, endDate: String? = nil, paymentSchedule: PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule? = nil, paymentsPerPeriod: Int? = nil, purpose: PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptionsPurpose? = nil) {
         self.amount = amount
@@ -11710,6 +12692,17 @@ public struct PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptions: Stripe
     }
 
     public enum CodingKeys: String, CodingKey {
+        case amount
+        case amountType = "amount_type"
+        case endDate = "end_date"
+        case paymentSchedule = "payment_schedule"
+        case paymentsPerPeriod = "payments_per_period"
+        case purpose
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case amount
         case amountType = "amount_type"
         case endDate = "end_date"
@@ -11961,7 +12954,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsPromptpaySetupFutureUsage: 
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsRevolutPay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsRevolutPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -11981,6 +12974,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsRevolutPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsRevolutPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsRevolutPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsRevolutPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -11988,6 +12983,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsRevolutPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -12017,7 +13019,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsRevolutPaySetupFutureUsage:
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsSamsungPay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsSamsungPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -12037,6 +13039,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsSamsungPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSamsungPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsSamsungPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSamsungPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -12046,6 +13050,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsSamsungPay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -12069,7 +13079,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsSamsungPaySetupFutureUsage:
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsSatispay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsSatispay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -12089,6 +13099,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsSatispay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSatispaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsSatispayCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSatispaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -12096,6 +13108,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsSatispay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -12123,7 +13142,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsSatispaySetupFutureUsage: R
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsScalapay: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsScalapay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -12131,12 +13150,20 @@ public struct PaymentIntentCreatePaymentMethodOptionsScalapay: StripeParams {
     /// already set on the PaymentIntent, providing an empty value for this parameter unsets the stored
     /// value for this payment method type.
     public var captureMethod: PaymentIntentCreatePaymentMethodOptionsScalapayCaptureMethod?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsScalapayCaptureMethod? = nil) {
         self.captureMethod = captureMethod
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
     }
 }
@@ -12151,7 +13178,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsScalapayCaptureMethod: RawR
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsSepaDebit: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsSepaDebit: ClearableParams {
     /// Additional fields for Mandate creation
     public var mandateOptions: PaymentIntentCreatePaymentMethodOptionsSepaDebitMandateOptions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -12172,6 +13199,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsSepaDebit: StripeParams {
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentCreatePaymentMethodOptionsSepaDebitMandateOptions? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSepaDebitSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.mandateOptions = mandateOptions
@@ -12183,21 +13212,35 @@ public struct PaymentIntentCreatePaymentMethodOptionsSepaDebit: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentCreatePaymentMethodOptionsSepaDebitMandateOptions: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsSepaDebitMandateOptions: ClearableParams {
     /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
     /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
     /// '.'. Cannot begin with 'STRIPE'.
     public var referencePrefix: String?
+    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(referencePrefix: String? = nil) {
         self.referencePrefix = referencePrefix
     }
 
     public enum CodingKeys: String, CodingKey {
+        case referencePrefix = "reference_prefix"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case referencePrefix = "reference_prefix"
     }
 }
@@ -12214,7 +13257,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsSepaDebitSetupFutureUsage: 
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsSequra: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsSequra: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -12236,6 +13279,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsSequra: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSequraSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsSequraCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSequraSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -12245,6 +13290,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsSequra: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -12268,7 +13319,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsSequraSetupFutureUsage: Raw
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsSofort: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsSofort: ClearableParams {
     /// Language shown to the payer on redirect.
     public var preferredLanguage: PaymentIntentCreatePaymentMethodOptionsSofortPreferredLanguage?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -12285,6 +13336,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsSofort: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSofortSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.preferredLanguage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(preferredLanguage: PaymentIntentCreatePaymentMethodOptionsSofortPreferredLanguage? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSofortSetupFutureUsage? = nil) {
         self.preferredLanguage = preferredLanguage
@@ -12292,6 +13345,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsSofort: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case preferredLanguage = "preferred_language"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case preferredLanguage = "preferred_language"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -12324,7 +13384,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsSofortSetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsSunbit: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsSunbit: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -12344,6 +13404,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsSunbit: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSunbitSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentCreatePaymentMethodOptionsSunbitCaptureMethod? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSunbitSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -12353,6 +13415,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsSunbit: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -12376,7 +13444,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsSunbitSetupFutureUsage: Raw
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsSwish: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsSwish: ClearableParams {
     /// A reference for this payment to be displayed in the Swish app.
     public var reference: String?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -12393,6 +13461,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsSwish: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSwishSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.reference)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(reference: String? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsSwishSetupFutureUsage? = nil) {
         self.reference = reference
@@ -12402,6 +13472,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsSwish: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case reference
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case reference
     }
 }
 
@@ -12451,10 +13527,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsTwintSetupFutureUsage: RawR
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsUpi: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsUpi: ClearableParams {
     /// Configuration options for setting up an eMandate
     public var mandateOptions: PaymentIntentCreatePaymentMethodOptionsUpiMandateOptions?
     public var setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsUpiSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentCreatePaymentMethodOptionsUpiMandateOptions? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsUpiSetupFutureUsage? = nil) {
         self.mandateOptions = mandateOptions
@@ -12463,6 +13541,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsUpi: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -12518,7 +13602,7 @@ public struct PaymentIntentCreatePaymentMethodOptionsUpiSetupFutureUsage: RawRep
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccount: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccount: ClearableParams {
     /// Additional fields for Financial Connections Session creation
     public var financialConnections: PaymentIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnections?
     /// Additional fields for Mandate creation
@@ -12547,6 +13631,8 @@ public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccount: StripeParams
     public var transactionPurpose: PaymentIntentCreatePaymentMethodOptionsUsBankAccountTransactionPurpose?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: PaymentIntentCreatePaymentMethodOptionsUsBankAccountVerificationMethod?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(financialConnections: PaymentIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnections? = nil, mandateOptions: PaymentIntentCreatePaymentMethodOptionsUsBankAccountMandateOptions? = nil, networks: PaymentIntentCreatePaymentMethodOptionsUsBankAccountNetworks? = nil, setupFutureUsage: PaymentIntentCreatePaymentMethodOptionsUsBankAccountSetupFutureUsage? = nil, targetDate: String? = nil, transactionPurpose: PaymentIntentCreatePaymentMethodOptionsUsBankAccountTransactionPurpose? = nil, verificationMethod: PaymentIntentCreatePaymentMethodOptionsUsBankAccountVerificationMethod? = nil) {
         self.financialConnections = financialConnections
@@ -12566,6 +13652,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccount: StripeParams
         case targetDate = "target_date"
         case transactionPurpose = "transaction_purpose"
         case verificationMethod = "verification_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
+        case transactionPurpose = "transaction_purpose"
     }
 }
 
@@ -12650,15 +13743,23 @@ public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccountFinancialConne
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccountMandateOptions: StripeParams {
+public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccountMandateOptions: ClearableParams {
     /// The method used to collect offline mandate customer acceptance.
     public var collectionMethod: PaymentIntentCreatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod?
+    /// Fields to send empty, which clears them: `params.clear(.collectionMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(collectionMethod: PaymentIntentCreatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod? = nil) {
         self.collectionMethod = collectionMethod
     }
 
     public enum CodingKeys: String, CodingKey {
+        case collectionMethod = "collection_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case collectionMethod = "collection_method"
     }
 }
@@ -12830,17 +13931,30 @@ public struct PaymentIntentCreatePaymentMethodOptionsZipSetupFutureUsage: RawRep
 
 /// Options to configure Radar. Learn more about [Radar
 /// Sessions](https://docs.stripe.com/radar/radar-session).
-public struct PaymentIntentCreateRadarOptions: StripeParams {
+public struct PaymentIntentCreateRadarOptions: ClearableParams {
     /// The referrer URL of the current checkout session. You can use this to supply session-level referrer
     /// data when a Radar Session isn't available or doesn't contain a referrer.
     public var referrer: String?
     /// A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata
     /// and device details that help Radar make more accurate predictions on your payments.
     public var session: String?
+    /// Fields to send empty, which clears them: `params.clear(.referrer)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(referrer: String? = nil, session: String? = nil) {
         self.referrer = referrer
         self.session = session
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case referrer
+        case session
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case referrer
     }
 }
 
@@ -12922,7 +14036,7 @@ public struct PaymentIntentCreateShippingAddress: StripeParams {
 
 /// The parameters that you can use to automatically create a Transfer. Learn more about the [use case
 /// for connected accounts](https://docs.stripe.com/payments/connected-accounts).
-public struct PaymentIntentCreateTransferData: StripeParams {
+public struct PaymentIntentCreateTransferData: ClearableParams {
     /// If specified, successful charges will be attributed to the destination account for tax reporting,
     /// and the funds from charges will be transferred to the destination account. The ID of the resulting
     /// transfer will be returned on the successful charge's `transfer` field.
@@ -12940,6 +14054,8 @@ public struct PaymentIntentCreateTransferData: StripeParams {
     public var metadata: [String: String]?
     /// The data with which to populate the destination payment.
     public var paymentData: PaymentIntentCreateTransferDataPaymentData?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(destination: String, amount: Int? = nil, description: String? = nil, metadata: [String: String]? = nil, paymentData: PaymentIntentCreateTransferDataPaymentData? = nil) {
         self.destination = destination
@@ -12955,25 +14071,44 @@ public struct PaymentIntentCreateTransferData: StripeParams {
         case destination
         case metadata
         case paymentData = "payment_data"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
 /// The data with which to populate the destination payment.
-public struct PaymentIntentCreateTransferDataPaymentData: StripeParams {
+public struct PaymentIntentCreateTransferDataPaymentData: ClearableParams {
     /// An arbitrary string attached to the destination payment. Often useful for displaying to users.
     public var description: String?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(description: String? = nil, metadata: [String: String]? = nil) {
         self.description = description
         self.metadata = metadata
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case description
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
+    }
 }
 
 /// Provides industry-specific information about the amount.
-public struct PaymentIntentIncrementAuthorizationAmountDetails: StripeParams {
+public struct PaymentIntentIncrementAuthorizationAmountDetails: ClearableParams {
     /// The total discount applied on the transaction represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0. This field is
     /// mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
@@ -12992,6 +14127,8 @@ public struct PaymentIntentIncrementAuthorizationAmountDetails: StripeParams {
     public var shipping: PaymentIntentIncrementAuthorizationAmountDetailsShipping?
     /// Contains information about the tax portion of the amount.
     public var tax: PaymentIntentIncrementAuthorizationAmountDetailsTax?
+    /// Fields to send empty, which clears them: `params.clear(.discountAmount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(discountAmount: Int? = nil, enforceArithmeticValidation: Bool? = nil, lineItems: [PaymentIntentIncrementAuthorizationAmountDetailsLineItems]? = nil, shipping: PaymentIntentIncrementAuthorizationAmountDetailsShipping? = nil, tax: PaymentIntentIncrementAuthorizationAmountDetailsTax? = nil) {
         self.discountAmount = discountAmount
@@ -13004,6 +14141,15 @@ public struct PaymentIntentIncrementAuthorizationAmountDetails: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case discountAmount = "discount_amount"
         case enforceArithmeticValidation = "enforce_arithmetic_validation"
+        case lineItems = "line_items"
+        case shipping
+        case tax
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discountAmount = "discount_amount"
         case lineItems = "line_items"
         case shipping
         case tax
@@ -13192,7 +14338,7 @@ public struct PaymentIntentIncrementAuthorizationAmountDetailsLineItemsTax: Stri
     }
 }
 
-public struct PaymentIntentIncrementAuthorizationAmountDetailsShipping: StripeParams {
+public struct PaymentIntentIncrementAuthorizationAmountDetailsShipping: ClearableParams {
     /// If a physical good is being shipped, the cost of shipping represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than or equal to 0.
     public var amount: Int?
@@ -13202,6 +14348,8 @@ public struct PaymentIntentIncrementAuthorizationAmountDetailsShipping: StripePa
     /// If a physical good is being shipped, the postal code of where it is being shipped to. At most 10
     /// alphanumeric characters long, hyphens and spaces are allowed.
     public var toPostalCode: String?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, fromPostalCode: String? = nil, toPostalCode: String? = nil) {
         self.amount = amount
@@ -13210,6 +14358,14 @@ public struct PaymentIntentIncrementAuthorizationAmountDetailsShipping: StripePa
     }
 
     public enum CodingKeys: String, CodingKey {
+        case amount
+        case fromPostalCode = "from_postal_code"
+        case toPostalCode = "to_postal_code"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case amount
         case fromPostalCode = "from_postal_code"
         case toPostalCode = "to_postal_code"
@@ -13253,17 +14409,29 @@ public struct PaymentIntentIncrementAuthorizationHooksInputs: StripeParams {
 }
 
 /// Tax arguments for automations
-public struct PaymentIntentIncrementAuthorizationHooksInputsTax: StripeParams {
+public struct PaymentIntentIncrementAuthorizationHooksInputsTax: ClearableParams {
     /// The [TaxCalculation](https://docs.stripe.com/api/tax/calculations) id
     public var calculation: String
+    /// Fields to send empty, which clears them: `params.clear(.calculation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(calculation: String) {
         self.calculation = calculation
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case calculation
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case calculation
+    }
 }
 
 /// Provides industry-specific information about the charge.
-public struct PaymentIntentIncrementAuthorizationPaymentDetails: StripeParams {
+public struct PaymentIntentIncrementAuthorizationPaymentDetails: ClearableParams {
     /// A unique value to identify the customer. This field is available only for card payments. This field
     /// is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
     public var customerReference: String?
@@ -13272,6 +14440,8 @@ public struct PaymentIntentIncrementAuthorizationPaymentDetails: StripeParams {
     /// sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to
     /// customers when they view the order in the Klarna app.
     public var orderReference: String?
+    /// Fields to send empty, which clears them: `params.clear(.customerReference)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customerReference: String? = nil, orderReference: String? = nil) {
         self.customerReference = customerReference
@@ -13279,6 +14449,13 @@ public struct PaymentIntentIncrementAuthorizationPaymentDetails: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case customerReference = "customer_reference"
+        case orderReference = "order_reference"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case customerReference = "customer_reference"
         case orderReference = "order_reference"
     }
@@ -13403,7 +14580,7 @@ public struct PaymentIntentUpdateAllowedPaymentMethodTypes: RawRepresentable, Co
     public static var zip: Self { .init(rawValue: "zip") }
 }
 
-public struct PaymentIntentUpdateAmountDetails: StripeParams {
+public struct PaymentIntentUpdateAmountDetails: ClearableParams {
     /// The total discount applied on the transaction represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0. This field is
     /// mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
@@ -13422,6 +14599,8 @@ public struct PaymentIntentUpdateAmountDetails: StripeParams {
     public var shipping: PaymentIntentUpdateAmountDetailsShipping?
     /// Contains information about the tax portion of the amount.
     public var tax: PaymentIntentUpdateAmountDetailsTax?
+    /// Fields to send empty, which clears them: `params.clear(.discountAmount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(discountAmount: Int? = nil, enforceArithmeticValidation: Bool? = nil, lineItems: [PaymentIntentUpdateAmountDetailsLineItems]? = nil, shipping: PaymentIntentUpdateAmountDetailsShipping? = nil, tax: PaymentIntentUpdateAmountDetailsTax? = nil) {
         self.discountAmount = discountAmount
@@ -13434,6 +14613,15 @@ public struct PaymentIntentUpdateAmountDetails: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case discountAmount = "discount_amount"
         case enforceArithmeticValidation = "enforce_arithmetic_validation"
+        case lineItems = "line_items"
+        case shipping
+        case tax
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discountAmount = "discount_amount"
         case lineItems = "line_items"
         case shipping
         case tax
@@ -13622,7 +14810,7 @@ public struct PaymentIntentUpdateAmountDetailsLineItemsTax: StripeParams {
     }
 }
 
-public struct PaymentIntentUpdateAmountDetailsShipping: StripeParams {
+public struct PaymentIntentUpdateAmountDetailsShipping: ClearableParams {
     /// If a physical good is being shipped, the cost of shipping represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than or equal to 0.
     public var amount: Int?
@@ -13632,6 +14820,8 @@ public struct PaymentIntentUpdateAmountDetailsShipping: StripeParams {
     /// If a physical good is being shipped, the postal code of where it is being shipped to. At most 10
     /// alphanumeric characters long, hyphens and spaces are allowed.
     public var toPostalCode: String?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, fromPostalCode: String? = nil, toPostalCode: String? = nil) {
         self.amount = amount
@@ -13640,6 +14830,14 @@ public struct PaymentIntentUpdateAmountDetailsShipping: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case amount
+        case fromPostalCode = "from_postal_code"
+        case toPostalCode = "to_postal_code"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case amount
         case fromPostalCode = "from_postal_code"
         case toPostalCode = "to_postal_code"
@@ -13759,16 +14957,28 @@ public struct PaymentIntentUpdateHooksInputs: StripeParams {
 }
 
 /// Tax arguments for automations
-public struct PaymentIntentUpdateHooksInputsTax: StripeParams {
+public struct PaymentIntentUpdateHooksInputsTax: ClearableParams {
     /// The [TaxCalculation](https://docs.stripe.com/api/tax/calculations) id
     public var calculation: String
+    /// Fields to send empty, which clears them: `params.clear(.calculation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(calculation: String) {
         self.calculation = calculation
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case calculation
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case calculation
+    }
 }
 
-public struct PaymentIntentUpdatePaymentDetails: StripeParams {
+public struct PaymentIntentUpdatePaymentDetails: ClearableParams {
     /// A unique value to identify the customer. This field is available only for card payments. This field
     /// is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
     public var customerReference: String?
@@ -13777,6 +14987,8 @@ public struct PaymentIntentUpdatePaymentDetails: StripeParams {
     /// sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to
     /// customers when they view the order in the Klarna app.
     public var orderReference: String?
+    /// Fields to send empty, which clears them: `params.clear(.customerReference)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customerReference: String? = nil, orderReference: String? = nil) {
         self.customerReference = customerReference
@@ -13784,6 +14996,13 @@ public struct PaymentIntentUpdatePaymentDetails: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case customerReference = "customer_reference"
+        case orderReference = "order_reference"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case customerReference = "customer_reference"
         case orderReference = "order_reference"
     }
@@ -14215,7 +15434,7 @@ public struct PaymentIntentUpdatePaymentMethodDataBacsDebit: StripeParams {
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct PaymentIntentUpdatePaymentMethodDataBillingDetails: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodDataBillingDetails: ClearableParams {
     /// Billing address.
     public var address: PaymentIntentUpdatePaymentMethodDataBillingDetailsAddress?
     /// Email address.
@@ -14227,6 +15446,8 @@ public struct PaymentIntentUpdatePaymentMethodDataBillingDetails: StripeParams {
     /// Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM
     /// sellers.
     public var taxId: String?
+    /// Fields to send empty, which clears them: `params.clear(.address)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: PaymentIntentUpdatePaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
         self.address = address
@@ -14242,6 +15463,15 @@ public struct PaymentIntentUpdatePaymentMethodDataBillingDetails: StripeParams {
         case name
         case phone
         case taxId = "tax_id"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case address
+        case email
+        case name
+        case phone
     }
 }
 
@@ -14747,7 +15977,7 @@ public struct PaymentIntentUpdatePaymentMethodDataUsBankAccountAccountType: RawR
 }
 
 /// Payment-method-specific configuration for this PaymentIntent.
-public struct PaymentIntentUpdatePaymentMethodOptions: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptions: ClearableParams {
     /// If this is a `acss_debit` PaymentMethod, this sub-hash contains details about the ACSS Debit payment
     /// method options.
     public var acssDebit: PaymentIntentUpdatePaymentMethodOptionsAcssDebit?
@@ -14921,6 +16151,8 @@ public struct PaymentIntentUpdatePaymentMethodOptions: StripeParams {
     /// If this is a `zip` PaymentMethod, this sub-hash contains details about the Zip payment method
     /// options.
     public var zip: PaymentIntentUpdatePaymentMethodOptionsZip?
+    /// Fields to send empty, which clears them: `params.clear(.acssDebit)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(acssDebit: PaymentIntentUpdatePaymentMethodOptionsAcssDebit? = nil, affirm: PaymentIntentUpdatePaymentMethodOptionsAffirm? = nil, afterpayClearpay: PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpay? = nil, alipay: PaymentIntentUpdatePaymentMethodOptionsAlipay? = nil, alma: PaymentIntentUpdatePaymentMethodOptionsAlma? = nil, amazonPay: PaymentIntentUpdatePaymentMethodOptionsAmazonPay? = nil, auBecsDebit: PaymentIntentUpdatePaymentMethodOptionsAuBecsDebit? = nil, bacsDebit: PaymentIntentUpdatePaymentMethodOptionsBacsDebit? = nil, bancontact: PaymentIntentUpdatePaymentMethodOptionsBancontact? = nil, billie: PaymentIntentUpdatePaymentMethodOptionsBillie? = nil, bizum: [String: String]? = nil, blik: PaymentIntentUpdatePaymentMethodOptionsBlik? = nil, boleto: PaymentIntentUpdatePaymentMethodOptionsBoleto? = nil, card: PaymentIntentUpdatePaymentMethodOptionsCard? = nil, cardPresent: PaymentIntentUpdatePaymentMethodOptionsCardPresent? = nil, cashapp: PaymentIntentUpdatePaymentMethodOptionsCashapp? = nil, crypto: PaymentIntentUpdatePaymentMethodOptionsCrypto? = nil, customerBalance: PaymentIntentUpdatePaymentMethodOptionsCustomerBalance? = nil, eps: PaymentIntentUpdatePaymentMethodOptionsEps? = nil, fpx: PaymentIntentUpdatePaymentMethodOptionsFpx? = nil, giropay: PaymentIntentUpdatePaymentMethodOptionsGiropay? = nil, grabpay: PaymentIntentUpdatePaymentMethodOptionsGrabpay? = nil, ideal: PaymentIntentUpdatePaymentMethodOptionsIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: PaymentIntentUpdatePaymentMethodOptionsKakaoPay? = nil, klarna: PaymentIntentUpdatePaymentMethodOptionsKlarna? = nil, konbini: PaymentIntentUpdatePaymentMethodOptionsKonbini? = nil, krCard: PaymentIntentUpdatePaymentMethodOptionsKrCard? = nil, link: PaymentIntentUpdatePaymentMethodOptionsLink? = nil, mbWay: PaymentIntentUpdatePaymentMethodOptionsMbWay? = nil, mobilepay: PaymentIntentUpdatePaymentMethodOptionsMobilepay? = nil, multibanco: PaymentIntentUpdatePaymentMethodOptionsMultibanco? = nil, naverPay: PaymentIntentUpdatePaymentMethodOptionsNaverPay? = nil, nzBankAccount: PaymentIntentUpdatePaymentMethodOptionsNzBankAccount? = nil, oxxo: PaymentIntentUpdatePaymentMethodOptionsOxxo? = nil, p24: PaymentIntentUpdatePaymentMethodOptionsP24? = nil, payByBank: [String: String]? = nil, payco: PaymentIntentUpdatePaymentMethodOptionsPayco? = nil, paynow: PaymentIntentUpdatePaymentMethodOptionsPaynow? = nil, paypal: PaymentIntentUpdatePaymentMethodOptionsPaypal? = nil, paypay: [String: String]? = nil, payto: PaymentIntentUpdatePaymentMethodOptionsPayto? = nil, pix: PaymentIntentUpdatePaymentMethodOptionsPix? = nil, promptpay: PaymentIntentUpdatePaymentMethodOptionsPromptpay? = nil, revolutPay: PaymentIntentUpdatePaymentMethodOptionsRevolutPay? = nil, samsungPay: PaymentIntentUpdatePaymentMethodOptionsSamsungPay? = nil, satispay: PaymentIntentUpdatePaymentMethodOptionsSatispay? = nil, scalapay: PaymentIntentUpdatePaymentMethodOptionsScalapay? = nil, sepaDebit: PaymentIntentUpdatePaymentMethodOptionsSepaDebit? = nil, sequra: PaymentIntentUpdatePaymentMethodOptionsSequra? = nil, sofort: PaymentIntentUpdatePaymentMethodOptionsSofort? = nil, sunbit: PaymentIntentUpdatePaymentMethodOptionsSunbit? = nil, swish: PaymentIntentUpdatePaymentMethodOptionsSwish? = nil, twint: PaymentIntentUpdatePaymentMethodOptionsTwint? = nil, upi: PaymentIntentUpdatePaymentMethodOptionsUpi? = nil, usBankAccount: PaymentIntentUpdatePaymentMethodOptionsUsBankAccount? = nil, wechatPay: PaymentIntentUpdatePaymentMethodOptionsWechatPay? = nil, zip: PaymentIntentUpdatePaymentMethodOptionsZip? = nil) {
         self.acssDebit = acssDebit
@@ -15042,10 +16274,73 @@ public struct PaymentIntentUpdatePaymentMethodOptions: StripeParams {
         case usBankAccount = "us_bank_account"
         case wechatPay = "wechat_pay"
         case zip
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case acssDebit = "acss_debit"
+        case affirm
+        case afterpayClearpay = "afterpay_clearpay"
+        case alipay
+        case alma
+        case amazonPay = "amazon_pay"
+        case auBecsDebit = "au_becs_debit"
+        case bacsDebit = "bacs_debit"
+        case bancontact
+        case billie
+        case bizum
+        case blik
+        case boleto
+        case card
+        case cardPresent = "card_present"
+        case cashapp
+        case crypto
+        case customerBalance = "customer_balance"
+        case eps
+        case fpx
+        case giropay
+        case grabpay
+        case ideal
+        case interacPresent = "interac_present"
+        case kakaoPay = "kakao_pay"
+        case klarna
+        case konbini
+        case krCard = "kr_card"
+        case link
+        case mbWay = "mb_way"
+        case mobilepay
+        case multibanco
+        case naverPay = "naver_pay"
+        case nzBankAccount = "nz_bank_account"
+        case oxxo
+        case p24
+        case payByBank = "pay_by_bank"
+        case payco
+        case paynow
+        case paypal
+        case paypay
+        case payto
+        case pix
+        case promptpay
+        case revolutPay = "revolut_pay"
+        case samsungPay = "samsung_pay"
+        case satispay
+        case scalapay
+        case sepaDebit = "sepa_debit"
+        case sequra
+        case sofort
+        case sunbit
+        case swish
+        case twint
+        case upi
+        case usBankAccount = "us_bank_account"
+        case wechatPay = "wechat_pay"
+        case zip
     }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebit: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebit: ClearableParams {
     /// Additional fields for Mandate creation
     public var mandateOptions: PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -15068,6 +16363,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebit: StripeParams {
     public var targetDate: String?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: PaymentIntentUpdatePaymentMethodOptionsAcssDebitVerificationMethod?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAcssDebitSetupFutureUsage? = nil, targetDate: String? = nil, verificationMethod: PaymentIntentUpdatePaymentMethodOptionsAcssDebitVerificationMethod? = nil) {
         self.mandateOptions = mandateOptions
@@ -15081,11 +16378,17 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebit: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
         case verificationMethod = "verification_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions: ClearableParams {
     /// A URL for custom mandate text to render during confirmation step. The URL will be rendered with
     /// additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a
     /// Payment Intent, or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
@@ -15097,6 +16400,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions: St
     public var paymentSchedule: PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule?
     /// Transaction type of the mandate.
     public var transactionType: PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
+    /// Fields to send empty, which clears them: `params.clear(.customMandateUrl)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customMandateUrl: String? = nil, intervalDescription: String? = nil, paymentSchedule: PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule? = nil, transactionType: PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType? = nil) {
         self.customMandateUrl = customMandateUrl
@@ -15110,6 +16415,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions: St
         case intervalDescription = "interval_description"
         case paymentSchedule = "payment_schedule"
         case transactionType = "transaction_type"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case customMandateUrl = "custom_mandate_url"
     }
 }
 
@@ -15160,7 +16471,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebitVerificationMethod
     public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsAffirm: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsAffirm: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -15184,6 +16495,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAffirm: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAffirmSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsAffirmCaptureMethod? = nil, preferredLocale: String? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAffirmSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -15195,6 +16508,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAffirm: StripeParams {
         case captureMethod = "capture_method"
         case preferredLocale = "preferred_locale"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -15218,7 +16537,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAffirmSetupFutureUsage: Raw
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -15244,6 +16563,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpay: StripePar
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpayCaptureMethod? = nil, reference: String? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -15255,6 +16576,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpay: StripePar
         case captureMethod = "capture_method"
         case reference
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -15278,7 +16605,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpaySetupFuture
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsAlipay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsAlipay: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -15293,12 +16620,20 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAlipay: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAlipaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAlipaySetupFutureUsage? = nil) {
         self.setupFutureUsage = setupFutureUsage
     }
 
     public enum CodingKeys: String, CodingKey {
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -15314,7 +16649,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAlipaySetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsAlma: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsAlma: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -15322,12 +16657,20 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAlma: StripeParams {
     /// already set on the PaymentIntent, providing an empty value for this parameter unsets the stored
     /// value for this payment method type.
     public var captureMethod: PaymentIntentUpdatePaymentMethodOptionsAlmaCaptureMethod?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsAlmaCaptureMethod? = nil) {
         self.captureMethod = captureMethod
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
     }
 }
@@ -15342,7 +16685,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAlmaCaptureMethod: RawRepre
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsAmazonPay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsAmazonPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -15362,6 +16705,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAmazonPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAmazonPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsAmazonPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAmazonPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -15369,6 +16714,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAmazonPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -15395,7 +16747,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAmazonPaySetupFutureUsage: 
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsAuBecsDebit: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsAuBecsDebit: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -15414,6 +16766,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAuBecsDebit: StripeParams {
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsAuBecsDebitSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.setupFutureUsage = setupFutureUsage
@@ -15423,6 +16777,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAuBecsDebit: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
@@ -15438,7 +16798,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAuBecsDebitSetupFutureUsage
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsBacsDebit: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsBacsDebit: ClearableParams {
     /// Additional fields for Mandate creation
     public var mandateOptions: PaymentIntentUpdatePaymentMethodOptionsBacsDebitMandateOptions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -15459,6 +16819,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBacsDebit: StripeParams {
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentUpdatePaymentMethodOptionsBacsDebitMandateOptions? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsBacsDebitSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.mandateOptions = mandateOptions
@@ -15470,21 +16832,35 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBacsDebit: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentUpdatePaymentMethodOptionsBacsDebitMandateOptions: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsBacsDebitMandateOptions: ClearableParams {
     /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
     /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
     /// '.'. Cannot begin with 'DDIC' or 'STRIPE'.
     public var referencePrefix: String?
+    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(referencePrefix: String? = nil) {
         self.referencePrefix = referencePrefix
     }
 
     public enum CodingKeys: String, CodingKey {
+        case referencePrefix = "reference_prefix"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case referencePrefix = "reference_prefix"
     }
 }
@@ -15501,7 +16877,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBacsDebitSetupFutureUsage: 
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsBancontact: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsBancontact: ClearableParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: PaymentIntentUpdatePaymentMethodOptionsBancontactPreferredLanguage?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -15518,6 +16894,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBancontact: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsBancontactSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(preferredLanguage: PaymentIntentUpdatePaymentMethodOptionsBancontactPreferredLanguage? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsBancontactSetupFutureUsage? = nil) {
         self.preferredLanguage = preferredLanguage
@@ -15526,6 +16904,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBancontact: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case preferredLanguage = "preferred_language"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -15554,7 +16938,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBancontactSetupFutureUsage:
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsBillie: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsBillie: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -15566,6 +16950,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBillie: StripeParams {
     public var companyDetails: PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetails?
     /// An identifier or reference that this payment corresponds to.
     public var reference: String?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsBillieCaptureMethod? = nil, companyDetails: PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetails? = nil, reference: String? = nil) {
         self.captureMethod = captureMethod
@@ -15577,6 +16963,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBillie: StripeParams {
         case captureMethod = "capture_method"
         case companyDetails = "company_details"
         case reference
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
+        case companyDetails = "company_details"
     }
 }
 
@@ -15590,7 +16983,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBillieCaptureMethod: RawRep
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetails: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetails: ClearableParams {
     /// The address the company or entity is registered with.
     public var registeredAddress: PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetailsRegisteredAddress?
     /// Company or entity name.
@@ -15601,6 +16994,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetails: Strip
     public var registrationType: PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetailsRegistrationType?
     /// VAT id number
     public var vat: String?
+    /// Fields to send empty, which clears them: `params.clear(.registeredAddress)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(registeredAddress: PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetailsRegisteredAddress? = nil, registeredName: String? = nil, registrationNumber: String? = nil, registrationType: PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetailsRegistrationType? = nil, vat: String? = nil) {
         self.registeredAddress = registeredAddress
@@ -15616,6 +17011,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetails: Strip
         case registrationNumber = "registration_number"
         case registrationType = "registration_type"
         case vat
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case registeredAddress = "registered_address"
+        case registrationType = "registration_type"
     }
 }
 
@@ -15675,7 +17077,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetailsRegistr
     public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsBlik: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsBlik: ClearableParams {
     /// The 6-digit BLIK code that a customer has generated using their banking application. Can only be set
     /// on confirmation.
     public var code: String?
@@ -15695,6 +17097,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBlik: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsBlikSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(code: String? = nil, mandateOptions: PaymentIntentUpdatePaymentMethodOptionsBlikMandateOptions? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsBlikSetupFutureUsage? = nil) {
         self.code = code
@@ -15705,6 +17109,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBlik: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case code
         case mandateOptions = "mandate_options"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -15734,7 +17144,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBlikSetupFutureUsage: RawRe
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsBoleto: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsBoleto: ClearableParams {
     /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto
     /// voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday
     /// at 23:59 America/Sao_Paulo time.
@@ -15753,6 +17163,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBoleto: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsBoletoSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expiresAfterDays: Int? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsBoletoSetupFutureUsage? = nil) {
         self.expiresAfterDays = expiresAfterDays
@@ -15761,6 +17173,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBoleto: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case expiresAfterDays = "expires_after_days"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -15777,7 +17195,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBoletoSetupFutureUsage: Raw
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsCard: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsCard: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -15863,6 +17281,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCard: StripeParams {
     /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
     /// use for this payment.
     public var threeDSecure: PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecure?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsCardCaptureMethod? = nil, cvcToken: String? = nil, installments: PaymentIntentUpdatePaymentMethodOptionsCardInstallments? = nil, mandateOptions: PaymentIntentUpdatePaymentMethodOptionsCardMandateOptions? = nil, moto: Bool? = nil, network: PaymentIntentUpdatePaymentMethodOptionsCardNetwork? = nil, requestExtendedAuthorization: PaymentIntentUpdatePaymentMethodOptionsCardRequestExtendedAuthorization? = nil, requestIncrementalAuthorization: PaymentIntentUpdatePaymentMethodOptionsCardRequestIncrementalAuthorization? = nil, requestMulticapture: PaymentIntentUpdatePaymentMethodOptionsCardRequestMulticapture? = nil, requestOvercapture: PaymentIntentUpdatePaymentMethodOptionsCardRequestOvercapture? = nil, requestThreeDSecure: PaymentIntentUpdatePaymentMethodOptionsCardRequestThreeDSecure? = nil, requireCvcRecollection: Bool? = nil, setupCredentialUsage: PaymentIntentUpdatePaymentMethodOptionsCardSetupCredentialUsage? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsCardSetupFutureUsage? = nil, statementDescriptorSuffixKana: String? = nil, statementDescriptorSuffixKanji: String? = nil, storedCredentialUsage: PaymentIntentUpdatePaymentMethodOptionsCardStoredCredentialUsage? = nil, threeDSecure: PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecure? = nil) {
         self.captureMethod = captureMethod
@@ -15904,6 +17324,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCard: StripeParams {
         case statementDescriptorSuffixKanji = "statement_descriptor_suffix_kanji"
         case storedCredentialUsage = "stored_credential_usage"
         case threeDSecure = "three_d_secure"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case statementDescriptorSuffixKana = "statement_descriptor_suffix_kana"
+        case statementDescriptorSuffixKanji = "statement_descriptor_suffix_kanji"
     }
 }
 
@@ -15919,7 +17348,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCardCaptureMethod: RawRepre
 
 /// Installment configuration for payments attempted on this PaymentIntent. For more information, see
 /// the [installments integration guide](https://docs.stripe.com/payments/installments).
-public struct PaymentIntentUpdatePaymentMethodOptionsCardInstallments: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsCardInstallments: ClearableParams {
     /// Setting to true enables installments for this PaymentIntent. This will cause the response to contain
     /// a list of available installment plans. Setting to false will prevent any selected plan from applying
     /// to a charge.
@@ -15927,10 +17356,23 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCardInstallments: StripePar
     /// The selected installment plan to use for this payment attempt. This parameter can only be provided
     /// during confirmation.
     public var plan: PaymentIntentUpdatePaymentMethodOptionsCardInstallmentsPlan?
+    /// Fields to send empty, which clears them: `params.clear(.plan)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabled: Bool? = nil, plan: PaymentIntentUpdatePaymentMethodOptionsCardInstallmentsPlan? = nil) {
         self.enabled = enabled
         self.plan = plan
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case enabled
+        case plan
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case plan
     }
 }
 
@@ -16418,7 +17860,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCardPresentRoutingRequested
     public static var international: Self { .init(rawValue: "international") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsCashapp: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsCashapp: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -16440,6 +17882,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCashapp: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsCashappSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsCashappCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsCashappSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -16447,6 +17891,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCashapp: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -16770,7 +18221,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsGrabpaySetupFutureUsage: Ra
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsIdeal: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsIdeal: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -16785,12 +18236,20 @@ public struct PaymentIntentUpdatePaymentMethodOptionsIdeal: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsIdealSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsIdealSetupFutureUsage? = nil) {
         self.setupFutureUsage = setupFutureUsage
     }
 
     public enum CodingKeys: String, CodingKey {
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -16806,7 +18265,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsIdealSetupFutureUsage: RawR
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsKakaoPay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsKakaoPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -16826,6 +18285,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKakaoPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsKakaoPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsKakaoPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsKakaoPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -16833,6 +18294,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKakaoPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -16859,7 +18327,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKakaoPaySetupFutureUsage: R
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsKlarna: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsKlarna: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -16887,6 +18355,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKlarna: StripeParams {
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsKlarnaSetupFutureUsage?
     /// Subscription details if setting up or charging a subscription.
     public var subscriptions: [PaymentIntentUpdatePaymentMethodOptionsKlarnaSubscriptions]?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsKlarnaCaptureMethod? = nil, onDemand: PaymentIntentUpdatePaymentMethodOptionsKlarnaOnDemand? = nil, preferredLocale: PaymentIntentUpdatePaymentMethodOptionsKlarnaPreferredLocale? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsKlarnaSetupFutureUsage? = nil, subscriptions: [PaymentIntentUpdatePaymentMethodOptionsKlarnaSubscriptions]? = nil) {
         self.captureMethod = captureMethod
@@ -16901,6 +18371,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKlarna: StripeParams {
         case onDemand = "on_demand"
         case preferredLocale = "preferred_locale"
         case setupFutureUsage = "setup_future_usage"
+        case subscriptions
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
         case subscriptions
     }
 }
@@ -17085,7 +18562,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKlarnaSubscriptionsNextBill
     }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsKonbini: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsKonbini: ClearableParams {
     /// An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable
     /// convenience stores. Must not consist of only zeroes and could be rejected in case of insufficient
     /// uniqueness. We recommend to use the customer's phone number.
@@ -17114,6 +18591,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKonbini: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsKonbiniSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.confirmationNumber)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(confirmationNumber: String? = nil, expiresAfterDays: Int? = nil, expiresAt: Date? = nil, productDescription: String? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsKonbiniSetupFutureUsage? = nil) {
         self.confirmationNumber = confirmationNumber
@@ -17129,6 +18608,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKonbini: StripeParams {
         case expiresAt = "expires_at"
         case productDescription = "product_description"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case confirmationNumber = "confirmation_number"
+        case expiresAfterDays = "expires_after_days"
+        case expiresAt = "expires_at"
+        case productDescription = "product_description"
     }
 }
 
@@ -17142,7 +18630,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKonbiniSetupFutureUsage: Ra
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsKrCard: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsKrCard: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -17162,6 +18650,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKrCard: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsKrCardSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsKrCardCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsKrCardSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -17169,6 +18659,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKrCard: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -17195,7 +18692,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKrCardSetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsLink: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsLink: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -17219,6 +18716,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsLink: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsLinkSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsLinkCaptureMethod? = nil, persistentToken: String? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsLinkSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -17229,6 +18728,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsLink: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case persistentToken = "persistent_token"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -17289,7 +18795,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsMbWaySetupFutureUsage: RawR
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsMobilepay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsMobilepay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -17311,6 +18817,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsMobilepay: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsMobilepaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsMobilepayCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsMobilepaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -17320,6 +18828,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsMobilepay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -17378,7 +18892,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsMultibancoSetupFutureUsage:
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsNaverPay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsNaverPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -17398,6 +18912,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsNaverPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsNaverPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsNaverPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsNaverPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -17405,6 +18921,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsNaverPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -17431,7 +18954,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsNaverPaySetupFutureUsage: R
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsNzBankAccount: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsNzBankAccount: ClearableParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the
@@ -17450,6 +18973,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsNzBankAccount: StripeParams
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsNzBankAccountSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.setupFutureUsage = setupFutureUsage
@@ -17459,6 +18984,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsNzBankAccount: StripeParams
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
@@ -17554,7 +19085,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsP24SetupFutureUsage: RawRep
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsPayco: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsPayco: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -17574,6 +19105,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPayco: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsPaycoSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsPaycoCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsPaycoSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -17583,6 +19116,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPayco: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -17641,7 +19180,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPaynowSetupFutureUsage: Raw
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsPaypal: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsPaypal: ClearableParams {
     /// Controls when the funds will be captured from the customer's account.
     public var captureMethod: PaymentIntentUpdatePaymentMethodOptionsPaypalCaptureMethod?
     /// [Preferred locale](https://docs.stripe.com/payments/paypal/supported-locales) of the PayPal checkout
@@ -17667,6 +19206,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPaypal: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsPaypalSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsPaypalCaptureMethod? = nil, preferredLocale: PaymentIntentUpdatePaymentMethodOptionsPaypalPreferredLocale? = nil, reference: String? = nil, riskCorrelationId: String? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsPaypalSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -17681,6 +19222,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPaypal: StripeParams {
         case preferredLocale = "preferred_locale"
         case reference
         case riskCorrelationId = "risk_correlation_id"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -17736,7 +19284,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPaypalSetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsPayto: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsPayto: ClearableParams {
     /// Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent
     /// with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with
     /// `setup_future_usage=off_session`
@@ -17755,6 +19303,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPayto: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsPaytoSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptions? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsPaytoSetupFutureUsage? = nil) {
         self.mandateOptions = mandateOptions
@@ -17764,13 +19314,19 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPayto: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent
 /// with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with
 /// `setup_future_usage=off_session`
-public struct PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptions: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptions: ClearableParams {
     /// Amount that will be collected. It is required when `amount_type` is `fixed`.
     public var amount: Int?
     /// The type of amount that will be collected. The amount charged must be exact or up to the value of
@@ -17785,6 +19341,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptions: Stripe
     public var paymentsPerPeriod: Int?
     /// The purpose for which payments are made. Has a default value based on your merchant category code.
     public var purpose: PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPurpose?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, amountType: PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptionsAmountType? = nil, endDate: String? = nil, paymentSchedule: PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule? = nil, paymentsPerPeriod: Int? = nil, purpose: PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPurpose? = nil) {
         self.amount = amount
@@ -17796,6 +19354,17 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptions: Stripe
     }
 
     public enum CodingKeys: String, CodingKey {
+        case amount
+        case amountType = "amount_type"
+        case endDate = "end_date"
+        case paymentSchedule = "payment_schedule"
+        case paymentsPerPeriod = "payments_per_period"
+        case purpose
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case amount
         case amountType = "amount_type"
         case endDate = "end_date"
@@ -18047,7 +19616,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPromptpaySetupFutureUsage: 
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsRevolutPay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsRevolutPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -18067,6 +19636,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsRevolutPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsRevolutPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsRevolutPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsRevolutPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -18074,6 +19645,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsRevolutPay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -18103,7 +19681,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsRevolutPaySetupFutureUsage:
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsSamsungPay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsSamsungPay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -18123,6 +19701,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSamsungPay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSamsungPaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsSamsungPayCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSamsungPaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -18132,6 +19712,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSamsungPay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -18155,7 +19741,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSamsungPaySetupFutureUsage:
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsSatispay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsSatispay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -18175,6 +19761,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSatispay: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSatispaySetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsSatispayCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSatispaySetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -18182,6 +19770,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSatispay: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -18209,7 +19804,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSatispaySetupFutureUsage: R
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsScalapay: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsScalapay: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -18217,12 +19812,20 @@ public struct PaymentIntentUpdatePaymentMethodOptionsScalapay: StripeParams {
     /// already set on the PaymentIntent, providing an empty value for this parameter unsets the stored
     /// value for this payment method type.
     public var captureMethod: PaymentIntentUpdatePaymentMethodOptionsScalapayCaptureMethod?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsScalapayCaptureMethod? = nil) {
         self.captureMethod = captureMethod
     }
 
     public enum CodingKeys: String, CodingKey {
+        case captureMethod = "capture_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case captureMethod = "capture_method"
     }
 }
@@ -18237,7 +19840,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsScalapayCaptureMethod: RawR
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsSepaDebit: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsSepaDebit: ClearableParams {
     /// Additional fields for Mandate creation
     public var mandateOptions: PaymentIntentUpdatePaymentMethodOptionsSepaDebitMandateOptions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -18258,6 +19861,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSepaDebit: StripeParams {
     /// string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from
     /// now.
     public var targetDate: String?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentUpdatePaymentMethodOptionsSepaDebitMandateOptions? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSepaDebitSetupFutureUsage? = nil, targetDate: String? = nil) {
         self.mandateOptions = mandateOptions
@@ -18269,21 +19874,35 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSepaDebit: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
     }
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentUpdatePaymentMethodOptionsSepaDebitMandateOptions: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsSepaDebitMandateOptions: ClearableParams {
     /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
     /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
     /// '.'. Cannot begin with 'STRIPE'.
     public var referencePrefix: String?
+    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(referencePrefix: String? = nil) {
         self.referencePrefix = referencePrefix
     }
 
     public enum CodingKeys: String, CodingKey {
+        case referencePrefix = "reference_prefix"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case referencePrefix = "reference_prefix"
     }
 }
@@ -18300,7 +19919,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSepaDebitSetupFutureUsage: 
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsSequra: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsSequra: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -18322,6 +19941,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSequra: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSequraSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsSequraCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSequraSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -18331,6 +19952,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSequra: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -18354,7 +19981,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSequraSetupFutureUsage: Raw
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsSofort: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsSofort: ClearableParams {
     /// Language shown to the payer on redirect.
     public var preferredLanguage: PaymentIntentUpdatePaymentMethodOptionsSofortPreferredLanguage?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -18371,6 +19998,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSofort: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSofortSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.preferredLanguage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(preferredLanguage: PaymentIntentUpdatePaymentMethodOptionsSofortPreferredLanguage? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSofortSetupFutureUsage? = nil) {
         self.preferredLanguage = preferredLanguage
@@ -18378,6 +20007,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSofort: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case preferredLanguage = "preferred_language"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case preferredLanguage = "preferred_language"
         case setupFutureUsage = "setup_future_usage"
     }
@@ -18410,7 +20046,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSofortSetupFutureUsage: Raw
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsSunbit: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsSunbit: ClearableParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
     /// [capture_method](/api/payment_intents/update#update_payment_intent-capture_method) for this payment
@@ -18430,6 +20066,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSunbit: StripeParams {
     /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSunbitSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.captureMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(captureMethod: PaymentIntentUpdatePaymentMethodOptionsSunbitCaptureMethod? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSunbitSetupFutureUsage? = nil) {
         self.captureMethod = captureMethod
@@ -18439,6 +20077,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSunbit: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case captureMethod = "capture_method"
     }
 }
 
@@ -18462,7 +20106,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSunbitSetupFutureUsage: Raw
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsSwish: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsSwish: ClearableParams {
     /// A reference for this payment to be displayed in the Swish app.
     public var reference: String?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -18479,6 +20123,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSwish: StripeParams {
     /// performing a request using a publishable key, you can only update the value from `on_session` to
     /// `off_session`.
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSwishSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.reference)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(reference: String? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsSwishSetupFutureUsage? = nil) {
         self.reference = reference
@@ -18488,6 +20134,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSwish: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case reference
         case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case reference
     }
 }
 
@@ -18537,10 +20189,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsTwintSetupFutureUsage: RawR
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsUpi: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsUpi: ClearableParams {
     /// Configuration options for setting up an eMandate
     public var mandateOptions: PaymentIntentUpdatePaymentMethodOptionsUpiMandateOptions?
     public var setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsUpiSetupFutureUsage?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(mandateOptions: PaymentIntentUpdatePaymentMethodOptionsUpiMandateOptions? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsUpiSetupFutureUsage? = nil) {
         self.mandateOptions = mandateOptions
@@ -18549,6 +20203,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsUpi: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
+        case setupFutureUsage = "setup_future_usage"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case setupFutureUsage = "setup_future_usage"
     }
 }
@@ -18604,7 +20264,7 @@ public struct PaymentIntentUpdatePaymentMethodOptionsUpiSetupFutureUsage: RawRep
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccount: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccount: ClearableParams {
     /// Additional fields for Financial Connections Session creation
     public var financialConnections: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnections?
     /// Additional fields for Mandate creation
@@ -18633,6 +20293,8 @@ public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccount: StripeParams
     public var transactionPurpose: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountTransactionPurpose?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountVerificationMethod?
+    /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(financialConnections: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnections? = nil, mandateOptions: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptions? = nil, networks: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountNetworks? = nil, setupFutureUsage: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountSetupFutureUsage? = nil, targetDate: String? = nil, transactionPurpose: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountTransactionPurpose? = nil, verificationMethod: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountVerificationMethod? = nil) {
         self.financialConnections = financialConnections
@@ -18652,6 +20314,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccount: StripeParams
         case targetDate = "target_date"
         case transactionPurpose = "transaction_purpose"
         case verificationMethod = "verification_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case setupFutureUsage = "setup_future_usage"
+        case transactionPurpose = "transaction_purpose"
     }
 }
 
@@ -18736,15 +20405,23 @@ public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConne
 }
 
 /// Additional fields for Mandate creation
-public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptions: StripeParams {
+public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptions: ClearableParams {
     /// The method used to collect offline mandate customer acceptance.
     public var collectionMethod: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod?
+    /// Fields to send empty, which clears them: `params.clear(.collectionMethod)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(collectionMethod: PaymentIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod? = nil) {
         self.collectionMethod = collectionMethod
     }
 
     public enum CodingKeys: String, CodingKey {
+        case collectionMethod = "collection_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case collectionMethod = "collection_method"
     }
 }
@@ -18991,7 +20668,7 @@ public struct PaymentIntentUpdateShippingAddress: StripeParams {
 
 /// Use this parameter to automatically create a Transfer when the payment succeeds. Learn more about
 /// the [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
-public struct PaymentIntentUpdateTransferData: StripeParams {
+public struct PaymentIntentUpdateTransferData: ClearableParams {
     /// The amount that will be transferred automatically when a charge succeeds.
     public var amount: Int?
     /// An arbitrary string attached to the transfer. Often useful for displaying to users.
@@ -19001,6 +20678,8 @@ public struct PaymentIntentUpdateTransferData: StripeParams {
     public var metadata: [String: String]?
     /// The data with which to populate the destination payment.
     public var paymentData: PaymentIntentUpdateTransferDataPaymentData?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, description: String? = nil, metadata: [String: String]? = nil, paymentData: PaymentIntentUpdateTransferDataPaymentData? = nil) {
         self.amount = amount
@@ -19014,19 +20693,38 @@ public struct PaymentIntentUpdateTransferData: StripeParams {
         case description
         case metadata
         case paymentData = "payment_data"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
 /// The data with which to populate the destination payment.
-public struct PaymentIntentUpdateTransferDataPaymentData: StripeParams {
+public struct PaymentIntentUpdateTransferDataPaymentData: ClearableParams {
     /// An arbitrary string attached to the destination payment. Often useful for displaying to users.
     public var description: String?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(description: String? = nil, metadata: [String: String]? = nil) {
         self.description = description
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case description
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }

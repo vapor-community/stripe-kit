@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct AccountCreateParams: StripeParams {
+public struct AccountCreateParams: ClearableParams {
     /// An [account token](https://docs.stripe.com/api#create_account_token), used to securely provide
     /// details to the account.
     public var accountToken: String?
@@ -93,6 +93,8 @@ public struct AccountCreateParams: StripeParams {
     /// [`controller`](/api/accounts/create#create_account-controller) instead to configure dashboard
     /// access, fee payer, loss liability, and requirement collection.
     public var type: AccountCreateType?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountToken: String? = nil, businessProfile: AccountCreateBusinessProfile? = nil, businessType: AccountCreateBusinessType? = nil, capabilities: AccountCreateCapabilities? = nil, company: AccountCreateCompany? = nil, controller: AccountCreateController? = nil, country: String? = nil, defaultCurrency: String? = nil, documents: AccountCreateDocuments? = nil, email: String? = nil, expand: [String]? = nil, externalAccount: String? = nil, groups: AccountCreateGroups? = nil, individual: AccountCreateIndividual? = nil, metadata: [String: String]? = nil, settings: AccountCreateSettings? = nil, tosAcceptance: AccountCreateTosAcceptance? = nil, type: AccountCreateType? = nil) {
         self.accountToken = accountToken
@@ -134,6 +136,12 @@ public struct AccountCreateParams: StripeParams {
         case settings
         case tosAcceptance = "tos_acceptance"
         case type
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -205,7 +213,7 @@ public struct AccountUnrejectParams: StripeParams {
     }
 }
 
-public struct AccountUpdateParams: StripeParams {
+public struct AccountUpdateParams: ClearableParams {
     /// An [account token](https://docs.stripe.com/api#create_account_token), used to securely provide
     /// details to the account.
     public var accountToken: String?
@@ -277,6 +285,8 @@ public struct AccountUpdateParams: StripeParams {
     /// is `application`, which includes Custom accounts. This property defaults to a `full` service
     /// agreement when empty.
     public var tosAcceptance: AccountUpdateTosAcceptance?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountToken: String? = nil, businessProfile: AccountUpdateBusinessProfile? = nil, businessType: AccountUpdateBusinessType? = nil, capabilities: AccountUpdateCapabilities? = nil, company: AccountUpdateCompany? = nil, defaultCurrency: String? = nil, documents: AccountUpdateDocuments? = nil, email: String? = nil, expand: [String]? = nil, externalAccount: String? = nil, groups: AccountUpdateGroups? = nil, individual: AccountUpdateIndividual? = nil, metadata: [String: String]? = nil, settings: AccountUpdateSettings? = nil, tosAcceptance: AccountUpdateTosAcceptance? = nil) {
         self.accountToken = accountToken
@@ -312,11 +322,17 @@ public struct AccountUpdateParams: StripeParams {
         case metadata
         case settings
         case tosAcceptance = "tos_acceptance"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
 /// Business information about the account.
-public struct AccountCreateBusinessProfile: StripeParams {
+public struct AccountCreateBusinessProfile: ClearableParams {
     /// The applicant's gross annual revenue for its preceding fiscal year.
     public var annualRevenue: AccountCreateBusinessProfileAnnualRevenue?
     /// An estimated upper bound of employees, contractors, vendors, etc. currently working for the
@@ -347,6 +363,8 @@ public struct AccountCreateBusinessProfile: StripeParams {
     public var supportUrl: String?
     /// The business's publicly available website.
     public var url: String?
+    /// Fields to send empty, which clears them: `params.clear(.specifiedCommercialTransactionsActUrl)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(annualRevenue: AccountCreateBusinessProfileAnnualRevenue? = nil, estimatedWorkerCount: Int? = nil, mcc: String? = nil, minorityOwnedBusinessDesignation: [AccountCreateBusinessProfileMinorityOwnedBusinessDesignation]? = nil, monthlyEstimatedRevenue: AccountCreateBusinessProfileMonthlyEstimatedRevenue? = nil, name: String? = nil, productDescription: String? = nil, specifiedCommercialTransactionsActUrl: String? = nil, supportAddress: AccountCreateBusinessProfileSupportAddress? = nil, supportEmail: String? = nil, supportPhone: String? = nil, supportUrl: String? = nil, url: String? = nil) {
         self.annualRevenue = annualRevenue
@@ -378,6 +396,13 @@ public struct AccountCreateBusinessProfile: StripeParams {
         case supportPhone = "support_phone"
         case supportUrl = "support_url"
         case url
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case specifiedCommercialTransactionsActUrl = "specified_commercial_transactions_act_url"
+        case supportUrl = "support_url"
     }
 }
 
@@ -1622,7 +1647,7 @@ public struct AccountCreateCapabilitiesZipPayments: StripeParams {
 /// property can only be updated for accounts where
 /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
 /// is `application`, which includes Custom accounts.
-public struct AccountCreateCompany: StripeParams {
+public struct AccountCreateCompany: ClearableParams {
     /// The company's primary address.
     public var address: AccountCreateCompanyAddress?
     /// The Kana variation of the company's primary address (Japan only).
@@ -1696,6 +1721,8 @@ public struct AccountCreateCompany: StripeParams {
     public var vatId: String?
     /// Information on the verification state of the company.
     public var verification: AccountCreateCompanyVerification?
+    /// Fields to send empty, which clears them: `params.clear(.ownershipExemptionReason)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: AccountCreateCompanyAddress? = nil, addressKana: AccountCreateCompanyAddressKana? = nil, addressKanji: AccountCreateCompanyAddressKanji? = nil, administrativeAddress: AccountCreateCompanyAdministrativeAddress? = nil, directorsProvided: Bool? = nil, directorshipDeclaration: AccountCreateCompanyDirectorshipDeclaration? = nil, executivesProvided: Bool? = nil, exportLicenseId: String? = nil, exportPurposeCode: String? = nil, name: String? = nil, nameKana: String? = nil, nameKanji: String? = nil, ownersProvided: Bool? = nil, ownershipDeclaration: AccountCreateCompanyOwnershipDeclaration? = nil, ownershipExemptionReason: AccountCreateCompanyOwnershipExemptionReason? = nil, phone: String? = nil, physicalAddress: AccountCreateCompanyPhysicalAddress? = nil, principalPlaceOfBusiness: AccountCreateCompanyPrincipalPlaceOfBusiness? = nil, registrationDate: AccountCreateCompanyRegistrationDate? = nil, registrationNumber: String? = nil, representativeDeclaration: AccountCreateCompanyRepresentativeDeclaration? = nil, structure: AccountCreateCompanyStructure? = nil, taxId: String? = nil, taxIdRegistrar: String? = nil, vatId: String? = nil, verification: AccountCreateCompanyVerification? = nil) {
         self.address = address
@@ -1753,6 +1780,14 @@ public struct AccountCreateCompany: StripeParams {
         case taxIdRegistrar = "tax_id_registrar"
         case vatId = "vat_id"
         case verification
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case ownershipExemptionReason = "ownership_exemption_reason"
+        case registrationDate = "registration_date"
+        case structure
     }
 }
 
@@ -2407,17 +2442,25 @@ public struct AccountCreateDocumentsProofOfUltimateBeneficialOwnershipSigner: St
 }
 
 /// A hash of account group type to tokens. These are account groups this account should be added to.
-public struct AccountCreateGroups: StripeParams {
+public struct AccountCreateGroups: ClearableParams {
     /// The group the account is in to determine their payments pricing, and null if the account is on
     /// customized pricing. [See the Platform pricing tool
     /// documentation](https://docs.stripe.com/connect/platform-pricing-tools) for details.
     public var paymentsPricing: String?
+    /// Fields to send empty, which clears them: `params.clear(.paymentsPricing)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(paymentsPricing: String? = nil) {
         self.paymentsPricing = paymentsPricing
     }
 
     public enum CodingKeys: String, CodingKey {
+        case paymentsPricing = "payments_pricing"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case paymentsPricing = "payments_pricing"
     }
 }
@@ -2427,7 +2470,7 @@ public struct AccountCreateGroups: StripeParams {
 /// Session](/api/account_sessions), this property can only be updated for accounts where
 /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
 /// is `application`, which includes Custom accounts.
-public struct AccountCreateIndividual: StripeParams {
+public struct AccountCreateIndividual: ClearableParams {
     /// The individual's primary address.
     public var address: AccountCreateIndividualAddress?
     /// The Kana variation of the individual's primary address (Japan only).
@@ -2485,6 +2528,8 @@ public struct AccountCreateIndividual: StripeParams {
     public var ssnLast4: String?
     /// The individual's verification document information.
     public var verification: AccountCreateIndividualVerification?
+    /// Fields to send empty, which clears them: `params.clear(.dob)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: AccountCreateIndividualAddress? = nil, addressKana: AccountCreateIndividualAddressKana? = nil, addressKanji: AccountCreateIndividualAddressKanji? = nil, dob: AccountCreateIndividualDob? = nil, email: String? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, phone: String? = nil, politicalExposure: AccountCreateIndividualPoliticalExposure? = nil, registeredAddress: AccountCreateIndividualRegisteredAddress? = nil, relationship: AccountCreateIndividualRelationship? = nil, ssnLast4: String? = nil, verification: AccountCreateIndividualVerification? = nil) {
         self.address = address
@@ -2536,6 +2581,14 @@ public struct AccountCreateIndividual: StripeParams {
         case relationship
         case ssnLast4 = "ssn_last_4"
         case verification
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case dob
+        case fullNameAliases = "full_name_aliases"
+        case metadata
     }
 }
 
@@ -2710,7 +2763,7 @@ public struct AccountCreateIndividualRegisteredAddress: StripeParams {
 }
 
 /// Describes the person’s relationship to the account.
-public struct AccountCreateIndividualRelationship: StripeParams {
+public struct AccountCreateIndividualRelationship: ClearableParams {
     /// Whether the person is a director of the account's legal entity. Directors are typically members of
     /// the governing board of the company, or responsible for ensuring the company meets its regulatory
     /// obligations.
@@ -2723,6 +2776,8 @@ public struct AccountCreateIndividualRelationship: StripeParams {
     public var percentOwnership: Double?
     /// The person's title (e.g., CEO, Support Engineer).
     public var title: String?
+    /// Fields to send empty, which clears them: `params.clear(.percentOwnership)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percentOwnership: Double? = nil, title: String? = nil) {
         self.director = director
@@ -2738,6 +2793,12 @@ public struct AccountCreateIndividualRelationship: StripeParams {
         case owner
         case percentOwnership = "percent_ownership"
         case title
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case percentOwnership = "percent_ownership"
     }
 }
 
@@ -2912,13 +2973,15 @@ public struct AccountCreateSettingsCardIssuing: StripeParams {
 
 /// Details on the account's acceptance of the [Stripe Issuing Terms and
 /// Disclosures](/issuing/connect/tos_acceptance).
-public struct AccountCreateSettingsCardIssuingTosAcceptance: StripeParams {
+public struct AccountCreateSettingsCardIssuingTosAcceptance: ClearableParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
     public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
+    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
@@ -2930,11 +2993,17 @@ public struct AccountCreateSettingsCardIssuingTosAcceptance: StripeParams {
         case date
         case ip
         case userAgent = "user_agent"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case userAgent = "user_agent"
     }
 }
 
 /// Settings specific to card charging on the account.
-public struct AccountCreateSettingsCardPayments: StripeParams {
+public struct AccountCreateSettingsCardPayments: ClearableParams {
     /// Automatically declines certain charge types regardless of whether the card issuer accepted or
     /// declined the charge.
     public var declineOn: AccountCreateSettingsCardPaymentsDeclineOn?
@@ -2952,6 +3021,8 @@ public struct AccountCreateSettingsCardPayments: StripeParams {
     /// charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the
     /// dynamic portion.
     public var statementDescriptorPrefixKanji: String?
+    /// Fields to send empty, which clears them: `params.clear(.statementDescriptorPrefixKana)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(declineOn: AccountCreateSettingsCardPaymentsDeclineOn? = nil, statementDescriptorPrefix: String? = nil, statementDescriptorPrefixKana: String? = nil, statementDescriptorPrefixKanji: String? = nil) {
         self.declineOn = declineOn
@@ -2963,6 +3034,13 @@ public struct AccountCreateSettingsCardPayments: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case declineOn = "decline_on"
         case statementDescriptorPrefix = "statement_descriptor_prefix"
+        case statementDescriptorPrefixKana = "statement_descriptor_prefix_kana"
+        case statementDescriptorPrefixKanji = "statement_descriptor_prefix_kanji"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case statementDescriptorPrefixKana = "statement_descriptor_prefix_kana"
         case statementDescriptorPrefixKanji = "statement_descriptor_prefix_kanji"
     }
@@ -3325,13 +3403,15 @@ public struct AccountCreateSettingsTreasury: StripeParams {
 }
 
 /// Details on the account's acceptance of the Stripe Treasury Services Agreement.
-public struct AccountCreateSettingsTreasuryTosAcceptance: StripeParams {
+public struct AccountCreateSettingsTreasuryTosAcceptance: ClearableParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
     public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
+    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
@@ -3342,6 +3422,12 @@ public struct AccountCreateSettingsTreasuryTosAcceptance: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case date
         case ip
+        case userAgent = "user_agent"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case userAgent = "user_agent"
     }
 }
@@ -3418,7 +3504,7 @@ public struct AccountRejectPayoutsAction: RawRepresentable, Codable, Hashable, S
 }
 
 /// Business information about the account.
-public struct AccountUpdateBusinessProfile: StripeParams {
+public struct AccountUpdateBusinessProfile: ClearableParams {
     /// The applicant's gross annual revenue for its preceding fiscal year.
     public var annualRevenue: AccountUpdateBusinessProfileAnnualRevenue?
     /// An estimated upper bound of employees, contractors, vendors, etc. currently working for the
@@ -3449,6 +3535,8 @@ public struct AccountUpdateBusinessProfile: StripeParams {
     public var supportUrl: String?
     /// The business's publicly available website.
     public var url: String?
+    /// Fields to send empty, which clears them: `params.clear(.specifiedCommercialTransactionsActUrl)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(annualRevenue: AccountUpdateBusinessProfileAnnualRevenue? = nil, estimatedWorkerCount: Int? = nil, mcc: String? = nil, minorityOwnedBusinessDesignation: [AccountUpdateBusinessProfileMinorityOwnedBusinessDesignation]? = nil, monthlyEstimatedRevenue: AccountUpdateBusinessProfileMonthlyEstimatedRevenue? = nil, name: String? = nil, productDescription: String? = nil, specifiedCommercialTransactionsActUrl: String? = nil, supportAddress: AccountUpdateBusinessProfileSupportAddress? = nil, supportEmail: String? = nil, supportPhone: String? = nil, supportUrl: String? = nil, url: String? = nil) {
         self.annualRevenue = annualRevenue
@@ -3480,6 +3568,13 @@ public struct AccountUpdateBusinessProfile: StripeParams {
         case supportPhone = "support_phone"
         case supportUrl = "support_url"
         case url
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case specifiedCommercialTransactionsActUrl = "specified_commercial_transactions_act_url"
+        case supportUrl = "support_url"
     }
 }
 
@@ -4724,7 +4819,7 @@ public struct AccountUpdateCapabilitiesZipPayments: StripeParams {
 /// property can only be updated for accounts where
 /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
 /// is `application`, which includes Custom accounts.
-public struct AccountUpdateCompany: StripeParams {
+public struct AccountUpdateCompany: ClearableParams {
     /// The company's primary address.
     public var address: AccountUpdateCompanyAddress?
     /// The Kana variation of the company's primary address (Japan only).
@@ -4797,6 +4892,8 @@ public struct AccountUpdateCompany: StripeParams {
     public var vatId: String?
     /// Information on the verification state of the company.
     public var verification: AccountUpdateCompanyVerification?
+    /// Fields to send empty, which clears them: `params.clear(.ownershipExemptionReason)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: AccountUpdateCompanyAddress? = nil, addressKana: AccountUpdateCompanyAddressKana? = nil, addressKanji: AccountUpdateCompanyAddressKanji? = nil, administrativeAddress: AccountUpdateCompanyAdministrativeAddress? = nil, directorsProvided: Bool? = nil, directorshipDeclaration: AccountUpdateCompanyDirectorshipDeclaration? = nil, executivesProvided: Bool? = nil, exportLicenseId: String? = nil, exportPurposeCode: String? = nil, name: String? = nil, nameKana: String? = nil, nameKanji: String? = nil, ownersProvided: Bool? = nil, ownershipDeclaration: AccountUpdateCompanyOwnershipDeclaration? = nil, ownershipExemptionReason: AccountUpdateCompanyOwnershipExemptionReason? = nil, phone: String? = nil, physicalAddress: AccountUpdateCompanyPhysicalAddress? = nil, principalPlaceOfBusiness: AccountUpdateCompanyPrincipalPlaceOfBusiness? = nil, registrationDate: AccountUpdateCompanyRegistrationDate? = nil, registrationNumber: String? = nil, representativeDeclaration: AccountUpdateCompanyRepresentativeDeclaration? = nil, structure: AccountUpdateCompanyStructure? = nil, taxId: String? = nil, taxIdRegistrar: String? = nil, vatId: String? = nil, verification: AccountUpdateCompanyVerification? = nil) {
         self.address = address
@@ -4854,6 +4951,14 @@ public struct AccountUpdateCompany: StripeParams {
         case taxIdRegistrar = "tax_id_registrar"
         case vatId = "vat_id"
         case verification
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case ownershipExemptionReason = "ownership_exemption_reason"
+        case registrationDate = "registration_date"
+        case structure
     }
 }
 
@@ -5424,17 +5529,25 @@ public struct AccountUpdateDocumentsProofOfUltimateBeneficialOwnershipSigner: St
 }
 
 /// A hash of account group type to tokens. These are account groups this account should be added to.
-public struct AccountUpdateGroups: StripeParams {
+public struct AccountUpdateGroups: ClearableParams {
     /// The group the account is in to determine their payments pricing, and null if the account is on
     /// customized pricing. [See the Platform pricing tool
     /// documentation](https://docs.stripe.com/connect/platform-pricing-tools) for details.
     public var paymentsPricing: String?
+    /// Fields to send empty, which clears them: `params.clear(.paymentsPricing)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(paymentsPricing: String? = nil) {
         self.paymentsPricing = paymentsPricing
     }
 
     public enum CodingKeys: String, CodingKey {
+        case paymentsPricing = "payments_pricing"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case paymentsPricing = "payments_pricing"
     }
 }
@@ -5444,7 +5557,7 @@ public struct AccountUpdateGroups: StripeParams {
 /// Session](/api/account_sessions), this property can only be updated for accounts where
 /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
 /// is `application`, which includes Custom accounts.
-public struct AccountUpdateIndividual: StripeParams {
+public struct AccountUpdateIndividual: ClearableParams {
     /// The individual's primary address.
     public var address: AccountUpdateIndividualAddress?
     /// The Kana variation of the individual's primary address (Japan only).
@@ -5502,6 +5615,8 @@ public struct AccountUpdateIndividual: StripeParams {
     public var ssnLast4: String?
     /// The individual's verification document information.
     public var verification: AccountUpdateIndividualVerification?
+    /// Fields to send empty, which clears them: `params.clear(.dob)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: AccountUpdateIndividualAddress? = nil, addressKana: AccountUpdateIndividualAddressKana? = nil, addressKanji: AccountUpdateIndividualAddressKanji? = nil, dob: AccountUpdateIndividualDob? = nil, email: String? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, phone: String? = nil, politicalExposure: AccountUpdateIndividualPoliticalExposure? = nil, registeredAddress: AccountUpdateIndividualRegisteredAddress? = nil, relationship: AccountUpdateIndividualRelationship? = nil, ssnLast4: String? = nil, verification: AccountUpdateIndividualVerification? = nil) {
         self.address = address
@@ -5553,6 +5668,14 @@ public struct AccountUpdateIndividual: StripeParams {
         case relationship
         case ssnLast4 = "ssn_last_4"
         case verification
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case dob
+        case fullNameAliases = "full_name_aliases"
+        case metadata
     }
 }
 
@@ -5727,7 +5850,7 @@ public struct AccountUpdateIndividualRegisteredAddress: StripeParams {
 }
 
 /// Describes the person’s relationship to the account.
-public struct AccountUpdateIndividualRelationship: StripeParams {
+public struct AccountUpdateIndividualRelationship: ClearableParams {
     /// Whether the person is a director of the account's legal entity. Directors are typically members of
     /// the governing board of the company, or responsible for ensuring the company meets its regulatory
     /// obligations.
@@ -5740,6 +5863,8 @@ public struct AccountUpdateIndividualRelationship: StripeParams {
     public var percentOwnership: Double?
     /// The person's title (e.g., CEO, Support Engineer).
     public var title: String?
+    /// Fields to send empty, which clears them: `params.clear(.percentOwnership)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percentOwnership: Double? = nil, title: String? = nil) {
         self.director = director
@@ -5755,6 +5880,12 @@ public struct AccountUpdateIndividualRelationship: StripeParams {
         case owner
         case percentOwnership = "percent_ownership"
         case title
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case percentOwnership = "percent_ownership"
     }
 }
 
@@ -5929,13 +6060,15 @@ public struct AccountUpdateSettingsCardIssuing: StripeParams {
 
 /// Details on the account's acceptance of the [Stripe Issuing Terms and
 /// Disclosures](/issuing/connect/tos_acceptance).
-public struct AccountUpdateSettingsCardIssuingTosAcceptance: StripeParams {
+public struct AccountUpdateSettingsCardIssuingTosAcceptance: ClearableParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
     public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
+    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
@@ -5947,11 +6080,17 @@ public struct AccountUpdateSettingsCardIssuingTosAcceptance: StripeParams {
         case date
         case ip
         case userAgent = "user_agent"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case userAgent = "user_agent"
     }
 }
 
 /// Settings specific to card charging on the account.
-public struct AccountUpdateSettingsCardPayments: StripeParams {
+public struct AccountUpdateSettingsCardPayments: ClearableParams {
     /// Automatically declines certain charge types regardless of whether the card issuer accepted or
     /// declined the charge.
     public var declineOn: AccountUpdateSettingsCardPaymentsDeclineOn?
@@ -5969,6 +6108,8 @@ public struct AccountUpdateSettingsCardPayments: StripeParams {
     /// charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the
     /// dynamic portion.
     public var statementDescriptorPrefixKanji: String?
+    /// Fields to send empty, which clears them: `params.clear(.statementDescriptorPrefixKana)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(declineOn: AccountUpdateSettingsCardPaymentsDeclineOn? = nil, statementDescriptorPrefix: String? = nil, statementDescriptorPrefixKana: String? = nil, statementDescriptorPrefixKanji: String? = nil) {
         self.declineOn = declineOn
@@ -5980,6 +6121,13 @@ public struct AccountUpdateSettingsCardPayments: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case declineOn = "decline_on"
         case statementDescriptorPrefix = "statement_descriptor_prefix"
+        case statementDescriptorPrefixKana = "statement_descriptor_prefix_kana"
+        case statementDescriptorPrefixKanji = "statement_descriptor_prefix_kanji"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case statementDescriptorPrefixKana = "statement_descriptor_prefix_kana"
         case statementDescriptorPrefixKanji = "statement_descriptor_prefix_kanji"
     }
@@ -6007,7 +6155,7 @@ public struct AccountUpdateSettingsCardPaymentsDeclineOn: StripeParams {
 }
 
 /// Settings specific to the account's use of Invoices.
-public struct AccountUpdateSettingsInvoices: StripeParams {
+public struct AccountUpdateSettingsInvoices: ClearableParams {
     /// The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added
     /// when an invoice is finalized.
     public var defaultAccountTaxIds: [String]?
@@ -6015,6 +6163,8 @@ public struct AccountUpdateSettingsInvoices: StripeParams {
     /// subscription invoice when the customer already has a default payment method on the hosted invoice
     /// page.
     public var hostedPaymentMethodSave: AccountUpdateSettingsInvoicesHostedPaymentMethodSave?
+    /// Fields to send empty, which clears them: `params.clear(.defaultAccountTaxIds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(defaultAccountTaxIds: [String]? = nil, hostedPaymentMethodSave: AccountUpdateSettingsInvoicesHostedPaymentMethodSave? = nil) {
         self.defaultAccountTaxIds = defaultAccountTaxIds
@@ -6024,6 +6174,12 @@ public struct AccountUpdateSettingsInvoices: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case defaultAccountTaxIds = "default_account_tax_ids"
         case hostedPaymentMethodSave = "hosted_payment_method_save"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case defaultAccountTaxIds = "default_account_tax_ids"
     }
 }
 
@@ -6347,13 +6503,15 @@ public struct AccountUpdateSettingsTreasury: StripeParams {
 }
 
 /// Details on the account's acceptance of the Stripe Treasury Services Agreement.
-public struct AccountUpdateSettingsTreasuryTosAcceptance: StripeParams {
+public struct AccountUpdateSettingsTreasuryTosAcceptance: ClearableParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
     public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
     public var ip: String?
     /// The user agent of the browser from which the account representative accepted the service agreement.
     public var userAgent: String?
+    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
@@ -6364,6 +6522,12 @@ public struct AccountUpdateSettingsTreasuryTosAcceptance: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case date
         case ip
+        case userAgent = "user_agent"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case userAgent = "user_agent"
     }
 }

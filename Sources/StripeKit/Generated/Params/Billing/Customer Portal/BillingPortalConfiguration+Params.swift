@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct BillingPortalConfigurationCreateParams: StripeParams {
+public struct BillingPortalConfigurationCreateParams: ClearableParams {
     /// Information about the features available in the portal.
     public var features: BillingPortalConfigurationCreateFeatures
     /// The business information shown to customers in the portal.
@@ -29,6 +29,8 @@ public struct BillingPortalConfigurationCreateParams: StripeParams {
     public var metadata: [String: String]?
     /// The name of the configuration.
     public var name: String?
+    /// Fields to send empty, which clears them: `params.clear(.defaultReturnUrl)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(features: BillingPortalConfigurationCreateFeatures, businessProfile: BillingPortalConfigurationCreateBusinessProfile? = nil, defaultReturnUrl: String? = nil, expand: [String]? = nil, loginPage: BillingPortalConfigurationCreateLoginPage? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.features = features
@@ -47,6 +49,13 @@ public struct BillingPortalConfigurationCreateParams: StripeParams {
         case features
         case loginPage = "login_page"
         case metadata
+        case name
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case defaultReturnUrl = "default_return_url"
         case name
     }
 }
@@ -92,7 +101,7 @@ public struct BillingPortalConfigurationListParams: StripeParams {
     }
 }
 
-public struct BillingPortalConfigurationUpdateParams: StripeParams {
+public struct BillingPortalConfigurationUpdateParams: ClearableParams {
     /// Whether the configuration is active and can be used to create portal sessions.
     public var active: Bool?
     /// The business information shown to customers in the portal.
@@ -116,6 +125,8 @@ public struct BillingPortalConfigurationUpdateParams: StripeParams {
     public var metadata: [String: String]?
     /// The name of the configuration.
     public var name: String?
+    /// Fields to send empty, which clears them: `params.clear(.defaultReturnUrl)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(active: Bool? = nil, businessProfile: BillingPortalConfigurationUpdateBusinessProfile? = nil, defaultReturnUrl: String? = nil, expand: [String]? = nil, features: BillingPortalConfigurationUpdateFeatures? = nil, loginPage: BillingPortalConfigurationUpdateLoginPage? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.active = active
@@ -135,6 +146,14 @@ public struct BillingPortalConfigurationUpdateParams: StripeParams {
         case expand
         case features
         case loginPage = "login_page"
+        case metadata
+        case name
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case defaultReturnUrl = "default_return_url"
         case metadata
         case name
     }
@@ -175,11 +194,13 @@ public struct BillingPortalConfigurationCreateFeatures: StripeParams {
 }
 
 /// Information about updating the customer details in the portal.
-public struct BillingPortalConfigurationCreateFeaturesCustomerUpdate: StripeParams {
+public struct BillingPortalConfigurationCreateFeaturesCustomerUpdate: ClearableParams {
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// The types of customer updates that are supported. When empty, customers are not updateable.
     public var allowedUpdates: [BillingPortalConfigurationCreateFeaturesCustomerUpdateAllowedUpdates]?
+    /// Fields to send empty, which clears them: `params.clear(.allowedUpdates)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabled: Bool, allowedUpdates: [BillingPortalConfigurationCreateFeaturesCustomerUpdateAllowedUpdates]? = nil) {
         self.enabled = enabled
@@ -189,6 +210,12 @@ public struct BillingPortalConfigurationCreateFeaturesCustomerUpdate: StripePara
     public enum CodingKeys: String, CodingKey {
         case allowedUpdates = "allowed_updates"
         case enabled
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case allowedUpdates = "allowed_updates"
     }
 }
 
@@ -218,7 +245,7 @@ public struct BillingPortalConfigurationCreateFeaturesInvoiceHistory: StripePara
 }
 
 /// Information about updating payment methods in the portal.
-public struct BillingPortalConfigurationCreateFeaturesPaymentMethodUpdate: StripeParams {
+public struct BillingPortalConfigurationCreateFeaturesPaymentMethodUpdate: ClearableParams {
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// The [Payment Method Configuration](/api/payment_method_configurations) to use for this portal
@@ -226,6 +253,8 @@ public struct BillingPortalConfigurationCreateFeaturesPaymentMethodUpdate: Strip
     /// specified by the payment method configuration. If not set or set to an empty string, the default
     /// payment method configuration is used.
     public var paymentMethodConfiguration: String?
+    /// Fields to send empty, which clears them: `params.clear(.paymentMethodConfiguration)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabled: Bool, paymentMethodConfiguration: String? = nil) {
         self.enabled = enabled
@@ -234,6 +263,12 @@ public struct BillingPortalConfigurationCreateFeaturesPaymentMethodUpdate: Strip
 
     public enum CodingKeys: String, CodingKey {
         case enabled
+        case paymentMethodConfiguration = "payment_method_configuration"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case paymentMethodConfiguration = "payment_method_configuration"
     }
 }
@@ -270,13 +305,15 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancel: Stripe
 
 /// Whether the cancellation reasons will be collected in the portal and which options are exposed to
 /// the customer
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReason: StripeParams {
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReason: ClearableParams {
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// Which cancellation reasons will be given as options to the customer.
     public var options: [BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReasonOptions]
     /// The IDs of custom feedback options to use for this cancellation reason.
     public var feedbackOptions: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.feedbackOptions)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabled: Bool, options: [BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReasonOptions], feedbackOptions: [String]? = nil) {
         self.enabled = enabled
@@ -286,6 +323,13 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancella
 
     public enum CodingKeys: String, CodingKey {
         case enabled
+        case feedbackOptions = "feedback_options"
+        case options
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case feedbackOptions = "feedback_options"
         case options
     }
@@ -348,11 +392,13 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPause: StripeP
 
 /// Controls how long a subscription can be paused. Defaults to `interval_options` with a single
 /// one-month option.
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDuration: StripeParams {
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDuration: ClearableParams {
     /// Whether subscriptions can be paused indefinitely or for a preset duration.
     public var type: BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationType
     /// The preset pause durations customers can choose from. Required when `type` is `interval_options`.
     public var intervalOptions: [BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptions]?
+    /// Fields to send empty, which clears them: `params.clear(.intervalOptions)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(type: BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationType, intervalOptions: [BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptions]? = nil) {
         self.type = type
@@ -362,6 +408,12 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDuration:
     public enum CodingKeys: String, CodingKey {
         case intervalOptions = "interval_options"
         case type
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case intervalOptions = "interval_options"
     }
 }
 
@@ -409,7 +461,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationI
 }
 
 /// Information about updating subscriptions in the portal.
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdate: StripeParams {
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdate: ClearableParams {
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// Determines the value to use for the billing cycle anchor on subscription updates. Valid values are
@@ -429,6 +481,8 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdate: Stripe
     public var scheduleAtPeriodEnd: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEnd?
     /// The behavior when updating a subscription that is trialing.
     public var trialUpdateBehavior: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateTrialUpdateBehavior?
+    /// Fields to send empty, which clears them: `params.clear(.defaultAllowedUpdates)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabled: Bool, billingCycleAnchor: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateBillingCycleAnchor? = nil, defaultAllowedUpdates: [BillingPortalConfigurationCreateFeaturesSubscriptionUpdateDefaultAllowedUpdates]? = nil, products: [BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts]? = nil, prorationBehavior: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProrationBehavior? = nil, scheduleAtPeriodEnd: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEnd? = nil, trialUpdateBehavior: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateTrialUpdateBehavior? = nil) {
         self.enabled = enabled
@@ -448,6 +502,13 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdate: Stripe
         case prorationBehavior = "proration_behavior"
         case scheduleAtPeriodEnd = "schedule_at_period_end"
         case trialUpdateBehavior = "trial_update_behavior"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case defaultAllowedUpdates = "default_allowed_updates"
+        case products
     }
 }
 
@@ -569,13 +630,15 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateTrialUpd
 }
 
 /// The business information shown to customers in the portal.
-public struct BillingPortalConfigurationCreateBusinessProfile: StripeParams {
+public struct BillingPortalConfigurationCreateBusinessProfile: ClearableParams {
     /// The messaging shown to customers in the portal.
     public var headline: String?
     /// A link to the business’s publicly available privacy policy.
     public var privacyPolicyUrl: String?
     /// A link to the business’s publicly available terms of service.
     public var termsOfServiceUrl: String?
+    /// Fields to send empty, which clears them: `params.clear(.headline)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(headline: String? = nil, privacyPolicyUrl: String? = nil, termsOfServiceUrl: String? = nil) {
         self.headline = headline
@@ -587,6 +650,12 @@ public struct BillingPortalConfigurationCreateBusinessProfile: StripeParams {
         case headline
         case privacyPolicyUrl = "privacy_policy_url"
         case termsOfServiceUrl = "terms_of_service_url"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case headline
     }
 }
 
@@ -604,13 +673,15 @@ public struct BillingPortalConfigurationCreateLoginPage: StripeParams {
 }
 
 /// The business information shown to customers in the portal.
-public struct BillingPortalConfigurationUpdateBusinessProfile: StripeParams {
+public struct BillingPortalConfigurationUpdateBusinessProfile: ClearableParams {
     /// The messaging shown to customers in the portal.
     public var headline: String?
     /// A link to the business’s publicly available privacy policy.
     public var privacyPolicyUrl: String?
     /// A link to the business’s publicly available terms of service.
     public var termsOfServiceUrl: String?
+    /// Fields to send empty, which clears them: `params.clear(.headline)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(headline: String? = nil, privacyPolicyUrl: String? = nil, termsOfServiceUrl: String? = nil) {
         self.headline = headline
@@ -619,6 +690,14 @@ public struct BillingPortalConfigurationUpdateBusinessProfile: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case headline
+        case privacyPolicyUrl = "privacy_policy_url"
+        case termsOfServiceUrl = "terms_of_service_url"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case headline
         case privacyPolicyUrl = "privacy_policy_url"
         case termsOfServiceUrl = "terms_of_service_url"
@@ -660,11 +739,13 @@ public struct BillingPortalConfigurationUpdateFeatures: StripeParams {
 }
 
 /// Information about updating the customer details in the portal.
-public struct BillingPortalConfigurationUpdateFeaturesCustomerUpdate: StripeParams {
+public struct BillingPortalConfigurationUpdateFeaturesCustomerUpdate: ClearableParams {
     /// The types of customer updates that are supported. When empty, customers are not updateable.
     public var allowedUpdates: [BillingPortalConfigurationUpdateFeaturesCustomerUpdateAllowedUpdates]?
     /// Whether the feature is enabled.
     public var enabled: Bool?
+    /// Fields to send empty, which clears them: `params.clear(.allowedUpdates)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(allowedUpdates: [BillingPortalConfigurationUpdateFeaturesCustomerUpdateAllowedUpdates]? = nil, enabled: Bool? = nil) {
         self.allowedUpdates = allowedUpdates
@@ -674,6 +755,12 @@ public struct BillingPortalConfigurationUpdateFeaturesCustomerUpdate: StripePara
     public enum CodingKeys: String, CodingKey {
         case allowedUpdates = "allowed_updates"
         case enabled
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case allowedUpdates = "allowed_updates"
     }
 }
 
@@ -703,7 +790,7 @@ public struct BillingPortalConfigurationUpdateFeaturesInvoiceHistory: StripePara
 }
 
 /// Information about updating payment methods in the portal.
-public struct BillingPortalConfigurationUpdateFeaturesPaymentMethodUpdate: StripeParams {
+public struct BillingPortalConfigurationUpdateFeaturesPaymentMethodUpdate: ClearableParams {
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// The [Payment Method Configuration](/api/payment_method_configurations) to use for this portal
@@ -711,6 +798,8 @@ public struct BillingPortalConfigurationUpdateFeaturesPaymentMethodUpdate: Strip
     /// specified by the payment method configuration. If not set or set to an empty string, the default
     /// payment method configuration is used.
     public var paymentMethodConfiguration: String?
+    /// Fields to send empty, which clears them: `params.clear(.paymentMethodConfiguration)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabled: Bool, paymentMethodConfiguration: String? = nil) {
         self.enabled = enabled
@@ -719,6 +808,12 @@ public struct BillingPortalConfigurationUpdateFeaturesPaymentMethodUpdate: Strip
 
     public enum CodingKeys: String, CodingKey {
         case enabled
+        case paymentMethodConfiguration = "payment_method_configuration"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case paymentMethodConfiguration = "payment_method_configuration"
     }
 }
@@ -755,13 +850,15 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancel: Stripe
 
 /// Whether the cancellation reasons will be collected in the portal and which options are exposed to
 /// the customer
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReason: StripeParams {
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReason: ClearableParams {
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// The IDs of custom feedback options to use for this cancellation reason.
     public var feedbackOptions: [String]?
     /// Which cancellation reasons will be given as options to the customer.
     public var options: [BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReasonOptions]?
+    /// Fields to send empty, which clears them: `params.clear(.feedbackOptions)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabled: Bool, feedbackOptions: [String]? = nil, options: [BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReasonOptions]? = nil) {
         self.enabled = enabled
@@ -771,6 +868,13 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancella
 
     public enum CodingKeys: String, CodingKey {
         case enabled
+        case feedbackOptions = "feedback_options"
+        case options
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case feedbackOptions = "feedback_options"
         case options
     }
@@ -833,11 +937,13 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPause: StripeP
 
 /// Controls how long a subscription can be paused. Defaults to `interval_options` with a single
 /// one-month option.
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDuration: StripeParams {
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDuration: ClearableParams {
     /// Whether subscriptions can be paused indefinitely or for a preset duration.
     public var type: BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationType
     /// The preset pause durations customers can choose from. Required when `type` is `interval_options`.
     public var intervalOptions: [BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptions]?
+    /// Fields to send empty, which clears them: `params.clear(.intervalOptions)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(type: BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationType, intervalOptions: [BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptions]? = nil) {
         self.type = type
@@ -847,6 +953,12 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDuration:
     public enum CodingKeys: String, CodingKey {
         case intervalOptions = "interval_options"
         case type
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case intervalOptions = "interval_options"
     }
 }
 
@@ -894,7 +1006,7 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationI
 }
 
 /// Information about updating subscriptions in the portal.
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate: StripeParams {
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate: ClearableParams {
     /// Determines the value to use for the billing cycle anchor on subscription updates. Valid values are
     /// `now` or `unchanged`, and the default value is `unchanged`. Setting the value to `now` resets the
     /// subscription's billing cycle anchor to the current time (in UTC). For more information, see the
@@ -914,6 +1026,8 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate: Stripe
     public var scheduleAtPeriodEnd: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEnd?
     /// The behavior when updating a subscription that is trialing.
     public var trialUpdateBehavior: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateTrialUpdateBehavior?
+    /// Fields to send empty, which clears them: `params.clear(.defaultAllowedUpdates)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(billingCycleAnchor: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateBillingCycleAnchor? = nil, defaultAllowedUpdates: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateDefaultAllowedUpdates]? = nil, enabled: Bool? = nil, products: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProducts]? = nil, prorationBehavior: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProrationBehavior? = nil, scheduleAtPeriodEnd: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEnd? = nil, trialUpdateBehavior: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateTrialUpdateBehavior? = nil) {
         self.billingCycleAnchor = billingCycleAnchor
@@ -933,6 +1047,13 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate: Stripe
         case prorationBehavior = "proration_behavior"
         case scheduleAtPeriodEnd = "schedule_at_period_end"
         case trialUpdateBehavior = "trial_update_behavior"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case defaultAllowedUpdates = "default_allowed_updates"
+        case products
     }
 }
 
@@ -1012,13 +1133,25 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProratio
 
 /// Setting to control when an update should be scheduled at the end of the period instead of applying
 /// immediately.
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEnd: StripeParams {
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEnd: ClearableParams {
     /// List of conditions. When any condition is true, the update will be scheduled at the end of the
     /// current period.
     public var conditions: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]?
+    /// Fields to send empty, which clears them: `params.clear(.conditions)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(conditions: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]? = nil) {
         self.conditions = conditions
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case conditions
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case conditions
     }
 }
 

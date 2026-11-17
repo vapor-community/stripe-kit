@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ThreeDSecureAuthenticationCancelParams: StripeParams {
+public struct ThreeDSecureAuthenticationCancelParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -15,14 +15,27 @@ public struct ThreeDSecureAuthenticationCancelParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
         self.metadata = metadata
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
+    }
 }
 
-public struct ThreeDSecureAuthenticationCreateParams: StripeParams {
+public struct ThreeDSecureAuthenticationCreateParams: ClearableParams {
     /// Contains additional details on the channel used for this 3DS Authentication.
     public var channel: ThreeDSecureAuthenticationCreateChannel
     /// Indicates whether this 3DS Authentication is being performed for a payment or non-payment use case.
@@ -74,6 +87,8 @@ public struct ThreeDSecureAuthenticationCreateParams: StripeParams {
     /// standalone 3DS guide](/payments/3d-secure/standalone-3d-secure#submit-at-creation) for more
     /// information.
     public var submit: ThreeDSecureAuthenticationCreateSubmit?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(channel: ThreeDSecureAuthenticationCreateChannel, messageCategory: ThreeDSecureAuthenticationCreateMessageCategory, acquirerDetails: ThreeDSecureAuthenticationCreateAcquirerDetails? = nil, amount: Int? = nil, currency: String? = nil, directoryServer: ThreeDSecureAuthenticationCreateDirectoryServer? = nil, expand: [String]? = nil, flowPreference: ThreeDSecureAuthenticationCreateFlowPreference? = nil, futureUsage: ThreeDSecureAuthenticationCreateFutureUsage? = nil, metadata: [String: String]? = nil, paymentMethod: String? = nil, paymentMethodData: ThreeDSecureAuthenticationCreatePaymentMethodData? = nil, reason: ThreeDSecureAuthenticationCreateReason? = nil, shippingAddress: ThreeDSecureAuthenticationCreateShippingAddress? = nil, submit: ThreeDSecureAuthenticationCreateSubmit? = nil) {
         self.channel = channel
@@ -109,6 +124,12 @@ public struct ThreeDSecureAuthenticationCreateParams: StripeParams {
         case reason
         case shippingAddress = "shipping_address"
         case submit
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -152,7 +173,7 @@ public struct ThreeDSecureAuthenticationListParams: StripeParams {
     }
 }
 
-public struct ThreeDSecureAuthenticationSubmitParams: StripeParams {
+public struct ThreeDSecureAuthenticationSubmitParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The fingerprinting result of the issuer fingerprinting step. Refer to the [Issuer fingerprinting
@@ -164,6 +185,8 @@ public struct ThreeDSecureAuthenticationSubmitParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, fingerprintingResult: String? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
@@ -174,6 +197,12 @@ public struct ThreeDSecureAuthenticationSubmitParams: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case expand
         case fingerprintingResult = "fingerprinting_result"
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case metadata
     }
 }

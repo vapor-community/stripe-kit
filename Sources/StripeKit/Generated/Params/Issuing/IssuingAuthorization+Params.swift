@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct IssuingAuthorizationApproveParams: StripeParams {
+public struct IssuingAuthorizationApproveParams: ClearableParams {
     /// If the authorization's `pending_request.is_amount_controllable` property is `true`, you may provide
     /// this value to control how much to hold for the authorization. Must be positive (use
     /// [`decline`](https://docs.stripe.com/api/issuing/authorizations/decline) to decline an authorization
@@ -20,11 +20,25 @@ public struct IssuingAuthorizationApproveParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.amount = amount
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -146,7 +160,7 @@ public struct IssuingAuthorizationCreateParams: StripeParams {
     }
 }
 
-public struct IssuingAuthorizationDeclineParams: StripeParams {
+public struct IssuingAuthorizationDeclineParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -154,10 +168,23 @@ public struct IssuingAuthorizationDeclineParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -300,7 +327,7 @@ public struct IssuingAuthorizationReverseParams: StripeParams {
     }
 }
 
-public struct IssuingAuthorizationUpdateParams: StripeParams {
+public struct IssuingAuthorizationUpdateParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -308,10 +335,23 @@ public struct IssuingAuthorizationUpdateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

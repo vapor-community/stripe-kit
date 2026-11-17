@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct InvoiceitemCreateParams: StripeParams {
+public struct InvoiceitemCreateParams: ClearableParams {
     /// The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming
     /// invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
     public var amount: Int?
@@ -78,6 +78,8 @@ public struct InvoiceitemCreateParams: StripeParams {
     /// Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at
     /// most 12 decimal places.
     public var unitAmountDecimal: String?
+    /// Fields to send empty, which clears them: `params.clear(.discounts)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, currency: String? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, discountable: Bool? = nil, discounts: [InvoiceitemCreateDiscounts]? = nil, expand: [String]? = nil, invoice: String? = nil, metadata: [String: String]? = nil, period: InvoiceitemCreatePeriod? = nil, priceData: InvoiceitemCreatePriceData? = nil, pricing: InvoiceitemCreatePricing? = nil, quantity: Int? = nil, quantityDecimal: String? = nil, subscription: String? = nil, taxBehavior: InvoiceitemCreateTaxBehavior? = nil, taxCode: String? = nil, taxRates: [String]? = nil, unitAmountDecimal: String? = nil) {
         self.amount = amount
@@ -123,6 +125,14 @@ public struct InvoiceitemCreateParams: StripeParams {
         case taxCode = "tax_code"
         case taxRates = "tax_rates"
         case unitAmountDecimal = "unit_amount_decimal"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discounts
+        case metadata
+        case taxCode = "tax_code"
     }
 }
 
@@ -182,7 +192,7 @@ public struct InvoiceitemListParams: StripeParams {
     }
 }
 
-public struct InvoiceitemUpdateParams: StripeParams {
+public struct InvoiceitemUpdateParams: ClearableParams {
     /// The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming
     /// invoice. If you want to apply a credit to the customer's account, pass a negative amount.
     public var amount: Int?
@@ -239,6 +249,8 @@ public struct InvoiceitemUpdateParams: StripeParams {
     /// Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at
     /// most 12 decimal places.
     public var unitAmountDecimal: String?
+    /// Fields to send empty, which clears them: `params.clear(.discounts)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, description: String? = nil, discountable: Bool? = nil, discounts: [InvoiceitemUpdateDiscounts]? = nil, expand: [String]? = nil, invoicingRules: String? = nil, metadata: [String: String]? = nil, period: InvoiceitemUpdatePeriod? = nil, priceData: InvoiceitemUpdatePriceData? = nil, pricing: InvoiceitemUpdatePricing? = nil, quantity: Int? = nil, quantityDecimal: String? = nil, taxBehavior: InvoiceitemUpdateTaxBehavior? = nil, taxCode: String? = nil, taxRates: [String]? = nil, unitAmountDecimal: String? = nil) {
         self.amount = amount
@@ -276,6 +288,16 @@ public struct InvoiceitemUpdateParams: StripeParams {
         case taxCode = "tax_code"
         case taxRates = "tax_rates"
         case unitAmountDecimal = "unit_amount_decimal"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discounts
+        case invoicingRules = "invoicing_rules"
+        case metadata
+        case taxCode = "tax_code"
+        case taxRates = "tax_rates"
     }
 }
 

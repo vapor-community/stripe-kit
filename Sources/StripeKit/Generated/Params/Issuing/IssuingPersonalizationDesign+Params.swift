@@ -137,7 +137,7 @@ public struct IssuingPersonalizationDesignRejectParams: StripeParams {
     }
 }
 
-public struct IssuingPersonalizationDesignUpdateParams: StripeParams {
+public struct IssuingPersonalizationDesignUpdateParams: ClearableParams {
     /// The file for the card logo, for use with physical bundles that support card logos. Must have a
     /// `purpose` value of `issuing_logo`.
     public var cardLogo: String?
@@ -163,6 +163,8 @@ public struct IssuingPersonalizationDesignUpdateParams: StripeParams {
     /// If set to true, will atomically remove the lookup key from the existing personalization design, and
     /// assign it to this personalization design.
     public var transferLookupKey: Bool?
+    /// Fields to send empty, which clears them: `params.clear(.cardLogo)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(cardLogo: String? = nil, carrierText: IssuingPersonalizationDesignUpdateCarrierText? = nil, expand: [String]? = nil, lookupKey: String? = nil, metadata: [String: String]? = nil, name: String? = nil, physicalBundle: String? = nil, preferences: IssuingPersonalizationDesignUpdatePreferences? = nil, transferLookupKey: Bool? = nil) {
         self.cardLogo = cardLogo
@@ -186,11 +188,20 @@ public struct IssuingPersonalizationDesignUpdateParams: StripeParams {
         case physicalBundle = "physical_bundle"
         case preferences
         case transferLookupKey = "transfer_lookup_key"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case cardLogo = "card_logo"
+        case carrierText = "carrier_text"
+        case lookupKey = "lookup_key"
+        case name
     }
 }
 
 /// Hash containing carrier text, for use with physical bundles that support carrier text.
-public struct IssuingPersonalizationDesignCreateCarrierText: StripeParams {
+public struct IssuingPersonalizationDesignCreateCarrierText: ClearableParams {
     /// The footer body text of the carrier letter.
     public var footerBody: String?
     /// The footer title text of the carrier letter.
@@ -199,6 +210,8 @@ public struct IssuingPersonalizationDesignCreateCarrierText: StripeParams {
     public var headerBody: String?
     /// The header title text of the carrier letter.
     public var headerTitle: String?
+    /// Fields to send empty, which clears them: `params.clear(.footerBody)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(footerBody: String? = nil, footerTitle: String? = nil, headerBody: String? = nil, headerTitle: String? = nil) {
         self.footerBody = footerBody
@@ -208,6 +221,15 @@ public struct IssuingPersonalizationDesignCreateCarrierText: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case footerBody = "footer_body"
+        case footerTitle = "footer_title"
+        case headerBody = "header_body"
+        case headerTitle = "header_title"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case footerBody = "footer_body"
         case footerTitle = "footer_title"
         case headerBody = "header_body"
@@ -316,7 +338,7 @@ public struct IssuingPersonalizationDesignRejectRejectionReasonsCarrierText: Raw
     public static var promotionalMaterial: Self { .init(rawValue: "promotional_material") }
 }
 
-public struct IssuingPersonalizationDesignUpdateCarrierText: StripeParams {
+public struct IssuingPersonalizationDesignUpdateCarrierText: ClearableParams {
     /// The footer body text of the carrier letter.
     public var footerBody: String?
     /// The footer title text of the carrier letter.
@@ -325,6 +347,8 @@ public struct IssuingPersonalizationDesignUpdateCarrierText: StripeParams {
     public var headerBody: String?
     /// The header title text of the carrier letter.
     public var headerTitle: String?
+    /// Fields to send empty, which clears them: `params.clear(.footerBody)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(footerBody: String? = nil, footerTitle: String? = nil, headerBody: String? = nil, headerTitle: String? = nil) {
         self.footerBody = footerBody
@@ -334,6 +358,15 @@ public struct IssuingPersonalizationDesignUpdateCarrierText: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case footerBody = "footer_body"
+        case footerTitle = "footer_title"
+        case headerBody = "header_body"
+        case headerTitle = "header_title"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case footerBody = "footer_body"
         case footerTitle = "footer_title"
         case headerBody = "header_body"

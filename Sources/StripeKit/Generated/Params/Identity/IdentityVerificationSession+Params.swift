@@ -171,13 +171,25 @@ public struct IdentityVerificationSessionUpdateParams: StripeParams {
 }
 
 /// A set of options for the session’s verification checks.
-public struct IdentityVerificationSessionCreateOptions: StripeParams {
+public struct IdentityVerificationSessionCreateOptions: ClearableParams {
     /// Options that apply to the [document
     /// check](https://docs.stripe.com/identity/verification-checks?type=document).
     public var document: IdentityVerificationSessionCreateOptionsDocument?
+    /// Fields to send empty, which clears them: `params.clear(.document)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(document: IdentityVerificationSessionCreateOptionsDocument? = nil) {
         self.document = document
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case document
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case document
     }
 }
 
@@ -275,13 +287,25 @@ public struct IdentityVerificationSessionListStatus: RawRepresentable, Codable, 
 }
 
 /// A set of options for the session’s verification checks.
-public struct IdentityVerificationSessionUpdateOptions: StripeParams {
+public struct IdentityVerificationSessionUpdateOptions: ClearableParams {
     /// Options that apply to the [document
     /// check](https://docs.stripe.com/identity/verification-checks?type=document).
     public var document: IdentityVerificationSessionUpdateOptionsDocument?
+    /// Fields to send empty, which clears them: `params.clear(.document)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(document: IdentityVerificationSessionUpdateOptionsDocument? = nil) {
         self.document = document
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case document
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case document
     }
 }
 

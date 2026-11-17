@@ -121,7 +121,7 @@ public struct PromotionCodeListParams: StripeParams {
     }
 }
 
-public struct PromotionCodeUpdateParams: StripeParams {
+public struct PromotionCodeUpdateParams: ClearableParams {
     /// Whether the promotion code is currently active. A promotion code can only be reactivated when the
     /// coupon is still valid and the promotion code is otherwise redeemable.
     public var active: Bool?
@@ -134,12 +134,27 @@ public struct PromotionCodeUpdateParams: StripeParams {
     public var metadata: [String: String]?
     /// Settings that restrict the redemption of the promotion code.
     public var restrictions: PromotionCodeUpdateRestrictions?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(active: Bool? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, restrictions: PromotionCodeUpdateRestrictions? = nil) {
         self.active = active
         self.expand = expand
         self.metadata = metadata
         self.restrictions = restrictions
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case active
+        case expand
+        case metadata
+        case restrictions
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

@@ -73,7 +73,7 @@ public struct ExternalAccountListParams: StripeParams {
     }
 }
 
-public struct ExternalAccountUpdateParams: StripeParams {
+public struct ExternalAccountUpdateParams: ClearableParams {
     /// The name of the person or business that owns the bank account.
     public var accountHolderName: String?
     /// The type of entity that holds the account. This can be either `individual` or `company`.
@@ -110,6 +110,8 @@ public struct ExternalAccountUpdateParams: StripeParams {
     public var metadata: [String: String]?
     /// Cardholder name.
     public var name: String?
+    /// Fields to send empty, which clears them: `params.clear(.accountHolderType)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountHolderName: String? = nil, accountHolderType: ExternalAccountUpdateAccountHolderType? = nil, accountType: ExternalAccountUpdateAccountType? = nil, addressCity: String? = nil, addressCountry: String? = nil, addressLine1: String? = nil, addressLine2: String? = nil, addressState: String? = nil, addressZip: String? = nil, defaultForCurrency: Bool? = nil, documents: ExternalAccountUpdateDocuments? = nil, expMonth: String? = nil, expYear: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.accountHolderName = accountHolderName
@@ -147,6 +149,13 @@ public struct ExternalAccountUpdateParams: StripeParams {
         case expand
         case metadata
         case name
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accountHolderType = "account_holder_type"
+        case metadata
     }
 }
 

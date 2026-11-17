@@ -233,6 +233,19 @@ Stripe supports [idempotency keys](https://docs.stripe.com/api/idempotent_reques
 let customer = try await stripe.customers.create(params, options: .init(idempotencyKey: UUID().uuidString))
 ```
 
+### Clearing Fields
+
+Stripe clears a field you send empty, where its API allows it (`metadata`, `shipping`, `discounts`, …). Params structs with such fields have a `clear(_:)` listing exactly those fields:
+
+```swift
+var params = CustomerUpdateParams(name: "Jane")
+params.clear(.shipping)    // shipping=
+params.clear(.metadata)    // metadata=
+try await stripe.customers.update("cus_1", params)
+```
+
+Nested params work the same way: `invoiceSettings.clear(.customFields)` sends `invoice_settings[custom_fields]=`.
+
 ### Retries
 
 Like Stripe's own SDKs, requests are retried up to 2 times, with exponential backoff (0.5s, doubling, up to 5s, with jitter), after a network error or a response Stripe marks retryable: its `Stripe-Should-Retry` header when present, otherwise a 409 or a 5xx. A `Retry-After` of up to 60 seconds is honoured. POSTs get a generated idempotency key unless you pass your own, so a retry can't perform one twice.

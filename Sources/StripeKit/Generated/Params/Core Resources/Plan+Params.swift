@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PlanCreateParams: StripeParams {
+public struct PlanCreateParams: ClearableParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -64,6 +64,8 @@ public struct PlanCreateParams: StripeParams {
     /// `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered`
     /// aggregates the total usage based on usage records. Defaults to `licensed`.
     public var usageType: PlanCreateUsageType?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(currency: String, interval: PlanCreateInterval, active: Bool? = nil, amount: Int? = nil, amountDecimal: String? = nil, billingScheme: PlanCreateBillingScheme? = nil, expand: [String]? = nil, id: String? = nil, intervalCount: Int? = nil, metadata: [String: String]? = nil, meter: String? = nil, nickname: String? = nil, product: PlanCreateProduct? = nil, tiers: [PlanCreateTiers]? = nil, tiersMode: PlanCreateTiersMode? = nil, transformUsage: PlanCreateTransformUsage? = nil, trialPeriodDays: Int? = nil, usageType: PlanCreateUsageType? = nil) {
         self.currency = currency
@@ -105,6 +107,12 @@ public struct PlanCreateParams: StripeParams {
         case transformUsage = "transform_usage"
         case trialPeriodDays = "trial_period_days"
         case usageType = "usage_type"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -152,7 +160,7 @@ public struct PlanListParams: StripeParams {
     }
 }
 
-public struct PlanUpdateParams: StripeParams {
+public struct PlanUpdateParams: ClearableParams {
     /// Whether the plan is currently available for new subscriptions.
     public var active: Bool?
     /// Specifies which fields in the response should be expanded.
@@ -170,6 +178,8 @@ public struct PlanUpdateParams: StripeParams {
     /// Default number of trial days when subscribing a customer to this plan using
     /// [`trial_from_plan=true`](https://docs.stripe.com/api#create_subscription-trial_from_plan).
     public var trialPeriodDays: Int?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(active: Bool? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, nickname: String? = nil, product: String? = nil, trialPeriodDays: Int? = nil) {
         self.active = active
@@ -187,6 +197,12 @@ public struct PlanUpdateParams: StripeParams {
         case nickname
         case product
         case trialPeriodDays = "trial_period_days"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -270,13 +286,15 @@ public struct PlanCreateProductInlineProduct: StripeParams {
 
 /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
 /// location.
-public struct PlanCreateProductInlineProductTaxDetails: StripeParams {
+public struct PlanCreateProductInlineProductTaxDetails: ClearableParams {
     /// A tax location ID. Depending on the [tax
     /// code](/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not
     /// supported.
     public var performanceLocation: String?
     /// A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
     public var taxCode: String?
+    /// Fields to send empty, which clears them: `params.clear(.taxCode)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(performanceLocation: String? = nil, taxCode: String? = nil) {
         self.performanceLocation = performanceLocation
@@ -285,6 +303,12 @@ public struct PlanCreateProductInlineProductTaxDetails: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case performanceLocation = "performance_location"
+        case taxCode = "tax_code"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case taxCode = "tax_code"
     }
 }

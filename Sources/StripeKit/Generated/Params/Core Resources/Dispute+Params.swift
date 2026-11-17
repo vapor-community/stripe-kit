@@ -59,7 +59,7 @@ public struct DisputeListParams: StripeParams {
     }
 }
 
-public struct DisputeUpdateParams: StripeParams {
+public struct DisputeUpdateParams: ClearableParams {
     /// Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields
     /// in the hash for review. The combined character count of all fields is limited to 150,000.
     public var evidence: DisputeUpdateEvidence?
@@ -76,6 +76,8 @@ public struct DisputeUpdateParams: StripeParams {
     /// Staged evidence is visible in the API and Dashboard, and can be submitted to the bank by making
     /// another request with this attribute set to `true` (the default).
     public var submit: Bool?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(evidence: DisputeUpdateEvidence? = nil, expand: [String]? = nil, intendedSubmissionMethod: DisputeUpdateIntendedSubmissionMethod? = nil, metadata: [String: String]? = nil, submit: Bool? = nil) {
         self.evidence = evidence
@@ -91,12 +93,18 @@ public struct DisputeUpdateParams: StripeParams {
         case intendedSubmissionMethod = "intended_submission_method"
         case metadata
         case submit
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
 /// Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields
 /// in the hash for review. The combined character count of all fields is limited to 150,000.
-public struct DisputeUpdateEvidence: StripeParams {
+public struct DisputeUpdateEvidence: ClearableParams {
     /// Any server or activity logs showing proof that the customer accessed or downloaded the purchased
     /// digital product. This information should include IP addresses, corresponding timestamps, and any
     /// detailed recorded activity. Has a maximum character count of 20,000.
@@ -183,6 +191,8 @@ public struct DisputeUpdateEvidence: StripeParams {
     public var uncategorizedFile: String?
     /// Any additional evidence or statements. Has a maximum character count of 20,000.
     public var uncategorizedText: String?
+    /// Fields to send empty, which clears them: `params.clear(.appeal)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accessActivityLog: String? = nil, appeal: DisputeUpdateEvidenceAppeal? = nil, billingAddress: String? = nil, cancellationPolicy: String? = nil, cancellationPolicyDisclosure: String? = nil, cancellationRebuttal: String? = nil, customerCommunication: String? = nil, customerEmailAddress: String? = nil, customerName: String? = nil, customerPurchaseIp: String? = nil, customerSignature: String? = nil, duplicateChargeDocumentation: String? = nil, duplicateChargeExplanation: String? = nil, duplicateChargeId: String? = nil, enhancedEvidence: DisputeUpdateEvidenceEnhancedEvidence? = nil, productDescription: String? = nil, receipt: String? = nil, refundPolicy: String? = nil, refundPolicyDisclosure: String? = nil, refundRefusalExplanation: String? = nil, serviceDate: String? = nil, serviceDocumentation: String? = nil, shippingAddress: String? = nil, shippingCarrier: String? = nil, shippingDate: String? = nil, shippingDocumentation: String? = nil, shippingTrackingNumber: String? = nil, uncategorizedFile: String? = nil, uncategorizedText: String? = nil) {
         self.accessActivityLog = accessActivityLog
@@ -246,24 +256,45 @@ public struct DisputeUpdateEvidence: StripeParams {
         case shippingTrackingNumber = "shipping_tracking_number"
         case uncategorizedFile = "uncategorized_file"
         case uncategorizedText = "uncategorized_text"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case appeal
+        case enhancedEvidence = "enhanced_evidence"
     }
 }
 
-public struct DisputeUpdateEvidenceAppeal: StripeParams {
+public struct DisputeUpdateEvidenceAppeal: ClearableParams {
     /// Evidence for a card dispute appeal.
     public var card: DisputeUpdateEvidenceAppealCard?
+    /// Fields to send empty, which clears them: `params.clear(.card)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(card: DisputeUpdateEvidenceAppealCard? = nil) {
         self.card = card
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case card
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case card
+    }
 }
 
-public struct DisputeUpdateEvidenceAppealCard: StripeParams {
+public struct DisputeUpdateEvidenceAppealCard: ClearableParams {
     /// An explanation of the reason for filing the appeal.
     public var reasonForFiling: String?
     /// One or more document IDs returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `dispute_evidence` to support the appeal.
     public var supportingFiles: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.reasonForFiling)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(reasonForFiling: String? = nil, supportingFiles: [String]? = nil) {
         self.reasonForFiling = reasonForFiling
@@ -271,6 +302,13 @@ public struct DisputeUpdateEvidenceAppealCard: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case reasonForFiling = "reason_for_filing"
+        case supportingFiles = "supporting_files"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case reasonForFiling = "reason_for_filing"
         case supportingFiles = "supporting_files"
     }
@@ -332,7 +370,7 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3: Stri
 }
 
 /// Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransaction: StripeParams {
+public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransaction: ClearableParams {
     /// User Account ID used to log into business platform. Must be recognizable by the user.
     public var customerAccountId: String?
     /// Unique identifier of the cardholder’s device derived from a combination of at least two hardware and
@@ -352,6 +390,8 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
     /// The address to which a physical product was shipped. All fields are required for Visa Compelling
     /// Evidence 3.0 evidence submission.
     public var shippingAddress: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress?
+    /// Fields to send empty, which clears them: `params.clear(.customerAccountId)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customerAccountId: String? = nil, customerDeviceFingerprint: String? = nil, customerDeviceId: String? = nil, customerEmailAddress: String? = nil, customerPurchaseIp: String? = nil, merchandiseOrServices: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices? = nil, productDescription: String? = nil, shippingAddress: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress? = nil) {
         self.customerAccountId = customerAccountId
@@ -373,6 +413,17 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
         case merchandiseOrServices = "merchandise_or_services"
         case productDescription = "product_description"
         case shippingAddress = "shipping_address"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case customerAccountId = "customer_account_id"
+        case customerDeviceFingerprint = "customer_device_fingerprint"
+        case customerDeviceId = "customer_device_id"
+        case customerEmailAddress = "customer_email_address"
+        case customerPurchaseIp = "customer_purchase_ip"
+        case productDescription = "product_description"
     }
 }
 
@@ -389,7 +440,7 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
 
 /// The address to which a physical product was shipped. All fields are required for Visa Compelling
 /// Evidence 3.0 evidence submission.
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress: StripeParams {
+public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress: ClearableParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -402,6 +453,8 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
     public var postalCode: String?
     /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
     public var state: String?
+    /// Fields to send empty, which clears them: `params.clear(.city)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
         self.city = city
@@ -419,10 +472,21 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
         case line2
         case postalCode = "postal_code"
         case state
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case city
+        case country
+        case line1
+        case line2
+        case postalCode = "postal_code"
+        case state
     }
 }
 
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactions: StripeParams {
+public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactions: ClearableParams {
     /// Stripe charge ID for the Visa Compelling Evidence 3.0 eligible prior charge.
     public var charge: String
     /// User Account ID used to log into business platform. Must be recognizable by the user.
@@ -442,6 +506,8 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorU
     /// The address to which a physical product was shipped. All fields are required for Visa Compelling
     /// Evidence 3.0 evidence submission.
     public var shippingAddress: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress?
+    /// Fields to send empty, which clears them: `params.clear(.customerAccountId)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(charge: String, customerAccountId: String? = nil, customerDeviceFingerprint: String? = nil, customerDeviceId: String? = nil, customerEmailAddress: String? = nil, customerPurchaseIp: String? = nil, productDescription: String? = nil, shippingAddress: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress? = nil) {
         self.charge = charge
@@ -463,12 +529,23 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorU
         case customerPurchaseIp = "customer_purchase_ip"
         case productDescription = "product_description"
         case shippingAddress = "shipping_address"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case customerAccountId = "customer_account_id"
+        case customerDeviceFingerprint = "customer_device_fingerprint"
+        case customerDeviceId = "customer_device_id"
+        case customerEmailAddress = "customer_email_address"
+        case customerPurchaseIp = "customer_purchase_ip"
+        case productDescription = "product_description"
     }
 }
 
 /// The address to which a physical product was shipped. All fields are required for Visa Compelling
 /// Evidence 3.0 evidence submission.
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress: StripeParams {
+public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress: ClearableParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -481,6 +558,8 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorU
     public var postalCode: String?
     /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
     public var state: String?
+    /// Fields to send empty, which clears them: `params.clear(.city)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
         self.city = city
@@ -492,6 +571,17 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorU
     }
 
     public enum CodingKeys: String, CodingKey {
+        case city
+        case country
+        case line1
+        case line2
+        case postalCode = "postal_code"
+        case state
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case city
         case country
         case line1

@@ -25,7 +25,7 @@ public struct TreasuryFinancialAccountCloseParams: StripeParams {
     }
 }
 
-public struct TreasuryFinancialAccountCreateParams: StripeParams {
+public struct TreasuryFinancialAccountCreateParams: ClearableParams {
     /// The currencies the FinancialAccount can hold a balance in.
     public var supportedCurrencies: [String]
     /// Specifies which fields in the response should be expanded.
@@ -42,6 +42,8 @@ public struct TreasuryFinancialAccountCreateParams: StripeParams {
     public var nickname: String?
     /// The set of functionalities that the platform can restrict on the FinancialAccount.
     public var platformRestrictions: TreasuryFinancialAccountCreatePlatformRestrictions?
+    /// Fields to send empty, which clears them: `params.clear(.nickname)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(supportedCurrencies: [String], expand: [String]? = nil, features: TreasuryFinancialAccountCreateFeatures? = nil, metadata: [String: String]? = nil, nickname: String? = nil, platformRestrictions: TreasuryFinancialAccountCreatePlatformRestrictions? = nil) {
         self.supportedCurrencies = supportedCurrencies
@@ -59,6 +61,12 @@ public struct TreasuryFinancialAccountCreateParams: StripeParams {
         case nickname
         case platformRestrictions = "platform_restrictions"
         case supportedCurrencies = "supported_currencies"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case nickname
     }
 }
 
@@ -96,7 +104,7 @@ public struct TreasuryFinancialAccountListParams: StripeParams {
     }
 }
 
-public struct TreasuryFinancialAccountUpdateParams: StripeParams {
+public struct TreasuryFinancialAccountUpdateParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Encodes whether a FinancialAccount has access to a particular feature, with a status enum and
@@ -114,6 +122,8 @@ public struct TreasuryFinancialAccountUpdateParams: StripeParams {
     public var nickname: String?
     /// The set of functionalities that the platform can restrict on the FinancialAccount.
     public var platformRestrictions: TreasuryFinancialAccountUpdatePlatformRestrictions?
+    /// Fields to send empty, which clears them: `params.clear(.nickname)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, features: TreasuryFinancialAccountUpdateFeatures? = nil, forwardingSettings: TreasuryFinancialAccountUpdateForwardingSettings? = nil, metadata: [String: String]? = nil, nickname: String? = nil, platformRestrictions: TreasuryFinancialAccountUpdatePlatformRestrictions? = nil) {
         self.expand = expand
@@ -131,6 +141,12 @@ public struct TreasuryFinancialAccountUpdateParams: StripeParams {
         case metadata
         case nickname
         case platformRestrictions = "platform_restrictions"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case nickname
     }
 }
 

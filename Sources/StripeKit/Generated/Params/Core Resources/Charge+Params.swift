@@ -67,7 +67,7 @@ public struct ChargeCaptureParams: StripeParams {
     }
 }
 
-public struct ChargeCreateParams: StripeParams {
+public struct ChargeCreateParams: ClearableParams {
     /// Amount intended to be collected by this payment. A positive integer representing how much to charge
     /// in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to
     /// charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or
@@ -151,6 +151,8 @@ public struct ChargeCreateParams: StripeParams {
     /// A string that identifies this transaction as part of a group. For details, see [Grouping
     /// transactions](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-options).
     public var transferGroup: String?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, applicationFee: Int? = nil, applicationFeeAmount: Int? = nil, capture: Bool? = nil, currency: String? = nil, customer: String? = nil, description: String? = nil, destination: ChargeCreateDestination? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, radarOptions: ChargeCreateRadarOptions? = nil, receiptEmail: String? = nil, shipping: ChargeCreateShipping? = nil, source: String? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferData: ChargeCreateTransferData? = nil, transferGroup: String? = nil) {
         self.amount = amount
@@ -194,6 +196,12 @@ public struct ChargeCreateParams: StripeParams {
         case statementDescriptorSuffix = "statement_descriptor_suffix"
         case transferData = "transfer_data"
         case transferGroup = "transfer_group"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -267,7 +275,7 @@ public struct ChargeSearchParams: StripeParams {
     }
 }
 
-public struct ChargeUpdateParams: StripeParams {
+public struct ChargeUpdateParams: ClearableParams {
     /// The ID of an existing customer that will be associated with this request. This field may only be
     /// updated if there is no existing associated customer with this charge.
     public var customer: String?
@@ -298,6 +306,8 @@ public struct ChargeUpdateParams: StripeParams {
     /// documentation](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-options) for
     /// details.
     public var transferGroup: String?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customer: String? = nil, description: String? = nil, expand: [String]? = nil, fraudDetails: ChargeUpdateFraudDetails? = nil, metadata: [String: String]? = nil, receiptEmail: String? = nil, shipping: ChargeUpdateShipping? = nil, transferGroup: String? = nil) {
         self.customer = customer
@@ -319,6 +329,12 @@ public struct ChargeUpdateParams: StripeParams {
         case receiptEmail = "receipt_email"
         case shipping
         case transferGroup = "transfer_group"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -449,15 +465,23 @@ public struct ChargeCreateTransferData: StripeParams {
 /// believe a charge is fraudulent, include a `user_report` key with a value of `fraudulent`. If you
 /// believe a charge is safe, include a `user_report` key with a value of `safe`. Stripe will use the
 /// information you send to improve our fraud detection algorithms.
-public struct ChargeUpdateFraudDetails: StripeParams {
+public struct ChargeUpdateFraudDetails: ClearableParams {
     /// Either `safe` or `fraudulent`.
     public var userReport: ChargeUpdateFraudDetailsUserReport
+    /// Fields to send empty, which clears them: `params.clear(.userReport)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(userReport: ChargeUpdateFraudDetailsUserReport) {
         self.userReport = userReport
     }
 
     public enum CodingKeys: String, CodingKey {
+        case userReport = "user_report"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case userReport = "user_report"
     }
 }

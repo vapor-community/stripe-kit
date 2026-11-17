@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TerminalLocationCreateParams: StripeParams {
+public struct TerminalLocationCreateParams: ClearableParams {
     /// The full address of the location.
     public var address: TerminalLocationCreateAddress?
     /// The Kana variation of the full address of the location (Japan only).
@@ -31,6 +31,8 @@ public struct TerminalLocationCreateParams: StripeParams {
     public var metadata: [String: String]?
     /// The phone number for the location.
     public var phone: String?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: TerminalLocationCreateAddress? = nil, addressKana: TerminalLocationCreateAddressKana? = nil, addressKanji: TerminalLocationCreateAddressKanji? = nil, configurationOverrides: String? = nil, displayName: String? = nil, displayNameKana: String? = nil, displayNameKanji: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, phone: String? = nil) {
         self.address = address
@@ -56,6 +58,12 @@ public struct TerminalLocationCreateParams: StripeParams {
         case expand
         case metadata
         case phone
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -90,7 +98,7 @@ public struct TerminalLocationListParams: StripeParams {
     }
 }
 
-public struct TerminalLocationUpdateParams: StripeParams {
+public struct TerminalLocationUpdateParams: ClearableParams {
     /// The full address of the location. You can't change the location's `country`. If you need to modify
     /// the `country` field, create a new `Location` object and re-register any existing readers to that
     /// location.
@@ -116,6 +124,8 @@ public struct TerminalLocationUpdateParams: StripeParams {
     public var metadata: [String: String]?
     /// The phone number for the location.
     public var phone: String?
+    /// Fields to send empty, which clears them: `params.clear(.configurationOverrides)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: TerminalLocationUpdateAddress? = nil, addressKana: TerminalLocationUpdateAddressKana? = nil, addressKanji: TerminalLocationUpdateAddressKanji? = nil, configurationOverrides: String? = nil, displayName: String? = nil, displayNameKana: String? = nil, displayNameKanji: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, phone: String? = nil) {
         self.address = address
@@ -139,6 +149,17 @@ public struct TerminalLocationUpdateParams: StripeParams {
         case displayNameKana = "display_name_kana"
         case displayNameKanji = "display_name_kanji"
         case expand
+        case metadata
+        case phone
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case configurationOverrides = "configuration_overrides"
+        case displayName = "display_name"
+        case displayNameKana = "display_name_kana"
+        case displayNameKanji = "display_name_kanji"
         case metadata
         case phone
     }

@@ -95,8 +95,16 @@ struct ParamGenerator {
         let properties = schema.properties ?? [:]
         let sorted = properties.sorted { $0.key < $1.key }
         
+        // Fields Stripe lets you clear by sending them empty: `anyOf: [X, {enum: [""]}]`, or an
+        // enum that includes ""
+        let clearable = sorted.map(\.key).filter { name in
+            let prop = properties[name]!
+            return prop.enum?.contains("") == true || prop.anyOf?.contains { $0.enum == [""] } == true
+        }
+        precondition(!properties.keys.contains("fields_to_clear"), "\(structName) has a fields_to_clear param")
+
         lines.append(contentsOf: docComment(schema.description))
-        lines.append("public struct \(structName): StripeParams {")
+        lines.append("public struct \(structName): \(clearable.isEmpty ? "StripeParams" : "ClearableParams") {")
         
         // Required fields first, then optional, sorted alphabetically within each group.
         // Each type is resolved once, which also generates the nested types it needs.
@@ -120,6 +128,10 @@ struct ParamGenerator {
             lines.append("    /// Specifies which fields to expand in the response.")
             lines.append("    public var expand: [String]?")
         }
+        if let first = clearable.first {
+            lines.append("    /// Fields to send empty, which clears them: `params.clear(.\(escapedSwiftName(snakeToCamel(first))))`.")
+            lines.append("    public var fieldsToClear: Set<ClearableField> = []")
+        }
         
         // Memberwise initializer: required params first, optional ones defaulting to nil
         lines.append("")
@@ -135,7 +147,7 @@ struct ParamGenerator {
         }
         
         // CodingKeys
-        let needsCodingKeys = sorted.contains { snakeToCamel($0.key) != $0.key }
+        let needsCodingKeys = !clearable.isEmpty || sorted.contains { snakeToCamel($0.key) != $0.key }
         if needsCodingKeys {
             lines.append("")
             lines.append("    public enum CodingKeys: String, CodingKey {")
@@ -149,6 +161,23 @@ struct ParamGenerator {
             }
             if depth == 0 && !properties.keys.contains("expand") {
                 lines.append("        case expand")
+            }
+            if !clearable.isEmpty {
+                // Must match `fieldsToClearKey` in StripeParams.swift, which toFormBody() reads
+                lines.append("        case fieldsToClear = \"__stripe_kit_fields_to_clear\"")
+            }
+            lines.append("    }")
+        }
+
+        if !clearable.isEmpty {
+            lines.append("")
+            lines.append("    /// The fields Stripe lets you clear by sending them empty")
+            lines.append("    public enum ClearableField: String, StripeClearableField {")
+            for propName in clearable {
+                let swiftName = snakeToCamel(propName)
+                lines.append(swiftName == propName
+                    ? "        case \(escapedSwiftName(swiftName))"
+                    : "        case \(escapedSwiftName(swiftName)) = \"\(propName)\"")
             }
             lines.append("    }")
         }

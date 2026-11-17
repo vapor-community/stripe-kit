@@ -232,7 +232,7 @@ public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodDataType: Raw
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodDataBillingDetails: StripeParams {
+public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodDataBillingDetails: ClearableParams {
     /// Billing address.
     public var address: TreasuryOutboundPaymentCreateDestinationPaymentMethodDataBillingDetailsAddress?
     /// Email address.
@@ -241,12 +241,30 @@ public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodDataBillingDe
     public var name: String?
     /// Billing phone number (including extension).
     public var phone: String?
+    /// Fields to send empty, which clears them: `params.clear(.address)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: TreasuryOutboundPaymentCreateDestinationPaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
         self.address = address
         self.email = email
         self.name = name
         self.phone = phone
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case address
+        case email
+        case name
+        case phone
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case address
+        case email
+        case name
+        case phone
     }
 }
 
@@ -336,15 +354,23 @@ public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodDataUsBankAcc
 }
 
 /// Payment method-specific configuration for this OutboundPayment.
-public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodOptions: StripeParams {
+public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodOptions: ClearableParams {
     /// Optional fields for `us_bank_account`.
     public var usBankAccount: TreasuryOutboundPaymentCreateDestinationPaymentMethodOptionsUsBankAccount?
+    /// Fields to send empty, which clears them: `params.clear(.usBankAccount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(usBankAccount: TreasuryOutboundPaymentCreateDestinationPaymentMethodOptionsUsBankAccount? = nil) {
         self.usBankAccount = usBankAccount
     }
 
     public enum CodingKeys: String, CodingKey {
+        case usBankAccount = "us_bank_account"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case usBankAccount = "us_bank_account"
     }
 }

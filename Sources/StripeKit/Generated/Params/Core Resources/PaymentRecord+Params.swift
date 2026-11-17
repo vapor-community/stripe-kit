@@ -46,7 +46,7 @@ public struct PaymentRecordListParams: StripeParams {
     }
 }
 
-public struct PaymentRecordReportPaymentParams: StripeParams {
+public struct PaymentRecordReportPaymentParams: ClearableParams {
     /// The amount you initially requested for this payment.
     public var amountRequested: PaymentRecordReportPaymentAmountRequested
     /// When the reported payment was initiated. Measured in seconds since the Unix epoch.
@@ -78,6 +78,8 @@ public struct PaymentRecordReportPaymentParams: StripeParams {
     public var processorDetails: PaymentRecordReportPaymentProcessorDetails?
     /// Shipping information for this payment.
     public var shippingDetails: PaymentRecordReportPaymentShippingDetails?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amountRequested: PaymentRecordReportPaymentAmountRequested, initiatedAt: Date, paymentMethodDetails: PaymentRecordReportPaymentPaymentMethodDetails, canceled: PaymentRecordReportPaymentCanceled? = nil, customerDetails: PaymentRecordReportPaymentCustomerDetails? = nil, customerPresence: PaymentRecordReportPaymentCustomerPresence? = nil, description: String? = nil, expand: [String]? = nil, failed: PaymentRecordReportPaymentFailed? = nil, guaranteed: PaymentRecordReportPaymentGuaranteed? = nil, metadata: [String: String]? = nil, outcome: PaymentRecordReportPaymentOutcome? = nil, processorDetails: PaymentRecordReportPaymentProcessorDetails? = nil, shippingDetails: PaymentRecordReportPaymentShippingDetails? = nil) {
         self.amountRequested = amountRequested
@@ -111,10 +113,16 @@ public struct PaymentRecordReportPaymentParams: StripeParams {
         case paymentMethodDetails = "payment_method_details"
         case processorDetails = "processor_details"
         case shippingDetails = "shipping_details"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
-public struct PaymentRecordReportPaymentAttemptParams: StripeParams {
+public struct PaymentRecordReportPaymentAttemptParams: ClearableParams {
     /// When the reported payment was initiated. Measured in seconds since the Unix epoch.
     public var initiatedAt: Date
     /// Information about the payment attempt cancelation.
@@ -138,6 +146,8 @@ public struct PaymentRecordReportPaymentAttemptParams: StripeParams {
     public var paymentMethodDetails: PaymentRecordReportPaymentAttemptPaymentMethodDetails?
     /// Shipping information for this payment.
     public var shippingDetails: PaymentRecordReportPaymentAttemptShippingDetails?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(initiatedAt: Date, canceled: PaymentRecordReportPaymentAttemptCanceled? = nil, description: String? = nil, expand: [String]? = nil, failed: PaymentRecordReportPaymentAttemptFailed? = nil, guaranteed: PaymentRecordReportPaymentAttemptGuaranteed? = nil, metadata: [String: String]? = nil, outcome: PaymentRecordReportPaymentAttemptOutcome? = nil, paymentMethodDetails: PaymentRecordReportPaymentAttemptPaymentMethodDetails? = nil, shippingDetails: PaymentRecordReportPaymentAttemptShippingDetails? = nil) {
         self.initiatedAt = initiatedAt
@@ -163,10 +173,16 @@ public struct PaymentRecordReportPaymentAttemptParams: StripeParams {
         case outcome
         case paymentMethodDetails = "payment_method_details"
         case shippingDetails = "shipping_details"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
-public struct PaymentRecordReportPaymentAttemptCanceledParams: StripeParams {
+public struct PaymentRecordReportPaymentAttemptCanceledParams: ClearableParams {
     /// When the reported payment was canceled. Measured in seconds since the Unix epoch.
     public var canceledAt: Date
     /// Specifies which fields in the response should be expanded.
@@ -176,6 +192,8 @@ public struct PaymentRecordReportPaymentAttemptCanceledParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(canceledAt: Date, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.canceledAt = canceledAt
@@ -187,10 +205,16 @@ public struct PaymentRecordReportPaymentAttemptCanceledParams: StripeParams {
         case canceledAt = "canceled_at"
         case expand
         case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
-public struct PaymentRecordReportPaymentAttemptFailedParams: StripeParams {
+public struct PaymentRecordReportPaymentAttemptFailedParams: ClearableParams {
     /// When the reported payment failed. Measured in seconds since the Unix epoch.
     public var failedAt: Date
     /// Specifies which fields in the response should be expanded.
@@ -200,6 +224,8 @@ public struct PaymentRecordReportPaymentAttemptFailedParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(failedAt: Date, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.failedAt = failedAt
@@ -211,10 +237,16 @@ public struct PaymentRecordReportPaymentAttemptFailedParams: StripeParams {
         case expand
         case failedAt = "failed_at"
         case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
-public struct PaymentRecordReportPaymentAttemptGuaranteedParams: StripeParams {
+public struct PaymentRecordReportPaymentAttemptGuaranteedParams: ClearableParams {
     /// When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
     public var guaranteedAt: Date
     /// Specifies which fields in the response should be expanded.
@@ -224,6 +256,8 @@ public struct PaymentRecordReportPaymentAttemptGuaranteedParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(guaranteedAt: Date, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.guaranteedAt = guaranteedAt
@@ -235,10 +269,16 @@ public struct PaymentRecordReportPaymentAttemptGuaranteedParams: StripeParams {
         case expand
         case guaranteedAt = "guaranteed_at"
         case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
-public struct PaymentRecordReportPaymentAttemptInformationalParams: StripeParams {
+public struct PaymentRecordReportPaymentAttemptInformationalParams: ClearableParams {
     /// Customer information for this payment.
     public var customerDetails: PaymentRecordReportPaymentAttemptInformationalCustomerDetails?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
@@ -252,6 +292,8 @@ public struct PaymentRecordReportPaymentAttemptInformationalParams: StripeParams
     public var metadata: [String: String]?
     /// Shipping information for this payment.
     public var shippingDetails: PaymentRecordReportPaymentAttemptInformationalShippingDetails?
+    /// Fields to send empty, which clears them: `params.clear(.description)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customerDetails: PaymentRecordReportPaymentAttemptInformationalCustomerDetails? = nil, description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, shippingDetails: PaymentRecordReportPaymentAttemptInformationalShippingDetails? = nil) {
         self.customerDetails = customerDetails
@@ -267,10 +309,18 @@ public struct PaymentRecordReportPaymentAttemptInformationalParams: StripeParams
         case expand
         case metadata
         case shippingDetails = "shipping_details"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case description
+        case metadata
+        case shippingDetails = "shipping_details"
     }
 }
 
-public struct PaymentRecordReportRefundParams: StripeParams {
+public struct PaymentRecordReportRefundParams: ClearableParams {
     /// The outcome of the reported refund.
     public var outcome: PaymentRecordReportRefundOutcome
     /// Processor information for this refund.
@@ -290,6 +340,8 @@ public struct PaymentRecordReportRefundParams: StripeParams {
     public var metadata: [String: String]?
     /// Information about the payment attempt refund.
     public var refunded: PaymentRecordReportRefundRefunded?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(outcome: PaymentRecordReportRefundOutcome, processorDetails: PaymentRecordReportRefundProcessorDetails, amount: PaymentRecordReportRefundAmount? = nil, expand: [String]? = nil, initiatedAt: Date? = nil, metadata: [String: String]? = nil, refunded: PaymentRecordReportRefundRefunded? = nil) {
         self.outcome = outcome
@@ -309,6 +361,12 @@ public struct PaymentRecordReportRefundParams: StripeParams {
         case outcome
         case processorDetails = "processor_details"
         case refunded
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

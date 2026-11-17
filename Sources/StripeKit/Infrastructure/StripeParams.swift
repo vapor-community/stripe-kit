@@ -48,6 +48,45 @@ extension StripeParams {
     }
 }
 
+// MARK: - Clearing Fields
+
+/// A field of a params struct that Stripe lets you clear (see `ClearableParams`)
+public protocol StripeClearableField: RawRepresentable, Codable, Hashable, Sendable where RawValue == String {}
+
+/// Params with fields Stripe lets you clear by sending them empty (`field=`), as its API
+/// reference describes for e.g. `metadata`, `discounts` or `invoice_settings`. stripe-go calls
+/// this unsetting a field.
+///
+/// ```swift
+/// var params = CustomerUpdateParams()
+/// params.clear(.invoiceSettings)   // invoice_settings=
+/// ```
+public protocol ClearableParams: StripeParams {
+    /// The fields Stripe lets you clear on these params
+    associatedtype ClearableField: StripeClearableField
+    /// The fields to send empty. Set with `clear(_:)`.
+    var fieldsToClear: Set<ClearableField> { get set }
+}
+
+extension ClearableParams {
+    /// Send `field` empty, which clears it on the object being updated. A value set on the
+    /// field isn't sent.
+    public mutating func clear(_ field: ClearableField) {
+        fieldsToClear.insert(field)
+    }
+}
+
+extension KeyedDecodingContainer {
+    /// Lets params JSON without `fieldsToClear` decode, as an empty set
+    public func decode<Field: StripeClearableField>(_ type: Set<Field>.Type, forKey key: Key) throws -> Set<Field> {
+        try decodeIfPresent(type, forKey: key) ?? []
+    }
+}
+
+/// The key a params struct encodes its `fieldsToClear` under (stripe-kit-codegen writes it into
+/// each struct's CodingKeys), which `toFormBody()` turns into `field=` pairs.
+let fieldsToClearKey = "__stripe_kit_fields_to_clear"
+
 private extension JSONValue {
     private var isContainer: Bool {
         switch self {
@@ -72,7 +111,13 @@ private extension JSONValue {
             for (index, item) in items.enumerated() {
                 item.flatten(key: item.isContainer ? "\(key)[\(index)]" : "\(key)[]", into: &pairs)
             }
-        case .object(let fields):
+        case .object(var fields):
+            // Fields to clear are sent empty (`field=`), in place of any value
+            if case .array(let names)? = fields.removeValue(forKey: fieldsToClearKey) {
+                for case .string(let name) in names {
+                    fields[name] = .string("")
+                }
+            }
             // Sorted for deterministic output; Stripe doesn't care about field order.
             for (name, value) in fields.sorted(by: { $0.key < $1.key }) {
                 let name = name.addingPercentEncoding(withAllowedCharacters: .stripeQueryAllowed) ?? name

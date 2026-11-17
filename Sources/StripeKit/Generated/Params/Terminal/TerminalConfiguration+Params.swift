@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TerminalConfigurationCreateParams: StripeParams {
+public struct TerminalConfigurationCreateParams: ClearableParams {
     /// An object containing device type specific settings for BBPOS WisePad 3 readers.
     public var bbposWisepad3: TerminalConfigurationCreateBbposWisepad3?
     /// An object containing device type specific settings for BBPOS WisePOS E readers.
@@ -44,6 +44,8 @@ public struct TerminalConfigurationCreateParams: StripeParams {
     public var verifoneV660P: TerminalConfigurationCreateVerifoneV660P?
     /// Configurations for connecting to a WiFi network.
     public var wifi: TerminalConfigurationCreateWifi?
+    /// Fields to send empty, which clears them: `params.clear(.cellular)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(bbposWisepad3: TerminalConfigurationCreateBbposWisepad3? = nil, bbposWiseposE: TerminalConfigurationCreateBbposWiseposE? = nil, cellular: TerminalConfigurationCreateCellular? = nil, expand: [String]? = nil, name: String? = nil, offline: TerminalConfigurationCreateOffline? = nil, readerSecurity: TerminalConfigurationCreateReaderSecurity? = nil, rebootWindow: TerminalConfigurationCreateRebootWindow? = nil, stripeS700: TerminalConfigurationCreateStripeS700? = nil, stripeS710: TerminalConfigurationCreateStripeS710? = nil, stripeT600: TerminalConfigurationCreateStripeT600? = nil, tipping: TerminalConfigurationCreateTipping? = nil, verifoneM425: TerminalConfigurationCreateVerifoneM425? = nil, verifoneP400: TerminalConfigurationCreateVerifoneP400? = nil, verifoneP630: TerminalConfigurationCreateVerifoneP630? = nil, verifoneUx700: TerminalConfigurationCreateVerifoneUx700? = nil, verifoneV660P: TerminalConfigurationCreateVerifoneV660P? = nil, wifi: TerminalConfigurationCreateWifi? = nil) {
         self.bbposWisepad3 = bbposWisepad3
@@ -85,6 +87,16 @@ public struct TerminalConfigurationCreateParams: StripeParams {
         case verifoneUx700 = "verifone_ux700"
         case verifoneV660P = "verifone_v660p"
         case wifi
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case cellular
+        case offline
+        case readerSecurity = "reader_security"
+        case tipping
+        case wifi
     }
 }
 
@@ -123,7 +135,7 @@ public struct TerminalConfigurationListParams: StripeParams {
     }
 }
 
-public struct TerminalConfigurationUpdateParams: StripeParams {
+public struct TerminalConfigurationUpdateParams: ClearableParams {
     /// An object containing device type specific settings for BBPOS WisePad 3 readers.
     public var bbposWisepad3: TerminalConfigurationUpdateBbposWisepad3?
     /// An object containing device type specific settings for BBPOS WisePOS E readers.
@@ -160,6 +172,8 @@ public struct TerminalConfigurationUpdateParams: StripeParams {
     public var verifoneV660P: TerminalConfigurationUpdateVerifoneV660P?
     /// Configurations for connecting to a WiFi network.
     public var wifi: TerminalConfigurationUpdateWifi?
+    /// Fields to send empty, which clears them: `params.clear(.bbposWisepad3)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(bbposWisepad3: TerminalConfigurationUpdateBbposWisepad3? = nil, bbposWiseposE: TerminalConfigurationUpdateBbposWiseposE? = nil, cellular: TerminalConfigurationUpdateCellular? = nil, expand: [String]? = nil, name: String? = nil, offline: TerminalConfigurationUpdateOffline? = nil, readerSecurity: TerminalConfigurationUpdateReaderSecurity? = nil, rebootWindow: TerminalConfigurationUpdateRebootWindow? = nil, stripeS700: TerminalConfigurationUpdateStripeS700? = nil, stripeS710: TerminalConfigurationUpdateStripeS710? = nil, stripeT600: TerminalConfigurationUpdateStripeT600? = nil, tipping: TerminalConfigurationUpdateTipping? = nil, verifoneM425: TerminalConfigurationUpdateVerifoneM425? = nil, verifoneP400: TerminalConfigurationUpdateVerifoneP400? = nil, verifoneP630: TerminalConfigurationUpdateVerifoneP630? = nil, verifoneUx700: TerminalConfigurationUpdateVerifoneUx700? = nil, verifoneV660P: TerminalConfigurationUpdateVerifoneV660P? = nil, wifi: TerminalConfigurationUpdateWifi? = nil) {
         self.bbposWisepad3 = bbposWisepad3
@@ -201,26 +215,71 @@ public struct TerminalConfigurationUpdateParams: StripeParams {
         case verifoneUx700 = "verifone_ux700"
         case verifoneV660P = "verifone_v660p"
         case wifi
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case bbposWisepad3 = "bbpos_wisepad3"
+        case bbposWiseposE = "bbpos_wisepos_e"
+        case cellular
+        case offline
+        case readerSecurity = "reader_security"
+        case rebootWindow = "reboot_window"
+        case stripeS700 = "stripe_s700"
+        case stripeS710 = "stripe_s710"
+        case stripeT600 = "stripe_t600"
+        case tipping
+        case verifoneM425 = "verifone_m425"
+        case verifoneP400 = "verifone_p400"
+        case verifoneP630 = "verifone_p630"
+        case verifoneUx700 = "verifone_ux700"
+        case verifoneV660P = "verifone_v660p"
+        case wifi
     }
 }
 
 /// An object containing device type specific settings for BBPOS WisePad 3 readers.
-public struct TerminalConfigurationCreateBbposWisepad3: StripeParams {
+public struct TerminalConfigurationCreateBbposWisepad3: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
 /// An object containing device type specific settings for BBPOS WisePOS E readers.
-public struct TerminalConfigurationCreateBbposWiseposE: StripeParams {
+public struct TerminalConfigurationCreateBbposWiseposE: ClearableParams {
     /// A File ID representing an image to display on the reader
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 
@@ -242,15 +301,23 @@ public struct TerminalConfigurationCreateOffline: StripeParams {
     }
 }
 
-public struct TerminalConfigurationCreateReaderSecurity: StripeParams {
+public struct TerminalConfigurationCreateReaderSecurity: ClearableParams {
     /// Passcode used to access a reader's admin menu.
     public var adminMenuPasscode: String?
+    /// Fields to send empty, which clears them: `params.clear(.adminMenuPasscode)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(adminMenuPasscode: String? = nil) {
         self.adminMenuPasscode = adminMenuPasscode
     }
 
     public enum CodingKeys: String, CodingKey {
+        case adminMenuPasscode = "admin_menu_passcode"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case adminMenuPasscode = "admin_menu_passcode"
     }
 }
@@ -275,32 +342,68 @@ public struct TerminalConfigurationCreateRebootWindow: StripeParams {
 }
 
 /// An object containing device type specific settings for Stripe S700 readers.
-public struct TerminalConfigurationCreateStripeS700: StripeParams {
+public struct TerminalConfigurationCreateStripeS700: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 
 /// An object containing device type specific settings for Stripe S710 readers.
-public struct TerminalConfigurationCreateStripeS710: StripeParams {
+public struct TerminalConfigurationCreateStripeS710: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
 /// An object containing device type specific settings for Stripe T600 readers.
-public struct TerminalConfigurationCreateStripeT600: StripeParams {
+public struct TerminalConfigurationCreateStripeT600: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 
@@ -836,52 +939,112 @@ public struct TerminalConfigurationCreateTippingUsd: StripeParams {
 }
 
 /// An object containing device type specific settings for Verifone M425 readers.
-public struct TerminalConfigurationCreateVerifoneM425: StripeParams {
+public struct TerminalConfigurationCreateVerifoneM425: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 
 /// An object containing device type specific settings for Verifone P400 readers.
-public struct TerminalConfigurationCreateVerifoneP400: StripeParams {
+public struct TerminalConfigurationCreateVerifoneP400: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 
 /// An object containing device type specific settings for Verifone P630 readers.
-public struct TerminalConfigurationCreateVerifoneP630: StripeParams {
+public struct TerminalConfigurationCreateVerifoneP630: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 
 /// An object containing device type specific settings for Verifone UX700 readers.
-public struct TerminalConfigurationCreateVerifoneUx700: StripeParams {
+public struct TerminalConfigurationCreateVerifoneUx700: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
 /// An object containing device type specific settings for Verifone V660p readers.
-public struct TerminalConfigurationCreateVerifoneV660P: StripeParams {
+public struct TerminalConfigurationCreateVerifoneV660P: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 
@@ -992,21 +1155,45 @@ public struct TerminalConfigurationCreateWifiPersonalPsk: StripeParams {
     }
 }
 
-public struct TerminalConfigurationUpdateBbposWisepad3: StripeParams {
+public struct TerminalConfigurationUpdateBbposWisepad3: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
-public struct TerminalConfigurationUpdateBbposWiseposE: StripeParams {
+public struct TerminalConfigurationUpdateBbposWiseposE: ClearableParams {
     /// A File ID representing an image to display on the reader
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 
@@ -1028,15 +1215,23 @@ public struct TerminalConfigurationUpdateOffline: StripeParams {
     }
 }
 
-public struct TerminalConfigurationUpdateReaderSecurity: StripeParams {
+public struct TerminalConfigurationUpdateReaderSecurity: ClearableParams {
     /// Passcode used to access a reader's admin menu.
     public var adminMenuPasscode: String?
+    /// Fields to send empty, which clears them: `params.clear(.adminMenuPasscode)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(adminMenuPasscode: String? = nil) {
         self.adminMenuPasscode = adminMenuPasscode
     }
 
     public enum CodingKeys: String, CodingKey {
+        case adminMenuPasscode = "admin_menu_passcode"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case adminMenuPasscode = "admin_menu_passcode"
     }
 }
@@ -1059,30 +1254,66 @@ public struct TerminalConfigurationUpdateRebootWindow: StripeParams {
     }
 }
 
-public struct TerminalConfigurationUpdateStripeS700: StripeParams {
+public struct TerminalConfigurationUpdateStripeS700: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
-public struct TerminalConfigurationUpdateStripeS710: StripeParams {
+public struct TerminalConfigurationUpdateStripeS710: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
-public struct TerminalConfigurationUpdateStripeT600: StripeParams {
+public struct TerminalConfigurationUpdateStripeT600: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 
@@ -1617,48 +1848,108 @@ public struct TerminalConfigurationUpdateTippingUsd: StripeParams {
     }
 }
 
-public struct TerminalConfigurationUpdateVerifoneM425: StripeParams {
+public struct TerminalConfigurationUpdateVerifoneM425: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
-public struct TerminalConfigurationUpdateVerifoneP400: StripeParams {
+public struct TerminalConfigurationUpdateVerifoneP400: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
-public struct TerminalConfigurationUpdateVerifoneP630: StripeParams {
+public struct TerminalConfigurationUpdateVerifoneP630: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
-public struct TerminalConfigurationUpdateVerifoneUx700: StripeParams {
+public struct TerminalConfigurationUpdateVerifoneUx700: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
+    }
 }
 
-public struct TerminalConfigurationUpdateVerifoneV660P: StripeParams {
+public struct TerminalConfigurationUpdateVerifoneV660P: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
+    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(splashscreen: String? = nil) {
         self.splashscreen = splashscreen
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case splashscreen
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case splashscreen
     }
 }
 

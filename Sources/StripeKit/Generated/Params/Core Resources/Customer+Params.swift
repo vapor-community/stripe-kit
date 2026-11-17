@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CustomerCreateParams: StripeParams {
+public struct CustomerCreateParams: ClearableParams {
     /// The customer's address. Learn about [country-specific requirements for calculating
     /// tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
     public var address: CustomerCreateAddress?
@@ -60,6 +60,8 @@ public struct CustomerCreateParams: StripeParams {
     /// ID of the test clock to attach to the customer.
     public var testClock: String?
     public var validate: Bool?
+    /// Fields to send empty, which clears them: `params.clear(.address)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: CustomerCreateAddress? = nil, balance: Int? = nil, businessName: String? = nil, cashBalance: CustomerCreateCashBalance? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, individualName: String? = nil, invoicePrefix: String? = nil, invoiceSettings: CustomerCreateInvoiceSettings? = nil, metadata: [String: String]? = nil, name: String? = nil, nextInvoiceSequence: Int? = nil, paymentMethod: String? = nil, phone: String? = nil, preferredLocales: [String]? = nil, shipping: CustomerCreateShipping? = nil, source: String? = nil, tax: CustomerCreateTax? = nil, taxExempt: CustomerCreateTaxExempt? = nil, taxIdData: [CustomerCreateTaxIdData]? = nil, testClock: String? = nil, validate: Bool? = nil) {
         self.address = address
@@ -111,6 +113,17 @@ public struct CustomerCreateParams: StripeParams {
         case taxIdData = "tax_id_data"
         case testClock = "test_clock"
         case validate
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case address
+        case businessName = "business_name"
+        case individualName = "individual_name"
+        case metadata
+        case shipping
+        case taxExempt = "tax_exempt"
     }
 }
 
@@ -275,7 +288,7 @@ public struct CustomerSearchParams: StripeParams {
     }
 }
 
-public struct CustomerUpdateParams: StripeParams {
+public struct CustomerUpdateParams: ClearableParams {
     /// The customer's address. Learn about [country-specific requirements for calculating
     /// tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
     public var address: CustomerUpdateAddress?
@@ -329,6 +342,8 @@ public struct CustomerUpdateParams: StripeParams {
     /// The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
     public var taxExempt: CustomerUpdateTaxExempt?
     public var validate: Bool?
+    /// Fields to send empty, which clears them: `params.clear(.address)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: CustomerUpdateAddress? = nil, balance: Int? = nil, businessName: String? = nil, cashBalance: CustomerUpdateCashBalance? = nil, defaultSource: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, individualName: String? = nil, invoicePrefix: String? = nil, invoiceSettings: CustomerUpdateInvoiceSettings? = nil, metadata: [String: String]? = nil, name: String? = nil, nextInvoiceSequence: Int? = nil, phone: String? = nil, preferredLocales: [String]? = nil, shipping: CustomerUpdateShipping? = nil, source: String? = nil, tax: CustomerUpdateTax? = nil, taxExempt: CustomerUpdateTaxExempt? = nil, validate: Bool? = nil) {
         self.address = address
@@ -376,6 +391,17 @@ public struct CustomerUpdateParams: StripeParams {
         case tax
         case taxExempt = "tax_exempt"
         case validate
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case address
+        case businessName = "business_name"
+        case individualName = "individual_name"
+        case metadata
+        case shipping
+        case taxExempt = "tax_exempt"
     }
 }
 
@@ -456,7 +482,7 @@ public struct CustomerCreateCashBalanceSettingsReconciliationMode: RawRepresenta
 }
 
 /// Default invoice settings for this customer.
-public struct CustomerCreateInvoiceSettings: StripeParams {
+public struct CustomerCreateInvoiceSettings: ClearableParams {
     /// The list of up to 4 default custom fields to be displayed on invoices for this customer. When
     /// updating, pass an empty string to remove previously-defined fields.
     public var customFields: [CustomerCreateInvoiceSettingsCustomFields]?
@@ -467,6 +493,8 @@ public struct CustomerCreateInvoiceSettings: StripeParams {
     public var footer: String?
     /// Default options for invoice PDF rendering for this customer.
     public var renderingOptions: CustomerCreateInvoiceSettingsRenderingOptions?
+    /// Fields to send empty, which clears them: `params.clear(.customFields)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customFields: [CustomerCreateInvoiceSettingsCustomFields]? = nil, defaultPaymentMethod: String? = nil, footer: String? = nil, renderingOptions: CustomerCreateInvoiceSettingsRenderingOptions? = nil) {
         self.customFields = customFields
@@ -479,6 +507,13 @@ public struct CustomerCreateInvoiceSettings: StripeParams {
         case customFields = "custom_fields"
         case defaultPaymentMethod = "default_payment_method"
         case footer
+        case renderingOptions = "rendering_options"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case customFields = "custom_fields"
         case renderingOptions = "rendering_options"
     }
 }
@@ -495,7 +530,7 @@ public struct CustomerCreateInvoiceSettingsCustomFields: StripeParams {
     }
 }
 
-public struct CustomerCreateInvoiceSettingsRenderingOptions: StripeParams {
+public struct CustomerCreateInvoiceSettingsRenderingOptions: ClearableParams {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
     /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
     /// exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and
@@ -503,6 +538,8 @@ public struct CustomerCreateInvoiceSettingsRenderingOptions: StripeParams {
     public var amountTaxDisplay: CustomerCreateInvoiceSettingsRenderingOptionsAmountTaxDisplay?
     /// ID of the invoice rendering template to use for future invoices.
     public var template: String?
+    /// Fields to send empty, which clears them: `params.clear(.amountTaxDisplay)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amountTaxDisplay: CustomerCreateInvoiceSettingsRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
         self.amountTaxDisplay = amountTaxDisplay
@@ -512,6 +549,12 @@ public struct CustomerCreateInvoiceSettingsRenderingOptions: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case amountTaxDisplay = "amount_tax_display"
         case template
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case amountTaxDisplay = "amount_tax_display"
     }
 }
 
@@ -578,7 +621,7 @@ public struct CustomerCreateShippingAddress: StripeParams {
 }
 
 /// Tax details about the customer.
-public struct CustomerCreateTax: StripeParams {
+public struct CustomerCreateTax: ClearableParams {
     /// A recent IP address of the customer used for tax reporting and tax location inference. Stripe
     /// recommends updating the IP address when a new PaymentMethod is attached or the address field on the
     /// customer is updated. We recommend against updating this field more frequently since it could result
@@ -586,6 +629,8 @@ public struct CustomerCreateTax: StripeParams {
     public var ipAddress: String?
     /// A flag that indicates when Stripe should validate the customer tax location. Defaults to `deferred`.
     public var validateLocation: CustomerCreateTaxValidateLocation?
+    /// Fields to send empty, which clears them: `params.clear(.ipAddress)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(ipAddress: String? = nil, validateLocation: CustomerCreateTaxValidateLocation? = nil) {
         self.ipAddress = ipAddress
@@ -595,6 +640,12 @@ public struct CustomerCreateTax: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case ipAddress = "ip_address"
         case validateLocation = "validate_location"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case ipAddress = "ip_address"
     }
 }
 
@@ -1018,7 +1069,7 @@ public struct CustomerUpdateCashBalanceSettingsReconciliationMode: RawRepresenta
 }
 
 /// Default invoice settings for this customer.
-public struct CustomerUpdateInvoiceSettings: StripeParams {
+public struct CustomerUpdateInvoiceSettings: ClearableParams {
     /// The list of up to 4 default custom fields to be displayed on invoices for this customer. When
     /// updating, pass an empty string to remove previously-defined fields.
     public var customFields: [CustomerUpdateInvoiceSettingsCustomFields]?
@@ -1029,6 +1080,8 @@ public struct CustomerUpdateInvoiceSettings: StripeParams {
     public var footer: String?
     /// Default options for invoice PDF rendering for this customer.
     public var renderingOptions: CustomerUpdateInvoiceSettingsRenderingOptions?
+    /// Fields to send empty, which clears them: `params.clear(.customFields)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customFields: [CustomerUpdateInvoiceSettingsCustomFields]? = nil, defaultPaymentMethod: String? = nil, footer: String? = nil, renderingOptions: CustomerUpdateInvoiceSettingsRenderingOptions? = nil) {
         self.customFields = customFields
@@ -1041,6 +1094,13 @@ public struct CustomerUpdateInvoiceSettings: StripeParams {
         case customFields = "custom_fields"
         case defaultPaymentMethod = "default_payment_method"
         case footer
+        case renderingOptions = "rendering_options"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case customFields = "custom_fields"
         case renderingOptions = "rendering_options"
     }
 }
@@ -1057,7 +1117,7 @@ public struct CustomerUpdateInvoiceSettingsCustomFields: StripeParams {
     }
 }
 
-public struct CustomerUpdateInvoiceSettingsRenderingOptions: StripeParams {
+public struct CustomerUpdateInvoiceSettingsRenderingOptions: ClearableParams {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
     /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
     /// exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and
@@ -1065,6 +1125,8 @@ public struct CustomerUpdateInvoiceSettingsRenderingOptions: StripeParams {
     public var amountTaxDisplay: CustomerUpdateInvoiceSettingsRenderingOptionsAmountTaxDisplay?
     /// ID of the invoice rendering template to use for future invoices.
     public var template: String?
+    /// Fields to send empty, which clears them: `params.clear(.amountTaxDisplay)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amountTaxDisplay: CustomerUpdateInvoiceSettingsRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
         self.amountTaxDisplay = amountTaxDisplay
@@ -1074,6 +1136,12 @@ public struct CustomerUpdateInvoiceSettingsRenderingOptions: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case amountTaxDisplay = "amount_tax_display"
         case template
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case amountTaxDisplay = "amount_tax_display"
     }
 }
 
@@ -1140,7 +1208,7 @@ public struct CustomerUpdateShippingAddress: StripeParams {
 }
 
 /// Tax details about the customer.
-public struct CustomerUpdateTax: StripeParams {
+public struct CustomerUpdateTax: ClearableParams {
     /// A recent IP address of the customer used for tax reporting and tax location inference. Stripe
     /// recommends updating the IP address when a new PaymentMethod is attached or the address field on the
     /// customer is updated. We recommend against updating this field more frequently since it could result
@@ -1148,6 +1216,8 @@ public struct CustomerUpdateTax: StripeParams {
     public var ipAddress: String?
     /// A flag that indicates when Stripe should validate the customer tax location. Defaults to `auto`.
     public var validateLocation: CustomerUpdateTaxValidateLocation?
+    /// Fields to send empty, which clears them: `params.clear(.ipAddress)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(ipAddress: String? = nil, validateLocation: CustomerUpdateTaxValidateLocation? = nil) {
         self.ipAddress = ipAddress
@@ -1157,6 +1227,12 @@ public struct CustomerUpdateTax: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case ipAddress = "ip_address"
         case validateLocation = "validate_location"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case ipAddress = "ip_address"
     }
 }
 

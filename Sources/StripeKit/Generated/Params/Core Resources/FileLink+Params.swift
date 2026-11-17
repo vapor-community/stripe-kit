@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FileLinkCreateParams: StripeParams {
+public struct FileLinkCreateParams: ClearableParams {
     /// The ID of the file. The file's `purpose` must be one of the following: `business_icon`,
     /// `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`,
     /// `financial_account_statement`, `identity_document_downloadable`, `issuing_regulatory_reporting`,
@@ -23,6 +23,8 @@ public struct FileLinkCreateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(file: String, expand: [String]? = nil, expiresAt: Date? = nil, metadata: [String: String]? = nil) {
         self.file = file
@@ -35,6 +37,12 @@ public struct FileLinkCreateParams: StripeParams {
         case expand
         case expiresAt = "expires_at"
         case file
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case metadata
     }
 }
@@ -82,7 +90,7 @@ public struct FileLinkListParams: StripeParams {
     }
 }
 
-public struct FileLinkUpdateParams: StripeParams {
+public struct FileLinkUpdateParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// A future timestamp after which the link will no longer be usable, or `now` to expire the link
@@ -93,6 +101,8 @@ public struct FileLinkUpdateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.expiresAt)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, expiresAt: FileLinkUpdateExpiresAt? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
@@ -102,6 +112,13 @@ public struct FileLinkUpdateParams: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case expand
+        case expiresAt = "expires_at"
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case expiresAt = "expires_at"
         case metadata
     }

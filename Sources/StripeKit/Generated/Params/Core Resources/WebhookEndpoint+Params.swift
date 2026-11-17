@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct WebhookEndpointCreateParams: StripeParams {
+public struct WebhookEndpointCreateParams: ClearableParams {
     /// The list of events to enable for this endpoint. You may specify `['*']` to enable all events, except
     /// those that require explicit selection.
     public var enabledEvents: [WebhookEndpointCreateEnabledEvents]
@@ -28,6 +28,8 @@ public struct WebhookEndpointCreateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.description)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(enabledEvents: [WebhookEndpointCreateEnabledEvents], url: String, apiVersion: WebhookEndpointCreateApiVersion? = nil, connect: Bool? = nil, description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.enabledEvents = enabledEvents
@@ -47,6 +49,13 @@ public struct WebhookEndpointCreateParams: StripeParams {
         case expand
         case metadata
         case url
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case description
+        case metadata
     }
 }
 
@@ -81,7 +90,7 @@ public struct WebhookEndpointListParams: StripeParams {
     }
 }
 
-public struct WebhookEndpointUpdateParams: StripeParams {
+public struct WebhookEndpointUpdateParams: ClearableParams {
     /// An optional description of what the webhook is used for.
     public var description: String?
     /// Disable the webhook endpoint if set to true.
@@ -98,6 +107,8 @@ public struct WebhookEndpointUpdateParams: StripeParams {
     public var metadata: [String: String]?
     /// The URL of the webhook endpoint.
     public var url: String?
+    /// Fields to send empty, which clears them: `params.clear(.description)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(description: String? = nil, disabled: Bool? = nil, enabledEvents: [WebhookEndpointUpdateEnabledEvents]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, url: String? = nil) {
         self.description = description
@@ -115,6 +126,13 @@ public struct WebhookEndpointUpdateParams: StripeParams {
         case expand
         case metadata
         case url
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case description
+        case metadata
     }
 }
 

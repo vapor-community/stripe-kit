@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct IssuingCardCreateParams: StripeParams {
+public struct IssuingCardCreateParams: ClearableParams {
     /// The currency for the card.
     public var currency: String
     /// The type of card to issue. Possible values are `physical` or `virtual`.
@@ -52,6 +52,8 @@ public struct IssuingCardCreateParams: StripeParams {
     /// Whether authorizations can be approved on this card. May be blocked from activating cards depending
     /// on past-due Cardholder requirements. Defaults to `inactive`.
     public var status: IssuingCardCreateStatus?
+    /// Fields to send empty, which clears them: `params.clear(.secondLine)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(currency: String, type: IssuingCardCreateType, cardholder: String? = nil, expMonth: Int? = nil, expYear: Int? = nil, expand: [String]? = nil, financialAccount: String? = nil, lifecycleControls: IssuingCardCreateLifecycleControls? = nil, metadata: [String: String]? = nil, personalizationDesign: String? = nil, pin: IssuingCardCreatePin? = nil, replacementFor: String? = nil, replacementReason: IssuingCardCreateReplacementReason? = nil, secondLine: String? = nil, shipping: IssuingCardCreateShipping? = nil, spendingControls: IssuingCardCreateSpendingControls? = nil, status: IssuingCardCreateStatus? = nil) {
         self.currency = currency
@@ -91,6 +93,12 @@ public struct IssuingCardCreateParams: StripeParams {
         case spendingControls = "spending_controls"
         case status
         case type
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case secondLine = "second_line"
     }
 }
 
@@ -201,7 +209,7 @@ public struct IssuingCardSubmitCardParams: StripeParams {
     }
 }
 
-public struct IssuingCardUpdateParams: StripeParams {
+public struct IssuingCardUpdateParams: ClearableParams {
     /// Reason why the `status` of this card is `canceled`.
     public var cancellationReason: IssuingCardUpdateCancellationReason?
     /// Specifies which fields in the response should be expanded.
@@ -227,6 +235,8 @@ public struct IssuingCardUpdateParams: StripeParams {
     /// canceled because it was lost or stolen, this information should be provided as
     /// `cancellation_reason`.
     public var status: IssuingCardUpdateStatus?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(cancellationReason: IssuingCardUpdateCancellationReason? = nil, expand: [String]? = nil, financialAccount: String? = nil, metadata: [String: String]? = nil, personalizationDesign: String? = nil, pin: IssuingCardUpdatePin? = nil, shipping: IssuingCardUpdateShipping? = nil, spendingControls: IssuingCardUpdateSpendingControls? = nil, status: IssuingCardUpdateStatus? = nil) {
         self.cancellationReason = cancellationReason
@@ -250,6 +260,12 @@ public struct IssuingCardUpdateParams: StripeParams {
         case shipping
         case spendingControls = "spending_controls"
         case status
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

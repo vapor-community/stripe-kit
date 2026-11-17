@@ -470,7 +470,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataBacsDebit: StripeParams {
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct ConfirmationTokenCreatePaymentMethodDataBillingDetails: StripeParams {
+public struct ConfirmationTokenCreatePaymentMethodDataBillingDetails: ClearableParams {
     /// Billing address.
     public var address: ConfirmationTokenCreatePaymentMethodDataBillingDetailsAddress?
     /// Email address.
@@ -482,6 +482,8 @@ public struct ConfirmationTokenCreatePaymentMethodDataBillingDetails: StripePara
     /// Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM
     /// sellers.
     public var taxId: String?
+    /// Fields to send empty, which clears them: `params.clear(.address)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: ConfirmationTokenCreatePaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
         self.address = address
@@ -497,6 +499,15 @@ public struct ConfirmationTokenCreatePaymentMethodDataBillingDetails: StripePara
         case name
         case phone
         case taxId = "tax_id"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case address
+        case email
+        case name
+        case phone
     }
 }
 
@@ -1085,18 +1096,32 @@ public struct ConfirmationTokenCreateSetupFutureUsage: RawRepresentable, Codable
 }
 
 /// Shipping information for this ConfirmationToken.
-public struct ConfirmationTokenCreateShipping: StripeParams {
+public struct ConfirmationTokenCreateShipping: ClearableParams {
     /// Shipping address
     public var address: ConfirmationTokenCreateShippingAddress
     /// Recipient name.
     public var name: String
     /// Recipient phone (including extension)
     public var phone: String?
+    /// Fields to send empty, which clears them: `params.clear(.phone)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: ConfirmationTokenCreateShippingAddress, name: String, phone: String? = nil) {
         self.address = address
         self.name = name
         self.phone = phone
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case address
+        case name
+        case phone
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case phone
     }
 }
 

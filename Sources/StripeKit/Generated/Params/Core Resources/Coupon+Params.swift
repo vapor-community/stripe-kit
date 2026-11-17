@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CouponCreateParams: StripeParams {
+public struct CouponCreateParams: ClearableParams {
     /// A positive integer representing the amount to subtract from an invoice total (required if
     /// `percent_off` is not passed).
     public var amountOff: Int?
@@ -49,6 +49,8 @@ public struct CouponCreateParams: StripeParams {
     /// than 5 years in the future). After the redeem_by date, the coupon can no longer be applied to new
     /// customers.
     public var redeemBy: Date?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amountOff: Int? = nil, appliesTo: CouponCreateAppliesTo? = nil, currency: String? = nil, currencyOptions: [String: CouponCreateCurrencyOptions]? = nil, duration: CouponCreateDuration? = nil, durationInMonths: Int? = nil, expand: [String]? = nil, id: String? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, name: String? = nil, percentOff: Double? = nil, redeemBy: Date? = nil) {
         self.amountOff = amountOff
@@ -80,6 +82,12 @@ public struct CouponCreateParams: StripeParams {
         case name
         case percentOff = "percent_off"
         case redeemBy = "redeem_by"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -119,7 +127,7 @@ public struct CouponListParams: StripeParams {
     }
 }
 
-public struct CouponUpdateParams: StripeParams {
+public struct CouponUpdateParams: ClearableParams {
     /// Coupons defined in each available currency option (only supported if the coupon is amount-based).
     /// Each key must be a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
@@ -135,6 +143,8 @@ public struct CouponUpdateParams: StripeParams {
     /// Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the
     /// `id` is shown if `name` is not set.
     public var name: String?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(currencyOptions: [String: CouponUpdateCurrencyOptions]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.currencyOptions = currencyOptions
@@ -148,6 +158,12 @@ public struct CouponUpdateParams: StripeParams {
         case expand
         case metadata
         case name
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

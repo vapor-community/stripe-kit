@@ -38,7 +38,7 @@ public struct LineItemListParams: StripeParams {
     }
 }
 
-public struct LineItemUpdateParams: StripeParams {
+public struct LineItemUpdateParams: ClearableParams {
     /// The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming
     /// invoice. If you want to apply a credit to the customer's account, pass a negative amount.
     public var amount: Int?
@@ -89,6 +89,8 @@ public struct LineItemUpdateParams: StripeParams {
     /// The tax rates which apply to the line item. When set, the `default_tax_rates` on the invoice do not
     /// apply to this line item. Pass an empty string to remove previously-defined tax rates.
     public var taxRates: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.discounts)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, description: String? = nil, discountable: Bool? = nil, discounts: [LineItemUpdateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, period: LineItemUpdatePeriod? = nil, priceData: LineItemUpdatePriceData? = nil, pricing: LineItemUpdatePricing? = nil, quantity: Int? = nil, quantityDecimal: String? = nil, taxAmounts: [LineItemUpdateTaxAmounts]? = nil, taxRates: [String]? = nil) {
         self.amount = amount
@@ -118,6 +120,15 @@ public struct LineItemUpdateParams: StripeParams {
         case pricing
         case quantity
         case quantityDecimal = "quantity_decimal"
+        case taxAmounts = "tax_amounts"
+        case taxRates = "tax_rates"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discounts
+        case metadata
         case taxAmounts = "tax_amounts"
         case taxRates = "tax_rates"
     }
@@ -253,13 +264,15 @@ public struct LineItemUpdatePriceDataProductData: StripeParams {
 
 /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
 /// location.
-public struct LineItemUpdatePriceDataProductDataTaxDetails: StripeParams {
+public struct LineItemUpdatePriceDataProductDataTaxDetails: ClearableParams {
     /// A tax location ID. Depending on the [tax
     /// code](/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not
     /// supported.
     public var performanceLocation: String?
     /// A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
     public var taxCode: String?
+    /// Fields to send empty, which clears them: `params.clear(.taxCode)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(performanceLocation: String? = nil, taxCode: String? = nil) {
         self.performanceLocation = performanceLocation
@@ -268,6 +281,12 @@ public struct LineItemUpdatePriceDataProductDataTaxDetails: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case performanceLocation = "performance_location"
+        case taxCode = "tax_code"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case taxCode = "tax_code"
     }
 }

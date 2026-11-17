@@ -16,7 +16,7 @@ public struct RefundCancelParams: StripeParams {
     }
 }
 
-public struct RefundCreateParams: StripeParams {
+public struct RefundCreateParams: ClearableParams {
     public var amount: Int?
     /// The identifier of the charge to refund.
     public var charge: String?
@@ -54,6 +54,8 @@ public struct RefundCreateParams: StripeParams {
     /// will be reversed proportionally to the amount being refunded (either the entire or partial amount).A
     /// transfer can be reversed only by the application that created the charge.
     public var reverseTransfer: Bool?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, charge: String? = nil, currency: String? = nil, customer: String? = nil, expand: [String]? = nil, instructionsEmail: String? = nil, metadata: [String: String]? = nil, origin: RefundCreateOrigin? = nil, paymentIntent: String? = nil, reason: RefundCreateReason? = nil, refundApplicationFee: Bool? = nil, reverseTransfer: Bool? = nil) {
         self.amount = amount
@@ -83,6 +85,12 @@ public struct RefundCreateParams: StripeParams {
         case reason
         case refundApplicationFee = "refund_application_fee"
         case reverseTransfer = "reverse_transfer"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -169,7 +177,7 @@ public struct RefundListForChargeParams: StripeParams {
     }
 }
 
-public struct RefundUpdateParams: StripeParams {
+public struct RefundUpdateParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -177,10 +185,23 @@ public struct RefundUpdateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

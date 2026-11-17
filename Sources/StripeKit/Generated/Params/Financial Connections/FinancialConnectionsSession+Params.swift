@@ -159,13 +159,25 @@ public struct FinancialConnectionsSessionCreateFiltersRequirePaymentMethodSuppor
 }
 
 /// Settings for configuring Session-specific limits.
-public struct FinancialConnectionsSessionCreateLimits: StripeParams {
+public struct FinancialConnectionsSessionCreateLimits: ClearableParams {
     /// The number of accounts that can be linked in this Session. Pass an empty value to allow any number
     /// of accounts.
     public var accounts: Int
+    /// Fields to send empty, which clears them: `params.clear(.accounts)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accounts: Int) {
         self.accounts = accounts
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case accounts
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accounts
     }
 }
 

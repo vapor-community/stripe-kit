@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CustomerBalanceTransactionCreateParams: StripeParams {
+public struct CustomerBalanceTransactionCreateParams: ClearableParams {
     /// The integer amount in **cents (or local equivalent)** to apply to the customer's credit balance.
     public var amount: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -25,6 +25,8 @@ public struct CustomerBalanceTransactionCreateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int, currency: String, description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.amount = amount
@@ -32,6 +34,20 @@ public struct CustomerBalanceTransactionCreateParams: StripeParams {
         self.description = description
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case currency
+        case description
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -74,7 +90,7 @@ public struct CustomerBalanceTransactionListParams: StripeParams {
     }
 }
 
-public struct CustomerBalanceTransactionUpdateParams: StripeParams {
+public struct CustomerBalanceTransactionUpdateParams: ClearableParams {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Specifies which fields in the response should be expanded.
@@ -84,10 +100,24 @@ public struct CustomerBalanceTransactionUpdateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.description = description
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case description
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }

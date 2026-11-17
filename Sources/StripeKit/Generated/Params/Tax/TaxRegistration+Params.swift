@@ -73,7 +73,7 @@ public struct TaxRegistrationListParams: StripeParams {
     }
 }
 
-public struct TaxRegistrationUpdateParams: StripeParams {
+public struct TaxRegistrationUpdateParams: ClearableParams {
     /// Time at which the registration becomes active. It can be either `now` to indicate the current time,
     /// or a timestamp measured in seconds since the Unix epoch.
     public var activeFrom: TaxRegistrationUpdateActiveFrom?
@@ -83,6 +83,8 @@ public struct TaxRegistrationUpdateParams: StripeParams {
     /// active indefinitely. It can be either `now` to indicate the current time, or a timestamp measured in
     /// seconds since the Unix epoch.
     public var expiresAt: TaxRegistrationUpdateExpiresAt?
+    /// Fields to send empty, which clears them: `params.clear(.expiresAt)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(activeFrom: TaxRegistrationUpdateActiveFrom? = nil, expand: [String]? = nil, expiresAt: TaxRegistrationUpdateExpiresAt? = nil) {
         self.activeFrom = activeFrom
@@ -93,6 +95,12 @@ public struct TaxRegistrationUpdateParams: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case activeFrom = "active_from"
         case expand
+        case expiresAt = "expires_at"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case expiresAt = "expires_at"
     }
 }

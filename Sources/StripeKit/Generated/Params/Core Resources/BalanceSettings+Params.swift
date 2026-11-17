@@ -43,7 +43,7 @@ public struct BalanceSettingsUpdatePayments: StripeParams {
 }
 
 /// Settings specific to the account's payouts.
-public struct BalanceSettingsUpdatePaymentsPayouts: StripeParams {
+public struct BalanceSettingsUpdatePaymentsPayouts: ClearableParams {
     /// Configures per-currency rules for automatically transferring funds from the payments balance to a
     /// FinancialAccount.
     public var automaticTransferRulesByCurrency: [String: [BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrency]]?
@@ -58,6 +58,8 @@ public struct BalanceSettingsUpdatePaymentsPayouts: StripeParams {
     /// The text that appears on the bank account statement for payouts. If not set, this defaults to the
     /// platform's bank descriptor as set in the Dashboard.
     public var statementDescriptor: String?
+    /// Fields to send empty, which clears them: `params.clear(.automaticTransferRulesByCurrency)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(automaticTransferRulesByCurrency: [String: [BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrency]]? = nil, minimumBalanceByCurrency: [String: Int]? = nil, schedule: BalanceSettingsUpdatePaymentsPayoutsSchedule? = nil, statementDescriptor: String? = nil) {
         self.automaticTransferRulesByCurrency = automaticTransferRulesByCurrency
@@ -71,6 +73,13 @@ public struct BalanceSettingsUpdatePaymentsPayouts: StripeParams {
         case minimumBalanceByCurrency = "minimum_balance_by_currency"
         case schedule
         case statementDescriptor = "statement_descriptor"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case automaticTransferRulesByCurrency = "automatic_transfer_rules_by_currency"
+        case minimumBalanceByCurrency = "minimum_balance_by_currency"
     }
 }
 
@@ -163,7 +172,7 @@ public struct BalanceSettingsUpdatePaymentsPayoutsScheduleWeeklyPayoutDays: RawR
 }
 
 /// Settings related to the account's balance settlement timing.
-public struct BalanceSettingsUpdatePaymentsSettlementTiming: StripeParams {
+public struct BalanceSettingsUpdatePaymentsSettlementTiming: ClearableParams {
     /// Change `delay_days` for this account, which determines the number of days charge funds are held
     /// before becoming available. The maximum value is 31. Passing an empty string to `delay_days_override`
     /// will return `delay_days` to the default, which is the lowest available value for the account. [Learn
@@ -173,6 +182,8 @@ public struct BalanceSettingsUpdatePaymentsSettlementTiming: StripeParams {
     /// timezones with a customized day starting time. For details, see our [Customized start of
     /// day](/connect/customized-start-of-day) documentation.
     public var startOfDay: BalanceSettingsUpdatePaymentsSettlementTimingStartOfDay?
+    /// Fields to send empty, which clears them: `params.clear(.delayDaysOverride)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(delayDaysOverride: Int? = nil, startOfDay: BalanceSettingsUpdatePaymentsSettlementTimingStartOfDay? = nil) {
         self.delayDaysOverride = delayDaysOverride
@@ -180,6 +191,13 @@ public struct BalanceSettingsUpdatePaymentsSettlementTiming: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case delayDaysOverride = "delay_days_override"
+        case startOfDay = "start_of_day"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case delayDaysOverride = "delay_days_override"
         case startOfDay = "start_of_day"
     }

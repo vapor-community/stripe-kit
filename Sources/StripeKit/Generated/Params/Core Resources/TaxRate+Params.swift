@@ -111,7 +111,7 @@ public struct TaxRateListParams: StripeParams {
     }
 }
 
-public struct TaxRateUpdateParams: StripeParams {
+public struct TaxRateUpdateParams: ClearableParams {
     /// Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates cannot be
     /// used with new applications or Checkout Sessions, but will still work for subscriptions and invoices
     /// that already have it set.
@@ -138,6 +138,8 @@ public struct TaxRateUpdateParams: StripeParams {
     public var state: String?
     /// The high-level tax type, such as `vat` or `sales_tax`.
     public var taxType: TaxRateUpdateTaxType?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(active: Bool? = nil, country: String? = nil, description: String? = nil, displayName: String? = nil, expand: [String]? = nil, jurisdiction: String? = nil, metadata: [String: String]? = nil, state: String? = nil, taxType: TaxRateUpdateTaxType? = nil) {
         self.active = active
@@ -161,6 +163,12 @@ public struct TaxRateUpdateParams: StripeParams {
         case metadata
         case state
         case taxType = "tax_type"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

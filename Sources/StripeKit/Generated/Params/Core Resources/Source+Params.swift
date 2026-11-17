@@ -142,7 +142,7 @@ public struct SourceSourceTransactionsParams: StripeParams {
     }
 }
 
-public struct SourceUpdateParams: StripeParams {
+public struct SourceUpdateParams: ClearableParams {
     /// Amount associated with the source.
     public var amount: Int?
     /// Specifies which fields in the response should be expanded.
@@ -161,6 +161,8 @@ public struct SourceUpdateParams: StripeParams {
     /// Information about the items and shipping associated with the source. Required for transactional
     /// credit (for example Klarna) sources before you can charge it.
     public var sourceOrder: SourceUpdateSourceOrder?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, expand: [String]? = nil, mandate: SourceUpdateMandate? = nil, metadata: [String: String]? = nil, owner: SourceUpdateOwner? = nil, sourceOrder: SourceUpdateSourceOrder? = nil) {
         self.amount = amount
@@ -178,6 +180,12 @@ public struct SourceUpdateParams: StripeParams {
         case metadata
         case owner
         case sourceOrder = "source_order"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -208,7 +216,7 @@ public struct SourceCreateFlow: RawRepresentable, Codable, Hashable, Sendable {
 
 /// Information about a mandate possibility attached to a source object (generally for bank debits) as
 /// well as its acceptance status.
-public struct SourceCreateMandate: StripeParams {
+public struct SourceCreateMandate: ClearableParams {
     /// The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
     public var acceptance: SourceCreateMandateAcceptance?
     /// The amount specified by the mandate. (Leave null for a mandate covering all amounts)
@@ -225,6 +233,8 @@ public struct SourceCreateMandate: StripeParams {
     /// and you should handle the notification) or `none` (the underlying debit network does not require any
     /// notification).
     public var notificationMethod: SourceCreateMandateNotificationMethod?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(acceptance: SourceCreateMandateAcceptance? = nil, amount: Int? = nil, currency: String? = nil, interval: SourceCreateMandateInterval? = nil, notificationMethod: SourceCreateMandateNotificationMethod? = nil) {
         self.acceptance = acceptance
@@ -240,6 +250,12 @@ public struct SourceCreateMandate: StripeParams {
         case currency
         case interval
         case notificationMethod = "notification_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case amount
     }
 }
 
@@ -600,7 +616,7 @@ public struct SourceCreateUsage: RawRepresentable, Codable, Hashable, Sendable {
 
 /// Information about a mandate possibility attached to a source object (generally for bank debits) as
 /// well as its acceptance status.
-public struct SourceUpdateMandate: StripeParams {
+public struct SourceUpdateMandate: ClearableParams {
     /// The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
     public var acceptance: SourceUpdateMandateAcceptance?
     /// The amount specified by the mandate. (Leave null for a mandate covering all amounts)
@@ -617,6 +633,8 @@ public struct SourceUpdateMandate: StripeParams {
     /// and you should handle the notification) or `none` (the underlying debit network does not require any
     /// notification).
     public var notificationMethod: SourceUpdateMandateNotificationMethod?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(acceptance: SourceUpdateMandateAcceptance? = nil, amount: Int? = nil, currency: String? = nil, interval: SourceUpdateMandateInterval? = nil, notificationMethod: SourceUpdateMandateNotificationMethod? = nil) {
         self.acceptance = acceptance
@@ -632,6 +650,12 @@ public struct SourceUpdateMandate: StripeParams {
         case currency
         case interval
         case notificationMethod = "notification_method"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case amount
     }
 }
 

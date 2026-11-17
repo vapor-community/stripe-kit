@@ -112,7 +112,7 @@ public struct BillingCreditGrantListParams: StripeParams {
     }
 }
 
-public struct BillingCreditGrantUpdateParams: StripeParams {
+public struct BillingCreditGrantUpdateParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The time when the billing credits created by this credit grant expire. If set to empty, the billing
@@ -121,6 +121,8 @@ public struct BillingCreditGrantUpdateParams: StripeParams {
     /// Set of key-value pairs you can attach to an object. You can use this to store additional information
     /// about the object (for example, cost basis) in a structured format.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.expiresAt)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, expiresAt: Date? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
@@ -132,6 +134,12 @@ public struct BillingCreditGrantUpdateParams: StripeParams {
         case expand
         case expiresAt = "expires_at"
         case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case expiresAt = "expires_at"
     }
 }
 

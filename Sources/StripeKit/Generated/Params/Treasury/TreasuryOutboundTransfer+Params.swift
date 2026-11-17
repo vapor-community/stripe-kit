@@ -194,15 +194,23 @@ public struct TreasuryOutboundTransferCreateDestinationPaymentMethodDataType: Ra
 }
 
 /// Hash describing payment method configuration details.
-public struct TreasuryOutboundTransferCreateDestinationPaymentMethodOptions: StripeParams {
+public struct TreasuryOutboundTransferCreateDestinationPaymentMethodOptions: ClearableParams {
     /// Optional fields for `us_bank_account`.
     public var usBankAccount: TreasuryOutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccount?
+    /// Fields to send empty, which clears them: `params.clear(.usBankAccount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(usBankAccount: TreasuryOutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccount? = nil) {
         self.usBankAccount = usBankAccount
     }
 
     public enum CodingKeys: String, CodingKey {
+        case usBankAccount = "us_bank_account"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case usBankAccount = "us_bank_account"
     }
 }

@@ -397,7 +397,7 @@ public struct PaymentMethodListParams: StripeParams {
     }
 }
 
-public struct PaymentMethodUpdateParams: StripeParams {
+public struct PaymentMethodUpdateParams: ClearableParams {
     /// This field indicates whether this payment method can be shown again to its customer in a checkout
     /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
     /// method can be shown as a saved payment method in a checkout flow. The field defaults to
@@ -418,6 +418,8 @@ public struct PaymentMethodUpdateParams: StripeParams {
     /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
     /// payment method.
     public var usBankAccount: PaymentMethodUpdateUsBankAccount?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(allowRedisplay: PaymentMethodUpdateAllowRedisplay? = nil, billingDetails: PaymentMethodUpdateBillingDetails? = nil, card: PaymentMethodUpdateCard? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, usBankAccount: PaymentMethodUpdateUsBankAccount? = nil) {
         self.allowRedisplay = allowRedisplay
@@ -435,6 +437,12 @@ public struct PaymentMethodUpdateParams: StripeParams {
         case expand
         case metadata
         case usBankAccount = "us_bank_account"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -512,7 +520,7 @@ public struct PaymentMethodCreateBacsDebit: StripeParams {
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct PaymentMethodCreateBillingDetails: StripeParams {
+public struct PaymentMethodCreateBillingDetails: ClearableParams {
     /// Billing address.
     public var address: PaymentMethodCreateBillingDetailsAddress?
     /// Email address.
@@ -524,6 +532,8 @@ public struct PaymentMethodCreateBillingDetails: StripeParams {
     /// Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM
     /// sellers.
     public var taxId: String?
+    /// Fields to send empty, which clears them: `params.clear(.address)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: PaymentMethodCreateBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
         self.address = address
@@ -539,6 +549,15 @@ public struct PaymentMethodCreateBillingDetails: StripeParams {
         case name
         case phone
         case taxId = "tax_id"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case address
+        case email
+        case name
+        case phone
     }
 }
 
@@ -1297,7 +1316,7 @@ public struct PaymentMethodUpdateAllowRedisplay: RawRepresentable, Codable, Hash
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct PaymentMethodUpdateBillingDetails: StripeParams {
+public struct PaymentMethodUpdateBillingDetails: ClearableParams {
     /// Billing address.
     public var address: PaymentMethodUpdateBillingDetailsAddress?
     /// Email address.
@@ -1309,6 +1328,8 @@ public struct PaymentMethodUpdateBillingDetails: StripeParams {
     /// Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM
     /// sellers.
     public var taxId: String?
+    /// Fields to send empty, which clears them: `params.clear(.address)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(address: PaymentMethodUpdateBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
         self.address = address
@@ -1324,6 +1345,15 @@ public struct PaymentMethodUpdateBillingDetails: StripeParams {
         case name
         case phone
         case taxId = "tax_id"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case address
+        case email
+        case name
+        case phone
     }
 }
 
@@ -1383,14 +1413,26 @@ public struct PaymentMethodUpdateCard: StripeParams {
 }
 
 /// Contains information about card networks used to process the payment.
-public struct PaymentMethodUpdateCardNetworks: StripeParams {
+public struct PaymentMethodUpdateCardNetworks: ClearableParams {
     /// The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`,
     /// `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as
     /// `invalid_preference` on the card.
     public var preferred: PaymentMethodUpdateCardNetworksPreferred?
+    /// Fields to send empty, which clears them: `params.clear(.preferred)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(preferred: PaymentMethodUpdateCardNetworksPreferred? = nil) {
         self.preferred = preferred
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case preferred
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case preferred
     }
 }
 

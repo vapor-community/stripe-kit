@@ -91,7 +91,7 @@ public struct ClimateOrderListParams: StripeParams {
     }
 }
 
-public struct ClimateOrderUpdateParams: StripeParams {
+public struct ClimateOrderUpdateParams: ClearableParams {
     /// Publicly sharable reference for the end beneficiary of carbon removal. Assumed to be the Stripe
     /// account if not set.
     public var beneficiary: ClimateOrderUpdateBeneficiary?
@@ -102,11 +102,25 @@ public struct ClimateOrderUpdateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.beneficiary)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(beneficiary: ClimateOrderUpdateBeneficiary? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.beneficiary = beneficiary
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case beneficiary
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case beneficiary
     }
 }
 
@@ -125,15 +139,23 @@ public struct ClimateOrderCreateBeneficiary: StripeParams {
     }
 }
 
-public struct ClimateOrderUpdateBeneficiary: StripeParams {
+public struct ClimateOrderUpdateBeneficiary: ClearableParams {
     /// Publicly displayable name for the end beneficiary of carbon removal.
     public var publicName: String
+    /// Fields to send empty, which clears them: `params.clear(.publicName)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(publicName: String) {
         self.publicName = publicName
     }
 
     public enum CodingKeys: String, CodingKey {
+        case publicName = "public_name"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case publicName = "public_name"
     }
 }

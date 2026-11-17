@@ -296,13 +296,15 @@ public struct IssuingCardholderCreateIndividualCardIssuing: StripeParams {
 /// Information about cardholder acceptance of Celtic [Authorized User
 /// Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a
 /// Celtic program.
-public struct IssuingCardholderCreateIndividualCardIssuingUserTermsAcceptance: StripeParams {
+public struct IssuingCardholderCreateIndividualCardIssuingUserTermsAcceptance: ClearableParams {
     /// The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
     public var date: Date?
     /// The IP address from which the cardholder accepted the Authorized User Terms.
     public var ip: String?
     /// The user agent of the browser from which the cardholder accepted the Authorized User Terms.
     public var userAgent: String?
+    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
@@ -313,6 +315,12 @@ public struct IssuingCardholderCreateIndividualCardIssuingUserTermsAcceptance: S
     public enum CodingKeys: String, CodingKey {
         case date
         case ip
+        case userAgent = "user_agent"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case userAgent = "user_agent"
     }
 }
@@ -1552,13 +1560,15 @@ public struct IssuingCardholderUpdateIndividualCardIssuing: StripeParams {
 /// Information about cardholder acceptance of Celtic [Authorized User
 /// Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a
 /// Celtic program.
-public struct IssuingCardholderUpdateIndividualCardIssuingUserTermsAcceptance: StripeParams {
+public struct IssuingCardholderUpdateIndividualCardIssuingUserTermsAcceptance: ClearableParams {
     /// The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
     public var date: Date?
     /// The IP address from which the cardholder accepted the Authorized User Terms.
     public var ip: String?
     /// The user agent of the browser from which the cardholder accepted the Authorized User Terms.
     public var userAgent: String?
+    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
         self.date = date
@@ -1569,6 +1579,12 @@ public struct IssuingCardholderUpdateIndividualCardIssuingUserTermsAcceptance: S
     public enum CodingKeys: String, CodingKey {
         case date
         case ip
+        case userAgent = "user_agent"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case userAgent = "user_agent"
     }
 }

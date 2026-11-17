@@ -247,7 +247,7 @@ public struct PaymentLinkListLineItemsParams: StripeParams {
     }
 }
 
-public struct PaymentLinkUpdateParams: StripeParams {
+public struct PaymentLinkUpdateParams: ClearableParams {
     /// Whether the payment link's `url` is active. If `false`, customers visiting the URL will be shown a
     /// page saying that the link has been deactivated.
     public var active: Bool?
@@ -342,6 +342,8 @@ public struct PaymentLinkUpdateParams: StripeParams {
     /// The account (if any) the payments will be attributed to for tax reporting, and where funds from each
     /// payment will be transferred to.
     public var transferData: PaymentLinkUpdateTransferData?
+    /// Fields to send empty, which clears them: `params.clear(.applicationFeeAmount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(active: Bool? = nil, afterCompletion: PaymentLinkUpdateAfterCompletion? = nil, allowPromotionCodes: Bool? = nil, applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: PaymentLinkUpdateAutomaticTax? = nil, billingAddressCollection: PaymentLinkUpdateBillingAddressCollection? = nil, consentCollection: PaymentLinkUpdateConsentCollection? = nil, customFields: [PaymentLinkUpdateCustomFields]? = nil, customText: PaymentLinkUpdateCustomText? = nil, customerCreation: PaymentLinkUpdateCustomerCreation? = nil, expand: [String]? = nil, inactiveMessage: String? = nil, invoiceCreation: PaymentLinkUpdateInvoiceCreation? = nil, lineItems: [PaymentLinkUpdateLineItems]? = nil, metadata: [String: String]? = nil, nameCollection: PaymentLinkUpdateNameCollection? = nil, onBehalfOf: String? = nil, optionalItems: [PaymentLinkUpdateOptionalItems]? = nil, paymentIntentData: PaymentLinkUpdatePaymentIntentData? = nil, paymentMethodCollection: PaymentLinkUpdatePaymentMethodCollection? = nil, paymentMethodOptions: PaymentLinkUpdatePaymentMethodOptions? = nil, paymentMethodTypes: [PaymentLinkUpdatePaymentMethodTypes]? = nil, phoneNumberCollection: PaymentLinkUpdatePhoneNumberCollection? = nil, restrictions: PaymentLinkUpdateRestrictions? = nil, shippingAddressCollection: PaymentLinkUpdateShippingAddressCollection? = nil, shippingOptions: [PaymentLinkUpdateShippingOptions]? = nil, submitType: PaymentLinkUpdateSubmitType? = nil, subscriptionData: PaymentLinkUpdateSubscriptionData? = nil, taxIdCollection: PaymentLinkUpdateTaxIdCollection? = nil, transferData: PaymentLinkUpdateTransferData? = nil) {
         self.active = active
@@ -408,6 +410,24 @@ public struct PaymentLinkUpdateParams: StripeParams {
         case submitType = "submit_type"
         case subscriptionData = "subscription_data"
         case taxIdCollection = "tax_id_collection"
+        case transferData = "transfer_data"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case applicationFeeAmount = "application_fee_amount"
+        case applicationFeePercent = "application_fee_percent"
+        case customFields = "custom_fields"
+        case inactiveMessage = "inactive_message"
+        case nameCollection = "name_collection"
+        case onBehalfOf = "on_behalf_of"
+        case optionalItems = "optional_items"
+        case paymentMethodOptions = "payment_method_options"
+        case paymentMethodTypes = "payment_method_types"
+        case restrictions
+        case shippingAddressCollection = "shipping_address_collection"
+        case shippingOptions = "shipping_options"
         case transferData = "transfer_data"
     }
 }
@@ -555,13 +575,15 @@ public struct PaymentLinkCreateLineItemsPriceDataProductData: StripeParams {
 
 /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
 /// location.
-public struct PaymentLinkCreateLineItemsPriceDataProductDataTaxDetails: StripeParams {
+public struct PaymentLinkCreateLineItemsPriceDataProductDataTaxDetails: ClearableParams {
     /// A tax location ID. Depending on the [tax
     /// code](/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not
     /// supported.
     public var performanceLocation: String?
     /// A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
     public var taxCode: String?
+    /// Fields to send empty, which clears them: `params.clear(.taxCode)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(performanceLocation: String? = nil, taxCode: String? = nil) {
         self.performanceLocation = performanceLocation
@@ -570,6 +592,12 @@ public struct PaymentLinkCreateLineItemsPriceDataProductDataTaxDetails: StripePa
 
     public enum CodingKeys: String, CodingKey {
         case performanceLocation = "performance_location"
+        case taxCode = "tax_code"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case taxCode = "tax_code"
     }
 }
@@ -948,7 +976,7 @@ public struct PaymentLinkCreateCustomFieldsText: StripeParams {
 
 /// Display additional text for your customers using custom text. You can't set this parameter if
 /// `ui_mode` is `elements`.
-public struct PaymentLinkCreateCustomText: StripeParams {
+public struct PaymentLinkCreateCustomText: ClearableParams {
     /// Custom text that should be displayed after the payment confirmation button.
     public var afterSubmit: PaymentLinkCreateCustomTextAfterSubmit?
     /// Custom text that should be displayed alongside shipping address collection.
@@ -957,6 +985,8 @@ public struct PaymentLinkCreateCustomText: StripeParams {
     public var submit: PaymentLinkCreateCustomTextSubmit?
     /// Custom text that should be displayed in place of the default terms of service agreement text.
     public var termsOfServiceAcceptance: PaymentLinkCreateCustomTextTermsOfServiceAcceptance?
+    /// Fields to send empty, which clears them: `params.clear(.afterSubmit)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(afterSubmit: PaymentLinkCreateCustomTextAfterSubmit? = nil, shippingAddress: PaymentLinkCreateCustomTextShippingAddress? = nil, submit: PaymentLinkCreateCustomTextSubmit? = nil, termsOfServiceAcceptance: PaymentLinkCreateCustomTextTermsOfServiceAcceptance? = nil) {
         self.afterSubmit = afterSubmit
@@ -966,6 +996,15 @@ public struct PaymentLinkCreateCustomText: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case afterSubmit = "after_submit"
+        case shippingAddress = "shipping_address"
+        case submit
+        case termsOfServiceAcceptance = "terms_of_service_acceptance"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case afterSubmit = "after_submit"
         case shippingAddress = "shipping_address"
         case submit
@@ -1039,7 +1078,7 @@ public struct PaymentLinkCreateInvoiceCreation: StripeParams {
 }
 
 /// Invoice PDF configuration.
-public struct PaymentLinkCreateInvoiceCreationInvoiceData: StripeParams {
+public struct PaymentLinkCreateInvoiceCreationInvoiceData: ClearableParams {
     /// The account tax IDs associated with the invoice.
     public var accountTaxIds: [String]?
     /// Default custom fields to be displayed on invoices for this customer.
@@ -1058,6 +1097,8 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceData: StripeParams {
     public var metadata: [String: String]?
     /// Default options for invoice PDF rendering for this customer.
     public var renderingOptions: PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions?
+    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkCreateInvoiceCreationInvoiceDataCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkCreateInvoiceCreationInvoiceDataIssuer? = nil, metadata: [String: String]? = nil, renderingOptions: PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions? = nil) {
         self.accountTaxIds = accountTaxIds
@@ -1075,6 +1116,15 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceData: StripeParams {
         case description
         case footer
         case issuer
+        case metadata
+        case renderingOptions = "rendering_options"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accountTaxIds = "account_tax_ids"
+        case customFields = "custom_fields"
         case metadata
         case renderingOptions = "rendering_options"
     }
@@ -1117,7 +1167,7 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataIssuerType: RawRepresen
     public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: StripeParams {
+public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: ClearableParams {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
     /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
     /// exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and
@@ -1125,6 +1175,8 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: Strip
     public var amountTaxDisplay: PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay?
     /// ID of the invoice rendering template to use for this invoice.
     public var template: String?
+    /// Fields to send empty, which clears them: `params.clear(.amountTaxDisplay)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amountTaxDisplay: PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
         self.amountTaxDisplay = amountTaxDisplay
@@ -1134,6 +1186,12 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: Strip
     public enum CodingKeys: String, CodingKey {
         case amountTaxDisplay = "amount_tax_display"
         case template
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case amountTaxDisplay = "amount_tax_display"
     }
 }
 
@@ -1803,7 +1861,7 @@ public struct PaymentLinkCreateSubscriptionData: StripeParams {
 }
 
 /// All invoices will be billed using the specified settings.
-public struct PaymentLinkCreateSubscriptionDataInvoiceSettings: StripeParams {
+public struct PaymentLinkCreateSubscriptionDataInvoiceSettings: ClearableParams {
     /// The account tax IDs associated with the subscription. Will be set on invoices generated by the
     /// subscription.
     public var accountTaxIds: [String]?
@@ -1816,6 +1874,8 @@ public struct PaymentLinkCreateSubscriptionDataInvoiceSettings: StripeParams {
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
     public var issuer: PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuer?
+    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkCreateSubscriptionDataInvoiceSettingsCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuer? = nil) {
         self.accountTaxIds = accountTaxIds
@@ -1831,6 +1891,13 @@ public struct PaymentLinkCreateSubscriptionDataInvoiceSettings: StripeParams {
         case description
         case footer
         case issuer
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accountTaxIds = "account_tax_ids"
+        case customFields = "custom_fields"
     }
 }
 
@@ -2282,7 +2349,7 @@ public struct PaymentLinkUpdateCustomFieldsText: StripeParams {
 
 /// Display additional text for your customers using custom text. You can't set this parameter if
 /// `ui_mode` is `elements`.
-public struct PaymentLinkUpdateCustomText: StripeParams {
+public struct PaymentLinkUpdateCustomText: ClearableParams {
     /// Custom text that should be displayed after the payment confirmation button.
     public var afterSubmit: PaymentLinkUpdateCustomTextAfterSubmit?
     /// Custom text that should be displayed alongside shipping address collection.
@@ -2291,6 +2358,8 @@ public struct PaymentLinkUpdateCustomText: StripeParams {
     public var submit: PaymentLinkUpdateCustomTextSubmit?
     /// Custom text that should be displayed in place of the default terms of service agreement text.
     public var termsOfServiceAcceptance: PaymentLinkUpdateCustomTextTermsOfServiceAcceptance?
+    /// Fields to send empty, which clears them: `params.clear(.afterSubmit)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(afterSubmit: PaymentLinkUpdateCustomTextAfterSubmit? = nil, shippingAddress: PaymentLinkUpdateCustomTextShippingAddress? = nil, submit: PaymentLinkUpdateCustomTextSubmit? = nil, termsOfServiceAcceptance: PaymentLinkUpdateCustomTextTermsOfServiceAcceptance? = nil) {
         self.afterSubmit = afterSubmit
@@ -2300,6 +2369,15 @@ public struct PaymentLinkUpdateCustomText: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case afterSubmit = "after_submit"
+        case shippingAddress = "shipping_address"
+        case submit
+        case termsOfServiceAcceptance = "terms_of_service_acceptance"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case afterSubmit = "after_submit"
         case shippingAddress = "shipping_address"
         case submit
@@ -2373,7 +2451,7 @@ public struct PaymentLinkUpdateInvoiceCreation: StripeParams {
 }
 
 /// Invoice PDF configuration.
-public struct PaymentLinkUpdateInvoiceCreationInvoiceData: StripeParams {
+public struct PaymentLinkUpdateInvoiceCreationInvoiceData: ClearableParams {
     /// The account tax IDs associated with the invoice.
     public var accountTaxIds: [String]?
     /// Default custom fields to be displayed on invoices for this customer.
@@ -2392,6 +2470,8 @@ public struct PaymentLinkUpdateInvoiceCreationInvoiceData: StripeParams {
     public var metadata: [String: String]?
     /// Default options for invoice PDF rendering for this customer.
     public var renderingOptions: PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions?
+    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkUpdateInvoiceCreationInvoiceDataCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkUpdateInvoiceCreationInvoiceDataIssuer? = nil, metadata: [String: String]? = nil, renderingOptions: PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions? = nil) {
         self.accountTaxIds = accountTaxIds
@@ -2409,6 +2489,15 @@ public struct PaymentLinkUpdateInvoiceCreationInvoiceData: StripeParams {
         case description
         case footer
         case issuer
+        case metadata
+        case renderingOptions = "rendering_options"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accountTaxIds = "account_tax_ids"
+        case customFields = "custom_fields"
         case metadata
         case renderingOptions = "rendering_options"
     }
@@ -2451,7 +2540,7 @@ public struct PaymentLinkUpdateInvoiceCreationInvoiceDataIssuerType: RawRepresen
     public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions: StripeParams {
+public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions: ClearableParams {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
     /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
     /// exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and
@@ -2459,6 +2548,8 @@ public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions: Strip
     public var amountTaxDisplay: PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay?
     /// ID of the invoice rendering template to use for this invoice.
     public var template: String?
+    /// Fields to send empty, which clears them: `params.clear(.amountTaxDisplay)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amountTaxDisplay: PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
         self.amountTaxDisplay = amountTaxDisplay
@@ -2468,6 +2559,12 @@ public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions: Strip
     public enum CodingKeys: String, CodingKey {
         case amountTaxDisplay = "amount_tax_display"
         case template
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case amountTaxDisplay = "amount_tax_display"
     }
 }
 
@@ -2608,7 +2705,7 @@ public struct PaymentLinkUpdateOptionalItemsAdjustableQuantity: StripeParams {
 
 /// A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment`
 /// mode.
-public struct PaymentLinkUpdatePaymentIntentData: StripeParams {
+public struct PaymentLinkUpdatePaymentIntentData: ClearableParams {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will declaratively set metadata
@@ -2642,6 +2739,8 @@ public struct PaymentLinkUpdatePaymentIntentData: StripeParams {
     /// A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case
     /// for connected accounts](https://docs.stripe.com/connect/separate-charges-and-transfers) for details.
     public var transferGroup: String?
+    /// Fields to send empty, which clears them: `params.clear(.description)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(description: String? = nil, metadata: [String: String]? = nil, setupFutureUsage: PaymentLinkUpdatePaymentIntentDataSetupFutureUsage? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferGroup: String? = nil) {
         self.description = description
@@ -2653,6 +2752,17 @@ public struct PaymentLinkUpdatePaymentIntentData: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case description
+        case metadata
+        case setupFutureUsage = "setup_future_usage"
+        case statementDescriptor = "statement_descriptor"
+        case statementDescriptorSuffix = "statement_descriptor_suffix"
+        case transferGroup = "transfer_group"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case description
         case metadata
         case setupFutureUsage = "setup_future_usage"
@@ -2684,34 +2794,66 @@ public struct PaymentLinkUpdatePaymentMethodCollection: RawRepresentable, Codabl
     public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
-public struct PaymentLinkUpdatePaymentMethodOptions: StripeParams {
+public struct PaymentLinkUpdatePaymentMethodOptions: ClearableParams {
     /// Configuration for `card` payment methods.
     public var card: PaymentLinkUpdatePaymentMethodOptionsCard?
+    /// Fields to send empty, which clears them: `params.clear(.card)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(card: PaymentLinkUpdatePaymentMethodOptionsCard? = nil) {
         self.card = card
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case card
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case card
+    }
 }
 
-public struct PaymentLinkUpdatePaymentMethodOptionsCard: StripeParams {
+public struct PaymentLinkUpdatePaymentMethodOptionsCard: ClearableParams {
     /// Restrictions to apply to the card payment method. For example, you can block specific card brands.
     public var restrictions: PaymentLinkUpdatePaymentMethodOptionsCardRestrictions?
+    /// Fields to send empty, which clears them: `params.clear(.restrictions)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(restrictions: PaymentLinkUpdatePaymentMethodOptionsCardRestrictions? = nil) {
         self.restrictions = restrictions
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case restrictions
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case restrictions
+    }
 }
 
-public struct PaymentLinkUpdatePaymentMethodOptionsCardRestrictions: StripeParams {
+public struct PaymentLinkUpdatePaymentMethodOptionsCardRestrictions: ClearableParams {
     /// The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they
     /// can't complete the payment.
     public var brandsBlocked: [PaymentLinkUpdatePaymentMethodOptionsCardRestrictionsBrandsBlocked]?
+    /// Fields to send empty, which clears them: `params.clear(.brandsBlocked)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(brandsBlocked: [PaymentLinkUpdatePaymentMethodOptionsCardRestrictionsBrandsBlocked]? = nil) {
         self.brandsBlocked = brandsBlocked
     }
 
     public enum CodingKeys: String, CodingKey {
+        case brandsBlocked = "brands_blocked"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case brandsBlocked = "brands_blocked"
     }
 }
@@ -3108,7 +3250,7 @@ public struct PaymentLinkUpdateSubmitType: RawRepresentable, Codable, Hashable, 
 
 /// When creating a subscription, the specified configuration data will be used. There must be at least
 /// one line item with a recurring price to use `subscription_data`.
-public struct PaymentLinkUpdateSubscriptionData: StripeParams {
+public struct PaymentLinkUpdateSubscriptionData: ClearableParams {
     /// All invoices will be billed using the specified settings.
     public var invoiceSettings: PaymentLinkUpdateSubscriptionDataInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will declaratively set metadata
@@ -3120,6 +3262,8 @@ public struct PaymentLinkUpdateSubscriptionData: StripeParams {
     public var trialPeriodDays: Int?
     /// Settings related to subscription trials.
     public var trialSettings: PaymentLinkUpdateSubscriptionDataTrialSettings?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(invoiceSettings: PaymentLinkUpdateSubscriptionDataInvoiceSettings? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil, trialSettings: PaymentLinkUpdateSubscriptionDataTrialSettings? = nil) {
         self.invoiceSettings = invoiceSettings
@@ -3133,11 +3277,19 @@ public struct PaymentLinkUpdateSubscriptionData: StripeParams {
         case metadata
         case trialPeriodDays = "trial_period_days"
         case trialSettings = "trial_settings"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
+        case trialPeriodDays = "trial_period_days"
+        case trialSettings = "trial_settings"
     }
 }
 
 /// All invoices will be billed using the specified settings.
-public struct PaymentLinkUpdateSubscriptionDataInvoiceSettings: StripeParams {
+public struct PaymentLinkUpdateSubscriptionDataInvoiceSettings: ClearableParams {
     /// The account tax IDs associated with the subscription. Will be set on invoices generated by the
     /// subscription.
     public var accountTaxIds: [String]?
@@ -3150,6 +3302,8 @@ public struct PaymentLinkUpdateSubscriptionDataInvoiceSettings: StripeParams {
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
     public var issuer: PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuer?
+    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkUpdateSubscriptionDataInvoiceSettingsCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuer? = nil) {
         self.accountTaxIds = accountTaxIds
@@ -3165,6 +3319,13 @@ public struct PaymentLinkUpdateSubscriptionDataInvoiceSettings: StripeParams {
         case description
         case footer
         case issuer
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case accountTaxIds = "account_tax_ids"
+        case customFields = "custom_fields"
     }
 }
 
@@ -3270,16 +3431,29 @@ public struct PaymentLinkUpdateTaxIdCollectionRequired: RawRepresentable, Codabl
     public static var never: Self { .init(rawValue: "never") }
 }
 
-public struct PaymentLinkUpdateTransferData: StripeParams {
+public struct PaymentLinkUpdateTransferData: ClearableParams {
     /// If specified, successful charges will be attributed to the destination account for tax reporting,
     /// and the funds from charges will be transferred to the destination account. The ID of the resulting
     /// transfer will be returned on the successful charge's `transfer` field.
     public var destination: String
     /// The amount that will be transferred automatically when a charge succeeds.
     public var amount: Int?
+    /// Fields to send empty, which clears them: `params.clear(.amount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(destination: String, amount: Int? = nil) {
         self.destination = destination
         self.amount = amount
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case destination
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case amount
     }
 }

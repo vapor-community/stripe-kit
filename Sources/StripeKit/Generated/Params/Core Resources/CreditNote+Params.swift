@@ -342,7 +342,7 @@ public struct CreditNoteCreateEmailType: RawRepresentable, Codable, Hashable, Se
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct CreditNoteCreateLines: StripeParams {
+public struct CreditNoteCreateLines: ClearableParams {
     /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
     /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
     public var type: CreditNoteCreateLinesType
@@ -373,6 +373,8 @@ public struct CreditNoteCreateLines: StripeParams {
     /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
+    /// Fields to send empty, which clears them: `params.clear(.taxAmounts)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(type: CreditNoteCreateLinesType, amount: Int? = nil, description: String? = nil, invoiceLineItem: String? = nil, metadata: [String: String]? = nil, quantity: Int? = nil, taxAmounts: [CreditNoteCreateLinesTaxAmounts]? = nil, taxRates: [String]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.type = type
@@ -398,6 +400,13 @@ public struct CreditNoteCreateLines: StripeParams {
         case type
         case unitAmount = "unit_amount"
         case unitAmountDecimal = "unit_amount_decimal"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case taxAmounts = "tax_amounts"
+        case taxRates = "tax_rates"
     }
 }
 
@@ -532,7 +541,7 @@ public struct CreditNotePreviewEmailType: RawRepresentable, Codable, Hashable, S
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct CreditNotePreviewLines: StripeParams {
+public struct CreditNotePreviewLines: ClearableParams {
     /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
     /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
     public var type: CreditNotePreviewLinesType
@@ -563,6 +572,8 @@ public struct CreditNotePreviewLines: StripeParams {
     /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
+    /// Fields to send empty, which clears them: `params.clear(.taxAmounts)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(type: CreditNotePreviewLinesType, amount: Int? = nil, description: String? = nil, invoiceLineItem: String? = nil, metadata: [String: String]? = nil, quantity: Int? = nil, taxAmounts: [CreditNotePreviewLinesTaxAmounts]? = nil, taxRates: [String]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.type = type
@@ -588,6 +599,13 @@ public struct CreditNotePreviewLines: StripeParams {
         case type
         case unitAmount = "unit_amount"
         case unitAmountDecimal = "unit_amount_decimal"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case taxAmounts = "tax_amounts"
+        case taxRates = "tax_rates"
     }
 }
 
@@ -722,7 +740,7 @@ public struct CreditNotePreviewLinesEmailType: RawRepresentable, Codable, Hashab
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct CreditNotePreviewLinesLines: StripeParams {
+public struct CreditNotePreviewLinesLines: ClearableParams {
     /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
     /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
     public var type: CreditNotePreviewLinesLinesType
@@ -753,6 +771,8 @@ public struct CreditNotePreviewLinesLines: StripeParams {
     /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
+    /// Fields to send empty, which clears them: `params.clear(.taxAmounts)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(type: CreditNotePreviewLinesLinesType, amount: Int? = nil, description: String? = nil, invoiceLineItem: String? = nil, metadata: [String: String]? = nil, quantity: Int? = nil, taxAmounts: [CreditNotePreviewLinesLinesTaxAmounts]? = nil, taxRates: [String]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.type = type
@@ -778,6 +798,13 @@ public struct CreditNotePreviewLinesLines: StripeParams {
         case type
         case unitAmount = "unit_amount"
         case unitAmountDecimal = "unit_amount_decimal"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case taxAmounts = "tax_amounts"
+        case taxRates = "tax_rates"
     }
 }
 

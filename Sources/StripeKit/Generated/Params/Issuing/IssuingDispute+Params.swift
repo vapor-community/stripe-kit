@@ -80,7 +80,7 @@ public struct IssuingDisputeListParams: StripeParams {
     }
 }
 
-public struct IssuingDisputeSubmitParams: StripeParams {
+public struct IssuingDisputeSubmitParams: ClearableParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -88,14 +88,27 @@ public struct IssuingDisputeSubmitParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
         self.metadata = metadata
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
+    }
 }
 
-public struct IssuingDisputeUpdateParams: StripeParams {
+public struct IssuingDisputeUpdateParams: ClearableParams {
     /// The dispute amount in the card's currency and in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal).
     public var amount: Int?
@@ -108,6 +121,8 @@ public struct IssuingDisputeUpdateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int? = nil, evidence: IssuingDisputeUpdateEvidence? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.amount = amount
@@ -115,10 +130,23 @@ public struct IssuingDisputeUpdateParams: StripeParams {
         self.expand = expand
         self.metadata = metadata
     }
+
+    public enum CodingKeys: String, CodingKey {
+        case amount
+        case evidence
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
+    }
 }
 
 /// Evidence provided for the dispute.
-public struct IssuingDisputeCreateEvidence: StripeParams {
+public struct IssuingDisputeCreateEvidence: ClearableParams {
     /// Evidence provided when `reason` is 'canceled'.
     public var canceled: IssuingDisputeCreateEvidenceCanceled?
     /// Evidence provided when `reason` is 'duplicate'.
@@ -137,6 +165,8 @@ public struct IssuingDisputeCreateEvidence: StripeParams {
     public var reason: IssuingDisputeCreateEvidenceReason?
     /// Evidence provided when `reason` is 'service_not_as_described'.
     public var serviceNotAsDescribed: IssuingDisputeCreateEvidenceServiceNotAsDescribed?
+    /// Fields to send empty, which clears them: `params.clear(.canceled)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(canceled: IssuingDisputeCreateEvidenceCanceled? = nil, duplicate: IssuingDisputeCreateEvidenceDuplicate? = nil, fraudulent: IssuingDisputeCreateEvidenceFraudulent? = nil, merchandiseNotAsDescribed: IssuingDisputeCreateEvidenceMerchandiseNotAsDescribed? = nil, noValidAuthorization: IssuingDisputeCreateEvidenceNoValidAuthorization? = nil, notReceived: IssuingDisputeCreateEvidenceNotReceived? = nil, other: IssuingDisputeCreateEvidenceOther? = nil, reason: IssuingDisputeCreateEvidenceReason? = nil, serviceNotAsDescribed: IssuingDisputeCreateEvidenceServiceNotAsDescribed? = nil) {
         self.canceled = canceled
@@ -160,10 +190,23 @@ public struct IssuingDisputeCreateEvidence: StripeParams {
         case other
         case reason
         case serviceNotAsDescribed = "service_not_as_described"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case canceled
+        case duplicate
+        case fraudulent
+        case merchandiseNotAsDescribed = "merchandise_not_as_described"
+        case noValidAuthorization = "no_valid_authorization"
+        case notReceived = "not_received"
+        case other
+        case serviceNotAsDescribed = "service_not_as_described"
     }
 }
 
-public struct IssuingDisputeCreateEvidenceCanceled: StripeParams {
+public struct IssuingDisputeCreateEvidenceCanceled: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -185,6 +228,8 @@ public struct IssuingDisputeCreateEvidenceCanceled: StripeParams {
     public var returnStatus: IssuingDisputeCreateEvidenceCanceledReturnStatus?
     /// Date when the product was returned or attempted to be returned.
     public var returnedAt: Date?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, canceledAt: Date? = nil, cancellationPolicyProvided: Bool? = nil, cancellationReason: String? = nil, expectedAt: Date? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeCreateEvidenceCanceledProductType? = nil, returnStatus: IssuingDisputeCreateEvidenceCanceledReturnStatus? = nil, returnedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -200,6 +245,21 @@ public struct IssuingDisputeCreateEvidenceCanceled: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case canceledAt = "canceled_at"
+        case cancellationPolicyProvided = "cancellation_policy_provided"
+        case cancellationReason = "cancellation_reason"
+        case expectedAt = "expected_at"
+        case explanation
+        case productDescription = "product_description"
+        case productType = "product_type"
+        case returnStatus = "return_status"
+        case returnedAt = "returned_at"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case canceledAt = "canceled_at"
         case cancellationPolicyProvided = "cancellation_policy_provided"
@@ -235,7 +295,7 @@ public struct IssuingDisputeCreateEvidenceCanceledReturnStatus: RawRepresentable
     public static var successful: Self { .init(rawValue: "successful") }
 }
 
-public struct IssuingDisputeCreateEvidenceDuplicate: StripeParams {
+public struct IssuingDisputeCreateEvidenceDuplicate: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -253,6 +313,8 @@ public struct IssuingDisputeCreateEvidenceDuplicate: StripeParams {
     /// Transaction (e.g., ipi_...) that the disputed transaction is a duplicate of. Of the two or more
     /// transactions that are copies of each other, this is original undisputed one.
     public var originalTransaction: String?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, cardStatement: String? = nil, cashReceipt: String? = nil, checkImage: String? = nil, explanation: String? = nil, originalTransaction: String? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -270,15 +332,27 @@ public struct IssuingDisputeCreateEvidenceDuplicate: StripeParams {
         case checkImage = "check_image"
         case explanation
         case originalTransaction = "original_transaction"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case additionalDocumentation = "additional_documentation"
+        case cardStatement = "card_statement"
+        case cashReceipt = "cash_receipt"
+        case checkImage = "check_image"
+        case explanation
     }
 }
 
-public struct IssuingDisputeCreateEvidenceFraudulent: StripeParams {
+public struct IssuingDisputeCreateEvidenceFraudulent: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, explanation: String? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -288,10 +362,17 @@ public struct IssuingDisputeCreateEvidenceFraudulent: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case additionalDocumentation = "additional_documentation"
         case explanation
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case additionalDocumentation = "additional_documentation"
+        case explanation
     }
 }
 
-public struct IssuingDisputeCreateEvidenceMerchandiseNotAsDescribed: StripeParams {
+public struct IssuingDisputeCreateEvidenceMerchandiseNotAsDescribed: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -305,6 +386,8 @@ public struct IssuingDisputeCreateEvidenceMerchandiseNotAsDescribed: StripeParam
     public var returnStatus: IssuingDisputeCreateEvidenceMerchandiseNotAsDescribedReturnStatus?
     /// Date when the product was returned or attempted to be returned.
     public var returnedAt: Date?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, explanation: String? = nil, receivedAt: Date? = nil, returnDescription: String? = nil, returnStatus: IssuingDisputeCreateEvidenceMerchandiseNotAsDescribedReturnStatus? = nil, returnedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -316,6 +399,17 @@ public struct IssuingDisputeCreateEvidenceMerchandiseNotAsDescribed: StripeParam
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case explanation
+        case receivedAt = "received_at"
+        case returnDescription = "return_description"
+        case returnStatus = "return_status"
+        case returnedAt = "returned_at"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case explanation
         case receivedAt = "received_at"
@@ -336,12 +430,14 @@ public struct IssuingDisputeCreateEvidenceMerchandiseNotAsDescribedReturnStatus:
     public static var successful: Self { .init(rawValue: "successful") }
 }
 
-public struct IssuingDisputeCreateEvidenceNoValidAuthorization: StripeParams {
+public struct IssuingDisputeCreateEvidenceNoValidAuthorization: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, explanation: String? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -351,10 +447,17 @@ public struct IssuingDisputeCreateEvidenceNoValidAuthorization: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case additionalDocumentation = "additional_documentation"
         case explanation
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case additionalDocumentation = "additional_documentation"
+        case explanation
     }
 }
 
-public struct IssuingDisputeCreateEvidenceNotReceived: StripeParams {
+public struct IssuingDisputeCreateEvidenceNotReceived: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -366,6 +469,8 @@ public struct IssuingDisputeCreateEvidenceNotReceived: StripeParams {
     public var productDescription: String?
     /// Whether the product was a merchandise or service.
     public var productType: IssuingDisputeCreateEvidenceNotReceivedProductType?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, expectedAt: Date? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeCreateEvidenceNotReceivedProductType? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -376,6 +481,16 @@ public struct IssuingDisputeCreateEvidenceNotReceived: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case expectedAt = "expected_at"
+        case explanation
+        case productDescription = "product_description"
+        case productType = "product_type"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case expectedAt = "expected_at"
         case explanation
@@ -395,7 +510,7 @@ public struct IssuingDisputeCreateEvidenceNotReceivedProductType: RawRepresentab
     public static var service: Self { .init(rawValue: "service") }
 }
 
-public struct IssuingDisputeCreateEvidenceOther: StripeParams {
+public struct IssuingDisputeCreateEvidenceOther: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -405,6 +520,8 @@ public struct IssuingDisputeCreateEvidenceOther: StripeParams {
     public var productDescription: String?
     /// Whether the product was a merchandise or service.
     public var productType: IssuingDisputeCreateEvidenceOtherProductType?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeCreateEvidenceOtherProductType? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -414,6 +531,15 @@ public struct IssuingDisputeCreateEvidenceOther: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case explanation
+        case productDescription = "product_description"
+        case productType = "product_type"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case explanation
         case productDescription = "product_description"
@@ -449,7 +575,7 @@ public struct IssuingDisputeCreateEvidenceReason: RawRepresentable, Codable, Has
     public static var serviceNotAsDescribed: Self { .init(rawValue: "service_not_as_described") }
 }
 
-public struct IssuingDisputeCreateEvidenceServiceNotAsDescribed: StripeParams {
+public struct IssuingDisputeCreateEvidenceServiceNotAsDescribed: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -461,6 +587,8 @@ public struct IssuingDisputeCreateEvidenceServiceNotAsDescribed: StripeParams {
     public var explanation: String?
     /// Date when the product was received.
     public var receivedAt: Date?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, canceledAt: Date? = nil, cancellationReason: String? = nil, explanation: String? = nil, receivedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -471,6 +599,16 @@ public struct IssuingDisputeCreateEvidenceServiceNotAsDescribed: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case canceledAt = "canceled_at"
+        case cancellationReason = "cancellation_reason"
+        case explanation
+        case receivedAt = "received_at"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case canceledAt = "canceled_at"
         case cancellationReason = "cancellation_reason"
@@ -508,7 +646,7 @@ public struct IssuingDisputeListStatus: RawRepresentable, Codable, Hashable, Sen
 }
 
 /// Evidence provided for the dispute.
-public struct IssuingDisputeUpdateEvidence: StripeParams {
+public struct IssuingDisputeUpdateEvidence: ClearableParams {
     /// Evidence provided when `reason` is 'canceled'.
     public var canceled: IssuingDisputeUpdateEvidenceCanceled?
     /// Evidence provided when `reason` is 'duplicate'.
@@ -527,6 +665,8 @@ public struct IssuingDisputeUpdateEvidence: StripeParams {
     public var reason: IssuingDisputeUpdateEvidenceReason?
     /// Evidence provided when `reason` is 'service_not_as_described'.
     public var serviceNotAsDescribed: IssuingDisputeUpdateEvidenceServiceNotAsDescribed?
+    /// Fields to send empty, which clears them: `params.clear(.canceled)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(canceled: IssuingDisputeUpdateEvidenceCanceled? = nil, duplicate: IssuingDisputeUpdateEvidenceDuplicate? = nil, fraudulent: IssuingDisputeUpdateEvidenceFraudulent? = nil, merchandiseNotAsDescribed: IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribed? = nil, noValidAuthorization: IssuingDisputeUpdateEvidenceNoValidAuthorization? = nil, notReceived: IssuingDisputeUpdateEvidenceNotReceived? = nil, other: IssuingDisputeUpdateEvidenceOther? = nil, reason: IssuingDisputeUpdateEvidenceReason? = nil, serviceNotAsDescribed: IssuingDisputeUpdateEvidenceServiceNotAsDescribed? = nil) {
         self.canceled = canceled
@@ -550,10 +690,23 @@ public struct IssuingDisputeUpdateEvidence: StripeParams {
         case other
         case reason
         case serviceNotAsDescribed = "service_not_as_described"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case canceled
+        case duplicate
+        case fraudulent
+        case merchandiseNotAsDescribed = "merchandise_not_as_described"
+        case noValidAuthorization = "no_valid_authorization"
+        case notReceived = "not_received"
+        case other
+        case serviceNotAsDescribed = "service_not_as_described"
     }
 }
 
-public struct IssuingDisputeUpdateEvidenceCanceled: StripeParams {
+public struct IssuingDisputeUpdateEvidenceCanceled: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -575,6 +728,8 @@ public struct IssuingDisputeUpdateEvidenceCanceled: StripeParams {
     public var returnStatus: IssuingDisputeUpdateEvidenceCanceledReturnStatus?
     /// Date when the product was returned or attempted to be returned.
     public var returnedAt: Date?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, canceledAt: Date? = nil, cancellationPolicyProvided: Bool? = nil, cancellationReason: String? = nil, expectedAt: Date? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeUpdateEvidenceCanceledProductType? = nil, returnStatus: IssuingDisputeUpdateEvidenceCanceledReturnStatus? = nil, returnedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -590,6 +745,21 @@ public struct IssuingDisputeUpdateEvidenceCanceled: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case canceledAt = "canceled_at"
+        case cancellationPolicyProvided = "cancellation_policy_provided"
+        case cancellationReason = "cancellation_reason"
+        case expectedAt = "expected_at"
+        case explanation
+        case productDescription = "product_description"
+        case productType = "product_type"
+        case returnStatus = "return_status"
+        case returnedAt = "returned_at"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case canceledAt = "canceled_at"
         case cancellationPolicyProvided = "cancellation_policy_provided"
@@ -625,7 +795,7 @@ public struct IssuingDisputeUpdateEvidenceCanceledReturnStatus: RawRepresentable
     public static var successful: Self { .init(rawValue: "successful") }
 }
 
-public struct IssuingDisputeUpdateEvidenceDuplicate: StripeParams {
+public struct IssuingDisputeUpdateEvidenceDuplicate: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -643,6 +813,8 @@ public struct IssuingDisputeUpdateEvidenceDuplicate: StripeParams {
     /// Transaction (e.g., ipi_...) that the disputed transaction is a duplicate of. Of the two or more
     /// transactions that are copies of each other, this is original undisputed one.
     public var originalTransaction: String?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, cardStatement: String? = nil, cashReceipt: String? = nil, checkImage: String? = nil, explanation: String? = nil, originalTransaction: String? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -660,15 +832,27 @@ public struct IssuingDisputeUpdateEvidenceDuplicate: StripeParams {
         case checkImage = "check_image"
         case explanation
         case originalTransaction = "original_transaction"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case additionalDocumentation = "additional_documentation"
+        case cardStatement = "card_statement"
+        case cashReceipt = "cash_receipt"
+        case checkImage = "check_image"
+        case explanation
     }
 }
 
-public struct IssuingDisputeUpdateEvidenceFraudulent: StripeParams {
+public struct IssuingDisputeUpdateEvidenceFraudulent: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, explanation: String? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -678,10 +862,17 @@ public struct IssuingDisputeUpdateEvidenceFraudulent: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case additionalDocumentation = "additional_documentation"
         case explanation
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case additionalDocumentation = "additional_documentation"
+        case explanation
     }
 }
 
-public struct IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribed: StripeParams {
+public struct IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribed: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -695,6 +886,8 @@ public struct IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribed: StripeParam
     public var returnStatus: IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribedReturnStatus?
     /// Date when the product was returned or attempted to be returned.
     public var returnedAt: Date?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, explanation: String? = nil, receivedAt: Date? = nil, returnDescription: String? = nil, returnStatus: IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribedReturnStatus? = nil, returnedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -706,6 +899,17 @@ public struct IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribed: StripeParam
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case explanation
+        case receivedAt = "received_at"
+        case returnDescription = "return_description"
+        case returnStatus = "return_status"
+        case returnedAt = "returned_at"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case explanation
         case receivedAt = "received_at"
@@ -726,12 +930,14 @@ public struct IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribedReturnStatus:
     public static var successful: Self { .init(rawValue: "successful") }
 }
 
-public struct IssuingDisputeUpdateEvidenceNoValidAuthorization: StripeParams {
+public struct IssuingDisputeUpdateEvidenceNoValidAuthorization: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
     /// Explanation of why the cardholder is disputing this transaction.
     public var explanation: String?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, explanation: String? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -741,10 +947,17 @@ public struct IssuingDisputeUpdateEvidenceNoValidAuthorization: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case additionalDocumentation = "additional_documentation"
         case explanation
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case additionalDocumentation = "additional_documentation"
+        case explanation
     }
 }
 
-public struct IssuingDisputeUpdateEvidenceNotReceived: StripeParams {
+public struct IssuingDisputeUpdateEvidenceNotReceived: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -756,6 +969,8 @@ public struct IssuingDisputeUpdateEvidenceNotReceived: StripeParams {
     public var productDescription: String?
     /// Whether the product was a merchandise or service.
     public var productType: IssuingDisputeUpdateEvidenceNotReceivedProductType?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, expectedAt: Date? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeUpdateEvidenceNotReceivedProductType? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -766,6 +981,16 @@ public struct IssuingDisputeUpdateEvidenceNotReceived: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case expectedAt = "expected_at"
+        case explanation
+        case productDescription = "product_description"
+        case productType = "product_type"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case expectedAt = "expected_at"
         case explanation
@@ -785,7 +1010,7 @@ public struct IssuingDisputeUpdateEvidenceNotReceivedProductType: RawRepresentab
     public static var service: Self { .init(rawValue: "service") }
 }
 
-public struct IssuingDisputeUpdateEvidenceOther: StripeParams {
+public struct IssuingDisputeUpdateEvidenceOther: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -795,6 +1020,8 @@ public struct IssuingDisputeUpdateEvidenceOther: StripeParams {
     public var productDescription: String?
     /// Whether the product was a merchandise or service.
     public var productType: IssuingDisputeUpdateEvidenceOtherProductType?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, explanation: String? = nil, productDescription: String? = nil, productType: IssuingDisputeUpdateEvidenceOtherProductType? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -804,6 +1031,15 @@ public struct IssuingDisputeUpdateEvidenceOther: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case explanation
+        case productDescription = "product_description"
+        case productType = "product_type"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case explanation
         case productDescription = "product_description"
@@ -839,7 +1075,7 @@ public struct IssuingDisputeUpdateEvidenceReason: RawRepresentable, Codable, Has
     public static var serviceNotAsDescribed: Self { .init(rawValue: "service_not_as_described") }
 }
 
-public struct IssuingDisputeUpdateEvidenceServiceNotAsDescribed: StripeParams {
+public struct IssuingDisputeUpdateEvidenceServiceNotAsDescribed: ClearableParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
     public var additionalDocumentation: String?
@@ -851,6 +1087,8 @@ public struct IssuingDisputeUpdateEvidenceServiceNotAsDescribed: StripeParams {
     public var explanation: String?
     /// Date when the product was received.
     public var receivedAt: Date?
+    /// Fields to send empty, which clears them: `params.clear(.additionalDocumentation)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(additionalDocumentation: String? = nil, canceledAt: Date? = nil, cancellationReason: String? = nil, explanation: String? = nil, receivedAt: Date? = nil) {
         self.additionalDocumentation = additionalDocumentation
@@ -861,6 +1099,16 @@ public struct IssuingDisputeUpdateEvidenceServiceNotAsDescribed: StripeParams {
     }
 
     public enum CodingKeys: String, CodingKey {
+        case additionalDocumentation = "additional_documentation"
+        case canceledAt = "canceled_at"
+        case cancellationReason = "cancellation_reason"
+        case explanation
+        case receivedAt = "received_at"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
         case additionalDocumentation = "additional_documentation"
         case canceledAt = "canceled_at"
         case cancellationReason = "cancellation_reason"

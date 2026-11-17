@@ -16,7 +16,7 @@ public struct TopupCancelParams: StripeParams {
     }
 }
 
-public struct TopupCreateParams: StripeParams {
+public struct TopupCreateParams: ClearableParams {
     /// A positive integer representing how much to transfer.
     public var amount: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -45,6 +45,8 @@ public struct TopupCreateParams: StripeParams {
     public var statementDescriptor: String?
     /// A string that identifies this top-up as part of a group.
     public var transferGroup: String?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(amount: Int, currency: String, description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentMethod: String? = nil, paymentMethodOptions: TopupCreatePaymentMethodOptions? = nil, source: String? = nil, statementDescriptor: String? = nil, transferGroup: String? = nil) {
         self.amount = amount
@@ -70,6 +72,12 @@ public struct TopupCreateParams: StripeParams {
         case source
         case statementDescriptor = "statement_descriptor"
         case transferGroup = "transfer_group"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 
@@ -118,7 +126,7 @@ public struct TopupListParams: StripeParams {
     }
 }
 
-public struct TopupUpdateParams: StripeParams {
+public struct TopupUpdateParams: ClearableParams {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Specifies which fields in the response should be expanded.
@@ -128,11 +136,25 @@ public struct TopupUpdateParams: StripeParams {
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
+    /// Fields to send empty, which clears them: `params.clear(.metadata)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.description = description
         self.expand = expand
         self.metadata = metadata
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case description
+        case expand
+        case metadata
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case metadata
     }
 }
 

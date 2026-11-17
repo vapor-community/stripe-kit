@@ -25,7 +25,7 @@ public struct QuoteCancelParams: StripeParams {
     }
 }
 
-public struct QuoteCreateParams: StripeParams {
+public struct QuoteCreateParams: ClearableParams {
     /// The amount of the application fee (if any) that will be requested to be applied to the payment and
     /// transferred to the application owner's Stripe account. There cannot be any line items with recurring
     /// prices when using this field.
@@ -94,6 +94,8 @@ public struct QuoteCreateParams: StripeParams {
     public var testClock: String?
     /// The data with which to automatically create a Transfer for each of the invoices.
     public var transferData: QuoteCreateTransferData?
+    /// Fields to send empty, which clears them: `params.clear(.applicationFeeAmount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteCreateAutomaticTax? = nil, collectionMethod: QuoteCreateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteCreateDiscounts]? = nil, expand: [String]? = nil, expiresAt: Date? = nil, footer: String? = nil, fromQuote: QuoteCreateFromQuote? = nil, header: String? = nil, invoiceSettings: QuoteCreateInvoiceSettings? = nil, lineItems: [QuoteCreateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteCreateSubscriptionData? = nil, testClock: String? = nil, transferData: QuoteCreateTransferData? = nil) {
         self.applicationFeeAmount = applicationFeeAmount
@@ -140,6 +142,20 @@ public struct QuoteCreateParams: StripeParams {
         case onBehalfOf = "on_behalf_of"
         case subscriptionData = "subscription_data"
         case testClock = "test_clock"
+        case transferData = "transfer_data"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case applicationFeeAmount = "application_fee_amount"
+        case applicationFeePercent = "application_fee_percent"
+        case defaultTaxRates = "default_tax_rates"
+        case description
+        case discounts
+        case footer
+        case header
+        case onBehalfOf = "on_behalf_of"
         case transferData = "transfer_data"
     }
 }
@@ -272,7 +288,7 @@ public struct QuoteListLineItemsParams: StripeParams {
     }
 }
 
-public struct QuoteUpdateParams: StripeParams {
+public struct QuoteUpdateParams: ClearableParams {
     /// The amount of the application fee (if any) that will be requested to be applied to the payment and
     /// transferred to the application owner's Stripe account. There cannot be any line items with recurring
     /// prices when using this field.
@@ -329,6 +345,8 @@ public struct QuoteUpdateParams: StripeParams {
     public var subscriptionData: QuoteUpdateSubscriptionData?
     /// The data with which to automatically create a Transfer for each of the invoices.
     public var transferData: QuoteUpdateTransferData?
+    /// Fields to send empty, which clears them: `params.clear(.applicationFeeAmount)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteUpdateAutomaticTax? = nil, collectionMethod: QuoteUpdateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteUpdateDiscounts]? = nil, expand: [String]? = nil, expiresAt: Date? = nil, footer: String? = nil, header: String? = nil, invoiceSettings: QuoteUpdateInvoiceSettings? = nil, lineItems: [QuoteUpdateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteUpdateSubscriptionData? = nil, transferData: QuoteUpdateTransferData? = nil) {
         self.applicationFeeAmount = applicationFeeAmount
@@ -371,6 +389,20 @@ public struct QuoteUpdateParams: StripeParams {
         case metadata
         case onBehalfOf = "on_behalf_of"
         case subscriptionData = "subscription_data"
+        case transferData = "transfer_data"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case applicationFeeAmount = "application_fee_amount"
+        case applicationFeePercent = "application_fee_percent"
+        case defaultTaxRates = "default_tax_rates"
+        case description
+        case discounts
+        case footer
+        case header
+        case onBehalfOf = "on_behalf_of"
         case transferData = "transfer_data"
     }
 }
@@ -469,7 +501,7 @@ public struct QuoteCreateFromQuote: StripeParams {
 }
 
 /// All invoices will be billed using the specified settings.
-public struct QuoteCreateInvoiceSettings: StripeParams {
+public struct QuoteCreateInvoiceSettings: ClearableParams {
     /// A list of up to 4 custom fields to be displayed on the invoice.
     public var customFields: [QuoteCreateInvoiceSettingsCustomFields]?
     /// Number of days within which a customer must pay the invoice generated by this quote. This value will
@@ -482,6 +514,8 @@ public struct QuoteCreateInvoiceSettings: StripeParams {
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
     public var issuer: QuoteCreateInvoiceSettingsIssuer?
+    /// Fields to send empty, which clears them: `params.clear(.customFields)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customFields: [QuoteCreateInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: QuoteCreateInvoiceSettingsIssuer? = nil) {
         self.customFields = customFields
@@ -497,6 +531,14 @@ public struct QuoteCreateInvoiceSettings: StripeParams {
         case description
         case footer
         case issuer
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case customFields = "custom_fields"
+        case description
+        case footer
     }
 }
 
@@ -537,7 +579,7 @@ public struct QuoteCreateInvoiceSettingsIssuerType: RawRepresentable, Codable, H
     public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public struct QuoteCreateLineItems: StripeParams {
+public struct QuoteCreateLineItems: ClearableParams {
     /// The discounts applied to this line item.
     public var discounts: [QuoteCreateLineItemsDiscounts]?
     /// The ID of the price object. One of `price` or `price_data` is required.
@@ -550,6 +592,8 @@ public struct QuoteCreateLineItems: StripeParams {
     /// The tax rates which apply to the line item. When set, the `default_tax_rates` on the quote do not
     /// apply to this line item.
     public var taxRates: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.discounts)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(discounts: [QuoteCreateLineItemsDiscounts]? = nil, price: String? = nil, priceData: QuoteCreateLineItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.discounts = discounts
@@ -564,6 +608,13 @@ public struct QuoteCreateLineItems: StripeParams {
         case price
         case priceData = "price_data"
         case quantity
+        case taxRates = "tax_rates"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discounts
         case taxRates = "tax_rates"
     }
 }
@@ -681,7 +732,7 @@ public struct QuoteCreateLineItemsPriceDataTaxBehavior: RawRepresentable, Codabl
 /// used. There must be at least one line item with a recurring price for a subscription or subscription
 /// schedule to be created. A subscription schedule is created if `subscription_data[effective_date]` is
 /// present and in the future, otherwise a subscription is created.
-public struct QuoteCreateSubscriptionData: StripeParams {
+public struct QuoteCreateSubscriptionData: ClearableParams {
     /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
     public var billingMode: QuoteCreateSubscriptionDataBillingMode?
     /// The subscription's description, meant to be displayable to the customer. Use this field to
@@ -701,6 +752,8 @@ public struct QuoteCreateSubscriptionData: StripeParams {
     /// Integer representing the number of trial period days before the customer is charged for the first
     /// time.
     public var trialPeriodDays: Int?
+    /// Fields to send empty, which clears them: `params.clear(.effectiveDate)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(billingMode: QuoteCreateSubscriptionDataBillingMode? = nil, description: String? = nil, effectiveDate: QuoteCreateSubscriptionDataEffectiveDate? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
         self.billingMode = billingMode
@@ -715,6 +768,13 @@ public struct QuoteCreateSubscriptionData: StripeParams {
         case description
         case effectiveDate = "effective_date"
         case metadata
+        case trialPeriodDays = "trial_period_days"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case effectiveDate = "effective_date"
         case trialPeriodDays = "trial_period_days"
     }
 }
@@ -917,7 +977,7 @@ public struct QuoteUpdateDiscounts: StripeParams {
 }
 
 /// All invoices will be billed using the specified settings.
-public struct QuoteUpdateInvoiceSettings: StripeParams {
+public struct QuoteUpdateInvoiceSettings: ClearableParams {
     /// A list of up to 4 custom fields to be displayed on the invoice.
     public var customFields: [QuoteUpdateInvoiceSettingsCustomFields]?
     /// Number of days within which a customer must pay the invoice generated by this quote. This value will
@@ -930,6 +990,8 @@ public struct QuoteUpdateInvoiceSettings: StripeParams {
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
     public var issuer: QuoteUpdateInvoiceSettingsIssuer?
+    /// Fields to send empty, which clears them: `params.clear(.customFields)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(customFields: [QuoteUpdateInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: QuoteUpdateInvoiceSettingsIssuer? = nil) {
         self.customFields = customFields
@@ -945,6 +1007,14 @@ public struct QuoteUpdateInvoiceSettings: StripeParams {
         case description
         case footer
         case issuer
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case customFields = "custom_fields"
+        case description
+        case footer
     }
 }
 
@@ -985,7 +1055,7 @@ public struct QuoteUpdateInvoiceSettingsIssuerType: RawRepresentable, Codable, H
     public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public struct QuoteUpdateLineItems: StripeParams {
+public struct QuoteUpdateLineItems: ClearableParams {
     /// The discounts applied to this line item.
     public var discounts: [QuoteUpdateLineItemsDiscounts]?
     /// The ID of an existing line item on the quote.
@@ -1000,6 +1070,8 @@ public struct QuoteUpdateLineItems: StripeParams {
     /// The tax rates which apply to the line item. When set, the `default_tax_rates` on the quote do not
     /// apply to this line item.
     public var taxRates: [String]?
+    /// Fields to send empty, which clears them: `params.clear(.discounts)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(discounts: [QuoteUpdateLineItemsDiscounts]? = nil, id: String? = nil, price: String? = nil, priceData: QuoteUpdateLineItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.discounts = discounts
@@ -1016,6 +1088,13 @@ public struct QuoteUpdateLineItems: StripeParams {
         case price
         case priceData = "price_data"
         case quantity
+        case taxRates = "tax_rates"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case discounts
         case taxRates = "tax_rates"
     }
 }
@@ -1133,7 +1212,7 @@ public struct QuoteUpdateLineItemsPriceDataTaxBehavior: RawRepresentable, Codabl
 /// used. There must be at least one line item with a recurring price for a subscription or subscription
 /// schedule to be created. A subscription schedule is created if `subscription_data[effective_date]` is
 /// present and in the future, otherwise a subscription is created.
-public struct QuoteUpdateSubscriptionData: StripeParams {
+public struct QuoteUpdateSubscriptionData: ClearableParams {
     /// The subscription's description, meant to be displayable to the customer. Use this field to
     /// optionally store an explanation of the subscription for rendering in Stripe surfaces and certain
     /// local payment methods UIs.
@@ -1151,6 +1230,8 @@ public struct QuoteUpdateSubscriptionData: StripeParams {
     /// Integer representing the number of trial period days before the customer is charged for the first
     /// time.
     public var trialPeriodDays: Int?
+    /// Fields to send empty, which clears them: `params.clear(.description)`.
+    public var fieldsToClear: Set<ClearableField> = []
 
     public init(description: String? = nil, effectiveDate: QuoteUpdateSubscriptionDataEffectiveDate? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
         self.description = description
@@ -1163,6 +1244,14 @@ public struct QuoteUpdateSubscriptionData: StripeParams {
         case description
         case effectiveDate = "effective_date"
         case metadata
+        case trialPeriodDays = "trial_period_days"
+        case fieldsToClear = "__stripe_kit_fields_to_clear"
+    }
+
+    /// The fields Stripe lets you clear by sending them empty
+    public enum ClearableField: String, StripeClearableField {
+        case description
+        case effectiveDate = "effective_date"
         case trialPeriodDays = "trial_period_days"
     }
 }
