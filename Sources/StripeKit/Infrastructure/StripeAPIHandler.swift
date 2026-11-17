@@ -16,7 +16,8 @@ public struct StripeAPIHandler: Sendable {
     let apiKey: String
     let stripeAccount: String?
     let idempotencyKey: String?
-    let apiVersion = "2026-10-28.endive"
+    /// Generated from the spec, so it always matches the models (see `StripeClient.apiVersion`)
+    var apiVersion: String { StripeClient.apiVersion }
     let baseURL = "https://api.stripe.com"
 
     public init(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil, idempotencyKey: String? = nil) {

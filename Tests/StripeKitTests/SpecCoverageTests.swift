@@ -11,17 +11,22 @@ import StripeKit
 @Suite("Spec coverage")
 struct SpecCoverageTests {
 
-    /// "METHOD /path" for every GET/POST/DELETE operation in spec3.sdk.json at the repo root
-    static let specOperations: Set<String> = {
+    /// spec3.sdk.json at the repo root (immutable once loaded)
+    nonisolated(unsafe) static let spec: [String: Any] = {
         let specURL = URL(filePath: #filePath)
             .deletingLastPathComponent()  // StripeKitTests
             .deletingLastPathComponent()  // Tests
             .deletingLastPathComponent()  // repo root
             .appending(path: "spec3.sdk.json")
         guard let data = try? Data(contentsOf: specURL),
-              let spec = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let paths = spec["paths"] as? [String: [String: Any]]
-        else { return [] }
+              let spec = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        else { return [:] }
+        return spec
+    }()
+
+    /// "METHOD /path" for every GET/POST/DELETE operation in the spec
+    static let specOperations: Set<String> = {
+        guard let paths = spec["paths"] as? [String: [String: Any]] else { return [] }
         var operations = Set<String>()
         for (path, item) in paths {
             for method in ["get", "post", "delete"] where item[method] != nil {
@@ -37,6 +42,12 @@ struct SpecCoverageTests {
     @Test("The spec loads")
     func specLoads() {
         #expect(Self.specOperations.count > 500, "couldn't read spec3.sdk.json from the repo root")
+    }
+
+    @Test("Requests send the API version the code was generated from")
+    func apiVersionMatchesSpec() throws {
+        let version = try #require((Self.spec["info"] as? [String: Any])?["version"] as? String)
+        #expect(StripeClient.apiVersion == version)
     }
 
     @Test("Every spec operation is generated or skipped with a reason")

@@ -14,6 +14,10 @@ import NIOHTTP1
 /// The entry point for the Stripe API.
 /// API Version: 2026-10-28.endive
 public struct StripeClient: Sendable {
+    /// The Stripe API version these types were generated from. Sent as the `Stripe-Version`
+    /// header on every request, so responses match the generated models.
+    public static let apiVersion = "2026-10-28.endive"
+
     /// The API handler used for requests. Stored to support `onBehalfOf()` scoping.
     public let handler: StripeAPIHandler
 
