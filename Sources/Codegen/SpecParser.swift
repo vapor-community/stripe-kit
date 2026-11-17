@@ -214,12 +214,6 @@ struct SpecParser {
             // generate them here rather than as resources, which would also get routes and params.
             let isDeleted = schemaName.starts(with: SpecParser.deletedPrefix)
             guard schema.xResourceId == nil || isDeleted else { continue }
-            // Skip dot-named schemas that collide with a real underscore-named schema
-            // e.g. "payment_intent.processing" → "payment_intent_processing" already exists
-            if schemaName.contains(".") {
-                let normalized = schemaName.replacing(".", with: "_")
-                if spec.components.schemas[normalized] != nil { continue }
-            }
             
             let required = schema.required ?? []
             
@@ -395,15 +389,18 @@ struct SpecParser {
     ///
     /// - "customer" → `Customer`
     /// - "terminal.reader" → `TerminalReader`, "billing_portal.session" → `BillingPortalSession`
-    /// - "account.application.authorized" (an event payload) → `AccountApplicationAuthorized`
     /// - "deleted_terminal.location" → `DeletedTerminalLocation`
+    /// - an event's payload (`x-stripeEvent`) gets an `Event` suffix, as in stripe-node:
+    ///   "billing.alert.triggered" → `BillingAlertTriggeredEvent`. Without it, that would be the
+    ///   same name as the "billing.alert_triggered" object's.
     func schemaNameToSwiftType(_ name: String) -> String {
         if name.starts(with: SpecParser.deletedPrefix) {
             return "Deleted" + schemaNameToSwiftType(String(name.dropFirst(SpecParser.deletedPrefix.count)))
         }
-        return name
+        let typeName = name
             .split(whereSeparator: { $0 == "." || $0 == "_" })
             .map { $0.capitalized }
             .joined()
+        return spec.components.schemas[name]?.xStripeEvent != nil ? typeName + "Event" : typeName
     }
 }

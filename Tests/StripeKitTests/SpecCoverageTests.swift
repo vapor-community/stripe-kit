@@ -62,8 +62,10 @@ struct SpecCoverageTests {
         let _: KeyPath<StripeClient, EntitlementsFeatureRoutes> = \.entitlements.features
         let _: KeyPath<StripeClient, BillingPortalSessionRoutes> = \.billingPortal.sessions
         let _: KeyPath<StripeClient, TestHelpersTestClockRoutes> = \.testHelpers.testClocks
-        // Event payloads too: account.application.authorized
-        let _: AccountApplicationAuthorized.Type = AccountApplicationAuthorized.self
+        // Event payloads too, with an `Event` suffix (as in stripe-node), which also keeps
+        // billing.alert.triggered apart from the billing.alert_triggered object
+        let _: AccountApplicationAuthorizedEvent.Type = AccountApplicationAuthorizedEvent.self
+        let _: KeyPath<BillingAlertTriggeredEvent, BillingAlertTriggered> = \.object
     }
 
     @Test("Every spec operation is generated or skipped with a reason")

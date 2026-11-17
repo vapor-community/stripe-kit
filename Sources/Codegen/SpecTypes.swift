@@ -33,8 +33,14 @@ struct SchemaObject: Decodable {
     
     // Stripe vendor extensions
     let xResourceId: String?
+    /// Set on an event's payload schema (`account.updated`), naming its event type
+    let xStripeEvent: StripeEventInfo?
     /// The SDK methods Stripe defines on this resource (what stripe-node, stripe-go etc. are generated from)
     let xStripeOperations: [StripeOperation]?
+
+    struct StripeEventInfo: Decodable {
+        let type: String
+    }
 
     struct StripeOperation: Decodable {
         /// e.g. "retrieve", "list_payment_methods", "void_invoice"
@@ -56,6 +62,7 @@ struct SchemaObject: Decodable {
         case type, description, properties, required
         case `enum`, anyOf, oneOf, nullable, items
         case xResourceId = "x-resourceId"
+        case xStripeEvent = "x-stripeEvent"
         case xStripeOperations = "x-stripeOperations"
     }
     
@@ -71,6 +78,7 @@ struct SchemaObject: Decodable {
         nullable = try container.decodeIfPresent(Bool.self, forKey: .nullable)
         items = try container.decodeIfPresent(PropertyObject.self, forKey: .items)
         xResourceId = try container.decodeIfPresent(String.self, forKey: .xResourceId)
+        xStripeEvent = try container.decodeIfPresent(StripeEventInfo.self, forKey: .xStripeEvent)
         xStripeOperations = try container.decodeIfPresent([StripeOperation].self, forKey: .xStripeOperations)
     }
 }

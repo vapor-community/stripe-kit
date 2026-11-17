@@ -67,6 +67,16 @@ struct CodegenCLI: AsyncParsableCommand {
         let parser = SpecParser(spec: openAPISpec)
         let resources = parser.parseResources()
         let inlineSchemas = parser.parseInlineSchemas()
+
+        // Each type is written to a file named after it, so two schemas with one Swift name
+        // would overwrite each other, and which one wins would change between runs
+        let schemasByType = Dictionary(grouping: resources + inlineSchemas, by: \.swiftTypeName)
+        let clashes = schemasByType.filter { $0.value.count > 1 }.map { "\($0.key): \($0.value.map(\.schemaName).sorted())" }
+        guard clashes.isEmpty else {
+            print("❌ Schemas that would generate the same Swift type:")
+            clashes.sorted().forEach { print("   \($0)") }
+            throw ExitCode.failure
+        }
         
         print("📊 Parsed \(resources.count) resources, \(inlineSchemas.count) inline types")
         print()
