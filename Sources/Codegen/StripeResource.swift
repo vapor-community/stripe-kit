@@ -41,7 +41,7 @@ indirect enum StripePropertyType: Sendable {
     case expandable(wrappedType: String)   // @Expandable<T>
     case expandableCollection(wrappedType: String) // @ExpandableCollection<T>
     case `enum`(cases: [String])
-    case hash                               // [String: AnyCodableValue]: free-form JSON object
+    case hash                               // [String: JSONValue]: free-form JSON object
     case any                                // fallback for a schema with no type
 }
 

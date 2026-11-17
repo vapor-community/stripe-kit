@@ -71,6 +71,9 @@ struct FixtureDecodingTests {
         let plan = try event.data.object(as: Plan.self)
         let fixturePlan = try Fixtures.decode("plan", as: Plan.self)
         #expect(plan.id == fixturePlan.id)
+        // Dates survive the trip through the raw JSON
+        #expect(plan.created == Date(timeIntervalSince1970: 1_721_948_530))
+        #expect(event.data.object["id"]?.stringValue == fixturePlan.id)
     }
 
     /// Only fields with `x-expansionResources` (an ID, or the object when expanded) get an

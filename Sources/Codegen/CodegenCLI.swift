@@ -10,7 +10,7 @@
 //     ├── Types/            — Inline schemas (shared sub-types referenced by resources)
 //     ├── StripeClient.swift — Auto-wired client with all route properties
 //     ├── StripeEventType.swift — Enum of the spec's event types
-//     └── StripeEvent.swift  — Webhook event, signature verification, AnyCodableValue
+//     └── StripeEvent.swift  — The event struct, from the spec's `event` schema
 //   Tests/StripeKitTests/Generated/
 //     ├── FixtureTypes.swift — Schema name → Swift type map for fixture decoding tests
 //     └── GeneratedOperations.swift — Operation manifest checked by SpecCoverageTests
@@ -21,6 +21,8 @@
 //     ├── StripeExpandable.swift   — @Expandable / @ExpandableCollection property wrappers
 //     ├── Indirect.swift           — @Indirect, storing embedded resources out of line
 //     ├── StripeError.swift        — Error types
+//     ├── StripeEvent+Webhooks.swift — EventData, EventRequest, webhook signature verification
+//     ├── JSONValue.swift          — Any JSON value (free-form objects, raw event data)
 //     ├── StripeParams.swift       — StripeParams protocol and form encoding
 //     ├── StripeRangeQuery.swift   — Range filters for list params (`created`, …)
 //     ├── StripeSearchResult.swift — Search endpoint responses

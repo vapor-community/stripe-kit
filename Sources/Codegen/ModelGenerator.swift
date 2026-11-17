@@ -211,7 +211,7 @@ struct ModelGenerator {
             return "String"
         // Free-form objects (no declared fields or value type) and unresolvable anyOf unions:
         // values can be any JSON, so [String: String] would fail on numbers, bools and nulls.
-        case .hash: return "[String: AnyCodableValue]"
+        case .hash: return "[String: JSONValue]"
         case .any: return "String"
         }
     }

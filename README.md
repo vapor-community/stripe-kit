@@ -232,30 +232,31 @@ let event = try StripeEvent.verify(
 )
 
 switch event.type {
-case "payment_intent.succeeded":
+case .paymentIntentSucceeded:
     let intent = try event.data.object(as: PaymentIntent.self)
     print("Payment succeeded: \(intent.id)")
 
-case "payment_intent.payment_failed":
+case .paymentIntentPaymentFailed:
     let intent = try event.data.object(as: PaymentIntent.self)
     print("Payment failed: \(intent.lastPaymentError?.message ?? "unknown")")
 
-case "customer.subscription.created",
-     "customer.subscription.updated":
+case .customerSubscriptionCreated, .customerSubscriptionUpdated:
     let sub = try event.data.object(as: Subscription.self)
-    print("Subscription \(sub.id) status: \(sub.status)")
+    print("Subscription \(sub.id) status: \(sub.status.rawValue)")
 
-case "customer.updated":
+case .customerUpdated:
     let customer = try event.data.object(as: Customer.self)
-    let previous = try event.data.previousAttributes(as: Customer.self)
-    print("Customer \(customer.id) updated")
+    // Only the changed fields, as raw JSON
+    if let previousEmail = event.data.previousAttributes?["email"]?.stringValue {
+        print("Customer \(customer.id) changed email from \(previousEmail)")
+    }
 
-case "invoice.paid":
+case .invoicePaid:
     let invoice = try event.data.object(as: Invoice.self)
-    print("Invoice \(invoice.id) paid: \(invoice.amountPaid ?? 0)")
+    print("Invoice \(invoice.id ?? "") paid: \(invoice.amountPaid)")
 
 default:
-    print("Unhandled event: \(event.type)")
+    print("Unhandled event: \(event.type)")  // includes `.unknown` for event types newer than StripeKit
 }
 ```
 

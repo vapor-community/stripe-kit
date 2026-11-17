@@ -1,8 +1,8 @@
 // MARK: - Infrastructure Generator
 // Generates the spec-wide files: StripeClient.swift (the client wiring every route struct),
-// StripeEventType.swift, StripeEvent.swift, and the test target's fixture type registry.
-// The rest of the runtime (StripeAPIHandler, StripeError, …) is hand-written in
-// Sources/StripeKit/Infrastructure/ and never regenerated.
+// StripeEventType.swift, StripeEvent.swift (the event struct only), and the test target's
+// fixture type registry. The rest of the runtime (StripeAPIHandler, webhook verification,
+// JSONValue, …) is hand-written in Sources/StripeKit/Infrastructure/ and never regenerated.
 
 import Foundation
 
@@ -161,7 +161,8 @@ struct InfraGenerator {
     
     // MARK: - StripeEvent
     
-    /// Generate the StripeEvent struct from the spec's event schema
+    /// Generate the StripeEvent struct from the spec's event schema. Its `data` and `request`
+    /// types and signature verification are hand-written (Infrastructure/StripeEvent+Webhooks.swift).
     func generateStripeEvent() -> String {
         var lines: [String] = []
         
@@ -173,7 +174,6 @@ struct InfraGenerator {
         lines.append("//")
         lines.append("")
         lines.append("import Foundation")
-        lines.append("import Crypto")
         lines.append("")
         
         // Build property list from the event schema
@@ -240,7 +240,7 @@ struct InfraGenerator {
         eventProps.sort()
         
         // StripeEvent struct
-        lines.append("/// A Stripe webhook event with typed event type and object extraction.")
+        lines.append("/// A Stripe event, as delivered to webhooks. Verify and decode one with `StripeEvent.verify`.")
         lines.append("/// Generated from the OpenAPI spec's `event` schema.")
         lines.append("public struct StripeEvent: Codable, Sendable {")
         
@@ -266,175 +266,6 @@ struct InfraGenerator {
             lines.append("    }")
         }
         
-        lines.append("}")
-        lines.append("")
-        
-        // EventData — custom infrastructure (not from spec)
-        lines.append("public struct EventData: Codable, Sendable {")
-        lines.append("    /// The raw JSON object. Use `object(as:)` for typed access.")
-        lines.append("    public var _object: AnyCodableValue?")
-        lines.append("    /// The raw JSON previous attributes. Use `previousAttributes(as:)` for typed access.")
-        lines.append("    public var _previousAttributes: AnyCodableValue?")
-        lines.append("")
-        lines.append("    public enum CodingKeys: String, CodingKey {")
-        lines.append("        case _object = \"object\"")
-        lines.append("        case _previousAttributes = \"previous_attributes\"")
-        lines.append("    }")
-        lines.append("")
-        lines.append("    /// Decode the event's object as a typed Stripe resource.")
-        lines.append("    public func object<T: Codable>(as type: T.Type) throws -> T {")
-        lines.append("        let data = try JSONSerialization.data(withJSONObject: _object?.value ?? [:] as [String: Any])")
-        lines.append("        let decoder = JSONDecoder()")
-        lines.append("        decoder.dateDecodingStrategy = .secondsSince1970")
-        lines.append("        return try decoder.decode(T.self, from: data)")
-        lines.append("    }")
-        lines.append("")
-        lines.append("    /// Decode the event's previous attributes as a Stripe resource.")
-        lines.append("    /// Only changed fields are present — non-optional model fields that were")
-        lines.append("    /// unchanged will decode as nil since they aren't in the JSON.")
-        lines.append("    public func previousAttributes<T: Codable>(as type: T.Type) throws -> T? {")
-        lines.append("        guard let prev = _previousAttributes?.value else { return nil }")
-        lines.append("        let data = try JSONSerialization.data(withJSONObject: prev)")
-        lines.append("        let decoder = JSONDecoder()")
-        lines.append("        decoder.dateDecodingStrategy = .secondsSince1970")
-        lines.append("        return try decoder.decode(T.self, from: data)")
-        lines.append("    }")
-        lines.append("}")
-        lines.append("")
-        
-        // EventRequest
-        lines.append("public struct EventRequest: Codable, Sendable {")
-        lines.append("    public var id: String?")
-        lines.append("    public var idempotencyKey: String?")
-        lines.append("")
-        lines.append("    public enum CodingKeys: String, CodingKey {")
-        lines.append("        case id")
-        lines.append("        case idempotencyKey = \"idempotency_key\"")
-        lines.append("    }")
-        lines.append("}")
-        lines.append("")
-        
-        // Signature Verification
-        lines.append("// MARK: - Signature Verification")
-        lines.append("")
-        lines.append("extension StripeEvent {")
-        lines.append("    /// Verify a webhook signature and decode the event.")
-        lines.append("    /// - Parameters:")
-        lines.append("    ///   - payload: The raw request body bytes")
-        lines.append("    ///   - header: The Stripe-Signature header value")
-        lines.append("    ///   - secret: Your webhook endpoint secret (whsec_...)")
-        lines.append("    ///   - tolerance: Maximum age in seconds (default: 300)")
-        lines.append("    /// - Returns: The decoded and verified StripeEvent")
-        lines.append("    public static func verify(")
-        lines.append("        payload: Data,")
-        lines.append("        header: String,")
-        lines.append("        secret: String,")
-        lines.append("        tolerance: Double = 300")
-        lines.append("    ) throws -> StripeEvent {")
-        lines.append("        try verifySignature(payload: payload, header: header, secret: secret, tolerance: tolerance)")
-        lines.append("")
-        lines.append("        // Decode the event — CodingKeys handle snake_case mapping,")
-        lines.append("        // so do NOT use .convertFromSnakeCase (it double-converts).")
-        lines.append("        let decoder = JSONDecoder()")
-        lines.append("        decoder.dateDecodingStrategy = .secondsSince1970")
-        lines.append("        return try decoder.decode(StripeEvent.self, from: payload)")
-        lines.append("    }")
-        lines.append("")
-        // Static code (nothing from the spec), so written as a literal rather than line by line
-        lines.append(contentsOf: #"""
-            /// Verify a webhook signature without decoding the event.
-            /// Throws if the header is malformed, no signature matches, or the timestamp is more
-            /// than `tolerance` seconds from now.
-            public static func verifySignature(
-                payload: Data,
-                header: String,
-                secret: String,
-                tolerance: Double = 300
-            ) throws {
-                // Parse header: t=timestamp,v1=sig1,v1=sig2,...
-                let pairs = header.split(separator: ",").reduce(into: [String: [String]]()) { result, pair in
-                    let kv = pair.split(separator: "=", maxSplits: 1)
-                    guard kv.count == 2 else { return }
-                    result[String(kv[0]), default: []].append(String(kv[1]))
-                }
-
-                guard let timestamp = pairs["t"]?.first, let time = TimeInterval(timestamp),
-                      let signatures = pairs["v1"], !signatures.isEmpty
-                else { throw StripeSignatureError.unableToParseHeader }
-
-                // Stripe signs "{timestamp}.{payload}" with the payload's exact bytes
-                var signedPayload = Data("\(timestamp).".utf8)
-                signedPayload.append(payload)
-                let signature = HMAC<SHA256>.authenticationCode(for: signedPayload, using: SymmetricKey(data: Data(secret.utf8)))
-                let expected = Array(signature.map { String(format: "%02x", $0) }.joined().utf8)
-
-                guard signatures.contains(where: { constantTimeEquals(Array($0.utf8), expected) }) else {
-                    throw StripeSignatureError.noMatchingSignatureFound
-                }
-
-                guard abs(Date().timeIntervalSince1970 - time) <= tolerance else {
-                    throw StripeSignatureError.timestampNotTolerated
-                }
-            }
-
-            /// Whether `a` and `b` are equal, taking the same time wherever they differ, so the
-            /// comparison doesn't reveal how much of a forged signature was right.
-            private static func constantTimeEquals(_ a: [UInt8], _ b: [UInt8]) -> Bool {
-                guard a.count == b.count else { return false }
-                var difference: UInt8 = 0
-                for index in a.indices {
-                    difference |= a[index] ^ b[index]
-                }
-                return difference == 0
-            }
-            """#.split(separator: "\n", omittingEmptySubsequences: false).map { $0.isEmpty ? "" : "    " + $0 })
-        lines.append("}")
-        lines.append("")
-        
-        // AnyCodableValue
-        lines.append("// MARK: - AnyCodableValue")
-        lines.append("")
-        lines.append("/// A type-erased Codable value for preserving raw JSON in webhook events.")
-        lines.append("public struct AnyCodableValue: Codable, @unchecked Sendable {")
-        lines.append("    public let value: Any")
-        lines.append("")
-        lines.append("    public init(_ value: Any) {")
-        lines.append("        self.value = value")
-        lines.append("    }")
-        lines.append("")
-        lines.append("    public init(from decoder: Decoder) throws {")
-        lines.append("        let container = try decoder.singleValueContainer()")
-        lines.append("        if container.decodeNil() {")
-        lines.append("            value = Optional<Any>.none as Any")
-        lines.append("        } else if let dict = try? container.decode([String: AnyCodableValue].self) {")
-        lines.append("            value = dict.mapValues { $0.value }")
-        lines.append("        } else if let array = try? container.decode([AnyCodableValue].self) {")
-        lines.append("            value = array.map { $0.value }")
-        lines.append("        } else if let string = try? container.decode(String.self) {")
-        lines.append("            value = string")
-        lines.append("        } else if let int = try? container.decode(Int.self) {")
-        lines.append("            value = int")
-        lines.append("        } else if let double = try? container.decode(Double.self) {")
-        lines.append("            value = double")
-        lines.append("        } else if let bool = try? container.decode(Bool.self) {")
-        lines.append("            value = bool")
-        lines.append("        } else {")
-        lines.append("            value = Optional<Any>.none as Any")
-        lines.append("        }")
-        lines.append("    }")
-        lines.append("")
-        lines.append("    public func encode(to encoder: Encoder) throws {")
-        lines.append("        var container = encoder.singleValueContainer()")
-        lines.append("        switch value {")
-        lines.append("        case let v as String: try container.encode(v)")
-        lines.append("        case let v as Int: try container.encode(v)")
-        lines.append("        case let v as Double: try container.encode(v)")
-        lines.append("        case let v as Bool: try container.encode(v)")
-        lines.append("        case let v as [Any]: try container.encode(v.map { AnyCodableValue($0) })")
-        lines.append("        case let v as [String: Any]: try container.encode(v.mapValues { AnyCodableValue($0) })")
-        lines.append("        default: try container.encodeNil()")
-        lines.append("        }")
-        lines.append("    }")
         lines.append("}")
         lines.append("")
         

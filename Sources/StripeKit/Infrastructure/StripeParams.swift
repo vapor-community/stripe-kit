@@ -26,7 +26,7 @@ extension StripeParams {
     /// - Arrays of objects: `key[0][field]=value`
     /// - `nil` optionals and empty arrays/objects are omitted.
     public func toFormBody() -> String {
-        let json: FormValue
+        let json: JSONValue
         do {
             let encoder = JSONEncoder()
             // Stripe takes timestamps as whole Unix seconds; `.secondsSince1970` would send
@@ -35,7 +35,7 @@ extension StripeParams {
                 var container = encoder.singleValueContainer()
                 try container.encode(Int64(date.timeIntervalSince1970.rounded(.down)))
             }
-            json = try JSONDecoder().decode(FormValue.self, from: encoder.encode(self))
+            json = try JSONDecoder().decode(JSONValue.self, from: encoder.encode(self))
         } catch {
             assertionFailure("StripeParams form encoding failed for \(Self.self): \(error)")
             return ""
@@ -48,38 +48,7 @@ extension StripeParams {
     }
 }
 
-/// A decoded JSON value, used as the intermediate form of `toFormBody()`.
-///
-/// `JSONDecoder` won't decode a JSON number as `Bool` (or the reverse), so `true`
-/// and `1` stay distinct on every platform.
-private enum FormValue: Decodable {
-    case null
-    case bool(Bool)
-    case int(Int)
-    case double(Double)
-    case string(String)
-    case array([FormValue])
-    case object([String: FormValue])
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if container.decodeNil() {
-            self = .null
-        } else if let value = try? container.decode(Bool.self) {
-            self = .bool(value)
-        } else if let value = try? container.decode(Int.self) {
-            self = .int(value)
-        } else if let value = try? container.decode(Double.self) {
-            self = .double(value)
-        } else if let value = try? container.decode(String.self) {
-            self = .string(value)
-        } else if let value = try? container.decode([FormValue].self) {
-            self = .array(value)
-        } else {
-            self = .object(try container.decode([String: FormValue].self))
-        }
-    }
-
+private extension JSONValue {
     private var isContainer: Bool {
         switch self {
         case .array, .object: return true

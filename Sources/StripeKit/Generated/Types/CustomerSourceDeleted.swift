@@ -9,7 +9,7 @@ import Foundation
 
 /// Occurs whenever a source is removed from a customer.
 public struct CustomerSourceDeleted: Codable, Sendable {
-    public var object: [String: AnyCodableValue]
+    public var object: [String: JSONValue]
 }
 
 public struct CustomerSourceDeletedList: Codable, Sendable {

@@ -9,7 +9,7 @@ import Foundation
 
 /// Occurs whenever an external account is deleted.
 public struct AccountExternalAccountDeleted: Codable, Sendable {
-    public var object: [String: AnyCodableValue]
+    public var object: [String: JSONValue]
 }
 
 public struct AccountExternalAccountDeletedList: Codable, Sendable {

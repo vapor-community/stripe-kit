@@ -9,7 +9,7 @@ import Foundation
 
 /// Occurs whenever a new source is created for a customer.
 public struct CustomerSourceCreated: Codable, Sendable {
-    public var object: [String: AnyCodableValue]
+    public var object: [String: JSONValue]
 }
 
 public struct CustomerSourceCreatedList: Codable, Sendable {

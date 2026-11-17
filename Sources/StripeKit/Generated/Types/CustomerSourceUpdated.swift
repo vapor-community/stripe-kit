@@ -9,7 +9,7 @@ import Foundation
 
 /// Occurs whenever a source's details are changed.
 public struct CustomerSourceUpdated: Codable, Sendable {
-    public var object: [String: AnyCodableValue]
+    public var object: [String: JSONValue]
 }
 
 public struct CustomerSourceUpdatedList: Codable, Sendable {

@@ -11,7 +11,7 @@ import Foundation
 /// legacy integrations using Card or Source objects. If you use the PaymentMethod API, this event won't
 /// occur.
 public struct CustomerSourceExpiring: Codable, Sendable {
-    public var object: [String: AnyCodableValue]
+    public var object: [String: JSONValue]
 }
 
 public struct CustomerSourceExpiringList: Codable, Sendable {
