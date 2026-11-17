@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a new OutboundPayment is successfully created.
 public struct TreasuryOutboundPaymentCreated: Codable, Sendable {
     @Indirect
-    public var object: OutboundPayment
+    public var object: TreasuryOutboundPayment
 }
 
 public struct TreasuryOutboundPaymentCreatedList: Codable, Sendable {

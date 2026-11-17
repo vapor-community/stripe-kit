@@ -10,7 +10,7 @@ import Foundation
 /// Occurs when a meter is deactivated
 public struct BillingMeterDeactivated: Codable, Sendable {
     @Indirect
-    public var object: Meter
+    public var object: BillingMeter
 }
 
 public struct BillingMeterDeactivatedList: Codable, Sendable {

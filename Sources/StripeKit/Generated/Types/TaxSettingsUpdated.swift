@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever tax settings is updated.
 public struct TaxSettingsUpdated: Codable, Sendable {
     @Indirect
-    public var object: Settings
+    public var object: TaxSettings
 }
 
 public struct TaxSettingsUpdatedList: Codable, Sendable {

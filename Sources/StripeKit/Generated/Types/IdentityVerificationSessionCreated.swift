@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a VerificationSession is created
 public struct IdentityVerificationSessionCreated: Codable, Sendable {
     @Indirect
-    public var object: VerificationSession
+    public var object: IdentityVerificationSession
 }
 
 public struct IdentityVerificationSessionCreatedList: Codable, Sendable {

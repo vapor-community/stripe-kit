@@ -51,7 +51,7 @@ struct FixtureDecodingTests {
     func retrieveRoutesReturnObjectOrDeleted() throws {
         let _: KeyPath<CustomerRoutes, @Sendable (String, [String]?) async throws -> ObjectOrDeleted<Customer, DeletedCustomer>> = \.retrieve
         let _: KeyPath<TerminalLocationRoutes, @Sendable (String, [String]?) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>> = \.retrieve
-        let _: KeyPath<ReaderRoutes, @Sendable (String, ReaderUpdateParams?) async throws -> ObjectOrDeleted<Reader, DeletedReader>> = \.update
+        let _: KeyPath<TerminalReaderRoutes, @Sendable (String, TerminalReaderUpdateParams?) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>> = \.update
 
         let live = try Fixtures.decode("customer", as: ObjectOrDeleted<Customer, DeletedCustomer>.self)
         #expect(live.object?.id == "cus_QXg1o8vcGmoR32")

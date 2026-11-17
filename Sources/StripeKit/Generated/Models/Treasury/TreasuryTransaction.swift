@@ -25,7 +25,7 @@ public struct TreasuryTransaction: Codable, Sendable {
     public var description: String
     /// A list of TransactionEntries that are part of this Transaction. This cannot be expanded in any list
     /// endpoints.
-    public var entries: TransactionEntryList?
+    public var entries: TreasuryTransactionEntryList?
     /// The FinancialAccount associated with this object.
     public var financialAccount: String
     /// ID of the flow that created the Transaction.

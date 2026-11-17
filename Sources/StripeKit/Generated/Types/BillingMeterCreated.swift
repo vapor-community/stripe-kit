@@ -10,7 +10,7 @@ import Foundation
 /// Occurs when a meter is created
 public struct BillingMeterCreated: Codable, Sendable {
     @Indirect
-    public var object: Meter
+    public var object: BillingMeter
 }
 
 public struct BillingMeterCreatedList: Codable, Sendable {

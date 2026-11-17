@@ -11,7 +11,7 @@ public struct PortalSubscriptionCancellationReason: Codable, Sendable {
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// The IDs of custom feedback options configured for this cancellation reason.
-    @ExpandableCollection<FeedbackOption>
+    @ExpandableCollection<BillingFeedbackOption>
     public var feedbackOptions: [String]?
     /// Which cancellation reasons will be given as options to the customer.
     public var options: [String]

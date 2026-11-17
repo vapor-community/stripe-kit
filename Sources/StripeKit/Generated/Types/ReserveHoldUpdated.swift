@@ -9,7 +9,7 @@ import Foundation
 
 /// Occurs when a reserve hold is updated.
 public struct ReserveHoldUpdated: Codable, Sendable {
-    public var object: Hold
+    public var object: ReserveHold
 }
 
 public struct ReserveHoldUpdatedList: Codable, Sendable {

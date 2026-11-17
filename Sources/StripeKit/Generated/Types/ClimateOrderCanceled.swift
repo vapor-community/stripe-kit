@@ -10,7 +10,7 @@ import Foundation
 /// Occurs when a Climate order is canceled.
 public struct ClimateOrderCanceled: Codable, Sendable {
     @Indirect
-    public var object: Order
+    public var object: ClimateOrder
 }
 
 public struct ClimateOrderCanceledList: Codable, Sendable {

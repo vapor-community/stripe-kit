@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a cardholder is created.
 public struct IssuingCardholderCreated: Codable, Sendable {
     @Indirect
-    public var object: Cardholder
+    public var object: IssuingCardholder
 }
 
 public struct IssuingCardholderCreatedList: Codable, Sendable {

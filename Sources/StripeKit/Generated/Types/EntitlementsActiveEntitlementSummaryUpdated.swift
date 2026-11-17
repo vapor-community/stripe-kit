@@ -9,7 +9,7 @@ import Foundation
 
 /// Occurs whenever a customer's entitlements change.
 public struct EntitlementsActiveEntitlementSummaryUpdated: Codable, Sendable {
-    public var object: ActiveEntitlementSummary
+    public var object: EntitlementsActiveEntitlementSummary
 }
 
 public struct EntitlementsActiveEntitlementSummaryUpdatedList: Codable, Sendable {

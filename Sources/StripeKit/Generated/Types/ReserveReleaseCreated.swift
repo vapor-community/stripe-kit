@@ -9,7 +9,7 @@ import Foundation
 
 /// Occurs when a reserve release is created.
 public struct ReserveReleaseCreated: Codable, Sendable {
-    public var object: Release
+    public var object: ReserveRelease
 }
 
 public struct ReserveReleaseCreatedList: Codable, Sendable {

@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a personalization design is updated.
 public struct IssuingPersonalizationDesignUpdated: Codable, Sendable {
     @Indirect
-    public var object: PersonalizationDesign
+    public var object: IssuingPersonalizationDesign
 }
 
 public struct IssuingPersonalizationDesignUpdatedList: Codable, Sendable {

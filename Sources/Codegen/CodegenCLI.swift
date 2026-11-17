@@ -154,6 +154,7 @@ struct CodegenCLI: AsyncParsableCommand {
         // ── 6. Generate StripeClient (route wiring) ───────────────
         let infraGen = InfraGenerator(
             spec: openAPISpec,
+            parser: parser,
             resources: resources,
             routedResources: resources.filter { operations[$0.schemaName]?.isEmpty == false }
         )

@@ -11,7 +11,7 @@ import Foundation
 /// available).
 public struct ReportingReportTypeUpdated: Codable, Sendable {
     @Indirect
-    public var object: ReportType
+    public var object: ReportingReportType
 }
 
 public struct ReportingReportTypeUpdatedList: Codable, Sendable {

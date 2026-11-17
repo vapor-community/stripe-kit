@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever the status of the FinancialAccount becomes closed.
 public struct TreasuryFinancialAccountClosed: Codable, Sendable {
     @Indirect
-    public var object: FinancialAccount
+    public var object: TreasuryFinancialAccount
 }
 
 public struct TreasuryFinancialAccountClosedList: Codable, Sendable {

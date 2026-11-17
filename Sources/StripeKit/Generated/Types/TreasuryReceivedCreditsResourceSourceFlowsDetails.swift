@@ -9,11 +9,11 @@ import Foundation
 
 public struct TreasuryReceivedCreditsResourceSourceFlowsDetails: Codable, Sendable {
     @Indirect
-    public var creditReversal: CreditReversal?
+    public var creditReversal: TreasuryCreditReversal?
     @Indirect
-    public var outboundPayment: OutboundPayment?
+    public var outboundPayment: TreasuryOutboundPayment?
     @Indirect
-    public var outboundTransfer: OutboundTransfer?
+    public var outboundTransfer: TreasuryOutboundTransfer?
     @Indirect
     public var payout: Payout?
     /// The type of the source flow that originated the ReceivedCredit.

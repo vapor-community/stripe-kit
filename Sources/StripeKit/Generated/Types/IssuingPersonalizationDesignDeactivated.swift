@@ -11,7 +11,7 @@ import Foundation
 /// bundle that belongs to it.
 public struct IssuingPersonalizationDesignDeactivated: Codable, Sendable {
     @Indirect
-    public var object: PersonalizationDesign
+    public var object: IssuingPersonalizationDesign
 }
 
 public struct IssuingPersonalizationDesignDeactivatedList: Codable, Sendable {

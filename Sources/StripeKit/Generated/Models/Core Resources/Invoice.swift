@@ -251,7 +251,7 @@ public struct Invoice: Codable, Sendable {
     /// any invoice level discount or tax is applied. Item discounts are already incorporated
     public var subtotalExcludingTax: Int?
     /// ID of the test clock this invoice belongs to.
-    @Expandable<TestClock>
+    @Expandable<TestHelpersTestClock>
     public var testClock: String?
     public var thresholdReason: InvoiceThresholdReason?
     /// Total after discounts and taxes.

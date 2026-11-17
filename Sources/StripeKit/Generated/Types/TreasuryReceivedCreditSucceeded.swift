@@ -11,7 +11,7 @@ import Foundation
 /// deposits.
 public struct TreasuryReceivedCreditSucceeded: Codable, Sendable {
     @Indirect
-    public var object: ReceivedCredit
+    public var object: TreasuryReceivedCredit
 }
 
 public struct TreasuryReceivedCreditSucceededList: Codable, Sendable {

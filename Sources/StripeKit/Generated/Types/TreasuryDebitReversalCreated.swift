@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a DebitReversal is created.
 public struct TreasuryDebitReversalCreated: Codable, Sendable {
     @Indirect
-    public var object: DebitReversal
+    public var object: TreasuryDebitReversal
 }
 
 public struct TreasuryDebitReversalCreatedList: Codable, Sendable {

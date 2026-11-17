@@ -31,7 +31,7 @@ public struct IssuingAuthorization: Codable, Sendable {
     /// Whether the card was present at the point of sale for the authorization.
     public var cardPresence: IssuingAuthorizationCardPresence?
     /// The cardholder to whom this authorization belongs.
-    @Expandable<Cardholder>
+    @Expandable<IssuingCardholder>
     public var cardholder: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date

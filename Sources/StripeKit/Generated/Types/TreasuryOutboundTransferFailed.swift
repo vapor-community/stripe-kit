@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever an OutboundTransfer has failed.
 public struct TreasuryOutboundTransferFailed: Codable, Sendable {
     @Indirect
-    public var object: OutboundTransfer
+    public var object: TreasuryOutboundTransfer
 }
 
 public struct TreasuryOutboundTransferFailedList: Codable, Sendable {

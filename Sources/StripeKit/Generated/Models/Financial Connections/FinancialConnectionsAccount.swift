@@ -39,7 +39,7 @@ public struct FinancialConnectionsAccount: Codable, Sendable {
     /// The ID of the [Financial Connections Account
     /// Ownership](https://docs.stripe.com/api/financial_connections/ownership) object associated with this
     /// account.
-    @Expandable<AccountOwnership>
+    @Expandable<FinancialConnectionsAccountOwnership>
     public var ownership: String?
     /// The state of the most recent attempt to refresh the account owners.
     public var ownershipRefresh: BankConnectionsResourceOwnershipRefresh?

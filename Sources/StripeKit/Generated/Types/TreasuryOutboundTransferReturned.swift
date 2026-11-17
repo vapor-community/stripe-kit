@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever an OutboundTransfer is returned.
 public struct TreasuryOutboundTransferReturned: Codable, Sendable {
     @Indirect
-    public var object: OutboundTransfer
+    public var object: TreasuryOutboundTransfer
 }
 
 public struct TreasuryOutboundTransferReturnedList: Codable, Sendable {

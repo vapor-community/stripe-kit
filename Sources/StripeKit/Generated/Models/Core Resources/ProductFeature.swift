@@ -12,7 +12,7 @@ import Foundation
 /// purchasing customer.
 public struct ProductFeature: Codable, Sendable {
     @Indirect
-    public var entitlementFeature: Feature
+    public var entitlementFeature: EntitlementsFeature
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

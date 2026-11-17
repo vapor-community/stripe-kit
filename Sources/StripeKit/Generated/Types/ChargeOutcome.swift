@@ -41,7 +41,7 @@ public struct ChargeOutcome: Codable, Sendable {
     /// field is only available with Radar for Fraud Teams.
     public var riskScore: Int?
     /// The ID of the Radar rule that matched the payment, if applicable.
-    @Expandable<Rule>
+    @Expandable<RadarRule>
     public var rule: String?
     /// A human-readable description of the outcome type and reason, designed for you (the recipient of the
     /// payment), not your customer.

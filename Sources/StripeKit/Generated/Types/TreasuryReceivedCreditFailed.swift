@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a received_credit transitions to failed state. Only applicable for check deposits.
 public struct TreasuryReceivedCreditFailed: Codable, Sendable {
     @Indirect
-    public var object: ReceivedCredit
+    public var object: TreasuryReceivedCredit
 }
 
 public struct TreasuryReceivedCreditFailedList: Codable, Sendable {

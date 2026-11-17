@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a CreditReversal post is posted.
 public struct TreasuryCreditReversalPosted: Codable, Sendable {
     @Indirect
-    public var object: CreditReversal
+    public var object: TreasuryCreditReversal
 }
 
 public struct TreasuryCreditReversalPostedList: Codable, Sendable {

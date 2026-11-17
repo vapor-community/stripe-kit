@@ -6,9 +6,6 @@ import Foundation
 struct SpecParser {
     let spec: OpenAPISpec
     
-    /// Pre-computed set of Swift type names that collide (e.g. "Session", "Configuration")
-    private let collidingBaseNames: Set<String>
-
     /// "GET /v1/balance" → [(schema, method_name, method_on)] from every schema's `x-stripeOperations`
     private let stripeMethodNames: [String: [(schema: String, name: String, methodOn: String)]]
     
@@ -22,18 +19,6 @@ struct SpecParser {
             }
         }
         self.stripeMethodNames = methodNames
-        
-        // Detect which base names collide across different schemas
-        var baseNameToSchemas: [String: [String]] = [:]
-        for (schemaName, schema) in spec.components.schemas {
-            guard !schemaName.starts(with: "deleted_") else { continue }
-            let name = schema.xResourceId ?? schemaName
-            let baseName = SpecParser.baseSwiftType(name)
-            baseNameToSchemas[baseName, default: []].append(name)
-        }
-        self.collidingBaseNames = Set(
-            baseNameToSchemas.filter { $0.value.count > 1 }.keys
-        )
     }
     
     /// The SDK method name Stripe gives an operation in `x-stripeOperations` (snake_case, e.g.
@@ -403,48 +388,21 @@ struct SpecParser {
     /// Prefix of the spec's deleted-object schemas (e.g. "deleted_customer"), returned by DELETE endpoints.
     static let deletedPrefix = "deleted_"
 
-    /// The PascalCase Swift type for just the last segment of a schema name
-    private static func baseSwiftType(_ name: String) -> String {
-        let baseName: String
-        if name.contains(".") {
-            baseName = String(name.split(separator: ".").last ?? Substring(name))
-        } else {
-            baseName = name
-        }
-        return baseName
-            .split(separator: "_")
-            .map { $0.capitalized }
-            .joined()
-    }
-    
-    /// Convert schema name to Swift PascalCase type name.
-    /// Includes the namespace prefix when base name collides (e.g. CheckoutSession, IssuingCard).
-    /// Inline schemas (no dot) are treated as-is (e.g. "thresholds_resource_usage_threshold_config").
+    /// The Swift type name for a schema or resource ID: the whole name in PascalCase, namespace
+    /// included, as in Stripe's typed SDKs (stripe-go, async-stripe). Using the full name keeps
+    /// names unique without depending on what else is in the spec, so adding a resource never
+    /// renames another:
+    ///
+    /// - "customer" → `Customer`
+    /// - "terminal.reader" → `TerminalReader`, "billing_portal.session" → `BillingPortalSession`
+    /// - "account.application.authorized" (an event payload) → `AccountApplicationAuthorized`
+    /// - "deleted_terminal.location" → `DeletedTerminalLocation`
     func schemaNameToSwiftType(_ name: String) -> String {
-        // Deleted objects mirror their resource's name: "deleted_terminal.location" → "DeletedLocation"
         if name.starts(with: SpecParser.deletedPrefix) {
             return "Deleted" + schemaNameToSwiftType(String(name.dropFirst(SpecParser.deletedPrefix.count)))
         }
-
-        let baseName = SpecParser.baseSwiftType(name)
-
-        if name.contains(".") && collidingBaseNames.contains(baseName) {
-            // Include namespace: "checkout.session" → "CheckoutSession"
-            // "financial_connections.session" → "FinancialConnectionsSession"
-            return name
-                .replacing(".", with: "_")
-                .split(separator: "_")
-                .map { $0.capitalized }
-                .joined()
-        }
-        
-        // Non-namespaced or no collision: just PascalCase the whole thing
-        if name.contains(".") {
-            return baseName
-        }
-        
         return name
-            .split(separator: "_")
+            .split(whereSeparator: { $0 == "." || $0 == "_" })
             .map { $0.capitalized }
             .joined()
     }

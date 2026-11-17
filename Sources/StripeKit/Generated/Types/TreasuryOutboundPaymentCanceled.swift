@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever an OutboundPayment is canceled.
 public struct TreasuryOutboundPaymentCanceled: Codable, Sendable {
     @Indirect
-    public var object: OutboundPayment
+    public var object: TreasuryOutboundPayment
 }
 
 public struct TreasuryOutboundPaymentCanceledList: Codable, Sendable {

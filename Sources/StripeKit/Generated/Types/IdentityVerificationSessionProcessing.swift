@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a VerificationSession transitions to processing
 public struct IdentityVerificationSessionProcessing: Codable, Sendable {
     @Indirect
-    public var object: VerificationSession
+    public var object: IdentityVerificationSession
 }
 
 public struct IdentityVerificationSessionProcessingList: Codable, Sendable {

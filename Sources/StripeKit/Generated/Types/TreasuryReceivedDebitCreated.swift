@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a received_debit is created as a result of funds being pulled by another account.
 public struct TreasuryReceivedDebitCreated: Codable, Sendable {
     @Indirect
-    public var object: ReceivedDebit
+    public var object: TreasuryReceivedDebit
 }
 
 public struct TreasuryReceivedDebitCreatedList: Codable, Sendable {

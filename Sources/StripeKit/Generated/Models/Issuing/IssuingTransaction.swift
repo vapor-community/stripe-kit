@@ -29,7 +29,7 @@ public struct IssuingTransaction: Codable, Sendable {
     @Expandable<IssuingCard>
     public var card: String?
     /// The cardholder to whom this transaction belongs.
-    @Expandable<Cardholder>
+    @Expandable<IssuingCardholder>
     public var cardholder: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date

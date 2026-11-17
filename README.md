@@ -95,7 +95,13 @@ let recent = try await stripe.customers.list(.init(
 // Search
 let results = try await stripe.customers.search(.init(query: "email:'jane@example.com'"))
 print(results.data.count, results.nextPage ?? "last page")
+
+// Namespaced APIs are grouped like their paths: /v1/terminal/readers → stripe.terminal.readers
+let readers: TerminalReaderList = try await stripe.terminal.readers.list(nil)
+let calculation: TaxCalculation = try await stripe.tax.calculations.create(taxParams)
 ```
+
+Types in a namespace always carry it in their name (`TerminalReader`, `TaxCalculation`, `BillingPortalSession`), as in stripe-go and async-stripe, so a resource Stripe adds later can never rename an existing type.
 
 ## API Design
 

@@ -16,7 +16,7 @@ public struct ThresholdsResourceUsageThresholdConfig: Codable, Sendable {
     /// The value at which this alert will trigger.
     public var gte: Int
     /// The [Billing Meter](/api/billing/meter) ID whose usage is monitored.
-    @Expandable<Meter>
+    @Expandable<BillingMeter>
     public var meter: String?
     /// Defines how the alert will behave.
     public var recurrence: ThresholdsResourceUsageThresholdConfigRecurrence

@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a new FinancialAccount is created.
 public struct TreasuryFinancialAccountCreated: Codable, Sendable {
     @Indirect
-    public var object: FinancialAccount
+    public var object: TreasuryFinancialAccount
 }
 
 public struct TreasuryFinancialAccountCreatedList: Codable, Sendable {

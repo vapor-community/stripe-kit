@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a requested `ReportRun` completed successfully.
 public struct ReportingReportRunSucceeded: Codable, Sendable {
     @Indirect
-    public var object: ReportRun
+    public var object: ReportingReportRun
 }
 
 public struct ReportingReportRunSucceededList: Codable, Sendable {

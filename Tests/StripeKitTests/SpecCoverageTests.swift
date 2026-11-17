@@ -50,6 +50,22 @@ struct SpecCoverageTests {
         #expect(StripeClient.apiVersion == version)
     }
 
+    /// Namespaced resources always carry their namespace in their type name, so adding a
+    /// resource to the spec never renames another, and the client groups them by namespace
+    /// like Stripe's API paths: /v1/terminal/readers → `stripe.terminal.readers`.
+    @Test("Namespaced resources are named and grouped by namespace")
+    func namespacedResources() {
+        let _: KeyPath<StripeClient, CustomerRoutes> = \.customers
+        let _: KeyPath<StripeClient, EphemeralKeyRoutes> = \.ephemeralKeys
+        let _: KeyPath<StripeClient, TerminalReaderRoutes> = \.terminal.readers
+        let _: KeyPath<StripeClient, TaxCalculationRoutes> = \.tax.calculations
+        let _: KeyPath<StripeClient, EntitlementsFeatureRoutes> = \.entitlements.features
+        let _: KeyPath<StripeClient, BillingPortalSessionRoutes> = \.billingPortal.sessions
+        let _: KeyPath<StripeClient, TestHelpersTestClockRoutes> = \.testHelpers.testClocks
+        // Event payloads too: account.application.authorized
+        let _: AccountApplicationAuthorized.Type = AccountApplicationAuthorized.self
+    }
+
     @Test("Every spec operation is generated or skipped with a reason")
     func everySpecOperationIsCovered() {
         let uncovered = Self.specOperations

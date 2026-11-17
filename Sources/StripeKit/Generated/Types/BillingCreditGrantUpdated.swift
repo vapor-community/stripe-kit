@@ -10,7 +10,7 @@ import Foundation
 /// Occurs when a credit grant is updated
 public struct BillingCreditGrantUpdated: Codable, Sendable {
     @Indirect
-    public var object: CreditGrant
+    public var object: BillingCreditGrant
 }
 
 public struct BillingCreditGrantUpdatedList: Codable, Sendable {

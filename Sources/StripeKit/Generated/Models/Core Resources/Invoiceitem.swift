@@ -82,7 +82,7 @@ public struct Invoiceitem: Codable, Sendable {
     /// not apply to this invoice item.
     public var taxRates: [TaxRate]?
     /// ID of the test clock this invoice item belongs to.
-    @Expandable<TestClock>
+    @Expandable<TestHelpersTestClock>
     public var testClock: String?
 
     public enum CodingKeys: String, CodingKey {

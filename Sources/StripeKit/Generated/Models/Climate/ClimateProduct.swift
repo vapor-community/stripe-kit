@@ -32,7 +32,7 @@ public struct ClimateProduct: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: ClimateProductObject
     /// The carbon removal suppliers that fulfill orders for this Climate product.
-    public var suppliers: [Supplier]
+    public var suppliers: [ClimateSupplier]
 
     public enum CodingKeys: String, CodingKey {
         case created

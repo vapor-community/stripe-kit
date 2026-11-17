@@ -98,7 +98,7 @@ public struct Quote: Codable, Sendable {
     @Expandable<SubscriptionSchedule>
     public var subscriptionSchedule: String?
     /// ID of the test clock this quote belongs to.
-    @Expandable<TestClock>
+    @Expandable<TestHelpersTestClock>
     public var testClock: String?
     public var totalDetails: QuotesResourceTotalDetails
     /// The account (if any) the payments will be attributed to for tax reporting, and where funds from each

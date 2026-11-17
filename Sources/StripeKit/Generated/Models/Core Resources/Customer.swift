@@ -100,7 +100,7 @@ public struct Customer: Codable, Sendable {
     /// The customer's tax IDs.
     public var taxIds: TaxIdList?
     /// ID of the test clock that this customer belongs to.
-    @Expandable<TestClock>
+    @Expandable<TestHelpersTestClock>
     public var testClock: String?
 
     public enum CodingKeys: String, CodingKey {

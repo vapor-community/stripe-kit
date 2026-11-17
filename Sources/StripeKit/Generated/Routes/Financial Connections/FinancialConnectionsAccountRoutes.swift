@@ -23,7 +23,7 @@ public struct FinancialConnectionsAccountRoutes: Sendable {
     public var disconnect: @Sendable (_ account: String, _ params: FinancialConnectionsAccountDisconnectParams?) async throws -> FinancialConnectionsAccount
 
     /// Lists all owners for a given Account
-    public var listOwners: @Sendable (_ account: String, _ params: FinancialConnectionsAccountListOwnersParams) async throws -> AccountOwnerList
+    public var listOwners: @Sendable (_ account: String, _ params: FinancialConnectionsAccountListOwnersParams) async throws -> FinancialConnectionsAccountOwnerList
 
     /// Refreshes the data associated with a Financial Connections Account.
     public var refresh: @Sendable (_ account: String, _ params: FinancialConnectionsAccountRefreshParams) async throws -> FinancialConnectionsAccount

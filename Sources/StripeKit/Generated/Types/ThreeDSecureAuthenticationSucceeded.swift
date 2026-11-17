@@ -10,7 +10,7 @@ import Foundation
 /// Occurs when a 3DS Authentication's status transitions to 'succeeded'
 public struct ThreeDSecureAuthenticationSucceeded: Codable, Sendable {
     @Indirect
-    public var object: Authentication
+    public var object: ThreeDSecureAuthentication
 }
 
 public struct ThreeDSecureAuthenticationSucceededList: Codable, Sendable {

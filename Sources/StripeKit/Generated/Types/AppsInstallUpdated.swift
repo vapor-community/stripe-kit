@@ -11,7 +11,7 @@ import Foundation
 /// installing merchant.
 public struct AppsInstallUpdated: Codable, Sendable {
     @Indirect
-    public var object: Install
+    public var object: AppsInstall
 }
 
 public struct AppsInstallUpdatedList: Codable, Sendable {

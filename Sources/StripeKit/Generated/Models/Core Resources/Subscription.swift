@@ -169,7 +169,7 @@ public struct Subscription: Codable, Sendable {
     public var status: SubscriptionStatus
     public var statusDetails: SubscriptionsResourceStatusDetailsPublic?
     /// ID of the test clock this subscription belongs to.
-    @Expandable<TestClock>
+    @Expandable<TestHelpersTestClock>
     public var testClock: String?
     /// The account (if any) the subscription's payments will be attributed to for tax reporting, and where
     /// funds from each payment will be transferred to for each of the subscription's invoices.

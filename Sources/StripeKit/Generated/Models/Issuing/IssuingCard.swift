@@ -15,7 +15,7 @@ public struct IssuingCard: Codable, Sendable {
     /// The reason why the card was canceled.
     public var cancellationReason: IssuingCardCancellationReason?
     @Indirect
-    public var cardholder: Cardholder
+    public var cardholder: IssuingCardholder
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Date
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -58,7 +58,7 @@ public struct IssuingCard: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: IssuingCardObject
     /// The personalization design object belonging to this card.
-    @Expandable<PersonalizationDesign>
+    @Expandable<IssuingPersonalizationDesign>
     public var personalizationDesign: String?
     /// The latest card that replaces this card, if any.
     @Expandable<IssuingCard>

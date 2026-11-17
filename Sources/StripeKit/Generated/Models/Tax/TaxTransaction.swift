@@ -22,7 +22,7 @@ public struct TaxTransaction: Codable, Sendable {
     /// Unique identifier for the transaction.
     public var id: String
     /// The tax collected or refunded, by line item.
-    public var lineItems: TransactionLineItemList?
+    public var lineItems: TaxTransactionLineItemList?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool

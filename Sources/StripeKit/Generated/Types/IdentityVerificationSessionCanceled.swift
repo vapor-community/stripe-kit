@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a VerificationSession is canceled
 public struct IdentityVerificationSessionCanceled: Codable, Sendable {
     @Indirect
-    public var object: VerificationSession
+    public var object: IdentityVerificationSession
 }
 
 public struct IdentityVerificationSessionCanceledList: Codable, Sendable {

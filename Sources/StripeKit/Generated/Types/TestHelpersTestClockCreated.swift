@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever a test clock is created.
 public struct TestHelpersTestClockCreated: Codable, Sendable {
     @Indirect
-    public var object: TestClock
+    public var object: TestHelpersTestClock
 }
 
 public struct TestHelpersTestClockCreatedList: Codable, Sendable {

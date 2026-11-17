@@ -23,7 +23,7 @@ public struct TaxTransactionRoutes: Sendable {
     public var createReversal: @Sendable (_ params: TaxTransactionCreateReversalParams) async throws -> TaxTransaction
 
     /// Retrieves the line items of a committed standalone transaction as a collection.
-    public var listLineItems: @Sendable (_ transaction: String, _ params: TaxTransactionListLineItemsParams?) async throws -> TransactionLineItemList
+    public var listLineItems: @Sendable (_ transaction: String, _ params: TaxTransactionListLineItemsParams?) async throws -> TaxTransactionLineItemList
 }
 
 extension TaxTransactionRoutes {

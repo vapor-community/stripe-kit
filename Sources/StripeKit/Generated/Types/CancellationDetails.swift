@@ -16,7 +16,7 @@ public struct CancellationDetails: Codable, Sendable {
     public var feedback: CancellationDetailsFeedback?
     /// Customized feedback options that provide deeper insight into why the subscription was canceled, if
     /// the subscription was canceled explicitly by the user.
-    @Expandable<FeedbackOption>
+    @Expandable<BillingFeedbackOption>
     public var feedbackOption: String?
     /// Why this subscription was canceled.
     public var reason: CancellationDetailsReason?

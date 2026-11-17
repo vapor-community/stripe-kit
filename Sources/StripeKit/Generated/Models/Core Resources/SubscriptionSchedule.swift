@@ -61,7 +61,7 @@ public struct SubscriptionSchedule: Codable, Sendable {
     @Expandable<Subscription>
     public var subscription: String?
     /// ID of the test clock this subscription schedule belongs to.
-    @Expandable<TestClock>
+    @Expandable<TestHelpersTestClock>
     public var testClock: String?
 
     public enum CodingKeys: String, CodingKey {

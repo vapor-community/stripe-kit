@@ -18,7 +18,7 @@ public struct ClimateRemovalsOrderDeliveries: Codable, Sendable {
     /// Once retired, a URL to the registry entry for the tons from this delivery.
     public var registryUrl: String?
     @Indirect
-    public var supplier: Supplier
+    public var supplier: ClimateSupplier
 
     public enum CodingKeys: String, CodingKey {
         case deliveredAt = "delivered_at"

@@ -10,7 +10,7 @@ import Foundation
 /// Occurs whenever the arrival date on an OutboundPayment updates.
 public struct TreasuryOutboundPaymentExpectedArrivalDateUpdated: Codable, Sendable {
     @Indirect
-    public var object: OutboundPayment
+    public var object: TreasuryOutboundPayment
 }
 
 public struct TreasuryOutboundPaymentExpectedArrivalDateUpdatedList: Codable, Sendable {

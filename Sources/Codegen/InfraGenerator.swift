@@ -8,6 +8,7 @@ import Foundation
 
 struct InfraGenerator {
     let spec: OpenAPISpec
+    let parser: SpecParser
     /// Every resource (for the fixture registry)
     let resources: [StripeResource]
     /// The resources that have at least one route (for the client)
@@ -17,8 +18,19 @@ struct InfraGenerator {
     
     /// Generate the StripeClient struct that wires all route structs
     func generateStripeClient() -> String {
+        // Core resources ("customer") are client properties: `stripe.customers`. Namespaced ones
+        // ("terminal.reader") are grouped under a property per namespace, as in Stripe's API
+        // paths (/v1/terminal/readers), docs and most of its SDKs: `stripe.terminal.readers`.
+        let core = routedResources.filter { namespace(of: $0) == nil }
+        let byNamespace = Dictionary(grouping: routedResources.filter { namespace(of: $0) != nil }) { namespace(of: $0)! }
+        let namespaces = byNamespace.keys.sorted()
+
+        let coreProperties = core.map { (name: pluralized(snakeToCamel($0.resourceId)), type: "\($0.swiftTypeName)Routes") }
+        let namespaceProperties = namespaces.map { (name: snakeToCamel($0), type: parser.schemaNameToSwiftType($0)) }
+        let clientNames = ["apiVersion", "handler"] + coreProperties.map(\.name) + namespaceProperties.map(\.name)
+        precondition(Set(clientNames).count == clientNames.count, "StripeClient property names collide: \(clientNames)")
+
         var lines: [String] = []
-        
         lines.append("//")
         lines.append("//  StripeClient.swift")
         lines.append("//  StripeKit")
@@ -29,12 +41,10 @@ struct InfraGenerator {
         lines.append("")
         lines.append("import Foundation")
         lines.append("import AsyncHTTPClient")
-        lines.append("import NIO")
-        lines.append("import NIOHTTP1")
         lines.append("")
         
         // Client struct
-        lines.append("/// The entry point for the Stripe API.")
+        lines.append("/// The entry point for the Stripe API: `stripe.customers`, `stripe.terminal.readers`, ….")
         lines.append("/// API Version: \(spec.info.version)")
         lines.append("public struct StripeClient: Sendable {")
         lines.append("    /// The Stripe API version these types were generated from. Sent as the `Stripe-Version`")
@@ -44,29 +54,59 @@ struct InfraGenerator {
         lines.append("    /// The API handler used for requests. Stored to support `onBehalfOf()` scoping.")
         lines.append("    public let handler: StripeAPIHandler")
         lines.append("")
-        
-        for resource in routedResources {
-            let propName = clientPropertyName(resource)
-            lines.append("    public var \(propName): \(resource.swiftTypeName)Routes")
+        for property in coreProperties {
+            lines.append("    public var \(property.name): \(property.type)")
         }
-        
+        lines.append("")
+        for (namespace, property) in zip(namespaces, namespaceProperties) {
+            lines.append("    /// The \(namespace) APIs (`/v1/\(namespace)/…`)")
+            lines.append("    public var \(property.name): \(property.type)")
+        }
         lines.append("}")
         lines.append("")
-        
+
+        // A struct per namespace, nested in StripeClient
+        lines.append("extension StripeClient {")
+        for (index, namespace) in namespaces.enumerated() {
+            let resources = byNamespace[namespace]!.sorted { $0.resourceId < $1.resourceId }
+            let members = resources.map { resource in
+                (name: pluralized(snakeToCamel(String(resource.resourceId.dropFirst(namespace.count + 1)))), type: "\(resource.swiftTypeName)Routes")
+            }
+            precondition(Set(members.map(\.name)).count == members.count, "StripeClient.\(namespace) property names collide")
+            let structName = parser.schemaNameToSwiftType(namespace)
+
+            if index > 0 { lines.append("") }
+            lines.append("    /// The \(namespace) APIs (`/v1/\(namespace)/…`), e.g. `stripe.\(snakeToCamel(namespace)).\(members[0].name)`.")
+            lines.append("    public struct \(structName): Sendable {")
+            for member in members {
+                lines.append("        public var \(member.name): \(member.type)")
+            }
+            lines.append("")
+            lines.append("        static func live(handler: StripeAPIHandler) -> Self {")
+            lines.append("            Self(")
+            for (memberIndex, member) in members.enumerated() {
+                let comma = memberIndex < members.count - 1 ? "," : ""
+                lines.append("                \(member.name): .live(handler: handler)\(comma)")
+            }
+            lines.append("            )")
+            lines.append("        }")
+            lines.append("    }")
+        }
+        lines.append("}")
+        lines.append("")
+
         // .live factory
+        let allProperties = coreProperties.map(\.name) + namespaceProperties.map(\.name)
         lines.append("extension StripeClient {")
         lines.append("    /// Create a live client connected to the Stripe API.")
         lines.append("    public static func live(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil, idempotencyKey: String? = nil) -> StripeClient {")
         lines.append("        let handler = StripeAPIHandler(httpClient: httpClient, apiKey: apiKey, stripeAccount: stripeAccount, idempotencyKey: idempotencyKey)")
         lines.append("        return StripeClient(")
         lines.append("            handler: handler,")
-        
-        for (idx, resource) in routedResources.enumerated() {
-            let propName = clientPropertyName(resource)
-            let comma = idx < routedResources.count - 1 ? "," : ""
-            lines.append("            \(propName): \(resource.swiftTypeName)Routes.live(handler: handler)\(comma)")
+        for (index, name) in allProperties.enumerated() {
+            let comma = index < allProperties.count - 1 ? "," : ""
+            lines.append("            \(name): .live(handler: handler)\(comma)")
         }
-        
         lines.append("        )")
         lines.append("    }")
         lines.append("}")
@@ -274,16 +314,20 @@ struct InfraGenerator {
     
     // MARK: - Helpers
     
-    private func clientPropertyName(_ resource: StripeResource) -> String {
-        // PaymentIntent → paymentIntents (pluralized, camelCase)
-        let typeName = resource.swiftTypeName
-        let firstChar = typeName.prefix(1).lowercased()
-        let rest = typeName.dropFirst()
-        let camel = firstChar + rest
-        
-        // Pluralize
-        if camel.hasSuffix("s") { return camel }
-        if camel.hasSuffix("y") { return String(camel.dropLast()) + "ies" }
-        return camel + "s"
+    /// The namespace of a resource ID ("terminal" for "terminal.reader"), or nil for a core resource
+    private func namespace(of resource: StripeResource) -> String? {
+        let parts = resource.resourceId.split(separator: ".")
+        return parts.count > 1 ? String(parts[0]) : nil
+    }
+
+    /// paymentIntent → paymentIntents, ephemeralKey → ephemeralKeys, meterEventSummary →
+    /// meterEventSummaries. Names already ending in "s" are plural already (taxSettings).
+    private func pluralized(_ name: String) -> String {
+        if name.hasSuffix("s") { return name }
+        if name.hasSuffix("y"), let beforeY = name.dropLast().last, !"aeiou".contains(beforeY) {
+            return String(name.dropLast()) + "ies"
+        }
+        if name.hasSuffix("x") || name.hasSuffix("ch") || name.hasSuffix("sh") { return name + "es" }
+        return name + "s"
     }
 }

@@ -8,10 +8,8 @@
 
 import Foundation
 import AsyncHTTPClient
-import NIO
-import NIOHTTP1
 
-/// The entry point for the Stripe API.
+/// The entry point for the Stripe API: `stripe.customers`, `stripe.terminal.readers`, ….
 /// API Version: 2026-10-28.endive
 public struct StripeClient: Sendable {
     /// The Stripe API version these types were generated from. Sent as the `Stripe-Version`
@@ -24,80 +22,40 @@ public struct StripeClient: Sendable {
     public var accounts: AccountRoutes
     public var accountLinks: AccountLinkRoutes
     public var accountSessions: AccountSessionRoutes
-    public var activeEntitlements: ActiveEntitlementRoutes
-    public var alerts: AlertRoutes
     public var applePayDomains: ApplePayDomainRoutes
     public var applicationFees: ApplicationFeeRoutes
-    public var associations: AssociationRoutes
-    public var authentications: AuthenticationRoutes
     public var balances: BalanceRoutes
     public var balanceSettings: BalanceSettingsRoutes
     public var balanceTransactions: BalanceTransactionRoutes
     public var bankAccounts: BankAccountRoutes
-    public var billingPortalConfigurations: BillingPortalConfigurationRoutes
-    public var billingPortalSessions: BillingPortalSessionRoutes
-    public var calculations: CalculationRoutes
     public var capabilities: CapabilityRoutes
-    public var cardholders: CardholderRoutes
     public var cashBalances: CashBalanceRoutes
     public var charges: ChargeRoutes
-    public var checkoutSessions: CheckoutSessionRoutes
-    public var climateProducts: ClimateProductRoutes
     public var confirmationTokens: ConfirmationTokenRoutes
-    public var connectionTokens: ConnectionTokenRoutes
     public var countrySpecs: CountrySpecRoutes
     public var coupons: CouponRoutes
-    public var creditBalanceSummaries: CreditBalanceSummaryRoutes
-    public var creditBalanceTransactions: CreditBalanceTransactionRoutes
-    public var creditGrants: CreditGrantRoutes
     public var creditNotes: CreditNoteRoutes
     public var creditNoteLineItems: CreditNoteLineItemRoutes
-    public var creditReversals: CreditReversalRoutes
     public var customers: CustomerRoutes
     public var customerBalanceTransactions: CustomerBalanceTransactionRoutes
     public var customerCashBalanceTransactions: CustomerCashBalanceTransactionRoutes
     public var customerSessions: CustomerSessionRoutes
-    public var debitReversals: DebitReversalRoutes
     public var disputes: DisputeRoutes
-    public var earlyFraudWarnings: EarlyFraudWarningRoutes
-    public var ephemeralKeies: EphemeralKeyRoutes
+    public var ephemeralKeys: EphemeralKeyRoutes
     public var events: EventRoutes
     public var exchangeRates: ExchangeRateRoutes
     public var externalAccounts: ExternalAccountRoutes
-    public var features: FeatureRoutes
     public var feeRefunds: FeeRefundRoutes
-    public var feedbackOptions: FeedbackOptionRoutes
     public var files: FileRoutes
     public var fileLinks: FileLinkRoutes
-    public var financialAccounts: FinancialAccountRoutes
-    public var financialConnectionsAccounts: FinancialConnectionsAccountRoutes
-    public var financialConnectionsSessions: FinancialConnectionsSessionRoutes
-    public var financialConnectionsTransactions: FinancialConnectionsTransactionRoutes
-    public var forwardingRequests: ForwardingRequestRoutes
-    public var inboundTransfers: InboundTransferRoutes
-    public var installs: InstallRoutes
     public var invoices: InvoiceRoutes
     public var invoicePayments: InvoicePaymentRoutes
     public var invoiceRenderingTemplates: InvoiceRenderingTemplateRoutes
     public var invoiceitems: InvoiceitemRoutes
-    public var issuingAuthorizations: IssuingAuthorizationRoutes
-    public var issuingCards: IssuingCardRoutes
-    public var issuingDisputes: IssuingDisputeRoutes
-    public var issuingTokens: IssuingTokenRoutes
-    public var issuingTransactions: IssuingTransactionRoutes
     public var lineItems: LineItemRoutes
     public var loginLinks: LoginLinkRoutes
     public var mandates: MandateRoutes
-    public var meters: MeterRoutes
-    public var meterEvents: MeterEventRoutes
-    public var meterEventAdjustments: MeterEventAdjustmentRoutes
-    public var meterEventSummaries: MeterEventSummaryRoutes
-    public var onboardingLinks: OnboardingLinkRoutes
-    public var orders: OrderRoutes
-    public var outboundPayments: OutboundPaymentRoutes
-    public var outboundTransfers: OutboundTransferRoutes
     public var paymentAttemptRecords: PaymentAttemptRecordRoutes
-    public var paymentEvaluations: PaymentEvaluationRoutes
     public var paymentIntents: PaymentIntentRoutes
     public var paymentIntentAmountDetailsLineItems: PaymentIntentAmountDetailsLineItemRoutes
     public var paymentLinks: PaymentLinkRoutes
@@ -108,25 +66,15 @@ public struct StripeClient: Sendable {
     public var paymentSources: PaymentSourceRoutes
     public var payouts: PayoutRoutes
     public var persons: PersonRoutes
-    public var personalizationDesigns: PersonalizationDesignRoutes
-    public var physicalBundles: PhysicalBundleRoutes
     public var plans: PlanRoutes
     public var prices: PriceRoutes
     public var products: ProductRoutes
     public var productFeatures: ProductFeatureRoutes
     public var promotionCodes: PromotionCodeRoutes
     public var quotes: QuoteRoutes
-    public var readers: ReaderRoutes
-    public var receivedCredits: ReceivedCreditRoutes
-    public var receivedDebits: ReceivedDebitRoutes
     public var refunds: RefundRoutes
-    public var registrations: RegistrationRoutes
-    public var reportRuns: ReportRunRoutes
-    public var reportTypes: ReportTypeRoutes
     public var reviews: ReviewRoutes
     public var scheduledQueryRuns: ScheduledQueryRunRoutes
-    public var secrets: SecretRoutes
-    public var settings: SettingsRoutes
     public var setupAttempts: SetupAttemptRoutes
     public var setupIntents: SetupIntentRoutes
     public var shippingRates: ShippingRateRoutes
@@ -134,27 +82,341 @@ public struct StripeClient: Sendable {
     public var subscriptions: SubscriptionRoutes
     public var subscriptionItems: SubscriptionItemRoutes
     public var subscriptionSchedules: SubscriptionScheduleRoutes
-    public var suppliers: SupplierRoutes
     public var taxCodes: TaxCodeRoutes
     public var taxIds: TaxIdRoutes
-    public var taxLocations: TaxLocationRoutes
     public var taxRates: TaxRateRoutes
-    public var taxTransactions: TaxTransactionRoutes
-    public var terminalConfigurations: TerminalConfigurationRoutes
-    public var terminalLocations: TerminalLocationRoutes
-    public var testClocks: TestClockRoutes
     public var tokens: TokenRoutes
     public var topups: TopupRoutes
-    public var transactionEntries: TransactionEntryRoutes
     public var transfers: TransferRoutes
     public var transferReversals: TransferReversalRoutes
-    public var treasuryTransactions: TreasuryTransactionRoutes
-    public var trialOffers: TrialOfferRoutes
-    public var valueLists: ValueListRoutes
-    public var valueListItems: ValueListItemRoutes
-    public var verificationReports: VerificationReportRoutes
-    public var verificationSessions: VerificationSessionRoutes
     public var webhookEndpoints: WebhookEndpointRoutes
+
+    /// The apps APIs (`/v1/apps/…`)
+    public var apps: Apps
+    /// The billing APIs (`/v1/billing/…`)
+    public var billing: Billing
+    /// The billing_portal APIs (`/v1/billing_portal/…`)
+    public var billingPortal: BillingPortal
+    /// The checkout APIs (`/v1/checkout/…`)
+    public var checkout: Checkout
+    /// The climate APIs (`/v1/climate/…`)
+    public var climate: Climate
+    /// The entitlements APIs (`/v1/entitlements/…`)
+    public var entitlements: Entitlements
+    /// The financial_connections APIs (`/v1/financial_connections/…`)
+    public var financialConnections: FinancialConnections
+    /// The forwarding APIs (`/v1/forwarding/…`)
+    public var forwarding: Forwarding
+    /// The identity APIs (`/v1/identity/…`)
+    public var identity: Identity
+    /// The issuing APIs (`/v1/issuing/…`)
+    public var issuing: Issuing
+    /// The product_catalog APIs (`/v1/product_catalog/…`)
+    public var productCatalog: ProductCatalog
+    /// The radar APIs (`/v1/radar/…`)
+    public var radar: Radar
+    /// The reporting APIs (`/v1/reporting/…`)
+    public var reporting: Reporting
+    /// The tax APIs (`/v1/tax/…`)
+    public var tax: Tax
+    /// The terminal APIs (`/v1/terminal/…`)
+    public var terminal: Terminal
+    /// The test_helpers APIs (`/v1/test_helpers/…`)
+    public var testHelpers: TestHelpers
+    /// The three_d_secure APIs (`/v1/three_d_secure/…`)
+    public var threeDSecure: ThreeDSecure
+    /// The treasury APIs (`/v1/treasury/…`)
+    public var treasury: Treasury
+}
+
+extension StripeClient {
+    /// The apps APIs (`/v1/apps/…`), e.g. `stripe.apps.installs`.
+    public struct Apps: Sendable {
+        public var installs: AppsInstallRoutes
+        public var secrets: AppsSecretRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                installs: .live(handler: handler),
+                secrets: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The billing APIs (`/v1/billing/…`), e.g. `stripe.billing.alerts`.
+    public struct Billing: Sendable {
+        public var alerts: BillingAlertRoutes
+        public var creditBalanceSummaries: BillingCreditBalanceSummaryRoutes
+        public var creditBalanceTransactions: BillingCreditBalanceTransactionRoutes
+        public var creditGrants: BillingCreditGrantRoutes
+        public var feedbackOptions: BillingFeedbackOptionRoutes
+        public var meters: BillingMeterRoutes
+        public var meterEvents: BillingMeterEventRoutes
+        public var meterEventAdjustments: BillingMeterEventAdjustmentRoutes
+        public var meterEventSummaries: BillingMeterEventSummaryRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                alerts: .live(handler: handler),
+                creditBalanceSummaries: .live(handler: handler),
+                creditBalanceTransactions: .live(handler: handler),
+                creditGrants: .live(handler: handler),
+                feedbackOptions: .live(handler: handler),
+                meters: .live(handler: handler),
+                meterEvents: .live(handler: handler),
+                meterEventAdjustments: .live(handler: handler),
+                meterEventSummaries: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The billing_portal APIs (`/v1/billing_portal/…`), e.g. `stripe.billingPortal.configurations`.
+    public struct BillingPortal: Sendable {
+        public var configurations: BillingPortalConfigurationRoutes
+        public var sessions: BillingPortalSessionRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                configurations: .live(handler: handler),
+                sessions: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The checkout APIs (`/v1/checkout/…`), e.g. `stripe.checkout.sessions`.
+    public struct Checkout: Sendable {
+        public var sessions: CheckoutSessionRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                sessions: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The climate APIs (`/v1/climate/…`), e.g. `stripe.climate.orders`.
+    public struct Climate: Sendable {
+        public var orders: ClimateOrderRoutes
+        public var products: ClimateProductRoutes
+        public var suppliers: ClimateSupplierRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                orders: .live(handler: handler),
+                products: .live(handler: handler),
+                suppliers: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The entitlements APIs (`/v1/entitlements/…`), e.g. `stripe.entitlements.activeEntitlements`.
+    public struct Entitlements: Sendable {
+        public var activeEntitlements: EntitlementsActiveEntitlementRoutes
+        public var features: EntitlementsFeatureRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                activeEntitlements: .live(handler: handler),
+                features: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The financial_connections APIs (`/v1/financial_connections/…`), e.g. `stripe.financialConnections.accounts`.
+    public struct FinancialConnections: Sendable {
+        public var accounts: FinancialConnectionsAccountRoutes
+        public var sessions: FinancialConnectionsSessionRoutes
+        public var transactions: FinancialConnectionsTransactionRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                accounts: .live(handler: handler),
+                sessions: .live(handler: handler),
+                transactions: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The forwarding APIs (`/v1/forwarding/…`), e.g. `stripe.forwarding.requests`.
+    public struct Forwarding: Sendable {
+        public var requests: ForwardingRequestRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                requests: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The identity APIs (`/v1/identity/…`), e.g. `stripe.identity.verificationReports`.
+    public struct Identity: Sendable {
+        public var verificationReports: IdentityVerificationReportRoutes
+        public var verificationSessions: IdentityVerificationSessionRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                verificationReports: .live(handler: handler),
+                verificationSessions: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The issuing APIs (`/v1/issuing/…`), e.g. `stripe.issuing.authorizations`.
+    public struct Issuing: Sendable {
+        public var authorizations: IssuingAuthorizationRoutes
+        public var cards: IssuingCardRoutes
+        public var cardholders: IssuingCardholderRoutes
+        public var disputes: IssuingDisputeRoutes
+        public var personalizationDesigns: IssuingPersonalizationDesignRoutes
+        public var physicalBundles: IssuingPhysicalBundleRoutes
+        public var tokens: IssuingTokenRoutes
+        public var transactions: IssuingTransactionRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                authorizations: .live(handler: handler),
+                cards: .live(handler: handler),
+                cardholders: .live(handler: handler),
+                disputes: .live(handler: handler),
+                personalizationDesigns: .live(handler: handler),
+                physicalBundles: .live(handler: handler),
+                tokens: .live(handler: handler),
+                transactions: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The product_catalog APIs (`/v1/product_catalog/…`), e.g. `stripe.productCatalog.trialOffers`.
+    public struct ProductCatalog: Sendable {
+        public var trialOffers: ProductCatalogTrialOfferRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                trialOffers: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The radar APIs (`/v1/radar/…`), e.g. `stripe.radar.earlyFraudWarnings`.
+    public struct Radar: Sendable {
+        public var earlyFraudWarnings: RadarEarlyFraudWarningRoutes
+        public var paymentEvaluations: RadarPaymentEvaluationRoutes
+        public var valueLists: RadarValueListRoutes
+        public var valueListItems: RadarValueListItemRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                earlyFraudWarnings: .live(handler: handler),
+                paymentEvaluations: .live(handler: handler),
+                valueLists: .live(handler: handler),
+                valueListItems: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The reporting APIs (`/v1/reporting/…`), e.g. `stripe.reporting.reportRuns`.
+    public struct Reporting: Sendable {
+        public var reportRuns: ReportingReportRunRoutes
+        public var reportTypes: ReportingReportTypeRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                reportRuns: .live(handler: handler),
+                reportTypes: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The tax APIs (`/v1/tax/…`), e.g. `stripe.tax.associations`.
+    public struct Tax: Sendable {
+        public var associations: TaxAssociationRoutes
+        public var calculations: TaxCalculationRoutes
+        public var locations: TaxLocationRoutes
+        public var registrations: TaxRegistrationRoutes
+        public var settings: TaxSettingsRoutes
+        public var transactions: TaxTransactionRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                associations: .live(handler: handler),
+                calculations: .live(handler: handler),
+                locations: .live(handler: handler),
+                registrations: .live(handler: handler),
+                settings: .live(handler: handler),
+                transactions: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The terminal APIs (`/v1/terminal/…`), e.g. `stripe.terminal.configurations`.
+    public struct Terminal: Sendable {
+        public var configurations: TerminalConfigurationRoutes
+        public var connectionTokens: TerminalConnectionTokenRoutes
+        public var locations: TerminalLocationRoutes
+        public var onboardingLinks: TerminalOnboardingLinkRoutes
+        public var readers: TerminalReaderRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                configurations: .live(handler: handler),
+                connectionTokens: .live(handler: handler),
+                locations: .live(handler: handler),
+                onboardingLinks: .live(handler: handler),
+                readers: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The test_helpers APIs (`/v1/test_helpers/…`), e.g. `stripe.testHelpers.testClocks`.
+    public struct TestHelpers: Sendable {
+        public var testClocks: TestHelpersTestClockRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                testClocks: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The three_d_secure APIs (`/v1/three_d_secure/…`), e.g. `stripe.threeDSecure.authentications`.
+    public struct ThreeDSecure: Sendable {
+        public var authentications: ThreeDSecureAuthenticationRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                authentications: .live(handler: handler)
+            )
+        }
+    }
+
+    /// The treasury APIs (`/v1/treasury/…`), e.g. `stripe.treasury.creditReversals`.
+    public struct Treasury: Sendable {
+        public var creditReversals: TreasuryCreditReversalRoutes
+        public var debitReversals: TreasuryDebitReversalRoutes
+        public var financialAccounts: TreasuryFinancialAccountRoutes
+        public var inboundTransfers: TreasuryInboundTransferRoutes
+        public var outboundPayments: TreasuryOutboundPaymentRoutes
+        public var outboundTransfers: TreasuryOutboundTransferRoutes
+        public var receivedCredits: TreasuryReceivedCreditRoutes
+        public var receivedDebits: TreasuryReceivedDebitRoutes
+        public var transactions: TreasuryTransactionRoutes
+        public var transactionEntries: TreasuryTransactionEntryRoutes
+
+        static func live(handler: StripeAPIHandler) -> Self {
+            Self(
+                creditReversals: .live(handler: handler),
+                debitReversals: .live(handler: handler),
+                financialAccounts: .live(handler: handler),
+                inboundTransfers: .live(handler: handler),
+                outboundPayments: .live(handler: handler),
+                outboundTransfers: .live(handler: handler),
+                receivedCredits: .live(handler: handler),
+                receivedDebits: .live(handler: handler),
+                transactions: .live(handler: handler),
+                transactionEntries: .live(handler: handler)
+            )
+        }
+    }
 }
 
 extension StripeClient {
@@ -163,140 +425,95 @@ extension StripeClient {
         let handler = StripeAPIHandler(httpClient: httpClient, apiKey: apiKey, stripeAccount: stripeAccount, idempotencyKey: idempotencyKey)
         return StripeClient(
             handler: handler,
-            accounts: AccountRoutes.live(handler: handler),
-            accountLinks: AccountLinkRoutes.live(handler: handler),
-            accountSessions: AccountSessionRoutes.live(handler: handler),
-            activeEntitlements: ActiveEntitlementRoutes.live(handler: handler),
-            alerts: AlertRoutes.live(handler: handler),
-            applePayDomains: ApplePayDomainRoutes.live(handler: handler),
-            applicationFees: ApplicationFeeRoutes.live(handler: handler),
-            associations: AssociationRoutes.live(handler: handler),
-            authentications: AuthenticationRoutes.live(handler: handler),
-            balances: BalanceRoutes.live(handler: handler),
-            balanceSettings: BalanceSettingsRoutes.live(handler: handler),
-            balanceTransactions: BalanceTransactionRoutes.live(handler: handler),
-            bankAccounts: BankAccountRoutes.live(handler: handler),
-            billingPortalConfigurations: BillingPortalConfigurationRoutes.live(handler: handler),
-            billingPortalSessions: BillingPortalSessionRoutes.live(handler: handler),
-            calculations: CalculationRoutes.live(handler: handler),
-            capabilities: CapabilityRoutes.live(handler: handler),
-            cardholders: CardholderRoutes.live(handler: handler),
-            cashBalances: CashBalanceRoutes.live(handler: handler),
-            charges: ChargeRoutes.live(handler: handler),
-            checkoutSessions: CheckoutSessionRoutes.live(handler: handler),
-            climateProducts: ClimateProductRoutes.live(handler: handler),
-            confirmationTokens: ConfirmationTokenRoutes.live(handler: handler),
-            connectionTokens: ConnectionTokenRoutes.live(handler: handler),
-            countrySpecs: CountrySpecRoutes.live(handler: handler),
-            coupons: CouponRoutes.live(handler: handler),
-            creditBalanceSummaries: CreditBalanceSummaryRoutes.live(handler: handler),
-            creditBalanceTransactions: CreditBalanceTransactionRoutes.live(handler: handler),
-            creditGrants: CreditGrantRoutes.live(handler: handler),
-            creditNotes: CreditNoteRoutes.live(handler: handler),
-            creditNoteLineItems: CreditNoteLineItemRoutes.live(handler: handler),
-            creditReversals: CreditReversalRoutes.live(handler: handler),
-            customers: CustomerRoutes.live(handler: handler),
-            customerBalanceTransactions: CustomerBalanceTransactionRoutes.live(handler: handler),
-            customerCashBalanceTransactions: CustomerCashBalanceTransactionRoutes.live(handler: handler),
-            customerSessions: CustomerSessionRoutes.live(handler: handler),
-            debitReversals: DebitReversalRoutes.live(handler: handler),
-            disputes: DisputeRoutes.live(handler: handler),
-            earlyFraudWarnings: EarlyFraudWarningRoutes.live(handler: handler),
-            ephemeralKeies: EphemeralKeyRoutes.live(handler: handler),
-            events: EventRoutes.live(handler: handler),
-            exchangeRates: ExchangeRateRoutes.live(handler: handler),
-            externalAccounts: ExternalAccountRoutes.live(handler: handler),
-            features: FeatureRoutes.live(handler: handler),
-            feeRefunds: FeeRefundRoutes.live(handler: handler),
-            feedbackOptions: FeedbackOptionRoutes.live(handler: handler),
-            files: FileRoutes.live(handler: handler),
-            fileLinks: FileLinkRoutes.live(handler: handler),
-            financialAccounts: FinancialAccountRoutes.live(handler: handler),
-            financialConnectionsAccounts: FinancialConnectionsAccountRoutes.live(handler: handler),
-            financialConnectionsSessions: FinancialConnectionsSessionRoutes.live(handler: handler),
-            financialConnectionsTransactions: FinancialConnectionsTransactionRoutes.live(handler: handler),
-            forwardingRequests: ForwardingRequestRoutes.live(handler: handler),
-            inboundTransfers: InboundTransferRoutes.live(handler: handler),
-            installs: InstallRoutes.live(handler: handler),
-            invoices: InvoiceRoutes.live(handler: handler),
-            invoicePayments: InvoicePaymentRoutes.live(handler: handler),
-            invoiceRenderingTemplates: InvoiceRenderingTemplateRoutes.live(handler: handler),
-            invoiceitems: InvoiceitemRoutes.live(handler: handler),
-            issuingAuthorizations: IssuingAuthorizationRoutes.live(handler: handler),
-            issuingCards: IssuingCardRoutes.live(handler: handler),
-            issuingDisputes: IssuingDisputeRoutes.live(handler: handler),
-            issuingTokens: IssuingTokenRoutes.live(handler: handler),
-            issuingTransactions: IssuingTransactionRoutes.live(handler: handler),
-            lineItems: LineItemRoutes.live(handler: handler),
-            loginLinks: LoginLinkRoutes.live(handler: handler),
-            mandates: MandateRoutes.live(handler: handler),
-            meters: MeterRoutes.live(handler: handler),
-            meterEvents: MeterEventRoutes.live(handler: handler),
-            meterEventAdjustments: MeterEventAdjustmentRoutes.live(handler: handler),
-            meterEventSummaries: MeterEventSummaryRoutes.live(handler: handler),
-            onboardingLinks: OnboardingLinkRoutes.live(handler: handler),
-            orders: OrderRoutes.live(handler: handler),
-            outboundPayments: OutboundPaymentRoutes.live(handler: handler),
-            outboundTransfers: OutboundTransferRoutes.live(handler: handler),
-            paymentAttemptRecords: PaymentAttemptRecordRoutes.live(handler: handler),
-            paymentEvaluations: PaymentEvaluationRoutes.live(handler: handler),
-            paymentIntents: PaymentIntentRoutes.live(handler: handler),
-            paymentIntentAmountDetailsLineItems: PaymentIntentAmountDetailsLineItemRoutes.live(handler: handler),
-            paymentLinks: PaymentLinkRoutes.live(handler: handler),
-            paymentMethods: PaymentMethodRoutes.live(handler: handler),
-            paymentMethodConfigurations: PaymentMethodConfigurationRoutes.live(handler: handler),
-            paymentMethodDomains: PaymentMethodDomainRoutes.live(handler: handler),
-            paymentRecords: PaymentRecordRoutes.live(handler: handler),
-            paymentSources: PaymentSourceRoutes.live(handler: handler),
-            payouts: PayoutRoutes.live(handler: handler),
-            persons: PersonRoutes.live(handler: handler),
-            personalizationDesigns: PersonalizationDesignRoutes.live(handler: handler),
-            physicalBundles: PhysicalBundleRoutes.live(handler: handler),
-            plans: PlanRoutes.live(handler: handler),
-            prices: PriceRoutes.live(handler: handler),
-            products: ProductRoutes.live(handler: handler),
-            productFeatures: ProductFeatureRoutes.live(handler: handler),
-            promotionCodes: PromotionCodeRoutes.live(handler: handler),
-            quotes: QuoteRoutes.live(handler: handler),
-            readers: ReaderRoutes.live(handler: handler),
-            receivedCredits: ReceivedCreditRoutes.live(handler: handler),
-            receivedDebits: ReceivedDebitRoutes.live(handler: handler),
-            refunds: RefundRoutes.live(handler: handler),
-            registrations: RegistrationRoutes.live(handler: handler),
-            reportRuns: ReportRunRoutes.live(handler: handler),
-            reportTypes: ReportTypeRoutes.live(handler: handler),
-            reviews: ReviewRoutes.live(handler: handler),
-            scheduledQueryRuns: ScheduledQueryRunRoutes.live(handler: handler),
-            secrets: SecretRoutes.live(handler: handler),
-            settings: SettingsRoutes.live(handler: handler),
-            setupAttempts: SetupAttemptRoutes.live(handler: handler),
-            setupIntents: SetupIntentRoutes.live(handler: handler),
-            shippingRates: ShippingRateRoutes.live(handler: handler),
-            sources: SourceRoutes.live(handler: handler),
-            subscriptions: SubscriptionRoutes.live(handler: handler),
-            subscriptionItems: SubscriptionItemRoutes.live(handler: handler),
-            subscriptionSchedules: SubscriptionScheduleRoutes.live(handler: handler),
-            suppliers: SupplierRoutes.live(handler: handler),
-            taxCodes: TaxCodeRoutes.live(handler: handler),
-            taxIds: TaxIdRoutes.live(handler: handler),
-            taxLocations: TaxLocationRoutes.live(handler: handler),
-            taxRates: TaxRateRoutes.live(handler: handler),
-            taxTransactions: TaxTransactionRoutes.live(handler: handler),
-            terminalConfigurations: TerminalConfigurationRoutes.live(handler: handler),
-            terminalLocations: TerminalLocationRoutes.live(handler: handler),
-            testClocks: TestClockRoutes.live(handler: handler),
-            tokens: TokenRoutes.live(handler: handler),
-            topups: TopupRoutes.live(handler: handler),
-            transactionEntries: TransactionEntryRoutes.live(handler: handler),
-            transfers: TransferRoutes.live(handler: handler),
-            transferReversals: TransferReversalRoutes.live(handler: handler),
-            treasuryTransactions: TreasuryTransactionRoutes.live(handler: handler),
-            trialOffers: TrialOfferRoutes.live(handler: handler),
-            valueLists: ValueListRoutes.live(handler: handler),
-            valueListItems: ValueListItemRoutes.live(handler: handler),
-            verificationReports: VerificationReportRoutes.live(handler: handler),
-            verificationSessions: VerificationSessionRoutes.live(handler: handler),
-            webhookEndpoints: WebhookEndpointRoutes.live(handler: handler)
+            accounts: .live(handler: handler),
+            accountLinks: .live(handler: handler),
+            accountSessions: .live(handler: handler),
+            applePayDomains: .live(handler: handler),
+            applicationFees: .live(handler: handler),
+            balances: .live(handler: handler),
+            balanceSettings: .live(handler: handler),
+            balanceTransactions: .live(handler: handler),
+            bankAccounts: .live(handler: handler),
+            capabilities: .live(handler: handler),
+            cashBalances: .live(handler: handler),
+            charges: .live(handler: handler),
+            confirmationTokens: .live(handler: handler),
+            countrySpecs: .live(handler: handler),
+            coupons: .live(handler: handler),
+            creditNotes: .live(handler: handler),
+            creditNoteLineItems: .live(handler: handler),
+            customers: .live(handler: handler),
+            customerBalanceTransactions: .live(handler: handler),
+            customerCashBalanceTransactions: .live(handler: handler),
+            customerSessions: .live(handler: handler),
+            disputes: .live(handler: handler),
+            ephemeralKeys: .live(handler: handler),
+            events: .live(handler: handler),
+            exchangeRates: .live(handler: handler),
+            externalAccounts: .live(handler: handler),
+            feeRefunds: .live(handler: handler),
+            files: .live(handler: handler),
+            fileLinks: .live(handler: handler),
+            invoices: .live(handler: handler),
+            invoicePayments: .live(handler: handler),
+            invoiceRenderingTemplates: .live(handler: handler),
+            invoiceitems: .live(handler: handler),
+            lineItems: .live(handler: handler),
+            loginLinks: .live(handler: handler),
+            mandates: .live(handler: handler),
+            paymentAttemptRecords: .live(handler: handler),
+            paymentIntents: .live(handler: handler),
+            paymentIntentAmountDetailsLineItems: .live(handler: handler),
+            paymentLinks: .live(handler: handler),
+            paymentMethods: .live(handler: handler),
+            paymentMethodConfigurations: .live(handler: handler),
+            paymentMethodDomains: .live(handler: handler),
+            paymentRecords: .live(handler: handler),
+            paymentSources: .live(handler: handler),
+            payouts: .live(handler: handler),
+            persons: .live(handler: handler),
+            plans: .live(handler: handler),
+            prices: .live(handler: handler),
+            products: .live(handler: handler),
+            productFeatures: .live(handler: handler),
+            promotionCodes: .live(handler: handler),
+            quotes: .live(handler: handler),
+            refunds: .live(handler: handler),
+            reviews: .live(handler: handler),
+            scheduledQueryRuns: .live(handler: handler),
+            setupAttempts: .live(handler: handler),
+            setupIntents: .live(handler: handler),
+            shippingRates: .live(handler: handler),
+            sources: .live(handler: handler),
+            subscriptions: .live(handler: handler),
+            subscriptionItems: .live(handler: handler),
+            subscriptionSchedules: .live(handler: handler),
+            taxCodes: .live(handler: handler),
+            taxIds: .live(handler: handler),
+            taxRates: .live(handler: handler),
+            tokens: .live(handler: handler),
+            topups: .live(handler: handler),
+            transfers: .live(handler: handler),
+            transferReversals: .live(handler: handler),
+            webhookEndpoints: .live(handler: handler),
+            apps: .live(handler: handler),
+            billing: .live(handler: handler),
+            billingPortal: .live(handler: handler),
+            checkout: .live(handler: handler),
+            climate: .live(handler: handler),
+            entitlements: .live(handler: handler),
+            financialConnections: .live(handler: handler),
+            forwarding: .live(handler: handler),
+            identity: .live(handler: handler),
+            issuing: .live(handler: handler),
+            productCatalog: .live(handler: handler),
+            radar: .live(handler: handler),
+            reporting: .live(handler: handler),
+            tax: .live(handler: handler),
+            terminal: .live(handler: handler),
+            testHelpers: .live(handler: handler),
+            threeDSecure: .live(handler: handler),
+            treasury: .live(handler: handler)
         )
     }
 }
