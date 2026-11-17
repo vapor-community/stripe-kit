@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Climate order's product is substituted for another.
 public struct ProductSubstituted: Codable, Sendable {
+    @Indirect
     public var object: Order
 }
 

@@ -8,22 +8,22 @@
 import Foundation
 
 public struct TreasuryTransactionsResourceFlowDetails: Codable, Sendable {
-    @Expandable<CreditReversal>
-    public var creditReversal: String?
-    @Expandable<DebitReversal>
-    public var debitReversal: String?
-    @Expandable<InboundTransfer>
-    public var inboundTransfer: String?
-    @Expandable<IssuingAuthorization>
-    public var issuingAuthorization: String?
-    @Expandable<OutboundPayment>
-    public var outboundPayment: String?
-    @Expandable<OutboundTransfer>
-    public var outboundTransfer: String?
-    @Expandable<ReceivedCredit>
-    public var receivedCredit: String?
-    @Expandable<ReceivedDebit>
-    public var receivedDebit: String?
+    @Indirect
+    public var creditReversal: CreditReversal?
+    @Indirect
+    public var debitReversal: DebitReversal?
+    @Indirect
+    public var inboundTransfer: InboundTransfer?
+    @Indirect
+    public var issuingAuthorization: IssuingAuthorization?
+    @Indirect
+    public var outboundPayment: OutboundPayment?
+    @Indirect
+    public var outboundTransfer: OutboundTransfer?
+    @Indirect
+    public var receivedCredit: ReceivedCredit?
+    @Indirect
+    public var receivedDebit: ReceivedDebit?
     /// Type of the flow that created the Transaction. Set to the same value as `flow_type`.
     public var type: TreasuryTransactionsResourceFlowDetailsType
 

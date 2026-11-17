@@ -8,8 +8,7 @@
 import Foundation
 
 public struct SetupIntentPaymentMethodOptionsPayto: Codable, Sendable {
-    @Expandable<SetupIntentPaymentMethodOptionsMandateOptionsPayto>
-    public var mandateOptions: String?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsMandateOptionsPayto?
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"

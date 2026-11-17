@@ -9,14 +9,12 @@ import Foundation
 
 /// Sort Code Records contain U.K. bank account details per the sort code format.
 public struct FundingInstructionsBankTransferSortCodeRecord: Codable, Sendable {
-    @Expandable<Address>
-    public var accountHolderAddress: String?
+    public var accountHolderAddress: Address
     /// The name of the person or business that owns the bank account
     public var accountHolderName: String
     /// The account number
     public var accountNumber: String
-    @Expandable<Address>
-    public var bankAddress: String?
+    public var bankAddress: Address
     /// The six-digit sort code
     public var sortCode: String
 

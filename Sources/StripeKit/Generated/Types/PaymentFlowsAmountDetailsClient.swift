@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentFlowsAmountDetailsClient: Codable, Sendable {
-    @Expandable<PaymentFlowsAmountDetailsClientResourceTip>
-    public var tip: String?
+    public var tip: PaymentFlowsAmountDetailsClientResourceTip?
 }
 
 public struct PaymentFlowsAmountDetailsClientList: Codable, Sendable {

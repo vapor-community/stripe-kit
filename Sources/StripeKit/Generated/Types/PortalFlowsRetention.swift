@@ -9,8 +9,7 @@ import Foundation
 
 public struct PortalFlowsRetention: Codable, Sendable {
     /// Configuration when `retention.type=coupon_offer`.
-    @Expandable<PortalFlowsCouponOffer>
-    public var couponOffer: String?
+    public var couponOffer: PortalFlowsCouponOffer?
     /// Type of retention strategy that will be used.
     public var type: PortalFlowsRetentionType
 

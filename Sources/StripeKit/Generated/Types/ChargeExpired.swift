@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an uncaptured charge expires.
 public struct ChargeExpired: Codable, Sendable {
+    @Indirect
     public var object: Charge
 }
 

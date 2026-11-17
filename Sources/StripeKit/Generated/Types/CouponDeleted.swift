@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a coupon is deleted.
 public struct CouponDeleted: Codable, Sendable {
+    @Indirect
     public var object: Coupon
 }
 

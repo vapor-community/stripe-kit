@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a personalization design is rejected by design review.
 public struct Rejected: Codable, Sendable {
+    @Indirect
     public var object: PersonalizationDesign
 }
 

@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a refund is updated on selected payment methods. For updates on all refunds, listen
 /// to `refund.updated` instead.
 public struct ChargeRefundUpdated: Codable, Sendable {
+    @Indirect
     public var object: Refund
 }
 

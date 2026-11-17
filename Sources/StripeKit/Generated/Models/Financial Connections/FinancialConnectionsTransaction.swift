@@ -27,8 +27,7 @@ public struct FinancialConnectionsTransaction: Codable, Sendable {
     public var object: FinancialConnectionsTransactionObject
     /// The status of the transaction.
     public var status: FinancialConnectionsTransactionStatus
-    @Expandable<BankConnectionsResourceTransactionResourceStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: BankConnectionsResourceTransactionResourceStatusTransitions
     /// Time at which the transaction was transacted. Measured in seconds since the Unix epoch.
     public var transactedAt: Int
     /// The token of the transaction refresh that last updated or created this transaction.

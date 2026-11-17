@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a new Stripe-generated file is available for your account.
 public struct FileCreated: Codable, Sendable {
+    @Indirect
     public var object: File
 }
 

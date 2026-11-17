@@ -9,8 +9,7 @@ import Foundation
 
 public struct KlarnaPayerDetails: Codable, Sendable {
     /// The payer's address
-    @Expandable<KlarnaAddress>
-    public var address: String?
+    public var address: KlarnaAddress?
 }
 
 public struct KlarnaPayerDetailsList: Codable, Sendable {

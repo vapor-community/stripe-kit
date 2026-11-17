@@ -19,8 +19,7 @@ public struct Calculation: Codable, Sendable {
     /// The ID of an existing [Customer](https://docs.stripe.com/api/customers/object) used for the
     /// resource.
     public var customer: String?
-    @Expandable<TaxProductResourceCustomerDetails>
-    public var customerDetails: String?
+    public var customerDetails: TaxProductResourceCustomerDetails
     /// Timestamp of date at which the tax calculation will expire.
     public var expiresAt: Int?
     /// Unique identifier for the calculation.
@@ -33,18 +32,15 @@ public struct Calculation: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: CalculationObject
     /// The details of the ship from location, such as the address.
-    @Expandable<TaxProductResourceShipFromDetails>
-    public var shipFromDetails: String?
+    public var shipFromDetails: TaxProductResourceShipFromDetails?
     /// The shipping cost details for the calculation.
-    @Expandable<TaxProductResourceTaxCalculationShippingCost>
-    public var shippingCost: String?
+    public var shippingCost: TaxProductResourceTaxCalculationShippingCost?
     /// The amount of tax to be collected on top of the line item prices.
     public var taxAmountExclusive: Int
     /// The amount of tax already included in the line item prices.
     public var taxAmountInclusive: Int
     /// Breakdown of individual tax amounts that add up to the total.
-    @ExpandableCollection<TaxProductResourceTaxBreakdown>
-    public var taxBreakdown: [String]?
+    public var taxBreakdown: [TaxProductResourceTaxBreakdown]
     /// The calculation uses the tax rules and rates that are in effect at this timestamp. You can use a
     /// date up to 31 days in the past or up to 31 days in the future. If you use a future date, Stripe
     /// doesn't guarantee that the expected tax rules and rate being used match the actual rules and rate

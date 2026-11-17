@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a review is closed. The review's `reason` field indicates why: `approved`,
 /// `disputed`, `refunded`, `refunded_as_fraud`, or `canceled`.
 public struct ReviewClosed: Codable, Sendable {
+    @Indirect
     public var object: Review
 }
 

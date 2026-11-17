@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a `ReportType` is updated (typically to indicate that a new day's data has come
 /// available).
 public struct ReportingReportTypeUpdated: Codable, Sendable {
+    @Indirect
     public var object: ReportType
 }
 

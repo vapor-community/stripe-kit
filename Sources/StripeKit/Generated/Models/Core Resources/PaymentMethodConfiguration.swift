@@ -25,143 +25,83 @@ import Foundation
 /// [Multiple configurations for your Connect
 /// accounts](https://docs.stripe.com/connect/multiple-payment-method-configurations)
 public struct PaymentMethodConfiguration: Codable, Sendable {
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var acssDebit: String?
+    public var acssDebit: PaymentMethodConfigResourcePaymentMethodProperties?
     /// Whether the configuration can be used for new payments.
     public var active: Bool
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var affirm: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var afterpayClearpay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var alipay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var alma: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var amazonPay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var applePay: String?
+    public var affirm: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var afterpayClearpay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var alipay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var alma: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var amazonPay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var applePay: PaymentMethodConfigResourcePaymentMethodProperties?
     /// For child configs, the Connect application associated with the configuration.
     public var application: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var auBecsDebit: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var bacsDebit: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var bancontact: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var billie: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var bizum: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var blik: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var boleto: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var card: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var cartesBancaires: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var cashapp: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var crypto: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var customerBalance: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var eps: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var fpx: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var giropay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var googlePay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var grabpay: String?
+    public var auBecsDebit: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var bacsDebit: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var bancontact: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var billie: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var bizum: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var blik: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var boleto: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var card: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var cartesBancaires: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var cashapp: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var crypto: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var customerBalance: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var eps: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var fpx: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var giropay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var googlePay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var grabpay: PaymentMethodConfigResourcePaymentMethodProperties?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var ideal: String?
+    public var ideal: PaymentMethodConfigResourcePaymentMethodProperties?
     /// The default configuration is used whenever a payment method configuration is not specified.
     public var isDefault: Bool
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var jcb: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var kakaoPay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var klarna: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var konbini: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var krCard: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var link: String?
+    public var jcb: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var kakaoPay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var klarna: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var konbini: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var krCard: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var link: PaymentMethodConfigResourcePaymentMethodProperties?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var mbWay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var mobilepay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var multibanco: String?
+    public var mbWay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var mobilepay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var multibanco: PaymentMethodConfigResourcePaymentMethodProperties?
     /// The configuration's name.
     public var name: String
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var naverPay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var nzBankAccount: String?
+    public var naverPay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var nzBankAccount: PaymentMethodConfigResourcePaymentMethodProperties?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PaymentMethodConfigurationObject
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var oxxo: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var p24: String?
+    public var oxxo: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var p24: PaymentMethodConfigResourcePaymentMethodProperties?
     /// For child configs, the configuration's parent configuration.
     public var parent: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var payByBank: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var payco: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var paynow: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var paypal: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var paypay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var payto: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var pix: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var promptpay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var revolutPay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var samsungPay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var satispay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var scalapay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var sepaDebit: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var sequra: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var sofort: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var sunbit: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var swish: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var twint: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var upi: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var usBankAccount: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var wechatPay: String?
-    @Expandable<PaymentMethodConfigResourcePaymentMethodProperties>
-    public var zip: String?
+    public var payByBank: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var payco: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var paynow: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var paypal: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var paypay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var payto: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var pix: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var promptpay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var revolutPay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var samsungPay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var satispay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var scalapay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var sepaDebit: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var sequra: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var sofort: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var sunbit: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var swish: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var twint: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var upi: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var usBankAccount: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var wechatPay: PaymentMethodConfigResourcePaymentMethodProperties?
+    public var zip: PaymentMethodConfigResourcePaymentMethodProperties?
 
     public enum CodingKeys: String, CodingKey {
         case acssDebit = "acss_debit"

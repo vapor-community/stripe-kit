@@ -8,8 +8,7 @@
 import Foundation
 
 public struct RevolutPayUnderlyingPaymentMethodFundingDetails: Codable, Sendable {
-    @Expandable<PaymentMethodDetailsPassthroughCard>
-    public var card: String?
+    public var card: PaymentMethodDetailsPassthroughCard?
     /// funding type of the underlying payment method.
     public var type: RevolutPayUnderlyingPaymentMethodFundingDetailsType?
 }

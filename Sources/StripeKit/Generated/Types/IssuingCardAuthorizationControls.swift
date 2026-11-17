@@ -37,8 +37,7 @@ public struct IssuingCardAuthorizationControls: Codable, Sendable {
     public var blockedMerchantCountries: [String]?
     /// Limit spending with amount-based rules that apply across any cards this card replaced (i.e., its
     /// `replacement_for` card and _that_ card's `replacement_for` card, up the chain).
-    @ExpandableCollection<IssuingCardSpendingLimit>
-    public var spendingLimits: [String]?
+    public var spendingLimits: [IssuingCardSpendingLimit]?
     /// Currency of the amounts within `spending_limits`. Always the same as the currency of the card.
     public var spendingLimitsCurrency: String?
 

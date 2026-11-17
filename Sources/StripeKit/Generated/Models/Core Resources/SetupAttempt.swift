@@ -52,11 +52,9 @@ public struct SetupAttempt: Codable, Sendable {
     /// ID of the payment method used with this SetupAttempt.
     @Expandable<PaymentMethod>
     public var paymentMethod: String?
-    @Expandable<SetupAttemptPaymentMethodDetails>
-    public var paymentMethodDetails: String?
+    public var paymentMethodDetails: SetupAttemptPaymentMethodDetails
     /// The error encountered during this attempt to confirm the SetupIntent, if any.
-    @Expandable<ApiErrors>
-    public var setupError: String?
+    public var setupError: ApiErrors?
     /// ID of the SetupIntent that this attempt belongs to.
     @Expandable<SetupIntent>
     public var setupIntent: String?

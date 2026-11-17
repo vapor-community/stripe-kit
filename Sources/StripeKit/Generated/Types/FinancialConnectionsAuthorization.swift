@@ -21,8 +21,7 @@ public struct FinancialConnectionsAuthorization: Codable, Sendable {
     public var object: FinancialConnectionsAuthorizationObject
     /// The status of the connection to the Authorization.
     public var status: FinancialConnectionsAuthorizationStatus
-    @Expandable<BankConnectionsResourceAuthorizationStatusDetails>
-    public var statusDetails: String?
+    public var statusDetails: BankConnectionsResourceAuthorizationStatusDetails
 
     public enum CodingKeys: String, CodingKey {
         case id

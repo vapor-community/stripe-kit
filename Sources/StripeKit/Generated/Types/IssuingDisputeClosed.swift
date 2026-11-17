@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a dispute is won, lost or expired.
 public struct IssuingDisputeClosed: Codable, Sendable {
+    @Indirect
     public var object: IssuingDispute
 }
 

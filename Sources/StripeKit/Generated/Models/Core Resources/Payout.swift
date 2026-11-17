@@ -88,8 +88,7 @@ public struct Payout: Codable, Sendable {
     public var status: String
     /// A value that generates from the beneficiary's bank that allows users to track payouts with their
     /// bank. Banks might call this a "reference number" or something similar.
-    @Expandable<PayoutsTraceId>
-    public var traceId: String?
+    public var traceId: PayoutsTraceId?
     /// Can be `bank_account` or `card`.
     public var type: PayoutType
 

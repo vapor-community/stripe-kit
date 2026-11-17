@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentLinksResourceRestrictions: Codable, Sendable {
-    @Expandable<PaymentLinksResourceCompletedSessions>
-    public var completedSessions: String?
+    public var completedSessions: PaymentLinksResourceCompletedSessions
 
     public enum CodingKeys: String, CodingKey {
         case completedSessions = "completed_sessions"

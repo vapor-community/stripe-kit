@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an invoice item is created.
 public struct InvoiceitemCreated: Codable, Sendable {
+    @Indirect
     public var object: Invoiceitem
 }
 

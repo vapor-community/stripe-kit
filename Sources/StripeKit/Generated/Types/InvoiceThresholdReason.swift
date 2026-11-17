@@ -11,8 +11,7 @@ public struct InvoiceThresholdReason: Codable, Sendable {
     /// The total invoice amount threshold boundary if it triggered the threshold invoice.
     public var amountGte: Int?
     /// Indicates which line items triggered a threshold invoice.
-    @ExpandableCollection<InvoiceItemThresholdReason>
-    public var itemReasons: [String]?
+    public var itemReasons: [InvoiceItemThresholdReason]
 
     public enum CodingKeys: String, CodingKey {
         case amountGte = "amount_gte"

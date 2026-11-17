@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a payment method is detached from a customer.
 public struct Detached: Codable, Sendable {
+    @Indirect
     public var object: PaymentMethod
 }
 

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an OutboundPayment fails.
 public struct TreasuryOutboundPaymentFailed: Codable, Sendable {
+    @Indirect
     public var object: OutboundPayment
 }
 

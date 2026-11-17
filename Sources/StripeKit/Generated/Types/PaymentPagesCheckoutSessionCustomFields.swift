@@ -8,20 +8,16 @@
 import Foundation
 
 public struct PaymentPagesCheckoutSessionCustomFields: Codable, Sendable {
-    @Expandable<PaymentPagesCheckoutSessionCustomFieldsDropdown>
-    public var dropdown: String?
+    public var dropdown: PaymentPagesCheckoutSessionCustomFieldsDropdown?
     /// String of your choice that your integration can use to reconcile this field. Must be unique to this
     /// field, alphanumeric, and up to 200 characters.
     public var key: String
-    @Expandable<PaymentPagesCheckoutSessionCustomFieldsLabel>
-    public var label: String?
-    @Expandable<PaymentPagesCheckoutSessionCustomFieldsNumeric>
-    public var numeric: String?
+    public var label: PaymentPagesCheckoutSessionCustomFieldsLabel
+    public var numeric: PaymentPagesCheckoutSessionCustomFieldsNumeric?
     /// Whether the customer is required to complete the field before completing the Checkout Session.
     /// Defaults to `false`.
     public var optional: Bool
-    @Expandable<PaymentPagesCheckoutSessionCustomFieldsText>
-    public var text: String?
+    public var text: PaymentPagesCheckoutSessionCustomFieldsText?
     /// The type of the field.
     public var type: PaymentPagesCheckoutSessionCustomFieldsType
 }

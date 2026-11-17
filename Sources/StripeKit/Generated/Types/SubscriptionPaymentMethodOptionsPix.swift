@@ -11,8 +11,7 @@ public struct SubscriptionPaymentMethodOptionsPix: Codable, Sendable {
     /// The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600,
     /// inclusive). If unspecified, defaults to 14400 seconds (4 hours).
     public var expiresAfterSeconds: Int?
-    @Expandable<SubscriptionPaymentMethodOptionsMandateOptionsPix>
-    public var mandateOptions: String?
+    public var mandateOptions: SubscriptionPaymentMethodOptionsMandateOptionsPix?
 
     public enum CodingKeys: String, CodingKey {
         case expiresAfterSeconds = "expires_after_seconds"

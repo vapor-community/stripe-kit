@@ -25,16 +25,14 @@ public struct Quote: Codable, Sendable {
     /// percentage of the subscription invoice total that will be transferred to the application owner's
     /// Stripe account. Only applicable if there are line items with recurring prices on the quote.
     public var applicationFeePercent: Double?
-    @Expandable<QuotesResourceAutomaticTax>
-    public var automaticTax: String?
+    public var automaticTax: QuotesResourceAutomaticTax
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay invoices at the end of the subscription cycle or on finalization using the default payment
     /// method attached to the subscription or customer. When sending an invoice, Stripe will email your
     /// customer an invoice with payment instructions and mark the subscription as `active`. Defaults to
     /// `charge_automatically`.
     public var collectionMethod: QuoteCollectionMethod
-    @Expandable<QuotesResourceComputed>
-    public var computed: String?
+    public var computed: QuotesResourceComputed
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -62,8 +60,7 @@ public struct Quote: Codable, Sendable {
     public var footer: String?
     /// Details of the quote that was cloned. See the [cloning
     /// documentation](https://docs.stripe.com/quotes/clone) for more details.
-    @Expandable<QuotesResourceFromQuote>
-    public var fromQuote: String?
+    public var fromQuote: QuotesResourceFromQuote?
     /// A header that will be displayed on the quote PDF.
     public var header: String?
     /// Unique identifier for the object.
@@ -71,8 +68,7 @@ public struct Quote: Codable, Sendable {
     /// The invoice that was created from this quote.
     @Expandable<Invoice>
     public var invoice: String?
-    @Expandable<InvoiceSettingQuoteSetting>
-    public var invoiceSettings: String?
+    public var invoiceSettings: InvoiceSettingQuoteSetting
     /// A list of items the customer is being quoted for.
     public var lineItems: ItemList?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -93,25 +89,21 @@ public struct Quote: Codable, Sendable {
     public var onBehalfOf: String?
     /// The status of the quote.
     public var status: QuoteStatus
-    @Expandable<QuotesResourceStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: QuotesResourceStatusTransitions
     /// The subscription that was created or updated from this quote.
     @Expandable<Subscription>
     public var subscription: String?
-    @Expandable<QuotesResourceSubscriptionDataSubscriptionData>
-    public var subscriptionData: String?
+    public var subscriptionData: QuotesResourceSubscriptionDataSubscriptionData
     /// The subscription schedule that was created or updated from this quote.
     @Expandable<SubscriptionSchedule>
     public var subscriptionSchedule: String?
     /// ID of the test clock this quote belongs to.
     @Expandable<TestClock>
     public var testClock: String?
-    @Expandable<QuotesResourceTotalDetails>
-    public var totalDetails: String?
+    public var totalDetails: QuotesResourceTotalDetails
     /// The account (if any) the payments will be attributed to for tax reporting, and where funds from each
     /// payment will be transferred to for each of the invoices.
-    @Expandable<QuotesResourceTransferData>
-    public var transferData: String?
+    public var transferData: QuotesResourceTransferData?
 
     public enum CodingKeys: String, CodingKey {
         case amountSubtotal = "amount_subtotal"

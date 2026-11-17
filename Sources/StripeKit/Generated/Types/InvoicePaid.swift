@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an invoice payment attempt succeeds or an invoice is marked as paid out-of-band.
 public struct InvoicePaid: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

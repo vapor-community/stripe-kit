@@ -43,8 +43,7 @@ public struct Charge: Codable, Sendable {
     /// including refunds or disputes).
     @Expandable<BalanceTransaction>
     public var balanceTransaction: String?
-    @Expandable<BillingDetails>
-    public var billingDetails: String?
+    public var billingDetails: BillingDetails
     /// The full statement descriptor that is passed to card networks, and that is displayed on your
     /// customers' credit card and bank statements. Allows you to see what the statement descriptor looks
     /// like after the static and dynamic portions are combined. This value only exists for card payments.
@@ -74,12 +73,10 @@ public struct Charge: Codable, Sendable {
     /// Message to user further explaining reason for charge failure if available.
     public var failureMessage: String?
     /// Information on fraud assessments for the charge.
-    @Expandable<ChargeFraudDetails>
-    public var fraudDetails: String?
+    public var fraudDetails: ChargeFraudDetails?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<Level3>
-    public var level3: String?
+    public var level3: Level3?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -95,8 +92,7 @@ public struct Charge: Codable, Sendable {
     public var onBehalfOf: String?
     /// Details about whether the payment was accepted, and why. See [understanding
     /// declines](https://docs.stripe.com/declines) for details.
-    @Expandable<ChargeOutcome>
-    public var outcome: String?
+    public var outcome: ChargeOutcome?
     /// `true` if the charge succeeded, or was successfully authorized for later capture.
     public var paid: Bool
     /// ID of the PaymentIntent associated with this charge, if one exists.
@@ -105,12 +101,9 @@ public struct Charge: Codable, Sendable {
     /// ID of the payment method used in this charge.
     public var paymentMethod: String?
     /// Details about the payment method at the time of the transaction.
-    @Expandable<PaymentMethodDetails>
-    public var paymentMethodDetails: String?
-    @Expandable<PaymentFlowsPaymentIntentPresentmentDetails>
-    public var presentmentDetails: String?
-    @Expandable<RadarRadarOptions>
-    public var radarOptions: String?
+    public var paymentMethodDetails: PaymentMethodDetails?
+    public var presentmentDetails: PaymentFlowsPaymentIntentPresentmentDetails?
+    public var radarOptions: RadarRadarOptions?
     /// This is the email address that the receipt for this charge was sent to.
     public var receiptEmail: String?
     /// This is the transaction number that appears on email receipts sent for this charge. This attribute
@@ -129,13 +122,12 @@ public struct Charge: Codable, Sendable {
     @Expandable<Review>
     public var review: String?
     /// Shipping information for the charge.
-    @Expandable<Shipping>
-    public var shipping: String?
+    public var shipping: Shipping?
     /// This is a legacy field that will be removed in the future. It contains the Source, Card, or
     /// BankAccount object used for the charge. For details about the payment method used for this charge,
     /// refer to `payment_method` or `payment_method_details` instead.
-    @Expandable<PaymentSource>
-    public var source: String?
+    @Indirect
+    public var source: PaymentSource?
     /// The transfer ID which created this charge. Only present if the charge came from another Stripe
     /// account. [See the Connect documentation](https://docs.stripe.com/connect/destination-charges) for
     /// details.
@@ -162,8 +154,7 @@ public struct Charge: Codable, Sendable {
     /// An optional dictionary including the account to automatically transfer to as part of a destination
     /// charge. [See the Connect documentation](https://docs.stripe.com/connect/destination-charges) for
     /// details.
-    @Expandable<ChargeTransferData>
-    public var transferData: String?
+    public var transferData: ChargeTransferData?
     /// A string that identifies this transaction as part of a group. See the [Connect
     /// documentation](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-options) for
     /// details.

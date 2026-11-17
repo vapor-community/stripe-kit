@@ -11,8 +11,7 @@ public struct CreditNoteRefund: Codable, Sendable {
     /// Amount of the refund that applies to this credit note, in cents (or local equivalent).
     public var amountRefunded: Int
     /// The PaymentRecord refund details associated with this credit note refund.
-    @Expandable<CreditNotesPaymentRecordRefund>
-    public var paymentRecordRefund: String?
+    public var paymentRecordRefund: CreditNotesPaymentRecordRefund?
     /// ID of the refund.
     @Expandable<Refund>
     public var refund: String?

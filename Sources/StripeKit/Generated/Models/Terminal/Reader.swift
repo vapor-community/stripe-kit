@@ -11,8 +11,7 @@ import Foundation
 /// reader](https://docs.stripe.com/terminal/payments/connect-reader)
 public struct Reader: Codable, Sendable {
     /// The most recent action performed by the reader.
-    @Expandable<TerminalReaderReaderResourceReaderAction>
-    public var action: String?
+    public var action: TerminalReaderReaderResourceReaderAction?
     /// The current software version of the reader.
     public var deviceSwVersion: String?
     /// Device type of the reader.

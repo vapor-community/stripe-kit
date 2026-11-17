@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a SetupIntent has successfully setup a payment method.
 public struct SetupIntentSucceeded: Codable, Sendable {
+    @Indirect
     public var object: SetupIntent
 }
 

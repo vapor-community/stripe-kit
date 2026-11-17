@@ -8,8 +8,7 @@
 import Foundation
 
 public struct TreasurySharedResourceBillingDetails: Codable, Sendable {
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address
     /// Email address.
     public var email: String?
     /// Full name.

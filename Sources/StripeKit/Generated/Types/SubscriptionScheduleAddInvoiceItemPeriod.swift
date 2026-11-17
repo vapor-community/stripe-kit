@@ -8,10 +8,8 @@
 import Foundation
 
 public struct SubscriptionScheduleAddInvoiceItemPeriod: Codable, Sendable {
-    @Expandable<SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEnd>
-    public var end: String?
-    @Expandable<SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStart>
-    public var start: String?
+    public var end: SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEnd
+    public var start: SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStart
 }
 
 public struct SubscriptionScheduleAddInvoiceItemPeriodList: Codable, Sendable {

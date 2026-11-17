@@ -32,8 +32,7 @@ public struct CreditNote: Codable, Sendable {
     /// credited.
     public var discountAmount: Int
     /// The aggregate amounts calculated per discount for all line items.
-    @ExpandableCollection<DiscountsResourceDiscountAmount>
-    public var discountAmounts: [String]?
+    public var discountAmounts: [DiscountsResourceDiscountAmount]
     /// The date when this credit note is in effect. Same as `created` unless overwritten. When defined,
     /// this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
     public var effectiveAt: Int?
@@ -68,17 +67,14 @@ public struct CreditNote: Codable, Sendable {
     /// reduced.
     public var prePaymentAmount: Int
     /// The pretax credit amounts (ex: discount, credit grants, etc) for all line items.
-    @ExpandableCollection<CreditNotesPretaxCreditAmount>
-    public var pretaxCreditAmounts: [String]?
+    public var pretaxCreditAmounts: [CreditNotesPretaxCreditAmount]
     /// Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or
     /// `product_unsatisfactory`
     public var reason: CreditNoteReason?
     /// Refunds related to this credit note.
-    @ExpandableCollection<CreditNoteRefund>
-    public var refunds: [String]?
+    public var refunds: [CreditNoteRefund]
     /// The details of the cost of shipping, including the ShippingRate applied to the invoice.
-    @Expandable<InvoicesResourceShippingCost>
-    public var shippingCost: String?
+    public var shippingCost: InvoicesResourceShippingCost?
     /// Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit
     /// notes](https://docs.stripe.com/billing/invoices/credit-notes#voiding).
     public var status: CreditNoteStatus
@@ -95,8 +91,7 @@ public struct CreditNote: Codable, Sendable {
     /// excluding tax, but including discounts.
     public var totalExcludingTax: Int?
     /// The aggregate tax information for all line items.
-    @ExpandableCollection<BillingBillResourceInvoicingTaxesTax>
-    public var totalTaxes: [String]?
+    public var totalTaxes: [BillingBillResourceInvoicingTaxesTax]?
     /// Type of this credit note, one of `pre_payment` or `post_payment`. A `pre_payment` credit note means
     /// it was issued when the invoice was open. A `post_payment` credit note means it was issued when the
     /// invoice was paid.

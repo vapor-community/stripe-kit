@@ -9,8 +9,7 @@ import Foundation
 
 public struct SubscriptionsResourcePaymentSettings: Codable, Sendable {
     /// Payment-method-specific configuration to provide to invoices created by the subscription.
-    @Expandable<SubscriptionsResourcePaymentMethodOptions>
-    public var paymentMethodOptions: String?
+    public var paymentMethodOptions: SubscriptionsResourcePaymentMethodOptions?
     /// The list of payment method types to provide to every invoice created by the subscription. If not
     /// set, Stripe attempts to automatically determine the types to use by looking at the invoice’s default
     /// payment method, the subscription’s default payment method, the customer’s default payment method,

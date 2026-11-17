@@ -8,10 +8,8 @@
 import Foundation
 
 public struct SetupIntentPaymentMethodOptionsUsBankAccount: Codable, Sendable {
-    @Expandable<LinkedAccountOptionsCommon>
-    public var financialConnections: String?
-    @Expandable<PaymentMethodOptionsUsBankAccountMandateOptions>
-    public var mandateOptions: String?
+    public var financialConnections: LinkedAccountOptionsCommon?
+    public var mandateOptions: PaymentMethodOptionsUsBankAccountMandateOptions?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: SetupIntentPaymentMethodOptionsUsBankAccountVerificationMethod?
 

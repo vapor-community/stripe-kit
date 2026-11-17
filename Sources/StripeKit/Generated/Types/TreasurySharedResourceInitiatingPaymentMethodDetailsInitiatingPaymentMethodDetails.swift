@@ -10,18 +10,15 @@ import Foundation
 public struct TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetails: Codable, Sendable {
     /// Set when `type` is `balance`.
     public var balance: TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetailsBalance?
-    @Expandable<TreasurySharedResourceBillingDetails>
-    public var billingDetails: String?
-    @Expandable<ReceivedPaymentMethodDetailsFinancialAccount>
-    public var financialAccount: String?
+    public var billingDetails: TreasurySharedResourceBillingDetails
+    public var financialAccount: ReceivedPaymentMethodDetailsFinancialAccount?
     /// Set when `type` is `issuing_card`. This is an [Issuing
     /// Card](https://docs.stripe.com/api#issuing_cards) ID.
     public var issuingCard: String?
     /// Polymorphic type matching the originating money movement's source. This can be an external account,
     /// a Stripe balance, or a FinancialAccount.
     public var type: TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetailsType
-    @Expandable<TreasurySharedResourceInitiatingPaymentMethodDetailsUsBankAccount>
-    public var usBankAccount: String?
+    public var usBankAccount: TreasurySharedResourceInitiatingPaymentMethodDetailsUsBankAccount?
 
     public enum CodingKeys: String, CodingKey {
         case balance

@@ -8,10 +8,8 @@
 import Foundation
 
 public struct CreditBalance: Codable, Sendable {
-    @Expandable<BillingCreditGrantsResourceAmount>
-    public var availableBalance: String?
-    @Expandable<BillingCreditGrantsResourceAmount>
-    public var ledgerBalance: String?
+    public var availableBalance: BillingCreditGrantsResourceAmount
+    public var ledgerBalance: BillingCreditGrantsResourceAmount
 
     public enum CodingKeys: String, CodingKey {
         case availableBalance = "available_balance"

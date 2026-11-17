@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a top-up is canceled.
 public struct TopupCanceled: Codable, Sendable {
+    @Indirect
     public var object: Topup
 }
 

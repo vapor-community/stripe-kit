@@ -8,56 +8,31 @@
 import Foundation
 
 public struct ConnectEmbeddedAccountSessionCreateComponents: Codable, Sendable {
-    @Expandable<ConnectEmbeddedAccountConfigClaim>
-    public var accountManagement: String?
-    @Expandable<ConnectEmbeddedAccountConfigClaim>
-    public var accountOnboarding: String?
-    @Expandable<ConnectEmbeddedBaseConfigClaim>
-    public var balanceReport: String?
-    @Expandable<ConnectEmbeddedPayoutsConfig>
-    public var balances: String?
-    @Expandable<ConnectEmbeddedDisputesListConfig>
-    public var disputesList: String?
-    @Expandable<ConnectEmbeddedBaseConfigClaim>
-    public var documents: String?
-    @Expandable<ConnectEmbeddedFinancialAccountConfigClaim>
-    public var financialAccount: String?
-    @Expandable<ConnectEmbeddedFinancialAccountTransactionsConfigClaim>
-    public var financialAccountTransactions: String?
-    @Expandable<ConnectEmbeddedInstantPayoutsPromotionConfig>
-    public var instantPayoutsPromotion: String?
-    @Expandable<ConnectEmbeddedIssuingCardConfigClaim>
-    public var issuingCard: String?
-    @Expandable<ConnectEmbeddedIssuingCardsListConfigClaim>
-    public var issuingCardsList: String?
-    @Expandable<ConnectEmbeddedAccountConfigClaim>
-    public var notificationBanner: String?
-    @Expandable<ConnectEmbeddedPaymentsConfigClaim>
-    public var paymentDetails: String?
-    @Expandable<ConnectEmbeddedPaymentDisputesConfig>
-    public var paymentDisputes: String?
-    @Expandable<ConnectEmbeddedPaymentMethodSettingsConfigClaim>
-    public var paymentMethodSettings: String?
-    @Expandable<ConnectEmbeddedPaymentsConfigClaim>
-    public var payments: String?
-    @Expandable<ConnectEmbeddedBaseConfigClaim>
-    public var payoutDetails: String?
-    @Expandable<ConnectEmbeddedBaseConfigClaim>
-    public var payoutReconciliationReport: String?
-    @Expandable<ConnectEmbeddedPayoutsConfig>
-    public var payouts: String?
-    @Expandable<ConnectEmbeddedBaseConfigClaim>
-    public var payoutsList: String?
-    @Expandable<ConnectEmbeddedBaseConfig>
-    public var reportingChart: String?
-    @Expandable<ConnectEmbeddedBaseConfigClaim>
-    public var taxRegistrations: String?
-    @Expandable<ConnectEmbeddedBaseConfigClaim>
-    public var taxSettings: String?
-    @Expandable<ConnectEmbeddedBaseConfig>
-    public var terminalHardwareOrders: String?
-    @Expandable<ConnectEmbeddedBaseConfig>
-    public var terminalHardwareShop: String?
+    public var accountManagement: ConnectEmbeddedAccountConfigClaim
+    public var accountOnboarding: ConnectEmbeddedAccountConfigClaim
+    public var balanceReport: ConnectEmbeddedBaseConfigClaim
+    public var balances: ConnectEmbeddedPayoutsConfig
+    public var disputesList: ConnectEmbeddedDisputesListConfig
+    public var documents: ConnectEmbeddedBaseConfigClaim
+    public var financialAccount: ConnectEmbeddedFinancialAccountConfigClaim
+    public var financialAccountTransactions: ConnectEmbeddedFinancialAccountTransactionsConfigClaim
+    public var instantPayoutsPromotion: ConnectEmbeddedInstantPayoutsPromotionConfig
+    public var issuingCard: ConnectEmbeddedIssuingCardConfigClaim
+    public var issuingCardsList: ConnectEmbeddedIssuingCardsListConfigClaim
+    public var notificationBanner: ConnectEmbeddedAccountConfigClaim
+    public var paymentDetails: ConnectEmbeddedPaymentsConfigClaim
+    public var paymentDisputes: ConnectEmbeddedPaymentDisputesConfig
+    public var paymentMethodSettings: ConnectEmbeddedPaymentMethodSettingsConfigClaim
+    public var payments: ConnectEmbeddedPaymentsConfigClaim
+    public var payoutDetails: ConnectEmbeddedBaseConfigClaim
+    public var payoutReconciliationReport: ConnectEmbeddedBaseConfigClaim
+    public var payouts: ConnectEmbeddedPayoutsConfig
+    public var payoutsList: ConnectEmbeddedBaseConfigClaim
+    public var reportingChart: ConnectEmbeddedBaseConfig
+    public var taxRegistrations: ConnectEmbeddedBaseConfigClaim
+    public var taxSettings: ConnectEmbeddedBaseConfigClaim
+    public var terminalHardwareOrders: ConnectEmbeddedBaseConfig
+    public var terminalHardwareShop: ConnectEmbeddedBaseConfig
 
     public enum CodingKeys: String, CodingKey {
         case accountManagement = "account_management"

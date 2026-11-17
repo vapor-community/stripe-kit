@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a subscription schedule is updated.
 public struct SubscriptionScheduleUpdated: Codable, Sendable {
+    @Indirect
     public var object: SubscriptionSchedule
 }
 

@@ -11,8 +11,7 @@ public struct PaymentLinksResourceCustomFieldsDropdown: Codable, Sendable {
     /// The value that pre-fills on the payment page.
     public var defaultValue: String?
     /// The options available for the customer to select. Up to 200 options allowed.
-    @ExpandableCollection<PaymentLinksResourceCustomFieldsDropdownOption>
-    public var options: [String]?
+    public var options: [PaymentLinksResourceCustomFieldsDropdownOption]
 
     public enum CodingKeys: String, CodingKey {
         case defaultValue = "default_value"

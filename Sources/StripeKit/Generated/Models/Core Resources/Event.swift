@@ -30,8 +30,7 @@ public struct Event: Codable, Sendable {
     public var context: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
-    @Expandable<NotificationEventData>
-    public var data: String?
+    public var data: NotificationEventData
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -43,8 +42,7 @@ public struct Event: Codable, Sendable {
     /// to the URLs you specify.
     public var pendingWebhooks: Int
     /// Information on the API request that triggers the event.
-    @Expandable<NotificationEventRequest>
-    public var request: String?
+    public var request: NotificationEventRequest?
     /// Description of the event (for example, `invoice.created` or `charge.refunded`).
     public var type: EventType
 

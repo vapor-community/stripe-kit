@@ -8,216 +8,111 @@
 import Foundation
 
 public struct TaxProductRegistrationsResourceCountryOptions: Codable, Sendable {
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods>
-    public var ae: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var al: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var am: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var ao: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var at: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods>
-    public var au: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var aw: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var az: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var ba: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var bb: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var bd: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var be: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var bf: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var bg: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var bh: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var bj: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var bs: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var bw: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var by: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsCanada>
-    public var ca: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var cd: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods>
-    public var ch: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ci: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var cl: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var cm: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var co: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var cr: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var cv: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var cy: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var cz: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var de: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var dk: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ec: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var ee: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var eg: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSpain>
-    public var es: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var et: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var fi: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var fr: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods>
-    public var gb: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ge: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var gh: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var gn: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var gr: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var hr: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var hu: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var id: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var ie: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var `in`: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var `is`: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var it: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods>
-    public var jp: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ke: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var kg: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var kh: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var kr: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var kz: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var la: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var lk: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var lt: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var lu: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var lv: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ma: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var md: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var me: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var mk: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var mr: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var mt: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var mu: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var mx: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var my: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ng: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var nl: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods>
-    public var no: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var np: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods>
-    public var nz: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var om: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var pe: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ph: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var pl: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var pt: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var ro: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var rs: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ru: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var sa: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var se: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods>
-    public var sg: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var si: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsEurope>
-    public var sk: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var sn: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var sr: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsThailand>
-    public var th: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var tj: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var tr: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var tw: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var tz: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ua: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var ug: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsUnitedStates>
-    public var us: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var uy: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var uz: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var vn: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var za: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsSimplified>
-    public var zm: String?
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefault>
-    public var zw: String?
+    public var ae: TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods?
+    public var al: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var am: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var ao: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var at: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var au: TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods?
+    public var aw: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var az: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var ba: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var bb: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var bd: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var be: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var bf: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var bg: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var bh: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var bj: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var bs: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var bw: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var by: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var ca: TaxProductRegistrationsResourceCountryOptionsCanada?
+    public var cd: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var ch: TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods?
+    public var ci: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var cl: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var cm: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var co: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var cr: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var cv: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var cy: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var cz: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var de: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var dk: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var ec: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var ee: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var eg: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var es: TaxProductRegistrationsResourceCountryOptionsSpain?
+    public var et: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var fi: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var fr: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var gb: TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods?
+    public var ge: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var gh: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var gn: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var gr: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var hr: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var hu: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var id: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var ie: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var `in`: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var `is`: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var it: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var jp: TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods?
+    public var ke: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var kg: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var kh: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var kr: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var kz: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var la: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var lk: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var lt: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var lu: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var lv: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var ma: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var md: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var me: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var mk: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var mr: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var mt: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var mu: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var mx: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var my: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var ng: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var nl: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var no: TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods?
+    public var np: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var nz: TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods?
+    public var om: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var pe: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var ph: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var pl: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var pt: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var ro: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var rs: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var ru: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var sa: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var se: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var sg: TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods?
+    public var si: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var sk: TaxProductRegistrationsResourceCountryOptionsEurope?
+    public var sn: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var sr: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var th: TaxProductRegistrationsResourceCountryOptionsThailand?
+    public var tj: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var tr: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var tw: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var tz: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var ua: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var ug: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var us: TaxProductRegistrationsResourceCountryOptionsUnitedStates?
+    public var uy: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var uz: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var vn: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var za: TaxProductRegistrationsResourceCountryOptionsDefault?
+    public var zm: TaxProductRegistrationsResourceCountryOptionsSimplified?
+    public var zw: TaxProductRegistrationsResourceCountryOptionsDefault?
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsList: Codable, Sendable {

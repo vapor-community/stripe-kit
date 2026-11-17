@@ -8,8 +8,7 @@
 import Foundation
 
 public struct BillingCreditGrantsResourceApplicabilityConfig: Codable, Sendable {
-    @Expandable<BillingCreditGrantsResourceScope>
-    public var scope: String?
+    public var scope: BillingCreditGrantsResourceScope
 }
 
 public struct BillingCreditGrantsResourceApplicabilityConfigList: Codable, Sendable {

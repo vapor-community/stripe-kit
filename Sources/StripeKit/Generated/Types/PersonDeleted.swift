@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a person associated with an account is deleted.
 public struct PersonDeleted: Codable, Sendable {
+    @Indirect
     public var object: Person
 }
 

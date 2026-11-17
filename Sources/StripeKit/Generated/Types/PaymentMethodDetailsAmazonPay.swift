@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentMethodDetailsAmazonPay: Codable, Sendable {
-    @Expandable<AmazonPayUnderlyingPaymentMethodFundingDetails>
-    public var funding: String?
+    public var funding: AmazonPayUnderlyingPaymentMethodFundingDetails?
     /// The Amazon Pay transaction ID associated with this payment.
     public var transactionId: String?
 

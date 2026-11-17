@@ -9,8 +9,7 @@ import Foundation
 
 public struct TaxProductRegistrationsResourceCountryOptionsUsStateSalesTax: Codable, Sendable {
     /// Elections for the state sales tax registration.
-    @ExpandableCollection<TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxElection>
-    public var elections: [String]?
+    public var elections: [TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxElection]?
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxList: Codable, Sendable {

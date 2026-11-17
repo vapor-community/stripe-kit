@@ -10,11 +10,9 @@ import Foundation
 /// You can use Tax `Settings` to manage configurations used by Stripe Tax calculations. Related guide:
 /// [Using the Settings API](https://docs.stripe.com/tax/settings-api)
 public struct Settings: Codable, Sendable {
-    @Expandable<TaxProductResourceTaxSettingsDefaults>
-    public var defaults: String?
+    public var defaults: TaxProductResourceTaxSettingsDefaults
     /// The place where your business is located.
-    @Expandable<TaxProductResourceTaxSettingsHeadOffice>
-    public var headOffice: String?
+    public var headOffice: TaxProductResourceTaxSettingsHeadOffice?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -23,8 +21,7 @@ public struct Settings: Codable, Sendable {
     /// Whether these settings have the information Stripe Tax needs to calculate tax. It doesn't reflect
     /// whether your integration is ready to collect tax.
     public var status: SettingsStatus
-    @Expandable<TaxProductResourceTaxSettingsStatusDetails>
-    public var statusDetails: String?
+    public var statusDetails: TaxProductResourceTaxSettingsStatusDetails
 
     public enum CodingKeys: String, CodingKey {
         case defaults

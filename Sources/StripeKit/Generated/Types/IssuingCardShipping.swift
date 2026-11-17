@@ -8,19 +8,16 @@
 import Foundation
 
 public struct IssuingCardShipping: Codable, Sendable {
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address
     /// Address validation details for the shipment.
-    @Expandable<IssuingCardShippingAddressValidation>
-    public var addressValidation: String?
+    public var addressValidation: IssuingCardShippingAddressValidation?
     /// The name of the business at the shipping address, used on the shipping label to ensure delivery when
     /// the card is shipped to a cardholder's workplace.
     public var businessName: String?
     /// The delivery company that shipped a card.
     public var carrier: IssuingCardShippingCarrier?
     /// Additional information that may be required for clearing customs.
-    @Expandable<IssuingCardShippingCustoms>
-    public var customs: String?
+    public var customs: IssuingCardShippingCustoms?
     /// The time the card was reported as delivered. Null for undelivered or untracked shipments, or if
     /// Stripe has not recorded a delivery time.
     public var deliveredAt: Int?

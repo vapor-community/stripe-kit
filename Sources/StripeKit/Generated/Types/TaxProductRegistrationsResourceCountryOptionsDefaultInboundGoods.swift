@@ -8,8 +8,7 @@
 import Foundation
 
 public struct TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods: Codable, Sendable {
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsDefaultStandard>
-    public var standard: String?
+    public var standard: TaxProductRegistrationsResourceCountryOptionsDefaultStandard?
     /// Type of registration in `country`.
     public var type: TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoodsType
 }

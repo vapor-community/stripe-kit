@@ -8,8 +8,7 @@
 import Foundation
 
 public struct CardGeneratedFromPaymentMethodDetails: Codable, Sendable {
-    @Expandable<PaymentMethodDetailsCardPresent>
-    public var cardPresent: String?
+    public var cardPresent: PaymentMethodDetailsCardPresent?
     /// The type of payment method transaction-specific details from the transaction that generated this
     /// `card` payment method. Always `card_present`.
     public var type: String

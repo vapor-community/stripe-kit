@@ -10,8 +10,7 @@ import Foundation
 public struct BillingBillResourceInvoicingLinesCommonProrationDetails: Codable, Sendable {
     /// For a credit proration `line_item`, the original debit line_items to which the credit proration
     /// applies.
-    @Expandable<BillingBillResourceInvoicingLinesCommonCreditedItems>
-    public var creditedItems: String?
+    public var creditedItems: BillingBillResourceInvoicingLinesCommonCreditedItems?
 
     public enum CodingKeys: String, CodingKey {
         case creditedItems = "credited_items"

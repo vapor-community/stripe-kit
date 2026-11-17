@@ -13,10 +13,8 @@ import Foundation
 public struct Meter: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
-    @Expandable<BillingMeterResourceCustomerMappingSettings>
-    public var customerMapping: String?
-    @Expandable<BillingMeterResourceAggregationSettings>
-    public var defaultAggregation: String?
+    public var customerMapping: BillingMeterResourceCustomerMappingSettings
+    public var defaultAggregation: BillingMeterResourceAggregationSettings
     /// The meter's name.
     public var displayName: String
     /// The name of the meter event to record usage for. Corresponds with the `event_name` field on meter
@@ -33,12 +31,10 @@ public struct Meter: Codable, Sendable {
     public var object: MeterObject
     /// The meter's status.
     public var status: MeterStatus
-    @Expandable<BillingMeterResourceBillingMeterStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: BillingMeterResourceBillingMeterStatusTransitions
     /// Time at which the object was last updated. Measured in seconds since the Unix epoch.
     public var updated: Int
-    @Expandable<BillingMeterResourceBillingMeterValue>
-    public var valueSettings: String?
+    public var valueSettings: BillingMeterResourceBillingMeterValue
 
     public enum CodingKeys: String, CodingKey {
         case created

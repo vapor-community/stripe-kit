@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a refund has failed.
 public struct RefundFailed: Codable, Sendable {
+    @Indirect
     public var object: Refund
 }
 

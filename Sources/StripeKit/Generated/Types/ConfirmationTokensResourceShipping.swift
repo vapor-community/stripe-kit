@@ -8,8 +8,7 @@
 import Foundation
 
 public struct ConfirmationTokensResourceShipping: Codable, Sendable {
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address
     /// Recipient name.
     public var name: String
     /// Recipient phone (including extension).

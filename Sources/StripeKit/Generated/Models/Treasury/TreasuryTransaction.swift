@@ -15,8 +15,7 @@ import Foundation
 public struct TreasuryTransaction: Codable, Sendable {
     /// Amount (in cents) transferred.
     public var amount: Int
-    @Expandable<TreasuryTransactionsResourceBalanceImpact>
-    public var balanceImpact: String?
+    public var balanceImpact: TreasuryTransactionsResourceBalanceImpact
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -32,8 +31,7 @@ public struct TreasuryTransaction: Codable, Sendable {
     /// ID of the flow that created the Transaction.
     public var flow: String?
     /// Details of the flow that created the Transaction.
-    @Expandable<TreasuryTransactionsResourceFlowDetails>
-    public var flowDetails: String?
+    public var flowDetails: TreasuryTransactionsResourceFlowDetails?
     /// Type of the flow that created the Transaction.
     public var flowType: TreasuryTransactionFlowType
     /// Unique identifier for the object.
@@ -45,8 +43,7 @@ public struct TreasuryTransaction: Codable, Sendable {
     public var object: TreasuryTransactionObject
     /// Status of the Transaction.
     public var status: TreasuryTransactionStatus
-    @Expandable<TreasuryTransactionsResourceAbstractTransactionResourceStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: TreasuryTransactionsResourceAbstractTransactionResourceStatusTransitions
 
     public enum CodingKeys: String, CodingKey {
         case amount

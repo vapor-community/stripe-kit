@@ -48,18 +48,15 @@ public struct PaymentMethodCardPresent: Codable, Sendable {
     /// The last four digits of the card.
     public var last4: String?
     /// Contains information about card networks that can be used to process the payment.
-    @Expandable<PaymentMethodCardPresentNetworks>
-    public var networks: String?
+    public var networks: PaymentMethodCardPresentNetworks?
     /// Details about payment methods collected offline.
-    @Expandable<PaymentMethodDetailsCardPresentOffline>
-    public var offline: String?
+    public var offline: PaymentMethodDetailsCardPresentOffline?
     /// The languages that the issuing bank recommends using for localizing any customer-facing text, as
     /// read from the card. Referenced from EMV tag 5F2D, data encoded on the card's chip.
     public var preferredLocales: [String]?
     /// How card details were read in this transaction.
     public var readMethod: PaymentMethodCardPresentReadMethod?
-    @Expandable<PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet>
-    public var wallet: String?
+    public var wallet: PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet?
 
     public enum CodingKeys: String, CodingKey {
         case brand

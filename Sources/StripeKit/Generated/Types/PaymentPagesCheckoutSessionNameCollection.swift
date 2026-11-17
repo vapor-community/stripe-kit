@@ -8,10 +8,8 @@
 import Foundation
 
 public struct PaymentPagesCheckoutSessionNameCollection: Codable, Sendable {
-    @Expandable<PaymentPagesCheckoutSessionBusinessName>
-    public var business: String?
-    @Expandable<PaymentPagesCheckoutSessionIndividualName>
-    public var individual: String?
+    public var business: PaymentPagesCheckoutSessionBusinessName?
+    public var individual: PaymentPagesCheckoutSessionIndividualName?
 }
 
 public struct PaymentPagesCheckoutSessionNameCollectionList: Codable, Sendable {

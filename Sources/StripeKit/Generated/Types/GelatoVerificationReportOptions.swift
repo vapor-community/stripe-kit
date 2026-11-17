@@ -8,10 +8,8 @@
 import Foundation
 
 public struct GelatoVerificationReportOptions: Codable, Sendable {
-    @Expandable<GelatoReportDocumentOptions>
-    public var document: String?
-    @Expandable<GelatoReportIdNumberOptions>
-    public var idNumber: String?
+    public var document: GelatoReportDocumentOptions?
+    public var idNumber: GelatoReportIdNumberOptions?
 
     public enum CodingKeys: String, CodingKey {
         case document

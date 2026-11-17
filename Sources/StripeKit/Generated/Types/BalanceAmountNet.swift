@@ -14,10 +14,8 @@ public struct BalanceAmountNet: Codable, Sendable {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// Breakdown of balance by destination.
-    @ExpandableCollection<BalanceNetAvailable>
-    public var netAvailable: [String]?
-    @Expandable<BalanceAmountBySourceType>
-    public var sourceTypes: String?
+    public var netAvailable: [BalanceNetAvailable]?
+    public var sourceTypes: BalanceAmountBySourceType?
 
     public enum CodingKeys: String, CodingKey {
         case amount

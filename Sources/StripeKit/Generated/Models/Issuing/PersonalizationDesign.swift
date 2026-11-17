@@ -17,8 +17,7 @@ public struct PersonalizationDesign: Codable, Sendable {
     @Expandable<File>
     public var cardLogo: String?
     /// Hash containing carrier text, for use with physical bundles that support carrier text.
-    @Expandable<IssuingPersonalizationDesignCarrierText>
-    public var carrierText: String?
+    public var carrierText: IssuingPersonalizationDesignCarrierText?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Unique identifier for the object.
@@ -39,10 +38,8 @@ public struct PersonalizationDesign: Codable, Sendable {
     /// The physical bundle object belonging to this personalization design.
     @Expandable<PhysicalBundle>
     public var physicalBundle: String?
-    @Expandable<IssuingPersonalizationDesignPreferences>
-    public var preferences: String?
-    @Expandable<IssuingPersonalizationDesignRejectionReasons>
-    public var rejectionReasons: String?
+    public var preferences: IssuingPersonalizationDesignPreferences
+    public var rejectionReasons: IssuingPersonalizationDesignRejectionReasons
     /// Whether this personalization design can be used to create cards.
     public var status: PersonalizationDesignStatus
 

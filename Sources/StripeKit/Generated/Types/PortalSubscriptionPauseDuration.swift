@@ -9,8 +9,7 @@ import Foundation
 
 public struct PortalSubscriptionPauseDuration: Codable, Sendable {
     /// The preset pause durations customers can choose from.
-    @ExpandableCollection<PortalSubscriptionPauseIntervalOption>
-    public var intervalOptions: [String]?
+    public var intervalOptions: [PortalSubscriptionPauseIntervalOption]
     /// Whether subscriptions can be paused indefinitely or for a preset duration.
     public var type: PortalSubscriptionPauseDurationType
 

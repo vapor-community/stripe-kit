@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs X number of days before an invoice becomes due&mdash;where X is determined by Automations
 public struct WillBeDue: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

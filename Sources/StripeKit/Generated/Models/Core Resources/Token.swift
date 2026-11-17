@@ -22,10 +22,10 @@ import Foundation
 /// accounts](/api#external_accounts). [Radar](https://docs.stripe.com/radar), our integrated solution
 /// for automatic fraud protection, performs best with integrations that use client-side tokenization.
 public struct Token: Codable, Sendable {
-    @Expandable<BankAccount>
-    public var bankAccount: String?
-    @Expandable<Card>
-    public var card: String?
+    @Indirect
+    public var bankAccount: BankAccount?
+    @Indirect
+    public var card: Card?
     /// IP address of the client that generates the token.
     public var clientIp: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.

@@ -10,27 +10,19 @@ import Foundation
 /// Represents an input to be collected using the reader
 public struct TerminalReaderReaderResourceInput: Codable, Sendable {
     /// Default text of input being collected.
-    @Expandable<TerminalReaderReaderResourceCustomText>
-    public var customText: String?
-    @Expandable<TerminalReaderReaderResourceEmail>
-    public var email: String?
-    @Expandable<TerminalReaderReaderResourceNumeric>
-    public var numeric: String?
-    @Expandable<TerminalReaderReaderResourcePhone>
-    public var phone: String?
+    public var customText: TerminalReaderReaderResourceCustomText?
+    public var email: TerminalReaderReaderResourceEmail?
+    public var numeric: TerminalReaderReaderResourceNumeric?
+    public var phone: TerminalReaderReaderResourcePhone?
     /// Indicate that this input is required, disabling the skip button.
     public var required: Bool?
-    @Expandable<TerminalReaderReaderResourceSelection>
-    public var selection: String?
-    @Expandable<TerminalReaderReaderResourceSignature>
-    public var signature: String?
+    public var selection: TerminalReaderReaderResourceSelection?
+    public var signature: TerminalReaderReaderResourceSignature?
     /// Indicate that this input was skipped by the user.
     public var skipped: Bool?
-    @Expandable<TerminalReaderReaderResourceText>
-    public var text: String?
+    public var text: TerminalReaderReaderResourceText?
     /// List of toggles being collected. Values are present if collection is complete.
-    @ExpandableCollection<TerminalReaderReaderResourceToggle>
-    public var toggles: [String]?
+    public var toggles: [TerminalReaderReaderResourceToggle]?
     /// Type of input being collected.
     public var type: TerminalReaderReaderResourceInputType
 

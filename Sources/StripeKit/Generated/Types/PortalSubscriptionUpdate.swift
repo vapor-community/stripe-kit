@@ -19,14 +19,12 @@ public struct PortalSubscriptionUpdate: Codable, Sendable {
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// The list of up to 10 products that support subscription updates.
-    @ExpandableCollection<PortalSubscriptionUpdateProduct>
-    public var products: [String]?
+    public var products: [PortalSubscriptionUpdateProduct]?
     /// Determines how to handle prorations resulting from subscription updates. Valid values are `none`,
     /// `create_prorations`, and `always_invoice`. Defaults to a value of `none` if you don't set it during
     /// creation.
     public var prorationBehavior: PortalSubscriptionUpdateProrationBehavior
-    @Expandable<PortalResourceScheduleUpdateAtPeriodEnd>
-    public var scheduleAtPeriodEnd: String?
+    public var scheduleAtPeriodEnd: PortalResourceScheduleUpdateAtPeriodEnd
     /// Determines how handle updates to trialing subscriptions. Valid values are `end_trial` and
     /// `continue_trial`. Defaults to a value of `end_trial` if you don't set it during creation.
     public var trialUpdateBehavior: PortalSubscriptionUpdateTrialUpdateBehavior

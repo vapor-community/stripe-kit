@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a plan is updated.
 public struct PlanUpdated: Codable, Sendable {
+    @Indirect
     public var object: Plan
 }
 

@@ -9,17 +9,13 @@ import Foundation
 
 public struct PaymentIntentNextActionKonbiniStores: Codable, Sendable {
     /// FamilyMart instruction details.
-    @Expandable<PaymentIntentNextActionKonbiniFamilymart>
-    public var familymart: String?
+    public var familymart: PaymentIntentNextActionKonbiniFamilymart?
     /// Lawson instruction details.
-    @Expandable<PaymentIntentNextActionKonbiniLawson>
-    public var lawson: String?
+    public var lawson: PaymentIntentNextActionKonbiniLawson?
     /// Ministop instruction details.
-    @Expandable<PaymentIntentNextActionKonbiniMinistop>
-    public var ministop: String?
+    public var ministop: PaymentIntentNextActionKonbiniMinistop?
     /// Seicomart instruction details.
-    @Expandable<PaymentIntentNextActionKonbiniSeicomart>
-    public var seicomart: String?
+    public var seicomart: PaymentIntentNextActionKonbiniSeicomart?
 }
 
 public struct PaymentIntentNextActionKonbiniStoresList: Codable, Sendable {

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a requested `ReportRun` failed to complete.
 public struct ReportingReportRunFailed: Codable, Sendable {
+    @Indirect
     public var object: ReportRun
 }
 

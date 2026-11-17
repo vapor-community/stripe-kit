@@ -13,8 +13,7 @@ public struct TaxProductResourceTaxRateDetails: Codable, Sendable {
     /// The amount of the tax rate when the `rate_type` is `flat_amount`. Tax rates with `rate_type`
     /// `percentage` can vary based on the transaction, resulting in this field being `null`. This field
     /// exposes the amount and currency of the flat tax rate.
-    @Expandable<TaxRateFlatAmount>
-    public var flatAmount: String?
+    public var flatAmount: TaxRateFlatAmount?
     /// The tax rate percentage as a string. For example, 8.5% is represented as `"8.5"`.
     public var percentageDecimal: String
     /// Indicates the type of tax rate applied to the taxable amount. This value can be `null` when no tax

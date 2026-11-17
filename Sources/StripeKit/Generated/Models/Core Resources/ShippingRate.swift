@@ -17,13 +17,11 @@ public struct ShippingRate: Codable, Sendable {
     public var created: Int
     /// The estimated range for how long shipping will take, meant to be displayable to the customer. This
     /// will appear on CheckoutSessions.
-    @Expandable<ShippingRateDeliveryEstimate>
-    public var deliveryEstimate: String?
+    public var deliveryEstimate: ShippingRateDeliveryEstimate?
     /// The name of the shipping rate, meant to be displayable to the customer. This will appear on
     /// CheckoutSessions.
     public var displayName: String?
-    @Expandable<ShippingRateFixedAmount>
-    public var fixedAmount: String?
+    public var fixedAmount: ShippingRateFixedAmount?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

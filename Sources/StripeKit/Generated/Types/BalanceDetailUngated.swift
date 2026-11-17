@@ -9,11 +9,9 @@ import Foundation
 
 public struct BalanceDetailUngated: Codable, Sendable {
     /// Funds that are available for use.
-    @ExpandableCollection<BalanceAmount>
-    public var available: [String]?
+    public var available: [BalanceAmount]
     /// Funds that are pending
-    @ExpandableCollection<BalanceAmount>
-    public var pending: [String]?
+    public var pending: [BalanceAmount]
 }
 
 public struct BalanceDetailUngatedList: Codable, Sendable {

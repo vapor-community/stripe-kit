@@ -9,8 +9,7 @@ import Foundation
 
 public struct AccountBusinessProfile: Codable, Sendable {
     /// The applicant's gross annual revenue for its preceding fiscal year.
-    @Expandable<AccountAnnualRevenue>
-    public var annualRevenue: String?
+    public var annualRevenue: AccountAnnualRevenue?
     /// An estimated upper bound of employees, contractors, vendors, etc. currently working for the
     /// business.
     public var estimatedWorkerCount: Int?
@@ -19,8 +18,7 @@ public struct AccountBusinessProfile: Codable, Sendable {
     public var mcc: String?
     /// Whether the business is a minority-owned, women-owned, and/or LGBTQI+ -owned business.
     public var minorityOwnedBusinessDesignation: [String]?
-    @Expandable<AccountMonthlyEstimatedRevenue>
-    public var monthlyEstimatedRevenue: String?
+    public var monthlyEstimatedRevenue: AccountMonthlyEstimatedRevenue?
     /// The customer-facing business name.
     public var name: String?
     /// Internal-only description of the product sold or service provided by the business. It's used by
@@ -30,8 +28,7 @@ public struct AccountBusinessProfile: Codable, Sendable {
     /// Act. Only used for accounts in Japan.
     public var specifiedCommercialTransactionsActUrl: String?
     /// A publicly available mailing address for sending support issues to.
-    @Expandable<Address>
-    public var supportAddress: String?
+    public var supportAddress: Address?
     /// A publicly available email address for sending support issues to.
     public var supportEmail: String?
     /// A publicly available phone number to call with support issues.

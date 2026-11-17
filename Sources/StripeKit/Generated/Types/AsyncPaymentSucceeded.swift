@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a payment intent using a delayed payment method finally succeeds.
 public struct AsyncPaymentSucceeded: Codable, Sendable {
+    @Indirect
     public var object: CheckoutSession
 }
 

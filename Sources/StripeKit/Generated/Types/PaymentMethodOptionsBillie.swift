@@ -10,8 +10,7 @@ import Foundation
 public struct PaymentMethodOptionsBillie: Codable, Sendable {
     /// Controls when the funds will be captured from the customer's account.
     public var captureMethod: PaymentMethodOptionsBillieCaptureMethod?
-    @Expandable<PaymentFlowsPrivatePaymentMethodsBilliePaymentMethodOptionsResourceCompanyDetails>
-    public var companyDetails: String?
+    public var companyDetails: PaymentFlowsPrivatePaymentMethodsBilliePaymentMethodOptionsResourceCompanyDetails?
     /// An identifier or reference that this payment corresponds to.
     public var reference: String?
 

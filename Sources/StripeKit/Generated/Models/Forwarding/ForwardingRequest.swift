@@ -37,14 +37,11 @@ public struct ForwardingRequest: Codable, Sendable {
     /// The field kinds to be replaced in the forwarded request.
     public var replacements: [String]
     /// Context about the request from Stripe's servers to the destination endpoint.
-    @Expandable<ForwardedRequestContext>
-    public var requestContext: String?
+    public var requestContext: ForwardedRequestContext?
     /// The request that was sent to the destination endpoint. We redact any sensitive fields.
-    @Expandable<ForwardedRequestDetails>
-    public var requestDetails: String?
+    public var requestDetails: ForwardedRequestDetails?
     /// The response that the destination endpoint returned to us. We redact any sensitive fields.
-    @Expandable<ForwardedResponseDetails>
-    public var responseDetails: String?
+    public var responseDetails: ForwardedResponseDetails?
     /// The destination URL for the forwarded request. Must be supported by the config.
     public var url: String?
 

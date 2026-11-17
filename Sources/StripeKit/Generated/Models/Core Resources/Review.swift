@@ -28,8 +28,7 @@ public struct Review: Codable, Sendable {
     /// Information related to the location of the payment. Note that this information is an approximation
     /// and attempts to locate the nearest population center - it should not be used to determine a specific
     /// address.
-    @Expandable<RadarReviewResourceLocation>
-    public var ipAddressLocation: String?
+    public var ipAddressLocation: RadarReviewResourceLocation?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -46,8 +45,7 @@ public struct Review: Codable, Sendable {
     /// `refunded_as_fraud`, `disputed`, `redacted`, `canceled`, `payment_never_settled`, or `acknowledged`.
     public var reason: String
     /// Information related to the browsing session of the user who initiated the payment.
-    @Expandable<RadarReviewResourceSession>
-    public var session: String?
+    public var session: RadarReviewResourceSession?
 
     public enum CodingKeys: String, CodingKey {
         case billingZip = "billing_zip"

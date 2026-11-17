@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a 3DS Authentication's 'challenge_url' was loaded.
 public struct ChallengeStarted: Codable, Sendable {
+    @Indirect
     public var object: Authentication
 }
 

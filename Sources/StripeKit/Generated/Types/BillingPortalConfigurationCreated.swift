@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a portal configuration is created.
 public struct BillingPortalConfigurationCreated: Codable, Sendable {
+    @Indirect
     public var object: BillingPortalConfiguration
 }
 

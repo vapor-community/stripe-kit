@@ -11,6 +11,7 @@ import Foundation
 /// out). By default, Stripe automatically transfers funds in your balance to your bank account on a
 /// daily basis. This event is not fired for negative transactions.
 public struct Available: Codable, Sendable {
+    @Indirect
     public var object: Balance
 }
 

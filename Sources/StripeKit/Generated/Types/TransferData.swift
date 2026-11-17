@@ -24,8 +24,7 @@ public struct TransferData: Codable, Sendable {
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    @Expandable<PaymentData>
-    public var paymentData: String?
+    public var paymentData: PaymentData?
 
     public enum CodingKeys: String, CodingKey {
         case amount

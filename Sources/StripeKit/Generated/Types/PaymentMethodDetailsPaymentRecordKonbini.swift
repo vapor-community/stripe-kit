@@ -10,8 +10,7 @@ import Foundation
 public struct PaymentMethodDetailsPaymentRecordKonbini: Codable, Sendable {
     /// If the payment succeeded, this contains the details of the convenience store where the payment was
     /// completed.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodKonbiniDetailsResourceStore>
-    public var store: String?
+    public var store: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodKonbiniDetailsResourceStore?
 }
 
 public struct PaymentMethodDetailsPaymentRecordKonbiniList: Codable, Sendable {

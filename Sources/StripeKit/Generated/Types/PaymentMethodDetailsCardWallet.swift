@@ -8,27 +8,20 @@
 import Foundation
 
 public struct PaymentMethodDetailsCardWallet: Codable, Sendable {
-    @Expandable<PaymentMethodDetailsCardWalletAmexExpressCheckout>
-    public var amexExpressCheckout: String?
-    @Expandable<PaymentMethodDetailsCardWalletApplePay>
-    public var applePay: String?
+    public var amexExpressCheckout: PaymentMethodDetailsCardWalletAmexExpressCheckout?
+    public var applePay: PaymentMethodDetailsCardWalletApplePay?
     /// (For tokenized numbers only.) The last four digits of the device account number.
     public var dynamicLast4: String?
-    @Expandable<PaymentMethodDetailsCardWalletGooglePay>
-    public var googlePay: String?
-    @Expandable<PaymentMethodDetailsCardWalletLink>
-    public var link: String?
-    @Expandable<PaymentMethodDetailsCardWalletMasterpass>
-    public var masterpass: String?
-    @Expandable<PaymentMethodDetailsCardWalletSamsungPay>
-    public var samsungPay: String?
+    public var googlePay: PaymentMethodDetailsCardWalletGooglePay?
+    public var link: PaymentMethodDetailsCardWalletLink?
+    public var masterpass: PaymentMethodDetailsCardWalletMasterpass?
+    public var samsungPay: PaymentMethodDetailsCardWalletSamsungPay?
     /// The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`,
     /// `masterpass`, `samsung_pay`, `visa_checkout`, or `link`. An additional hash is included on the
     /// Wallet subhash with a name matching this value. It contains additional information specific to the
     /// card wallet type.
     public var type: PaymentMethodDetailsCardWalletType
-    @Expandable<PaymentMethodDetailsCardWalletVisaCheckout>
-    public var visaCheckout: String?
+    public var visaCheckout: PaymentMethodDetailsCardWalletVisaCheckout?
 
     public enum CodingKeys: String, CodingKey {
         case amexExpressCheckout = "amex_express_checkout"

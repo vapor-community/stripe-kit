@@ -17,10 +17,8 @@ public struct SourceOrder: Codable, Sendable {
     /// The email address of the customer placing the order.
     public var email: String?
     /// List of items constituting the order.
-    @ExpandableCollection<SourceOrderItem>
-    public var items: [String]?
-    @Expandable<Shipping>
-    public var shipping: String?
+    public var items: [SourceOrderItem]?
+    public var shipping: Shipping?
 }
 
 public struct SourceOrderList: Codable, Sendable {

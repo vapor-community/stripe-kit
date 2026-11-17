@@ -8,8 +8,7 @@
 import Foundation
 
 public struct InvoicePaymentMethodOptionsCard: Codable, Sendable {
-    @Expandable<InvoiceInstallmentsCard>
-    public var installments: String?
+    public var installments: InvoiceInstallmentsCard?
     /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for
     /// authentication based on risk level and [other
     /// requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to

@@ -34,8 +34,7 @@ public struct Source: Codable, Sendable {
     public var cardPresent: SourceTypeCardPresent?
     /// The client secret of the source. Used for client-side retrieval using a publishable key.
     public var clientSecret: String
-    @Expandable<SourceCodeVerificationFlow>
-    public var codeVerification: String?
+    public var codeVerification: SourceCodeVerificationFlow?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the
@@ -65,18 +64,14 @@ public struct Source: Codable, Sendable {
     public var object: SourceObject
     /// Information about the owner of the payment instrument that may be used or required by particular
     /// source types.
-    @Expandable<SourceOwner>
-    public var owner: String?
+    public var owner: SourceOwner?
     public var p24: SourceTypeP24?
-    @Expandable<SourceReceiverFlow>
-    public var receiver: String?
-    @Expandable<SourceRedirectFlow>
-    public var redirect: String?
+    public var receiver: SourceReceiverFlow?
+    public var redirect: SourceRedirectFlow?
     public var sepaCreditTransfer: SourceTypeSepaCreditTransfer?
     public var sepaDebit: SourceTypeSepaDebit?
     public var sofort: SourceTypeSofort?
-    @Expandable<SourceOrder>
-    public var sourceOrder: String?
+    public var sourceOrder: SourceOrder?
     /// Extra information about a source. This will appear on your customer's statement every time you
     /// charge the source.
     public var statementDescriptor: String?

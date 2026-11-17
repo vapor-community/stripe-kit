@@ -11,10 +11,8 @@ public struct BankConnectionsResourceBalance: Codable, Sendable {
     /// The time that the external institution calculated this balance. Measured in seconds since the Unix
     /// epoch.
     public var asOf: Int
-    @Expandable<BankConnectionsResourceBalanceApiResourceCashBalance>
-    public var cash: String?
-    @Expandable<BankConnectionsResourceBalanceApiResourceCreditBalance>
-    public var credit: String?
+    public var cash: BankConnectionsResourceBalanceApiResourceCashBalance?
+    public var credit: BankConnectionsResourceBalanceApiResourceCreditBalance?
     /// The balances owed to (or by) the account holder, before subtracting any outbound pending
     /// transactions or adding any inbound pending transactions. Each key is a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Each value is a integer

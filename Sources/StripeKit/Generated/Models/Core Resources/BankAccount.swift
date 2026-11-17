@@ -46,8 +46,7 @@ public struct BankAccount: Codable, Sendable {
     /// Information about the [upcoming new requirements for the bank
     /// account](https://docs.stripe.com/connect/custom-accounts/future-requirements), including what
     /// information needs to be collected, and by when.
-    @Expandable<ExternalAccountRequirements>
-    public var futureRequirements: String?
+    public var futureRequirements: ExternalAccountRequirements?
     /// Unique identifier for the object.
     public var id: String
     /// The last four digits of the bank account number.
@@ -59,8 +58,7 @@ public struct BankAccount: Codable, Sendable {
     public var object: BankAccountObject
     /// Information about the requirements for the bank account, including what information needs to be
     /// collected.
-    @Expandable<ExternalAccountRequirements>
-    public var requirements: String?
+    public var requirements: ExternalAccountRequirements?
     /// The routing transit number for the bank account.
     public var routingNumber: String?
     /// For bank accounts, possible values are `new`, `validated`, `verified`, `verification_failed`,

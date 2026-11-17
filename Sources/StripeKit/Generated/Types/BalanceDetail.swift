@@ -9,8 +9,7 @@ import Foundation
 
 public struct BalanceDetail: Codable, Sendable {
     /// Funds that are available for use.
-    @ExpandableCollection<BalanceAmount>
-    public var available: [String]?
+    public var available: [BalanceAmount]
 }
 
 public struct BalanceDetailList: Codable, Sendable {

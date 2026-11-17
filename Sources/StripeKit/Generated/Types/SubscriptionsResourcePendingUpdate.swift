@@ -17,8 +17,7 @@ public struct SubscriptionsResourcePendingUpdate: Codable, Sendable {
     /// applied.
     public var cancelAtPeriodEnd: Bool?
     /// The pending subscription-level discount that will be applied when the pending update is applied.
-    @Expandable<Discount>
-    public var discount: String?
+    public var discount: Discount?
     /// The discounts that will be applied to the subscription when the pending update is applied. Use
     /// `expand[]=discounts` to expand each discount.
     @ExpandableCollection<Discount>
@@ -29,8 +28,7 @@ public struct SubscriptionsResourcePendingUpdate: Codable, Sendable {
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// List of subscription items, each with an attached plan, that will be set if the update is applied.
-    @ExpandableCollection<SubscriptionItem>
-    public var subscriptionItems: [String]?
+    public var subscriptionItems: [SubscriptionItem]?
     /// Unix timestamp representing the end of the trial period the customer will get before being charged
     /// for the first time, if the update is applied.
     public var trialEnd: Int?

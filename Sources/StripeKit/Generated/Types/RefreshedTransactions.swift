@@ -10,6 +10,7 @@ import Foundation
 /// Occurs when an Account’s `transaction_refresh` status transitions from `pending` to either
 /// `succeeded` or `failed`.
 public struct RefreshedTransactions: Codable, Sendable {
+    @Indirect
     public var object: FinancialConnectionsAccount
 }
 

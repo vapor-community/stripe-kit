@@ -11,8 +11,7 @@ public struct InvoiceItemProrationCreditedItems: Codable, Sendable {
     /// When `type` is `invoice_item`, the invoice item id for the debited invoice item corresponding to
     /// this credit proration.
     public var invoiceItem: String?
-    @Expandable<CreditedItemsInvoiceLineItems>
-    public var invoiceLineItemDetails: String?
+    public var invoiceLineItemDetails: CreditedItemsInvoiceLineItems?
     /// Whether the credit references a pending invoice item or one or more invoice line items on an
     /// invoice.
     public var type: InvoiceItemProrationCreditedItemsType

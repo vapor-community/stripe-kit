@@ -9,8 +9,7 @@ import Foundation
 
 /// A line item.
 public struct Item: Codable, Sendable {
-    @Expandable<LineItemsAdjustableQuantity>
-    public var adjustableQuantity: String?
+    public var adjustableQuantity: LineItemsAdjustableQuantity?
     /// Total discount amount applied. If no discounts were applied, defaults to 0.
     public var amountDiscount: Int
     /// Total before any discounts or taxes are applied.
@@ -26,8 +25,7 @@ public struct Item: Codable, Sendable {
     /// product name.
     public var description: String?
     /// The discounts applied to the line item.
-    @ExpandableCollection<LineItemsDiscountAmount>
-    public var discounts: [String]?
+    public var discounts: [LineItemsDiscountAmount]?
     /// Unique identifier for the object.
     public var id: String
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -36,13 +34,12 @@ public struct Item: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: ItemObject
     /// The price used to generate the line item.
-    @Expandable<Price>
-    public var price: String?
+    @Indirect
+    public var price: Price?
     /// The quantity of products being purchased.
     public var quantity: Int?
     /// The taxes applied to the line item.
-    @ExpandableCollection<LineItemsTaxAmount>
-    public var taxes: [String]?
+    public var taxes: [LineItemsTaxAmount]?
 
     public enum CodingKeys: String, CodingKey {
         case adjustableQuantity = "adjustable_quantity"

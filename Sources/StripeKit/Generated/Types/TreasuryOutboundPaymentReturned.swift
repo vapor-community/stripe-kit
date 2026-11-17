@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an OutboundPayment was returned.
 public struct TreasuryOutboundPaymentReturned: Codable, Sendable {
+    @Indirect
     public var object: OutboundPayment
 }
 

@@ -9,8 +9,7 @@ import Foundation
 
 /// Returns redirect links used for onboarding onto Tap to Pay on iPhone.
 public struct OnboardingLink: Codable, Sendable {
-    @Expandable<TerminalOnboardingLinkLinkOptions>
-    public var linkOptions: String?
+    public var linkOptions: TerminalOnboardingLinkLinkOptions
     /// The type of link being generated.
     public var linkType: OnboardingLinkLinkType
     public var object: OnboardingLinkObject

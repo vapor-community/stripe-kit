@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an invoice changes (e.g., the invoice amount).
 public struct InvoiceUpdated: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

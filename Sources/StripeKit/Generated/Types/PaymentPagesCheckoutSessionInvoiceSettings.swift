@@ -9,24 +9,22 @@ import Foundation
 
 public struct PaymentPagesCheckoutSessionInvoiceSettings: Codable, Sendable {
     /// The account tax IDs associated with the invoice.
-    public var accountTaxIds: [[String: AnyCodableValue]]?
+    @ExpandableCollection<TaxId>
+    public var accountTaxIds: [String]?
     /// Custom fields displayed on the invoice.
-    @ExpandableCollection<InvoiceSettingCustomField>
-    public var customFields: [String]?
+    public var customFields: [InvoiceSettingCustomField]?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Footer displayed on the invoice.
     public var footer: String?
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
-    @Expandable<ConnectAccountReference>
-    public var issuer: String?
+    public var issuer: ConnectAccountReference?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// Options for invoice PDF rendering.
-    @Expandable<InvoiceSettingCheckoutRenderingOptions>
-    public var renderingOptions: String?
+    public var renderingOptions: InvoiceSettingCheckoutRenderingOptions?
 
     public enum CodingKeys: String, CodingKey {
         case accountTaxIds = "account_tax_ids"

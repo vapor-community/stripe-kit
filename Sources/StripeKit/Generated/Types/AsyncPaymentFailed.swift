@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a payment intent using a delayed payment method fails.
 public struct AsyncPaymentFailed: Codable, Sendable {
+    @Indirect
     public var object: CheckoutSession
 }
 

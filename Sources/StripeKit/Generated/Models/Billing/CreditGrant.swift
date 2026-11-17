@@ -11,10 +11,8 @@ import Foundation
 /// customer. Related guide: [Billing
 /// credits](https://docs.stripe.com/billing/subscriptions/usage-based/billing-credits)
 public struct CreditGrant: Codable, Sendable {
-    @Expandable<BillingCreditGrantsResourceAmount>
-    public var amount: String?
-    @Expandable<BillingCreditGrantsResourceApplicabilityConfig>
-    public var applicabilityConfig: String?
+    public var amount: BillingCreditGrantsResourceAmount
+    public var applicabilityConfig: BillingCreditGrantsResourceApplicabilityConfig
     /// The category of this credit grant. This is for tracking purposes and isn't displayed to the
     /// customer.
     public var category: CreditGrantCategory

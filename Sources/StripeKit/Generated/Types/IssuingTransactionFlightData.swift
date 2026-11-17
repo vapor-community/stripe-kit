@@ -15,8 +15,7 @@ public struct IssuingTransactionFlightData: Codable, Sendable {
     /// Whether the ticket is refundable.
     public var refundable: Bool?
     /// The legs of the trip.
-    @ExpandableCollection<IssuingTransactionFlightDataLeg>
-    public var segments: [String]?
+    public var segments: [IssuingTransactionFlightDataLeg]?
     /// The travel agency that issued the ticket.
     public var travelAgency: String?
 

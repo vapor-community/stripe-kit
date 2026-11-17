@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever tracking_details on an OutboundPayment is updated.
 public struct TreasuryOutboundPaymentTrackingDetailsUpdated: Codable, Sendable {
+    @Indirect
     public var object: OutboundPayment
 }
 

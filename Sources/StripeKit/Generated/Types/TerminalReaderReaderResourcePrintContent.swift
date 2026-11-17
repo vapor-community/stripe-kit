@@ -9,8 +9,7 @@ import Foundation
 
 /// Represents a reader action to print content
 public struct TerminalReaderReaderResourcePrintContent: Codable, Sendable {
-    @Expandable<TerminalReaderReaderResourceFileMetadata>
-    public var image: String?
+    public var image: TerminalReaderReaderResourceFileMetadata?
     /// The type of content to print. Currently supports `image`.
     public var type: TerminalReaderReaderResourcePrintContentType
 }

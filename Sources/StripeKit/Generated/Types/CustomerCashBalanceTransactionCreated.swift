@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a new customer cash balance transactions is created.
 public struct CustomerCashBalanceTransactionCreated: Codable, Sendable {
+    @Indirect
     public var object: CustomerCashBalanceTransaction
 }
 

@@ -9,14 +9,11 @@ import Foundation
 
 /// Outcome details for this payment evaluation.
 public struct InsightsResourcesPaymentEvaluationOutcome: Codable, Sendable {
-    @Expandable<InsightsResourcesPaymentEvaluationMerchantBlocked>
-    public var merchantBlocked: String?
+    public var merchantBlocked: InsightsResourcesPaymentEvaluationMerchantBlocked?
     /// The PaymentIntent ID associated with the payment evaluation.
     public var paymentIntentId: String?
-    @Expandable<InsightsResourcesPaymentEvaluationRejected>
-    public var rejected: String?
-    @Expandable<InsightsResourcesPaymentEvaluationSucceeded>
-    public var succeeded: String?
+    public var rejected: InsightsResourcesPaymentEvaluationRejected?
+    public var succeeded: InsightsResourcesPaymentEvaluationSucceeded?
     /// Indicates the outcome of the payment evaluation.
     public var type: InsightsResourcesPaymentEvaluationOutcomeType
 

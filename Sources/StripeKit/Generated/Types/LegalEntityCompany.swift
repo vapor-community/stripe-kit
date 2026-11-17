@@ -8,24 +8,19 @@
 import Foundation
 
 public struct LegalEntityCompany: Codable, Sendable {
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address?
     /// The Kana variation of the company's primary address (Japan only).
-    @Expandable<LegalEntityJapanAddress>
-    public var addressKana: String?
+    public var addressKana: LegalEntityJapanAddress?
     /// The Kanji variation of the company's primary address (Japan only).
-    @Expandable<LegalEntityJapanAddress>
-    public var addressKanji: String?
-    @Expandable<Address>
-    public var administrativeAddress: String?
+    public var addressKanji: LegalEntityJapanAddress?
+    public var administrativeAddress: Address?
     /// Whether the company's directors have been provided. This Boolean will be `true` if you've manually
     /// indicated that all directors are provided via [the `directors_provided`
     /// parameter](https://docs.stripe.com/api/accounts/update#update_account-company-directors_provided).
     public var directorsProvided: Bool?
     /// This hash is used to attest that the director information provided to Stripe is both current and
     /// correct.
-    @Expandable<LegalEntityDirectorshipDeclaration>
-    public var directorshipDeclaration: String?
+    public var directorshipDeclaration: LegalEntityDirectorshipDeclaration?
     /// Whether the company's executives have been provided. This Boolean will be `true` if you've manually
     /// indicated that all executives are provided via [the `executives_provided`
     /// parameter](https://docs.stripe.com/api/accounts/update#update_account-company-executives_provided),
@@ -56,8 +51,7 @@ public struct LegalEntityCompany: Codable, Sendable {
     public var ownersProvided: Bool?
     /// This hash is used to attest that the beneficial owner information provided to Stripe is both current
     /// and correct.
-    @Expandable<LegalEntityUboDeclaration>
-    public var ownershipDeclaration: String?
+    public var ownershipDeclaration: LegalEntityUboDeclaration?
     /// This value is used to determine if a business is exempt from providing ultimate beneficial owners.
     /// See [this support
     /// article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and
@@ -66,16 +60,12 @@ public struct LegalEntityCompany: Codable, Sendable {
     public var ownershipExemptionReason: LegalEntityCompanyOwnershipExemptionReason?
     /// The company's phone number (used for verification).
     public var phone: String?
-    @Expandable<Address>
-    public var physicalAddress: String?
-    @Expandable<Address>
-    public var principalPlaceOfBusiness: String?
-    @Expandable<LegalEntityRegistrationDate>
-    public var registrationDate: String?
+    public var physicalAddress: Address?
+    public var principalPlaceOfBusiness: Address?
+    public var registrationDate: LegalEntityRegistrationDate?
     /// This hash is used to attest that the representative is authorized to act as the representative of
     /// their legal entity.
-    @Expandable<LegalEntityRepresentativeDeclaration>
-    public var representativeDeclaration: String?
+    public var representativeDeclaration: LegalEntityRepresentativeDeclaration?
     /// The category identifying the legal structure of the company or legal entity. Also available for
     /// accounts where
     /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
@@ -90,8 +80,7 @@ public struct LegalEntityCompany: Codable, Sendable {
     /// Whether the company's business VAT number was provided.
     public var vatIdProvided: Bool?
     /// Information on the verification state of the company.
-    @Expandable<LegalEntityCompanyVerification>
-    public var verification: String?
+    public var verification: LegalEntityCompanyVerification?
 
     public enum CodingKeys: String, CodingKey {
         case address

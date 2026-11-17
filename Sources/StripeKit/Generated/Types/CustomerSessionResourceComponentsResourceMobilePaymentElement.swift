@@ -12,8 +12,7 @@ public struct CustomerSessionResourceComponentsResourceMobilePaymentElement: Cod
     /// Whether the mobile payment element is enabled.
     public var enabled: Bool
     /// This hash defines whether the mobile payment element supports certain features.
-    @Expandable<CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeatures>
-    public var features: String?
+    public var features: CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeatures?
 }
 
 public struct CustomerSessionResourceComponentsResourceMobilePaymentElementList: Codable, Sendable {

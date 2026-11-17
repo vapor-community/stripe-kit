@@ -11,8 +11,7 @@ public struct PaymentMethodConfigResourcePaymentMethodProperties: Codable, Senda
     /// Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the
     /// payment method's capability is active.
     public var available: Bool
-    @Expandable<PaymentMethodConfigResourceDisplayPreference>
-    public var displayPreference: String?
+    public var displayPreference: PaymentMethodConfigResourceDisplayPreference
 
     public enum CodingKeys: String, CodingKey {
         case available

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct IssuingCardLifecycleControls: Codable, Sendable {
-    @Expandable<IssuingCardLifecycleConditions>
-    public var cancelAfter: String?
+    public var cancelAfter: IssuingCardLifecycleConditions
 
     public enum CodingKeys: String, CodingKey {
         case cancelAfter = "cancel_after"

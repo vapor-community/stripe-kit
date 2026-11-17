@@ -9,8 +9,7 @@ import Foundation
 
 /// InboundTransfers contains inbound transfers features for a FinancialAccount.
 public struct TreasuryFinancialAccountsResourceInboundTransfers: Codable, Sendable {
-    @Expandable<TreasuryFinancialAccountsResourceInboundAchToggleSettings>
-    public var ach: String?
+    public var ach: TreasuryFinancialAccountsResourceInboundAchToggleSettings?
 }
 
 public struct TreasuryFinancialAccountsResourceInboundTransfersList: Codable, Sendable {

@@ -8,82 +8,46 @@
 import Foundation
 
 public struct RefundDestinationDetails: Codable, Sendable {
-    @Expandable<DestinationDetailsUnimplemented>
-    public var affirm: String?
-    @Expandable<RefundDestinationDetailsAfterpayClearpay>
-    public var afterpayClearpay: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var alipay: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var alma: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var amazonPay: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var auBankTransfer: String?
-    @Expandable<RefundDestinationDetailsBlik>
-    public var blik: String?
-    @Expandable<RefundDestinationDetailsBrBankTransfer>
-    public var brBankTransfer: String?
-    @Expandable<RefundDestinationDetailsCard>
-    public var card: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var cashapp: String?
-    @Expandable<RefundDestinationDetailsCrypto>
-    public var crypto: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var customerCashBalance: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var eps: String?
-    @Expandable<RefundDestinationDetailsEuBankTransfer>
-    public var euBankTransfer: String?
-    @Expandable<RefundDestinationDetailsGbBankTransfer>
-    public var gbBankTransfer: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var giropay: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var grabpay: String?
-    @Expandable<RefundDestinationDetailsJpBankTransfer>
-    public var jpBankTransfer: String?
-    @Expandable<RefundDestinationDetailsKlarna>
-    public var klarna: String?
-    @Expandable<RefundDestinationDetailsMbWay>
-    public var mbWay: String?
-    @Expandable<RefundDestinationDetailsMultibanco>
-    public var multibanco: String?
-    @Expandable<RefundDestinationDetailsMxBankTransfer>
-    public var mxBankTransfer: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var nzBankTransfer: String?
-    @Expandable<RefundDestinationDetailsP24>
-    public var p24: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var paynow: String?
-    @Expandable<RefundDestinationDetailsPaypal>
-    public var paypal: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var pix: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var revolut: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var scalapay: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var sofort: String?
-    @Expandable<RefundDestinationDetailsSwish>
-    public var swish: String?
-    @Expandable<RefundDestinationDetailsThBankTransfer>
-    public var thBankTransfer: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var twint: String?
+    public var affirm: DestinationDetailsUnimplemented?
+    public var afterpayClearpay: RefundDestinationDetailsAfterpayClearpay?
+    public var alipay: DestinationDetailsUnimplemented?
+    public var alma: DestinationDetailsUnimplemented?
+    public var amazonPay: DestinationDetailsUnimplemented?
+    public var auBankTransfer: DestinationDetailsUnimplemented?
+    public var blik: RefundDestinationDetailsBlik?
+    public var brBankTransfer: RefundDestinationDetailsBrBankTransfer?
+    public var card: RefundDestinationDetailsCard?
+    public var cashapp: DestinationDetailsUnimplemented?
+    public var crypto: RefundDestinationDetailsCrypto?
+    public var customerCashBalance: DestinationDetailsUnimplemented?
+    public var eps: DestinationDetailsUnimplemented?
+    public var euBankTransfer: RefundDestinationDetailsEuBankTransfer?
+    public var gbBankTransfer: RefundDestinationDetailsGbBankTransfer?
+    public var giropay: DestinationDetailsUnimplemented?
+    public var grabpay: DestinationDetailsUnimplemented?
+    public var jpBankTransfer: RefundDestinationDetailsJpBankTransfer?
+    public var klarna: RefundDestinationDetailsKlarna?
+    public var mbWay: RefundDestinationDetailsMbWay?
+    public var multibanco: RefundDestinationDetailsMultibanco?
+    public var mxBankTransfer: RefundDestinationDetailsMxBankTransfer?
+    public var nzBankTransfer: DestinationDetailsUnimplemented?
+    public var p24: RefundDestinationDetailsP24?
+    public var paynow: DestinationDetailsUnimplemented?
+    public var paypal: RefundDestinationDetailsPaypal?
+    public var pix: DestinationDetailsUnimplemented?
+    public var revolut: DestinationDetailsUnimplemented?
+    public var scalapay: DestinationDetailsUnimplemented?
+    public var sofort: DestinationDetailsUnimplemented?
+    public var swish: RefundDestinationDetailsSwish?
+    public var thBankTransfer: RefundDestinationDetailsThBankTransfer?
+    public var twint: DestinationDetailsUnimplemented?
     /// The type of transaction-specific details of the payment method used in the refund (e.g., `card`). An
     /// additional hash is included on `destination_details` with a name matching this value. It contains
     /// information specific to the refund transaction.
     public var type: String
-    @Expandable<RefundDestinationDetailsUsBankTransfer>
-    public var usBankTransfer: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var wechatPay: String?
-    @Expandable<DestinationDetailsUnimplemented>
-    public var zip: String?
+    public var usBankTransfer: RefundDestinationDetailsUsBankTransfer?
+    public var wechatPay: DestinationDetailsUnimplemented?
+    public var zip: DestinationDetailsUnimplemented?
 
     public enum CodingKeys: String, CodingKey {
         case affirm

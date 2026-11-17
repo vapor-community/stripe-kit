@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a new SetupIntent is created.
 public struct SetupIntentCreated: Codable, Sendable {
+    @Indirect
     public var object: SetupIntent
 }
 

@@ -16,8 +16,7 @@ public struct TerminalReaderReaderResourceProcessConfig: Codable, Sendable {
     public var returnUrl: String?
     /// Override showing a tipping selection screen on this transaction.
     public var skipTipping: Bool?
-    @Expandable<TerminalReaderReaderResourceTippingConfig>
-    public var tipping: String?
+    public var tipping: TerminalReaderReaderResourceTippingConfig?
 
     public enum CodingKeys: String, CodingKey {
         case enableCustomerCancellation = "enable_customer_cancellation"

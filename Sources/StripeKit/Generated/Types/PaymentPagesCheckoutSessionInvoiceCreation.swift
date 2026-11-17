@@ -10,8 +10,7 @@ import Foundation
 public struct PaymentPagesCheckoutSessionInvoiceCreation: Codable, Sendable {
     /// Indicates whether invoice creation is enabled for the Checkout Session.
     public var enabled: Bool
-    @Expandable<PaymentPagesCheckoutSessionInvoiceSettings>
-    public var invoiceData: String?
+    public var invoiceData: PaymentPagesCheckoutSessionInvoiceSettings
 
     public enum CodingKeys: String, CodingKey {
         case enabled

@@ -9,13 +9,11 @@ import Foundation
 
 public struct PortalFlowsFlowSubscriptionUpdateConfirm: Codable, Sendable {
     /// The coupon or promotion code to apply to this subscription update.
-    @ExpandableCollection<PortalFlowsSubscriptionUpdateConfirmDiscount>
-    public var discounts: [String]?
+    public var discounts: [PortalFlowsSubscriptionUpdateConfirmDiscount]?
     /// The [subscription item](https://docs.stripe.com/api/subscription_items) to be updated through this
     /// flow. Currently, only up to one may be specified and subscriptions with multiple items are not
     /// updatable.
-    @ExpandableCollection<PortalFlowsSubscriptionUpdateConfirmItem>
-    public var items: [String]?
+    public var items: [PortalFlowsSubscriptionUpdateConfirmItem]
     /// The ID of the subscription to be updated.
     public var subscription: String
 }

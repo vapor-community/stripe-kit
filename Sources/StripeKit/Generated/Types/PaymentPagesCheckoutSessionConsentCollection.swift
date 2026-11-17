@@ -9,8 +9,7 @@ import Foundation
 
 public struct PaymentPagesCheckoutSessionConsentCollection: Codable, Sendable {
     /// If set to `hidden`, it will hide legal text related to the reuse of a payment method.
-    @Expandable<PaymentPagesCheckoutSessionPaymentMethodReuseAgreement>
-    public var paymentMethodReuseAgreement: String?
+    public var paymentMethodReuseAgreement: PaymentPagesCheckoutSessionPaymentMethodReuseAgreement?
     /// If set to `auto`, enables the collection of customer consent for promotional communications. The
     /// Checkout Session will determine whether to display an option to opt into promotional communication
     /// from the merchant depending on the customer's locale. Only available to US merchants and US

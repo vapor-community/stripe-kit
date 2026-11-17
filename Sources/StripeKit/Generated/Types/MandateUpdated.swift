@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a Mandate is updated.
 public struct MandateUpdated: Codable, Sendable {
+    @Indirect
     public var object: Mandate
 }
 

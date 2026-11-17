@@ -9,12 +9,10 @@ import Foundation
 
 public struct DisputeEnhancedEvidenceVisaCompellingEvidence3: Codable, Sendable {
     /// Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.
-    @Expandable<DisputeVisaCompellingEvidence3DisputedTransaction>
-    public var disputedTransaction: String?
+    public var disputedTransaction: DisputeVisaCompellingEvidence3DisputedTransaction?
     /// List of exactly two prior undisputed transaction objects for Visa Compelling Evidence 3.0 evidence
     /// submission.
-    @ExpandableCollection<DisputeVisaCompellingEvidence3PriorUndisputedTransaction>
-    public var priorUndisputedTransactions: [String]?
+    public var priorUndisputedTransactions: [DisputeVisaCompellingEvidence3PriorUndisputedTransaction]
 
     public enum CodingKeys: String, CodingKey {
         case disputedTransaction = "disputed_transaction"

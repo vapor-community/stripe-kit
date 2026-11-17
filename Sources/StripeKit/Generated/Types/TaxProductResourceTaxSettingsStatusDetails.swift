@@ -8,10 +8,8 @@
 import Foundation
 
 public struct TaxProductResourceTaxSettingsStatusDetails: Codable, Sendable {
-    @Expandable<TaxProductResourceTaxSettingsStatusDetailsResourceActive>
-    public var active: String?
-    @Expandable<TaxProductResourceTaxSettingsStatusDetailsResourcePending>
-    public var pending: String?
+    public var active: TaxProductResourceTaxSettingsStatusDetailsResourceActive?
+    public var pending: TaxProductResourceTaxSettingsStatusDetailsResourcePending?
 }
 
 public struct TaxProductResourceTaxSettingsStatusDetailsList: Codable, Sendable {

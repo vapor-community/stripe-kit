@@ -13,8 +13,7 @@ public struct BalanceAmount: Codable, Sendable {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
-    @Expandable<BalanceAmountBySourceType>
-    public var sourceTypes: String?
+    public var sourceTypes: BalanceAmountBySourceType?
 
     public enum CodingKeys: String, CodingKey {
         case amount

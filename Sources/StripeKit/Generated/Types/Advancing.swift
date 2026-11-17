@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a test clock starts advancing.
 public struct Advancing: Codable, Sendable {
+    @Indirect
     public var object: TestClock
 }
 

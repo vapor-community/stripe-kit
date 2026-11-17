@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs 7 days before a subscription schedule will expire.
 public struct SubscriptionScheduleExpiring: Codable, Sendable {
+    @Indirect
     public var object: SubscriptionSchedule
 }
 

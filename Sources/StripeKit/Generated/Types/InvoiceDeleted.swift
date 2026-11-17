@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a draft invoice is deleted. Note: This event is not sent for [invoice
 /// previews](https://docs.stripe.com/api/invoices/create_preview).
 public struct InvoiceDeleted: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

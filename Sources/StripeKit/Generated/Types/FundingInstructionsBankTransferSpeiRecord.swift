@@ -9,12 +9,10 @@ import Foundation
 
 /// SPEI Records contain Mexico bank account details per the SPEI format.
 public struct FundingInstructionsBankTransferSpeiRecord: Codable, Sendable {
-    @Expandable<Address>
-    public var accountHolderAddress: String?
+    public var accountHolderAddress: Address
     /// The account holder name
     public var accountHolderName: String
-    @Expandable<Address>
-    public var bankAddress: String?
+    public var bankAddress: Address
     /// The three-digit bank code
     public var bankCode: String
     /// The short banking institution name

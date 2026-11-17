@@ -13,14 +13,12 @@ public struct CreditBalanceTransaction: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Credit details for this credit balance transaction. Only present if type is `credit`.
-    @Expandable<BillingCreditGrantsResourceBalanceCredit>
-    public var credit: String?
+    public var credit: BillingCreditGrantsResourceBalanceCredit?
     /// The credit grant associated with this credit balance transaction.
     @Expandable<CreditGrant>
     public var creditGrant: String?
     /// Debit details for this credit balance transaction. Only present if type is `debit`.
-    @Expandable<BillingCreditGrantsResourceBalanceDebit>
-    public var debit: String?
+    public var debit: BillingCreditGrantsResourceBalanceDebit?
     /// The effective time of this credit balance transaction.
     public var effectiveAt: Int
     /// Unique identifier for the object.

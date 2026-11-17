@@ -9,8 +9,7 @@ import Foundation
 
 /// Settings related to Financial Addresses features on a Financial Account
 public struct TreasuryFinancialAccountsResourceFinancialAddressesFeatures: Codable, Sendable {
-    @Expandable<TreasuryFinancialAccountsResourceAbaToggleSettings>
-    public var aba: String?
+    public var aba: TreasuryFinancialAccountsResourceAbaToggleSettings?
 }
 
 public struct TreasuryFinancialAccountsResourceFinancialAddressesFeaturesList: Codable, Sendable {

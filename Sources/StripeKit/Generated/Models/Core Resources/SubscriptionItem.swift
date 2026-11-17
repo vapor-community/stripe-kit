@@ -14,8 +14,7 @@ public struct SubscriptionItem: Codable, Sendable {
     public var billedUntil: Int?
     /// Define thresholds at which an invoice will be sent, and the related subscription advanced to a new
     /// billing period
-    @Expandable<SubscriptionItemBillingThresholds>
-    public var billingThresholds: String?
+    public var billingThresholds: SubscriptionItemBillingThresholds?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// The end time of this subscription item's current billing period.
@@ -23,8 +22,7 @@ public struct SubscriptionItem: Codable, Sendable {
     /// The start time of this subscription item's current billing period.
     public var currentPeriodStart: Int
     /// The current trial that is applied to this subscription item.
-    @Expandable<SubscriptionsTrialsResourceCurrentTrial>
-    public var currentTrial: String?
+    public var currentTrial: SubscriptionsTrialsResourceCurrentTrial?
     /// The discounts applied to the subscription item. Subscription item discounts are applied before
     /// subscription discounts. Use `expand[]=discounts` to expand each discount.
     @ExpandableCollection<Discount>
@@ -36,10 +34,10 @@ public struct SubscriptionItem: Codable, Sendable {
     public var metadata: [String: String]
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: SubscriptionItemObject
-    @Expandable<Plan>
-    public var plan: String?
-    @Expandable<Price>
-    public var price: String?
+    @Indirect
+    public var plan: Plan
+    @Indirect
+    public var price: Price
     /// The [quantity](https://docs.stripe.com/subscriptions/quantities) of the plan to which the customer
     /// should be subscribed.
     public var quantity: Int?
@@ -47,8 +45,7 @@ public struct SubscriptionItem: Codable, Sendable {
     public var subscription: String
     /// The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the
     /// subscription do not apply to this `subscription_item`.
-    @ExpandableCollection<TaxRate>
-    public var taxRates: [String]?
+    public var taxRates: [TaxRate]?
 
     public enum CodingKeys: String, CodingKey {
         case billedUntil = "billed_until"

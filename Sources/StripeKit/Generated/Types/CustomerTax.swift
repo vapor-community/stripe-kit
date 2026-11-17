@@ -13,8 +13,7 @@ public struct CustomerTax: Codable, Sendable {
     /// A recent IP address of the customer used for tax reporting and tax location inference.
     public var ipAddress: String?
     /// The identified tax location of the customer.
-    @Expandable<CustomerTaxLocation>
-    public var location: String?
+    public var location: CustomerTaxLocation?
     /// The tax calculation provider used for location resolution. Defaults to `stripe` when not using a
     /// [third-party provider](/tax/third-party-apps).
     public var provider: CustomerTaxProvider

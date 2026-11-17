@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a subscription schedule is canceled due to the underlying subscription being
 /// canceled because of delinquency.
 public struct Aborted: Codable, Sendable {
+    @Indirect
     public var object: SubscriptionSchedule
 }
 

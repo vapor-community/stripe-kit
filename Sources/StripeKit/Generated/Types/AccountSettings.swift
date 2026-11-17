@@ -8,28 +8,17 @@
 import Foundation
 
 public struct AccountSettings: Codable, Sendable {
-    @Expandable<AccountBacsDebitPaymentsSettings>
-    public var bacsDebitPayments: String?
-    @Expandable<AccountBrandingSettings>
-    public var branding: String?
-    @Expandable<AccountCardIssuingSettings>
-    public var cardIssuing: String?
-    @Expandable<AccountCardPaymentsSettings>
-    public var cardPayments: String?
-    @Expandable<AccountDashboardSettings>
-    public var dashboard: String?
-    @Expandable<AccountInvoicesSettings>
-    public var invoices: String?
-    @Expandable<AccountPaymentsSettings>
-    public var payments: String?
-    @Expandable<AccountPayoutSettings>
-    public var payouts: String?
-    @Expandable<AccountPaypayPaymentsSettings>
-    public var paypayPayments: String?
-    @Expandable<AccountSepaDebitPaymentsSettings>
-    public var sepaDebitPayments: String?
-    @Expandable<AccountTreasurySettings>
-    public var treasury: String?
+    public var bacsDebitPayments: AccountBacsDebitPaymentsSettings?
+    public var branding: AccountBrandingSettings
+    public var cardIssuing: AccountCardIssuingSettings?
+    public var cardPayments: AccountCardPaymentsSettings
+    public var dashboard: AccountDashboardSettings
+    public var invoices: AccountInvoicesSettings?
+    public var payments: AccountPaymentsSettings
+    public var payouts: AccountPayoutSettings?
+    public var paypayPayments: AccountPaypayPaymentsSettings?
+    public var sepaDebitPayments: AccountSepaDebitPaymentsSettings?
+    public var treasury: AccountTreasurySettings?
 
     public enum CodingKeys: String, CodingKey {
         case bacsDebitPayments = "bacs_debit_payments"

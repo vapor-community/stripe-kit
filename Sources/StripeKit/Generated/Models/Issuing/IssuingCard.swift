@@ -14,8 +14,8 @@ public struct IssuingCard: Codable, Sendable {
     public var brand: String
     /// The reason why the card was canceled.
     public var cancellationReason: IssuingCardCancellationReason?
-    @Expandable<Cardholder>
-    public var cardholder: String?
+    @Indirect
+    public var cardholder: Cardholder
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -39,12 +39,10 @@ public struct IssuingCard: Codable, Sendable {
     public var last4: String
     /// Stripe’s assessment of whether this card’s details have been compromised. If this property isn't
     /// null, cancel and reissue the card to prevent fraudulent activity risk.
-    @Expandable<IssuingCardFraudWarning>
-    public var latestFraudWarning: String?
+    public var latestFraudWarning: IssuingCardFraudWarning?
     /// Rules that control the lifecycle of this card, such as automatic cancellation. Refer to our
     /// [documentation](/issuing/controls/lifecycle-controls) for more details.
-    @Expandable<IssuingCardLifecycleControls>
-    public var lifecycleControls: String?
+    public var lifecycleControls: IssuingCardLifecycleControls?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -73,18 +71,15 @@ public struct IssuingCard: Codable, Sendable {
     /// Text separate from cardholder name, printed on the card.
     public var secondLine: String?
     /// Where and how the card will be shipped.
-    @Expandable<IssuingCardShipping>
-    public var shipping: String?
-    @Expandable<IssuingCardAuthorizationControls>
-    public var spendingControls: String?
+    public var shipping: IssuingCardShipping?
+    public var spendingControls: IssuingCardAuthorizationControls
     /// Whether authorizations can be approved on this card. May be blocked from activating cards depending
     /// on past-due Cardholder requirements. Defaults to `inactive`.
     public var status: IssuingCardStatus
     /// The type of the card.
     public var type: IssuingCardType
     /// Information relating to digital wallets (like Apple Pay and Google Pay).
-    @Expandable<IssuingCardWallets>
-    public var wallets: String?
+    public var wallets: IssuingCardWallets?
 
     public enum CodingKeys: String, CodingKey {
         case brand

@@ -17,8 +17,7 @@ public struct PaymentIntentAmountDetailsLineItem: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PaymentIntentAmountDetailsLineItemObject
     /// Payment method-specific information for line items.
-    @Expandable<PaymentFlowsAmountDetailsResourceLineItemsListResourceLineItemResourcePaymentMethodOptions>
-    public var paymentMethodOptions: String?
+    public var paymentMethodOptions: PaymentFlowsAmountDetailsResourceLineItemsListResourceLineItemResourcePaymentMethodOptions?
     /// The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters
     /// long.
     public var productCode: String?
@@ -29,8 +28,7 @@ public struct PaymentIntentAmountDetailsLineItem: Codable, Sendable {
     /// The quantity of items. Required for L3 rates. An integer greater than 0.
     public var quantity: Int
     /// Contains information about the tax on the item.
-    @Expandable<PaymentFlowsAmountDetailsResourceLineItemsListResourceLineItemResourceTax>
-    public var tax: String?
+    public var tax: PaymentFlowsAmountDetailsResourceLineItemsListResourceLineItemResourceTax?
     /// The unit cost of the line item represented in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal). Required for L3 rates. An integer greater
     /// than or equal to 0.

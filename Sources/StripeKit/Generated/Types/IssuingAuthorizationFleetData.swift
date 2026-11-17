@@ -11,15 +11,13 @@ public struct IssuingAuthorizationFleetData: Codable, Sendable {
     /// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
     /// on the configuration of your physical fleet cards. Typical points of sale support only numeric
     /// entry.
-    @Expandable<IssuingAuthorizationFleetCardholderPromptData>
-    public var cardholderPromptData: String?
+    public var cardholderPromptData: IssuingAuthorizationFleetCardholderPromptData?
     /// The type of purchase.
     public var purchaseType: IssuingAuthorizationFleetDataPurchaseType?
     /// More information about the total amount. Typically this information is received from the merchant
     /// after the authorization has been approved and the fuel dispensed. This information is not guaranteed
     /// to be accurate as some merchants may provide unreliable data.
-    @Expandable<IssuingAuthorizationFleetReportedBreakdown>
-    public var reportedBreakdown: String?
+    public var reportedBreakdown: IssuingAuthorizationFleetReportedBreakdown?
     /// The type of fuel service.
     public var serviceType: IssuingAuthorizationFleetDataServiceType?
 

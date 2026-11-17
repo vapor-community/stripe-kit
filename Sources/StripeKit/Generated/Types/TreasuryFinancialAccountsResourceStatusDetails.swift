@@ -9,8 +9,7 @@ import Foundation
 
 public struct TreasuryFinancialAccountsResourceStatusDetails: Codable, Sendable {
     /// Details related to the closure of this FinancialAccount
-    @Expandable<TreasuryFinancialAccountsResourceClosedStatusDetails>
-    public var closed: String?
+    public var closed: TreasuryFinancialAccountsResourceClosedStatusDetails?
 }
 
 public struct TreasuryFinancialAccountsResourceStatusDetailsList: Codable, Sendable {

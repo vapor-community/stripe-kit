@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a meter is created
 public struct BillingMeterCreated: Codable, Sendable {
+    @Indirect
     public var object: Meter
 }
 

@@ -12,8 +12,7 @@ import Foundation
 public struct ThresholdsResourceUsageThresholdConfig: Codable, Sendable {
     /// The filters allow limiting the scope of this usage alert. You can only specify up to one filter at
     /// this time.
-    @ExpandableCollection<ThresholdsResourceUsageAlertFilter>
-    public var filters: [String]?
+    public var filters: [ThresholdsResourceUsageAlertFilter]?
     /// The value at which this alert will trigger.
     public var gte: Int
     /// The [Billing Meter](/api/billing/meter) ID whose usage is monitored.

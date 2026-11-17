@@ -12,6 +12,7 @@ import Foundation
 /// settings](https://dashboard.stripe.com/account/billing/automatic). Note: The received `Invoice`
 /// object will not have an invoice ID.
 public struct Upcoming: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

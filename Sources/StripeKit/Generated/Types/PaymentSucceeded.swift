@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an invoice payment attempt succeeds.
 public struct PaymentSucceeded: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

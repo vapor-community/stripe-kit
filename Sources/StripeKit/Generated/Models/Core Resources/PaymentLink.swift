@@ -18,8 +18,7 @@ public struct PaymentLink: Codable, Sendable {
     /// Whether the payment link's `url` is active. If `false`, customers visiting the URL will be shown a
     /// page saying that the link has been deactivated.
     public var active: Bool
-    @Expandable<PaymentLinksResourceAfterCompletion>
-    public var afterCompletion: String?
+    public var afterCompletion: PaymentLinksResourceAfterCompletion
     /// Whether user redeemable promotion codes are enabled.
     public var allowPromotionCodes: Bool
     /// The ID of the Connect application that created the Payment Link.
@@ -31,22 +30,18 @@ public struct PaymentLink: Codable, Sendable {
     /// This represents the percentage of the subscription invoice total that will be transferred to the
     /// application owner's Stripe account.
     public var applicationFeePercent: Double?
-    @Expandable<PaymentLinksResourceAutomaticTax>
-    public var automaticTax: String?
+    public var automaticTax: PaymentLinksResourceAutomaticTax
     /// Configuration for collecting the customer's billing address. Defaults to `auto`.
     public var billingAddressCollection: PaymentLinkBillingAddressCollection
     /// When set, provides configuration to gather active consent from customers.
-    @Expandable<PaymentLinksResourceConsentCollection>
-    public var consentCollection: String?
+    public var consentCollection: PaymentLinksResourceConsentCollection?
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// Collect additional information from your customer using custom fields. Up to 3 fields are supported.
     /// You can't set this parameter if `ui_mode` is `elements`.
-    @ExpandableCollection<PaymentLinksResourceCustomFields>
-    public var customFields: [String]?
-    @Expandable<PaymentLinksResourceCustomText>
-    public var customText: String?
+    public var customFields: [PaymentLinksResourceCustomFields]
+    public var customText: PaymentLinksResourceCustomText
     /// Configuration for Customer creation during checkout.
     public var customerCreation: PaymentLinkCustomerCreation
     /// Unique identifier for the object.
@@ -54,8 +49,7 @@ public struct PaymentLink: Codable, Sendable {
     /// The custom message to be displayed to a customer when a payment link is no longer active.
     public var inactiveMessage: String?
     /// Configuration for creating invoice for payment mode payment links.
-    @Expandable<PaymentLinksResourceInvoiceCreation>
-    public var invoiceCreation: String?
+    public var invoiceCreation: PaymentLinksResourceInvoiceCreation?
     /// The line items representing what is being sold.
     public var lineItems: ItemList?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -64,13 +58,11 @@ public struct PaymentLink: Codable, Sendable {
     /// Settings for Managed Payments for this Payment Link and resulting
     /// [CheckoutSessions](/api/checkout/sessions/object), [PaymentIntents](/api/payment_intents/object),
     /// [Invoices](/api/invoices/object), and [Subscriptions](/api/subscriptions/object).
-    @Expandable<PaymentPagesCheckoutSessionManagedPayments>
-    public var managedPayments: String?
+    public var managedPayments: PaymentPagesCheckoutSessionManagedPayments?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]
-    @Expandable<PaymentLinksResourceNameCollection>
-    public var nameCollection: String?
+    public var nameCollection: PaymentLinksResourceNameCollection?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PaymentLinkObject
     /// The account on behalf of which to charge. See the [Connect
@@ -79,44 +71,34 @@ public struct PaymentLink: Codable, Sendable {
     @Expandable<Account>
     public var onBehalfOf: String?
     /// The optional items presented to the customer at checkout.
-    @ExpandableCollection<PaymentLinksResourceOptionalItem>
-    public var optionalItems: [String]?
+    public var optionalItems: [PaymentLinksResourceOptionalItem]?
     /// Indicates the parameters to be passed to PaymentIntent creation during checkout.
-    @Expandable<PaymentLinksResourcePaymentIntentData>
-    public var paymentIntentData: String?
+    public var paymentIntentData: PaymentLinksResourcePaymentIntentData?
     /// Configuration for collecting a payment method during checkout. Defaults to `always`.
     public var paymentMethodCollection: PaymentLinkPaymentMethodCollection
     /// Payment-method-specific configuration.
-    @Expandable<PaymentLinksResourcePaymentMethodOptions>
-    public var paymentMethodOptions: String?
+    public var paymentMethodOptions: PaymentLinksResourcePaymentMethodOptions?
     /// The list of payment method types that customers can use. When `null`, Stripe will dynamically show
     /// relevant payment methods you've enabled in your [payment method
     /// settings](https://dashboard.stripe.com/settings/payment_methods).
     public var paymentMethodTypes: [String]?
-    @Expandable<PaymentLinksResourcePhoneNumberCollection>
-    public var phoneNumberCollection: String?
+    public var phoneNumberCollection: PaymentLinksResourcePhoneNumberCollection
     /// Settings that restrict the usage of a payment link.
-    @Expandable<PaymentLinksResourceRestrictions>
-    public var restrictions: String?
+    public var restrictions: PaymentLinksResourceRestrictions?
     /// Configuration for collecting the customer's shipping address.
-    @Expandable<PaymentLinksResourceShippingAddressCollection>
-    public var shippingAddressCollection: String?
+    public var shippingAddressCollection: PaymentLinksResourceShippingAddressCollection?
     /// The shipping rate options applied to the session.
-    @ExpandableCollection<PaymentLinksResourceShippingOption>
-    public var shippingOptions: [String]?
+    public var shippingOptions: [PaymentLinksResourceShippingOption]
     /// Indicates the type of transaction being performed which customizes relevant text on the page, such
     /// as the submit button.
     public var submitType: PaymentLinkSubmitType
     /// When creating a subscription, the specified configuration data will be used. There must be at least
     /// one line item with a recurring price to use `subscription_data`.
-    @Expandable<PaymentLinksResourceSubscriptionData>
-    public var subscriptionData: String?
-    @Expandable<PaymentLinksResourceTaxIdCollection>
-    public var taxIdCollection: String?
+    public var subscriptionData: PaymentLinksResourceSubscriptionData?
+    public var taxIdCollection: PaymentLinksResourceTaxIdCollection
     /// The account (if any) the payments will be attributed to for tax reporting, and where funds from each
     /// payment will be transferred to.
-    @Expandable<PaymentLinksResourceTransferData>
-    public var transferData: String?
+    public var transferData: PaymentLinksResourceTransferData?
     /// The public URL that can be shared with customers.
     public var url: String
 

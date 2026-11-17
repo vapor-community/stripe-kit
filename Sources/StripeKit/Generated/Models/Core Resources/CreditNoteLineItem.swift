@@ -18,8 +18,7 @@ public struct CreditNoteLineItem: Codable, Sendable {
     /// line item.
     public var discountAmount: Int
     /// The amount of discount calculated per discount for this line item
-    @ExpandableCollection<DiscountsResourceDiscountAmount>
-    public var discountAmounts: [String]?
+    public var discountAmounts: [DiscountsResourceDiscountAmount]
     /// Unique identifier for the object.
     public var id: String
     /// ID of the invoice line item being credited
@@ -33,16 +32,13 @@ public struct CreditNoteLineItem: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: CreditNoteLineItemObject
     /// The pretax credit amounts (ex: discount, credit grants, etc) for this line item.
-    @ExpandableCollection<CreditNotesPretaxCreditAmount>
-    public var pretaxCreditAmounts: [String]?
+    public var pretaxCreditAmounts: [CreditNotesPretaxCreditAmount]
     /// The number of units of product being credited.
     public var quantity: Int?
     /// The tax rates which apply to the line item.
-    @ExpandableCollection<TaxRate>
-    public var taxRates: [String]?
+    public var taxRates: [TaxRate]
     /// The tax information of the line item.
-    @ExpandableCollection<BillingBillResourceInvoicingTaxesTax>
-    public var taxes: [String]?
+    public var taxes: [BillingBillResourceInvoicingTaxesTax]?
     /// The type of the credit note line item, one of `invoice_line_item` or `custom_line_item`. When the
     /// type is `invoice_line_item` there is an additional `invoice_line_item` property on the resource the
     /// value of which is the id of the credited line item on the invoice.

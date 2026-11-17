@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when funds are removed from your account due to a dispute.
 public struct FundsWithdrawn: Codable, Sendable {
+    @Indirect
     public var object: Dispute
 }
 

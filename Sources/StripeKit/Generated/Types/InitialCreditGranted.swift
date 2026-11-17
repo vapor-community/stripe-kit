@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an initial credit is granted on a DebitReversal.
 public struct InitialCreditGranted: Codable, Sendable {
+    @Indirect
     public var object: DebitReversal
 }
 

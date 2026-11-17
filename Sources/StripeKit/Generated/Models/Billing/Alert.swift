@@ -26,8 +26,7 @@ public struct Alert: Codable, Sendable {
     public var title: String
     /// Encapsulates configuration of the alert to monitor usage on a specific [Billing
     /// Meter](https://docs.stripe.com/api/billing/meter).
-    @Expandable<ThresholdsResourceUsageThresholdConfig>
-    public var usageThreshold: String?
+    public var usageThreshold: ThresholdsResourceUsageThresholdConfig?
 
     public enum CodingKeys: String, CodingKey {
         case alertType = "alert_type"

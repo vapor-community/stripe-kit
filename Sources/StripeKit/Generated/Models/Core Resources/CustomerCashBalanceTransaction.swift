@@ -12,10 +12,8 @@ import Foundation
 /// represent when funds are moved into or out of this balance. This includes funding by the customer,
 /// allocation to payments, and refunds to the customer.
 public struct CustomerCashBalanceTransaction: Codable, Sendable {
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceAdjustedForOverdraft>
-    public var adjustedForOverdraft: String?
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceAppliedToPaymentTransaction>
-    public var appliedToPayment: String?
+    public var adjustedForOverdraft: CustomerBalanceResourceCashBalanceTransactionResourceAdjustedForOverdraft?
+    public var appliedToPayment: CustomerBalanceResourceCashBalanceTransactionResourceAppliedToPaymentTransaction?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -30,8 +28,7 @@ public struct CustomerCashBalanceTransaction: Codable, Sendable {
     /// The total available cash balance for the specified currency after this transaction was applied.
     /// Represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
     public var endingBalance: Int
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceFundedTransaction>
-    public var funded: String?
+    public var funded: CustomerBalanceResourceCashBalanceTransactionResourceFundedTransaction?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -43,15 +40,12 @@ public struct CustomerCashBalanceTransaction: Codable, Sendable {
     public var netAmount: Int
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: CustomerCashBalanceTransactionObject
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceRefundedFromPaymentTransaction>
-    public var refundedFromPayment: String?
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceTransferredToBalance>
-    public var transferredToBalance: String?
+    public var refundedFromPayment: CustomerBalanceResourceCashBalanceTransactionResourceRefundedFromPaymentTransaction?
+    public var transferredToBalance: CustomerBalanceResourceCashBalanceTransactionResourceTransferredToBalance?
     /// The type of the cash balance transaction. New types may be added in future. See [Customer
     /// Balance](https://docs.stripe.com/payments/customer-balance#types) to learn more about these types.
     public var type: CustomerCashBalanceTransactionType
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceUnappliedFromPaymentTransaction>
-    public var unappliedFromPayment: String?
+    public var unappliedFromPayment: CustomerBalanceResourceCashBalanceTransactionResourceUnappliedFromPaymentTransaction?
 
     public enum CodingKeys: String, CodingKey {
         case adjustedForOverdraft = "adjusted_for_overdraft"

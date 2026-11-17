@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a new subscription schedule is released.
 public struct Released: Codable, Sendable {
+    @Indirect
     public var object: SubscriptionSchedule
 }
 

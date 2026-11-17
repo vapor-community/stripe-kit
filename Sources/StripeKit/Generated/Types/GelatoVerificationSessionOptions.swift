@@ -8,16 +8,11 @@
 import Foundation
 
 public struct GelatoVerificationSessionOptions: Codable, Sendable {
-    @Expandable<GelatoSessionDocumentOptions>
-    public var document: String?
-    @Expandable<GelatoSessionEmailOptions>
-    public var email: String?
-    @Expandable<GelatoSessionIdNumberOptions>
-    public var idNumber: String?
-    @Expandable<GelatoSessionMatchingOptions>
-    public var matching: String?
-    @Expandable<GelatoSessionPhoneOptions>
-    public var phone: String?
+    public var document: GelatoSessionDocumentOptions?
+    public var email: GelatoSessionEmailOptions?
+    public var idNumber: GelatoSessionIdNumberOptions?
+    public var matching: GelatoSessionMatchingOptions?
+    public var phone: GelatoSessionPhoneOptions?
 
     public enum CodingKeys: String, CodingKey {
         case document

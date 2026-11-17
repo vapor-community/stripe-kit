@@ -9,8 +9,7 @@ import Foundation
 
 public struct BillingDetails: Codable, Sendable {
     /// Billing address.
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address?
     /// Email address.
     public var email: String?
     /// Full name.

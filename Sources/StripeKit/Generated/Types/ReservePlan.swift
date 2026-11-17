@@ -23,15 +23,13 @@ public struct ReservePlan: Codable, Sendable {
     public var destination: ReservePlanDestination
     /// Time at which the ReservePlan was disabled.
     public var disabledAt: Int?
-    @Expandable<ReservesReservePlansResourcesFixedRelease>
-    public var fixedRelease: String?
+    public var fixedRelease: ReservesReservePlansResourcesFixedRelease?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
-    @Expandable<ReservesReservePlansResourcesManualRelease>
-    public var manualRelease: String?
+    public var manualRelease: ReservesReservePlansResourcesManualRelease?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
@@ -39,8 +37,7 @@ public struct ReservePlan: Codable, Sendable {
     public var object: ReservePlanObject
     /// The percent of each Charge to reserve.
     public var percent: Int
-    @Expandable<ReservesReservePlansResourcesRollingRelease>
-    public var rollingRelease: String?
+    public var rollingRelease: ReservesReservePlansResourcesRollingRelease?
     /// The current status of the ReservePlan. The ReservePlan only affects charges if it is `active`.
     public var status: ReservePlanStatus
     /// The type of the ReservePlan.

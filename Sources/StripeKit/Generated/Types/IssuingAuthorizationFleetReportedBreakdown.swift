@@ -9,14 +9,11 @@ import Foundation
 
 public struct IssuingAuthorizationFleetReportedBreakdown: Codable, Sendable {
     /// Breakdown of fuel portion of the purchase.
-    @Expandable<IssuingAuthorizationFleetFuelPriceData>
-    public var fuel: String?
+    public var fuel: IssuingAuthorizationFleetFuelPriceData?
     /// Breakdown of non-fuel portion of the purchase.
-    @Expandable<IssuingAuthorizationFleetNonFuelPriceData>
-    public var nonFuel: String?
+    public var nonFuel: IssuingAuthorizationFleetNonFuelPriceData?
     /// Information about tax included in this transaction.
-    @Expandable<IssuingAuthorizationFleetTaxData>
-    public var tax: String?
+    public var tax: IssuingAuthorizationFleetTaxData?
 
     public enum CodingKeys: String, CodingKey {
         case fuel

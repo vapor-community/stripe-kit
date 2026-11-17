@@ -35,8 +35,7 @@ public struct OutboundTransfer: Codable, Sendable {
     public var description: String?
     /// The PaymentMethod used as the payment instrument for an OutboundTransfer.
     public var destinationPaymentMethod: String?
-    @Expandable<OutboundTransfersPaymentMethodDetails>
-    public var destinationPaymentMethodDetails: String?
+    public var destinationPaymentMethodDetails: OutboundTransfersPaymentMethodDetails
     /// The date when funds are expected to arrive in the destination account.
     public var expectedArrivalDate: Int
     /// The FinancialAccount that funds were pulled from.
@@ -56,8 +55,7 @@ public struct OutboundTransfer: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: OutboundTransferObject
     /// Details about a returned OutboundTransfer. Only set when the status is `returned`.
-    @Expandable<TreasuryOutboundTransfersResourceReturnedDetails>
-    public var returnedDetails: String?
+    public var returnedDetails: TreasuryOutboundTransfersResourceReturnedDetails?
     /// Information about the OutboundTransfer to be sent to the recipient account.
     public var statementDescriptor: String
     /// Current status of the OutboundTransfer: `processing`, `failed`, `canceled`, `posted`, `returned`. An
@@ -66,11 +64,9 @@ public struct OutboundTransfer: Codable, Sendable {
     /// `failed` or `canceled`. If an OutboundTransfer fails to arrive at its destination, its status will
     /// change to `returned`.
     public var status: OutboundTransferStatus
-    @Expandable<TreasuryOutboundTransfersResourceStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: TreasuryOutboundTransfersResourceStatusTransitions
     /// Details about network-specific tracking information if available.
-    @Expandable<TreasuryOutboundTransfersResourceOutboundTransferResourceTrackingDetails>
-    public var trackingDetails: String?
+    public var trackingDetails: TreasuryOutboundTransfersResourceOutboundTransferResourceTrackingDetails?
     /// The Transaction associated with this object.
     @Expandable<TreasuryTransaction>
     public var transaction: String?

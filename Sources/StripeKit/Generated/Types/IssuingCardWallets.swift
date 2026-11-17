@@ -8,10 +8,8 @@
 import Foundation
 
 public struct IssuingCardWallets: Codable, Sendable {
-    @Expandable<IssuingCardApplePay>
-    public var applePay: String?
-    @Expandable<IssuingCardGooglePay>
-    public var googlePay: String?
+    public var applePay: IssuingCardApplePay
+    public var googlePay: IssuingCardGooglePay
     /// Unique identifier for a card used with digital wallets
     public var primaryAccountIdentifier: String?
 

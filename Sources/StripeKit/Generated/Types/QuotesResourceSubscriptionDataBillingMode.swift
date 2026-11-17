@@ -9,8 +9,7 @@ import Foundation
 
 /// The billing mode of the quote.
 public struct QuotesResourceSubscriptionDataBillingMode: Codable, Sendable {
-    @Expandable<SubscriptionsResourceBillingModeFlexible>
-    public var flexible: String?
+    public var flexible: SubscriptionsResourceBillingModeFlexible?
     /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
     public var type: QuotesResourceSubscriptionDataBillingModeType
 }

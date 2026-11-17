@@ -37,8 +37,7 @@ public struct ApplicationFee: Codable, Sendable {
     public var currency: String
     /// Polymorphic source of the application fee. Includes the ID of the object the application fee was
     /// created from.
-    @Expandable<PlatformEarningFeeSource>
-    public var feeSource: String?
+    public var feeSource: PlatformEarningFeeSource?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

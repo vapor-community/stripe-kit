@@ -8,8 +8,7 @@
 import Foundation
 
 public struct CheckoutSessionWalletOptions: Codable, Sendable {
-    @Expandable<CheckoutLinkWalletOptions>
-    public var link: String?
+    public var link: CheckoutLinkWalletOptions?
 }
 
 public struct CheckoutSessionWalletOptionsList: Codable, Sendable {

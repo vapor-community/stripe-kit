@@ -14,8 +14,7 @@ public struct QuotesResourceTotalDetails: Codable, Sendable {
     public var amountShipping: Int?
     /// This is the sum of all the tax amounts.
     public var amountTax: Int
-    @Expandable<QuotesResourceTotalDetailsResourceBreakdown>
-    public var breakdown: String?
+    public var breakdown: QuotesResourceTotalDetailsResourceBreakdown?
 
     public enum CodingKeys: String, CodingKey {
         case amountDiscount = "amount_discount"

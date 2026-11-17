@@ -9,22 +9,16 @@ import Foundation
 
 /// FinancialAddresses contain identifying information that resolves to a FinancialAccount.
 public struct FundingInstructionsBankTransferFinancialAddress: Codable, Sendable {
-    @Expandable<FundingInstructionsBankTransferAbaRecord>
-    public var aba: String?
-    @Expandable<FundingInstructionsBankTransferIbanRecord>
-    public var iban: String?
-    @Expandable<FundingInstructionsBankTransferSortCodeRecord>
-    public var sortCode: String?
-    @Expandable<FundingInstructionsBankTransferSpeiRecord>
-    public var spei: String?
+    public var aba: FundingInstructionsBankTransferAbaRecord?
+    public var iban: FundingInstructionsBankTransferIbanRecord?
+    public var sortCode: FundingInstructionsBankTransferSortCodeRecord?
+    public var spei: FundingInstructionsBankTransferSpeiRecord?
     /// The payment networks supported by this FinancialAddress
     public var supportedNetworks: [String]?
-    @Expandable<FundingInstructionsBankTransferSwiftRecord>
-    public var swift: String?
+    public var swift: FundingInstructionsBankTransferSwiftRecord?
     /// The type of financial address
     public var type: FundingInstructionsBankTransferFinancialAddressType
-    @Expandable<FundingInstructionsBankTransferZenginRecord>
-    public var zengin: String?
+    public var zengin: FundingInstructionsBankTransferZenginRecord?
 
     public enum CodingKeys: String, CodingKey {
         case aba

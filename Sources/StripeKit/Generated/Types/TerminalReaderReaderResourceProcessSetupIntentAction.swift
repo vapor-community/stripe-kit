@@ -12,8 +12,7 @@ public struct TerminalReaderReaderResourceProcessSetupIntentAction: Codable, Sen
     /// ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a
     /// Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
     public var generatedCard: String?
-    @Expandable<TerminalReaderReaderResourceProcessSetupConfig>
-    public var processConfig: String?
+    public var processConfig: TerminalReaderReaderResourceProcessSetupConfig?
     /// Most recent SetupIntent processed by the reader.
     @Expandable<SetupIntent>
     public var setupIntent: String?

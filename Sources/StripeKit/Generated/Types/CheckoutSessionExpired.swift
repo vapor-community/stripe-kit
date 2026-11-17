@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Checkout Session is expired.
 public struct CheckoutSessionExpired: Codable, Sendable {
+    @Indirect
     public var object: CheckoutSession
 }
 

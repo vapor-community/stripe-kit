@@ -36,8 +36,7 @@ public struct BalanceTransaction: Codable, Sendable {
     /// when assessed.
     public var fee: Int
     /// Detailed breakdown of fees (in cents (or local equivalent)) paid for this transaction.
-    @ExpandableCollection<Fee>
-    public var feeDetails: [String]?
+    public var feeDetails: [Fee]
     /// Unique identifier for the object.
     public var id: String
     /// Net impact to a Stripe balance (in cents (or local equivalent)). A positive value represents

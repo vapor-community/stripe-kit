@@ -26,8 +26,7 @@ public struct DisputeVisaCompellingEvidence3DisputedTransaction: Codable, Sendab
     public var productDescription: String?
     /// The address to which a physical product was shipped. All fields are required for Visa Compelling
     /// Evidence 3.0 evidence submission.
-    @Expandable<DisputeTransactionShippingAddress>
-    public var shippingAddress: String?
+    public var shippingAddress: DisputeTransactionShippingAddress?
 
     public enum CodingKeys: String, CodingKey {
         case customerAccountId = "customer_account_id"

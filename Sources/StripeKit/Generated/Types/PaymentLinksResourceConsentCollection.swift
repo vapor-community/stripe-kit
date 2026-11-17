@@ -9,8 +9,7 @@ import Foundation
 
 public struct PaymentLinksResourceConsentCollection: Codable, Sendable {
     /// Settings related to the payment method reuse text shown in the Checkout UI.
-    @Expandable<PaymentLinksResourcePaymentMethodReuseAgreement>
-    public var paymentMethodReuseAgreement: String?
+    public var paymentMethodReuseAgreement: PaymentLinksResourcePaymentMethodReuseAgreement?
     /// If set to `auto`, enables the collection of customer consent for promotional communications.
     public var promotions: PaymentLinksResourceConsentCollectionPromotions?
     /// If set to `required`, it requires cutomers to accept the terms of service before being able to pay.

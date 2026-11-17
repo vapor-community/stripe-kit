@@ -13,8 +13,7 @@ public struct BillingBillResourceInvoicingLinesParentsInvoiceLineItemSubscriptio
     /// Whether this is a proration
     public var proration: Bool
     /// Additional details for proration line items
-    @Expandable<BillingBillResourceInvoicingLinesCommonProrationDetails>
-    public var prorationDetails: String?
+    public var prorationDetails: BillingBillResourceInvoicingLinesCommonProrationDetails?
     /// The subscription that the subscription item belongs to
     public var subscription: String?
     /// The subscription item that generated this line item

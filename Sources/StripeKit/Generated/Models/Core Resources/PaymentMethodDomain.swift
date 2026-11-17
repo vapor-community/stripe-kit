@@ -12,10 +12,8 @@ import Foundation
 /// Related guide: [Payment method
 /// domains](https://docs.stripe.com/payments/payment-methods/pmd-registration).
 public struct PaymentMethodDomain: Codable, Sendable {
-    @Expandable<PaymentMethodDomainResourcePaymentMethodStatus>
-    public var amazonPay: String?
-    @Expandable<PaymentMethodDomainResourcePaymentMethodStatus>
-    public var applePay: String?
+    public var amazonPay: PaymentMethodDomainResourcePaymentMethodStatus
+    public var applePay: PaymentMethodDomainResourcePaymentMethodStatus
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// The domain name that this payment method domain object represents.
@@ -23,21 +21,17 @@ public struct PaymentMethodDomain: Codable, Sendable {
     /// Whether this payment method domain is enabled. If the domain is not enabled, payment methods that
     /// require a payment method domain will not appear in Elements.
     public var enabled: Bool
-    @Expandable<PaymentMethodDomainResourcePaymentMethodStatus>
-    public var googlePay: String?
+    public var googlePay: PaymentMethodDomainResourcePaymentMethodStatus
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<PaymentMethodDomainResourcePaymentMethodStatus>
-    public var klarna: String?
-    @Expandable<PaymentMethodDomainResourcePaymentMethodStatus>
-    public var link: String?
+    public var klarna: PaymentMethodDomainResourcePaymentMethodStatus
+    public var link: PaymentMethodDomainResourcePaymentMethodStatus
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PaymentMethodDomainObject
-    @Expandable<PaymentMethodDomainResourcePaymentMethodStatus>
-    public var paypal: String?
+    public var paypal: PaymentMethodDomainResourcePaymentMethodStatus
 
     public enum CodingKeys: String, CodingKey {
         case amazonPay = "amazon_pay"

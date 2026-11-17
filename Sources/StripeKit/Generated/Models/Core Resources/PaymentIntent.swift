@@ -28,8 +28,7 @@ public struct PaymentIntent: Codable, Sendable {
     public var amount: Int
     /// Amount that can be captured from this PaymentIntent.
     public var amountCapturable: Int
-    @Expandable<PaymentFlowsAmountDetails>
-    public var amountDetails: String?
+    public var amountDetails: PaymentFlowsAmountDetails?
     /// Amount that this PaymentIntent collects.
     public var amountReceived: Int
     /// ID of the Connect application that created the PaymentIntent.
@@ -42,8 +41,7 @@ public struct PaymentIntent: Codable, Sendable {
     public var applicationFeeAmount: Int?
     /// Settings to configure compatible payment methods from the [Stripe
     /// Dashboard](https://dashboard.stripe.com/settings/payment_methods)
-    @Expandable<PaymentFlowsAutomaticPaymentMethodsPaymentIntent>
-    public var automaticPaymentMethods: String?
+    public var automaticPaymentMethods: PaymentFlowsAutomaticPaymentMethodsPaymentIntent?
     /// Populated when `status` is `canceled`, this is the time at which the PaymentIntent was canceled.
     /// Measured in seconds since the Unix epoch.
     public var canceledAt: Int?
@@ -91,14 +89,12 @@ public struct PaymentIntent: Codable, Sendable {
     public var description: String?
     /// The list of payment method types to exclude from use with this payment.
     public var excludedPaymentMethodTypes: [String]?
-    @Expandable<PaymentFlowsPaymentIntentAsyncWorkflows>
-    public var hooks: String?
+    public var hooks: PaymentFlowsPaymentIntentAsyncWorkflows?
     /// Unique identifier for the object.
     public var id: String
     /// The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the
     /// PaymentIntent is later updated for any reason.
-    @Expandable<ApiErrors>
-    public var lastPaymentError: String?
+    public var lastPaymentError: ApiErrors?
     /// ID of the latest [Charge object](https://docs.stripe.com/api/charges) created by this PaymentIntent.
     /// This property is `null` until PaymentIntent confirmation is attempted.
     @Expandable<Charge>
@@ -107,8 +103,7 @@ public struct PaymentIntent: Codable, Sendable {
     /// is `false`.
     public var livemode: Bool
     /// Settings for Managed Payments.
-    @Expandable<SmorResourceManagedPayments>
-    public var managedPayments: String?
+    public var managedPayments: SmorResourceManagedPayments?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format. Learn
     /// more about [storing information in
@@ -116,8 +111,7 @@ public struct PaymentIntent: Codable, Sendable {
     public var metadata: [String: String]
     /// If present, this property tells you what actions you need to take in order for your customer to
     /// fulfill a payment using the provided source.
-    @Expandable<PaymentIntentNextAction>
-    public var nextAction: String?
+    public var nextAction: PaymentIntentNextAction?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PaymentIntentObject
     /// You can specify the settlement merchant as the connected account using the `on_behalf_of` attribute
@@ -125,19 +119,16 @@ public struct PaymentIntent: Codable, Sendable {
     /// accounts](/payments/connected-accounts) for details.
     @Expandable<Account>
     public var onBehalfOf: String?
-    @Expandable<PaymentFlowsPaymentDetails>
-    public var paymentDetails: String?
+    public var paymentDetails: PaymentFlowsPaymentDetails?
     /// ID of the payment method used in this PaymentIntent.
     @Expandable<PaymentMethod>
     public var paymentMethod: String?
     /// Information about the [payment method
     /// configuration](https://docs.stripe.com/api/payment_method_configurations) used for this
     /// PaymentIntent.
-    @Expandable<PaymentMethodConfigBizPaymentMethodConfigurationDetails>
-    public var paymentMethodConfigurationDetails: String?
+    public var paymentMethodConfigurationDetails: PaymentMethodConfigBizPaymentMethodConfigurationDetails?
     /// Payment-method-specific configuration for this PaymentIntent.
-    @Expandable<PaymentIntentPaymentMethodOptions>
-    public var paymentMethodOptions: String?
+    public var paymentMethodOptions: PaymentIntentPaymentMethodOptions?
     /// The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. A
     /// comprehensive list of valid payment method types can be found
     /// [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
@@ -146,11 +137,9 @@ public struct PaymentIntent: Codable, Sendable {
     /// PaymentIntent.
     @Expandable<PaymentRecord>
     public var paymentRecord: String?
-    @Expandable<PaymentFlowsPaymentIntentPresentmentDetails>
-    public var presentmentDetails: String?
+    public var presentmentDetails: PaymentFlowsPaymentIntentPresentmentDetails?
     /// If present, this property tells you about the processing state of the payment.
-    @Expandable<PaymentIntentProcessing>
-    public var processing: String?
+    public var processing: PaymentIntentProcessing?
     /// Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is
     /// specified for a payment in live mode, a receipt will be sent regardless of your [email
     /// settings](https://dashboard.stripe.com/account/emails).
@@ -171,8 +160,7 @@ public struct PaymentIntent: Codable, Sendable {
     /// [SCA](/strong-customer-authentication).
     public var setupFutureUsage: PaymentIntentSetupFutureUsage?
     /// Shipping information for this PaymentIntent.
-    @Expandable<Shipping>
-    public var shipping: String?
+    public var shipping: Shipping?
     /// This is a legacy field that will be removed in the future. It is the ID of the Source object that is
     /// associated with this PaymentIntent, if one was supplied.
     @Expandable<PaymentSource>
@@ -195,8 +183,7 @@ public struct PaymentIntent: Codable, Sendable {
     public var status: PaymentIntentStatus
     /// The data that automatically creates a Transfer after the payment finalizes. Learn more about the
     /// [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
-    @Expandable<TransferData>
-    public var transferData: String?
+    public var transferData: TransferData?
     /// A string that identifies the resulting payment as part of a group. Learn more about the [use case
     /// for connected accounts](https://docs.stripe.com/connect/separate-charges-and-transfers).
     public var transferGroup: String?

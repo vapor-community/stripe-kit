@@ -15,8 +15,7 @@ public struct BillingPortalConfiguration: Codable, Sendable {
     /// ID of the Connect Application that created the configuration.
     @Expandable<Application>
     public var application: String?
-    @Expandable<PortalBusinessProfile>
-    public var businessProfile: String?
+    public var businessProfile: PortalBusinessProfile
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// The default URL to redirect customers to when they click on the portal's link to return to your
@@ -24,8 +23,7 @@ public struct BillingPortalConfiguration: Codable, Sendable {
     /// [overridden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url)
     /// when creating the session.
     public var defaultReturnUrl: String?
-    @Expandable<PortalFeatures>
-    public var features: String?
+    public var features: PortalFeatures
     /// Unique identifier for the object.
     public var id: String
     /// Whether the configuration is the default. If `true`, this configuration can be managed in the
@@ -35,8 +33,7 @@ public struct BillingPortalConfiguration: Codable, Sendable {
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
-    @Expandable<PortalLoginPage>
-    public var loginPage: String?
+    public var loginPage: PortalLoginPage
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?

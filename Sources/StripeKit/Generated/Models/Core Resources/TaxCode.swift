@@ -22,8 +22,7 @@ public struct TaxCode: Codable, Sendable {
     /// tax codes require a [performance
     /// location](/tax/location-sales#required-versus-optional-performance-locations) to calculate tax
     /// correctly.
-    @Expandable<TaxCodeRequirements>
-    public var requirements: String?
+    public var requirements: TaxCodeRequirements?
 }
 
 /// String representing the object's type. Objects of the same type share the same value.

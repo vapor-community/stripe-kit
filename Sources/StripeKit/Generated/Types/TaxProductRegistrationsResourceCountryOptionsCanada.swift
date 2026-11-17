@@ -8,8 +8,7 @@
 import Foundation
 
 public struct TaxProductRegistrationsResourceCountryOptionsCanada: Codable, Sendable {
-    @Expandable<TaxProductRegistrationsResourceCountryOptionsCaProvinceStandard>
-    public var provinceStandard: String?
+    public var provinceStandard: TaxProductRegistrationsResourceCountryOptionsCaProvinceStandard?
     /// Type of registration in Canada.
     public var type: TaxProductRegistrationsResourceCountryOptionsCanadaType
 

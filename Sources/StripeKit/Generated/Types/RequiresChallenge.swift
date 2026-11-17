@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a 3DS Authentication's status transitions to 'requires_challenge'
 public struct RequiresChallenge: Codable, Sendable {
+    @Indirect
     public var object: Authentication
 }
 

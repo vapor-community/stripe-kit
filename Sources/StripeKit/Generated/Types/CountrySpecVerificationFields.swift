@@ -8,10 +8,8 @@
 import Foundation
 
 public struct CountrySpecVerificationFields: Codable, Sendable {
-    @Expandable<CountrySpecVerificationFieldDetails>
-    public var company: String?
-    @Expandable<CountrySpecVerificationFieldDetails>
-    public var individual: String?
+    public var company: CountrySpecVerificationFieldDetails
+    public var individual: CountrySpecVerificationFieldDetails
 }
 
 public struct CountrySpecVerificationFieldsList: Codable, Sendable {

@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a received_credit transitions to succeeded state. Only applicable for check
 /// deposits.
 public struct TreasuryReceivedCreditSucceeded: Codable, Sendable {
+    @Indirect
     public var object: ReceivedCredit
 }
 

@@ -12,8 +12,7 @@ public struct PaymentMethodCard: Codable, Sendable {
     /// `mastercard`, `unionpay`, `visa` or `unknown`.
     public var brand: String
     /// Checks on Card address and CVC if provided.
-    @Expandable<PaymentMethodCardChecks>
-    public var checks: String?
+    public var checks: PaymentMethodCardChecks?
     /// Two-letter ISO code representing the country of the card. You could use this attribute to get a
     /// sense of the international breakdown of cards you've collected.
     public var country: String?
@@ -39,8 +38,7 @@ public struct PaymentMethodCard: Codable, Sendable {
     /// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
     public var funding: String
     /// Details of the original PaymentMethod that created this object.
-    @Expandable<PaymentMethodCardGeneratedCard>
-    public var generatedFrom: String?
+    public var generatedFrom: PaymentMethodCardGeneratedCard?
     /// Issuer identification number of the card. (For internal use only and not typically available in
     /// standard API requests.)
     public var iin: String?
@@ -50,16 +48,13 @@ public struct PaymentMethodCard: Codable, Sendable {
     /// The last four digits of the card.
     public var last4: String
     /// Contains information about card networks that can be used to process the payment.
-    @Expandable<Networks>
-    public var networks: String?
+    public var networks: Networks?
     /// Status of a card based on the card issuer.
     public var regulatedStatus: PaymentMethodCardRegulatedStatus?
     /// Contains details on how this Card may be used for 3D Secure authentication.
-    @Expandable<ThreeDSecureUsage>
-    public var threeDSecureUsage: String?
+    public var threeDSecureUsage: ThreeDSecureUsage?
     /// If this Card is part of a card wallet, this contains the details of the card wallet.
-    @Expandable<PaymentMethodCardWallet>
-    public var wallet: String?
+    public var wallet: PaymentMethodCardWallet?
 
     public enum CodingKeys: String, CodingKey {
         case brand

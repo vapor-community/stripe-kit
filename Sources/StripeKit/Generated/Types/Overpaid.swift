@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when an invoice transitions to paid with a non-zero amount_overpaid.
 public struct Overpaid: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

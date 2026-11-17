@@ -9,15 +9,13 @@ import Foundation
 
 /// A Mandate is a record of the permission that your customer gives you to debit their payment method.
 public struct Mandate: Codable, Sendable {
-    @Expandable<CustomerAcceptance>
-    public var customerAcceptance: String?
+    public var customerAcceptance: CustomerAcceptance
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
-    @Expandable<MandateMultiUse>
-    public var multiUse: String?
+    public var multiUse: MandateMultiUse?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: MandateObject
     /// The account (if any) that the mandate is intended for.
@@ -25,10 +23,8 @@ public struct Mandate: Codable, Sendable {
     /// ID of the payment method associated with this mandate.
     @Expandable<PaymentMethod>
     public var paymentMethod: String?
-    @Expandable<MandatePaymentMethodDetails>
-    public var paymentMethodDetails: String?
-    @Expandable<MandateSingleUse>
-    public var singleUse: String?
+    public var paymentMethodDetails: MandatePaymentMethodDetails
+    public var singleUse: MandateSingleUse?
     /// The mandate status indicates whether or not you can use it to initiate a payment.
     public var status: MandateStatus
     /// The type of the mandate.

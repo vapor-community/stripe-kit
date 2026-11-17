@@ -11,8 +11,8 @@ import Foundation
 /// purchased that has a feature attached, Stripe will create an entitlement to the feature for the
 /// purchasing customer.
 public struct ProductFeature: Codable, Sendable {
-    @Expandable<Feature>
-    public var entitlementFeature: String?
+    @Indirect
+    public var entitlementFeature: Feature
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

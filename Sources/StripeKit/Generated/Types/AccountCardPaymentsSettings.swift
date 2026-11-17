@@ -8,8 +8,7 @@
 import Foundation
 
 public struct AccountCardPaymentsSettings: Codable, Sendable {
-    @Expandable<AccountDeclineChargeOn>
-    public var declineOn: String?
+    public var declineOn: AccountDeclineChargeOn?
     /// The default text that appears on credit card statements when a charge is made. This field prefixes
     /// any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful
     /// for maximizing descriptor space for the dynamic portion.

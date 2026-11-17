@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a SetupIntent has failed the attempt to setup a payment method.
 public struct SetupFailed: Codable, Sendable {
+    @Indirect
     public var object: SetupIntent
 }
 

@@ -18,8 +18,7 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetails: 
     /// uncaptured.
     public var captureBefore: Int?
     /// Check results by Card networks on Card address and CVC at time of payment.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceChecks>
-    public var checks: String?
+    public var checks: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceChecks?
     /// Two-letter ISO code representing the country of the card. You could use this attribute to get a
     /// sense of the international breakdown of cards you've collected.
     public var country: String?
@@ -41,8 +40,7 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetails: 
     /// Issuer identification number of the card.
     public var iin: String?
     /// Installment details for this payment.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallments>
-    public var installments: String?
+    public var installments: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallments?
     /// The name of the card's issuing bank.
     public var issuer: String?
     /// The last four digits of the card.
@@ -58,8 +56,7 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetails: 
     public var networkDeclineCode: String?
     /// If this card has network token credentials, this contains the details of the network token
     /// credentials.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceNetworkToken>
-    public var networkToken: String?
+    public var networkToken: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceNetworkToken?
     /// This is used by the financial networks to identify a transaction. Visa calls this the Transaction
     /// ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data.
     /// This value will be present if it is returned by the financial network in the authorization response,
@@ -69,11 +66,9 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetails: 
     /// `recurring` or `unscheduled`.
     public var storedCredentialUsage: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsStoredCredentialUsage?
     /// Populated if this transaction used 3D Secure authentication.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecure>
-    public var threeDSecure: String?
+    public var threeDSecure: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecure?
     /// If this Card is part of a card wallet, this contains the details of the card wallet.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceWallet>
-    public var wallet: String?
+    public var wallet: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceWallet?
 
     public enum CodingKeys: String, CodingKey {
         case authorizationCode = "authorization_code"

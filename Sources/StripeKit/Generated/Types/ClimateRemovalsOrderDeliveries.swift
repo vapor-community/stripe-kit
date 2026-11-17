@@ -12,14 +12,13 @@ public struct ClimateRemovalsOrderDeliveries: Codable, Sendable {
     /// Time at which the delivery occurred. Measured in seconds since the Unix epoch.
     public var deliveredAt: Int
     /// Specific location of this delivery.
-    @Expandable<ClimateRemovalsLocation>
-    public var location: String?
+    public var location: ClimateRemovalsLocation?
     /// Quantity of carbon removal supplied by this delivery.
     public var metricTons: String
     /// Once retired, a URL to the registry entry for the tons from this delivery.
     public var registryUrl: String?
-    @Expandable<Supplier>
-    public var supplier: String?
+    @Indirect
+    public var supplier: Supplier
 
     public enum CodingKeys: String, CodingKey {
         case deliveredAt = "delivered_at"

@@ -9,11 +9,9 @@ import Foundation
 
 public struct IssuingCardholderIndividual: Codable, Sendable {
     /// Information related to the card_issuing program for this cardholder.
-    @Expandable<IssuingCardholderCardIssuing>
-    public var cardIssuing: String?
+    public var cardIssuing: IssuingCardholderCardIssuing?
     /// The date of birth of this cardholder.
-    @Expandable<IssuingCardholderIndividualDob>
-    public var dob: String?
+    public var dob: IssuingCardholderIndividualDob?
     /// The first name of this cardholder. Required before activating Cards. This field cannot contain any
     /// numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin
     /// letters.
@@ -23,8 +21,7 @@ public struct IssuingCardholderIndividual: Codable, Sendable {
     /// letters.
     public var lastName: String?
     /// Government-issued ID document for this cardholder.
-    @Expandable<IssuingCardholderVerification>
-    public var verification: String?
+    public var verification: IssuingCardholderVerification?
 
     public enum CodingKeys: String, CodingKey {
         case cardIssuing = "card_issuing"

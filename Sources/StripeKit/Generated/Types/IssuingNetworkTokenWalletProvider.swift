@@ -15,8 +15,7 @@ public struct IssuingNetworkTokenWalletProvider: Codable, Sendable {
     public var accountTrustScore: Int?
     /// The method used for tokenizing a card.
     public var cardNumberSource: IssuingNetworkTokenWalletProviderCardNumberSource?
-    @Expandable<IssuingNetworkTokenAddress>
-    public var cardholderAddress: String?
+    public var cardholderAddress: IssuingNetworkTokenAddress?
     /// The name of the cardholder tokenizing the card.
     public var cardholderName: String?
     /// An evaluation on the trustworthiness of the device. A higher score indicates more trustworthy.

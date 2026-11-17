@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a payment method's details are automatically updated by the network.
 public struct AutomaticallyUpdated: Codable, Sendable {
+    @Indirect
     public var object: PaymentMethod
 }
 

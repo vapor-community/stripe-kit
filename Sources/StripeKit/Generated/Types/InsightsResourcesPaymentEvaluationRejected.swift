@@ -9,8 +9,7 @@ import Foundation
 
 /// Details of an rejected outcome attached to this payment evaluation.
 public struct InsightsResourcesPaymentEvaluationRejected: Codable, Sendable {
-    @Expandable<InsightsResourcesPaymentEvaluationRejectedCard>
-    public var card: String?
+    public var card: InsightsResourcesPaymentEvaluationRejectedCard?
 }
 
 public struct InsightsResourcesPaymentEvaluationRejectedList: Codable, Sendable {

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct SubscriptionSchedulesResourcePauseScheduleResumeStatus: Codable, Sendable {
-    @Expandable<SubscriptionSchedulesResourcePauseScheduleStatusError>
-    public var error: String?
+    public var error: SubscriptionSchedulesResourcePauseScheduleStatusError?
     /// The lifecycle state of the resume operation.
     public var type: SubscriptionSchedulesResourcePauseScheduleResumeStatusType
 }

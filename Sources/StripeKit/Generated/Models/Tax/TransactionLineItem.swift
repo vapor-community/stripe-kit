@@ -33,8 +33,7 @@ public struct TransactionLineItem: Codable, Sendable {
     /// A custom identifier for this line item in the transaction.
     public var reference: String
     /// If `type=reversal`, contains information about what was reversed.
-    @Expandable<TaxProductResourceTaxTransactionLineItemResourceReversal>
-    public var reversal: String?
+    public var reversal: TaxProductResourceTaxTransactionLineItemResourceReversal?
     /// Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes
     /// taxes.
     public var taxBehavior: TransactionLineItemTaxBehavior

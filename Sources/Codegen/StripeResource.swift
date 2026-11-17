@@ -11,7 +11,6 @@ struct StripeResource: Sendable {
     let swiftTypeName: String
     let description: String
     let properties: [StripeProperty]
-    let expandableFields: Set<String>
     let requiredFields: Set<String>
     /// For polymorphic `anyOf` schemas (e.g., external_account → [bank_account, card]).
     /// Contains the x-resourceId values of each variant.
@@ -26,7 +25,6 @@ struct StripeProperty: Sendable {
     let type: StripePropertyType
     let isRequired: Bool
     let isNullable: Bool
-    let isExpandable: Bool
     let enumCases: [String]?
 }
 

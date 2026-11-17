@@ -13,8 +13,7 @@ public struct AccountPaypayPaymentsSettings: Codable, Sendable {
     /// The type of goods your business sells. Use `digital_content` if you sell digital content. Use
     /// `other` for all other types of goods or services.
     public var goodsType: AccountPaypayPaymentsSettingsGoodsType?
-    @Expandable<AccountPaypaySiteSettings>
-    public var site: String?
+    public var site: AccountPaypaySiteSettings?
 
     public enum CodingKeys: String, CodingKey {
         case additionalFiles = "additional_files"

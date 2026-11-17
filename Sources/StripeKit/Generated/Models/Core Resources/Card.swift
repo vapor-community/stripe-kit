@@ -104,8 +104,7 @@ public struct Card: Codable, Sendable {
     public var metadata: [String: String]?
     /// Cardholder name.
     public var name: String?
-    @Expandable<TokenCardNetworks>
-    public var networks: String?
+    public var networks: TokenCardNetworks?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: CardObject
     /// Status of a card based on the card issuer.

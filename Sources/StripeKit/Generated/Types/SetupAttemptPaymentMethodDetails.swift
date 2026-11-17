@@ -8,64 +8,37 @@
 import Foundation
 
 public struct SetupAttemptPaymentMethodDetails: Codable, Sendable {
-    @Expandable<SetupAttemptPaymentMethodDetailsAcssDebit>
-    public var acssDebit: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsAmazonPay>
-    public var amazonPay: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsAuBecsDebit>
-    public var auBecsDebit: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsBacsDebit>
-    public var bacsDebit: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsBancontact>
-    public var bancontact: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsBlik>
-    public var blik: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsBoleto>
-    public var boleto: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsCard>
-    public var card: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsCardPresent>
-    public var cardPresent: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsCashapp>
-    public var cashapp: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsIdeal>
-    public var ideal: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsKakaoPay>
-    public var kakaoPay: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsKlarna>
-    public var klarna: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsKrCard>
-    public var krCard: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsLink>
-    public var link: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsNaverPay>
-    public var naverPay: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsNzBankAccount>
-    public var nzBankAccount: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsPaypal>
-    public var paypal: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsPayto>
-    public var payto: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsPix>
-    public var pix: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsRevolutPay>
-    public var revolutPay: String?
-    @Expandable<PaymentFlowsPrivatePaymentMethodsSatispaySetupAttemptDetails>
-    public var satispay: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsSepaDebit>
-    public var sepaDebit: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsSofort>
-    public var sofort: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsTwint>
-    public var twint: String?
+    public var acssDebit: SetupAttemptPaymentMethodDetailsAcssDebit?
+    public var amazonPay: SetupAttemptPaymentMethodDetailsAmazonPay?
+    public var auBecsDebit: SetupAttemptPaymentMethodDetailsAuBecsDebit?
+    public var bacsDebit: SetupAttemptPaymentMethodDetailsBacsDebit?
+    public var bancontact: SetupAttemptPaymentMethodDetailsBancontact?
+    public var blik: SetupAttemptPaymentMethodDetailsBlik?
+    public var boleto: SetupAttemptPaymentMethodDetailsBoleto?
+    public var card: SetupAttemptPaymentMethodDetailsCard?
+    public var cardPresent: SetupAttemptPaymentMethodDetailsCardPresent?
+    public var cashapp: SetupAttemptPaymentMethodDetailsCashapp?
+    public var ideal: SetupAttemptPaymentMethodDetailsIdeal?
+    public var kakaoPay: SetupAttemptPaymentMethodDetailsKakaoPay?
+    public var klarna: SetupAttemptPaymentMethodDetailsKlarna?
+    public var krCard: SetupAttemptPaymentMethodDetailsKrCard?
+    public var link: SetupAttemptPaymentMethodDetailsLink?
+    public var naverPay: SetupAttemptPaymentMethodDetailsNaverPay?
+    public var nzBankAccount: SetupAttemptPaymentMethodDetailsNzBankAccount?
+    public var paypal: SetupAttemptPaymentMethodDetailsPaypal?
+    public var payto: SetupAttemptPaymentMethodDetailsPayto?
+    public var pix: SetupAttemptPaymentMethodDetailsPix?
+    public var revolutPay: SetupAttemptPaymentMethodDetailsRevolutPay?
+    public var satispay: PaymentFlowsPrivatePaymentMethodsSatispaySetupAttemptDetails?
+    public var sepaDebit: SetupAttemptPaymentMethodDetailsSepaDebit?
+    public var sofort: SetupAttemptPaymentMethodDetailsSofort?
+    public var twint: SetupAttemptPaymentMethodDetailsTwint?
     /// The type of the payment method used in the SetupIntent (e.g., `card`). An additional hash is
     /// included on `payment_method_details` with a name matching this value. It contains
     /// confirmation-specific information for the payment method.
     public var type: String
-    @Expandable<SetupAttemptPaymentMethodDetailsUpi>
-    public var upi: String?
-    @Expandable<SetupAttemptPaymentMethodDetailsUsBankAccount>
-    public var usBankAccount: String?
+    public var upi: SetupAttemptPaymentMethodDetailsUpi?
+    public var usBankAccount: SetupAttemptPaymentMethodDetailsUsBankAccount?
 
     public enum CodingKeys: String, CodingKey {
         case acssDebit = "acss_debit"

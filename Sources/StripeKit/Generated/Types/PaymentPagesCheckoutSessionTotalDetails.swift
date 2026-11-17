@@ -14,8 +14,7 @@ public struct PaymentPagesCheckoutSessionTotalDetails: Codable, Sendable {
     public var amountShipping: Int?
     /// This is the sum of all the tax amounts.
     public var amountTax: Int
-    @Expandable<PaymentPagesCheckoutSessionTotalDetailsResourceBreakdown>
-    public var breakdown: String?
+    public var breakdown: PaymentPagesCheckoutSessionTotalDetailsResourceBreakdown?
 
     public enum CodingKeys: String, CodingKey {
         case amountDiscount = "amount_discount"

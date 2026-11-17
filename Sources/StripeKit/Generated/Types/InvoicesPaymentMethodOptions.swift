@@ -10,52 +10,40 @@ import Foundation
 public struct InvoicesPaymentMethodOptions: Codable, Sendable {
     /// If paying by `acss_debit`, this sub-hash contains details about the Canadian pre-authorized debit
     /// payment method options to pass to the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsAcssDebit>
-    public var acssDebit: String?
+    public var acssDebit: InvoicePaymentMethodOptionsAcssDebit?
     /// If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method
     /// options to pass to the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsBancontact>
-    public var bancontact: String?
+    public var bancontact: InvoicePaymentMethodOptionsBancontact?
     /// If paying by `billie`, this sub-hash contains details about the Billie payment method options to
     /// pass to the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsBillie>
-    public var billie: String?
+    public var billie: InvoicePaymentMethodOptionsBillie?
     /// If paying by `blik`, this sub-hash contains details about the Blik payment method options to pass to
     /// the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsBlik>
-    public var blik: String?
+    public var blik: InvoicePaymentMethodOptionsBlik?
     /// If paying by `card`, this sub-hash contains details about the Card payment method options to pass to
     /// the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsCard>
-    public var card: String?
+    public var card: InvoicePaymentMethodOptionsCard?
     /// If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment
     /// method options to pass to the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsCustomerBalance>
-    public var customerBalance: String?
+    public var customerBalance: InvoicePaymentMethodOptionsCustomerBalance?
     /// If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to
     /// pass to the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsKonbini>
-    public var konbini: String?
+    public var konbini: InvoicePaymentMethodOptionsKonbini?
     /// If paying by `payto`, this sub-hash contains details about the PayTo payment method options to pass
     /// to the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsPayto>
-    public var payto: String?
+    public var payto: InvoicePaymentMethodOptionsPayto?
     /// If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to
     /// the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsPix>
-    public var pix: String?
+    public var pix: InvoicePaymentMethodOptionsPix?
     /// If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method
     /// options to pass to the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsSepaDebit>
-    public var sepaDebit: String?
+    public var sepaDebit: InvoicePaymentMethodOptionsSepaDebit?
     /// If paying by `upi`, this sub-hash contains details about the UPI payment method options to pass to
     /// the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsUpi>
-    public var upi: String?
+    public var upi: InvoicePaymentMethodOptionsUpi?
     /// If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment
     /// method options to pass to the invoice’s PaymentIntent.
-    @Expandable<InvoicePaymentMethodOptionsUsBankAccount>
-    public var usBankAccount: String?
+    public var usBankAccount: InvoicePaymentMethodOptionsUsBankAccount?
 
     public enum CodingKeys: String, CodingKey {
         case acssDebit = "acss_debit"

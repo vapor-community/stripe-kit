@@ -10,8 +10,7 @@ import Foundation
 /// Result from a phone check
 public struct GelatoPhoneReport: Codable, Sendable {
     /// Details on the verification error. Present when status is `unverified`.
-    @Expandable<GelatoPhoneReportError>
-    public var error: String?
+    public var error: GelatoPhoneReportError?
     /// Phone to be verified.
     public var phone: String?
     /// Status of this `phone` check.

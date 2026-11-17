@@ -9,8 +9,7 @@ import Foundation
 
 /// The customer's shipping information associated with this payment.
 public struct PaymentsPrimitivesPaymentRecordsResourceShippingDetails: Codable, Sendable {
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceAddress>
-    public var address: String?
+    public var address: PaymentsPrimitivesPaymentRecordsResourceAddress
     /// The shipping recipient's name.
     public var name: String?
     /// The shipping recipient's phone number.

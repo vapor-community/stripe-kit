@@ -23,8 +23,7 @@ public struct AccountSession: Codable, Sendable {
     /// components](https://docs.stripe.com/connect/get-started-connect-embedded-components) and learn about
     /// how `client_secret` should be handled.
     public var clientSecret: String
-    @Expandable<ConnectEmbeddedAccountSessionCreateComponents>
-    public var components: String?
+    public var components: ConnectEmbeddedAccountSessionCreateComponents
     /// The timestamp at which this AccountSession will expire.
     public var expiresAt: Int
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

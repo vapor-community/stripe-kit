@@ -11,8 +11,7 @@ public struct PaymentMethodCustom: Codable, Sendable {
     /// Display name of the Dashboard-only CustomPaymentMethodType.
     public var displayName: String?
     /// Contains information about the Dashboard-only CustomPaymentMethodType logo.
-    @Expandable<CustomLogo>
-    public var logo: String?
+    public var logo: CustomLogo?
     /// ID of the Dashboard-only CustomPaymentMethodType. Not expandable.
     public var type: String
 

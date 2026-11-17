@@ -17,17 +17,15 @@ import Foundation
 public struct FinancialAccount: Codable, Sendable {
     /// The array of paths to active Features in the Features hash.
     public var activeFeatures: [String]?
-    @Expandable<TreasuryFinancialAccountsResourceBalance>
-    public var balance: String?
+    public var balance: TreasuryFinancialAccountsResourceBalance
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     public var country: String
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
-    @Expandable<FinancialAccountFeatures>
-    public var features: String?
+    @Indirect
+    public var features: FinancialAccountFeatures?
     /// The set of credentials that resolve to a FinancialAccount.
-    @ExpandableCollection<TreasuryFinancialAccountsResourceFinancialAddress>
-    public var financialAddresses: [String]?
+    public var financialAddresses: [TreasuryFinancialAccountsResourceFinancialAddress]
     /// Unique identifier for the object.
     public var id: String
     public var isDefault: Bool?
@@ -44,14 +42,12 @@ public struct FinancialAccount: Codable, Sendable {
     /// The array of paths to pending Features in the Features hash.
     public var pendingFeatures: [String]?
     /// The set of functionalities that the platform can restrict on the FinancialAccount.
-    @Expandable<TreasuryFinancialAccountsResourcePlatformRestrictions>
-    public var platformRestrictions: String?
+    public var platformRestrictions: TreasuryFinancialAccountsResourcePlatformRestrictions?
     /// The array of paths to restricted Features in the Features hash.
     public var restrictedFeatures: [String]?
     /// Status of this FinancialAccount.
     public var status: FinancialAccountStatus
-    @Expandable<TreasuryFinancialAccountsResourceStatusDetails>
-    public var statusDetails: String?
+    public var statusDetails: TreasuryFinancialAccountsResourceStatusDetails
     /// The currencies the FinancialAccount can hold a balance in. Three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     public var supportedCurrencies: [String]

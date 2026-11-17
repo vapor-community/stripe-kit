@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a SetupIntent is canceled.
 public struct SetupIntentCanceled: Codable, Sendable {
+    @Indirect
     public var object: SetupIntent
 }
 

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a payment link is updated.
 public struct PaymentLinkUpdated: Codable, Sendable {
+    @Indirect
     public var object: PaymentLink
 }
 

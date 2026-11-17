@@ -9,8 +9,7 @@ import Foundation
 
 public struct Level3: Codable, Sendable {
     public var customerReference: String?
-    @ExpandableCollection<Level3LineItems>
-    public var lineItems: [String]?
+    public var lineItems: [Level3LineItems]
     public var merchantReference: String
     public var shippingAddressZip: String?
     public var shippingAmount: Int?

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a PaymentIntent transitions to requires_action state
 public struct PaymentIntentRequiresAction: Codable, Sendable {
+    @Indirect
     public var object: PaymentIntent
 }
 

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct CheckoutCustomerBalanceBankTransferPaymentMethodOptions: Codable, Sendable {
-    @Expandable<PaymentMethodOptionsCustomerBalanceEuBankAccount>
-    public var euBankTransfer: String?
+    public var euBankTransfer: PaymentMethodOptionsCustomerBalanceEuBankAccount?
     /// List of address types that should be returned in the financial_addresses response. If not specified,
     /// all valid types will be returned. Permitted values include: `sort_code`, `zengin`, `iban`, or
     /// `spei`.

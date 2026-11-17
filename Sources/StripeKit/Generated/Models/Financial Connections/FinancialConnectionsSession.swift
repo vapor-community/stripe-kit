@@ -11,25 +11,21 @@ import Foundation
 /// Stripe.js modal that lets your users link their accounts.
 public struct FinancialConnectionsSession: Codable, Sendable {
     /// The account holder for whom accounts are collected in this session.
-    @Expandable<BankConnectionsResourceAccountholder>
-    public var accountHolder: String?
+    public var accountHolder: BankConnectionsResourceAccountholder?
     /// The accounts that were collected as part of this Session.
     public var accounts: FinancialConnectionsAccountList
-    @Expandable<Token>
-    public var bankAccountToken: String?
+    @Indirect
+    public var bankAccountToken: Token?
     /// A value that will be passed to the client to launch the authentication flow.
     public var clientSecret: String?
-    @Expandable<BankConnectionsResourceLinkAccountSessionFilters>
-    public var filters: String?
+    public var filters: BankConnectionsResourceLinkAccountSessionFilters?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<BankConnectionsResourceLinkAccountSessionLimits>
-    public var limits: String?
+    public var limits: BankConnectionsResourceLinkAccountSessionLimits?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
-    @Expandable<BankConnectionsResourceLinkAccountSessionManualEntry>
-    public var manualEntry: String?
+    public var manualEntry: BankConnectionsResourceLinkAccountSessionManualEntry?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: FinancialConnectionsSessionObject
     /// Permissions requested for accounts collected during this session.

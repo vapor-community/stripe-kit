@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an application fee is created on a charge.
 public struct ApplicationFeeCreated: Codable, Sendable {
+    @Indirect
     public var object: ApplicationFee
 }
 

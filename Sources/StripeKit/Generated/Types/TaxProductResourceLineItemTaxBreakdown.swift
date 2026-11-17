@@ -10,15 +10,13 @@ import Foundation
 public struct TaxProductResourceLineItemTaxBreakdown: Codable, Sendable {
     /// The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
     public var amount: Int
-    @Expandable<TaxProductResourceJurisdiction>
-    public var jurisdiction: String?
+    public var jurisdiction: TaxProductResourceJurisdiction
     /// Indicates whether the jurisdiction was determined by the origin (merchant's address) or destination
     /// (customer's address).
     public var sourcing: TaxProductResourceLineItemTaxBreakdownSourcing
     /// Details regarding the rate for this tax. This field will be `null` when the tax is not imposed, for
     /// example if the product is exempt from tax.
-    @Expandable<TaxProductResourceLineItemTaxRateDetails>
-    public var taxRateDetails: String?
+    public var taxRateDetails: TaxProductResourceLineItemTaxRateDetails?
     /// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for
     /// this field may be extended as new tax rules are supported.
     public var taxabilityReason: TaxProductResourceLineItemTaxBreakdownTaxabilityReason

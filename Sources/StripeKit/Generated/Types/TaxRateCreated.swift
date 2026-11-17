@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a new tax rate is created.
 public struct TaxRateCreated: Codable, Sendable {
+    @Indirect
     public var object: TaxRate
 }
 

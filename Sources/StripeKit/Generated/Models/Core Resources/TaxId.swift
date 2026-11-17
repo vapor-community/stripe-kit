@@ -29,8 +29,7 @@ public struct TaxId: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: TaxIdObject
     /// The account or customer the tax ID belongs to.
-    @Expandable<TaxIDsOwner>
-    public var owner: String?
+    public var owner: TaxIDsOwner?
     /// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`,
     /// `au_acn`, `au_arn`, `au_wpn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`,
     /// `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `bw_vat`, `by_tin`, `ca_bn`,
@@ -50,8 +49,7 @@ public struct TaxId: Codable, Sendable {
     /// Value of the tax ID.
     public var value: String
     /// Tax ID verification information.
-    @Expandable<TaxIdVerification>
-    public var verification: String?
+    public var verification: TaxIdVerification?
 
     public enum CodingKeys: String, CodingKey {
         case country

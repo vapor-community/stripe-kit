@@ -10,6 +10,7 @@ import Foundation
 /// Occurs when funds are applied to a customer_balance PaymentIntent and the 'amount_remaining'
 /// changes.
 public struct PartiallyFunded: Codable, Sendable {
+    @Indirect
     public var object: PaymentIntent
 }
 

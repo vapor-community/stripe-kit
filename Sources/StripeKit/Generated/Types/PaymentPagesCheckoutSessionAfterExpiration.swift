@@ -9,8 +9,7 @@ import Foundation
 
 public struct PaymentPagesCheckoutSessionAfterExpiration: Codable, Sendable {
     /// When set, configuration used to recover the Checkout Session on expiry.
-    @Expandable<PaymentPagesCheckoutSessionAfterExpirationRecovery>
-    public var recovery: String?
+    public var recovery: PaymentPagesCheckoutSessionAfterExpirationRecovery?
 }
 
 public struct PaymentPagesCheckoutSessionAfterExpirationList: Codable, Sendable {

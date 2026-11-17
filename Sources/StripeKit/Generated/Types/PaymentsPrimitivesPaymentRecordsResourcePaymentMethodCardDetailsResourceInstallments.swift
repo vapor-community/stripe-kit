@@ -9,8 +9,7 @@ import Foundation
 
 public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallments: Codable, Sendable {
     /// Installment plan selected for the payment.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlan>
-    public var plan: String?
+    public var plan: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlan?
 }
 
 public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentsList: Codable, Sendable {

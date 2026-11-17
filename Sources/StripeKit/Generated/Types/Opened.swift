@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a review is opened.
 public struct Opened: Codable, Sendable {
+    @Indirect
     public var object: Review
 }
 

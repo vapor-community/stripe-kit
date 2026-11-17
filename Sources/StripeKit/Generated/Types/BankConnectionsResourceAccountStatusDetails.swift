@@ -8,8 +8,7 @@
 import Foundation
 
 public struct BankConnectionsResourceAccountStatusDetails: Codable, Sendable {
-    @Expandable<BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetails>
-    public var active: String?
+    public var active: BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetails?
 }
 
 public struct BankConnectionsResourceAccountStatusDetailsList: Codable, Sendable {

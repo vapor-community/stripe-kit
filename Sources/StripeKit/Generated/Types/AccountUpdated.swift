@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an account status or property has changed.
 public struct AccountUpdated: Codable, Sendable {
+    @Indirect
     public var object: Account
 }
 

@@ -12,16 +12,13 @@ import Foundation
 /// transaction events, such as refunds or disputes. See the [Radar API guide](/radar/multiprocessor)
 /// for integration steps.
 public struct PaymentEvaluation: Codable, Sendable {
-    @Expandable<InsightsResourcesPaymentEvaluationClientDeviceMetadata>
-    public var clientDeviceMetadataDetails: String?
+    public var clientDeviceMetadataDetails: InsightsResourcesPaymentEvaluationClientDeviceMetadata?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var createdAt: Int
-    @Expandable<InsightsResourcesPaymentEvaluationCustomerDetails>
-    public var customerDetails: String?
+    public var customerDetails: InsightsResourcesPaymentEvaluationCustomerDetails?
     /// Event information associated with the payment evaluation, such as refunds, dispute, early fraud
     /// warnings, or user interventions.
-    @ExpandableCollection<InsightsResourcesPaymentEvaluationEvent>
-    public var events: [String]?
+    public var events: [InsightsResourcesPaymentEvaluationEvent]?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -33,15 +30,12 @@ public struct PaymentEvaluation: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PaymentEvaluationObject
     /// Indicates the final outcome for the payment evaluation.
-    @Expandable<InsightsResourcesPaymentEvaluationOutcome>
-    public var outcome: String?
-    @Expandable<InsightsResourcesPaymentEvaluationPaymentDetails>
-    public var paymentDetails: String?
+    public var outcome: InsightsResourcesPaymentEvaluationOutcome?
+    public var paymentDetails: InsightsResourcesPaymentEvaluationPaymentDetails?
     /// Recommended action based on the score of the `fraudulent_payment` signal. Possible values are
     /// `block`, `continue` and `request_three_d_secure`.
     public var recommendedAction: PaymentEvaluationRecommendedAction
-    @Expandable<InsightsResourcesPaymentEvaluationSignals>
-    public var signals: String?
+    public var signals: InsightsResourcesPaymentEvaluationSignals
 
     public enum CodingKeys: String, CodingKey {
         case clientDeviceMetadataDetails = "client_device_metadata_details"

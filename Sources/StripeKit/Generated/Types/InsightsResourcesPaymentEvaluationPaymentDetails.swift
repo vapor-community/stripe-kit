@@ -22,14 +22,11 @@ public struct InsightsResourcesPaymentEvaluationPaymentDetails: Codable, Sendabl
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Details about the payment's customer presence and type.
-    @Expandable<InsightsResourcesPaymentEvaluationMoneyMovementDetails>
-    public var moneyMovementDetails: String?
+    public var moneyMovementDetails: InsightsResourcesPaymentEvaluationMoneyMovementDetails?
     /// Details about the payment method used for the payment.
-    @Expandable<InsightsResourcesPaymentEvaluationPaymentMethodDetails>
-    public var paymentMethodDetails: String?
+    public var paymentMethodDetails: InsightsResourcesPaymentEvaluationPaymentMethodDetails?
     /// Shipping details for the payment evaluation.
-    @Expandable<InsightsResourcesPaymentEvaluationShipping>
-    public var shippingDetails: String?
+    public var shippingDetails: InsightsResourcesPaymentEvaluationShipping?
     /// Payment statement descriptor.
     public var statementDescriptor: String?
 

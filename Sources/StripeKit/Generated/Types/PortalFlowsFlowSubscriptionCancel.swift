@@ -9,8 +9,7 @@ import Foundation
 
 public struct PortalFlowsFlowSubscriptionCancel: Codable, Sendable {
     /// Specify a retention strategy to be used in the cancellation flow.
-    @Expandable<PortalFlowsRetention>
-    public var retention: String?
+    public var retention: PortalFlowsRetention?
     /// The ID of the subscription to be canceled.
     public var subscription: String
 }

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct SubscriptionPaymentMethodOptionsBlik: Codable, Sendable {
-    @Expandable<SubscriptionPaymentMethodOptionsMandateOptionsBlik>
-    public var mandateOptions: String?
+    public var mandateOptions: SubscriptionPaymentMethodOptionsMandateOptionsBlik?
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"

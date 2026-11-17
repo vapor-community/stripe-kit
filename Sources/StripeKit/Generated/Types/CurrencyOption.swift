@@ -10,8 +10,7 @@ import Foundation
 public struct CurrencyOption: Codable, Sendable {
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
     /// Sessions and Payment Links.
-    @Expandable<CustomUnitAmount>
-    public var customUnitAmount: String?
+    public var customUnitAmount: CustomUnitAmount?
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
@@ -20,8 +19,7 @@ public struct CurrencyOption: Codable, Sendable {
     public var taxBehavior: CurrencyOptionTaxBehavior?
     /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
     /// `tiered`. See also the documentation for `billing_scheme`.
-    @ExpandableCollection<PriceTier>
-    public var tiers: [String]?
+    public var tiers: [PriceTier]?
     /// The unit amount in cents (or local equivalent) to be charged, represented as a whole integer if
     /// possible. Only set if `billing_scheme=per_unit`.
     public var unitAmount: Int?

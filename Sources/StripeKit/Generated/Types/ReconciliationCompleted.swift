@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever balance transactions paid out in an automatic payout can be queried.
 public struct ReconciliationCompleted: Codable, Sendable {
+    @Indirect
     public var object: Payout
 }
 

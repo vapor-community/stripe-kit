@@ -16,8 +16,7 @@ public struct BalanceSettingsResourceSettlementTiming: Codable, Sendable {
     /// Customized start of day configuration for automatic payouts to group and send payments in local
     /// timezones with a customized day starting time. For details, see our [Customized start of
     /// day](/connect/customized-start-of-day) documentation.
-    @Expandable<BalanceSettingsResourceStartOfDay>
-    public var startOfDay: String?
+    public var startOfDay: BalanceSettingsResourceStartOfDay?
 
     public enum CodingKeys: String, CodingKey {
         case delayDays = "delay_days"

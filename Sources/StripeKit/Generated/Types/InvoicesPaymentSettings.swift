@@ -12,8 +12,7 @@ public struct InvoicesPaymentSettings: Codable, Sendable {
     /// the invoice, including the invoice's default_payment_method or default_source, if set.
     public var defaultMandate: String?
     /// Payment-method-specific configuration to provide to the invoice’s PaymentIntent.
-    @Expandable<InvoicesPaymentMethodOptions>
-    public var paymentMethodOptions: String?
+    public var paymentMethodOptions: InvoicesPaymentMethodOptions?
     /// The list of payment method types (e.g. card) to provide to the invoice’s PaymentIntent. If not set,
     /// Stripe attempts to automatically determine the types to use by looking at the invoice’s default
     /// payment method, the subscription’s default payment method, the customer’s default payment method,

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a new PaymentIntent is created.
 public struct PaymentIntentCreated: Codable, Sendable {
+    @Indirect
     public var object: PaymentIntent
 }
 

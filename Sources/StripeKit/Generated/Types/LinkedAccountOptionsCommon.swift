@@ -8,8 +8,7 @@
 import Foundation
 
 public struct LinkedAccountOptionsCommon: Codable, Sendable {
-    @Expandable<PaymentFlowsPrivatePaymentMethodsFinancialConnectionsCommonLinkedAccountOptionsFilters>
-    public var filters: String?
+    public var filters: PaymentFlowsPrivatePaymentMethodsFinancialConnectionsCommonLinkedAccountOptionsFilters?
     /// The list of permissions to request. The `payment_method` permission must be included.
     public var permissions: [String]?
     /// Data features requested to be retrieved upon account creation.

@@ -29,8 +29,7 @@ public struct CountrySpec: Codable, Sendable {
     public var supportedPaymentMethods: [String]
     /// Countries that can accept transfers from the specified country.
     public var supportedTransferCountries: [String]
-    @Expandable<CountrySpecVerificationFields>
-    public var verificationFields: String?
+    public var verificationFields: CountrySpecVerificationFields
 
     public enum CodingKeys: String, CodingKey {
         case defaultCurrency = "default_currency"

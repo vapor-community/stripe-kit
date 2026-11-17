@@ -22,13 +22,11 @@ public struct PaymentMethodUsBankAccount: Codable, Sendable {
     /// Last four digits of the bank account number.
     public var last4: String?
     /// Contains information about US bank account networks that can be used.
-    @Expandable<UsBankAccountNetworks>
-    public var networks: String?
+    public var networks: UsBankAccountNetworks?
     /// Routing number of the bank account.
     public var routingNumber: String?
     /// Contains information about the future reusability of this PaymentMethod.
-    @Expandable<PaymentMethodUsBankAccountStatusDetails>
-    public var statusDetails: String?
+    public var statusDetails: PaymentMethodUsBankAccountStatusDetails?
 
     public enum CodingKeys: String, CodingKey {
         case accountHolderType = "account_holder_type"

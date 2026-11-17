@@ -18,8 +18,7 @@ public struct Coupon: Codable, Sendable {
     /// Amount (in the `currency` specified) that will be taken off the subtotal of any invoices for this
     /// customer.
     public var amountOff: Int?
-    @Expandable<CouponAppliesTo>
-    public var appliesTo: String?
+    public var appliesTo: CouponAppliesTo?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// If `amount_off` has been set, the three-letter [ISO code for the

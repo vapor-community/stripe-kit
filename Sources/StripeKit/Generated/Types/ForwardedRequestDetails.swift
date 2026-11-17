@@ -13,8 +13,7 @@ public struct ForwardedRequestDetails: Codable, Sendable {
     public var body: String
     /// The headers to include in the forwarded request. Can be omitted if no additional headers (excluding
     /// Stripe-generated ones such as the Content-Type header) should be included.
-    @ExpandableCollection<ForwardedRequestHeader>
-    public var headers: [String]?
+    public var headers: [ForwardedRequestHeader]
     /// The HTTP method used to call the destination endpoint.
     public var httpMethod: ForwardedRequestDetailsHttpMethod
 

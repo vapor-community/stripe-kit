@@ -9,8 +9,7 @@ import Foundation
 
 public struct PaymentMethodDetailsMobilepay: Codable, Sendable {
     /// Internal card details
-    @Expandable<InternalCard>
-    public var card: String?
+    public var card: InternalCard?
 }
 
 public struct PaymentMethodDetailsMobilepayList: Codable, Sendable {

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a credit balance transaction is created
 public struct BillingCreditBalanceTransactionCreated: Codable, Sendable {
+    @Indirect
     public var object: CreditBalanceTransaction
 }
 

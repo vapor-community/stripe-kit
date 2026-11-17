@@ -10,8 +10,7 @@ import Foundation
 /// Represents a reader action to set the reader display
 public struct TerminalReaderReaderResourceSetReaderDisplayAction: Codable, Sendable {
     /// Cart object to be displayed by the reader, including line items, amounts, and currency.
-    @Expandable<TerminalReaderReaderResourceCart>
-    public var cart: String?
+    public var cart: TerminalReaderReaderResourceCart?
     /// Type of information to be displayed by the reader. Only `cart` is currently supported.
     public var type: TerminalReaderReaderResourceSetReaderDisplayActionType
 }

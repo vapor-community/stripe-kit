@@ -17,8 +17,7 @@ public struct Order: Codable, Sendable {
     public var amountSubtotal: Int
     /// Total amount of the order including fees in the currency's smallest unit.
     public var amountTotal: Int
-    @Expandable<ClimateRemovalsBeneficiary>
-    public var beneficiary: String?
+    public var beneficiary: ClimateRemovalsBeneficiary?
     /// Time at which the order was canceled. Measured in seconds since the Unix epoch.
     public var canceledAt: Int?
     /// Reason for the cancellation of this order.
@@ -38,8 +37,7 @@ public struct Order: Codable, Sendable {
     /// Time at which the order was delivered. Measured in seconds since the Unix epoch.
     public var deliveredAt: Int?
     /// Details about the delivery of carbon removal for this order.
-    @ExpandableCollection<ClimateRemovalsOrderDeliveries>
-    public var deliveryDetails: [String]?
+    public var deliveryDetails: [ClimateRemovalsOrderDeliveries]
     /// The year this order is expected to be delivered. If the year is in the past, the order is a spot
     /// purchase and will be delivered within 30 days of purchase.
     public var expectedDeliveryYear: Int

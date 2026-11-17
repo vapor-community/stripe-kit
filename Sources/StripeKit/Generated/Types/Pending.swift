@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a pending charge is created.
 public struct Pending: Codable, Sendable {
+    @Indirect
     public var object: Charge
 }
 

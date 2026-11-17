@@ -9,12 +9,10 @@ import Foundation
 
 /// Iban Records contain E.U. bank account details per the SEPA format.
 public struct FundingInstructionsBankTransferIbanRecord: Codable, Sendable {
-    @Expandable<Address>
-    public var accountHolderAddress: String?
+    public var accountHolderAddress: Address
     /// The name of the person or business that owns the bank account
     public var accountHolderName: String
-    @Expandable<Address>
-    public var bankAddress: String?
+    public var bankAddress: Address
     /// The BIC/SWIFT code of the account.
     public var bic: String
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).

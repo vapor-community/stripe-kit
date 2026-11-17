@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an action sent to a Terminal reader failed.
 public struct ActionFailed: Codable, Sendable {
+    @Indirect
     public var object: Reader
 }
 

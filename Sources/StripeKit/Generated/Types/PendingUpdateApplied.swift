@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a customer's subscription's pending update is applied, and the subscription is
 /// updated.
 public struct PendingUpdateApplied: Codable, Sendable {
+    @Indirect
     public var object: Subscription
 }
 

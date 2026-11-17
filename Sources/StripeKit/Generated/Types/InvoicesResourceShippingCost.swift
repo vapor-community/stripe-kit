@@ -18,8 +18,7 @@ public struct InvoicesResourceShippingCost: Codable, Sendable {
     @Expandable<ShippingRate>
     public var shippingRate: String?
     /// The taxes applied to the shipping rate.
-    @ExpandableCollection<LineItemsTaxAmount>
-    public var taxes: [String]?
+    public var taxes: [LineItemsTaxAmount]?
 
     public enum CodingKeys: String, CodingKey {
         case amountSubtotal = "amount_subtotal"

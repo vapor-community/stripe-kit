@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a top-up succeeds.
 public struct TopupSucceeded: Codable, Sendable {
+    @Indirect
     public var object: Topup
 }
 

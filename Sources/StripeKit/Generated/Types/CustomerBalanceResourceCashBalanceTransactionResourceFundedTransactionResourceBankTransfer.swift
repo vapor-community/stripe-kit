@@ -8,20 +8,16 @@
 import Foundation
 
 public struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransfer: Codable, Sendable {
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceEuBankTransfer>
-    public var euBankTransfer: String?
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceGbBankTransfer>
-    public var gbBankTransfer: String?
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceJpBankTransfer>
-    public var jpBankTransfer: String?
+    public var euBankTransfer: CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceEuBankTransfer?
+    public var gbBankTransfer: CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceGbBankTransfer?
+    public var jpBankTransfer: CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceJpBankTransfer?
     /// The user-supplied reference field on the bank transfer.
     public var reference: String?
     /// The funding method type used to fund the customer balance. Permitted values include:
     /// `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or
     /// `us_bank_transfer`.
     public var type: CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferType
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransfer>
-    public var usBankTransfer: String?
+    public var usBankTransfer: CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransfer?
 
     public enum CodingKeys: String, CodingKey {
         case euBankTransfer = "eu_bank_transfer"

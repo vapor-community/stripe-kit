@@ -10,8 +10,7 @@ import Foundation
 public struct PortalResourceScheduleUpdateAtPeriodEnd: Codable, Sendable {
     /// List of conditions. When any condition is true, an update will be scheduled at the end of the
     /// current period.
-    @ExpandableCollection<PortalResourceScheduleUpdateAtPeriodEndCondition>
-    public var conditions: [String]?
+    public var conditions: [PortalResourceScheduleUpdateAtPeriodEndCondition]
 }
 
 public struct PortalResourceScheduleUpdateAtPeriodEndList: Codable, Sendable {

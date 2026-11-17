@@ -20,8 +20,7 @@ public struct TreasuryReceivedCreditsResourceLinkedFlows: Codable, Sendable {
     /// Examples of source flows include OutboundPayments, payouts, or CreditReversals.
     public var sourceFlow: String?
     /// The expandable object of the source flow.
-    @Expandable<TreasuryReceivedCreditsResourceSourceFlowsDetails>
-    public var sourceFlowDetails: String?
+    public var sourceFlowDetails: TreasuryReceivedCreditsResourceSourceFlowsDetails?
     /// The type of flow that originated the ReceivedCredit (for example, `outbound_payment`).
     public var sourceFlowType: String?
 

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PortalSubscriptionUpdateProduct: Codable, Sendable {
-    @Expandable<PortalSubscriptionUpdateProductAdjustableQuantity>
-    public var adjustableQuantity: String?
+    public var adjustableQuantity: PortalSubscriptionUpdateProductAdjustableQuantity
     /// The list of price IDs which, when subscribed to, a subscription can be updated.
     public var prices: [String]
     /// The product ID.

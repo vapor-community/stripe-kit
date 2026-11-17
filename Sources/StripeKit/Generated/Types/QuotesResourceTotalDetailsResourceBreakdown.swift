@@ -9,11 +9,9 @@ import Foundation
 
 public struct QuotesResourceTotalDetailsResourceBreakdown: Codable, Sendable {
     /// The aggregated discounts.
-    @ExpandableCollection<LineItemsDiscountAmount>
-    public var discounts: [String]?
+    public var discounts: [LineItemsDiscountAmount]
     /// The aggregated tax amounts by rate.
-    @ExpandableCollection<LineItemsTaxAmount>
-    public var taxes: [String]?
+    public var taxes: [LineItemsTaxAmount]
 }
 
 public struct QuotesResourceTotalDetailsResourceBreakdownList: Codable, Sendable {

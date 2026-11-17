@@ -20,11 +20,9 @@ public struct PaymentPagesCheckoutSessionBrandingSettings: Codable, Sendable {
     /// families](https://docs.stripe.com/payments/checkout/customization/appearance?payment-ui=stripe-hosted#font-compatibility).
     public var fontFamily: String
     /// The icon for the Checkout Session. You cannot set both `logo` and `icon`.
-    @Expandable<PaymentPagesCheckoutSessionBrandingSettingsIcon>
-    public var icon: String?
+    public var icon: PaymentPagesCheckoutSessionBrandingSettingsIcon?
     /// The logo for the Checkout Session. You cannot set both `logo` and `icon`.
-    @Expandable<PaymentPagesCheckoutSessionBrandingSettingsLogo>
-    public var logo: String?
+    public var logo: PaymentPagesCheckoutSessionBrandingSettingsLogo?
 
     public enum CodingKeys: String, CodingKey {
         case backgroundColor = "background_color"

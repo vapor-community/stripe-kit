@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a quote is accepted.
 public struct Accepted: Codable, Sendable {
+    @Indirect
     public var object: Quote
 }
 

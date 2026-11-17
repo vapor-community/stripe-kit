@@ -14,8 +14,7 @@ public struct IssuingAuthorizationRequest: Codable, Sendable {
     public var amount: Int
     /// Detailed breakdown of amount components. These amounts are denominated in `currency` and in the
     /// [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-    @Expandable<IssuingAuthorizationAmountDetails>
-    public var amountDetails: String?
+    public var amountDetails: IssuingAuthorizationAmountDetails?
     /// Whether this request was approved.
     public var approved: Bool
     /// A code created by Stripe which is shared with the merchant to validate the authorization. This field

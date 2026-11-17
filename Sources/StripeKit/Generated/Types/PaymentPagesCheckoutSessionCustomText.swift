@@ -9,17 +9,13 @@ import Foundation
 
 public struct PaymentPagesCheckoutSessionCustomText: Codable, Sendable {
     /// Custom text that should be displayed after the payment confirmation button.
-    @Expandable<PaymentPagesCheckoutSessionCustomTextPosition>
-    public var afterSubmit: String?
+    public var afterSubmit: PaymentPagesCheckoutSessionCustomTextPosition?
     /// Custom text that should be displayed alongside shipping address collection.
-    @Expandable<PaymentPagesCheckoutSessionCustomTextPosition>
-    public var shippingAddress: String?
+    public var shippingAddress: PaymentPagesCheckoutSessionCustomTextPosition?
     /// Custom text that should be displayed alongside the payment confirmation button.
-    @Expandable<PaymentPagesCheckoutSessionCustomTextPosition>
-    public var submit: String?
+    public var submit: PaymentPagesCheckoutSessionCustomTextPosition?
     /// Custom text that should be displayed in place of the default terms of service agreement text.
-    @Expandable<PaymentPagesCheckoutSessionCustomTextPosition>
-    public var termsOfServiceAcceptance: String?
+    public var termsOfServiceAcceptance: PaymentPagesCheckoutSessionCustomTextPosition?
 
     public enum CodingKeys: String, CodingKey {
         case afterSubmit = "after_submit"

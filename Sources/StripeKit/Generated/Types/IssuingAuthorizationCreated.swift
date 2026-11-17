@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever an authorization is created. For verification authorizations, this event is only
 /// accessible via private preview.
 public struct IssuingAuthorizationCreated: Codable, Sendable {
+    @Indirect
     public var object: IssuingAuthorization
 }
 

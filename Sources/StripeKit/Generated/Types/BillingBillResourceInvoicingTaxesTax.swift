@@ -13,8 +13,7 @@ public struct BillingBillResourceInvoicingTaxesTax: Codable, Sendable {
     /// Whether this tax is inclusive or exclusive.
     public var taxBehavior: BillingBillResourceInvoicingTaxesTaxTaxBehavior
     /// Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
-    @Expandable<BillingBillResourceInvoicingTaxesTaxRateDetails>
-    public var taxRateDetails: String?
+    public var taxRateDetails: BillingBillResourceInvoicingTaxesTaxRateDetails?
     /// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for
     /// this field may be extended as new tax rules are supported.
     public var taxabilityReason: BillingBillResourceInvoicingTaxesTaxTaxabilityReason

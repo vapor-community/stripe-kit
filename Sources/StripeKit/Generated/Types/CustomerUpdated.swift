@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever any property of a customer changes.
 public struct CustomerUpdated: Codable, Sendable {
+    @Indirect
     public var object: Customer
 }
 

@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a personalization design is deactivated following the deactivation of the physical
 /// bundle that belongs to it.
 public struct IssuingPersonalizationDesignDeactivated: Codable, Sendable {
+    @Indirect
     public var object: PersonalizationDesign
 }
 

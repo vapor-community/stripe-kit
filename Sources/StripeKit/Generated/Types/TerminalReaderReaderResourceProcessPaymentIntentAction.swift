@@ -12,8 +12,7 @@ public struct TerminalReaderReaderResourceProcessPaymentIntentAction: Codable, S
     /// Most recent PaymentIntent processed by the reader.
     @Expandable<PaymentIntent>
     public var paymentIntent: String?
-    @Expandable<TerminalReaderReaderResourceProcessConfig>
-    public var processConfig: String?
+    public var processConfig: TerminalReaderReaderResourceProcessConfig?
 
     public enum CodingKeys: String, CodingKey {
         case paymentIntent = "payment_intent"

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct BillingClocksResourceStatusDetailsStatusDetails: Codable, Sendable {
-    @Expandable<BillingClocksResourceStatusDetailsAdvancingStatusDetails>
-    public var advancing: String?
+    public var advancing: BillingClocksResourceStatusDetailsAdvancingStatusDetails?
 }
 
 public struct BillingClocksResourceStatusDetailsStatusDetailsList: Codable, Sendable {

@@ -29,8 +29,7 @@ public struct InboundTransfer: Codable, Sendable {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Details about this InboundTransfer's failure. Will be set when `status=failed` or `returned=true`.
-    @Expandable<TreasuryInboundTransfersResourceFailureDetails>
-    public var failureDetails: String?
+    public var failureDetails: TreasuryInboundTransfersResourceFailureDetails?
     /// The FinancialAccount that received the funds.
     public var financialAccount: String
     /// A [hosted transaction receipt](https://docs.stripe.com/treasury/moving-money/regulatory-receipts)
@@ -39,8 +38,7 @@ public struct InboundTransfer: Codable, Sendable {
     public var hostedRegulatoryReceiptUrl: String?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<TreasuryInboundTransfersResourceInboundTransferResourceLinkedFlows>
-    public var linkedFlows: String?
+    public var linkedFlows: TreasuryInboundTransfersResourceInboundTransferResourceLinkedFlows
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -52,8 +50,7 @@ public struct InboundTransfer: Codable, Sendable {
     /// The origin payment method to be debited for an InboundTransfer.
     public var originPaymentMethod: String?
     /// Details about the PaymentMethod for an InboundTransfer.
-    @Expandable<InboundTransfers>
-    public var originPaymentMethodDetails: String?
+    public var originPaymentMethodDetails: InboundTransfers?
     /// Returns `true` if the funds for an InboundTransfer were returned after the InboundTransfer went to
     /// the `succeeded` state.
     public var returned: Bool?
@@ -65,8 +62,7 @@ public struct InboundTransfer: Codable, Sendable {
     /// the funds have been "confirmed" and a `transaction` is created and posted. The status changes to
     /// `failed` if the transfer fails.
     public var status: InboundTransferStatus
-    @Expandable<TreasuryInboundTransfersResourceInboundTransferResourceStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: TreasuryInboundTransfersResourceInboundTransferResourceStatusTransitions
     /// The Transaction associated with this object.
     @Expandable<TreasuryTransaction>
     public var transaction: String?

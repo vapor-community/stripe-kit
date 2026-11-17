@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever an invoice payment attempt fails, due to either a declined payment, including soft
 /// decline, or to the lack of a stored payment method.
 public struct InvoicePaymentFailed: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

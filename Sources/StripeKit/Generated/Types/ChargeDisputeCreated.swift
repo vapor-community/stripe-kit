@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a customer disputes a charge with their bank.
 public struct ChargeDisputeCreated: Codable, Sendable {
+    @Indirect
     public var object: Dispute
 }
 

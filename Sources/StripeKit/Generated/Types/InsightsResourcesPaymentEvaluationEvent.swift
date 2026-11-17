@@ -9,20 +9,15 @@ import Foundation
 
 /// Event reported for this payment evaluation.
 public struct InsightsResourcesPaymentEvaluationEvent: Codable, Sendable {
-    @Expandable<InsightsResourcesPaymentEvaluationDisputeOpened>
-    public var disputeOpened: String?
-    @Expandable<InsightsResourcesPaymentEvaluationEarlyFraudWarningReceived>
-    public var earlyFraudWarningReceived: String?
+    public var disputeOpened: InsightsResourcesPaymentEvaluationDisputeOpened?
+    public var earlyFraudWarningReceived: InsightsResourcesPaymentEvaluationEarlyFraudWarningReceived?
     /// Timestamp when the event occurred.
     public var occurredAt: Int
-    @Expandable<InsightsResourcesPaymentEvaluationRefunded>
-    public var refunded: String?
+    public var refunded: InsightsResourcesPaymentEvaluationRefunded?
     /// Indicates the type of event attached to the payment evaluation.
     public var type: InsightsResourcesPaymentEvaluationEventType
-    @Expandable<InsightsResourcesPaymentEvaluationUserInterventionRaised>
-    public var userInterventionRaised: String?
-    @Expandable<InsightsResourcesPaymentEvaluationUserInterventionResolved>
-    public var userInterventionResolved: String?
+    public var userInterventionRaised: InsightsResourcesPaymentEvaluationUserInterventionRaised?
+    public var userInterventionResolved: InsightsResourcesPaymentEvaluationUserInterventionResolved?
 
     public enum CodingKeys: String, CodingKey {
         case disputeOpened = "dispute_opened"

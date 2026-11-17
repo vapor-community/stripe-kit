@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a payout is *expected* to be available in the destination account. If the payout
 /// fails, a `payout.failed` notification is also sent, at a later time.
 public struct PayoutPaid: Codable, Sendable {
+    @Indirect
     public var object: Payout
 }
 

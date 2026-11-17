@@ -9,8 +9,7 @@ import Foundation
 
 public struct SetupIntentPaymentMethodOptionsCard: Codable, Sendable {
     /// Configuration options for setting up an eMandate for cards issued in India.
-    @Expandable<SetupIntentPaymentMethodOptionsCardMandateOptions>
-    public var mandateOptions: String?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsCardMandateOptions?
     /// Selected network to process this SetupIntent on. Depends on the available networks of the card
     /// attached to the setup intent. Can be only set confirm-time.
     public var network: SetupIntentPaymentMethodOptionsCardNetwork?

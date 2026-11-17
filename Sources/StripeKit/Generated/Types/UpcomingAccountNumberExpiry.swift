@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when an Account’s tokenized account number is about to expire.
 public struct UpcomingAccountNumberExpiry: Codable, Sendable {
+    @Indirect
     public var object: FinancialConnectionsAccount
 }
 

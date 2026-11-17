@@ -50,8 +50,7 @@ public struct Invoiceitem: Codable, Sendable {
     public var invoice: String?
     /// The rules that control when this invoice item is eligible for invoicing. All rules must be satisfied
     /// for the item to be invoiced.
-    @ExpandableCollection<InvoicingRule>
-    public var invoicingRules: [String]?
+    public var invoicingRules: [InvoicingRule]?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -64,18 +63,14 @@ public struct Invoiceitem: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: InvoiceitemObject
     /// The parent that generated this invoice item.
-    @Expandable<BillingBillResourceInvoiceItemParentsInvoiceItemParent>
-    public var parent: String?
-    @Expandable<InvoiceLineItemPeriod>
-    public var period: String?
+    public var parent: BillingBillResourceInvoiceItemParentsInvoiceItemParent?
+    public var period: InvoiceLineItemPeriod
     /// The pricing information of the invoice item.
-    @Expandable<BillingBillResourceInvoicingPricingPricing>
-    public var pricing: String?
+    public var pricing: BillingBillResourceInvoicingPricingPricing?
     /// Whether the invoice item was created automatically as a proration adjustment when the customer
     /// switched plans.
     public var proration: Bool
-    @Expandable<ProrationDetails>
-    public var prorationDetails: String?
+    public var prorationDetails: ProrationDetails?
     /// Quantity of units for the invoice item in integer format, with any decimal precision truncated. For
     /// the item's full-precision decimal quantity, use `quantity_decimal`. This field will be deprecated in
     /// favor of `quantity_decimal` in a future version. If the invoice item is a proration, the quantity of
@@ -85,8 +80,7 @@ public struct Invoiceitem: Codable, Sendable {
     public var quantityDecimal: String
     /// The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do
     /// not apply to this invoice item.
-    @ExpandableCollection<TaxRate>
-    public var taxRates: [String]?
+    public var taxRates: [TaxRate]?
     /// ID of the test clock this invoice item belongs to.
     @Expandable<TestClock>
     public var testClock: String?

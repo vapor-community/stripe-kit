@@ -8,14 +8,10 @@
 import Foundation
 
 public struct DisputePaymentMethodDetails: Codable, Sendable {
-    @Expandable<DisputePaymentMethodDetailsAmazonPay>
-    public var amazonPay: String?
-    @Expandable<DisputePaymentMethodDetailsCard>
-    public var card: String?
-    @Expandable<DisputePaymentMethodDetailsKlarna>
-    public var klarna: String?
-    @Expandable<DisputePaymentMethodDetailsPaypal>
-    public var paypal: String?
+    public var amazonPay: DisputePaymentMethodDetailsAmazonPay?
+    public var card: DisputePaymentMethodDetailsCard?
+    public var klarna: DisputePaymentMethodDetailsKlarna?
+    public var paypal: DisputePaymentMethodDetailsPaypal?
     /// Payment method type.
     public var type: DisputePaymentMethodDetailsType
 

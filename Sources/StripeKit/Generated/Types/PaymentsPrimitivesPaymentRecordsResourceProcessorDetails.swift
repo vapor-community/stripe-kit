@@ -9,8 +9,7 @@ import Foundation
 
 /// Processor information associated with this payment.
 public struct PaymentsPrimitivesPaymentRecordsResourceProcessorDetails: Codable, Sendable {
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceProcessorDetailsResourceCustomDetails>
-    public var custom: String?
+    public var custom: PaymentsPrimitivesPaymentRecordsResourceProcessorDetailsResourceCustomDetails?
     /// The processor used for this payment attempt.
     public var type: PaymentsPrimitivesPaymentRecordsResourceProcessorDetailsType
 }

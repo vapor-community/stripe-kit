@@ -8,54 +8,34 @@
 import Foundation
 
 public struct PaymentIntentNextAction: Codable, Sendable {
-    @Expandable<PaymentIntentNextActionAlipayHandleRedirect>
-    public var alipayHandleRedirect: String?
-    @Expandable<PaymentIntentNextActionBlikAuthorize>
-    public var blikAuthorize: String?
-    @Expandable<PaymentIntentNextActionBoleto>
-    public var boletoDisplayDetails: String?
-    @Expandable<PaymentIntentNextActionCardAwaitNotification>
-    public var cardAwaitNotification: String?
-    @Expandable<PaymentIntentNextActionCashappHandleRedirectOrDisplayQrCode>
-    public var cashappHandleRedirectOrDisplayQrCode: String?
-    @Expandable<PaymentIntentNextActionDisplayBankTransferInstructions>
-    public var displayBankTransferInstructions: String?
-    @Expandable<PaymentIntentNextActionKlarnaDisplayQrCode>
-    public var klarnaDisplayQrCode: String?
-    @Expandable<PaymentIntentNextActionKonbini>
-    public var konbiniDisplayDetails: String?
-    @Expandable<PaymentIntentNextActionDisplayMultibancoDetails>
-    public var multibancoDisplayDetails: String?
-    @Expandable<PaymentIntentNextActionDisplayOxxoDetails>
-    public var oxxoDisplayDetails: String?
-    @Expandable<PaymentIntentNextActionPaynowDisplayQrCode>
-    public var paynowDisplayQrCode: String?
-    @Expandable<PaymentIntentNextActionPixDisplayQrCode>
-    public var pixDisplayQrCode: String?
-    @Expandable<PaymentIntentNextActionPromptpayDisplayQrCode>
-    public var promptpayDisplayQrCode: String?
-    @Expandable<PaymentIntentNextActionRedirectToUrl>
-    public var redirectToUrl: String?
-    @Expandable<PaymentIntentNextActionSwishHandleRedirectOrDisplayQrCode>
-    public var swishHandleRedirectOrDisplayQrCode: String?
+    public var alipayHandleRedirect: PaymentIntentNextActionAlipayHandleRedirect?
+    public var blikAuthorize: PaymentIntentNextActionBlikAuthorize?
+    public var boletoDisplayDetails: PaymentIntentNextActionBoleto?
+    public var cardAwaitNotification: PaymentIntentNextActionCardAwaitNotification?
+    public var cashappHandleRedirectOrDisplayQrCode: PaymentIntentNextActionCashappHandleRedirectOrDisplayQrCode?
+    public var displayBankTransferInstructions: PaymentIntentNextActionDisplayBankTransferInstructions?
+    public var klarnaDisplayQrCode: PaymentIntentNextActionKlarnaDisplayQrCode?
+    public var konbiniDisplayDetails: PaymentIntentNextActionKonbini?
+    public var multibancoDisplayDetails: PaymentIntentNextActionDisplayMultibancoDetails?
+    public var oxxoDisplayDetails: PaymentIntentNextActionDisplayOxxoDetails?
+    public var paynowDisplayQrCode: PaymentIntentNextActionPaynowDisplayQrCode?
+    public var pixDisplayQrCode: PaymentIntentNextActionPixDisplayQrCode?
+    public var promptpayDisplayQrCode: PaymentIntentNextActionPromptpayDisplayQrCode?
+    public var redirectToUrl: PaymentIntentNextActionRedirectToUrl?
+    public var swishHandleRedirectOrDisplayQrCode: PaymentIntentNextActionSwishHandleRedirectOrDisplayQrCode?
     /// Type of the next action to perform. Refer to the other child attributes under `next_action` for
     /// available values. Examples include: `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`,
     /// `oxxo_display_details`, or `verify_with_microdeposits`.
     public var type: String
-    @Expandable<PaymentIntentNextActionUpiHandleRedirectOrDisplayQrCode>
-    public var upiHandleRedirectOrDisplayQrCode: String?
+    public var upiHandleRedirectOrDisplayQrCode: PaymentIntentNextActionUpiHandleRedirectOrDisplayQrCode?
     /// When confirming a PaymentIntent with Stripe.js, Stripe.js depends on the contents of this dictionary
     /// to invoke authentication flows. The shape of the contents is subject to change and is only intended
     /// to be used by Stripe.js.
     public var useStripeSdk: [String: AnyCodableValue]?
-    @Expandable<PaymentIntentNextActionVerifyWithMicrodeposits>
-    public var verifyWithMicrodeposits: String?
-    @Expandable<PaymentIntentNextActionWechatPayDisplayQrCode>
-    public var wechatPayDisplayQrCode: String?
-    @Expandable<PaymentIntentNextActionWechatPayRedirectToAndroidApp>
-    public var wechatPayRedirectToAndroidApp: String?
-    @Expandable<PaymentIntentNextActionWechatPayRedirectToIosApp>
-    public var wechatPayRedirectToIosApp: String?
+    public var verifyWithMicrodeposits: PaymentIntentNextActionVerifyWithMicrodeposits?
+    public var wechatPayDisplayQrCode: PaymentIntentNextActionWechatPayDisplayQrCode?
+    public var wechatPayRedirectToAndroidApp: PaymentIntentNextActionWechatPayRedirectToAndroidApp?
+    public var wechatPayRedirectToIosApp: PaymentIntentNextActionWechatPayRedirectToIosApp?
 
     public enum CodingKeys: String, CodingKey {
         case alipayHandleRedirect = "alipay_handle_redirect"

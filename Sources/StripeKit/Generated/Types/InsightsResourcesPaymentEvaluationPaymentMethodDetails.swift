@@ -10,8 +10,7 @@ import Foundation
 /// Payment method details attached to this payment evaluation.
 public struct InsightsResourcesPaymentEvaluationPaymentMethodDetails: Codable, Sendable {
     /// Billing information associated with the payment evaluation.
-    @Expandable<InsightsResourcesPaymentEvaluationBillingDetails>
-    public var billingDetails: String?
+    public var billingDetails: InsightsResourcesPaymentEvaluationBillingDetails?
     /// The payment method used in this payment evaluation.
     @Expandable<PaymentMethod>
     public var paymentMethod: String?

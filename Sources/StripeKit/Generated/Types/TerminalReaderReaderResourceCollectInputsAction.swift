@@ -10,8 +10,7 @@ import Foundation
 /// Represents a reader action to collect customer inputs
 public struct TerminalReaderReaderResourceCollectInputsAction: Codable, Sendable {
     /// List of inputs to be collected.
-    @ExpandableCollection<TerminalReaderReaderResourceInput>
-    public var inputs: [String]?
+    public var inputs: [TerminalReaderReaderResourceInput]
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?

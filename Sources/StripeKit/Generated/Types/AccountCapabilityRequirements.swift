@@ -12,8 +12,7 @@ public struct AccountCapabilityRequirements: Codable, Sendable {
     /// Multiple alternatives can reference the same `original_fields_due`. When this happens, any of these
     /// alternatives can serve as a pathway for attempting to resolve the fields. Additionally, providing
     /// `original_fields_due` again also serves as a pathway for attempting to resolve the fields.
-    @ExpandableCollection<AccountRequirementsAlternative>
-    public var alternatives: [String]?
+    public var alternatives: [AccountRequirementsAlternative]?
     /// The date by which all required account information must be both submitted and verified. This
     /// includes fields listed in `currently_due` as well as those in `pending_verification`. If any
     /// required information is missing or unverified by this date, the account may be disabled. Note that
@@ -27,8 +26,7 @@ public struct AccountCapabilityRequirements: Codable, Sendable {
     public var disabledReason: AccountCapabilityRequirementsDisabledReason?
     /// Fields that are `currently_due` and need to be collected again because validation or verification
     /// failed.
-    @ExpandableCollection<AccountRequirementsError>
-    public var errors: [String]?
+    public var errors: [AccountRequirementsError]
     /// Fields you must collect when all thresholds are reached. As they become required, they appear in
     /// `currently_due` as well, and `current_deadline` becomes set.
     public var eventuallyDue: [String]

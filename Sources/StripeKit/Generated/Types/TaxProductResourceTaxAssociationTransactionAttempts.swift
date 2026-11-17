@@ -8,10 +8,8 @@
 import Foundation
 
 public struct TaxProductResourceTaxAssociationTransactionAttempts: Codable, Sendable {
-    @Expandable<TaxProductResourceTaxAssociationTransactionAttemptsResourceCommitted>
-    public var committed: String?
-    @Expandable<TaxProductResourceTaxAssociationTransactionAttemptsResourceErrored>
-    public var errored: String?
+    public var committed: TaxProductResourceTaxAssociationTransactionAttemptsResourceCommitted?
+    public var errored: TaxProductResourceTaxAssociationTransactionAttemptsResourceErrored?
     /// The source of the tax transaction attempt. This is either a refund or a payment intent.
     public var source: String
     /// The status of the transaction attempt. This can be `errored` or `committed`.

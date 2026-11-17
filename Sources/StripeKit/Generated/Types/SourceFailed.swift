@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a source fails.
 public struct SourceFailed: Codable, Sendable {
+    @Indirect
     public var object: Source
 }
 

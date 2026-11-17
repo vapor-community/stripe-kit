@@ -9,6 +9,73 @@ import Foundation
 
 struct ModelGenerator {
     let parser: SpecParser
+    /// "Type.property" for each property stored `@Indirect` (see `indirectProperties(…)`)
+    let indirectProperties: Set<String>
+
+    /// `resources` and `inlineTypes` are every model to be generated.
+    init(parser: SpecParser, resources: [StripeResource], inlineTypes: [StripeResource]) {
+        self.parser = parser
+        self.indirectProperties = Self.indirectProperties(resources: resources, inlineTypes: inlineTypes, parser: parser)
+    }
+
+    /// The properties to store `@Indirect` (out of line), keeping models small and finite:
+    ///
+    /// - Every property that holds another API resource (ApiErrors.paymentIntent). Resources
+    ///   are large, and a model embedding them inline grows to many KB (ApiErrors was 11 KB,
+    ///   and Invoice and TerminalReader embed it), enough for a debug build's decoder to
+    ///   overflow a 512 KB Swift concurrency thread stack.
+    /// - Any property that still closes a cycle, since a struct can't contain itself, even
+    ///   through other structs or enums. These are the back edges of a depth-first walk in
+    ///   name order, so they're stable between runs. None remain in today's spec: every
+    ///   cycle passes through an embedded resource.
+    ///
+    /// Arrays, dictionaries and expandable fields already store their values out of line, so
+    /// only direct object properties and enum payloads count.
+    static func indirectProperties(resources: [StripeResource], inlineTypes: [StripeResource], parser: SpecParser) -> Set<String> {
+        let resourceNames = Set(resources.map(\.swiftTypeName))
+        var result = Set<String>()
+
+        // Type → (property, type it stores inline); property is nil for an enum case payload
+        var edges: [String: [(property: String?, target: String)]] = [:]
+        for type in resources + inlineTypes {
+            if let variants = type.anyOfVariants, !variants.isEmpty {
+                edges[type.swiftTypeName] = variants.map { (nil, parser.schemaNameToSwiftType($0)) }
+            } else {
+                edges[type.swiftTypeName] = type.properties.compactMap { property in
+                    guard case .object(let name) = property.type else { return nil }
+                    if resourceNames.contains(name) {
+                        result.insert("\(type.swiftTypeName).\(property.swiftName)")
+                        return nil
+                    }
+                    return (property.swiftName, name)
+                }
+            }
+        }
+
+        var finished: [String: Bool] = [:]  // false while on the walk's stack
+        func visit(_ name: String) {
+            finished[name] = false
+            let sorted = (edges[name] ?? []).sorted { ($0.property ?? "", $0.target) < ($1.property ?? "", $1.target) }
+            for edge in sorted where edges[edge.target] != nil {
+                switch finished[edge.target] {
+                case false?:
+                    guard let property = edge.property else {
+                        preconditionFailure("\(name) is recursive through an enum case; box it in the generator")
+                    }
+                    result.insert("\(name).\(property)")
+                case nil:
+                    visit(edge.target)
+                case true?:
+                    break
+                }
+            }
+            finished[name] = true
+        }
+        for name in edges.keys.sorted() where finished[name] == nil {
+            visit(name)
+        }
+        return result
+    }
     
     /// Generate the full Swift source for a resource's model file
     func generate(resource: StripeResource) -> String {
@@ -98,18 +165,16 @@ struct ModelGenerator {
         }
         let optionalMark = (isNonOptional && !isExpandableType) ? "" : "?"
         
-        // Expandable property wrapper annotations. SpecParser already leaves deleted variants
-        // out of an expandable field's type; one that can only expand to a deleted object
-        // stays a plain ID.
+        if indirectProperties.contains("\(resource.swiftTypeName).\(property.swiftName)") {
+            lines.append("    @Indirect")
+        }
+
+        // Expandable property wrapper annotations
         switch property.type {
         case .expandable(let wrappedType):
-            if !wrappedType.starts(with: "Deleted") {
-                lines.append("    @Expandable<\(wrappedType)>")
-            }
+            lines.append("    @Expandable<\(wrappedType)>")
         case .expandableCollection(let wrappedType):
-            if !wrappedType.starts(with: "Deleted") {
-                lines.append("    @ExpandableCollection<\(wrappedType)>")
-            }
+            lines.append("    @ExpandableCollection<\(wrappedType)>")
         default:
             break
         }

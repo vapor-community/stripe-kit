@@ -8,48 +8,27 @@
 import Foundation
 
 public struct TerminalConfigurationConfigurationResourceTipping: Codable, Sendable {
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var aed: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var aud: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var cad: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var chf: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var czk: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var dkk: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var eur: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var gbp: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var gip: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var hkd: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var huf: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var jpy: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var mxn: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var myr: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var nok: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var nzd: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var pln: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var ron: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var sek: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var sgd: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>
-    public var usd: String?
+    public var aed: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var aud: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var cad: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var chf: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var czk: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var dkk: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var eur: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var gbp: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var gip: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var hkd: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var huf: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var jpy: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var mxn: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var myr: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var nok: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var nzd: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var pln: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var ron: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var sek: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var sgd: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
+    public var usd: TerminalConfigurationConfigurationResourceCurrencySpecificConfig?
 }
 
 public struct TerminalConfigurationConfigurationResourceTippingList: Codable, Sendable {

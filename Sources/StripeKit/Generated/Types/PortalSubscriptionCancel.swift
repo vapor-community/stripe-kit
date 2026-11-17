@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PortalSubscriptionCancel: Codable, Sendable {
-    @Expandable<PortalSubscriptionCancellationReason>
-    public var cancellationReason: String?
+    public var cancellationReason: PortalSubscriptionCancellationReason
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// Whether to cancel subscriptions immediately or at the end of the billing period.

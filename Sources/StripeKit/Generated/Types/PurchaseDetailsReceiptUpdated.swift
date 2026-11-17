@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an issuing transaction is updated with receipt data.
 public struct PurchaseDetailsReceiptUpdated: Codable, Sendable {
+    @Indirect
     public var object: IssuingTransaction
 }
 

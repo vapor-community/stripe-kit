@@ -13,8 +13,7 @@ public struct PaymentIntentNextActionKonbini: Codable, Sendable {
     /// The URL for the Konbini payment instructions page, which allows customers to view and print a
     /// Konbini voucher.
     public var hostedVoucherUrl: String?
-    @Expandable<PaymentIntentNextActionKonbiniStores>
-    public var stores: String?
+    public var stores: PaymentIntentNextActionKonbiniStores
 
     public enum CodingKeys: String, CodingKey {
         case expiresAt = "expires_at"

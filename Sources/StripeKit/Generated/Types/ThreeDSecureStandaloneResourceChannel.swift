@@ -9,10 +9,8 @@ import Foundation
 
 /// Contains details on the channel used (browser, 3RI) for a standalone 3DS Authentication.
 public struct ThreeDSecureStandaloneResourceChannel: Codable, Sendable {
-    @Expandable<ThreeDSecureStandaloneResourceBrowserDetails>
-    public var browser: String?
-    @Expandable<ThreeDSecureStandaloneResourceThreeRiDetails>
-    public var threeRI: String?
+    public var browser: ThreeDSecureStandaloneResourceBrowserDetails?
+    public var threeRI: ThreeDSecureStandaloneResourceThreeRiDetails?
     /// Type of channel you would prefer to use for this 3DS Authentication. Only browser.
     public var type: ThreeDSecureStandaloneResourceChannelType
 

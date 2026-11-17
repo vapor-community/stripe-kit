@@ -18,8 +18,7 @@ public struct PaymentMethodOptionsCardPresent: Codable, Sendable {
     /// [incremental_authorization_supported](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported)
     /// in the [Confirm](https://docs.stripe.com/api/payment_intents/confirm) response to verify support.
     public var requestIncrementalAuthorizationSupport: Bool?
-    @Expandable<PaymentMethodOptionsCardPresentRouting>
-    public var routing: String?
+    public var routing: PaymentMethodOptionsCardPresentRouting?
 
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"

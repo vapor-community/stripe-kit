@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Checkout Session has been successfully completed.
 public struct CheckoutSessionCompleted: Codable, Sendable {
+    @Indirect
     public var object: CheckoutSession
 }
 

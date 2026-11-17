@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever funds are reinstated to your account for an Issuing dispute.
 public struct IssuingDisputeFundsReinstated: Codable, Sendable {
+    @Indirect
     public var object: IssuingDispute
 }
 

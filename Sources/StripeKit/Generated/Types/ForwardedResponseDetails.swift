@@ -12,8 +12,7 @@ public struct ForwardedResponseDetails: Codable, Sendable {
     /// The response body from the destination endpoint to Stripe.
     public var body: String
     /// HTTP headers that the destination endpoint returned.
-    @ExpandableCollection<ForwardedRequestHeader>
-    public var headers: [String]?
+    public var headers: [ForwardedRequestHeader]
     /// The HTTP status code that the destination endpoint returned.
     public var status: Int
 }

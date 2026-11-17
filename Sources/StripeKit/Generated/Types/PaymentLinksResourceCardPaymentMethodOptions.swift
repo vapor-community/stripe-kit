@@ -9,8 +9,7 @@ import Foundation
 
 public struct PaymentLinksResourceCardPaymentMethodOptions: Codable, Sendable {
     /// Restrictions to apply to the card payment method. For example, you can block specific card brands.
-    @Expandable<PaymentLinksResourceCardRestrictions>
-    public var restrictions: String?
+    public var restrictions: PaymentLinksResourceCardRestrictions?
 }
 
 public struct PaymentLinksResourceCardPaymentMethodOptionsList: Codable, Sendable {

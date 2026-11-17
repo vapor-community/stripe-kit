@@ -19,8 +19,7 @@ public struct BalanceSettingsResourcePayouts: Codable, Sendable {
     /// See our [Setting Bank and Debit Card
     /// Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation for
     /// details.
-    @Expandable<BalanceSettingsResourcePayoutSchedule>
-    public var schedule: String?
+    public var schedule: BalanceSettingsResourcePayoutSchedule?
     /// The text that appears on the bank account statement for payouts. If not set, this defaults to the
     /// platform's bank descriptor as set in the Dashboard.
     public var statementDescriptor: String?

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a received_credit is created as a result of funds being pushed by another account.
 public struct TreasuryReceivedCreditCreated: Codable, Sendable {
+    @Indirect
     public var object: ReceivedCredit
 }
 

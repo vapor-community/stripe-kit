@@ -9,8 +9,7 @@ import Foundation
 
 /// Represents a reader action to confirm a payment
 public struct TerminalReaderReaderResourceConfirmPaymentIntentAction: Codable, Sendable {
-    @Expandable<TerminalReaderReaderResourceConfirmConfig>
-    public var confirmConfig: String?
+    public var confirmConfig: TerminalReaderReaderResourceConfirmConfig?
     /// Most recent PaymentIntent processed by the reader.
     @Expandable<PaymentIntent>
     public var paymentIntent: String?

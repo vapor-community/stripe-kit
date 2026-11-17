@@ -10,8 +10,7 @@ import Foundation
 /// Money Movement details attached to this payment.
 public struct InsightsResourcesPaymentEvaluationMoneyMovementDetails: Codable, Sendable {
     /// Describes card money movement details.
-    @Expandable<InsightsResourcesPaymentEvaluationMoneyMovementCard>
-    public var card: String?
+    public var card: InsightsResourcesPaymentEvaluationMoneyMovementCard?
     /// Describes the type of money movement.
     public var moneyMovementType: InsightsResourcesPaymentEvaluationMoneyMovementDetailsMoneyMovementType
 

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct IssuingCardholderAddress: Codable, Sendable {
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address
 }
 
 public struct IssuingCardholderAddressList: Codable, Sendable {

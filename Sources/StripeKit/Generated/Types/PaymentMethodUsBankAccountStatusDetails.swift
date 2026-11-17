@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentMethodUsBankAccountStatusDetails: Codable, Sendable {
-    @Expandable<PaymentMethodUsBankAccountBlocked>
-    public var blocked: String?
+    public var blocked: PaymentMethodUsBankAccountBlocked?
 }
 
 public struct PaymentMethodUsBankAccountStatusDetailsList: Codable, Sendable {

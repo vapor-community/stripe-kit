@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an issuing digital wallet token is created.
 public struct IssuingTokenCreated: Codable, Sendable {
+    @Indirect
     public var object: IssuingToken
 }
 

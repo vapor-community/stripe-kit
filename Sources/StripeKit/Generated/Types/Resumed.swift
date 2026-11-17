@@ -11,6 +11,7 @@ import Foundation
 /// subscription is [resumed](https://docs.stripe.com/api/subscriptions/resume), not when [payment
 /// collection](https://docs.stripe.com/billing/subscriptions/pause) is resumed.
 public struct Resumed: Codable, Sendable {
+    @Indirect
     public var object: Subscription
 }
 

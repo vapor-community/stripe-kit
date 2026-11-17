@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a PaymentIntent is canceled.
 public struct PaymentIntentCanceled: Codable, Sendable {
+    @Indirect
     public var object: PaymentIntent
 }
 

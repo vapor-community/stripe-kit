@@ -12,8 +12,7 @@ import Foundation
 /// or attached to the wrong customer.
 public struct MeterEventAdjustment: Codable, Sendable {
     /// Specifies which event to cancel.
-    @Expandable<BillingMeterResourceBillingMeterEventAdjustmentCancel>
-    public var cancel: String?
+    public var cancel: BillingMeterResourceBillingMeterEventAdjustmentCancel?
     /// The name of the meter event. Corresponds with the `event_name` field on a meter.
     public var eventName: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct InvoicePaymentMethodOptionsAcssDebit: Codable, Sendable {
-    @Expandable<InvoicePaymentMethodOptionsAcssDebitMandateOptions>
-    public var mandateOptions: String?
+    public var mandateOptions: InvoicePaymentMethodOptionsAcssDebitMandateOptions?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: InvoicePaymentMethodOptionsAcssDebitVerificationMethod?
 

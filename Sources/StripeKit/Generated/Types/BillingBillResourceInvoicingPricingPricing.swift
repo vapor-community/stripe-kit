@@ -8,8 +8,7 @@
 import Foundation
 
 public struct BillingBillResourceInvoicingPricingPricing: Codable, Sendable {
-    @Expandable<BillingBillResourceInvoicingPricingPricingPriceDetails>
-    public var priceDetails: String?
+    public var priceDetails: BillingBillResourceInvoicingPricingPricingPriceDetails?
     /// The type of the pricing details.
     public var type: BillingBillResourceInvoicingPricingPricingType
     /// The unit amount (in the `currency` specified) of the item which contains a decimal value with at

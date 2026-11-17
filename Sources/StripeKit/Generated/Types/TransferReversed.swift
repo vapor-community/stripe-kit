@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a transfer is reversed, including partial reversals.
 public struct TransferReversed: Codable, Sendable {
+    @Indirect
     public var object: Transfer
 }
 

@@ -12,8 +12,7 @@ public struct PaymentMethodDetailsKlarna: Codable, Sendable {
     /// is assigned to.
     public var location: String?
     /// The payer details for this transaction.
-    @Expandable<KlarnaPayerDetails>
-    public var payerDetails: String?
+    public var payerDetails: KlarnaPayerDetails?
     /// The Klarna payment method used for this transaction. Can be one of `pay_later`, `pay_now`,
     /// `pay_with_financing`, or `pay_in_installments`
     public var paymentMethodCategory: String?

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an invoice is marked uncollectible.
 public struct MarkedUncollectible: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

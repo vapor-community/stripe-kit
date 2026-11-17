@@ -9,12 +9,9 @@ import Foundation
 
 /// Contains details of the flow preference used for a standalone 3DS Authentication.
 public struct ThreeDSecureStandaloneResourceFlowPreference: Codable, Sendable {
-    @Expandable<ThreeDSecureStandaloneResourceChallengeDetails>
-    public var challenge: String?
-    @Expandable<ThreeDSecureStandaloneResourceDataShareDetails>
-    public var dataShare: String?
-    @Expandable<ThreeDSecureStandaloneResourceFrictionlessDetails>
-    public var frictionless: String?
+    public var challenge: ThreeDSecureStandaloneResourceChallengeDetails?
+    public var dataShare: ThreeDSecureStandaloneResourceDataShareDetails?
+    public var frictionless: ThreeDSecureStandaloneResourceFrictionlessDetails?
     /// Type of flow you requested for this 3DS Authentication.
     public var type: ThreeDSecureStandaloneResourceFlowPreferenceType
 

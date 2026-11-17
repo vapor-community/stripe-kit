@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Climate product is created.
 public struct ClimateProductCreated: Codable, Sendable {
+    @Indirect
     public var object: ClimateProduct
 }
 

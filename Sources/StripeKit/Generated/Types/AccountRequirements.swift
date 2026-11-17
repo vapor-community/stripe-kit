@@ -12,8 +12,7 @@ public struct AccountRequirements: Codable, Sendable {
     /// Many alternatives can list the same `original_fields_due`, and any of these alternatives can serve
     /// as a pathway for attempting to resolve the fields again. Re-providing `original_fields_due` also
     /// serves as a pathway for attempting to resolve the fields again.
-    @ExpandableCollection<AccountRequirementsAlternative>
-    public var alternatives: [String]?
+    public var alternatives: [AccountRequirementsAlternative]?
     /// Date by which the fields in `currently_due` must be collected to keep the account enabled. These
     /// fields may disable the account sooner if the next threshold is reached before they are collected.
     public var currentDeadline: Int?
@@ -25,8 +24,7 @@ public struct AccountRequirements: Codable, Sendable {
     public var disabledReason: AccountRequirementsDisabledReason?
     /// Fields that are `currently_due` and need to be collected again because validation or verification
     /// failed.
-    @ExpandableCollection<AccountRequirementsError>
-    public var errors: [String]?
+    public var errors: [AccountRequirementsError]?
     /// Fields you must collect when all thresholds are reached. As they become required, they appear in
     /// `currently_due` as well, and `current_deadline` becomes set.
     public var eventuallyDue: [String]?

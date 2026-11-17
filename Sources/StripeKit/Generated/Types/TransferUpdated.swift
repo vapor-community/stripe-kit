@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a transfer's description or metadata is updated.
 public struct TransferUpdated: Codable, Sendable {
+    @Indirect
     public var object: Transfer
 }
 

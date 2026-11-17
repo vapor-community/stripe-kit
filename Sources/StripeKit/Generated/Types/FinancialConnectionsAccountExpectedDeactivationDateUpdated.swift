@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Financial Connections account’s `expected_deactivation_date` changes.
 public struct FinancialConnectionsAccountExpectedDeactivationDateUpdated: Codable, Sendable {
+    @Indirect
     public var object: FinancialConnectionsAccount
 }
 

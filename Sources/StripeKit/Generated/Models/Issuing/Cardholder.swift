@@ -11,11 +11,9 @@ import Foundation
 /// [issued](https://docs.stripe.com/issuing) cards. Related guide: [How to create a
 /// cardholder](https://docs.stripe.com/issuing/cards/virtual/issue-cards#create-cardholder)
 public struct Cardholder: Codable, Sendable {
-    @Expandable<IssuingCardholderAddress>
-    public var billing: String?
+    public var billing: IssuingCardholderAddress
     /// Additional information about a `company` cardholder.
-    @Expandable<IssuingCardholderCompany>
-    public var company: String?
+    public var company: IssuingCardholderCompany?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// The cardholder's email address.
@@ -23,8 +21,7 @@ public struct Cardholder: Codable, Sendable {
     /// Unique identifier for the object.
     public var id: String
     /// Additional information about an `individual` cardholder.
-    @Expandable<IssuingCardholderIndividual>
-    public var individual: String?
+    public var individual: IssuingCardholderIndividual?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -45,12 +42,10 @@ public struct Cardholder: Codable, Sendable {
     /// flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the
     /// cardholder.
     public var preferredLocales: [String]?
-    @Expandable<IssuingCardholderRequirements>
-    public var requirements: String?
+    public var requirements: IssuingCardholderRequirements
     /// Rules that control spending across this cardholder's cards. Refer to our
     /// [documentation](https://docs.stripe.com/issuing/controls/spending-controls) for more details.
-    @Expandable<IssuingCardholderAuthorizationControls>
-    public var spendingControls: String?
+    public var spendingControls: IssuingCardholderAuthorizationControls?
     /// Specifies whether to permit authorizations on this cardholder's cards.
     public var status: CardholderStatus
     /// One of `individual` or `company`. See [Choose a cardholder

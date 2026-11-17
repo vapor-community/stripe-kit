@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a transfer is created.
 public struct TransferCreated: Codable, Sendable {
+    @Indirect
     public var object: Transfer
 }
 

@@ -36,8 +36,7 @@ public struct Price: Codable, Sendable {
     public var currencyOptions: [String: CurrencyOption]?
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
     /// Sessions and Payment Links.
-    @Expandable<CustomUnitAmount>
-    public var customUnitAmount: String?
+    public var customUnitAmount: CustomUnitAmount?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -57,8 +56,7 @@ public struct Price: Codable, Sendable {
     @Expandable<Product>
     public var product: String?
     /// The recurring components of a price such as `interval` and `usage_type`.
-    @Expandable<Recurring>
-    public var recurring: String?
+    public var recurring: Recurring?
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
@@ -67,16 +65,14 @@ public struct Price: Codable, Sendable {
     public var taxBehavior: PriceTaxBehavior?
     /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
     /// `tiered`. See also the documentation for `billing_scheme`.
-    @ExpandableCollection<PriceTier>
-    public var tiers: [String]?
+    public var tiers: [PriceTier]?
     /// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the
     /// maximum quantity within a period determines the per unit price. In `graduated` tiering, pricing can
     /// change as the quantity grows.
     public var tiersMode: PriceTiersMode?
     /// Apply a transformation to the reported usage or set quantity before computing the amount billed.
     /// Cannot be combined with `tiers`.
-    @Expandable<TransformQuantity>
-    public var transformQuantity: String?
+    public var transformQuantity: TransformQuantity?
     /// One of `one_time` or `recurring` depending on whether the price is for a one-time purchase or a
     /// recurring (subscription) purchase.
     public var type: PriceType

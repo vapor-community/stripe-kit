@@ -10,52 +10,40 @@ import Foundation
 public struct SubscriptionsResourcePaymentMethodOptions: Codable, Sendable {
     /// This sub-hash contains details about the Canadian pre-authorized debit payment method options to
     /// pass to invoices created by the subscription.
-    @Expandable<InvoicePaymentMethodOptionsAcssDebit>
-    public var acssDebit: String?
+    public var acssDebit: InvoicePaymentMethodOptionsAcssDebit?
     /// This sub-hash contains details about the Bancontact payment method options to pass to invoices
     /// created by the subscription.
-    @Expandable<InvoicePaymentMethodOptionsBancontact>
-    public var bancontact: String?
+    public var bancontact: InvoicePaymentMethodOptionsBancontact?
     /// This sub-hash contains details about the Billie payment method options to pass to invoices created
     /// by the subscription.
-    @Expandable<SubscriptionPaymentMethodOptionsBillie>
-    public var billie: String?
+    public var billie: SubscriptionPaymentMethodOptionsBillie?
     /// This sub-hash contains details about the Blik payment method options to pass to invoices created by
     /// the subscription.
-    @Expandable<SubscriptionPaymentMethodOptionsBlik>
-    public var blik: String?
+    public var blik: SubscriptionPaymentMethodOptionsBlik?
     /// This sub-hash contains details about the Card payment method options to pass to invoices created by
     /// the subscription.
-    @Expandable<SubscriptionPaymentMethodOptionsCard>
-    public var card: String?
+    public var card: SubscriptionPaymentMethodOptionsCard?
     /// This sub-hash contains details about the Bank transfer payment method options to pass to invoices
     /// created by the subscription.
-    @Expandable<InvoicePaymentMethodOptionsCustomerBalance>
-    public var customerBalance: String?
+    public var customerBalance: InvoicePaymentMethodOptionsCustomerBalance?
     /// This sub-hash contains details about the Konbini payment method options to pass to invoices created
     /// by the subscription.
-    @Expandable<InvoicePaymentMethodOptionsKonbini>
-    public var konbini: String?
+    public var konbini: InvoicePaymentMethodOptionsKonbini?
     /// This sub-hash contains details about the PayTo payment method options to pass to invoices created by
     /// the subscription.
-    @Expandable<InvoicePaymentMethodOptionsPayto>
-    public var payto: String?
+    public var payto: InvoicePaymentMethodOptionsPayto?
     /// This sub-hash contains details about the Pix payment method options to pass to invoices created by
     /// the subscription.
-    @Expandable<SubscriptionPaymentMethodOptionsPix>
-    public var pix: String?
+    public var pix: SubscriptionPaymentMethodOptionsPix?
     /// This sub-hash contains details about the SEPA Direct Debit payment method options to pass to
     /// invoices created by the subscription.
-    @Expandable<SubscriptionPaymentMethodOptionsSepaDebit>
-    public var sepaDebit: String?
+    public var sepaDebit: SubscriptionPaymentMethodOptionsSepaDebit?
     /// This sub-hash contains details about the UPI payment method options to pass to invoices created by
     /// the subscription.
-    @Expandable<InvoicePaymentMethodOptionsUpi>
-    public var upi: String?
+    public var upi: InvoicePaymentMethodOptionsUpi?
     /// This sub-hash contains details about the ACH direct debit payment method options to pass to invoices
     /// created by the subscription.
-    @Expandable<InvoicePaymentMethodOptionsUsBankAccount>
-    public var usBankAccount: String?
+    public var usBankAccount: InvoicePaymentMethodOptionsUsBankAccount?
 
     public enum CodingKeys: String, CodingKey {
         case acssDebit = "acss_debit"

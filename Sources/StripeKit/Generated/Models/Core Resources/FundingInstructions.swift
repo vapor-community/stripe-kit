@@ -14,8 +14,7 @@ import Foundation
 /// `financial_addresses` field. Related guide: [Customer balance funding
 /// instructions](https://docs.stripe.com/payments/customer-balance/funding-instructions)
 public struct FundingInstructions: Codable, Sendable {
-    @Expandable<FundingInstructionsBankTransfer>
-    public var bankTransfer: String?
+    public var bankTransfer: FundingInstructionsBankTransfer
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String

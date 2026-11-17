@@ -11,8 +11,7 @@ import Foundation
 public struct ConfirmationTokensResourcePaymentMethodOptionsResourceCard: Codable, Sendable {
     /// The `cvc_update` Token collected from the Payment Element.
     public var cvcToken: String?
-    @Expandable<ConfirmationTokensResourcePaymentMethodOptionsResourceCardResourceInstallment>
-    public var installments: String?
+    public var installments: ConfirmationTokensResourcePaymentMethodOptionsResourceCardResourceInstallment?
 
     public enum CodingKeys: String, CodingKey {
         case cvcToken = "cvc_token"

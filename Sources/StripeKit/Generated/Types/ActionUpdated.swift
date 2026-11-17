@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an action sent to a Terminal reader is updated.
 public struct ActionUpdated: Codable, Sendable {
+    @Indirect
     public var object: Reader
 }
 

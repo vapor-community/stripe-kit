@@ -13,8 +13,7 @@ public struct PaymentIntentNextActionSwishHandleRedirectOrDisplayQrCode: Codable
     /// The url for mobile redirect based auth (for internal use only and not typically available in
     /// standard API requests).
     public var mobileAuthUrl: String
-    @Expandable<PaymentIntentNextActionSwishQrCode>
-    public var qrCode: String?
+    public var qrCode: PaymentIntentNextActionSwishQrCode
 
     public enum CodingKeys: String, CodingKey {
         case hostedInstructionsUrl = "hosted_instructions_url"

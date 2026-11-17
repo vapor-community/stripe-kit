@@ -10,8 +10,7 @@ import Foundation
 /// A Physical Bundle represents the bundle of physical items - card stock, carrier letter, and envelope
 /// - that is shipped to a cardholder when you create a physical card.
 public struct PhysicalBundle: Codable, Sendable {
-    @Expandable<IssuingPhysicalBundleFeatures>
-    public var features: String?
+    public var features: IssuingPhysicalBundleFeatures
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

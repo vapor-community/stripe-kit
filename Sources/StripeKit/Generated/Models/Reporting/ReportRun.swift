@@ -25,14 +25,13 @@ public struct ReportRun: Codable, Sendable {
     public var livemode: Bool
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: ReportRunObject
-    @Expandable<FinancialReportingFinanceReportRunRunParameters>
-    public var parameters: String?
+    public var parameters: FinancialReportingFinanceReportRunRunParameters
     /// The ID of the [report type](https://docs.stripe.com/reports/report-types) to run, such as
     /// `"balance.summary.1"`.
     public var reportType: String
     /// The file object representing the result of the report run (populated when `status=succeeded`).
-    @Expandable<File>
-    public var result: String?
+    @Indirect
+    public var result: File?
     /// Status of this report run. This will be `pending` when the run is initially created. When the run
     /// finishes, this will be set to `succeeded` and the `result` field will be populated. Rarely, we may
     /// encounter an error, at which point this will be set to `failed` and the `error` field will be

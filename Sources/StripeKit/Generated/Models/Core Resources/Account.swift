@@ -20,18 +20,14 @@ import Foundation
 /// start Connect Onboarding. Learn about the [differences between accounts](/connect/accounts).
 public struct Account: Codable, Sendable {
     /// Business information about the account.
-    @Expandable<AccountBusinessProfile>
-    public var businessProfile: String?
+    public var businessProfile: AccountBusinessProfile?
     /// The business type.
     public var businessType: AccountBusinessType?
-    @Expandable<AccountCapabilities>
-    public var capabilities: String?
+    public var capabilities: AccountCapabilities?
     /// Whether the account can process charges.
     public var chargesEnabled: Bool?
-    @Expandable<LegalEntityCompany>
-    public var company: String?
-    @Expandable<AccountUnificationAccountController>
-    public var controller: String?
+    public var company: LegalEntityCompany?
+    public var controller: AccountUnificationAccountController?
     /// The account's country.
     public var country: String?
     /// Time at which the account was connected. Measured in seconds since the Unix epoch.
@@ -49,15 +45,13 @@ public struct Account: Codable, Sendable {
     /// External accounts (bank accounts and debit cards) currently attached to this account. External
     /// accounts are only returned for requests where `controller[is_controller]` is true.
     public var externalAccounts: ExternalAccountList?
-    @Expandable<AccountFutureRequirements>
-    public var futureRequirements: String?
+    public var futureRequirements: AccountFutureRequirements?
     /// The groups associated with the account.
-    @Expandable<AccountGroupMembership>
-    public var groups: String?
+    public var groups: AccountGroupMembership?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<Person>
-    public var individual: String?
+    @Indirect
+    public var individual: Person?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
@@ -65,13 +59,10 @@ public struct Account: Codable, Sendable {
     public var object: AccountObject
     /// Whether the funds in this account can be paid out.
     public var payoutsEnabled: Bool?
-    @Expandable<AccountRequirements>
-    public var requirements: String?
+    public var requirements: AccountRequirements?
     /// Options for customizing how the account functions within Stripe.
-    @Expandable<AccountSettings>
-    public var settings: String?
-    @Expandable<AccountTosAcceptance>
-    public var tosAcceptance: String?
+    public var settings: AccountSettings?
+    public var tosAcceptance: AccountTosAcceptance?
     /// The Stripe account type. Can be `standard`, `express`, `custom`, or `none`.
     public var type: AccountType?
 

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct InvoicePaymentMethodOptionsUpi: Codable, Sendable {
-    @Expandable<InvoicePaymentMethodOptionsMandateOptionsUpi>
-    public var mandateOptions: String?
+    public var mandateOptions: InvoicePaymentMethodOptionsMandateOptionsUpi?
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"

@@ -11,6 +11,7 @@ import Foundation
 /// funds into the cash balance. If you enabled manual reconciliation, this webhook will fire whenever
 /// there are new funds into the cash balance.
 public struct FundsAvailable: Codable, Sendable {
+    @Indirect
     public var object: CashBalance
 }
 

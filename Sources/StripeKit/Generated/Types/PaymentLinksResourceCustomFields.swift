@@ -8,20 +8,16 @@
 import Foundation
 
 public struct PaymentLinksResourceCustomFields: Codable, Sendable {
-    @Expandable<PaymentLinksResourceCustomFieldsDropdown>
-    public var dropdown: String?
+    public var dropdown: PaymentLinksResourceCustomFieldsDropdown?
     /// String of your choice that your integration can use to reconcile this field. Must be unique to this
     /// field, alphanumeric, and up to 200 characters.
     public var key: String
-    @Expandable<PaymentLinksResourceCustomFieldsLabel>
-    public var label: String?
-    @Expandable<PaymentLinksResourceCustomFieldsNumeric>
-    public var numeric: String?
+    public var label: PaymentLinksResourceCustomFieldsLabel
+    public var numeric: PaymentLinksResourceCustomFieldsNumeric?
     /// Whether the customer is required to complete the field before completing the Checkout Session.
     /// Defaults to `false`.
     public var optional: Bool
-    @Expandable<PaymentLinksResourceCustomFieldsText>
-    public var text: String?
+    public var text: PaymentLinksResourceCustomFieldsText?
     /// The type of the field.
     public var type: PaymentLinksResourceCustomFieldsType
 }

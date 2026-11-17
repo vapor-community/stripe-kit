@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a payout attempt fails.
 public struct PayoutFailed: Codable, Sendable {
+    @Indirect
     public var object: Payout
 }
 

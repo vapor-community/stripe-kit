@@ -13,153 +13,92 @@ import Foundation
 /// Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment
 /// Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
 public struct PaymentMethod: Codable, Sendable {
-    @Expandable<PaymentMethodAcssDebit>
-    public var acssDebit: String?
-    @Expandable<PaymentMethodAffirm>
-    public var affirm: String?
-    @Expandable<PaymentMethodAfterpayClearpay>
-    public var afterpayClearpay: String?
-    @Expandable<PaymentFlowsPrivatePaymentMethodsAlipay>
-    public var alipay: String?
+    public var acssDebit: PaymentMethodAcssDebit?
+    public var affirm: PaymentMethodAffirm?
+    public var afterpayClearpay: PaymentMethodAfterpayClearpay?
+    public var alipay: PaymentFlowsPrivatePaymentMethodsAlipay?
     /// This field indicates whether this payment method can be shown again to its customer in a checkout
     /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
     /// method can be shown as a saved payment method in a checkout flow. The field defaults to
     /// “unspecified”.
     public var allowRedisplay: PaymentMethodAllowRedisplay?
-    @Expandable<PaymentMethodAlma>
-    public var alma: String?
-    @Expandable<PaymentMethodAmazonPay>
-    public var amazonPay: String?
-    @Expandable<PaymentMethodAuBecsDebit>
-    public var auBecsDebit: String?
-    @Expandable<PaymentMethodBacsDebit>
-    public var bacsDebit: String?
-    @Expandable<PaymentMethodBancontact>
-    public var bancontact: String?
-    @Expandable<PaymentMethodBillie>
-    public var billie: String?
-    @Expandable<BillingDetails>
-    public var billingDetails: String?
-    @Expandable<PaymentMethodBizum>
-    public var bizum: String?
-    @Expandable<PaymentMethodBlik>
-    public var blik: String?
-    @Expandable<PaymentMethodBoleto>
-    public var boleto: String?
-    @Expandable<PaymentMethodCard>
-    public var card: String?
-    @Expandable<PaymentMethodCardPresent>
-    public var cardPresent: String?
-    @Expandable<PaymentMethodCashapp>
-    public var cashapp: String?
+    public var alma: PaymentMethodAlma?
+    public var amazonPay: PaymentMethodAmazonPay?
+    public var auBecsDebit: PaymentMethodAuBecsDebit?
+    public var bacsDebit: PaymentMethodBacsDebit?
+    public var bancontact: PaymentMethodBancontact?
+    public var billie: PaymentMethodBillie?
+    public var billingDetails: BillingDetails
+    public var bizum: PaymentMethodBizum?
+    public var blik: PaymentMethodBlik?
+    public var boleto: PaymentMethodBoleto?
+    public var card: PaymentMethodCard?
+    public var cardPresent: PaymentMethodCardPresent?
+    public var cashapp: PaymentMethodCashapp?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
-    @Expandable<PaymentMethodCrypto>
-    public var crypto: String?
-    @Expandable<PaymentMethodCustom>
-    public var custom: String?
+    public var crypto: PaymentMethodCrypto?
+    public var custom: PaymentMethodCustom?
     /// The ID of the Customer to which this PaymentMethod is saved. This will not be set when the
     /// PaymentMethod has not been saved to a Customer.
     @Expandable<Customer>
     public var customer: String?
     public var customerAccount: String?
-    @Expandable<PaymentMethodCustomerBalance>
-    public var customerBalance: String?
-    @Expandable<PaymentMethodEps>
-    public var eps: String?
-    @Expandable<PaymentMethodFpx>
-    public var fpx: String?
-    @Expandable<PaymentMethodGiropay>
-    public var giropay: String?
-    @Expandable<PaymentMethodGrabpay>
-    public var grabpay: String?
+    public var customerBalance: PaymentMethodCustomerBalance?
+    public var eps: PaymentMethodEps?
+    public var fpx: PaymentMethodFpx?
+    public var giropay: PaymentMethodGiropay?
+    public var grabpay: PaymentMethodGrabpay?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<PaymentMethodIdeal>
-    public var ideal: String?
-    @Expandable<PaymentMethodInteracPresent>
-    public var interacPresent: String?
-    @Expandable<PaymentMethodKakaoPay>
-    public var kakaoPay: String?
-    @Expandable<PaymentMethodKlarna>
-    public var klarna: String?
-    @Expandable<PaymentMethodKonbini>
-    public var konbini: String?
-    @Expandable<PaymentMethodKrCard>
-    public var krCard: String?
-    @Expandable<PaymentMethodLink>
-    public var link: String?
+    public var ideal: PaymentMethodIdeal?
+    public var interacPresent: PaymentMethodInteracPresent?
+    public var kakaoPay: PaymentMethodKakaoPay?
+    public var klarna: PaymentMethodKlarna?
+    public var konbini: PaymentMethodKonbini?
+    public var krCard: PaymentMethodKrCard?
+    public var link: PaymentMethodLink?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
-    @Expandable<PaymentMethodMbWay>
-    public var mbWay: String?
+    public var mbWay: PaymentMethodMbWay?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    @Expandable<PaymentMethodMobilepay>
-    public var mobilepay: String?
-    @Expandable<PaymentMethodMultibanco>
-    public var multibanco: String?
-    @Expandable<PaymentMethodNaverPay>
-    public var naverPay: String?
-    @Expandable<PaymentMethodNzBankAccount>
-    public var nzBankAccount: String?
+    public var mobilepay: PaymentMethodMobilepay?
+    public var multibanco: PaymentMethodMultibanco?
+    public var naverPay: PaymentMethodNaverPay?
+    public var nzBankAccount: PaymentMethodNzBankAccount?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PaymentMethodObject
-    @Expandable<PaymentMethodOxxo>
-    public var oxxo: String?
-    @Expandable<PaymentMethodP24>
-    public var p24: String?
-    @Expandable<PaymentMethodPayByBank>
-    public var payByBank: String?
-    @Expandable<PaymentMethodPayco>
-    public var payco: String?
-    @Expandable<PaymentMethodPaynow>
-    public var paynow: String?
-    @Expandable<PaymentMethodPaypal>
-    public var paypal: String?
-    @Expandable<PaymentMethodPaypay>
-    public var paypay: String?
-    @Expandable<PaymentMethodPayto>
-    public var payto: String?
-    @Expandable<PaymentMethodPix>
-    public var pix: String?
-    @Expandable<PaymentMethodPromptpay>
-    public var promptpay: String?
-    @Expandable<RadarRadarOptions>
-    public var radarOptions: String?
-    @Expandable<PaymentMethodRevolutPay>
-    public var revolutPay: String?
-    @Expandable<PaymentMethodSamsungPay>
-    public var samsungPay: String?
-    @Expandable<PaymentMethodSatispay>
-    public var satispay: String?
-    @Expandable<PaymentMethodScalapay>
-    public var scalapay: String?
-    @Expandable<PaymentMethodSepaDebit>
-    public var sepaDebit: String?
-    @Expandable<PaymentMethodSequra>
-    public var sequra: String?
-    @Expandable<PaymentMethodSofort>
-    public var sofort: String?
-    @Expandable<PaymentMethodSunbit>
-    public var sunbit: String?
-    @Expandable<PaymentMethodSwish>
-    public var swish: String?
-    @Expandable<PaymentMethodTwint>
-    public var twint: String?
+    public var oxxo: PaymentMethodOxxo?
+    public var p24: PaymentMethodP24?
+    public var payByBank: PaymentMethodPayByBank?
+    public var payco: PaymentMethodPayco?
+    public var paynow: PaymentMethodPaynow?
+    public var paypal: PaymentMethodPaypal?
+    public var paypay: PaymentMethodPaypay?
+    public var payto: PaymentMethodPayto?
+    public var pix: PaymentMethodPix?
+    public var promptpay: PaymentMethodPromptpay?
+    public var radarOptions: RadarRadarOptions?
+    public var revolutPay: PaymentMethodRevolutPay?
+    public var samsungPay: PaymentMethodSamsungPay?
+    public var satispay: PaymentMethodSatispay?
+    public var scalapay: PaymentMethodScalapay?
+    public var sepaDebit: PaymentMethodSepaDebit?
+    public var sequra: PaymentMethodSequra?
+    public var sofort: PaymentMethodSofort?
+    public var sunbit: PaymentMethodSunbit?
+    public var swish: PaymentMethodSwish?
+    public var twint: PaymentMethodTwint?
     /// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name
     /// matching this value. It contains additional information specific to the PaymentMethod type.
     public var type: PaymentMethodType
-    @Expandable<PaymentMethodUpi>
-    public var upi: String?
-    @Expandable<PaymentMethodUsBankAccount>
-    public var usBankAccount: String?
-    @Expandable<PaymentMethodWechatPay>
-    public var wechatPay: String?
-    @Expandable<PaymentMethodZip>
-    public var zip: String?
+    public var upi: PaymentMethodUpi?
+    public var usBankAccount: PaymentMethodUsBankAccount?
+    public var wechatPay: PaymentMethodWechatPay?
+    public var zip: PaymentMethodZip?
 
     public enum CodingKeys: String, CodingKey {
         case acssDebit = "acss_debit"

@@ -11,12 +11,9 @@ import Foundation
 /// information about how to use it, see the [Terminal configurations
 /// documentation](https://docs.stripe.com/terminal/fleet/configurations-overview).
 public struct TerminalConfiguration: Codable, Sendable {
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var bbposWisepad3: String?
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var bbposWiseposE: String?
-    @Expandable<TerminalConfigurationConfigurationResourceCellularConfig>
-    public var cellular: String?
+    public var bbposWisepad3: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var bbposWiseposE: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var cellular: TerminalConfigurationConfigurationResourceCellularConfig?
     /// Unique identifier for the object.
     public var id: String
     /// Whether this Configuration is the default for your account
@@ -28,32 +25,19 @@ public struct TerminalConfiguration: Codable, Sendable {
     public var name: String?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: TerminalConfigurationObject
-    @Expandable<TerminalConfigurationConfigurationResourceOfflineConfig>
-    public var offline: String?
-    @Expandable<TerminalConfigurationConfigurationResourceReaderSecurityConfig>
-    public var readerSecurity: String?
-    @Expandable<TerminalConfigurationConfigurationResourceRebootWindow>
-    public var rebootWindow: String?
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var stripeS700: String?
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var stripeS710: String?
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var stripeT600: String?
-    @Expandable<TerminalConfigurationConfigurationResourceTipping>
-    public var tipping: String?
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var verifoneM425: String?
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var verifoneP400: String?
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var verifoneP630: String?
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var verifoneUx700: String?
-    @Expandable<TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig>
-    public var verifoneV660P: String?
-    @Expandable<TerminalConfigurationConfigurationResourceWifiConfig>
-    public var wifi: String?
+    public var offline: TerminalConfigurationConfigurationResourceOfflineConfig?
+    public var readerSecurity: TerminalConfigurationConfigurationResourceReaderSecurityConfig?
+    public var rebootWindow: TerminalConfigurationConfigurationResourceRebootWindow?
+    public var stripeS700: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var stripeS710: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var stripeT600: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var tipping: TerminalConfigurationConfigurationResourceTipping?
+    public var verifoneM425: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var verifoneP400: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var verifoneP630: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var verifoneUx700: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var verifoneV660P: TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig?
+    public var wifi: TerminalConfigurationConfigurationResourceWifiConfig?
 
     public enum CodingKeys: String, CodingKey {
         case bbposWisepad3 = "bbpos_wisepad3"

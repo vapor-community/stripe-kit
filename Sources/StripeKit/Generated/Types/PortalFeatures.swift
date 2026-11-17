@@ -8,18 +8,12 @@
 import Foundation
 
 public struct PortalFeatures: Codable, Sendable {
-    @Expandable<PortalCustomerUpdate>
-    public var customerUpdate: String?
-    @Expandable<PortalInvoiceList>
-    public var invoiceHistory: String?
-    @Expandable<PortalPaymentMethodUpdate>
-    public var paymentMethodUpdate: String?
-    @Expandable<PortalSubscriptionCancel>
-    public var subscriptionCancel: String?
-    @Expandable<PortalSubscriptionPause>
-    public var subscriptionPause: String?
-    @Expandable<PortalSubscriptionUpdate>
-    public var subscriptionUpdate: String?
+    public var customerUpdate: PortalCustomerUpdate
+    public var invoiceHistory: PortalInvoiceList
+    public var paymentMethodUpdate: PortalPaymentMethodUpdate
+    public var subscriptionCancel: PortalSubscriptionCancel
+    public var subscriptionPause: PortalSubscriptionPause
+    public var subscriptionUpdate: PortalSubscriptionUpdate
 
     public enum CodingKeys: String, CodingKey {
         case customerUpdate = "customer_update"

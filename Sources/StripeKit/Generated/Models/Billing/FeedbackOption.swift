@@ -23,8 +23,7 @@ public struct FeedbackOption: Codable, Sendable {
     public var object: FeedbackOptionObject
     /// The feedback option's status.
     public var status: FeedbackOptionStatus
-    @Expandable<FeedbackOptionsStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: FeedbackOptionsStatusTransitions
 
     public enum CodingKeys: String, CodingKey {
         case description

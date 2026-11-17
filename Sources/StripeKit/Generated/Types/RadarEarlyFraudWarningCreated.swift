@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an early fraud warning is created.
 public struct RadarEarlyFraudWarningCreated: Codable, Sendable {
+    @Indirect
     public var object: EarlyFraudWarning
 }
 

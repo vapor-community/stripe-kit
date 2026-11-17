@@ -8,8 +8,7 @@
 import Foundation
 
 public struct SubscriptionPaymentMethodOptionsCard: Codable, Sendable {
-    @Expandable<InvoiceMandateOptionsCard>
-    public var mandateOptions: String?
+    public var mandateOptions: InvoiceMandateOptionsCard?
     /// Selected network to process this Subscription on. Depends on the available networks of the card
     /// attached to the Subscription. Can be only set confirm-time.
     public var network: SubscriptionPaymentMethodOptionsCardNetwork?

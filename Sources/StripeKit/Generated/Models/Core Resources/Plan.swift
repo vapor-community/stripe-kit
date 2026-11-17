@@ -61,16 +61,14 @@ public struct Plan: Codable, Sendable {
     public var product: String?
     /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
     /// `tiered`. See also the documentation for `billing_scheme`.
-    @ExpandableCollection<PlanTier>
-    public var tiers: [String]?
+    public var tiers: [PlanTier]?
     /// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the
     /// maximum quantity within a period determines the per unit price. In `graduated` tiering, pricing can
     /// change as the quantity grows.
     public var tiersMode: PlanTiersMode?
     /// Apply a transformation to the reported usage or set quantity before computing the amount billed.
     /// Cannot be combined with `tiers`.
-    @Expandable<TransformUsage>
-    public var transformUsage: String?
+    public var transformUsage: TransformUsage?
     /// Default number of trial days when subscribing a customer to this plan using
     /// [`trial_from_plan=true`](https://docs.stripe.com/api#create_subscription-trial_from_plan).
     public var trialPeriodDays: Int?

@@ -67,8 +67,7 @@ public struct PaymentMethodDetailsInteracPresent: Codable, Sendable {
     /// ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
     public var reader: String?
     /// A collection of fields required to be displayed on receipts. Only required for EMV transactions.
-    @Expandable<PaymentMethodDetailsInteracPresentReceipt>
-    public var receipt: String?
+    public var receipt: PaymentMethodDetailsInteracPresentReceipt?
 
     public enum CodingKeys: String, CodingKey {
         case brand

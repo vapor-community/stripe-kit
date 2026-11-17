@@ -194,15 +194,9 @@ struct SpecParser {
             
             let domain = StripeDomain.from(resourceId: resourceId)
             let required = schema.required ?? []
-            let expandable = schema.xExpandableFields ?? []
             
             let properties = (schema.properties ?? [:]).map { name, prop in
-                resolveProperty(
-                    name: name,
-                    property: prop,
-                    isRequired: required.contains(name),
-                    isExpandable: expandable.contains(name)
-                )
+                resolveProperty(name: name, property: prop, isRequired: required.contains(name))
             }.sorted { $0.name < $1.name }
             
             let anyOfVariants: [String]? = schema.anyOf.map { refs in
@@ -216,7 +210,6 @@ struct SpecParser {
                 swiftTypeName: schemaNameToSwiftType(resourceId),
                 description: schema.description ?? "",
                 properties: properties,
-                expandableFields: Set(expandable),
                 requiredFields: Set(required),
                 anyOfVariants: anyOfVariants
             ))
@@ -244,15 +237,9 @@ struct SpecParser {
             }
             
             let required = schema.required ?? []
-            let expandable = schema.xExpandableFields ?? []
             
             let properties = (schema.properties ?? [:]).map { name, prop in
-                resolveProperty(
-                    name: name,
-                    property: prop,
-                    isRequired: required.contains(name),
-                    isExpandable: expandable.contains(name)
-                )
+                resolveProperty(name: name, property: prop, isRequired: required.contains(name))
             }.sorted { $0.name < $1.name }
             
             resources.append(StripeResource(
@@ -262,7 +249,6 @@ struct SpecParser {
                 swiftTypeName: schemaNameToSwiftType(schemaName),
                 description: schema.description ?? "",
                 properties: properties,
-                expandableFields: Set(expandable),
                 requiredFields: Set(required),
                 // Polymorphic deleted objects (deleted_external_account → deleted_bank_account | deleted_card)
                 anyOfVariants: isDeleted ? schema.anyOf.map { refs in
@@ -279,14 +265,9 @@ struct SpecParser {
     private func resolveProperty(
         name: String,
         property: PropertyObject,
-        isRequired: Bool,
-        isExpandable: Bool
+        isRequired: Bool
     ) -> StripeProperty {
-        let type = resolveType(
-            property: property, 
-            fieldName: name,
-            isExpandable: isExpandable
-        )
+        let type = resolveType(property: property, fieldName: name)
         
         return StripeProperty(
             name: name,
@@ -297,42 +278,29 @@ struct SpecParser {
             type: type,
             isRequired: isRequired,
             isNullable: property.nullable ?? false,
-            isExpandable: isExpandable,
             enumCases: property.enum
         )
     }
     
-    private func resolveType(
-        property: PropertyObject,
-        fieldName: String,
-        isExpandable: Bool
-    ) -> StripePropertyType {
-        
-        // Handle anyOf — common pattern for expandable fields
+    private func resolveType(property: PropertyObject, fieldName: String) -> StripePropertyType {
+        // An object's ID, or the object itself when expanded: `@Expandable` / `@ExpandableCollection`.
+        // Only fields with `x-expansionResources` are; the parent's `x-expandableFields` also
+        // lists plain nested objects (account.business_profile), which are typed as themselves.
+        if let resources = property.expansionResources {
+            return .expandable(wrappedType: expandedType(resources, fieldName: fieldName))
+        }
+        if property.type == "array", let resources = property.items?.expansionResources {
+            return .expandableCollection(wrappedType: expandedType(resources, fieldName: fieldName))
+        }
+
         if let anyOf = property.anyOf, !anyOf.isEmpty {
-            return resolveAnyOf(
-                anyOf, 
-                fieldName: fieldName, 
-                isExpandable: isExpandable
-            )
+            return resolveAnyOf(anyOf, fieldName: fieldName)
         }
-        
-        // Handle oneOf
         if let oneOf = property.oneOf, !oneOf.isEmpty {
-            return resolveAnyOf(
-                oneOf,
-                fieldName: fieldName, 
-                isExpandable: isExpandable
-            )
+            return resolveAnyOf(oneOf, fieldName: fieldName)
         }
-        
-        // Handle $ref
         if let ref = property.ref {
-            let typeName = refToSchemaName(ref)
-            if isExpandable {
-                return .expandable(wrappedType: schemaNameToSwiftType(typeName))
-            }
-            return .object(name: schemaNameToSwiftType(typeName))
+            return .object(name: schemaNameToSwiftType(refToSchemaName(ref)))
         }
         
         // Handle by type
@@ -350,28 +318,12 @@ struct SpecParser {
             return .boolean
         case "array":
             if let items = property.items {
-                let elementType = resolveType(
-                    property: items,
-                    fieldName: fieldName,
-                    isExpandable: false
-                )
-                if isExpandable {
-                    // Array of expandable references
-                    if case .object(let name) = elementType {
-                        return .expandableCollection(wrappedType: name)
-                    }
-                }
-                return .array(element: elementType)
+                return .array(element: resolveType(property: items, fieldName: fieldName))
             }
             return .array(element: .any)
         case "object":
             if let additionalProperties = property.additionalProperties {
-                let valueType = resolveType(
-                    property: additionalProperties,
-                    fieldName: fieldName,
-                    isExpandable: false
-                )
-                return .dictionary(value: valueType)
+                return .dictionary(value: resolveType(property: additionalProperties, fieldName: fieldName))
             }
             // Detect Stripe list sub-objects: inline objects with {object, data, has_more, url}
             // where data is an array of items. These should map to "ElementTypeList".
@@ -404,32 +356,25 @@ struct SpecParser {
         }
     }
     
-    private func resolveAnyOf(
-        _ variants: [PropertyObject],
-        fieldName: String,
-        isExpandable: Bool
-    ) -> StripePropertyType {
-        // Filter out string-only variants (typically the ID string for expandables)
+    /// The Swift type an expandable field expands to: its one live resource. Deleted variants
+    /// are left out, so `customer` (customer | deleted_customer) expands to `Customer`.
+    private func expandedType(_ resources: [PropertyObject], fieldName: String) -> String {
+        let refs = resources.compactMap(\.ref).map(refToSchemaName)
+        let live = refs.filter { !$0.starts(with: SpecParser.deletedPrefix) }
+        precondition(
+            live.count == 1,
+            "Expandable field `\(fieldName)` expands to \(refs.joined(separator: " | ")); expected exactly one non-deleted type"
+        )
+        return schemaNameToSwiftType(live[0])
+    }
+
+    private func resolveAnyOf(_ variants: [PropertyObject], fieldName: String) -> StripePropertyType {
+        // Filter out string-only variants, then try to pick the most specific type
         let nonStringVariants = variants.filter { $0.type != "string" }
         let refVariants = variants.compactMap { $0.ref }.map(refToSchemaName)
         
-        if isExpandable, !refVariants.isEmpty {
-            // Expandable fields expand to the live object only (`customer`, not `deleted_customer`)
-            let live = refVariants.filter { !$0.starts(with: SpecParser.deletedPrefix) }
-            precondition(
-                live.count <= 1,
-                "Expandable field `\(fieldName)` can expand to several types (\(live.joined(separator: ", "))), which isn't supported"
-            )
-            return .expandable(wrappedType: schemaNameToSwiftType(live.first ?? refVariants[0]))
-        }
-        
-        // Non-expandable anyOf — try to pick the most specific type
         if nonStringVariants.count == 1, let single = nonStringVariants.first {
-            return resolveType(
-                property: single,
-                fieldName: fieldName,
-                isExpandable: false
-            )
+            return resolveType(property: single, fieldName: fieldName)
         }
         
         if let ref = refVariants.first, refVariants.count == 1 {

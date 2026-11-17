@@ -9,8 +9,7 @@ import Foundation
 
 public struct PaymentFlowsInstallmentOptions: Codable, Sendable {
     public var enabled: Bool
-    @Expandable<PaymentMethodDetailsCardInstallmentsPlan>
-    public var plan: String?
+    public var plan: PaymentMethodDetailsCardInstallmentsPlan?
 }
 
 public struct PaymentFlowsInstallmentOptionsList: Codable, Sendable {

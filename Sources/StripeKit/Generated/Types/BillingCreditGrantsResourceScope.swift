@@ -15,8 +15,7 @@ public struct BillingCreditGrantsResourceScope: Codable, Sendable {
     /// The prices that credit grants can apply to. We currently only support `metered` prices. This refers
     /// to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
     /// Cannot be used in combination with `price_type`.
-    @ExpandableCollection<BillingCreditGrantsResourceApplicablePrice>
-    public var prices: [String]?
+    public var prices: [BillingCreditGrantsResourceApplicablePrice]?
 
     public enum CodingKeys: String, CodingKey {
         case priceType = "price_type"

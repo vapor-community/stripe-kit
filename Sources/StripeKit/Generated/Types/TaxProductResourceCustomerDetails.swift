@@ -9,15 +9,13 @@ import Foundation
 
 public struct TaxProductResourceCustomerDetails: Codable, Sendable {
     /// The customer's postal address (for example, home or business location).
-    @Expandable<TaxProductResourcePostalAddress>
-    public var address: String?
+    public var address: TaxProductResourcePostalAddress?
     /// The type of customer address provided.
     public var addressSource: TaxProductResourceCustomerDetailsAddressSource?
     /// The customer's IP address (IPv4 or IPv6).
     public var ipAddress: String?
     /// The customer's tax IDs (for example, EU VAT numbers).
-    @ExpandableCollection<TaxProductResourceCustomerDetailsResourceTaxId>
-    public var taxIds: [String]?
+    public var taxIds: [TaxProductResourceCustomerDetailsResourceTaxId]
     /// The taxability override used for taxation.
     public var taxabilityOverride: TaxProductResourceCustomerDetailsTaxabilityOverride
 

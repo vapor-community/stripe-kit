@@ -15,11 +15,10 @@ public struct ScheduledQueryRun: Codable, Sendable {
     public var created: Int
     /// When the query was run, Sigma contained a snapshot of your Stripe data at this time.
     public var dataLoadTime: Int
-    @Expandable<SigmaScheduledQueryRunError>
-    public var error: String?
+    public var error: SigmaScheduledQueryRunError?
     /// The file object representing the results of the query.
-    @Expandable<File>
-    public var file: String?
+    @Indirect
+    public var file: File?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

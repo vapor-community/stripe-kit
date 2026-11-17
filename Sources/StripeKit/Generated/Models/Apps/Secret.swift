@@ -34,8 +34,7 @@ public struct Secret: Codable, Sendable {
     public var object: SecretObject
     /// The plaintext secret value to be stored.
     public var payload: String?
-    @Expandable<SecretServiceResourceScope>
-    public var scope: String?
+    public var scope: SecretServiceResourceScope
 
     public enum CodingKeys: String, CodingKey {
         case created

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an invoice is voided.
 public struct InvoiceVoided: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

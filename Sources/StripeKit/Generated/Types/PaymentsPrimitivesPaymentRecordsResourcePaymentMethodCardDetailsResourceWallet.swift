@@ -8,14 +8,11 @@
 import Foundation
 
 public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceWallet: Codable, Sendable {
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceWalletResourceApplePay>
-    public var applePay: String?
+    public var applePay: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceWalletResourceApplePay?
     /// (For tokenized numbers only.) The last four digits of the device account number.
     public var dynamicLast4: String?
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceWalletResourceGooglePay>
-    public var googlePay: String?
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceWalletResourceLink>
-    public var link: String?
+    public var googlePay: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceWalletResourceGooglePay?
+    public var link: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceWalletResourceLink?
     /// The type of the card wallet, one of `apple_pay`, `google_pay`, or `link`. An additional hash is
     /// included on the Wallet subhash with a name matching this value. It contains additional information
     /// specific to the card wallet type.

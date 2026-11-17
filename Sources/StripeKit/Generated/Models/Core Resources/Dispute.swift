@@ -16,8 +16,7 @@ public struct Dispute: Codable, Sendable {
     public var amount: Int
     /// List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your
     /// Stripe account as a result of this dispute.
-    @ExpandableCollection<BalanceTransaction>
-    public var balanceTransactions: [String]?
+    public var balanceTransactions: [BalanceTransaction]
     /// ID of the charge that's disputed.
     @Expandable<Charge>
     public var charge: String?
@@ -28,10 +27,8 @@ public struct Dispute: Codable, Sendable {
     public var currency: String
     /// List of eligibility types that are included in `enhanced_evidence`.
     public var enhancedEligibilityTypes: [String]
-    @Expandable<DisputeEvidence>
-    public var evidence: String?
-    @Expandable<DisputeEvidenceDetails>
-    public var evidenceDetails: String?
+    public var evidence: DisputeEvidence
+    public var evidenceDetails: DisputeEvidenceDetails
     /// Unique identifier for the object.
     public var id: String
     /// Intended submission method for the dispute.
@@ -52,8 +49,7 @@ public struct Dispute: Codable, Sendable {
     /// ID of the PaymentIntent that's disputed.
     @Expandable<PaymentIntent>
     public var paymentIntent: String?
-    @Expandable<DisputePaymentMethodDetails>
-    public var paymentMethodDetails: String?
+    public var paymentMethodDetails: DisputePaymentMethodDetails?
     /// Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`,
     /// `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`,
     /// `general`, `incorrect_account_details`, `insufficient_funds`, `noncompliant`,

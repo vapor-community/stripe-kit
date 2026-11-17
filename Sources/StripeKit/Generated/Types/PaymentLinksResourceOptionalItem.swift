@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentLinksResourceOptionalItem: Codable, Sendable {
-    @Expandable<PaymentLinksResourceOptionalItemAdjustableQuantity>
-    public var adjustableQuantity: String?
+    public var adjustableQuantity: PaymentLinksResourceOptionalItemAdjustableQuantity?
     public var price: String
     public var quantity: Int
 

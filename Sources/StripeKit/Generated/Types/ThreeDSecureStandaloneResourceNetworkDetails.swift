@@ -9,8 +9,7 @@ import Foundation
 
 /// Contains details specific to the individual network.
 public struct ThreeDSecureStandaloneResourceNetworkDetails: Codable, Sendable {
-    @Expandable<ThreeDSecureStandaloneResourceCartesBancaires>
-    public var cartesBancaires: String?
+    public var cartesBancaires: ThreeDSecureStandaloneResourceCartesBancaires?
 
     public enum CodingKeys: String, CodingKey {
         case cartesBancaires = "cartes_bancaires"

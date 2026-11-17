@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a charge is refunded, including partial refunds. Listen to `refund.created` for
 /// information about the refund.
 public struct ChargeRefunded: Codable, Sendable {
+    @Indirect
     public var object: Charge
 }
 

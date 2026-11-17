@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a dispute is updated.
 public struct IssuingDisputeUpdated: Codable, Sendable {
+    @Indirect
     public var object: IssuingDispute
 }
 

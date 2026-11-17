@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a failed charge attempt occurs.
 public struct ChargeFailed: Codable, Sendable {
+    @Indirect
     public var object: Charge
 }
 

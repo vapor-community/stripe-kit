@@ -37,11 +37,9 @@ public struct OutboundPayment: Codable, Sendable {
     /// OutboundPayment was created using `destination_payment_method_data`.
     public var destinationPaymentMethod: String?
     /// Details about the PaymentMethod for an OutboundPayment.
-    @Expandable<OutboundPaymentsPaymentMethodDetails>
-    public var destinationPaymentMethodDetails: String?
+    public var destinationPaymentMethodDetails: OutboundPaymentsPaymentMethodDetails?
     /// Details about the end user.
-    @Expandable<TreasuryOutboundPaymentsResourceOutboundPaymentResourceEndUserDetails>
-    public var endUserDetails: String?
+    public var endUserDetails: TreasuryOutboundPaymentsResourceOutboundPaymentResourceEndUserDetails?
     /// The date when funds are expected to arrive in the destination account.
     public var expectedArrivalDate: Int
     /// The FinancialAccount that funds were pulled from.
@@ -61,8 +59,7 @@ public struct OutboundPayment: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: OutboundPaymentObject
     /// Details about a returned OutboundPayment. Only set when the status is `returned`.
-    @Expandable<TreasuryOutboundPaymentsResourceReturnedStatus>
-    public var returnedDetails: String?
+    public var returnedDetails: TreasuryOutboundPaymentsResourceReturnedStatus?
     /// The description that appears on the receiving end for an OutboundPayment (for example, bank
     /// statement for external bank transfer).
     public var statementDescriptor: String
@@ -72,11 +69,9 @@ public struct OutboundPayment: Codable, Sendable {
     /// `failed` or `canceled`. If an OutboundPayment fails to arrive at its destination, its status will
     /// change to `returned`.
     public var status: OutboundPaymentStatus
-    @Expandable<TreasuryOutboundPaymentsResourceOutboundPaymentResourceStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: TreasuryOutboundPaymentsResourceOutboundPaymentResourceStatusTransitions
     /// Details about network-specific tracking information if available.
-    @Expandable<TreasuryOutboundPaymentsResourceOutboundPaymentResourceTrackingDetails>
-    public var trackingDetails: String?
+    public var trackingDetails: TreasuryOutboundPaymentsResourceOutboundPaymentResourceTrackingDetails?
     /// The Transaction associated with this object.
     @Expandable<TreasuryTransaction>
     public var transaction: String?

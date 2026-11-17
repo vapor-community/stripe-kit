@@ -9,16 +9,14 @@ import Foundation
 
 /// SWIFT Records contain U.S. bank account details per the SWIFT format.
 public struct FundingInstructionsBankTransferSwiftRecord: Codable, Sendable {
-    @Expandable<Address>
-    public var accountHolderAddress: String?
+    public var accountHolderAddress: Address
     /// The account holder name
     public var accountHolderName: String
     /// The account number
     public var accountNumber: String
     /// The account type
     public var accountType: String
-    @Expandable<Address>
-    public var bankAddress: String?
+    public var bankAddress: Address
     /// The bank name
     public var bankName: String
     /// The SWIFT code

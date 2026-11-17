@@ -9,8 +9,7 @@ import Foundation
 
 /// Describes changes to the subscription's status.
 public struct SubscriptionsResourceStatusDetailsPublic: Codable, Sendable {
-    @Expandable<SubscriptionsResourcePausedStatusDetailsPublic>
-    public var paused: String?
+    public var paused: SubscriptionsResourcePausedStatusDetailsPublic
 }
 
 public struct SubscriptionsResourceStatusDetailsPublicList: Codable, Sendable {

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an invoice email is sent out.
 public struct Sent: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

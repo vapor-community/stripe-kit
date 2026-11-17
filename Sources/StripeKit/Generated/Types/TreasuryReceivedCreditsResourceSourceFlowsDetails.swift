@@ -8,14 +8,14 @@
 import Foundation
 
 public struct TreasuryReceivedCreditsResourceSourceFlowsDetails: Codable, Sendable {
-    @Expandable<CreditReversal>
-    public var creditReversal: String?
-    @Expandable<OutboundPayment>
-    public var outboundPayment: String?
-    @Expandable<OutboundTransfer>
-    public var outboundTransfer: String?
-    @Expandable<Payout>
-    public var payout: String?
+    @Indirect
+    public var creditReversal: CreditReversal?
+    @Indirect
+    public var outboundPayment: OutboundPayment?
+    @Indirect
+    public var outboundTransfer: OutboundTransfer?
+    @Indirect
+    public var payout: Payout?
     /// The type of the source flow that originated the ReceivedCredit.
     public var type: TreasuryReceivedCreditsResourceSourceFlowsDetailsType
 

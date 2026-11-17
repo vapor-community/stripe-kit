@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a new Financial Connections account is created.
 public struct FinancialConnectionsAccountCreated: Codable, Sendable {
+    @Indirect
     public var object: FinancialConnectionsAccount
 }
 

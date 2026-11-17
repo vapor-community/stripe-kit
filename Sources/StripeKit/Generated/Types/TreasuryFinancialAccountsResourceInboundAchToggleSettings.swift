@@ -14,8 +14,7 @@ public struct TreasuryFinancialAccountsResourceInboundAchToggleSettings: Codable
     /// Whether the Feature is operational.
     public var status: TreasuryFinancialAccountsResourceInboundAchToggleSettingsStatus
     /// Additional details; includes at least one entry when the status is not `active`.
-    @ExpandableCollection<TreasuryFinancialAccountsResourceTogglesSettingStatusDetails>
-    public var statusDetails: [String]?
+    public var statusDetails: [TreasuryFinancialAccountsResourceTogglesSettingStatusDetails]
 
     public enum CodingKeys: String, CodingKey {
         case requested

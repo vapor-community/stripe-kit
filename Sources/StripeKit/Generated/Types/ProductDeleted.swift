@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a product is deleted.
 public struct ProductDeleted: Codable, Sendable {
+    @Indirect
     public var object: Product
 }
 

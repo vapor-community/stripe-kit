@@ -8,12 +8,10 @@
 import Foundation
 
 public struct BillingCreditGrantsResourceBalanceCredit: Codable, Sendable {
-    @Expandable<BillingCreditGrantsResourceAmount>
-    public var amount: String?
+    public var amount: BillingCreditGrantsResourceAmount
     /// Details of the invoice to which the reinstated credits were originally applied. Only present if
     /// `type` is `credits_application_invoice_voided`.
-    @Expandable<BillingCreditGrantsResourceBalanceCreditsApplicationInvoiceVoided>
-    public var creditsApplicationInvoiceVoided: String?
+    public var creditsApplicationInvoiceVoided: BillingCreditGrantsResourceBalanceCreditsApplicationInvoiceVoided?
     /// The type of credit transaction.
     public var type: BillingCreditGrantsResourceBalanceCreditType
 

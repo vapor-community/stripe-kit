@@ -12,8 +12,7 @@ public struct ThreeDSecureStandaloneResourceRecurring: Codable, Sendable {
     /// A non-negative integer representing the amount in the [smallest currency
     /// unit](/currencies#zero-decimal).
     public var amount: Int?
-    @Expandable<ThreeDSecureStandaloneResourceExpiry>
-    public var expiry: String?
+    public var expiry: ThreeDSecureStandaloneResourceExpiry
     /// The unit of time for `interval_count`.
     public var interval: ThreeDSecureStandaloneResourceRecurringInterval
     /// The minimum number of time intervals between authorizations.

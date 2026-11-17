@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a balance settings status or property has changed.
 public struct BalanceSettingsUpdated: Codable, Sendable {
+    @Indirect
     public var object: BalanceSettings
 }
 

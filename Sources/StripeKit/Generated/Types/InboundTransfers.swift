@@ -8,12 +8,10 @@
 import Foundation
 
 public struct InboundTransfers: Codable, Sendable {
-    @Expandable<TreasurySharedResourceBillingDetails>
-    public var billingDetails: String?
+    public var billingDetails: TreasurySharedResourceBillingDetails
     /// The type of the payment method used in the InboundTransfer.
     public var type: InboundTransfersType
-    @Expandable<InboundTransfersPaymentMethodDetailsUsBankAccount>
-    public var usBankAccount: String?
+    public var usBankAccount: InboundTransfersPaymentMethodDetailsUsBankAccount?
 
     public enum CodingKeys: String, CodingKey {
         case billingDetails = "billing_details"

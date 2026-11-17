@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a credit note is updated.
 public struct CreditNoteUpdated: Codable, Sendable {
+    @Indirect
     public var object: CreditNote
 }
 

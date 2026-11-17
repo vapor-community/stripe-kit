@@ -11,6 +11,7 @@ import Foundation
 /// `status=paused`, not when [payment collection](https://docs.stripe.com/billing/subscriptions/pause)
 /// is paused.
 public struct Paused: Codable, Sendable {
+    @Indirect
     public var object: Subscription
 }
 

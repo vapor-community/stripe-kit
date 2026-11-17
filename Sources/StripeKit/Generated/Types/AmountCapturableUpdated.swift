@@ -12,6 +12,7 @@ import Foundation
 /// an `amount_to_capture` value up to the specified amount. [Learn more about capturing
 /// PaymentIntents.](https://docs.stripe.com/api/payment_intents/capture)
 public struct AmountCapturableUpdated: Codable, Sendable {
+    @Indirect
     public var object: PaymentIntent
 }
 

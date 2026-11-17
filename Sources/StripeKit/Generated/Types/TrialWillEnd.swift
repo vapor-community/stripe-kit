@@ -14,6 +14,7 @@ import Foundation
 /// payment-reminder communications from this webhook, check the subscription status and latest invoice
 /// to determine whether payment has already been collected.
 public struct TrialWillEnd: Codable, Sendable {
+    @Indirect
     public var object: Subscription
 }
 

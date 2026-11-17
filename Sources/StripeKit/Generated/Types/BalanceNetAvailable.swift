@@ -12,8 +12,7 @@ public struct BalanceNetAvailable: Codable, Sendable {
     public var amount: Int
     /// ID of the external account for this net balance (not expandable).
     public var destination: String
-    @Expandable<BalanceAmountBySourceType>
-    public var sourceTypes: String?
+    public var sourceTypes: BalanceAmountBySourceType?
 
     public enum CodingKeys: String, CodingKey {
         case amount

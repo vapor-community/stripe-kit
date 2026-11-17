@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentMethodOptionsCustomerBalance: Codable, Sendable {
-    @Expandable<PaymentMethodOptionsCustomerBalanceBankTransfer>
-    public var bankTransfer: String?
+    public var bankTransfer: PaymentMethodOptionsCustomerBalanceBankTransfer?
     /// The funding method type to be used when there are not enough funds in the customer balance.
     /// Permitted values include: `bank_transfer`.
     public var fundingType: PaymentMethodOptionsCustomerBalanceFundingType?

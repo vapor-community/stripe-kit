@@ -11,14 +11,12 @@ import Foundation
 /// authorizing the payment with any PSP. Related guide: [Standalone
 /// 3DS](/payments/3d-secure/standalone-3d-secure)
 public struct Authentication: Codable, Sendable {
-    @Expandable<ThreeDSecureStandaloneResourceAcquirerDetails>
-    public var acquirerDetails: String?
+    public var acquirerDetails: ThreeDSecureStandaloneResourceAcquirerDetails?
     /// The amount for this 3DS Authentication.
     public var amount: Int?
     /// The URL for presenting a challenge to your cardholder, present if status is requires_challenge.
     public var challengeUrl: String?
-    @Expandable<ThreeDSecureStandaloneResourceChannel>
-    public var channel: String?
+    public var channel: ThreeDSecureStandaloneResourceChannel
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -29,10 +27,8 @@ public struct Authentication: Codable, Sendable {
     /// The URL for performing issuer fingerprinting, present if fingerprinting is supported for the given
     /// payment method.
     public var fingerprintingUrl: String?
-    @Expandable<ThreeDSecureStandaloneResourceFlowPreference>
-    public var flowPreference: String?
-    @Expandable<ThreeDSecureStandaloneResourceFutureUsage>
-    public var futureUsage: String?
+    public var flowPreference: ThreeDSecureStandaloneResourceFlowPreference?
+    public var futureUsage: ThreeDSecureStandaloneResourceFutureUsage?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -47,15 +43,13 @@ public struct Authentication: Codable, Sendable {
     public var object: AuthenticationObject
     /// The outcome of this 3DS Authentication.
     public var outcome: AuthenticationOutcome?
-    @Expandable<ThreeDSecureStandaloneResourceOutcomeDetails>
-    public var outcomeDetails: String?
+    public var outcomeDetails: ThreeDSecureStandaloneResourceOutcomeDetails?
     /// ID of the payment method (a PaymentMethod object) to attach to this 3DS Authentication.
     @Expandable<PaymentMethod>
     public var paymentMethod: String?
     /// The reason for invoking this 3DS Authentication.
     public var reason: AuthenticationReason?
-    @Expandable<ThreeDSecureStandaloneResourceShippingAddress>
-    public var shippingAddress: String?
+    public var shippingAddress: ThreeDSecureStandaloneResourceShippingAddress?
     /// Status of this Authentication.
     public var status: AuthenticationStatus
 

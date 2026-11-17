@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever the arrival date on an OutboundTransfer updates.
 public struct TreasuryOutboundTransferExpectedArrivalDateUpdated: Codable, Sendable {
+    @Indirect
     public var object: OutboundTransfer
 }
 

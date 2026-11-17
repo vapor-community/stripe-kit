@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a DebitReversal is completed.
 public struct TreasuryDebitReversalCompleted: Codable, Sendable {
+    @Indirect
     public var object: DebitReversal
 }
 

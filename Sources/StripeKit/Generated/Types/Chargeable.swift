@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a source transitions to chargeable.
 public struct Chargeable: Codable, Sendable {
+    @Indirect
     public var object: Source
 }
 

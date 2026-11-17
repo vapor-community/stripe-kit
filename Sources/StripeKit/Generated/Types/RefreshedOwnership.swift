@@ -10,6 +10,7 @@ import Foundation
 /// Occurs when an Account’s `ownership_refresh` status transitions from `pending` to either `succeeded`
 /// or `failed`.
 public struct RefreshedOwnership: Codable, Sendable {
+    @Indirect
     public var object: FinancialConnectionsAccount
 }
 

@@ -9,8 +9,7 @@ import Foundation
 
 public struct SourceOwner: Codable, Sendable {
     /// Owner's address.
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address?
     /// Owner's email address.
     public var email: String?
     /// Owner's full name.
@@ -19,8 +18,7 @@ public struct SourceOwner: Codable, Sendable {
     public var phone: String?
     /// Verified owner's address. Verified values are verified or provided by the payment method directly
     /// (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
-    @Expandable<Address>
-    public var verifiedAddress: String?
+    public var verifiedAddress: Address?
     /// Verified owner's email address. Verified values are verified or provided by the payment method
     /// directly (and if supported) at the time of authorization or settlement. They cannot be set or
     /// mutated.

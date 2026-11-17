@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a customer is deleted.
 public struct CustomerDeleted: Codable, Sendable {
+    @Indirect
     public var object: Customer
 }
 

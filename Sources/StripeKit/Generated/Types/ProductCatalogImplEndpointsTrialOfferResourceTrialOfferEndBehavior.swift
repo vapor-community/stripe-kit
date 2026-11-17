@@ -8,8 +8,7 @@
 import Foundation
 
 public struct ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehavior: Codable, Sendable {
-    @Expandable<ProductCatalogImplEndpointsTrialOfferResourceTransition>
-    public var transition: String?
+    public var transition: ProductCatalogImplEndpointsTrialOfferResourceTransition?
     /// The type of behavior when the trial offer ends.
     public var type: ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehaviorType
 }

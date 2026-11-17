@@ -11,8 +11,7 @@ public struct PaymentPagesCheckoutSessionCustomFieldsDropdown: Codable, Sendable
     /// The value that pre-fills on the payment page.
     public var defaultValue: String?
     /// The options available for the customer to select. Up to 200 options allowed.
-    @ExpandableCollection<PaymentPagesCheckoutSessionCustomFieldsOption>
-    public var options: [String]?
+    public var options: [PaymentPagesCheckoutSessionCustomFieldsOption]
     /// The option selected by the customer. This will be the `value` for the option.
     public var value: String?
 

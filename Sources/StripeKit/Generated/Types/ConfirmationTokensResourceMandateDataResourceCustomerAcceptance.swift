@@ -10,8 +10,7 @@ import Foundation
 /// This hash contains details about the customer acceptance of the Mandate.
 public struct ConfirmationTokensResourceMandateDataResourceCustomerAcceptance: Codable, Sendable {
     /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
-    @Expandable<ConfirmationTokensResourceMandateDataResourceCustomerAcceptanceResourceOnline>
-    public var online: String?
+    public var online: ConfirmationTokensResourceMandateDataResourceCustomerAcceptanceResourceOnline?
     /// The type of customer acceptance information included with the Mandate.
     public var type: String
 }

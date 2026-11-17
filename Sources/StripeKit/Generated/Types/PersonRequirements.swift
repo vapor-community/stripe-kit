@@ -12,16 +12,14 @@ public struct PersonRequirements: Codable, Sendable {
     /// Many alternatives can list the same `original_fields_due`, and any of these alternatives can serve
     /// as a pathway for attempting to resolve the fields again. Re-providing `original_fields_due` also
     /// serves as a pathway for attempting to resolve the fields again.
-    @ExpandableCollection<AccountRequirementsAlternative>
-    public var alternatives: [String]?
+    public var alternatives: [AccountRequirementsAlternative]?
     /// Fields that need to be resolved to keep the person's account enabled. If not resolved by the
     /// account's `current_deadline`, these fields will appear in `past_due` as well, and the account is
     /// disabled.
     public var currentlyDue: [String]
     /// Fields that are `currently_due` and need to be collected again because validation or verification
     /// failed.
-    @ExpandableCollection<AccountRequirementsError>
-    public var errors: [String]?
+    public var errors: [AccountRequirementsError]
     /// Fields you must collect when all thresholds are reached. As they become required, they appear in
     /// `currently_due` as well, and the account's `current_deadline` becomes set.
     public var eventuallyDue: [String]

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Climate order is created.
 public struct ClimateOrderCreated: Codable, Sendable {
+    @Indirect
     public var object: Order
 }
 

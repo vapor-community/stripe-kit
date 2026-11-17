@@ -20,8 +20,7 @@ public struct LineItem: Codable, Sendable {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// The amount of discount calculated per discount for this line item.
-    @ExpandableCollection<DiscountsResourceDiscountAmount>
-    public var discountAmounts: [String]?
+    public var discountAmounts: [DiscountsResourceDiscountAmount]?
     /// If true, discounts will apply to this line item. Always false for prorations.
     public var discountable: Bool
     /// The discounts applied to the invoice line item. Line item discounts are applied before invoice
@@ -44,16 +43,12 @@ public struct LineItem: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: LineItemObject
     /// The parent that generated this line item.
-    @Expandable<BillingBillResourceInvoicingLinesParentsInvoiceLineItemParent>
-    public var parent: String?
-    @Expandable<InvoiceLineItemPeriod>
-    public var period: String?
+    public var parent: BillingBillResourceInvoicingLinesParentsInvoiceLineItemParent?
+    public var period: InvoiceLineItemPeriod
     /// Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this line item.
-    @ExpandableCollection<InvoicesResourcePretaxCreditAmount>
-    public var pretaxCreditAmounts: [String]?
+    public var pretaxCreditAmounts: [InvoicesResourcePretaxCreditAmount]?
     /// The pricing information of the line item.
-    @Expandable<BillingBillResourceInvoicingPricingPricing>
-    public var pricing: String?
+    public var pricing: BillingBillResourceInvoicingPricingPricing?
     /// Quantity of units for the invoice line item in integer format, with any decimal precision truncated.
     /// For the line item's full-precision decimal quantity, use `quantity_decimal`. This field will be
     /// deprecated in favor of `quantity_decimal` in a future version. If the line item is a proration or
@@ -66,8 +61,7 @@ public struct LineItem: Codable, Sendable {
     /// The subtotal of the line item, in cents (or local equivalent), before any discounts or taxes.
     public var subtotal: Int
     /// The tax information of the line item.
-    @ExpandableCollection<BillingBillResourceInvoicingTaxesTax>
-    public var taxes: [String]?
+    public var taxes: [BillingBillResourceInvoicingTaxesTax]?
 
     public enum CodingKeys: String, CodingKey {
         case amount

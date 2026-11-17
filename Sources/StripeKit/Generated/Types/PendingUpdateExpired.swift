@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a customer's subscription's pending update expires before the related invoice is
 /// paid.
 public struct PendingUpdateExpired: Codable, Sendable {
+    @Indirect
     public var object: Subscription
 }
 

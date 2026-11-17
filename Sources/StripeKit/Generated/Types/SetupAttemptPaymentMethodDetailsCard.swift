@@ -12,8 +12,7 @@ public struct SetupAttemptPaymentMethodDetailsCard: Codable, Sendable {
     /// `mastercard`, `unionpay`, `visa` or `unknown`.
     public var brand: String?
     /// Check results by Card networks on Card address and CVC at the time of authorization
-    @Expandable<SetupAttemptPaymentMethodDetailsCardChecks>
-    public var checks: String?
+    public var checks: SetupAttemptPaymentMethodDetailsCardChecks?
     /// Two-letter ISO code representing the country of the card. You could use this attribute to get a
     /// sense of the international breakdown of cards you've collected.
     public var country: String?
@@ -47,11 +46,9 @@ public struct SetupAttemptPaymentMethodDetailsCard: Codable, Sendable {
     /// `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
     public var network: String?
     /// Populated if this authorization used 3D Secure authentication.
-    @Expandable<ThreeDSecureDetails>
-    public var threeDSecure: String?
+    public var threeDSecure: ThreeDSecureDetails?
     /// If this Card is part of a card wallet, this contains the details of the card wallet.
-    @Expandable<SetupAttemptPaymentMethodDetailsCardWallet>
-    public var wallet: String?
+    public var wallet: SetupAttemptPaymentMethodDetailsCardWallet?
 
     public enum CodingKeys: String, CodingKey {
         case brand

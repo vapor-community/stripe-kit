@@ -8,100 +8,53 @@
 import Foundation
 
 public struct CheckoutSessionPaymentMethodOptions: Codable, Sendable {
-    @Expandable<CheckoutAcssDebitPaymentMethodOptions>
-    public var acssDebit: String?
-    @Expandable<CheckoutAffirmPaymentMethodOptions>
-    public var affirm: String?
-    @Expandable<CheckoutAfterpayClearpayPaymentMethodOptions>
-    public var afterpayClearpay: String?
-    @Expandable<CheckoutAlipayPaymentMethodOptions>
-    public var alipay: String?
-    @Expandable<CheckoutAlmaPaymentMethodOptions>
-    public var alma: String?
-    @Expandable<CheckoutAmazonPayPaymentMethodOptions>
-    public var amazonPay: String?
-    @Expandable<CheckoutAuBecsDebitPaymentMethodOptions>
-    public var auBecsDebit: String?
-    @Expandable<CheckoutBacsDebitPaymentMethodOptions>
-    public var bacsDebit: String?
-    @Expandable<CheckoutBancontactPaymentMethodOptions>
-    public var bancontact: String?
-    @Expandable<CheckoutBilliePaymentMethodOptions>
-    public var billie: String?
-    @Expandable<CheckoutBoletoPaymentMethodOptions>
-    public var boleto: String?
-    @Expandable<CheckoutCardPaymentMethodOptions>
-    public var card: String?
-    @Expandable<CheckoutCashappPaymentMethodOptions>
-    public var cashapp: String?
-    @Expandable<CheckoutCustomerBalancePaymentMethodOptions>
-    public var customerBalance: String?
-    @Expandable<CheckoutEpsPaymentMethodOptions>
-    public var eps: String?
-    @Expandable<CheckoutFpxPaymentMethodOptions>
-    public var fpx: String?
-    @Expandable<CheckoutGiropayPaymentMethodOptions>
-    public var giropay: String?
-    @Expandable<CheckoutGrabPayPaymentMethodOptions>
-    public var grabpay: String?
-    @Expandable<CheckoutIdealPaymentMethodOptions>
-    public var ideal: String?
-    @Expandable<CheckoutKakaoPayPaymentMethodOptions>
-    public var kakaoPay: String?
-    @Expandable<CheckoutKlarnaPaymentMethodOptions>
-    public var klarna: String?
-    @Expandable<CheckoutKonbiniPaymentMethodOptions>
-    public var konbini: String?
-    @Expandable<CheckoutKrCardPaymentMethodOptions>
-    public var krCard: String?
-    @Expandable<CheckoutLinkPaymentMethodOptions>
-    public var link: String?
-    @Expandable<CheckoutMobilepayPaymentMethodOptions>
-    public var mobilepay: String?
-    @Expandable<CheckoutMultibancoPaymentMethodOptions>
-    public var multibanco: String?
-    @Expandable<CheckoutNaverPayPaymentMethodOptions>
-    public var naverPay: String?
-    @Expandable<CheckoutOxxoPaymentMethodOptions>
-    public var oxxo: String?
-    @Expandable<CheckoutP24PaymentMethodOptions>
-    public var p24: String?
-    @Expandable<CheckoutPaycoPaymentMethodOptions>
-    public var payco: String?
-    @Expandable<CheckoutPaynowPaymentMethodOptions>
-    public var paynow: String?
-    @Expandable<CheckoutPaypalPaymentMethodOptions>
-    public var paypal: String?
-    @Expandable<CheckoutPaytoPaymentMethodOptions>
-    public var payto: String?
-    @Expandable<CheckoutPixPaymentMethodOptions>
-    public var pix: String?
-    @Expandable<CheckoutRevolutPayPaymentMethodOptions>
-    public var revolutPay: String?
-    @Expandable<CheckoutSamsungPayPaymentMethodOptions>
-    public var samsungPay: String?
-    @Expandable<CheckoutSatispayPaymentMethodOptions>
-    public var satispay: String?
-    @Expandable<CheckoutScalapayPaymentMethodOptions>
-    public var scalapay: String?
-    @Expandable<CheckoutSepaDebitPaymentMethodOptions>
-    public var sepaDebit: String?
-    @Expandable<CheckoutSequraPaymentMethodOptions>
-    public var sequra: String?
-    @Expandable<CheckoutSofortPaymentMethodOptions>
-    public var sofort: String?
-    @Expandable<CheckoutSunbitPaymentMethodOptions>
-    public var sunbit: String?
-    @Expandable<CheckoutSwishPaymentMethodOptions>
-    public var swish: String?
-    @Expandable<CheckoutTwintPaymentMethodOptions>
-    public var twint: String?
-    @Expandable<CheckoutUpiPaymentMethodOptions>
-    public var upi: String?
-    @Expandable<CheckoutUsBankAccountPaymentMethodOptions>
-    public var usBankAccount: String?
-    @Expandable<CheckoutWechatPayPaymentMethodOptions>
-    public var wechatPay: String?
+    public var acssDebit: CheckoutAcssDebitPaymentMethodOptions?
+    public var affirm: CheckoutAffirmPaymentMethodOptions?
+    public var afterpayClearpay: CheckoutAfterpayClearpayPaymentMethodOptions?
+    public var alipay: CheckoutAlipayPaymentMethodOptions?
+    public var alma: CheckoutAlmaPaymentMethodOptions?
+    public var amazonPay: CheckoutAmazonPayPaymentMethodOptions?
+    public var auBecsDebit: CheckoutAuBecsDebitPaymentMethodOptions?
+    public var bacsDebit: CheckoutBacsDebitPaymentMethodOptions?
+    public var bancontact: CheckoutBancontactPaymentMethodOptions?
+    public var billie: CheckoutBilliePaymentMethodOptions?
+    public var boleto: CheckoutBoletoPaymentMethodOptions?
+    public var card: CheckoutCardPaymentMethodOptions?
+    public var cashapp: CheckoutCashappPaymentMethodOptions?
+    public var customerBalance: CheckoutCustomerBalancePaymentMethodOptions?
+    public var eps: CheckoutEpsPaymentMethodOptions?
+    public var fpx: CheckoutFpxPaymentMethodOptions?
+    public var giropay: CheckoutGiropayPaymentMethodOptions?
+    public var grabpay: CheckoutGrabPayPaymentMethodOptions?
+    public var ideal: CheckoutIdealPaymentMethodOptions?
+    public var kakaoPay: CheckoutKakaoPayPaymentMethodOptions?
+    public var klarna: CheckoutKlarnaPaymentMethodOptions?
+    public var konbini: CheckoutKonbiniPaymentMethodOptions?
+    public var krCard: CheckoutKrCardPaymentMethodOptions?
+    public var link: CheckoutLinkPaymentMethodOptions?
+    public var mobilepay: CheckoutMobilepayPaymentMethodOptions?
+    public var multibanco: CheckoutMultibancoPaymentMethodOptions?
+    public var naverPay: CheckoutNaverPayPaymentMethodOptions?
+    public var oxxo: CheckoutOxxoPaymentMethodOptions?
+    public var p24: CheckoutP24PaymentMethodOptions?
+    public var payco: CheckoutPaycoPaymentMethodOptions?
+    public var paynow: CheckoutPaynowPaymentMethodOptions?
+    public var paypal: CheckoutPaypalPaymentMethodOptions?
+    public var payto: CheckoutPaytoPaymentMethodOptions?
+    public var pix: CheckoutPixPaymentMethodOptions?
+    public var revolutPay: CheckoutRevolutPayPaymentMethodOptions?
+    public var samsungPay: CheckoutSamsungPayPaymentMethodOptions?
+    public var satispay: CheckoutSatispayPaymentMethodOptions?
+    public var scalapay: CheckoutScalapayPaymentMethodOptions?
+    public var sepaDebit: CheckoutSepaDebitPaymentMethodOptions?
+    public var sequra: CheckoutSequraPaymentMethodOptions?
+    public var sofort: CheckoutSofortPaymentMethodOptions?
+    public var sunbit: CheckoutSunbitPaymentMethodOptions?
+    public var swish: CheckoutSwishPaymentMethodOptions?
+    public var twint: CheckoutTwintPaymentMethodOptions?
+    public var upi: CheckoutUpiPaymentMethodOptions?
+    public var usBankAccount: CheckoutUsBankAccountPaymentMethodOptions?
+    public var wechatPay: CheckoutWechatPayPaymentMethodOptions?
 
     public enum CodingKeys: String, CodingKey {
         case acssDebit = "acss_debit"

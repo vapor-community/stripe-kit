@@ -19,17 +19,15 @@ public struct IssuingAuthorization: Codable, Sendable {
     public var amount: Int
     /// Detailed breakdown of amount components. These amounts are denominated in `currency` and in the
     /// [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-    @Expandable<IssuingAuthorizationAmountDetails>
-    public var amountDetails: String?
+    public var amountDetails: IssuingAuthorizationAmountDetails?
     /// Whether the authorization has been approved.
     public var approved: Bool
     /// How the card details were provided.
     public var authorizationMethod: IssuingAuthorizationAuthorizationMethod
     /// List of balance transactions associated with this authorization.
-    @ExpandableCollection<BalanceTransaction>
-    public var balanceTransactions: [String]?
-    @Expandable<IssuingCard>
-    public var card: String?
+    public var balanceTransactions: [BalanceTransaction]
+    @Indirect
+    public var card: IssuingCard
     /// Whether the card was present at the point of sale for the authorization.
     public var cardPresence: IssuingAuthorizationCardPresence?
     /// The cardholder to whom this authorization belongs.
@@ -43,15 +41,12 @@ public struct IssuingAuthorization: Codable, Sendable {
     /// currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// Fleet-specific information for authorizations using Fleet cards.
-    @Expandable<IssuingAuthorizationFleetData>
-    public var fleet: String?
+    public var fleet: IssuingAuthorizationFleetData?
     /// Fraud challenges sent to the cardholder, if this authorization was declined for fraud risk reasons.
-    @ExpandableCollection<IssuingAuthorizationFraudChallenge>
-    public var fraudChallenges: [String]?
+    public var fraudChallenges: [IssuingAuthorizationFraudChallenge]?
     /// Information about fuel that was purchased with this transaction. Typically this information is
     /// received from the merchant after the authorization has been approved and the fuel dispensed.
-    @Expandable<IssuingAuthorizationFuelData>
-    public var fuel: String?
+    public var fuel: IssuingAuthorizationFuelData?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -66,27 +61,23 @@ public struct IssuingAuthorization: Codable, Sendable {
     /// [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a
     /// [supported currency](https://stripe.com/docs/currencies).
     public var merchantCurrency: String
-    @Expandable<IssuingAuthorizationMerchantData>
-    public var merchantData: String?
+    public var merchantData: IssuingAuthorizationMerchantData
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]
     /// Details about the authorization, such as identifiers, set by the card network.
-    @Expandable<IssuingAuthorizationNetworkData>
-    public var networkData: String?
+    public var networkData: IssuingAuthorizationNetworkData?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: IssuingAuthorizationObject
     /// The pending authorization request. This field will only be non-null during an
     /// `issuing_authorization.request` webhook.
-    @Expandable<IssuingAuthorizationPendingRequest>
-    public var pendingRequest: String?
+    public var pendingRequest: IssuingAuthorizationPendingRequest?
     /// History of every time a `pending_request` authorization was approved/declined, either by you
     /// directly or by Stripe (e.g. based on your spending_controls). If the merchant changes the
     /// authorization by performing an incremental authorization, you can look at this field to see the
     /// previous requests for the authorization. This field can be helpful in determining why a given
     /// authorization was approved/declined.
-    @ExpandableCollection<IssuingAuthorizationRequest>
-    public var requestHistory: [String]?
+    public var requestHistory: [IssuingAuthorizationRequest]
     /// The current status of the authorization in its lifecycle.
     public var status: IssuingAuthorizationStatus
     /// [Token](https://docs.stripe.com/api/issuing/tokens/object) object used for this authorization. If a
@@ -95,14 +86,11 @@ public struct IssuingAuthorization: Codable, Sendable {
     public var token: String?
     /// List of [transactions](https://docs.stripe.com/api/issuing/transactions) associated with this
     /// authorization.
-    @ExpandableCollection<IssuingTransaction>
-    public var transactions: [String]?
+    public var transactions: [IssuingTransaction]
     /// [Treasury](https://docs.stripe.com/api/treasury) details related to this authorization if it was
     /// created on a [FinancialAccount](https://docs.stripe.com/api/treasury/financial_accounts).
-    @Expandable<IssuingAuthorizationTreasury>
-    public var treasury: String?
-    @Expandable<IssuingAuthorizationVerificationData>
-    public var verificationData: String?
+    public var treasury: IssuingAuthorizationTreasury?
+    public var verificationData: IssuingAuthorizationVerificationData
     /// Whether the authorization bypassed fraud risk checks because the cardholder has previously completed
     /// a fraud challenge on a similar high-risk authorization from the same merchant.
     public var verifiedByFraudChallenge: Bool?

@@ -8,12 +8,9 @@
 import Foundation
 
 public struct AccountPaypaySiteSettings: Codable, Sendable {
-    @Expandable<AccountPaypaySiteAccessibleSettings>
-    public var accessible: String?
-    @Expandable<AccountPaypaySiteInDevelopmentSettings>
-    public var inDevelopment: String?
-    @Expandable<AccountPaypaySiteRestrictedSettings>
-    public var restricted: String?
+    public var accessible: AccountPaypaySiteAccessibleSettings?
+    public var inDevelopment: AccountPaypaySiteInDevelopmentSettings?
+    public var restricted: AccountPaypaySiteRestrictedSettings?
     /// The status of your business's website.
     public var type: AccountPaypaySiteSettingsType?
 

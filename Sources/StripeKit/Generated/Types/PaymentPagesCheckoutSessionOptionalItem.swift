@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentPagesCheckoutSessionOptionalItem: Codable, Sendable {
-    @Expandable<PaymentPagesCheckoutSessionOptionalItemAdjustableQuantity>
-    public var adjustableQuantity: String?
+    public var adjustableQuantity: PaymentPagesCheckoutSessionOptionalItemAdjustableQuantity?
     public var price: String
     public var quantity: Int
 

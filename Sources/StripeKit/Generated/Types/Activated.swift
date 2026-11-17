@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a personalization design is activated following the activation of the physical
 /// bundle that belongs to it.
 public struct Activated: Codable, Sendable {
+    @Indirect
     public var object: PersonalizationDesign
 }
 

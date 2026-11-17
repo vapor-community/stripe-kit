@@ -9,11 +9,9 @@ import Foundation
 
 public struct GelatoVerifiedOutputs: Codable, Sendable {
     /// The user's verified address.
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address?
     /// The user’s verified date of birth.
-    @Expandable<GelatoDataVerifiedOutputsDate>
-    public var dob: String?
+    public var dob: GelatoDataVerifiedOutputsDate?
     /// The user's verified email address
     public var email: String?
     /// The user's verified first name.

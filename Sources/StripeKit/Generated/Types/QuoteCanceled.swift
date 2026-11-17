@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a quote is canceled.
 public struct QuoteCanceled: Codable, Sendable {
+    @Indirect
     public var object: Quote
 }
 

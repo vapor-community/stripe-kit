@@ -17,8 +17,7 @@ public struct Supplier: Codable, Sendable {
     /// test mode.
     public var livemode: Bool
     /// The locations in which this supplier operates.
-    @ExpandableCollection<ClimateRemovalsLocation>
-    public var locations: [String]?
+    public var locations: [ClimateRemovalsLocation]
     /// Name of this carbon removal supplier.
     public var name: String
     /// String representing the object’s type. Objects of the same type share the same value.

@@ -11,8 +11,7 @@ public struct InvoicesResourceInvoiceRendering: Codable, Sendable {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
     public var amountTaxDisplay: String?
     /// Invoice pdf rendering options
-    @Expandable<InvoiceRenderingPdf>
-    public var pdf: String?
+    public var pdf: InvoiceRenderingPdf?
     /// ID of the rendering template that the invoice is formatted by.
     public var template: String?
     /// Version of the rendering template that the invoice is using.

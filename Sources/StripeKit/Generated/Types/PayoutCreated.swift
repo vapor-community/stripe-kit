@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a payout is created.
 public struct PayoutCreated: Codable, Sendable {
+    @Indirect
     public var object: Payout
 }
 

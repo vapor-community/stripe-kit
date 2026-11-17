@@ -33,8 +33,7 @@ public struct DeletedDiscount: Codable, Sendable {
     /// The promotion code applied to create this discount.
     @Expandable<PromotionCode>
     public var promotionCode: String?
-    @Expandable<DiscountSource>
-    public var source: String?
+    public var source: DiscountSource
     /// Date that the coupon was applied.
     public var start: Int
     /// The subscription that this coupon is applied to, if it is applied to a particular subscription.

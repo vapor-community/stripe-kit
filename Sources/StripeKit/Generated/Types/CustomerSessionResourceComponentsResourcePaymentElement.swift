@@ -12,8 +12,7 @@ public struct CustomerSessionResourceComponentsResourcePaymentElement: Codable, 
     /// Whether the Payment Element is enabled.
     public var enabled: Bool
     /// This hash defines whether the Payment Element supports certain features.
-    @Expandable<CustomerSessionResourceComponentsResourcePaymentElementResourceFeatures>
-    public var features: String?
+    public var features: CustomerSessionResourceComponentsResourcePaymentElementResourceFeatures?
 }
 
 public struct CustomerSessionResourceComponentsResourcePaymentElementList: Codable, Sendable {

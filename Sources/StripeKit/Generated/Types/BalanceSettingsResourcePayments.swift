@@ -15,10 +15,8 @@ public struct BalanceSettingsResourcePayments: Codable, Sendable {
     /// is `application`, which includes Custom accounts, otherwise `true`.
     public var debitNegativeBalances: Bool?
     /// Settings specific to the account's payouts.
-    @Expandable<BalanceSettingsResourcePayouts>
-    public var payouts: String?
-    @Expandable<BalanceSettingsResourceSettlementTiming>
-    public var settlementTiming: String?
+    public var payouts: BalanceSettingsResourcePayouts?
+    public var settlementTiming: BalanceSettingsResourceSettlementTiming
 
     public enum CodingKeys: String, CodingKey {
         case debitNegativeBalances = "debit_negative_balances"

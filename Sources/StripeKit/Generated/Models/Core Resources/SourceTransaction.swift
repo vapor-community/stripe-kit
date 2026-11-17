@@ -11,21 +11,18 @@ import Foundation
 /// to send any amount, and it can be made up of multiple transactions. As such, sources can have
 /// multiple associated transactions.
 public struct SourceTransaction: Codable, Sendable {
-    @Expandable<SourceTransactionAchCreditTransferData>
-    public var achCreditTransfer: String?
+    public var achCreditTransfer: SourceTransactionAchCreditTransferData?
     /// A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1,
     /// Japanese Yen being a zero-decimal currency) representing the amount your customer has pushed to the
     /// receiver.
     public var amount: Int
-    @Expandable<SourceTransactionChfCreditTransferData>
-    public var chfCreditTransfer: String?
+    public var chfCreditTransfer: SourceTransactionChfCreditTransferData?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
-    @Expandable<SourceTransactionGbpCreditTransferData>
-    public var gbpCreditTransfer: String?
+    public var gbpCreditTransfer: SourceTransactionGbpCreditTransferData?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -33,10 +30,8 @@ public struct SourceTransaction: Codable, Sendable {
     public var livemode: Bool
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: SourceTransactionObject
-    @Expandable<SourceTransactionPaperCheckData>
-    public var paperCheck: String?
-    @Expandable<SourceTransactionSepaCreditTransferData>
-    public var sepaCreditTransfer: String?
+    public var paperCheck: SourceTransactionPaperCheckData?
+    public var sepaCreditTransfer: SourceTransactionSepaCreditTransferData?
     /// The ID of the source this transaction is attached to.
     public var source: String
     /// The status of the transaction, one of `succeeded`, `pending`, or `failed`.

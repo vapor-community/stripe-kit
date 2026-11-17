@@ -11,10 +11,8 @@ public struct QuotesResourceComputed: Codable, Sendable {
     /// The definitive totals and line items the customer will be charged on a recurring basis. Takes into
     /// account the line items with recurring prices and discounts with `duration=forever` coupons only.
     /// Defaults to `null` if no inputted line items with recurring prices.
-    @Expandable<QuotesResourceRecurring>
-    public var recurring: String?
-    @Expandable<QuotesResourceUpfront>
-    public var upfront: String?
+    public var recurring: QuotesResourceRecurring?
+    public var upfront: QuotesResourceUpfront
 }
 
 public struct QuotesResourceComputedList: Codable, Sendable {

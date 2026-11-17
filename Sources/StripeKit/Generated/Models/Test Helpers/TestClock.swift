@@ -30,8 +30,7 @@ public struct TestClock: Codable, Sendable {
     public var object: TestClockObject
     /// The status of the Test Clock.
     public var status: TestClockStatus
-    @Expandable<BillingClocksResourceStatusDetailsStatusDetails>
-    public var statusDetails: String?
+    public var statusDetails: BillingClocksResourceStatusDetailsStatusDetails
 
     public enum CodingKeys: String, CodingKey {
         case created

@@ -16,8 +16,7 @@ public struct QuotesResourceUpfront: Codable, Sendable {
     /// include pending invoice items that exist on the customer but may still be included in the next
     /// invoice.
     public var lineItems: ItemList?
-    @Expandable<QuotesResourceTotalDetails>
-    public var totalDetails: String?
+    public var totalDetails: QuotesResourceTotalDetails
 
     public enum CodingKeys: String, CodingKey {
         case amountSubtotal = "amount_subtotal"

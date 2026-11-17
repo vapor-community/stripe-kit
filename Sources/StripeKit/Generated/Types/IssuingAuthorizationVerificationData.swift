@@ -15,8 +15,7 @@ public struct IssuingAuthorizationVerificationData: Codable, Sendable {
     /// `billing.address.postal_code`.
     public var addressPostalCodeCheck: IssuingAuthorizationVerificationDataAddressPostalCodeCheck
     /// The exemption applied to this authorization.
-    @Expandable<IssuingAuthorizationAuthenticationExemption>
-    public var authenticationExemption: String?
+    public var authenticationExemption: IssuingAuthorizationAuthenticationExemption?
     /// Whether the cardholder provided a CVC and if it matched Stripe’s record.
     public var cvcCheck: IssuingAuthorizationVerificationDataCvcCheck
     /// Whether the cardholder provided an expiry date and if it matched Stripe’s record.
@@ -24,8 +23,7 @@ public struct IssuingAuthorizationVerificationData: Codable, Sendable {
     /// The postal code submitted as part of the authorization used for postal code verification.
     public var postalCode: String?
     /// 3D Secure details.
-    @Expandable<IssuingAuthorizationThreeDSecure>
-    public var threeDSecure: String?
+    public var threeDSecure: IssuingAuthorizationThreeDSecure?
 
     public enum CodingKeys: String, CodingKey {
         case addressLine1Check = "address_line1_check"

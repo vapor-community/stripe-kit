@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a top-up is created.
 public struct TopupCreated: Codable, Sendable {
+    @Indirect
     public var object: Topup
 }
 

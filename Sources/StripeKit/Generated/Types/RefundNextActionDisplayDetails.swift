@@ -8,8 +8,7 @@
 import Foundation
 
 public struct RefundNextActionDisplayDetails: Codable, Sendable {
-    @Expandable<EmailSent>
-    public var emailSent: String?
+    public var emailSent: EmailSent
     /// The expiry timestamp.
     public var expiresAt: Int
 

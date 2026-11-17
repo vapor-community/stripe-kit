@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a capability has new requirements or a new status.
 public struct CapabilityUpdated: Codable, Sendable {
+    @Indirect
     public var object: Capability
 }
 

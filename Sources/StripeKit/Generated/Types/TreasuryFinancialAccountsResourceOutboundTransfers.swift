@@ -9,10 +9,8 @@ import Foundation
 
 /// OutboundTransfers contains outbound transfers features for a FinancialAccount.
 public struct TreasuryFinancialAccountsResourceOutboundTransfers: Codable, Sendable {
-    @Expandable<TreasuryFinancialAccountsResourceOutboundAchToggleSettings>
-    public var ach: String?
-    @Expandable<TreasuryFinancialAccountsResourceToggleSettings>
-    public var usDomesticWire: String?
+    public var ach: TreasuryFinancialAccountsResourceOutboundAchToggleSettings?
+    public var usDomesticWire: TreasuryFinancialAccountsResourceToggleSettings?
 
     public enum CodingKeys: String, CodingKey {
         case ach

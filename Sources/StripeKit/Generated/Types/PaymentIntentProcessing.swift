@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentIntentProcessing: Codable, Sendable {
-    @Expandable<PaymentIntentCardProcessing>
-    public var card: String?
+    public var card: PaymentIntentCardProcessing?
     /// Type of the payment method for which payment is in `processing` state, one of `card`.
     public var type: PaymentIntentProcessingType
 }

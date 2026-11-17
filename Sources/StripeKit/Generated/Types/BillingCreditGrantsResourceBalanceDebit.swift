@@ -8,12 +8,10 @@
 import Foundation
 
 public struct BillingCreditGrantsResourceBalanceDebit: Codable, Sendable {
-    @Expandable<BillingCreditGrantsResourceAmount>
-    public var amount: String?
+    public var amount: BillingCreditGrantsResourceAmount
     /// Details of how the billing credits were applied to an invoice. Only present if `type` is
     /// `credits_applied`.
-    @Expandable<BillingCreditGrantsResourceBalanceCreditsApplied>
-    public var creditsApplied: String?
+    public var creditsApplied: BillingCreditGrantsResourceBalanceCreditsApplied?
     /// The type of debit transaction.
     public var type: BillingCreditGrantsResourceBalanceDebitType
 

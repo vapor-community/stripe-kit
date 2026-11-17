@@ -40,12 +40,10 @@ public struct InvoicePayment: Codable, Sendable {
     public var livemode: Bool
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: InvoicePaymentObject
-    @Expandable<InvoicesPaymentsInvoicePaymentAssociatedPayment>
-    public var payment: String?
+    public var payment: InvoicesPaymentsInvoicePaymentAssociatedPayment
     /// The status of the payment, one of `open`, `paid`, or `canceled`.
     public var status: String
-    @Expandable<InvoicesPaymentsInvoicePaymentStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: InvoicesPaymentsInvoicePaymentStatusTransitions
 
     public enum CodingKeys: String, CodingKey {
         case amountPaid = "amount_paid"

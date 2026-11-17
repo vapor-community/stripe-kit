@@ -18,8 +18,7 @@ public struct PaymentMethodSepaDebit: Codable, Sendable {
     /// bank accounts are the same.
     public var fingerprint: String?
     /// Information about the object that generated this PaymentMethod.
-    @Expandable<SepaDebitGeneratedFrom>
-    public var generatedFrom: String?
+    public var generatedFrom: SepaDebitGeneratedFrom?
     /// Last four characters of the IBAN.
     public var last4: String?
 

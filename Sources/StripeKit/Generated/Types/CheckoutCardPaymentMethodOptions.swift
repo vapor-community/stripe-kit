@@ -10,8 +10,7 @@ import Foundation
 public struct CheckoutCardPaymentMethodOptions: Codable, Sendable {
     /// Controls when the funds will be captured from the customer's account.
     public var captureMethod: CheckoutCardPaymentMethodOptionsCaptureMethod?
-    @Expandable<CheckoutCardInstallmentsOptions>
-    public var installments: String?
+    public var installments: CheckoutCardInstallmentsOptions?
     /// Request ability to [capture beyond the standard authorization validity
     /// window](/payments/extended-authorization) for this CheckoutSession.
     public var requestExtendedAuthorization: CheckoutCardPaymentMethodOptionsRequestExtendedAuthorization?
@@ -30,8 +29,7 @@ public struct CheckoutCardPaymentMethodOptions: Codable, Sendable {
     /// Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more
     /// information on how this configuration interacts with Radar and our SCA Engine.
     public var requestThreeDSecure: CheckoutCardPaymentMethodOptionsRequestThreeDSecure
-    @Expandable<PaymentPagesPrivateCardPaymentMethodOptionsResourceRestrictions>
-    public var restrictions: String?
+    public var restrictions: PaymentPagesPrivateCardPaymentMethodOptionsResourceRestrictions?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the

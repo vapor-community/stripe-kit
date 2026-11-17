@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentIntentCardProcessing: Codable, Sendable {
-    @Expandable<PaymentIntentProcessingCustomerNotification>
-    public var customerNotification: String?
+    public var customerNotification: PaymentIntentProcessingCustomerNotification?
 
     public enum CodingKeys: String, CodingKey {
         case customerNotification = "customer_notification"

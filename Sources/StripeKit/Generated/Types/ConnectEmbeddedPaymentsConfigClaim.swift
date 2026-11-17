@@ -10,8 +10,7 @@ import Foundation
 public struct ConnectEmbeddedPaymentsConfigClaim: Codable, Sendable {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
-    @Expandable<ConnectEmbeddedPaymentsFeatures>
-    public var features: String?
+    public var features: ConnectEmbeddedPaymentsFeatures
 }
 
 public struct ConnectEmbeddedPaymentsConfigClaimList: Codable, Sendable {

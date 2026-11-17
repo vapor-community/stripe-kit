@@ -10,22 +10,15 @@ import Foundation
 /// Encodes whether a FinancialAccount has access to a particular Feature, with a `status` enum and
 /// associated `status_details`. Stripe or the platform can control Features via the requested field.
 public struct FinancialAccountFeatures: Codable, Sendable {
-    @Expandable<TreasuryFinancialAccountsResourceToggleSettings>
-    public var cardIssuing: String?
-    @Expandable<TreasuryFinancialAccountsResourceToggleSettings>
-    public var depositInsurance: String?
-    @Expandable<TreasuryFinancialAccountsResourceFinancialAddressesFeatures>
-    public var financialAddresses: String?
-    @Expandable<TreasuryFinancialAccountsResourceInboundTransfers>
-    public var inboundTransfers: String?
-    @Expandable<TreasuryFinancialAccountsResourceToggleSettings>
-    public var intraStripeFlows: String?
+    public var cardIssuing: TreasuryFinancialAccountsResourceToggleSettings?
+    public var depositInsurance: TreasuryFinancialAccountsResourceToggleSettings?
+    public var financialAddresses: TreasuryFinancialAccountsResourceFinancialAddressesFeatures?
+    public var inboundTransfers: TreasuryFinancialAccountsResourceInboundTransfers?
+    public var intraStripeFlows: TreasuryFinancialAccountsResourceToggleSettings?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: FinancialAccountFeaturesObject
-    @Expandable<TreasuryFinancialAccountsResourceOutboundPayments>
-    public var outboundPayments: String?
-    @Expandable<TreasuryFinancialAccountsResourceOutboundTransfers>
-    public var outboundTransfers: String?
+    public var outboundPayments: TreasuryFinancialAccountsResourceOutboundPayments?
+    public var outboundTransfers: TreasuryFinancialAccountsResourceOutboundTransfers?
 
     public enum CodingKeys: String, CodingKey {
         case cardIssuing = "card_issuing"

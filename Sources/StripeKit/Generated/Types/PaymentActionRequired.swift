@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an invoice payment attempt requires further user action to complete.
 public struct PaymentActionRequired: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

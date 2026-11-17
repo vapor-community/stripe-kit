@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a payment method is updated via the [PaymentMethod update
 /// API](https://docs.stripe.com/api/payment_methods/update).
 public struct PaymentMethodUpdated: Codable, Sendable {
+    @Indirect
     public var object: PaymentMethod
 }
 

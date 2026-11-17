@@ -14,8 +14,7 @@ public struct PaymentIntentNextActionDisplayBankTransferInstructions: Codable, S
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String?
     /// A list of financial addresses that can be used to fund the customer balance
-    @ExpandableCollection<FundingInstructionsBankTransferFinancialAddress>
-    public var financialAddresses: [String]?
+    public var financialAddresses: [FundingInstructionsBankTransferFinancialAddress]?
     /// A link to a hosted page that guides your customer through completing the transfer.
     public var hostedInstructionsUrl: String?
     /// A string identifying this payment. Instruct your customer to include this code in the reference or

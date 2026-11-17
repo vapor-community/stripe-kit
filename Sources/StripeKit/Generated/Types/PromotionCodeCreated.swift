@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a promotion code is created.
 public struct PromotionCodeCreated: Codable, Sendable {
+    @Indirect
     public var object: PromotionCode
 }
 

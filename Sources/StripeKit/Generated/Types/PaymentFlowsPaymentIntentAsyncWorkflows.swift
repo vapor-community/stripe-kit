@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentFlowsPaymentIntentAsyncWorkflows: Codable, Sendable {
-    @Expandable<PaymentFlowsPaymentIntentAsyncWorkflowsResourceInputs>
-    public var inputs: String?
+    public var inputs: PaymentFlowsPaymentIntentAsyncWorkflowsResourceInputs?
 }
 
 public struct PaymentFlowsPaymentIntentAsyncWorkflowsList: Codable, Sendable {

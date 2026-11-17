@@ -8,137 +8,74 @@
 import Foundation
 
 public struct PaymentMethodDetails: Codable, Sendable {
-    @Expandable<PaymentMethodDetailsAchCreditTransfer>
-    public var achCreditTransfer: String?
-    @Expandable<PaymentMethodDetailsAchDebit>
-    public var achDebit: String?
-    @Expandable<PaymentMethodDetailsAcssDebit>
-    public var acssDebit: String?
-    @Expandable<PaymentMethodDetailsAffirm>
-    public var affirm: String?
-    @Expandable<PaymentMethodDetailsAfterpayClearpay>
-    public var afterpayClearpay: String?
-    @Expandable<PaymentMethodDetailsAlipay>
-    public var alipay: String?
-    @Expandable<PaymentMethodDetailsAlma>
-    public var alma: String?
-    @Expandable<PaymentMethodDetailsAmazonPay>
-    public var amazonPay: String?
-    @Expandable<PaymentMethodDetailsAuBecsDebit>
-    public var auBecsDebit: String?
-    @Expandable<PaymentMethodDetailsBacsDebit>
-    public var bacsDebit: String?
-    @Expandable<PaymentMethodDetailsBancontact>
-    public var bancontact: String?
-    @Expandable<PaymentMethodDetailsBillie>
-    public var billie: String?
-    @Expandable<PaymentMethodDetailsBizum>
-    public var bizum: String?
-    @Expandable<PaymentMethodDetailsBlik>
-    public var blik: String?
-    @Expandable<PaymentMethodDetailsBoleto>
-    public var boleto: String?
-    @Expandable<PaymentMethodDetailsCard>
-    public var card: String?
-    @Expandable<PaymentMethodDetailsCardPresent>
-    public var cardPresent: String?
-    @Expandable<PaymentMethodDetailsCashapp>
-    public var cashapp: String?
-    @Expandable<PaymentMethodDetailsCrypto>
-    public var crypto: String?
-    @Expandable<PaymentMethodDetailsCustomerBalance>
-    public var customerBalance: String?
-    @Expandable<PaymentMethodDetailsEps>
-    public var eps: String?
-    @Expandable<PaymentMethodDetailsFpx>
-    public var fpx: String?
-    @Expandable<PaymentMethodDetailsGiropay>
-    public var giropay: String?
-    @Expandable<PaymentMethodDetailsGrabpay>
-    public var grabpay: String?
-    @Expandable<PaymentMethodDetailsIdeal>
-    public var ideal: String?
-    @Expandable<PaymentMethodDetailsInteracPresent>
-    public var interacPresent: String?
-    @Expandable<PaymentMethodDetailsKakaoPay>
-    public var kakaoPay: String?
-    @Expandable<PaymentMethodDetailsKlarna>
-    public var klarna: String?
-    @Expandable<PaymentMethodDetailsKonbini>
-    public var konbini: String?
-    @Expandable<PaymentMethodDetailsKrCard>
-    public var krCard: String?
-    @Expandable<PaymentMethodDetailsLink>
-    public var link: String?
-    @Expandable<PaymentMethodDetailsMbWay>
-    public var mbWay: String?
-    @Expandable<PaymentMethodDetailsMobilepay>
-    public var mobilepay: String?
-    @Expandable<PaymentMethodDetailsMultibanco>
-    public var multibanco: String?
-    @Expandable<PaymentMethodDetailsNaverPay>
-    public var naverPay: String?
-    @Expandable<PaymentMethodDetailsNzBankAccount>
-    public var nzBankAccount: String?
-    @Expandable<PaymentMethodDetailsOxxo>
-    public var oxxo: String?
-    @Expandable<PaymentMethodDetailsP24>
-    public var p24: String?
-    @Expandable<PaymentMethodDetailsPayByBank>
-    public var payByBank: String?
-    @Expandable<PaymentMethodDetailsPayco>
-    public var payco: String?
-    @Expandable<PaymentMethodDetailsPaynow>
-    public var paynow: String?
-    @Expandable<PaymentMethodDetailsPaypal>
-    public var paypal: String?
-    @Expandable<PaymentMethodDetailsPaypay>
-    public var paypay: String?
-    @Expandable<PaymentMethodDetailsPayto>
-    public var payto: String?
-    @Expandable<PaymentMethodDetailsPix>
-    public var pix: String?
-    @Expandable<PaymentMethodDetailsPromptpay>
-    public var promptpay: String?
-    @Expandable<PaymentMethodDetailsRevolutPay>
-    public var revolutPay: String?
-    @Expandable<PaymentMethodDetailsSamsungPay>
-    public var samsungPay: String?
-    @Expandable<PaymentMethodDetailsSatispay>
-    public var satispay: String?
-    @Expandable<PaymentMethodDetailsScalapay>
-    public var scalapay: String?
-    @Expandable<PaymentMethodDetailsSepaCreditTransfer>
-    public var sepaCreditTransfer: String?
-    @Expandable<PaymentMethodDetailsSepaDebit>
-    public var sepaDebit: String?
-    @Expandable<PaymentMethodDetailsSequra>
-    public var sequra: String?
-    @Expandable<PaymentMethodDetailsSofort>
-    public var sofort: String?
-    @Expandable<PaymentMethodDetailsStripeAccount>
-    public var stripeAccount: String?
-    @Expandable<PaymentMethodDetailsSunbit>
-    public var sunbit: String?
-    @Expandable<PaymentMethodDetailsSwish>
-    public var swish: String?
-    @Expandable<PaymentMethodDetailsTwint>
-    public var twint: String?
+    public var achCreditTransfer: PaymentMethodDetailsAchCreditTransfer?
+    public var achDebit: PaymentMethodDetailsAchDebit?
+    public var acssDebit: PaymentMethodDetailsAcssDebit?
+    public var affirm: PaymentMethodDetailsAffirm?
+    public var afterpayClearpay: PaymentMethodDetailsAfterpayClearpay?
+    public var alipay: PaymentMethodDetailsAlipay?
+    public var alma: PaymentMethodDetailsAlma?
+    public var amazonPay: PaymentMethodDetailsAmazonPay?
+    public var auBecsDebit: PaymentMethodDetailsAuBecsDebit?
+    public var bacsDebit: PaymentMethodDetailsBacsDebit?
+    public var bancontact: PaymentMethodDetailsBancontact?
+    public var billie: PaymentMethodDetailsBillie?
+    public var bizum: PaymentMethodDetailsBizum?
+    public var blik: PaymentMethodDetailsBlik?
+    public var boleto: PaymentMethodDetailsBoleto?
+    public var card: PaymentMethodDetailsCard?
+    public var cardPresent: PaymentMethodDetailsCardPresent?
+    public var cashapp: PaymentMethodDetailsCashapp?
+    public var crypto: PaymentMethodDetailsCrypto?
+    public var customerBalance: PaymentMethodDetailsCustomerBalance?
+    public var eps: PaymentMethodDetailsEps?
+    public var fpx: PaymentMethodDetailsFpx?
+    public var giropay: PaymentMethodDetailsGiropay?
+    public var grabpay: PaymentMethodDetailsGrabpay?
+    public var ideal: PaymentMethodDetailsIdeal?
+    public var interacPresent: PaymentMethodDetailsInteracPresent?
+    public var kakaoPay: PaymentMethodDetailsKakaoPay?
+    public var klarna: PaymentMethodDetailsKlarna?
+    public var konbini: PaymentMethodDetailsKonbini?
+    public var krCard: PaymentMethodDetailsKrCard?
+    public var link: PaymentMethodDetailsLink?
+    public var mbWay: PaymentMethodDetailsMbWay?
+    public var mobilepay: PaymentMethodDetailsMobilepay?
+    public var multibanco: PaymentMethodDetailsMultibanco?
+    public var naverPay: PaymentMethodDetailsNaverPay?
+    public var nzBankAccount: PaymentMethodDetailsNzBankAccount?
+    public var oxxo: PaymentMethodDetailsOxxo?
+    public var p24: PaymentMethodDetailsP24?
+    public var payByBank: PaymentMethodDetailsPayByBank?
+    public var payco: PaymentMethodDetailsPayco?
+    public var paynow: PaymentMethodDetailsPaynow?
+    public var paypal: PaymentMethodDetailsPaypal?
+    public var paypay: PaymentMethodDetailsPaypay?
+    public var payto: PaymentMethodDetailsPayto?
+    public var pix: PaymentMethodDetailsPix?
+    public var promptpay: PaymentMethodDetailsPromptpay?
+    public var revolutPay: PaymentMethodDetailsRevolutPay?
+    public var samsungPay: PaymentMethodDetailsSamsungPay?
+    public var satispay: PaymentMethodDetailsSatispay?
+    public var scalapay: PaymentMethodDetailsScalapay?
+    public var sepaCreditTransfer: PaymentMethodDetailsSepaCreditTransfer?
+    public var sepaDebit: PaymentMethodDetailsSepaDebit?
+    public var sequra: PaymentMethodDetailsSequra?
+    public var sofort: PaymentMethodDetailsSofort?
+    public var stripeAccount: PaymentMethodDetailsStripeAccount?
+    public var sunbit: PaymentMethodDetailsSunbit?
+    public var swish: PaymentMethodDetailsSwish?
+    public var twint: PaymentMethodDetailsTwint?
     /// The type of transaction-specific details of the payment method used in the payment. See
     /// [PaymentMethod.type](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type)
     /// for the full list of possible types. An additional hash is included on `payment_method_details` with
     /// a name matching this value. It contains information specific to the payment method.
     public var type: String
-    @Expandable<PaymentMethodDetailsUpi>
-    public var upi: String?
-    @Expandable<PaymentMethodDetailsUsBankAccount>
-    public var usBankAccount: String?
-    @Expandable<PaymentMethodDetailsWechat>
-    public var wechat: String?
-    @Expandable<PaymentMethodDetailsWechatPay>
-    public var wechatPay: String?
-    @Expandable<PaymentMethodDetailsZip>
-    public var zip: String?
+    public var upi: PaymentMethodDetailsUpi?
+    public var usBankAccount: PaymentMethodDetailsUsBankAccount?
+    public var wechat: PaymentMethodDetailsWechat?
+    public var wechatPay: PaymentMethodDetailsWechatPay?
+    public var zip: PaymentMethodDetailsZip?
 
     public enum CodingKeys: String, CodingKey {
         case achCreditTransfer = "ach_credit_transfer"

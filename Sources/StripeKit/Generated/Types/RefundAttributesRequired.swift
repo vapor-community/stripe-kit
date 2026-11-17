@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever the refund attributes are required on a receiver source to process a refund or a
 /// mispayment.
 public struct RefundAttributesRequired: Codable, Sendable {
+    @Indirect
     public var object: Source
 }
 

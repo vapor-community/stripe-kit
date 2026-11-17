@@ -9,20 +9,15 @@ import Foundation
 
 public struct IssuingTransactionPurchaseDetails: Codable, Sendable {
     /// Fleet-specific information for transactions using Fleet cards.
-    @Expandable<IssuingTransactionFleetData>
-    public var fleet: String?
+    public var fleet: IssuingTransactionFleetData?
     /// Information about the flight that was purchased with this transaction.
-    @Expandable<IssuingTransactionFlightData>
-    public var flight: String?
+    public var flight: IssuingTransactionFlightData?
     /// Information about fuel that was purchased with this transaction.
-    @Expandable<IssuingTransactionFuelData>
-    public var fuel: String?
+    public var fuel: IssuingTransactionFuelData?
     /// Information about lodging that was purchased with this transaction.
-    @Expandable<IssuingTransactionLodgingData>
-    public var lodging: String?
+    public var lodging: IssuingTransactionLodgingData?
     /// The line items in the purchase.
-    @ExpandableCollection<IssuingTransactionReceiptData>
-    public var receipt: [String]?
+    public var receipt: [IssuingTransactionReceiptData]?
     /// A merchant-specific order number.
     public var reference: String?
 }

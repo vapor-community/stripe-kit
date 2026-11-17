@@ -23,8 +23,7 @@ public struct ThreeDSecureStandaloneResourceOutcomeDetails: Codable, Sendable {
     /// Electronic Commerce Indicator provided by the issuer to indicate the result of this 3DS
     /// Authentication.
     public var eci: String?
-    @Expandable<ThreeDSecureStandaloneResourceNetworkDetails>
-    public var networkDetails: String?
+    public var networkDetails: ThreeDSecureStandaloneResourceNetworkDetails?
     /// The 3DS protocol version used for this 3DS Authentication.
     public var protocolVersion: ThreeDSecureStandaloneResourceOutcomeDetailsProtocolVersion
     /// The indicator provided to the issuer by Stripe in the AReq that indicates whether a challenge is

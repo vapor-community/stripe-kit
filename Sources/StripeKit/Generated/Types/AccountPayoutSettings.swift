@@ -14,8 +14,7 @@ public struct AccountPayoutSettings: Codable, Sendable {
     /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
     /// is `application`, which includes Custom accounts, otherwise `true`.
     public var debitNegativeBalances: Bool
-    @Expandable<TransferSchedule>
-    public var schedule: String?
+    public var schedule: TransferSchedule
     /// The text that appears on the bank account statement for payouts. If not set, this defaults to the
     /// platform's bank descriptor as set in the Dashboard.
     public var statementDescriptor: String?

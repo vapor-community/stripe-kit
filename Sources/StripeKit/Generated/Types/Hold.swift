@@ -40,10 +40,8 @@ public struct Hold: Codable, Sendable {
     /// The reason for the ReserveHold.
     public var reason: HoldReason
     /// List of ReserveReleases and the amounts released from this ReserveHold.
-    @ExpandableCollection<ReservesReserveHoldsResourcesReleaseDetail>
-    public var releaseDetails: [String]?
-    @Expandable<ReservesReserveHoldsResourcesReleaseSchedule>
-    public var releaseSchedule: String?
+    public var releaseDetails: [ReservesReserveHoldsResourcesReleaseDetail]?
+    public var releaseSchedule: ReservesReserveHoldsResourcesReleaseSchedule
     /// The ReservePlan which produced this ReserveHold (i.e., resplan_123)
     @Expandable<ReservePlan>
     public var reservePlan: String?

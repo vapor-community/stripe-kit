@@ -11,8 +11,7 @@ import Foundation
 public struct CreditBalanceSummary: Codable, Sendable {
     /// The billing credit balances. One entry per credit grant currency. If a customer only has credit
     /// grants in a single currency, then this will have a single balance entry.
-    @ExpandableCollection<CreditBalance>
-    public var balances: [String]?
+    public var balances: [CreditBalance]
     /// The customer the balance is for.
     @Expandable<Customer>
     public var customer: String?

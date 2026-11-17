@@ -25,10 +25,8 @@ public struct Install: Codable, Sendable {
     public var authCode: String?
     /// The distribution channel associated with the app install.
     public var channel: InstallChannel
-    @Expandable<AppServiceResourceInstallContentSecurityPolicy>
-    public var contentSecurityPolicyGranted: String?
-    @Expandable<AppServiceResourceInstallContentSecurityPolicy>
-    public var contentSecurityPolicyPending: String?
+    public var contentSecurityPolicyGranted: AppServiceResourceInstallContentSecurityPolicy
+    public var contentSecurityPolicyPending: AppServiceResourceInstallContentSecurityPolicy
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// The ID of the embedding platform that created the install, if applicable.

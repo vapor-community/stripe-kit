@@ -36,8 +36,7 @@ public struct Product: Codable, Sendable {
     public var livemode: Bool
     /// A list of up to 15 marketing features for this product. These are displayed in [pricing
     /// tables](https://docs.stripe.com/payments/checkout/pricing-table).
-    @ExpandableCollection<ProductMarketingFeature>
-    public var marketingFeatures: [String]?
+    public var marketingFeatures: [ProductMarketingFeature]
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]
@@ -46,8 +45,7 @@ public struct Product: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: ProductObject
     /// The dimensions of this product for shipping purposes.
-    @Expandable<PackageDimensions>
-    public var packageDimensions: String?
+    public var packageDimensions: PackageDimensions?
     /// Whether this product is shipped (i.e., physical goods).
     public var shippable: Bool?
     /// Extra information about a product which will appear on your customer's credit card statement. In the
@@ -59,8 +57,7 @@ public struct Product: Codable, Sendable {
     public var taxCode: String?
     /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
     /// location.
-    @Expandable<TaxProductTaxDetailsResourceTaxDetails>
-    public var taxDetails: String?
+    public var taxDetails: TaxProductTaxDetailsResourceTaxDetails?
     /// The type of the product. The product is either of type `good`, which is eligible for use with Orders
     /// and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
     public var type: ProductType

@@ -8,36 +8,21 @@
 import Foundation
 
 public struct SetupIntentPaymentMethodOptions: Codable, Sendable {
-    @Expandable<SetupIntentPaymentMethodOptionsAcssDebit>
-    public var acssDebit: String?
-    @Expandable<SetupIntentPaymentMethodOptionsAmazonPay>
-    public var amazonPay: String?
-    @Expandable<SetupIntentPaymentMethodOptionsBacsDebit>
-    public var bacsDebit: String?
-    @Expandable<SetupIntentPaymentMethodOptionsBizum>
-    public var bizum: String?
-    @Expandable<SetupIntentPaymentMethodOptionsBlik>
-    public var blik: String?
-    @Expandable<SetupIntentPaymentMethodOptionsCard>
-    public var card: String?
-    @Expandable<SetupIntentPaymentMethodOptionsCardPresent>
-    public var cardPresent: String?
-    @Expandable<SetupIntentPaymentMethodOptionsKlarna>
-    public var klarna: String?
-    @Expandable<SetupIntentPaymentMethodOptionsLink>
-    public var link: String?
-    @Expandable<SetupIntentPaymentMethodOptionsPaypal>
-    public var paypal: String?
-    @Expandable<SetupIntentPaymentMethodOptionsPayto>
-    public var payto: String?
-    @Expandable<SetupIntentPaymentMethodOptionsPix>
-    public var pix: String?
-    @Expandable<SetupIntentPaymentMethodOptionsSepaDebit>
-    public var sepaDebit: String?
-    @Expandable<SetupIntentPaymentMethodOptionsUpi>
-    public var upi: String?
-    @Expandable<SetupIntentPaymentMethodOptionsUsBankAccount>
-    public var usBankAccount: String?
+    public var acssDebit: SetupIntentPaymentMethodOptionsAcssDebit?
+    public var amazonPay: SetupIntentPaymentMethodOptionsAmazonPay?
+    public var bacsDebit: SetupIntentPaymentMethodOptionsBacsDebit?
+    public var bizum: SetupIntentPaymentMethodOptionsBizum?
+    public var blik: SetupIntentPaymentMethodOptionsBlik?
+    public var card: SetupIntentPaymentMethodOptionsCard?
+    public var cardPresent: SetupIntentPaymentMethodOptionsCardPresent?
+    public var klarna: SetupIntentPaymentMethodOptionsKlarna?
+    public var link: SetupIntentPaymentMethodOptionsLink?
+    public var paypal: SetupIntentPaymentMethodOptionsPaypal?
+    public var payto: SetupIntentPaymentMethodOptionsPayto?
+    public var pix: SetupIntentPaymentMethodOptionsPix?
+    public var sepaDebit: SetupIntentPaymentMethodOptionsSepaDebit?
+    public var upi: SetupIntentPaymentMethodOptionsUpi?
+    public var usBankAccount: SetupIntentPaymentMethodOptionsUsBankAccount?
 
     public enum CodingKeys: String, CodingKey {
         case acssDebit = "acss_debit"

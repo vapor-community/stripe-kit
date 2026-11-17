@@ -19,8 +19,7 @@ public struct PaymentMethodDetailsCard: Codable, Sendable {
     /// uncaptured.
     public var captureBefore: Int?
     /// Check results by Card networks on Card address and CVC at time of payment.
-    @Expandable<PaymentMethodDetailsCardChecks>
-    public var checks: String?
+    public var checks: PaymentMethodDetailsCardChecks?
     /// Two-letter ISO code representing the country of the card. You could use this attribute to get a
     /// sense of the international breakdown of cards you've collected.
     public var country: String?
@@ -36,8 +35,7 @@ public struct PaymentMethodDetailsCard: Codable, Sendable {
     public var expMonth: Int
     /// Four-digit number representing the card's expiration year.
     public var expYear: Int
-    @Expandable<PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesExtendedAuthorizationExtendedAuthorization>
-    public var extendedAuthorization: String?
+    public var extendedAuthorization: PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesExtendedAuthorizationExtendedAuthorization?
     /// Uniquely identifies this particular card number. You can use this attribute to check whether two
     /// customers who’ve signed up with you are using the same card number, for example. For payment methods
     /// that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided
@@ -50,12 +48,10 @@ public struct PaymentMethodDetailsCard: Codable, Sendable {
     /// Issuer identification number of the card. (For internal use only and not typically available in
     /// standard API requests.)
     public var iin: String?
-    @Expandable<PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesIncrementalAuthorizationIncrementalAuthorization>
-    public var incrementalAuthorization: String?
+    public var incrementalAuthorization: PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesIncrementalAuthorizationIncrementalAuthorization?
     /// Installment details for this payment. For more information, see the [installments integration
     /// guide](https://docs.stripe.com/payments/installments).
-    @Expandable<PaymentMethodDetailsCardInstallments>
-    public var installments: String?
+    public var installments: PaymentMethodDetailsCardInstallments?
     /// The name of the card's issuing bank. (For internal use only and not typically available in standard
     /// API requests.)
     public var issuer: String?
@@ -66,22 +62,19 @@ public struct PaymentMethodDetailsCard: Codable, Sendable {
     public var mandate: String?
     /// True if this payment was marked as MOTO and out of scope for SCA.
     public var moto: Bool?
-    @Expandable<PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceMulticapture>
-    public var multicapture: String?
+    public var multicapture: PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceMulticapture?
     /// Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`,
     /// `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
     public var network: String?
     /// If this card has network token credentials, this contains the details of the network token
     /// credentials.
-    @Expandable<PaymentMethodDetailsCardNetworkToken>
-    public var networkToken: String?
+    public var networkToken: PaymentMethodDetailsCardNetworkToken?
     /// This is used by the financial networks to identify a transaction. Visa calls this the Transaction
     /// ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data.
     /// This value will be present if it is returned by the financial network in the authorization response,
     /// and null otherwise.
     public var networkTransactionId: String?
-    @Expandable<PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesOvercaptureOvercapture>
-    public var overcapture: String?
+    public var overcapture: PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesOvercaptureOvercapture?
     /// Status of a card based on the card issuer.
     public var regulatedStatus: PaymentMethodDetailsCardRegulatedStatus?
     /// The payment_method_options.card.setup_credential_usage value that was passed when setup_future_usage
@@ -91,16 +84,14 @@ public struct PaymentMethodDetailsCard: Codable, Sendable {
     /// merchant-initiated transaction.
     public var storedCredentialUsage: PaymentMethodDetailsCardStoredCredentialUsage?
     /// Populated if this transaction used 3D Secure authentication.
-    @Expandable<ThreeDSecureDetailsCharge>
-    public var threeDSecure: String?
+    public var threeDSecure: ThreeDSecureDetailsCharge?
     /// Transaction Link ID (TLID) is a unique identifier for a transaction. This is used by some card
     /// networks, such as Mastercard, for transaction linking, in addition to Network Transaction IDs. This
     /// value will be present if it is returned by the financial network in the authorization response, and
     /// null otherwise.
     public var transactionLinkId: String?
     /// If this Card is part of a card wallet, this contains the details of the card wallet.
-    @Expandable<PaymentMethodDetailsCardWallet>
-    public var wallet: String?
+    public var wallet: PaymentMethodDetailsCardWallet?
 
     public enum CodingKeys: String, CodingKey {
         case amountAuthorized = "amount_authorized"

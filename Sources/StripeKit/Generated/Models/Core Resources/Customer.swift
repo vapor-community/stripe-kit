@@ -13,8 +13,7 @@ import Foundation
 /// payments that belong to the same customer.
 public struct Customer: Codable, Sendable {
     /// The customer's billing address.
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address?
     /// The current balance, if any, that's stored on the customer in their default currency. If negative,
     /// the customer has credit to apply to their next invoice. If positive, the customer has an amount owed
     /// that's added to their next invoice. The balance only considers amounts that Stripe hasn't
@@ -27,8 +26,8 @@ public struct Customer: Codable, Sendable {
     /// The current funds being held by Stripe on behalf of the customer. You can apply these funds towards
     /// payment intents when the source is "cash_balance". The `settings[reconciliation_mode]` field
     /// describes if these funds apply to these payment intents manually or automatically.
-    @Expandable<CashBalance>
-    public var cashBalance: String?
+    @Indirect
+    public var cashBalance: CashBalance?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) the customer can be
@@ -54,8 +53,7 @@ public struct Customer: Codable, Sendable {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Describes the current discount active on the customer, if there is one.
-    @Expandable<Discount>
-    public var discount: String?
+    public var discount: Discount?
     /// The customer's email address.
     public var email: String?
     /// Unique identifier for the object.
@@ -71,8 +69,7 @@ public struct Customer: Codable, Sendable {
     public var invoiceCreditBalance: [String: Int]?
     /// The prefix for the customer used to generate unique invoice numbers.
     public var invoicePrefix: String?
-    @Expandable<InvoiceSettingCustomerSetting>
-    public var invoiceSettings: String?
+    public var invoiceSettings: InvoiceSettingCustomerSetting?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -91,14 +88,12 @@ public struct Customer: Codable, Sendable {
     /// The customer's preferred locales (languages), ordered by preference.
     public var preferredLocales: [String]?
     /// Mailing and shipping address for the customer. Appears on invoices emailed to this customer.
-    @Expandable<Shipping>
-    public var shipping: String?
+    public var shipping: Shipping?
     /// The customer's payment sources, if any.
     public var sources: PaymentSourceList?
     /// The customer's current subscriptions, if any.
     public var subscriptions: SubscriptionList?
-    @Expandable<CustomerTax>
-    public var tax: String?
+    public var tax: CustomerTax?
     /// Describes the customer's tax exemption status, which is `none`, `exempt`, or `reverse`. When set to
     /// `reverse`, invoice and receipt PDFs include the following text: **"Reverse charge"**.
     public var taxExempt: CustomerTaxExempt?

@@ -18,8 +18,7 @@ public struct TaxTransaction: Codable, Sendable {
     /// The ID of an existing [Customer](https://docs.stripe.com/api/customers/object) used for the
     /// resource.
     public var customer: String?
-    @Expandable<TaxProductResourceCustomerDetails>
-    public var customerDetails: String?
+    public var customerDetails: TaxProductResourceCustomerDetails
     /// Unique identifier for the transaction.
     public var id: String
     /// The tax collected or refunded, by line item.
@@ -37,14 +36,11 @@ public struct TaxTransaction: Codable, Sendable {
     /// A custom unique identifier, such as 'myOrder_123'.
     public var reference: String
     /// If `type=reversal`, contains information about what was reversed.
-    @Expandable<TaxProductResourceTaxTransactionResourceReversal>
-    public var reversal: String?
+    public var reversal: TaxProductResourceTaxTransactionResourceReversal?
     /// The details of the ship from location, such as the address.
-    @Expandable<TaxProductResourceShipFromDetails>
-    public var shipFromDetails: String?
+    public var shipFromDetails: TaxProductResourceShipFromDetails?
     /// The shipping cost details for the transaction.
-    @Expandable<TaxProductResourceTaxTransactionShippingCost>
-    public var shippingCost: String?
+    public var shippingCost: TaxProductResourceTaxTransactionShippingCost?
     /// The calculation uses the tax rules and rates that are in effect at this timestamp. You can use a
     /// date up to 31 days in the past or up to 31 days in the future. If you use a future date, Stripe
     /// doesn't guarantee that the expected tax rules and rate being used match the actual rules and rate

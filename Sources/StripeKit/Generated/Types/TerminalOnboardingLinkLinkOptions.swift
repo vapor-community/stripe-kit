@@ -10,8 +10,7 @@ import Foundation
 /// Link type options associated with the current onboarding link object.
 public struct TerminalOnboardingLinkLinkOptions: Codable, Sendable {
     /// The options associated with the Apple Terms and Conditions link type.
-    @Expandable<TerminalOnboardingLinkAppleTermsAndConditions>
-    public var appleTermsAndConditions: String?
+    public var appleTermsAndConditions: TerminalOnboardingLinkAppleTermsAndConditions?
 
     public enum CodingKeys: String, CodingKey {
         case appleTermsAndConditions = "apple_terms_and_conditions"

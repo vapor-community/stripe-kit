@@ -14,8 +14,7 @@ public struct IssuingAuthorizationPendingRequest: Codable, Sendable {
     public var amount: Int
     /// Detailed breakdown of amount components. These amounts are denominated in `currency` and in the
     /// [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-    @Expandable<IssuingAuthorizationAmountDetails>
-    public var amountDetails: String?
+    public var amountDetails: IssuingAuthorizationAmountDetails?
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String

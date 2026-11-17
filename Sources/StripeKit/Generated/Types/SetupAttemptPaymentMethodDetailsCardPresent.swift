@@ -12,8 +12,7 @@ public struct SetupAttemptPaymentMethodDetailsCardPresent: Codable, Sendable {
     @Expandable<PaymentMethod>
     public var generatedCard: String?
     /// Details about payments collected offline.
-    @Expandable<PaymentMethodDetailsCardPresentOffline>
-    public var offline: String?
+    public var offline: PaymentMethodDetailsCardPresentOffline?
 
     public enum CodingKeys: String, CodingKey {
         case generatedCard = "generated_card"

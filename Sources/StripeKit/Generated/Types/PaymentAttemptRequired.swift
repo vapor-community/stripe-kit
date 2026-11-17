@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when an invoice requires a payment using a payment method that cannot be processed by Stripe.
 public struct PaymentAttemptRequired: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

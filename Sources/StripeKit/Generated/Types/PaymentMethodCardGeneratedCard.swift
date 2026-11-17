@@ -11,8 +11,7 @@ public struct PaymentMethodCardGeneratedCard: Codable, Sendable {
     /// The charge that created this object.
     public var charge: String?
     /// Transaction-specific details of the payment method used in the payment.
-    @Expandable<CardGeneratedFromPaymentMethodDetails>
-    public var paymentMethodDetails: String?
+    public var paymentMethodDetails: CardGeneratedFromPaymentMethodDetails?
     /// The ID of the SetupAttempt that generated this PaymentMethod, if any.
     @Expandable<SetupAttempt>
     public var setupAttempt: String?

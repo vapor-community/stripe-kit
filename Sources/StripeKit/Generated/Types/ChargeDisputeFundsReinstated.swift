@@ -10,6 +10,7 @@ import Foundation
 /// Occurs when funds are reinstated to your account after a dispute is closed. This includes [partially
 /// refunded payments](https://docs.stripe.com/disputes#disputes-on-partially-refunded-payments).
 public struct ChargeDisputeFundsReinstated: Codable, Sendable {
+    @Indirect
     public var object: Dispute
 }
 

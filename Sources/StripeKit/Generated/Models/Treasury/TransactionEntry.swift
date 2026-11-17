@@ -14,8 +14,7 @@ import Foundation
 /// new v1 integration. TransactionEntries represent individual units of money movements within a single
 /// [Transaction](https://docs.stripe.com/api#transactions).
 public struct TransactionEntry: Codable, Sendable {
-    @Expandable<TreasuryTransactionsResourceBalanceImpact>
-    public var balanceImpact: String?
+    public var balanceImpact: TreasuryTransactionsResourceBalanceImpact
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -28,8 +27,7 @@ public struct TransactionEntry: Codable, Sendable {
     /// Token of the flow associated with the TransactionEntry.
     public var flow: String?
     /// Details of the flow associated with the TransactionEntry.
-    @Expandable<TreasuryTransactionsResourceFlowDetails>
-    public var flowDetails: String?
+    public var flowDetails: TreasuryTransactionsResourceFlowDetails?
     /// Type of the flow associated with the TransactionEntry.
     public var flowType: TransactionEntryFlowType
     /// Unique identifier for the object.

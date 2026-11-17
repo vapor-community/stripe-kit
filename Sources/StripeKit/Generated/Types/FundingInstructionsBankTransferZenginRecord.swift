@@ -9,16 +9,14 @@ import Foundation
 
 /// Zengin Records contain Japan bank account details per the Zengin format.
 public struct FundingInstructionsBankTransferZenginRecord: Codable, Sendable {
-    @Expandable<Address>
-    public var accountHolderAddress: String?
+    public var accountHolderAddress: Address
     /// The account holder name
     public var accountHolderName: String?
     /// The account number
     public var accountNumber: String?
     /// The bank account type. In Japan, this can only be `futsu` or `toza`.
     public var accountType: String?
-    @Expandable<Address>
-    public var bankAddress: String?
+    public var bankAddress: Address
     /// The bank code of the account
     public var bankCode: String?
     /// The bank name of the account

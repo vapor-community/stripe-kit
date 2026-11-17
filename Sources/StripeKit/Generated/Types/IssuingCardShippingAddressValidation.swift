@@ -11,8 +11,7 @@ public struct IssuingCardShippingAddressValidation: Codable, Sendable {
     /// The address validation capabilities to use.
     public var mode: IssuingCardShippingAddressValidationMode
     /// The normalized shipping address.
-    @Expandable<Address>
-    public var normalizedAddress: String?
+    public var normalizedAddress: Address?
     /// The validation result for the shipping address.
     public var result: IssuingCardShippingAddressValidationResult?
 

@@ -11,8 +11,7 @@ public struct FundingInstructionsBankTransfer: Codable, Sendable {
     /// The country of the bank account to fund
     public var country: String
     /// A list of financial addresses that can be used to fund a particular balance
-    @ExpandableCollection<FundingInstructionsBankTransferFinancialAddress>
-    public var financialAddresses: [String]?
+    public var financialAddresses: [FundingInstructionsBankTransferFinancialAddress]
     /// The bank_transfer type
     public var type: FundingInstructionsBankTransferType
 

@@ -13,8 +13,7 @@ public struct GelatoSelfieReport: Codable, Sendable {
     /// in this check.
     public var document: String?
     /// Details on the verification error. Present when status is `unverified`.
-    @Expandable<GelatoSelfieReportError>
-    public var error: String?
+    public var error: GelatoSelfieReportError?
     /// ID of the [File](https://docs.stripe.com/api/files) holding the image of the selfie used in this
     /// check.
     public var selfie: String?

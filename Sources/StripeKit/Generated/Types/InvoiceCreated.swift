@@ -11,6 +11,7 @@ import Foundation
 /// they can affect it, see [Using Webhooks with
 /// Subscriptions](https://docs.stripe.com/subscriptions/webhooks).
 public struct InvoiceCreated: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a cardholder is updated.
 public struct IssuingCardholderUpdated: Codable, Sendable {
+    @Indirect
     public var object: Cardholder
 }
 

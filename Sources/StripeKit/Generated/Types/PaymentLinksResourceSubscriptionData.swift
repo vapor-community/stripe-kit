@@ -12,8 +12,7 @@ public struct PaymentLinksResourceSubscriptionData: Codable, Sendable {
     /// optionally store an explanation of the subscription for rendering in Stripe surfaces and certain
     /// local payment methods UIs.
     public var description: String?
-    @Expandable<PaymentLinksResourceSubscriptionDataInvoiceSettings>
-    public var invoiceSettings: String?
+    public var invoiceSettings: PaymentLinksResourceSubscriptionDataInvoiceSettings
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on
     /// [Subscriptions](https://docs.stripe.com/api/subscriptions) generated from this payment link.
     public var metadata: [String: String]
@@ -21,8 +20,7 @@ public struct PaymentLinksResourceSubscriptionData: Codable, Sendable {
     /// time.
     public var trialPeriodDays: Int?
     /// Settings related to subscription trials.
-    @Expandable<SubscriptionsTrialsResourceTrialSettings>
-    public var trialSettings: String?
+    public var trialSettings: SubscriptionsTrialsResourceTrialSettings?
 
     public enum CodingKeys: String, CodingKey {
         case description

@@ -9,8 +9,7 @@ import Foundation
 
 public struct PaymentLinksResourcePaymentMethodOptions: Codable, Sendable {
     /// Configuration for `card` payment methods.
-    @Expandable<PaymentLinksResourceCardPaymentMethodOptions>
-    public var card: String?
+    public var card: PaymentLinksResourceCardPaymentMethodOptions?
 }
 
 public struct PaymentLinksResourcePaymentMethodOptionsList: Codable, Sendable {

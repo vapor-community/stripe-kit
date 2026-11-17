@@ -8,8 +8,7 @@
 import Foundation
 
 public struct TaxProductResourceShipFromDetails: Codable, Sendable {
-    @Expandable<TaxProductResourcePostalAddress>
-    public var address: String?
+    public var address: TaxProductResourcePostalAddress
 }
 
 public struct TaxProductResourceShipFromDetailsList: Codable, Sendable {

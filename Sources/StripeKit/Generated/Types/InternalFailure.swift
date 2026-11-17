@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a test clock fails to advance its frozen time.
 public struct InternalFailure: Codable, Sendable {
+    @Indirect
     public var object: TestClock
 }
 

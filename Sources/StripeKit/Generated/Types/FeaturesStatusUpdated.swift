@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever the statuses of any features within an existing FinancialAccount are updated.
 public struct FeaturesStatusUpdated: Codable, Sendable {
+    @Indirect
     public var object: FinancialAccount
 }
 

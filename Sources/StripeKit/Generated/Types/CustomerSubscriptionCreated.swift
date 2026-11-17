@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a customer is signed up for a new plan.
 public struct CustomerSubscriptionCreated: Codable, Sendable {
+    @Indirect
     public var object: Subscription
 }
 

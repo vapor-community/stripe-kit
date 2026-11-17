@@ -11,8 +11,7 @@ public struct DisputeEvidenceDetails: Codable, Sendable {
     /// Date by which evidence must be submitted in order to successfully challenge dispute. Will be 0 if
     /// the customer's bank or credit card company doesn't allow a response for this particular dispute.
     public var dueBy: Int?
-    @Expandable<DisputeEnhancedEligibility>
-    public var enhancedEligibility: String?
+    public var enhancedEligibility: DisputeEnhancedEligibility
     /// Whether evidence has been staged for this dispute.
     public var hasEvidence: Bool
     /// Whether the last evidence submission was submitted past the due date. Defaults to `false` if no

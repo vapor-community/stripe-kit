@@ -9,8 +9,7 @@ import Foundation
 
 public struct PersonAdditionalTosAcceptances: Codable, Sendable {
     /// Details on the legal guardian's acceptance of the main Stripe service agreement.
-    @Expandable<PersonAdditionalTosAcceptance>
-    public var account: String?
+    public var account: PersonAdditionalTosAcceptance?
 }
 
 public struct PersonAdditionalTosAcceptancesList: Codable, Sendable {

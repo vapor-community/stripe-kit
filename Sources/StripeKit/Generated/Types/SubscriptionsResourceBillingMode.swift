@@ -10,8 +10,7 @@ import Foundation
 /// The billing mode of the subscription.
 public struct SubscriptionsResourceBillingMode: Codable, Sendable {
     /// Configure behavior for flexible billing mode
-    @Expandable<SubscriptionsResourceBillingModeFlexible>
-    public var flexible: String?
+    public var flexible: SubscriptionsResourceBillingModeFlexible?
     /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
     public var type: SubscriptionsResourceBillingModeType
     /// Details on when the current billing_mode was adopted.

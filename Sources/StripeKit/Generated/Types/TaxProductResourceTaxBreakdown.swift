@@ -12,8 +12,7 @@ public struct TaxProductResourceTaxBreakdown: Codable, Sendable {
     public var amount: Int
     /// Specifies whether the tax amount is included in the line item amount.
     public var inclusive: Bool
-    @Expandable<TaxProductResourceTaxRateDetails>
-    public var taxRateDetails: String?
+    public var taxRateDetails: TaxProductResourceTaxRateDetails
     /// The reasoning behind this tax, for example, if the product is tax exempt. We might extend the
     /// possible values for this field to support new tax rules.
     public var taxabilityReason: TaxProductResourceTaxBreakdownTaxabilityReason

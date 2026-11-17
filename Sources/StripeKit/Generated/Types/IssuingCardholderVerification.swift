@@ -9,8 +9,7 @@ import Foundation
 
 public struct IssuingCardholderVerification: Codable, Sendable {
     /// An identifying document, either a passport or local ID card.
-    @Expandable<IssuingCardholderIdDocument>
-    public var document: String?
+    public var document: IssuingCardholderIdDocument?
 }
 
 public struct IssuingCardholderVerificationList: Codable, Sendable {

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a source transaction is created.
 public struct SourceTransactionCreated: Codable, Sendable {
+    @Indirect
     public var object: SourceTransaction
 }
 

@@ -19,6 +19,7 @@
 //     ├── StripeAPIHandler.swift   — HTTP transport
 //     ├── StripeClient+Scoping.swift — Connected-account and idempotency scoping
 //     ├── StripeExpandable.swift   — @Expandable / @ExpandableCollection property wrappers
+//     ├── Indirect.swift           — @Indirect, storing embedded resources out of line
 //     ├── StripeError.swift        — Error types
 //     ├── StripeParams.swift       — StripeParams protocol and form encoding
 //     ├── StripeRangeQuery.swift   — Range filters for list params (`created`, …)
@@ -71,7 +72,7 @@ struct CodegenCLI: AsyncParsableCommand {
         // ── 3. Initialize generators ─────────────────────────────
         let pathMapping = parser.buildPathMapping()
         print("🗺️  Path mapping: \(pathMapping.count) schemas → API paths")
-        let modelGen = ModelGenerator(parser: parser)
+        let modelGen = ModelGenerator(parser: parser, resources: resources, inlineTypes: inlineSchemas)
         let routeGen = RouteGenerator(spec: openAPISpec, parser: parser, pathMapping: pathMapping)
         let paramGen = ParamGenerator(spec: openAPISpec, parser: parser)
 

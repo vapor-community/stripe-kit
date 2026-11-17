@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a user installs a Stripe app. Sent to the app developer, embedding platform, and
 /// installing merchant.
 public struct AppsInstallCreated: Codable, Sendable {
+    @Indirect
     public var object: Install
 }
 

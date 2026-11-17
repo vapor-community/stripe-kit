@@ -36,7 +36,8 @@ public struct Invoice: Codable, Sendable {
     /// invoice.
     public var accountName: String?
     /// The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
-    public var accountTaxIds: [[String: AnyCodableValue]]?
+    @ExpandableCollection<TaxId>
+    public var accountTaxIds: [String]?
     /// Final amount due at this time for this invoice. If the invoice's total is smaller than the minimum
     /// charge amount, for example, or if there is account credit that can be applied to the invoice, the
     /// `amount_due` may be 0. If there is a positive `starting_balance` for the invoice (the customer owes
@@ -73,8 +74,7 @@ public struct Invoice: Codable, Sendable {
     /// collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the
     /// invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
     public var autoAdvance: Bool?
-    @Expandable<AutomaticTax>
-    public var automaticTax: String?
+    public var automaticTax: AutomaticTax
     /// The time when this invoice is currently scheduled to be automatically finalized. The field will be
     /// `null` if the invoice is not scheduled to finalize in the future. If the invoice is not in the draft
     /// state, this field will always be `null` - see `finalized_at` for the time when an already-finalized
@@ -95,16 +95,14 @@ public struct Invoice: Codable, Sendable {
     public var collectionMethod: InvoiceCollectionMethod
     /// The confirmation secret associated with this invoice. Currently, this contains the client_secret of
     /// the PaymentIntent that Stripe creates during invoice finalization.
-    @Expandable<InvoicesResourceConfirmationSecret>
-    public var confirmationSecret: String?
+    public var confirmationSecret: InvoicesResourceConfirmationSecret?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// Custom fields displayed on the invoice.
-    @ExpandableCollection<InvoiceSettingCustomField>
-    public var customFields: [String]?
+    public var customFields: [InvoiceSettingCustomField]?
     /// The ID of the customer to bill.
     @Expandable<Customer>
     public var customer: String?
@@ -112,8 +110,7 @@ public struct Invoice: Codable, Sendable {
     public var customerAccount: String?
     /// The customer's address. Until the invoice is finalized, this field will equal `customer.address`.
     /// Once the invoice is finalized, this field will no longer be updated.
-    @Expandable<Address>
-    public var customerAddress: String?
+    public var customerAddress: Address?
     /// The customer's email. Until the invoice is finalized, this field will equal `customer.email`. Once
     /// the invoice is finalized, this field will no longer be updated.
     public var customerEmail: String?
@@ -125,15 +122,13 @@ public struct Invoice: Codable, Sendable {
     public var customerPhone: String?
     /// The customer's shipping information. Until the invoice is finalized, this field will equal
     /// `customer.shipping`. Once the invoice is finalized, this field will no longer be updated.
-    @Expandable<Shipping>
-    public var customerShipping: String?
+    public var customerShipping: Shipping?
     /// The customer's tax exempt status. Until the invoice is finalized, this field will equal
     /// `customer.tax_exempt`. Once the invoice is finalized, this field will no longer be updated.
     public var customerTaxExempt: InvoiceCustomerTaxExempt?
     /// The customer's tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as
     /// `customer.tax_ids`. Once the invoice is finalized, this field will no longer be updated.
-    @ExpandableCollection<InvoicesResourceInvoiceTaxId>
-    public var customerTaxIds: [String]?
+    public var customerTaxIds: [InvoicesResourceInvoiceTaxId]?
     /// ID of the default payment method for the invoice. It must belong to the customer associated with the
     /// invoice. If not set, defaults to the subscription's default payment method, if any, or to the
     /// default payment method in the customer's invoice settings.
@@ -145,14 +140,14 @@ public struct Invoice: Codable, Sendable {
     @Expandable<PaymentSource>
     public var defaultSource: String?
     /// The tax rates applied to this invoice, if any.
-    @ExpandableCollection<TaxRate>
-    public var defaultTaxRates: [String]?
+    public var defaultTaxRates: [TaxRate]
     /// An arbitrary string attached to the object. Often useful for displaying to users. Referenced as
     /// 'memo' in the Dashboard.
     public var description: String?
     /// The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use
     /// `expand[]=discounts` to expand each discount.
-    public var discounts: [[String: AnyCodableValue]]
+    @ExpandableCollection<Discount>
+    public var discounts: [String]?
     /// The date on which payment for this invoice is due. This value will be `null` for invoices where
     /// `collection_method=charge_automatically`.
     public var dueDate: Int?
@@ -167,8 +162,7 @@ public struct Invoice: Codable, Sendable {
     public var footer: String?
     /// Details of the invoice that was cloned. See the [revision
     /// documentation](https://docs.stripe.com/invoicing/invoice-revisions) for more details.
-    @Expandable<InvoicesResourceFromInvoice>
-    public var fromInvoice: String?
+    public var fromInvoice: InvoicesResourceFromInvoice?
     /// The URL for the hosted invoice page, which allows customers to view and pay an invoice. If the
     /// invoice has not been finalized yet, this will be null.
     public var hostedInvoiceUrl: String?
@@ -179,12 +173,10 @@ public struct Invoice: Codable, Sendable {
     /// The link to download the PDF for the invoice. If the invoice has not been finalized yet, this will
     /// be null.
     public var invoicePdf: String?
-    @Expandable<ConnectAccountReference>
-    public var issuer: String?
+    public var issuer: ConnectAccountReference
     /// The error encountered during the previous attempt to finalize the invoice. This field is cleared
     /// when the invoice is successfully finalized.
-    @Expandable<ApiErrors>
-    public var lastFinalizationError: String?
+    public var lastFinalizationError: ApiErrors?
     /// The ID of the most recent non-draft revision of this invoice
     @Expandable<Invoice>
     public var latestRevision: String?
@@ -213,10 +205,8 @@ public struct Invoice: Codable, Sendable {
     @Expandable<Account>
     public var onBehalfOf: String?
     /// The parent that generated this invoice
-    @Expandable<BillingBillResourceInvoicingParentsInvoiceParent>
-    public var parent: String?
-    @Expandable<InvoicesPaymentSettings>
-    public var paymentSettings: String?
+    public var parent: BillingBillResourceInvoicingParentsInvoiceParent?
+    public var paymentSettings: InvoicesPaymentSettings
     /// Payments for this invoice. Use [invoice payment](/api/invoice-payment) to get more details.
     public var payments: InvoicePaymentList?
     /// The latest timestamp at which invoice items can be associated with this invoice. Use the [line item
@@ -235,15 +225,12 @@ public struct Invoice: Codable, Sendable {
     public var receiptNumber: String?
     /// The rendering-related settings that control how invoices render in customer-facing interfaces such
     /// as the PDF or hosted invoice page.
-    @Expandable<InvoicesResourceInvoiceRendering>
-    public var rendering: String?
+    public var rendering: InvoicesResourceInvoiceRendering?
     /// The details of the cost of shipping, including the ShippingRate applied on the invoice.
-    @Expandable<InvoicesResourceShippingCost>
-    public var shippingCost: String?
+    public var shippingCost: InvoicesResourceShippingCost?
     /// Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is
     /// set, otherwise the PDF will render the shipping address from the customer.
-    @Expandable<Shipping>
-    public var shippingDetails: String?
+    public var shippingDetails: Shipping?
     /// Starting customer balance before the invoice is finalized. If the invoice has not been finalized
     /// yet, this will be the current customer balance. For revision invoices, this also includes any
     /// customer balance that was applied to the original invoice.
@@ -253,10 +240,8 @@ public struct Invoice: Codable, Sendable {
     /// The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn
     /// more](https://docs.stripe.com/billing/invoices/workflow#workflow-overview)
     public var status: InvoiceStatus?
-    @Expandable<InvoicesResourceStatusDetails>
-    public var statusDetails: String?
-    @Expandable<InvoicesResourceStatusTransitions>
-    public var statusTransitions: String?
+    public var statusDetails: InvoicesResourceStatusDetails?
+    public var statusTransitions: InvoicesResourceStatusTransitions
     @Expandable<Subscription>
     public var subscription: String?
     /// Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level
@@ -268,23 +253,19 @@ public struct Invoice: Codable, Sendable {
     /// ID of the test clock this invoice belongs to.
     @Expandable<TestClock>
     public var testClock: String?
-    @Expandable<InvoiceThresholdReason>
-    public var thresholdReason: String?
+    public var thresholdReason: InvoiceThresholdReason?
     /// Total after discounts and taxes.
     public var total: Int
     /// The aggregate amounts calculated per discount across all line items.
-    @ExpandableCollection<DiscountsResourceDiscountAmount>
-    public var totalDiscountAmounts: [String]?
+    public var totalDiscountAmounts: [DiscountsResourceDiscountAmount]?
     /// The integer amount in cents (or local equivalent) representing the total amount of the invoice
     /// including all discounts but excluding all tax.
     public var totalExcludingTax: Int?
     /// Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this invoice. This
     /// is a combined list of total_pretax_credit_amounts across all invoice line items.
-    @ExpandableCollection<InvoicesResourcePretaxCreditAmount>
-    public var totalPretaxCreditAmounts: [String]?
+    public var totalPretaxCreditAmounts: [InvoicesResourcePretaxCreditAmount]?
     /// The aggregate tax information of all line items.
-    @ExpandableCollection<BillingBillResourceInvoicingTaxesTax>
-    public var totalTaxes: [String]?
+    public var totalTaxes: [BillingBillResourceInvoicingTaxesTax]?
     /// Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook
     /// delivery attempts have [been exhausted](https://docs.stripe.com/billing/webhooks#understand). This
     /// field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had

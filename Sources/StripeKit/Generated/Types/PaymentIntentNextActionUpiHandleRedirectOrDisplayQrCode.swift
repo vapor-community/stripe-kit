@@ -10,8 +10,7 @@ import Foundation
 public struct PaymentIntentNextActionUpiHandleRedirectOrDisplayQrCode: Codable, Sendable {
     /// The URL to the hosted UPI instructions page, which allows customers to view the QR code.
     public var hostedInstructionsUrl: String
-    @Expandable<PaymentIntentNextActionUpiqrCode>
-    public var qrCode: String?
+    public var qrCode: PaymentIntentNextActionUpiqrCode
 
     public enum CodingKeys: String, CodingKey {
         case hostedInstructionsUrl = "hosted_instructions_url"

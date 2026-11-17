@@ -33,7 +33,6 @@ struct SchemaObject: Decodable {
     
     // Stripe vendor extensions
     let xResourceId: String?
-    let xExpandableFields: [String]?
     /// The SDK methods Stripe defines on this resource (what stripe-node, stripe-go etc. are generated from)
     let xStripeOperations: [StripeOperation]?
 
@@ -57,7 +56,6 @@ struct SchemaObject: Decodable {
         case type, description, properties, required
         case `enum`, anyOf, oneOf, nullable, items
         case xResourceId = "x-resourceId"
-        case xExpandableFields = "x-expandableFields"
         case xStripeOperations = "x-stripeOperations"
     }
     
@@ -73,7 +71,6 @@ struct SchemaObject: Decodable {
         nullable = try container.decodeIfPresent(Bool.self, forKey: .nullable)
         items = try container.decodeIfPresent(PropertyObject.self, forKey: .items)
         xResourceId = try container.decodeIfPresent(String.self, forKey: .xResourceId)
-        xExpandableFields = try container.decodeIfPresent([String].self, forKey: .xExpandableFields)
         xStripeOperations = try container.decodeIfPresent([StripeOperation].self, forKey: .xStripeOperations)
     }
 }
@@ -92,12 +89,22 @@ final class PropertyObject: Decodable {
     let properties: [String: PropertyObject]?
     let required: [String]?
     let additionalProperties: PropertyObject?
+    /// The objects an expandable field (`x-expansionResources`) holds when expanded; the field
+    /// holds the object's ID otherwise. e.g. `charge.customer` → customer | deleted_customer.
+    /// Unlike the parent's `x-expandableFields`, which also lists plain nested objects so
+    /// their own fields can be expanded through them.
+    let expansionResources: [PropertyObject]?
     
     enum CodingKeys: String, CodingKey {
         case type, description, title, `enum`
         case ref = "$ref"
         case anyOf, oneOf, nullable, items, properties, required
         case additionalProperties
+        case expansionResources = "x-expansionResources"
+    }
+
+    private struct ExpansionResources: Decodable {
+        let oneOf: [PropertyObject]
     }
     
     required init(from decoder: Decoder) throws {
@@ -120,6 +127,7 @@ final class PropertyObject: Decodable {
             // Boolean additionalProperties (e.g. `"additionalProperties": false`) — ignore
             additionalProperties = nil
         }
+        expansionResources = try container.decodeIfPresent(ExpansionResources.self, forKey: .expansionResources)?.oneOf
     }
 
     /// Build a schema in code, e.g. an object synthesized from an operation's query parameters.
@@ -135,7 +143,8 @@ final class PropertyObject: Decodable {
         items: PropertyObject? = nil,
         properties: [String: PropertyObject]? = nil,
         required: [String]? = nil,
-        additionalProperties: PropertyObject? = nil
+        additionalProperties: PropertyObject? = nil,
+        expansionResources: [PropertyObject]? = nil
     ) {
         self.type = type
         self.description = description
@@ -149,6 +158,7 @@ final class PropertyObject: Decodable {
         self.properties = properties
         self.required = required
         self.additionalProperties = additionalProperties
+        self.expansionResources = expansionResources
     }
 
     /// A copy of this schema with a different description.
@@ -156,7 +166,8 @@ final class PropertyObject: Decodable {
         PropertyObject(
             type: type, description: description, title: title, enum: `enum`, ref: ref,
             anyOf: anyOf, oneOf: oneOf, nullable: nullable, items: items,
-            properties: properties, required: required, additionalProperties: additionalProperties
+            properties: properties, required: required, additionalProperties: additionalProperties,
+            expansionResources: expansionResources
         )
     }
 }

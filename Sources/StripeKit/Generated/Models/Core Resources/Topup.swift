@@ -49,11 +49,10 @@ public struct Topup: Codable, Sendable {
     @Expandable<PaymentMethod>
     public var paymentMethod: String?
     /// Payment-method-specific configuration for this top-up.
-    @Expandable<TopupResourcePaymentMethodOptions>
-    public var paymentMethodOptions: String?
+    public var paymentMethodOptions: TopupResourcePaymentMethodOptions?
     /// The source field is deprecated. It might not always be present in the API response.
-    @Expandable<Source>
-    public var source: String?
+    @Indirect
+    public var source: Source?
     /// Extra information about a top-up. This will appear on your source's bank statement. It must contain
     /// at least one letter.
     public var statementDescriptor: String?

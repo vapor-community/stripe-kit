@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a Sigma scheduled query run finishes.
 public struct SigmaScheduledQueryRunCreated: Codable, Sendable {
+    @Indirect
     public var object: ScheduledQueryRun
 }
 

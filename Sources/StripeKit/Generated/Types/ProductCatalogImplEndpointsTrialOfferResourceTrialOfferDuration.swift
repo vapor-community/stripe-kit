@@ -8,8 +8,7 @@
 import Foundation
 
 public struct ProductCatalogImplEndpointsTrialOfferResourceTrialOfferDuration: Codable, Sendable {
-    @Expandable<ProductCatalogImplEndpointsTrialOfferResourceRelativeDuration>
-    public var relative: String?
+    public var relative: ProductCatalogImplEndpointsTrialOfferResourceRelativeDuration?
     /// The type of trial offer duration.
     public var type: ProductCatalogImplEndpointsTrialOfferResourceTrialOfferDurationType
 }

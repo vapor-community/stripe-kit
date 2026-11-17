@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodRevolutPayDetailsResourceFunding: Codable, Sendable {
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodRevolutPayDetailsResourceFundingResourceFundingCard>
-    public var card: String?
+    public var card: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodRevolutPayDetailsResourceFundingResourceFundingCard?
     /// Funding type of the underlying payment method.
     public var type: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodRevolutPayDetailsResourceFundingType?
 }

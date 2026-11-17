@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever an application fee is refunded, whether from refunding a charge or from [refunding
 /// the application fee directly](#fee_refunds). This includes partial refunds.
 public struct ApplicationFeeRefunded: Codable, Sendable {
+    @Indirect
     public var object: ApplicationFee
 }
 

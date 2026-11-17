@@ -8,8 +8,7 @@
 import Foundation
 
 public struct Shipping: Codable, Sendable {
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address?
     /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
     public var carrier: String?
     /// Recipient name.

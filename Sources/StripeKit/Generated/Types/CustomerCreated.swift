@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a new customer is created.
 public struct CustomerCreated: Codable, Sendable {
+    @Indirect
     public var object: Customer
 }
 

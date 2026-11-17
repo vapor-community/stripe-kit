@@ -43,8 +43,7 @@ public struct Release: Codable, Sendable {
     /// expiry.
     @Expandable<ReservePlan>
     public var reservePlan: String?
-    @Expandable<ReservesReserveReleasesResourcesSourceTransaction>
-    public var sourceTransaction: String?
+    public var sourceTransaction: ReservesReserveReleasesResourcesSourceTransaction?
 
     public enum CodingKeys: String, CodingKey {
         case amount

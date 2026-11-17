@@ -10,8 +10,7 @@ import Foundation
 public struct ConnectEmbeddedDisputesListConfig: Codable, Sendable {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
-    @Expandable<ConnectEmbeddedDisputesListFeatures>
-    public var features: String?
+    public var features: ConnectEmbeddedDisputesListFeatures
 }
 
 public struct ConnectEmbeddedDisputesListConfigList: Codable, Sendable {

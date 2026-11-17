@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentMethodDetailsAlma: Codable, Sendable {
-    @Expandable<PaymentFlowsPrivatePaymentMethodsAlmaDetailsResourceInstallments>
-    public var installments: String?
+    public var installments: PaymentFlowsPrivatePaymentMethodsAlmaDetailsResourceInstallments?
     /// The Alma transaction ID associated with this payment.
     public var transactionId: String?
 

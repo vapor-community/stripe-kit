@@ -10,11 +10,9 @@ import Foundation
 /// Result from an id_number check
 public struct GelatoIdNumberReport: Codable, Sendable {
     /// Date of birth.
-    @Expandable<GelatoDataIdNumberReportDate>
-    public var dob: String?
+    public var dob: GelatoDataIdNumberReportDate?
     /// Details on the verification error. Present when status is `unverified`.
-    @Expandable<GelatoIdNumberReportError>
-    public var error: String?
+    public var error: GelatoIdNumberReportError?
     /// First name.
     public var firstName: String?
     /// ID number. When `id_number_type` is `us_ssn`, only the last 4 digits are present.

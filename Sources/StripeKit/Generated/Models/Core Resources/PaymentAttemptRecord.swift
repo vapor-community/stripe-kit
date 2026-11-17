@@ -12,27 +12,19 @@ import Foundation
 /// method. Payment Attempt Records are attached to Payment Records. Only one attempt per Payment Record
 /// can have guaranteed funds.
 public struct PaymentAttemptRecord: Codable, Sendable {
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceAmount>
-    public var amount: String?
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceAmount>
-    public var amountAuthorized: String?
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceAmount>
-    public var amountCanceled: String?
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceAmount>
-    public var amountFailed: String?
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceAmount>
-    public var amountGuaranteed: String?
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceAmount>
-    public var amountRefunded: String?
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceAmount>
-    public var amountRequested: String?
+    public var amount: PaymentsPrimitivesPaymentRecordsResourceAmount
+    public var amountAuthorized: PaymentsPrimitivesPaymentRecordsResourceAmount
+    public var amountCanceled: PaymentsPrimitivesPaymentRecordsResourceAmount
+    public var amountFailed: PaymentsPrimitivesPaymentRecordsResourceAmount
+    public var amountGuaranteed: PaymentsPrimitivesPaymentRecordsResourceAmount
+    public var amountRefunded: PaymentsPrimitivesPaymentRecordsResourceAmount
+    public var amountRequested: PaymentsPrimitivesPaymentRecordsResourceAmount
     /// ID of the Connect application that created the PaymentAttemptRecord.
     public var application: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Customer information for this payment.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceCustomerDetails>
-    public var customerDetails: String?
+    public var customerDetails: PaymentsPrimitivesPaymentRecordsResourceCustomerDetails?
     /// Indicates whether the customer was present in your checkout flow during this payment.
     public var customerPresence: PaymentAttemptRecordCustomerPresence?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
@@ -48,17 +40,14 @@ public struct PaymentAttemptRecord: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PaymentAttemptRecordObject
     /// Information about the Payment Method debited for this payment.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodDetails>
-    public var paymentMethodDetails: String?
+    public var paymentMethodDetails: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodDetails?
     /// ID of the Payment Record this Payment Attempt Record belongs to.
     public var paymentRecord: String?
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceProcessorDetails>
-    public var processorDetails: String?
+    public var processorDetails: PaymentsPrimitivesPaymentRecordsResourceProcessorDetails
     /// Indicates who reported the payment.
     public var reportedBy: PaymentAttemptRecordReportedBy
     /// Shipping information for this payment.
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceShippingDetails>
-    public var shippingDetails: String?
+    public var shippingDetails: PaymentsPrimitivesPaymentRecordsResourceShippingDetails?
 
     public enum CodingKeys: String, CodingKey {
         case amount

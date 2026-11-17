@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a product is created.
 public struct ProductCreated: Codable, Sendable {
+    @Indirect
     public var object: Product
 }
 

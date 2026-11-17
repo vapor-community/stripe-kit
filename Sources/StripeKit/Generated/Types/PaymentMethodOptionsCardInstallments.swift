@@ -9,13 +9,11 @@ import Foundation
 
 public struct PaymentMethodOptionsCardInstallments: Codable, Sendable {
     /// Installment plans that may be selected for this PaymentIntent.
-    @ExpandableCollection<PaymentMethodDetailsCardInstallmentsPlan>
-    public var availablePlans: [String]?
+    public var availablePlans: [PaymentMethodDetailsCardInstallmentsPlan]?
     /// Whether Installments are enabled for this PaymentIntent.
     public var enabled: Bool
     /// Installment plan selected for this PaymentIntent.
-    @Expandable<PaymentMethodDetailsCardInstallmentsPlan>
-    public var plan: String?
+    public var plan: PaymentMethodDetailsCardInstallmentsPlan?
 
     public enum CodingKeys: String, CodingKey {
         case availablePlans = "available_plans"

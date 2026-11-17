@@ -8,8 +8,7 @@
 import Foundation
 
 public struct InvoicePaymentMethodOptionsBillie: Codable, Sendable {
-    @Expandable<InvoicePaymentMethodOptionsBillieCompanyDetails>
-    public var companyDetails: String?
+    public var companyDetails: InvoicePaymentMethodOptionsBillieCompanyDetails?
     /// An identifier or reference that this payment corresponds to.
     public var reference: String?
 

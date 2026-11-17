@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a price is created.
 public struct PriceCreated: Codable, Sendable {
+    @Indirect
     public var object: Price
 }
 

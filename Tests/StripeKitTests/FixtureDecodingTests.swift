@@ -75,6 +75,60 @@ struct FixtureDecodingTests {
         #expect(plan.id == fixturePlan.id)
     }
 
+    /// Only fields with `x-expansionResources` (an ID, or the object when expanded) get an
+    /// expandable wrapper. Plain nested objects that `x-expandableFields` also lists, so their
+    /// own fields can be expanded through them, keep their own type.
+    @Test("Nested objects are typed; only ID-or-object fields are expandable")
+    func onlyIDOrObjectFieldsAreExpandable() throws {
+        let _: KeyPath<Account, AccountBusinessProfile?> = \.businessProfile
+        let _: KeyPath<AccountBusinessProfile, Address?> = \.supportAddress
+        let account = try Fixtures.decode("account", as: Account.self)
+        #expect(account.businessProfile != nil)
+        #expect(account.capabilities != nil)
+
+        // Unexpanded: IDs
+        var invoiceJSON = try #require(JSONSerialization.jsonObject(with: Fixtures.all["invoice"]!) as? [String: Any])
+        invoiceJSON["customer"] = "cus_123"
+        invoiceJSON["discounts"] = ["di_123"]
+        let unexpanded = try Fixtures.decoder.decode(Invoice.self, from: JSONSerialization.data(withJSONObject: invoiceJSON))
+        #expect(unexpanded.customer == "cus_123")
+        #expect(unexpanded.discounts == ["di_123"])
+        #expect(unexpanded.$discounts == nil)
+
+        // Expanded: the objects, including an array of them (`discounts` also lists
+        // deleted_discount, which the wrapper leaves out)
+        invoiceJSON["customer"] = try JSONSerialization.jsonObject(with: Fixtures.all["customer"]!)
+        invoiceJSON["discounts"] = [try JSONSerialization.jsonObject(with: Fixtures.all["discount"]!)]
+        let expanded = try Fixtures.decoder.decode(Invoice.self, from: JSONSerialization.data(withJSONObject: invoiceJSON))
+        #expect(expanded.$customer?.id == "cus_QXg1o8vcGmoR32")
+        #expect(expanded.$discounts?.count == 1)
+    }
+
+    /// PaymentIntent → ApiErrors → PaymentIntent is a cycle of plain objects. The generator
+    /// stores embedded resources (`ApiErrors.paymentIntent`) `@Indirect`, so the structs have a
+    /// finite, small size, and the boxed property still reads, decodes (present, null or
+    /// missing) and encodes as a plain optional. Decoding this nests ApiErrors inside a
+    /// PaymentIntent inside a test task; it overflowed the task's stack while ApiErrors
+    /// embedded its resources inline.
+    @Test("Recursive models decode through @Indirect")
+    func recursiveModelsDecode() throws {
+        let _: KeyPath<PaymentIntent, ApiErrors?> = \.lastPaymentError
+
+        var json = try #require(JSONSerialization.jsonObject(with: Fixtures.all["payment_intent"]!) as? [String: Any])
+        let nested = json
+        json["last_payment_error"] = ["type": "card_error", "code": "card_declined", "payment_intent": nested]
+        let intent = try Fixtures.decoder.decode(PaymentIntent.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(intent.lastPaymentError?.code == .cardDeclined)
+        #expect(intent.lastPaymentError?.paymentIntent?.id == intent.id)
+
+        let roundTripped = try Fixtures.decoder.decode(PaymentIntent.self, from: JSONEncoder().encode(intent))
+        #expect(roundTripped.lastPaymentError?.paymentIntent?.id == intent.id)
+
+        json.removeValue(forKey: "last_payment_error")
+        let missing = try Fixtures.decoder.decode(PaymentIntent.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(missing.lastPaymentError == nil)
+    }
+
     @Test("Every fixture has a generated type")
     func everyFixtureIsMapped() {
         let unmapped = Set(Fixtures.all.keys).subtracting(resourceTypes.keys).subtracting(Self.knownUnmapped)

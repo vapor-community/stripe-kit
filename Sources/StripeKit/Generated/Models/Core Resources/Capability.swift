@@ -13,8 +13,7 @@ public struct Capability: Codable, Sendable {
     /// The account for which the capability enables functionality.
     @Expandable<Account>
     public var account: String?
-    @Expandable<AccountCapabilityFutureRequirements>
-    public var futureRequirements: String?
+    public var futureRequirements: AccountCapabilityFutureRequirements?
     /// The identifier for the capability.
     public var id: String
     /// String representing the object's type. Objects of the same type share the same value.
@@ -23,8 +22,7 @@ public struct Capability: Codable, Sendable {
     public var requested: Bool
     /// Time at which the capability was requested. Measured in seconds since the Unix epoch.
     public var requestedAt: Int?
-    @Expandable<AccountCapabilityRequirements>
-    public var requirements: String?
+    public var requirements: AccountCapabilityRequirements?
     /// The status of the capability.
     public var status: CapabilityStatus
 

@@ -8,23 +8,17 @@
 import Foundation
 
 public struct PortalFlowsFlow: Codable, Sendable {
-    @Expandable<PortalFlowsFlowAfterCompletion>
-    public var afterCompletion: String?
+    public var afterCompletion: PortalFlowsFlowAfterCompletion
     /// Configuration when `flow.type=customer_update`.
-    @Expandable<PortalFlowsFlowCustomerUpdate>
-    public var customerUpdate: String?
+    public var customerUpdate: PortalFlowsFlowCustomerUpdate?
     /// Configuration when `flow.type=subscription_cancel`.
-    @Expandable<PortalFlowsFlowSubscriptionCancel>
-    public var subscriptionCancel: String?
+    public var subscriptionCancel: PortalFlowsFlowSubscriptionCancel?
     /// Configuration when `flow.type=subscription_pause`.
-    @Expandable<PortalFlowsFlowSubscriptionPause>
-    public var subscriptionPause: String?
+    public var subscriptionPause: PortalFlowsFlowSubscriptionPause?
     /// Configuration when `flow.type=subscription_update`.
-    @Expandable<PortalFlowsFlowSubscriptionUpdate>
-    public var subscriptionUpdate: String?
+    public var subscriptionUpdate: PortalFlowsFlowSubscriptionUpdate?
     /// Configuration when `flow.type=subscription_update_confirm`.
-    @Expandable<PortalFlowsFlowSubscriptionUpdateConfirm>
-    public var subscriptionUpdateConfirm: String?
+    public var subscriptionUpdateConfirm: PortalFlowsFlowSubscriptionUpdateConfirm?
     /// Type of flow that the customer will go through.
     public var type: PortalFlowsFlowType
 

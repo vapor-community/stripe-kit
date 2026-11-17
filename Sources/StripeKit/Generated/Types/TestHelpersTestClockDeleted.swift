@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a test clock is deleted.
 public struct TestHelpersTestClockDeleted: Codable, Sendable {
+    @Indirect
     public var object: TestClock
 }
 

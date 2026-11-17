@@ -11,17 +11,13 @@ import Foundation
 /// have been granted some degree of access.
 public struct FinancialConnectionsAccount: Codable, Sendable {
     /// The account holder that this account belongs to.
-    @Expandable<BankConnectionsResourceAccountholder>
-    public var accountHolder: String?
+    public var accountHolder: BankConnectionsResourceAccountholder?
     /// Details about the account numbers.
-    @ExpandableCollection<BankConnectionsResourceAccountNumberDetails>
-    public var accountNumbers: [String]?
+    public var accountNumbers: [BankConnectionsResourceAccountNumberDetails]?
     /// The most recent information about the account's balance.
-    @Expandable<BankConnectionsResourceBalance>
-    public var balance: String?
+    public var balance: BankConnectionsResourceBalance?
     /// The state of the most recent attempt to refresh the account balance.
-    @Expandable<BankConnectionsResourceBalanceRefresh>
-    public var balanceRefresh: String?
+    public var balanceRefresh: BankConnectionsResourceBalanceRefresh?
     /// The type of the account. Account category is further divided in `subcategory`.
     public var category: FinancialConnectionsAccountCategory
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -46,14 +42,12 @@ public struct FinancialConnectionsAccount: Codable, Sendable {
     @Expandable<AccountOwnership>
     public var ownership: String?
     /// The state of the most recent attempt to refresh the account owners.
-    @Expandable<BankConnectionsResourceOwnershipRefresh>
-    public var ownershipRefresh: String?
+    public var ownershipRefresh: BankConnectionsResourceOwnershipRefresh?
     /// The list of permissions granted by this account.
     public var permissions: [String]?
     /// The status of the link to the account.
     public var status: FinancialConnectionsAccountStatus
-    @Expandable<BankConnectionsResourceAccountStatusDetails>
-    public var statusDetails: String?
+    public var statusDetails: BankConnectionsResourceAccountStatusDetails?
     /// If `category` is `cash`, one of: - `checking` - `savings` - `other` If `category` is `credit`, one
     /// of: - `mortgage` - `line_of_credit` - `credit_card` - `other` If `category` is `investment` or
     /// `other`, this will be `other`.
@@ -65,8 +59,7 @@ public struct FinancialConnectionsAccount: Codable, Sendable {
     /// created from this account.
     public var supportedPaymentMethodTypes: [String]
     /// The state of the most recent attempt to refresh the account transactions.
-    @Expandable<BankConnectionsResourceTransactionRefresh>
-    public var transactionRefresh: String?
+    public var transactionRefresh: BankConnectionsResourceTransactionRefresh?
 
     public enum CodingKeys: String, CodingKey {
         case accountHolder = "account_holder"

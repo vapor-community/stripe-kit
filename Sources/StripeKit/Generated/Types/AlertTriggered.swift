@@ -8,8 +8,8 @@
 import Foundation
 
 public struct AlertTriggered: Codable, Sendable {
-    @Expandable<Alert>
-    public var alert: String?
+    @Indirect
+    public var alert: Alert
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// ID of customer for which the alert triggered

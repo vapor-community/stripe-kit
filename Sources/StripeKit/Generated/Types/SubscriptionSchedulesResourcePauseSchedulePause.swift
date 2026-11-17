@@ -11,10 +11,8 @@ public struct SubscriptionSchedulesResourcePauseSchedulePause: Codable, Sendable
     /// Time at which the subscription pauses.
     public var pauseAt: Int
     /// Settings controlling billing behavior during the pause.
-    @Expandable<SubscriptionSchedulesResourcePauseSchedulePauseSettings>
-    public var settings: String?
-    @Expandable<SubscriptionSchedulesResourcePauseSchedulePauseStatus>
-    public var status: String?
+    public var settings: SubscriptionSchedulesResourcePauseSchedulePauseSettings?
+    public var status: SubscriptionSchedulesResourcePauseSchedulePauseStatus
 
     public enum CodingKeys: String, CodingKey {
         case pauseAt = "pause_at"

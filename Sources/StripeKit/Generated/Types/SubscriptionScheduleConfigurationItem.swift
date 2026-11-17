@@ -11,12 +11,10 @@ import Foundation
 public struct SubscriptionScheduleConfigurationItem: Codable, Sendable {
     /// Define thresholds at which an invoice will be sent, and the related subscription advanced to a new
     /// billing period
-    @Expandable<SubscriptionItemBillingThresholds>
-    public var billingThresholds: String?
+    public var billingThresholds: SubscriptionItemBillingThresholds?
     /// The discounts applied to the subscription item. Subscription item discounts are applied before
     /// subscription discounts. Use `expand[]=discounts` to expand each discount.
-    @ExpandableCollection<StackableDiscountWithDiscountSettings>
-    public var discounts: [String]?
+    public var discounts: [StackableDiscountWithDiscountSettings]
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an item.
     /// Metadata on this item will update the underlying subscription item's `metadata` when the phase is
     /// entered.
@@ -31,8 +29,7 @@ public struct SubscriptionScheduleConfigurationItem: Codable, Sendable {
     public var quantity: Int?
     /// The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do
     /// not apply to this `phase_item`.
-    @ExpandableCollection<TaxRate>
-    public var taxRates: [String]?
+    public var taxRates: [TaxRate]?
 
     public enum CodingKeys: String, CodingKey {
         case billingThresholds = "billing_thresholds"

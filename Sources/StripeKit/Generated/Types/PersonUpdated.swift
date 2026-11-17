@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a person associated with an account is updated.
 public struct PersonUpdated: Codable, Sendable {
+    @Indirect
     public var object: Person
 }
 

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Financial Connections account is about to become `inactive`.
 public struct FinancialConnectionsAccountUpcomingDeactivation: Codable, Sendable {
+    @Indirect
     public var object: FinancialConnectionsAccount
 }
 

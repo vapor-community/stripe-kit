@@ -8,8 +8,7 @@
 import Foundation
 
 public struct DisputeAppeal: Codable, Sendable {
-    @Expandable<DisputeAppealCard>
-    public var card: String?
+    public var card: DisputeAppealCard?
 }
 
 public struct DisputeAppealList: Codable, Sendable {

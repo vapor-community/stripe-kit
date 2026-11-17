@@ -12,8 +12,7 @@ import Foundation
 public struct BalanceSettings: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: BalanceSettingsObject
-    @Expandable<BalanceSettingsResourcePayments>
-    public var payments: String?
+    public var payments: BalanceSettingsResourcePayments
 }
 
 /// String representing the object's type. Objects of the same type share the same value.

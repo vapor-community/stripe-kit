@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when the dispute is updated (usually with evidence).
 public struct ChargeDisputeUpdated: Codable, Sendable {
+    @Indirect
     public var object: Dispute
 }
 

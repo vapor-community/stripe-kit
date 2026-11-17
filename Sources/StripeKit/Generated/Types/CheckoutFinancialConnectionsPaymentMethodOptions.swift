@@ -8,8 +8,7 @@
 import Foundation
 
 public struct CheckoutFinancialConnectionsPaymentMethodOptions: Codable, Sendable {
-    @Expandable<CheckoutFinancialConnectionsPaymentMethodOptionsFilters>
-    public var filters: String?
+    public var filters: CheckoutFinancialConnectionsPaymentMethodOptionsFilters?
     /// The list of permissions to request. The `payment_method` permission must be included.
     public var permissions: [String]?
     /// Data features requested to be retrieved upon account creation.

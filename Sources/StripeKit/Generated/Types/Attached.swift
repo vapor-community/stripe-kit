@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a new payment method is attached to a customer.
 public struct Attached: Codable, Sendable {
+    @Indirect
     public var object: PaymentMethod
 }
 

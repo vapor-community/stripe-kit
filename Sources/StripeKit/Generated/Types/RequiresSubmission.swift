@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a 3DS Authentication's status transitions to 'requires_submission'
 public struct RequiresSubmission: Codable, Sendable {
+    @Indirect
     public var object: Authentication
 }
 

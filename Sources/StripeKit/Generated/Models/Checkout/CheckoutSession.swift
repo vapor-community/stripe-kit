@@ -19,11 +19,9 @@ import Foundation
 public struct CheckoutSession: Codable, Sendable {
     /// Settings for price localization with [Adaptive
     /// Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing).
-    @Expandable<PaymentPagesCheckoutSessionAdaptivePricing>
-    public var adaptivePricing: String?
+    public var adaptivePricing: PaymentPagesCheckoutSessionAdaptivePricing?
     /// When set, provides configuration for actions to take if this Checkout Session expires.
-    @Expandable<PaymentPagesCheckoutSessionAfterExpiration>
-    public var afterExpiration: String?
+    public var afterExpiration: PaymentPagesCheckoutSessionAfterExpiration?
     /// Enables user redeemable promotion codes.
     public var allowPromotionCodes: Bool?
     /// A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
@@ -32,12 +30,10 @@ public struct CheckoutSession: Codable, Sendable {
     public var amountSubtotal: Int?
     /// Total of all items after discounts and taxes are applied.
     public var amountTotal: Int?
-    @Expandable<PaymentPagesCheckoutSessionAutomaticTax>
-    public var automaticTax: String?
+    public var automaticTax: PaymentPagesCheckoutSessionAutomaticTax
     /// Describes whether Checkout should collect the customer's billing address. Defaults to `auto`.
     public var billingAddressCollection: CheckoutSessionBillingAddressCollection?
-    @Expandable<PaymentPagesCheckoutSessionBrandingSettings>
-    public var brandingSettings: String?
+    public var brandingSettings: PaymentPagesCheckoutSessionBrandingSettings?
     /// If set, Checkout displays a back button and customers will be directed to this URL if they decide to
     /// cancel payment and return to your website.
     public var cancelUrl: String?
@@ -50,14 +46,11 @@ public struct CheckoutSession: Codable, Sendable {
     /// [initCheckout](https://docs.stripe.com/js/custom_checkout/init) on your front end.
     public var clientSecret: String?
     /// Information about the customer collected within the Checkout Session.
-    @Expandable<PaymentPagesCheckoutSessionCollectedInformation>
-    public var collectedInformation: String?
+    public var collectedInformation: PaymentPagesCheckoutSessionCollectedInformation?
     /// Results of `consent_collection` for this session.
-    @Expandable<PaymentPagesCheckoutSessionConsent>
-    public var consent: String?
+    public var consent: PaymentPagesCheckoutSessionConsent?
     /// When set, provides configuration for the Checkout Session to gather active consent from customers.
-    @Expandable<PaymentPagesCheckoutSessionConsentCollection>
-    public var consentCollection: String?
+    public var consentCollection: PaymentPagesCheckoutSessionConsentCollection?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -66,14 +59,11 @@ public struct CheckoutSession: Codable, Sendable {
     /// Currency conversion details for [Adaptive
     /// Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) sessions created before
     /// 2025-03-31.
-    @Expandable<PaymentPagesCheckoutSessionCurrencyConversion>
-    public var currencyConversion: String?
+    public var currencyConversion: PaymentPagesCheckoutSessionCurrencyConversion?
     /// Collect additional information from your customer using custom fields. Up to 3 fields are supported.
     /// You can't set this parameter if `ui_mode` is `elements`.
-    @ExpandableCollection<PaymentPagesCheckoutSessionCustomFields>
-    public var customFields: [String]?
-    @Expandable<PaymentPagesCheckoutSessionCustomText>
-    public var customText: String?
+    public var customFields: [PaymentPagesCheckoutSessionCustomFields]
+    public var customText: PaymentPagesCheckoutSessionCustomText
     /// The ID of the customer for this Session. For Checkout Sessions in `subscription` mode or Checkout
     /// Sessions with `customer_creation` set as `always` in `payment` mode, Checkout will create a new
     /// customer object based on information provided during the payment flow unless an existing customer
@@ -86,16 +76,14 @@ public struct CheckoutSession: Codable, Sendable {
     public var customerCreation: CheckoutSessionCustomerCreation?
     /// The customer details including the customer's tax exempt status and the customer's tax IDs.
     /// Customer's address details are not present on Sessions in `setup` mode.
-    @Expandable<PaymentPagesCheckoutSessionCustomerDetails>
-    public var customerDetails: String?
+    public var customerDetails: PaymentPagesCheckoutSessionCustomerDetails?
     /// If provided, this value will be used when the Customer object is created. If not provided, customers
     /// will be asked to enter their email address. Use this parameter to prefill customer data if you
     /// already have an email on file. To access information about the customer once the payment flow is
     /// complete, use the `customer` attribute.
     public var customerEmail: String?
     /// List of coupons and promotion codes attached to the Checkout Session.
-    @ExpandableCollection<PaymentPagesCheckoutSessionDiscount>
-    public var discounts: [String]?
+    public var discounts: [PaymentPagesCheckoutSessionDiscount]?
     /// A list of the types of payment methods (e.g., `card`) that should be excluded from this Checkout
     /// Session. This should only be used when payment methods for this Checkout Session are managed through
     /// the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
@@ -111,8 +99,7 @@ public struct CheckoutSession: Codable, Sendable {
     @Expandable<Invoice>
     public var invoice: String?
     /// Details on the state of invoice creation for the Checkout Session.
-    @Expandable<PaymentPagesCheckoutSessionInvoiceCreation>
-    public var invoiceCreation: String?
+    public var invoiceCreation: PaymentPagesCheckoutSessionInvoiceCreation?
     /// The line items purchased by the customer.
     public var lineItems: ItemList?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -124,20 +111,17 @@ public struct CheckoutSession: Codable, Sendable {
     /// Settings for Managed Payments for this Checkout Session and resulting
     /// [PaymentIntents](/api/payment_intents/object), [Invoices](/api/invoices/object), and
     /// [Subscriptions](/api/subscriptions/object).
-    @Expandable<PaymentPagesCheckoutSessionManagedPayments>
-    public var managedPayments: String?
+    public var managedPayments: PaymentPagesCheckoutSessionManagedPayments?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
     /// The mode of the Checkout Session.
     public var mode: CheckoutSessionMode
-    @Expandable<PaymentPagesCheckoutSessionNameCollection>
-    public var nameCollection: String?
+    public var nameCollection: PaymentPagesCheckoutSessionNameCollection?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: CheckoutSessionObject
     /// The optional items presented to the customer at checkout.
-    @ExpandableCollection<PaymentPagesCheckoutSessionOptionalItem>
-    public var optionalItems: [String]?
+    public var optionalItems: [PaymentPagesCheckoutSessionOptionalItem]?
     /// Where the user is coming from. This informs the optimizations that are applied to the session.
     public var originContext: CheckoutSessionOriginContext?
     /// The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the
@@ -153,11 +137,9 @@ public struct CheckoutSession: Codable, Sendable {
     public var paymentMethodCollection: CheckoutSessionPaymentMethodCollection?
     /// Information about the payment method configuration used for this Checkout session if using dynamic
     /// payment methods.
-    @Expandable<PaymentMethodConfigBizPaymentMethodConfigurationDetails>
-    public var paymentMethodConfigurationDetails: String?
+    public var paymentMethodConfigurationDetails: PaymentMethodConfigBizPaymentMethodConfigurationDetails?
     /// Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
-    @Expandable<CheckoutSessionPaymentMethodOptions>
-    public var paymentMethodOptions: String?
+    public var paymentMethodOptions: CheckoutSessionPaymentMethodOptions?
     /// A list of the types of payment methods (e.g. card) this Checkout Session is allowed to accept.
     public var paymentMethodTypes: [String]
     /// The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`. You
@@ -166,12 +148,9 @@ public struct CheckoutSession: Codable, Sendable {
     /// This property is used to set up permissions for various actions (e.g., update) on the
     /// CheckoutSession object. For specific permissions, please refer to their dedicated subsections, such
     /// as `permissions.update_shipping_details`.
-    @Expandable<PaymentPagesCheckoutSessionPermissions>
-    public var permissions: String?
-    @Expandable<PaymentPagesCheckoutSessionPhoneNumberCollection>
-    public var phoneNumberCollection: String?
-    @Expandable<PaymentFlowsPaymentIntentPresentmentDetails>
-    public var presentmentDetails: String?
+    public var permissions: PaymentPagesCheckoutSessionPermissions?
+    public var phoneNumberCollection: PaymentPagesCheckoutSessionPhoneNumberCollection?
+    public var presentmentDetails: PaymentFlowsPaymentIntentPresentmentDetails?
     /// The ID of the original expired Checkout Session that triggered the recovery flow.
     public var recoveredFrom: String?
     /// This parameter applies to `ui_mode: embedded_page`. Learn more about the [redirect
@@ -184,22 +163,18 @@ public struct CheckoutSession: Codable, Sendable {
     public var returnUrl: String?
     /// Controls saved payment method settings for the session. Only available in `payment` and
     /// `subscription` mode.
-    @Expandable<PaymentPagesCheckoutSessionSavedPaymentMethodOptions>
-    public var savedPaymentMethodOptions: String?
+    public var savedPaymentMethodOptions: PaymentPagesCheckoutSessionSavedPaymentMethodOptions?
     /// The ID of the SetupIntent for Checkout Sessions in `setup` mode. You can't confirm or cancel the
     /// SetupIntent for a Checkout Session. To cancel, [expire the Checkout
     /// Session](https://docs.stripe.com/api/checkout/sessions/expire) instead.
     @Expandable<SetupIntent>
     public var setupIntent: String?
     /// When set, provides configuration for Checkout to collect a shipping address from a customer.
-    @Expandable<PaymentPagesCheckoutSessionShippingAddressCollection>
-    public var shippingAddressCollection: String?
+    public var shippingAddressCollection: PaymentPagesCheckoutSessionShippingAddressCollection?
     /// The details of the customer cost of shipping, including the customer chosen ShippingRate.
-    @Expandable<PaymentPagesCheckoutSessionShippingCost>
-    public var shippingCost: String?
+    public var shippingCost: PaymentPagesCheckoutSessionShippingCost?
     /// The shipping rate options applied to this Session.
-    @ExpandableCollection<PaymentPagesCheckoutSessionShippingOption>
-    public var shippingOptions: [String]?
+    public var shippingOptions: [PaymentPagesCheckoutSessionShippingOption]
     /// The status of the Checkout Session, one of `open`, `complete`, or `expired`.
     public var status: CheckoutSessionStatus?
     /// Describes the type of transaction being performed by Checkout in order to customize relevant text on
@@ -212,11 +187,9 @@ public struct CheckoutSession: Codable, Sendable {
     public var subscription: String?
     /// The URL the customer will be directed to after the payment or subscription creation is successful.
     public var successUrl: String?
-    @Expandable<PaymentPagesCheckoutSessionTaxIdCollection>
-    public var taxIdCollection: String?
+    public var taxIdCollection: PaymentPagesCheckoutSessionTaxIdCollection?
     /// Tax and discount details for the computed total amount.
-    @Expandable<PaymentPagesCheckoutSessionTotalDetails>
-    public var totalDetails: String?
+    public var totalDetails: PaymentPagesCheckoutSessionTotalDetails?
     /// The UI mode of the Session. Defaults to `hosted_page`.
     public var uiMode: CheckoutSessionUiMode?
     /// The URL to the Checkout Session. Applies to Checkout Sessions with `ui_mode: hosted_page`. Redirect
@@ -225,8 +198,7 @@ public struct CheckoutSession: Codable, Sendable {
     /// Otherwise, it’ll use `checkout.stripe.com.` This value is only present when the session is active.
     public var url: String?
     /// Wallet-specific configuration for this Checkout Session.
-    @Expandable<CheckoutSessionWalletOptions>
-    public var walletOptions: String?
+    public var walletOptions: CheckoutSessionWalletOptions?
 
     public enum CodingKeys: String, CodingKey {
         case adaptivePricing = "adaptive_pricing"

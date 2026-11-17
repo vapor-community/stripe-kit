@@ -9,8 +9,7 @@ import Foundation
 
 /// FinancialAddresses contain identifying information that resolves to a FinancialAccount.
 public struct TreasuryFinancialAccountsResourceFinancialAddress: Codable, Sendable {
-    @Expandable<TreasuryFinancialAccountsResourceAbaRecord>
-    public var aba: String?
+    public var aba: TreasuryFinancialAccountsResourceAbaRecord?
     /// The list of networks that the address supports
     public var supportedNetworks: [String]?
     /// The type of financial address

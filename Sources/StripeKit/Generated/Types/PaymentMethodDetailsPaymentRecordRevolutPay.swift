@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentMethodDetailsPaymentRecordRevolutPay: Codable, Sendable {
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourcePaymentMethodRevolutPayDetailsResourceFunding>
-    public var funding: String?
+    public var funding: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodRevolutPayDetailsResourceFunding?
     /// The Revolut Pay transaction ID associated with this payment.
     public var transactionId: String?
 

@@ -29,8 +29,7 @@ public struct DebitReversal: Codable, Sendable {
     /// Unique identifier for the object.
     public var id: String
     /// Other flows linked to a DebitReversal.
-    @Expandable<TreasuryReceivedDebitsResourceDebitReversalLinkedFlows>
-    public var linkedFlows: String?
+    public var linkedFlows: TreasuryReceivedDebitsResourceDebitReversalLinkedFlows?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -45,8 +44,7 @@ public struct DebitReversal: Codable, Sendable {
     public var receivedDebit: String
     /// Status of the DebitReversal
     public var status: DebitReversalStatus
-    @Expandable<TreasuryReceivedDebitsResourceStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: TreasuryReceivedDebitsResourceStatusTransitions
     /// The Transaction associated with this object.
     @Expandable<TreasuryTransaction>
     public var transaction: String?

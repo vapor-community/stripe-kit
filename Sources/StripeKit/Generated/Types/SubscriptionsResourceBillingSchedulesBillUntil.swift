@@ -12,8 +12,7 @@ public struct SubscriptionsResourceBillingSchedulesBillUntil: Codable, Sendable 
     /// The timestamp the billing schedule will apply until.
     public var computedTimestamp: Int
     /// Specifies the billing period.
-    @Expandable<SubscriptionsResourceBillingSchedulesBillUntilDuration>
-    public var duration: String?
+    public var duration: SubscriptionsResourceBillingSchedulesBillUntilDuration?
     /// If specified, the billing schedule will apply until the specified timestamp.
     public var timestamp: Int?
     /// Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.

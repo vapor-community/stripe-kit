@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a previously uncaptured charge is captured.
 public struct Captured: Codable, Sendable {
+    @Indirect
     public var object: Charge
 }
 

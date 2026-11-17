@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PaymentPagesCheckoutSessionCheckoutAddressDetails: Codable, Sendable {
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address
     /// Customer name.
     public var name: String
 }

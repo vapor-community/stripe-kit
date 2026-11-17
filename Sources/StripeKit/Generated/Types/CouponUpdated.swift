@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a coupon is updated.
 public struct CouponUpdated: Codable, Sendable {
+    @Indirect
     public var object: Coupon
 }
 

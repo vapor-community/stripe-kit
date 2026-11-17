@@ -10,8 +10,7 @@ import Foundation
 /// Information about a selection being collected using a reader
 public struct TerminalReaderReaderResourceSelection: Codable, Sendable {
     /// List of possible choices to be selected
-    @ExpandableCollection<TerminalReaderReaderResourceChoice>
-    public var choices: [String]?
+    public var choices: [TerminalReaderReaderResourceChoice]
     /// The id of the selected choice
     public var id: String?
     /// The text of the selected choice

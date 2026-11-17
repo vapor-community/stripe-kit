@@ -10,8 +10,7 @@ import Foundation
 public struct TopupResourcePaymentMethodOptions: Codable, Sendable {
     /// If this top-up is to be used with a `us_bank_account` payment method, this sub-hash contains
     /// configuration for it.
-    @Expandable<TopupResourceUsBankAccount>
-    public var usBankAccount: String?
+    public var usBankAccount: TopupResourceUsBankAccount?
 
     public enum CodingKeys: String, CodingKey {
         case usBankAccount = "us_bank_account"

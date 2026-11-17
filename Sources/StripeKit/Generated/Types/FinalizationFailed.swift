@@ -11,6 +11,7 @@ import Foundation
 /// error](https://docs.stripe.com/api/invoices/object#invoice_object-last_finalization_error) for
 /// details.
 public struct FinalizationFailed: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

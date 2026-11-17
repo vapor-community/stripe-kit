@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a refund is created.
 public struct RefundCreated: Codable, Sendable {
+    @Indirect
     public var object: Refund
 }
 

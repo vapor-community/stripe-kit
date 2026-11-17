@@ -16,8 +16,7 @@ import Foundation
 /// billing details. Related guide: [Customer management](/customer-management)
 public struct BillingPortalSession: Codable, Sendable {
     /// Behavior after the portal session expires.
-    @Expandable<PortalAfterExpiration>
-    public var afterExpiration: String?
+    public var afterExpiration: PortalAfterExpiration?
     /// The configuration used by this session, describing the features available.
     @Expandable<BillingPortalConfiguration>
     public var configuration: String?
@@ -30,8 +29,7 @@ public struct BillingPortalSession: Codable, Sendable {
     /// Information about a specific flow for the customer to go through. See the
     /// [docs](https://docs.stripe.com/customer-management/portal-deep-links) to learn more about using
     /// customer portal deep links and flows.
-    @Expandable<PortalFlowsFlow>
-    public var flow: String?
+    public var flow: PortalFlowsFlow?
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

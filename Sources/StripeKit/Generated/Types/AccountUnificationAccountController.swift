@@ -8,20 +8,17 @@
 import Foundation
 
 public struct AccountUnificationAccountController: Codable, Sendable {
-    @Expandable<AccountUnificationAccountControllerFees>
-    public var fees: String?
+    public var fees: AccountUnificationAccountControllerFees?
     /// `true` if the Connect application retrieving the resource controls the account and can therefore
     /// exercise [platform
     /// controls](https://docs.stripe.com/connect/platform-controls-for-standard-accounts). Otherwise, this
     /// field is null.
     public var isController: Bool?
-    @Expandable<AccountUnificationAccountControllerLosses>
-    public var losses: String?
+    public var losses: AccountUnificationAccountControllerLosses?
     /// A value indicating responsibility for collecting requirements on this account. Only returned when
     /// the Connect application retrieving the resource controls the account.
     public var requirementCollection: AccountUnificationAccountControllerRequirementCollection?
-    @Expandable<AccountUnificationAccountControllerStripeDashboard>
-    public var stripeDashboard: String?
+    public var stripeDashboard: AccountUnificationAccountControllerStripeDashboard?
     /// The controller type. Can be `application`, if a Connect application controls the account, or
     /// `account`, if the account controls itself.
     public var type: AccountUnificationAccountControllerType

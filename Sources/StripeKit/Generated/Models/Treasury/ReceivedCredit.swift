@@ -35,10 +35,8 @@ public struct ReceivedCredit: Codable, Sendable {
     public var hostedRegulatoryReceiptUrl: String?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetails>
-    public var initiatingPaymentMethodDetails: String?
-    @Expandable<TreasuryReceivedCreditsResourceLinkedFlows>
-    public var linkedFlows: String?
+    public var initiatingPaymentMethodDetails: TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetails
+    public var linkedFlows: TreasuryReceivedCreditsResourceLinkedFlows
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -47,8 +45,7 @@ public struct ReceivedCredit: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: ReceivedCreditObject
     /// Details describing when a ReceivedCredit may be reversed.
-    @Expandable<TreasuryReceivedCreditsResourceReversalDetails>
-    public var reversalDetails: String?
+    public var reversalDetails: TreasuryReceivedCreditsResourceReversalDetails?
     /// Status of the ReceivedCredit. ReceivedCredits are created either `succeeded` (approved) or `failed`
     /// (declined). If a ReceivedCredit is declined, the failure reason can be found in the `failure_code`
     /// field.

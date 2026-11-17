@@ -45,8 +45,7 @@ public struct CreditReversal: Codable, Sendable {
     public var receivedCredit: String
     /// Status of the CreditReversal
     public var status: CreditReversalStatus
-    @Expandable<TreasuryReceivedCreditsResourceStatusTransitions>
-    public var statusTransitions: String?
+    public var statusTransitions: TreasuryReceivedCreditsResourceStatusTransitions
     /// The Transaction associated with this object.
     @Expandable<TreasuryTransaction>
     public var transaction: String?

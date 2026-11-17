@@ -21,8 +21,7 @@ public struct Association: Codable, Sendable {
     /// tracking.
     public var paymentIntent: String
     /// Information about the tax transactions linked to this payment intent
-    @ExpandableCollection<TaxProductResourceTaxAssociationTransactionAttempts>
-    public var taxTransactionAttempts: [String]?
+    public var taxTransactionAttempts: [TaxProductResourceTaxAssociationTransactionAttempts]?
 
     public enum CodingKeys: String, CodingKey {
         case calculation

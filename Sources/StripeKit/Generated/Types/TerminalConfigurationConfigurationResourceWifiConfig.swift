@@ -8,12 +8,9 @@
 import Foundation
 
 public struct TerminalConfigurationConfigurationResourceWifiConfig: Codable, Sendable {
-    @Expandable<TerminalConfigurationConfigurationResourceEnterprisePeapWifi>
-    public var enterpriseEapPeap: String?
-    @Expandable<TerminalConfigurationConfigurationResourceEnterpriseTlsWifi>
-    public var enterpriseEapTls: String?
-    @Expandable<TerminalConfigurationConfigurationResourcePersonalPskWifi>
-    public var personalPsk: String?
+    public var enterpriseEapPeap: TerminalConfigurationConfigurationResourceEnterprisePeapWifi?
+    public var enterpriseEapTls: TerminalConfigurationConfigurationResourceEnterpriseTlsWifi?
+    public var personalPsk: TerminalConfigurationConfigurationResourcePersonalPskWifi?
     /// Security type of the WiFi network. The hash with the corresponding name contains the credentials for
     /// this security type.
     public var type: TerminalConfigurationConfigurationResourceWifiConfigType

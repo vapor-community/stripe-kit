@@ -13,8 +13,7 @@ public struct DisputeEvidence: Codable, Sendable {
     /// detailed recorded activity.
     public var accessActivityLog: String?
     /// Appeal evidence submitted during the appeal stage.
-    @Expandable<DisputeAppeal>
-    public var appeal: String?
+    public var appeal: DisputeAppeal?
     /// The billing address provided by the customer.
     public var billingAddress: String?
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Your subscription cancellation
@@ -52,8 +51,7 @@ public struct DisputeEvidence: Codable, Sendable {
     public var duplicateChargeExplanation: String?
     /// The Stripe ID for the prior charge which appears to be a duplicate of the disputed charge.
     public var duplicateChargeId: String?
-    @Expandable<DisputeEnhancedEvidence>
-    public var enhancedEvidence: String?
+    public var enhancedEvidence: DisputeEnhancedEvidence
     /// A description of the product or service that was sold.
     public var productDescription: String?
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any receipt or message sent to

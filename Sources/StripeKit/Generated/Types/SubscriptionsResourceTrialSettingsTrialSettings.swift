@@ -9,8 +9,7 @@ import Foundation
 
 /// Configures how this subscription behaves during the trial period.
 public struct SubscriptionsResourceTrialSettingsTrialSettings: Codable, Sendable {
-    @Expandable<SubscriptionsResourceTrialSettingsEndBehavior>
-    public var endBehavior: String?
+    public var endBehavior: SubscriptionsResourceTrialSettingsEndBehavior
 
     public enum CodingKeys: String, CodingKey {
         case endBehavior = "end_behavior"

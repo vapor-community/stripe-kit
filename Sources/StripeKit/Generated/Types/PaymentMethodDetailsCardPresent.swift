@@ -73,8 +73,7 @@ public struct PaymentMethodDetailsCardPresent: Codable, Sendable {
     /// and null otherwise.
     public var networkTransactionId: String?
     /// Details about payments collected offline.
-    @Expandable<PaymentMethodDetailsCardPresentOffline>
-    public var offline: String?
+    public var offline: PaymentMethodDetailsCardPresentOffline?
     /// Defines whether the authorized amount can be over-captured or not
     public var overcaptureSupported: Bool
     /// The languages that the issuing bank recommends using for localizing any customer-facing text, as
@@ -85,10 +84,8 @@ public struct PaymentMethodDetailsCardPresent: Codable, Sendable {
     /// ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
     public var reader: String?
     /// A collection of fields required to be displayed on receipts. Only required for EMV transactions.
-    @Expandable<PaymentMethodDetailsCardPresentReceipt>
-    public var receipt: String?
-    @Expandable<PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet>
-    public var wallet: String?
+    public var receipt: PaymentMethodDetailsCardPresentReceipt?
+    public var wallet: PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet?
 
     public enum CodingKeys: String, CodingKey {
         case amountAuthorized = "amount_authorized"

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a customer's subscription ends.
 public struct CustomerSubscriptionDeleted: Codable, Sendable {
+    @Indirect
     public var object: Subscription
 }
 

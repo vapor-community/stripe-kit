@@ -17,8 +17,7 @@ public struct IssuingTransaction: Codable, Sendable {
     public var amount: Int
     /// Detailed breakdown of amount components. These amounts are denominated in `currency` and in the
     /// [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-    @Expandable<IssuingTransactionAmountDetails>
-    public var amountDetails: String?
+    public var amountDetails: IssuingTransactionAmountDetails?
     /// The `Authorization` object that led to this transaction.
     @Expandable<IssuingAuthorization>
     public var authorization: String?
@@ -51,27 +50,23 @@ public struct IssuingTransaction: Codable, Sendable {
     public var merchantAmount: Int
     /// The currency with which the merchant is taking payment.
     public var merchantCurrency: String
-    @Expandable<IssuingAuthorizationMerchantData>
-    public var merchantData: String?
+    public var merchantData: IssuingAuthorizationMerchantData
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]
     /// Details about the transaction, such as processing dates, set by the card network.
-    @Expandable<IssuingTransactionNetworkData>
-    public var networkData: String?
+    public var networkData: IssuingTransactionNetworkData?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: IssuingTransactionObject
     /// Additional purchase information that is optionally provided by the merchant.
-    @Expandable<IssuingTransactionPurchaseDetails>
-    public var purchaseDetails: String?
+    public var purchaseDetails: IssuingTransactionPurchaseDetails?
     /// [Token](https://docs.stripe.com/api/issuing/tokens/object) object used for this transaction. If a
     /// network token was not used for this transaction, this field will be null.
     @Expandable<IssuingToken>
     public var token: String?
     /// [Treasury](https://docs.stripe.com/api/treasury) details related to this transaction if it was
     /// created on a [FinancialAccount](/docs/api/treasury/financial_accounts
-    @Expandable<IssuingTransactionTreasury>
-    public var treasury: String?
+    public var treasury: IssuingTransactionTreasury?
     /// The nature of the transaction.
     public var type: IssuingTransactionType
     /// The digital wallet used for this transaction. One of `apple_pay`, `google_pay`, or `samsung_pay`.

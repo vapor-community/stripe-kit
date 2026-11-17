@@ -8,8 +8,7 @@
 import Foundation
 
 public struct SubscriptionPaymentMethodOptionsBillieCompanyDetails: Codable, Sendable {
-    @Expandable<SubscriptionPaymentMethodOptionsBillieCompanyDetailsRegisteredAddress>
-    public var registeredAddress: String?
+    public var registeredAddress: SubscriptionPaymentMethodOptionsBillieCompanyDetailsRegisteredAddress?
     /// Company or entity name.
     public var registeredName: String?
     /// The official registration number for the given registration type.

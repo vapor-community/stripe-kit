@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a tax ID is created for a customer.
 public struct CustomerTaxIdCreated: Codable, Sendable {
+    @Indirect
     public var object: TaxId
 }
 

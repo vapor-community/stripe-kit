@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a quote is created.
 public struct QuoteCreated: Codable, Sendable {
+    @Indirect
     public var object: Quote
 }
 

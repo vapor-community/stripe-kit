@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Financial Connections account is disconnected.
 public struct Disconnected: Codable, Sendable {
+    @Indirect
     public var object: FinancialConnectionsAccount
 }
 

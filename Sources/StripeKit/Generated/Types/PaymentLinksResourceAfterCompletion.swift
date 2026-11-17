@@ -8,10 +8,8 @@
 import Foundation
 
 public struct PaymentLinksResourceAfterCompletion: Codable, Sendable {
-    @Expandable<PaymentLinksResourceCompletionBehaviorConfirmationPage>
-    public var hostedConfirmation: String?
-    @Expandable<PaymentLinksResourceCompletionBehaviorRedirect>
-    public var redirect: String?
+    public var hostedConfirmation: PaymentLinksResourceCompletionBehaviorConfirmationPage?
+    public var redirect: PaymentLinksResourceCompletionBehaviorRedirect?
     /// The specified behavior after the purchase is complete.
     public var type: PaymentLinksResourceAfterCompletionType
 

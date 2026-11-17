@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a VerificationSession is redacted.
 public struct Redacted: Codable, Sendable {
+    @Indirect
     public var object: VerificationSession
 }
 

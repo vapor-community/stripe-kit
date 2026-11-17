@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a source is canceled.
 public struct SourceCanceled: Codable, Sendable {
+    @Indirect
     public var object: Source
 }
 

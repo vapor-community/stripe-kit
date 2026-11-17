@@ -11,8 +11,7 @@ public struct PaymentLinksResourceInvoiceCreation: Codable, Sendable {
     /// Enable creating an invoice on successful payment.
     public var enabled: Bool
     /// Configuration for the invoice. Default invoice values will be used if unspecified.
-    @Expandable<PaymentLinksResourceInvoiceSettings>
-    public var invoiceData: String?
+    public var invoiceData: PaymentLinksResourceInvoiceSettings?
 
     public enum CodingKeys: String, CodingKey {
         case enabled

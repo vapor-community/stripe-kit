@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a SetupIntent is in requires_action state.
 public struct SetupIntentRequiresAction: Codable, Sendable {
+    @Indirect
     public var object: SetupIntent
 }
 

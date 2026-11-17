@@ -13,8 +13,7 @@ public struct QuotesResourceAutomaticTax: Codable, Sendable {
     /// The account that's liable for tax. If set, the business address and tax registrations required to
     /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
     /// report of the connected account.
-    @Expandable<ConnectAccountReference>
-    public var liability: String?
+    public var liability: ConnectAccountReference?
     /// The tax provider powering automatic tax.
     public var provider: String?
     /// The status of the most recent automated tax calculation for this quote.

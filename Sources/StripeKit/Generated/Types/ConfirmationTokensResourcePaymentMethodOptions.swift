@@ -10,8 +10,7 @@ import Foundation
 /// Payment-method-specific configuration
 public struct ConfirmationTokensResourcePaymentMethodOptions: Codable, Sendable {
     /// This hash contains the card payment method options.
-    @Expandable<ConfirmationTokensResourcePaymentMethodOptionsResourceCard>
-    public var card: String?
+    public var card: ConfirmationTokensResourcePaymentMethodOptionsResourceCard?
 }
 
 public struct ConfirmationTokensResourcePaymentMethodOptionsList: Codable, Sendable {

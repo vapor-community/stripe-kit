@@ -12,8 +12,7 @@ public struct GelatoEmailReport: Codable, Sendable {
     /// Email to be verified.
     public var email: String?
     /// Details on the verification error. Present when status is `unverified`.
-    @Expandable<GelatoEmailReportError>
-    public var error: String?
+    public var error: GelatoEmailReportError?
     /// Status of this `email` check.
     public var status: GelatoEmailReportStatus
 }

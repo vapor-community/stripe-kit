@@ -24,8 +24,7 @@ public struct CashBalance: Codable, Sendable {
     public var livemode: Bool
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: CashBalanceObject
-    @Expandable<CustomerBalanceCustomerBalanceSettings>
-    public var settings: String?
+    public var settings: CustomerBalanceCustomerBalanceSettings
 
     public enum CodingKeys: String, CodingKey {
         case available

@@ -30,8 +30,7 @@ public struct TerminalReaderReaderResourceRefundPaymentAction: Codable, Sendable
     /// fee will be refunded in an amount proportional to the amount of the charge refunded. An application
     /// fee can be refunded only by the application that created the charge.
     public var refundApplicationFee: Bool?
-    @Expandable<TerminalReaderReaderResourceRefundPaymentConfig>
-    public var refundPaymentConfig: String?
+    public var refundPaymentConfig: TerminalReaderReaderResourceRefundPaymentConfig?
     /// Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer
     /// will be reversed proportionally to the amount being refunded (either the entire or partial amount).
     /// A transfer can be reversed only by the application that created the charge.

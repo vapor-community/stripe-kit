@@ -8,24 +8,16 @@
 import Foundation
 
 public struct IssuingDisputeEvidence: Codable, Sendable {
-    @Expandable<IssuingDisputeCanceledEvidence>
-    public var canceled: String?
-    @Expandable<IssuingDisputeDuplicateEvidence>
-    public var duplicate: String?
-    @Expandable<IssuingDisputeFraudulentEvidence>
-    public var fraudulent: String?
-    @Expandable<IssuingDisputeMerchandiseNotAsDescribedEvidence>
-    public var merchandiseNotAsDescribed: String?
-    @Expandable<IssuingDisputeNoValidAuthorizationEvidence>
-    public var noValidAuthorization: String?
-    @Expandable<IssuingDisputeNotReceivedEvidence>
-    public var notReceived: String?
-    @Expandable<IssuingDisputeOtherEvidence>
-    public var other: String?
+    public var canceled: IssuingDisputeCanceledEvidence?
+    public var duplicate: IssuingDisputeDuplicateEvidence?
+    public var fraudulent: IssuingDisputeFraudulentEvidence?
+    public var merchandiseNotAsDescribed: IssuingDisputeMerchandiseNotAsDescribedEvidence?
+    public var noValidAuthorization: IssuingDisputeNoValidAuthorizationEvidence?
+    public var notReceived: IssuingDisputeNotReceivedEvidence?
+    public var other: IssuingDisputeOtherEvidence?
     /// The reason for filing the dispute. Its value will match the field containing the evidence.
     public var reason: IssuingDisputeEvidenceReason
-    @Expandable<IssuingDisputeServiceNotAsDescribedEvidence>
-    public var serviceNotAsDescribed: String?
+    public var serviceNotAsDescribed: IssuingDisputeServiceNotAsDescribedEvidence?
 
     public enum CodingKeys: String, CodingKey {
         case canceled

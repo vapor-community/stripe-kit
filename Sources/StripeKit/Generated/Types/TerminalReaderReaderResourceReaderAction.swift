@@ -15,28 +15,19 @@ public struct TerminalReaderReaderResourceReaderAction: Codable, Sendable {
     /// humans only and may be updated at anytime. Requires [reader
     /// version](https://docs.stripe.com/terminal/readers/stripe-reader-s700-s710#reader-software-version)
     /// 2.42 or later. Readers on older versions always return null.
-    @Expandable<ApiErrors>
-    public var apiError: String?
-    @Expandable<TerminalReaderReaderResourceCollectInputsAction>
-    public var collectInputs: String?
-    @Expandable<TerminalReaderReaderResourceCollectPaymentMethodAction>
-    public var collectPaymentMethod: String?
-    @Expandable<TerminalReaderReaderResourceConfirmPaymentIntentAction>
-    public var confirmPaymentIntent: String?
+    public var apiError: ApiErrors?
+    public var collectInputs: TerminalReaderReaderResourceCollectInputsAction?
+    public var collectPaymentMethod: TerminalReaderReaderResourceCollectPaymentMethodAction?
+    public var confirmPaymentIntent: TerminalReaderReaderResourceConfirmPaymentIntentAction?
     /// Failure code, only set if status is `failed`.
     public var failureCode: String?
     /// Detailed failure message, only set if status is `failed`.
     public var failureMessage: String?
-    @Expandable<TerminalReaderReaderResourcePrintContent>
-    public var printContent: String?
-    @Expandable<TerminalReaderReaderResourceProcessPaymentIntentAction>
-    public var processPaymentIntent: String?
-    @Expandable<TerminalReaderReaderResourceProcessSetupIntentAction>
-    public var processSetupIntent: String?
-    @Expandable<TerminalReaderReaderResourceRefundPaymentAction>
-    public var refundPayment: String?
-    @Expandable<TerminalReaderReaderResourceSetReaderDisplayAction>
-    public var setReaderDisplay: String?
+    public var printContent: TerminalReaderReaderResourcePrintContent?
+    public var processPaymentIntent: TerminalReaderReaderResourceProcessPaymentIntentAction?
+    public var processSetupIntent: TerminalReaderReaderResourceProcessSetupIntentAction?
+    public var refundPayment: TerminalReaderReaderResourceRefundPaymentAction?
+    public var setReaderDisplay: TerminalReaderReaderResourceSetReaderDisplayAction?
     /// Status of the action performed by the reader.
     public var status: TerminalReaderReaderResourceReaderActionStatus
     /// Type of action performed by the reader.

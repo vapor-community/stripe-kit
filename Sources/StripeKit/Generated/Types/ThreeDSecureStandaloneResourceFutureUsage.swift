@@ -9,10 +9,8 @@ import Foundation
 
 /// Contains information about the future authorisations related to this authentication
 public struct ThreeDSecureStandaloneResourceFutureUsage: Codable, Sendable {
-    @Expandable<ThreeDSecureStandaloneResourceInstallment>
-    public var installment: String?
-    @Expandable<ThreeDSecureStandaloneResourceRecurring>
-    public var recurring: String?
+    public var installment: ThreeDSecureStandaloneResourceInstallment?
+    public var recurring: ThreeDSecureStandaloneResourceRecurring?
     /// The type of future usage declared for this 3DS Authentication.
     public var type: ThreeDSecureStandaloneResourceFutureUsageType
 }

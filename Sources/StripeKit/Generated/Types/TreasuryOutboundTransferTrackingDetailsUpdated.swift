@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever tracking_details on an OutboundTransfer is updated.
 public struct TreasuryOutboundTransferTrackingDetailsUpdated: Codable, Sendable {
+    @Indirect
     public var object: OutboundTransfer
 }
 

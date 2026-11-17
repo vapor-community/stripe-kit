@@ -8,8 +8,7 @@
 import Foundation
 
 public struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransaction: Codable, Sendable {
-    @Expandable<CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransfer>
-    public var bankTransfer: String?
+    public var bankTransfer: CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransfer
 
     public enum CodingKeys: String, CodingKey {
         case bankTransfer = "bank_transfer"

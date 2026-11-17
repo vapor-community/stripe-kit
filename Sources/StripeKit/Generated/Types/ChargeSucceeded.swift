@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a charge is successful.
 public struct ChargeSucceeded: Codable, Sendable {
+    @Indirect
     public var object: Charge
 }
 

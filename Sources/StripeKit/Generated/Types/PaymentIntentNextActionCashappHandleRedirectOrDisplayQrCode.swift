@@ -13,8 +13,7 @@ public struct PaymentIntentNextActionCashappHandleRedirectOrDisplayQrCode: Codab
     public var hostedInstructionsUrl: String
     /// The url for mobile redirect based auth
     public var mobileAuthUrl: String
-    @Expandable<PaymentIntentNextActionCashappQrCode>
-    public var qrCode: String?
+    public var qrCode: PaymentIntentNextActionCashappQrCode
 
     public enum CodingKeys: String, CodingKey {
         case hostedInstructionsUrl = "hosted_instructions_url"

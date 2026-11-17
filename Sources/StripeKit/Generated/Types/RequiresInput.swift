@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a VerificationSession transitions to require user input
 public struct RequiresInput: Codable, Sendable {
+    @Indirect
     public var object: VerificationSession
 }
 

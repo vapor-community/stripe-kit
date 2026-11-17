@@ -8,8 +8,7 @@
 import Foundation
 
 public struct SubscriptionSchedulesResourcePauseSchedulePauseSettings: Codable, Sendable {
-    @Expandable<SubscriptionSchedulesResourcePauseScheduleBillFor>
-    public var billFor: String?
+    public var billFor: SubscriptionSchedulesResourcePauseScheduleBillFor
     /// Determines how to handle debits and credits when pausing.
     public var invoicingBehavior: SubscriptionSchedulesResourcePauseSchedulePauseSettingsInvoicingBehavior
     /// The type of pause settings.

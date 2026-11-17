@@ -10,12 +10,9 @@ import Foundation
 /// A Location represents a grouping of readers. Related guide: [Fleet
 /// management](https://docs.stripe.com/terminal/fleet/locations)
 public struct TerminalLocation: Codable, Sendable {
-    @Expandable<AddressApiResourceTerminal>
-    public var address: String?
-    @Expandable<LegalEntityJapanAddress>
-    public var addressKana: String?
-    @Expandable<LegalEntityJapanAddress>
-    public var addressKanji: String?
+    public var address: AddressApiResourceTerminal
+    public var addressKana: LegalEntityJapanAddress?
+    public var addressKanji: LegalEntityJapanAddress?
     /// The ID of a configuration that will be used to customize all readers in this location.
     public var configurationOverrides: String?
     /// The display name of the location.

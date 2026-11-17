@@ -9,8 +9,7 @@ import Foundation
 
 /// Billing details used by the customer for this payment.
 public struct PaymentsPrimitivesPaymentRecordsResourceBillingDetails: Codable, Sendable {
-    @Expandable<PaymentsPrimitivesPaymentRecordsResourceAddress>
-    public var address: String?
+    public var address: PaymentsPrimitivesPaymentRecordsResourceAddress
     /// The billing email associated with the method of payment.
     public var email: String?
     /// The billing name associated with the method of payment.

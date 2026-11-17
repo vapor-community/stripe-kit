@@ -31,8 +31,7 @@ public struct VerificationSession: Codable, Sendable {
     /// Unique identifier for the object.
     public var id: String
     /// If present, this property tells you the last error encountered when processing the verification.
-    @Expandable<GelatoSessionLastError>
-    public var lastError: String?
+    public var lastError: GelatoSessionLastError?
     /// ID of the most recent VerificationReport. [Learn more about accessing detailed verification
     /// results.](https://docs.stripe.com/identity/verification-sessions#results)
     @Expandable<VerificationReport>
@@ -46,21 +45,17 @@ public struct VerificationSession: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: VerificationSessionObject
     /// A set of options for the session’s verification checks.
-    @Expandable<GelatoVerificationSessionOptions>
-    public var options: String?
+    public var options: GelatoVerificationSessionOptions?
     /// Details provided about the user being verified. These details may be shown to the user.
-    @Expandable<GelatoProvidedDetails>
-    public var providedDetails: String?
+    public var providedDetails: GelatoProvidedDetails?
     /// Redaction status of this VerificationSession. If the VerificationSession is not redacted, this field
     /// will be null.
-    @Expandable<VerificationSessionRedaction>
-    public var redaction: String?
+    public var redaction: VerificationSessionRedaction?
     /// Customer ID
     public var relatedCustomer: String?
     /// The ID of the Account representing a customer.
     public var relatedCustomerAccount: String?
-    @Expandable<GelatoRelatedPerson>
-    public var relatedPerson: String?
+    public var relatedPerson: GelatoRelatedPerson?
     /// Status of this VerificationSession. [Learn more about the lifecycle of
     /// sessions](https://docs.stripe.com/identity/how-sessions-work).
     public var status: VerificationSessionStatus
@@ -76,8 +71,7 @@ public struct VerificationSession: Codable, Sendable {
     /// The configuration token of a verification flow from the dashboard.
     public var verificationFlow: String?
     /// The user’s verified data.
-    @Expandable<GelatoVerifiedOutputs>
-    public var verifiedOutputs: String?
+    public var verifiedOutputs: GelatoVerifiedOutputs?
 
     public enum CodingKeys: String, CodingKey {
         case clientReferenceId = "client_reference_id"

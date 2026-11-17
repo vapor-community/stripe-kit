@@ -8,12 +8,10 @@
 import Foundation
 
 public struct TreasuryOutboundTransfersResourceOutboundTransferResourceTrackingDetails: Codable, Sendable {
-    @Expandable<TreasuryOutboundTransfersResourceAchTrackingDetails>
-    public var ach: String?
+    public var ach: TreasuryOutboundTransfersResourceAchTrackingDetails?
     /// The US bank account network used to send funds.
     public var type: TreasuryOutboundTransfersResourceOutboundTransferResourceTrackingDetailsType
-    @Expandable<TreasuryOutboundTransfersResourceUsDomesticWireTrackingDetails>
-    public var usDomesticWire: String?
+    public var usDomesticWire: TreasuryOutboundTransfersResourceUsDomesticWireTrackingDetails?
 
     public enum CodingKeys: String, CodingKey {
         case ach

@@ -9,8 +9,7 @@ import Foundation
 
 public struct BillingBillResourceInvoiceItemParentsInvoiceItemParent: Codable, Sendable {
     /// Details about the subscription that generated this invoice item
-    @Expandable<BillingBillResourceInvoiceItemParentsInvoiceItemSubscriptionParent>
-    public var subscriptionDetails: String?
+    public var subscriptionDetails: BillingBillResourceInvoiceItemParentsInvoiceItemSubscriptionParent?
     /// The type of parent that generated this invoice item
     public var type: BillingBillResourceInvoiceItemParentsInvoiceItemParentType
 

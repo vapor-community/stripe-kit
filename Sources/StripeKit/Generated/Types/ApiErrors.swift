@@ -33,19 +33,19 @@ public struct ApiErrors: Codable, Sendable {
     /// If the error is parameter-specific, the parameter related to the error. For example, you can use
     /// this to display a message near the correct form field.
     public var param: String?
-    @Expandable<PaymentIntent>
-    public var paymentIntent: String?
-    @Expandable<PaymentMethod>
-    public var paymentMethod: String?
+    @Indirect
+    public var paymentIntent: PaymentIntent?
+    @Indirect
+    public var paymentMethod: PaymentMethod?
     /// If the error is specific to the type of payment method, the payment method type that had a problem.
     /// This field is only populated for invoice-related errors.
     public var paymentMethodType: String?
     /// A URL to the request log entry in your dashboard.
     public var requestLogUrl: String?
-    @Expandable<SetupIntent>
-    public var setupIntent: String?
-    @Expandable<PaymentSource>
-    public var source: String?
+    @Indirect
+    public var setupIntent: SetupIntent?
+    @Indirect
+    public var source: PaymentSource?
     /// The type of error returned. One of `api_error`, `card_error`, `idempotency_error`, or
     /// `invalid_request_error`
     public var type: ApiErrorsType

@@ -13,8 +13,7 @@ public struct PaymentPagesCheckoutSessionCollectedInformation: Codable, Sendable
     /// Customer’s individual name for this Checkout Session
     public var individualName: String?
     /// Shipping information for this Checkout Session.
-    @Expandable<PaymentPagesCheckoutSessionCheckoutAddressDetails>
-    public var shippingDetails: String?
+    public var shippingDetails: PaymentPagesCheckoutSessionCheckoutAddressDetails?
 
     public enum CodingKeys: String, CodingKey {
         case businessName = "business_name"

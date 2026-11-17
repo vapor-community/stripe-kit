@@ -41,10 +41,8 @@ public struct PromotionCode: Codable, Sendable {
     public var metadata: [String: String]?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PromotionCodeObject
-    @Expandable<PromotionCodesResourcePromotion>
-    public var promotion: String?
-    @Expandable<PromotionCodesResourceRestrictions>
-    public var restrictions: String?
+    public var promotion: PromotionCodesResourcePromotion
+    public var restrictions: PromotionCodesResourceRestrictions
     /// Number of times this promotion code has been used.
     public var timesRedeemed: Int
 

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct PortalSubscriptionPause: Codable, Sendable {
-    @Expandable<PortalSubscriptionPauseDuration>
-    public var duration: String?
+    public var duration: PortalSubscriptionPauseDuration
     /// Whether the feature is enabled. Customers can only pause subscriptions in the [redesigned customer
     /// portal](/customer-management).
     public var enabled: Bool

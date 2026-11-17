@@ -10,6 +10,7 @@ import Foundation
 /// Occurs whenever a subscription changes (e.g., switching from one plan to another, or changing the
 /// status from trial to active).
 public struct CustomerSubscriptionUpdated: Codable, Sendable {
+    @Indirect
     public var object: Subscription
 }
 

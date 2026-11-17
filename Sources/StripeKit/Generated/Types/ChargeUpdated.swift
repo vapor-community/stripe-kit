@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a charge description or metadata is updated, or upon an asynchronous capture.
 public struct ChargeUpdated: Codable, Sendable {
+    @Indirect
     public var object: Charge
 }
 

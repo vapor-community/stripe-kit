@@ -17,25 +17,20 @@ public struct Subscription: Codable, Sendable {
     /// percentage of the subscription invoice total that will be transferred to the application owner's
     /// Stripe account.
     public var applicationFeePercent: Double?
-    @Expandable<SubscriptionAutomaticTax>
-    public var automaticTax: String?
+    public var automaticTax: SubscriptionAutomaticTax
     /// The reference point that aligns future [billing
     /// cycle](https://docs.stripe.com/subscriptions/billing-cycle) dates. It sets the day of week for
     /// `week` intervals, the day of month for `month` and `year` intervals, and the month of year for
     /// `year` intervals. The timestamp is in UTC format.
     public var billingCycleAnchor: Int
     /// The fixed values used to calculate the `billing_cycle_anchor`.
-    @Expandable<SubscriptionsResourceBillingCycleAnchorConfig>
-    public var billingCycleAnchorConfig: String?
-    @Expandable<SubscriptionsResourceBillingMode>
-    public var billingMode: String?
+    public var billingCycleAnchorConfig: SubscriptionsResourceBillingCycleAnchorConfig?
+    public var billingMode: SubscriptionsResourceBillingMode
     /// Billing schedules for this subscription.
-    @ExpandableCollection<SubscriptionsResourceBillingSchedules>
-    public var billingSchedules: [String]?
+    public var billingSchedules: [SubscriptionsResourceBillingSchedules]
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period
-    @Expandable<SubscriptionBillingThresholds>
-    public var billingThresholds: String?
+    public var billingThresholds: SubscriptionBillingThresholds?
     /// A date in the future at which the subscription will automatically get canceled
     public var cancelAt: Int?
     /// Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end
@@ -47,8 +42,7 @@ public struct Subscription: Codable, Sendable {
     /// canceled state.
     public var canceledAt: Int?
     /// Details about why this subscription was cancelled
-    @Expandable<CancellationDetails>
-    public var cancellationDetails: String?
+    public var cancellationDetails: CancellationDetails?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay this subscription at the end of the cycle using the default source attached to the customer.
     /// When sending an invoice, Stripe will email your customer an invoice with payment instructions and
@@ -83,8 +77,7 @@ public struct Subscription: Codable, Sendable {
     public var defaultSource: String?
     /// The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices
     /// created will have their `default_tax_rates` populated from the subscription.
-    @ExpandableCollection<TaxRate>
-    public var defaultTaxRates: [String]?
+    public var defaultTaxRates: [TaxRate]?
     /// The subscription's description, meant to be displayable to the customer. Use this field to
     /// optionally store an explanation of the subscription for rendering in Stripe surfaces and certain
     /// local payment methods UIs.
@@ -97,8 +90,7 @@ public struct Subscription: Codable, Sendable {
     public var endedAt: Int?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<SubscriptionsResourceSubscriptionInvoiceSettings>
-    public var invoiceSettings: String?
+    public var invoiceSettings: SubscriptionsResourceSubscriptionInvoiceSettings
     /// List of subscription items, each with an attached price.
     public var items: SubscriptionItemList
     /// The most recent invoice this subscription has generated over its lifecycle (for example, when it
@@ -110,8 +102,7 @@ public struct Subscription: Codable, Sendable {
     public var livemode: Bool
     /// Settings for Managed Payments for this Subscription and resulting [Invoices](/api/invoices/object)
     /// and [PaymentIntents](/api/payment_intents/object).
-    @Expandable<SmorResourceManagedPayments>
-    public var managedPayments: String?
+    public var managedPayments: SmorResourceManagedPayments?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]
@@ -128,16 +119,13 @@ public struct Subscription: Codable, Sendable {
     /// If specified, payment collection for this subscription will be paused. Note that the subscription
     /// status will be unchanged and will not be updated to `paused`. Learn more about [pausing
     /// collection](https://docs.stripe.com/billing/subscriptions/pause-payment).
-    @Expandable<SubscriptionsResourcePauseCollection>
-    public var pauseCollection: String?
+    public var pauseCollection: SubscriptionsResourcePauseCollection?
     /// Payment settings passed on to invoices created by the subscription.
-    @Expandable<SubscriptionsResourcePaymentSettings>
-    public var paymentSettings: String?
+    public var paymentSettings: SubscriptionsResourcePaymentSettings?
     /// Specifies an interval for how often to bill for any pending invoice items. It is analogous to
     /// calling [Create an invoice](/api/invoices/create) for the given subscription at the specified
     /// interval.
-    @Expandable<SubscriptionPendingInvoiceItemInterval>
-    public var pendingInvoiceItemInterval: String?
+    public var pendingInvoiceItemInterval: SubscriptionPendingInvoiceItemInterval?
     /// You can use this [SetupIntent](https://docs.stripe.com/api/setup_intents) to collect user
     /// authentication when creating a subscription without immediate payment or updating a subscription's
     /// payment method, allowing you to optimize for off-session payments. Learn more in the [SCA Migration
@@ -146,10 +134,8 @@ public struct Subscription: Codable, Sendable {
     public var pendingSetupIntent: String?
     /// If specified, [pending updates](https://docs.stripe.com/billing/subscriptions/pending-updates) that
     /// will be applied to the subscription once the `latest_invoice` has been paid.
-    @Expandable<SubscriptionsResourcePendingUpdate>
-    public var pendingUpdate: String?
-    @Expandable<SubscriptionsResourceSubscriptionPresentmentDetails>
-    public var presentmentDetails: String?
+    public var pendingUpdate: SubscriptionsResourcePendingUpdate?
+    public var presentmentDetails: SubscriptionsResourceSubscriptionPresentmentDetails?
     /// The schedule attached to the subscription
     @Expandable<SubscriptionSchedule>
     public var schedule: String?
@@ -181,20 +167,17 @@ public struct Subscription: Codable, Sendable {
     /// closed). After receiving updated payment information from a customer, you may choose to reopen and
     /// pay their closed invoices.
     public var status: SubscriptionStatus
-    @Expandable<SubscriptionsResourceStatusDetailsPublic>
-    public var statusDetails: String?
+    public var statusDetails: SubscriptionsResourceStatusDetailsPublic?
     /// ID of the test clock this subscription belongs to.
     @Expandable<TestClock>
     public var testClock: String?
     /// The account (if any) the subscription's payments will be attributed to for tax reporting, and where
     /// funds from each payment will be transferred to for each of the subscription's invoices.
-    @Expandable<SubscriptionTransferData>
-    public var transferData: String?
+    public var transferData: SubscriptionTransferData?
     /// If the subscription has a trial, the end of that trial.
     public var trialEnd: Int?
     /// Settings related to subscription trials.
-    @Expandable<SubscriptionsResourceTrialSettingsTrialSettings>
-    public var trialSettings: String?
+    public var trialSettings: SubscriptionsResourceTrialSettingsTrialSettings?
     /// If the subscription has a trial, the beginning of that trial.
     public var trialStart: Int?
 

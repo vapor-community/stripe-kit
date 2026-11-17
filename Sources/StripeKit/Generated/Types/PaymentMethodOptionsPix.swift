@@ -19,8 +19,7 @@ public struct PaymentMethodOptionsPix: Codable, Sendable {
     /// is supplied, the Pix expires 14400 seconds (4 hours) after PaymentIntent confirmation. Mutually
     /// exclusive with `expires_after_seconds`.
     public var expiresAt: Int?
-    @Expandable<PaymentMethodOptionsMandateOptionsPix>
-    public var mandateOptions: String?
+    public var mandateOptions: PaymentMethodOptionsMandateOptionsPix?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the

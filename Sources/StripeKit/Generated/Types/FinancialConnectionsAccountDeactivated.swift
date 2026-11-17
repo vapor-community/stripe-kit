@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Financial Connections account's status is updated from `active` to `inactive`.
 public struct FinancialConnectionsAccountDeactivated: Codable, Sendable {
+    @Indirect
     public var object: FinancialConnectionsAccount
 }
 

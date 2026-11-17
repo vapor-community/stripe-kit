@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a tax ID is deleted from a customer.
 public struct CustomerTaxIdDeleted: Codable, Sendable {
+    @Indirect
     public var object: TaxId
 }
 

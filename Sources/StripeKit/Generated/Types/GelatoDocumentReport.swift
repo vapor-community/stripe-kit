@@ -10,24 +10,19 @@ import Foundation
 /// Result from a document check
 public struct GelatoDocumentReport: Codable, Sendable {
     /// Address as it appears in the document.
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address?
     /// Date of birth as it appears in the document.
-    @Expandable<GelatoDataDocumentReportDateOfBirth>
-    public var dob: String?
+    public var dob: GelatoDataDocumentReportDateOfBirth?
     /// Details on the verification error. Present when status is `unverified`.
-    @Expandable<GelatoDocumentReportError>
-    public var error: String?
+    public var error: GelatoDocumentReportError?
     /// Expiration date of the document.
-    @Expandable<GelatoDataDocumentReportExpirationDate>
-    public var expirationDate: String?
+    public var expirationDate: GelatoDataDocumentReportExpirationDate?
     /// Array of [File](https://docs.stripe.com/api/files) ids containing images for this document.
     public var files: [String]?
     /// First name as it appears in the document.
     public var firstName: String?
     /// Issued date of the document.
-    @Expandable<GelatoDataDocumentReportIssuedDate>
-    public var issuedDate: String?
+    public var issuedDate: GelatoDataDocumentReportIssuedDate?
     /// Issuing country of the document.
     public var issuingCountry: String?
     /// Last name as it appears in the document.

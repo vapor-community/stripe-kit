@@ -10,10 +10,8 @@ import Foundation
 /// Sets the billing schedule for the subscription.
 public struct SubscriptionsResourceBillingSchedules: Codable, Sendable {
     /// Specifies which subscription items the billing schedule applies to.
-    @ExpandableCollection<SubscriptionsResourceBillingSchedulesAppliesTo>
-    public var appliesTo: [String]?
-    @Expandable<SubscriptionsResourceBillingSchedulesBillUntil>
-    public var billUntil: String?
+    public var appliesTo: [SubscriptionsResourceBillingSchedulesAppliesTo]?
+    public var billUntil: SubscriptionsResourceBillingSchedulesBillUntil
     /// Unique identifier for the billing schedule.
     public var key: String
 

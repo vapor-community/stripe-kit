@@ -12,8 +12,7 @@ public struct CustomerSessionResourceComponentsResourceCustomerSheet: Codable, S
     /// Whether the customer sheet is enabled.
     public var enabled: Bool
     /// This hash defines whether the customer sheet supports certain features.
-    @Expandable<CustomerSessionResourceComponentsResourceCustomerSheetResourceFeatures>
-    public var features: String?
+    public var features: CustomerSessionResourceComponentsResourceCustomerSheetResourceFeatures?
 }
 
 public struct CustomerSessionResourceComponentsResourceCustomerSheetList: Codable, Sendable {

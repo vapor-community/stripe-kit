@@ -12,8 +12,7 @@ public struct SubscriptionSchedulesResourceDefaultSettings: Codable, Sendable {
     /// percentage of the subscription invoice total that will be transferred to the application owner's
     /// Stripe account during this phase of the schedule.
     public var applicationFeePercent: Double?
-    @Expandable<SubscriptionSchedulesResourceDefaultSettingsAutomaticTax>
-    public var automaticTax: String?
+    public var automaticTax: SubscriptionSchedulesResourceDefaultSettingsAutomaticTax?
     /// Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the
     /// subscription is set to the start of the phase when entering the phase. If `automatic` then the
     /// billing cycle anchor is automatically modified as needed when entering the phase. For more
@@ -22,8 +21,7 @@ public struct SubscriptionSchedulesResourceDefaultSettings: Codable, Sendable {
     public var billingCycleAnchor: SubscriptionSchedulesResourceDefaultSettingsBillingCycleAnchor
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period
-    @Expandable<SubscriptionBillingThresholds>
-    public var billingThresholds: String?
+    public var billingThresholds: SubscriptionBillingThresholds?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay the underlying subscription at the end of each billing cycle using the default source
     /// attached to the customer. When sending an invoice, Stripe will email your customer an invoice with
@@ -37,16 +35,14 @@ public struct SubscriptionSchedulesResourceDefaultSettings: Codable, Sendable {
     /// store an explanation of the subscription for rendering in Stripe surfaces and certain local payment
     /// methods UIs.
     public var description: String?
-    @Expandable<InvoiceSettingSubscriptionScheduleSetting>
-    public var invoiceSettings: String?
+    public var invoiceSettings: InvoiceSettingSubscriptionScheduleSetting
     /// The account (if any) the charge was made on behalf of for charges associated with the schedule's
     /// subscription. See the Connect documentation for details.
     @Expandable<Account>
     public var onBehalfOf: String?
     /// The account (if any) the associated subscription's payments will be attributed to for tax reporting,
     /// and where funds from each payment will be transferred to for each of the subscription's invoices.
-    @Expandable<SubscriptionTransferData>
-    public var transferData: String?
+    public var transferData: SubscriptionTransferData?
 
     public enum CodingKeys: String, CodingKey {
         case applicationFeePercent = "application_fee_percent"

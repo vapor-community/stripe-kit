@@ -10,8 +10,7 @@ import Foundation
 public struct LegalEntityPersonVerification: Codable, Sendable {
     /// A document showing address, either a passport, local ID card, or utility bill from a well-known
     /// utility company.
-    @Expandable<LegalEntityPersonVerificationDocument>
-    public var additionalDocument: String?
+    public var additionalDocument: LegalEntityPersonVerificationDocument?
     /// A user-displayable string describing the verification state for the person. For example, this may
     /// say "Provided identity information could not be verified".
     public var details: String?
@@ -20,8 +19,7 @@ public struct LegalEntityPersonVerification: Codable, Sendable {
     /// `failed_keyed_identity`, or `failed_other`. A machine-readable code specifying the verification
     /// state for the person.
     public var detailsCode: String?
-    @Expandable<LegalEntityPersonVerificationDocument>
-    public var document: String?
+    public var document: LegalEntityPersonVerificationDocument?
     /// The state of verification for the person. Possible values are `unverified`, `pending`, or
     /// `verified`. Please refer [guide](https://docs.stripe.com/connect/handling-api-verification) to
     /// handle verification updates.

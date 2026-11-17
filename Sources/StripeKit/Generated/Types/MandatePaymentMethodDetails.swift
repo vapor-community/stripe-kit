@@ -8,52 +8,31 @@
 import Foundation
 
 public struct MandatePaymentMethodDetails: Codable, Sendable {
-    @Expandable<MandateAcssDebit>
-    public var acssDebit: String?
-    @Expandable<MandateAmazonPay>
-    public var amazonPay: String?
-    @Expandable<MandateAuBecsDebit>
-    public var auBecsDebit: String?
-    @Expandable<MandateBacsDebit>
-    public var bacsDebit: String?
-    @Expandable<MandateBlik>
-    public var blik: String?
-    @Expandable<CardMandatePaymentMethodDetails>
-    public var card: String?
-    @Expandable<MandateCashapp>
-    public var cashapp: String?
-    @Expandable<MandateKakaoPay>
-    public var kakaoPay: String?
-    @Expandable<MandateKlarna>
-    public var klarna: String?
-    @Expandable<MandateKrCard>
-    public var krCard: String?
-    @Expandable<MandateLink>
-    public var link: String?
-    @Expandable<MandateNaverPay>
-    public var naverPay: String?
-    @Expandable<MandateNzBankAccount>
-    public var nzBankAccount: String?
-    @Expandable<MandatePaypal>
-    public var paypal: String?
-    @Expandable<MandatePayto>
-    public var payto: String?
-    @Expandable<MandatePix>
-    public var pix: String?
-    @Expandable<MandateRevolutPay>
-    public var revolutPay: String?
-    @Expandable<MandateSepaDebit>
-    public var sepaDebit: String?
-    @Expandable<MandateTwint>
-    public var twint: String?
+    public var acssDebit: MandateAcssDebit?
+    public var amazonPay: MandateAmazonPay?
+    public var auBecsDebit: MandateAuBecsDebit?
+    public var bacsDebit: MandateBacsDebit?
+    public var blik: MandateBlik?
+    public var card: CardMandatePaymentMethodDetails?
+    public var cashapp: MandateCashapp?
+    public var kakaoPay: MandateKakaoPay?
+    public var klarna: MandateKlarna?
+    public var krCard: MandateKrCard?
+    public var link: MandateLink?
+    public var naverPay: MandateNaverPay?
+    public var nzBankAccount: MandateNzBankAccount?
+    public var paypal: MandatePaypal?
+    public var payto: MandatePayto?
+    public var pix: MandatePix?
+    public var revolutPay: MandateRevolutPay?
+    public var sepaDebit: MandateSepaDebit?
+    public var twint: MandateTwint?
     /// This mandate corresponds with a specific payment method type. The `payment_method_details` includes
     /// an additional hash with the same name and contains mandate information that's specific to that
     /// payment method.
     public var type: String
-    @Expandable<MandateUpi>
-    public var upi: String?
-    @Expandable<MandateUsBankAccount>
-    public var usBankAccount: String?
+    public var upi: MandateUpi?
+    public var usBankAccount: MandateUsBankAccount?
 
     public enum CodingKeys: String, CodingKey {
         case acssDebit = "acss_debit"

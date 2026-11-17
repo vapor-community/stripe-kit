@@ -13,8 +13,7 @@ public struct ExternalAccountRequirements: Codable, Sendable {
     public var currentlyDue: [String]?
     /// Fields that are `currently_due` and need to be collected again because validation or verification
     /// failed.
-    @ExpandableCollection<AccountRequirementsError>
-    public var errors: [String]?
+    public var errors: [AccountRequirementsError]?
     /// Fields that haven't been resolved by `current_deadline`. These fields need to be resolved to enable
     /// the external account.
     public var pastDue: [String]?

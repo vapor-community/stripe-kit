@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever an invoice item is deleted.
 public struct InvoiceitemDeleted: Codable, Sendable {
+    @Indirect
     public var object: Invoiceitem
 }
 

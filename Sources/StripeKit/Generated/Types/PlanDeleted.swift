@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a plan is deleted.
 public struct PlanDeleted: Codable, Sendable {
+    @Indirect
     public var object: Plan
 }
 

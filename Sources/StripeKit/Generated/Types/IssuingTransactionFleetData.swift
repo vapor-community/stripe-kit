@@ -9,14 +9,12 @@ import Foundation
 
 public struct IssuingTransactionFleetData: Codable, Sendable {
     /// Answers to prompts presented to cardholder at point of sale.
-    @Expandable<IssuingTransactionFleetCardholderPromptData>
-    public var cardholderPromptData: String?
+    public var cardholderPromptData: IssuingTransactionFleetCardholderPromptData?
     /// The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
     public var purchaseType: String?
     /// More information about the total amount. This information is not guaranteed to be accurate as some
     /// merchants may provide unreliable data.
-    @Expandable<IssuingTransactionFleetReportedBreakdown>
-    public var reportedBreakdown: String?
+    public var reportedBreakdown: IssuingTransactionFleetReportedBreakdown?
     /// The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
     public var serviceType: String?
 

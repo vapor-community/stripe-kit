@@ -15,10 +15,8 @@ import Foundation
 public struct TrialOffer: Codable, Sendable {
     /// Whether the trial offer is active. Set to false to archive the trial offer.
     public var active: Bool
-    @Expandable<ProductCatalogImplEndpointsTrialOfferResourceTrialOfferDuration>
-    public var duration: String?
-    @Expandable<ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehavior>
-    public var endBehavior: String?
+    public var duration: ProductCatalogImplEndpointsTrialOfferResourceTrialOfferDuration
+    public var endBehavior: ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehavior
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value

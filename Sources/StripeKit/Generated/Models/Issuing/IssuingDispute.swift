@@ -16,14 +16,12 @@ public struct IssuingDispute: Codable, Sendable {
     /// can differ (usually because of currency fluctuation).
     public var amount: Int
     /// List of balance transactions associated with the dispute.
-    @ExpandableCollection<BalanceTransaction>
-    public var balanceTransactions: [String]?
+    public var balanceTransactions: [BalanceTransaction]?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// The currency the `transaction` was made in.
     public var currency: String
-    @Expandable<IssuingDisputeEvidence>
-    public var evidence: String?
+    public var evidence: IssuingDisputeEvidence
     /// Unique identifier for the object.
     public var id: String
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
@@ -44,8 +42,7 @@ public struct IssuingDispute: Codable, Sendable {
     public var transaction: String?
     /// [Treasury](https://docs.stripe.com/api/treasury) details related to this dispute if it was created
     /// on a [FinancialAccount](https://docs.stripe.com/api/treasury/financial_accounts)
-    @Expandable<IssuingDisputeTreasury>
-    public var treasury: String?
+    public var treasury: IssuingDisputeTreasury?
 
     public enum CodingKeys: String, CodingKey {
         case amount

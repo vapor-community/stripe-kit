@@ -25,8 +25,7 @@ public struct ConfirmationToken: Codable, Sendable {
     /// is `false`.
     public var livemode: Bool
     /// Data used for generating a Mandate.
-    @Expandable<ConfirmationTokensResourceMandateData>
-    public var mandateData: String?
+    public var mandateData: ConfirmationTokensResourceMandateData?
     /// Set of key-value pairs that you can attach to an object. This can be useful for storing additional
     /// information about the object in a structured format.
     public var metadata: [String: String]?
@@ -36,12 +35,10 @@ public struct ConfirmationToken: Codable, Sendable {
     /// ConfirmationToken has not yet been used.
     public var paymentIntent: String?
     /// Payment-method-specific configuration for this ConfirmationToken.
-    @Expandable<ConfirmationTokensResourcePaymentMethodOptions>
-    public var paymentMethodOptions: String?
+    public var paymentMethodOptions: ConfirmationTokensResourcePaymentMethodOptions?
     /// Payment details collected by the Payment Element, used to create a PaymentMethod when a
     /// PaymentIntent or SetupIntent is confirmed with this ConfirmationToken.
-    @Expandable<ConfirmationTokensResourcePaymentMethodPreview>
-    public var paymentMethodPreview: String?
+    public var paymentMethodPreview: ConfirmationTokensResourcePaymentMethodPreview?
     /// Return URL used to confirm the Intent.
     public var returnUrl: String?
     /// Indicates that you intend to make future payments with this ConfirmationToken's payment method. The
@@ -53,8 +50,7 @@ public struct ConfirmationToken: Codable, Sendable {
     /// ConfirmationToken has not yet been used.
     public var setupIntent: String?
     /// Shipping information collected on this ConfirmationToken.
-    @Expandable<ConfirmationTokensResourceShipping>
-    public var shipping: String?
+    public var shipping: ConfirmationTokensResourceShipping?
     /// Indicates whether the Stripe SDK is used to handle confirmation flow. Defaults to `true` on
     /// ConfirmationToken.
     public var useStripeSdk: Bool

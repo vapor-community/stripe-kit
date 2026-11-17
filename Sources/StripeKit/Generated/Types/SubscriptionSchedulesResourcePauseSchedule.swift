@@ -10,11 +10,9 @@ import Foundation
 public struct SubscriptionSchedulesResourcePauseSchedule: Codable, Sendable {
     /// A unique identifier for this pause schedule.
     public var key: String
-    @Expandable<SubscriptionSchedulesResourcePauseSchedulePause>
-    public var pause: String?
+    public var pause: SubscriptionSchedulesResourcePauseSchedulePause
     /// Details about when and how the subscription resumes.
-    @Expandable<SubscriptionSchedulesResourcePauseScheduleResume>
-    public var resume: String?
+    public var resume: SubscriptionSchedulesResourcePauseScheduleResume?
 }
 
 public struct SubscriptionSchedulesResourcePauseScheduleList: Codable, Sendable {

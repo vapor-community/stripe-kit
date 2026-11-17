@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a draft invoice is finalized and updated to be an open invoice.
 public struct InvoiceFinalized: Codable, Sendable {
+    @Indirect
     public var object: Invoice
 }
 

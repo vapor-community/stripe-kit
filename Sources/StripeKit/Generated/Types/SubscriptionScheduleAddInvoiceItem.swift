@@ -13,21 +13,18 @@ public struct SubscriptionScheduleAddInvoiceItem: Codable, Sendable {
     /// Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
     public var discountable: Bool?
     /// The stackable discounts that will be applied to the item.
-    @ExpandableCollection<DiscountsResourceStackableDiscountWithDiscountEnd>
-    public var discounts: [String]?
+    public var discounts: [DiscountsResourceStackableDiscountWithDiscountEnd]
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
-    @Expandable<SubscriptionScheduleAddInvoiceItemPeriod>
-    public var period: String?
+    public var period: SubscriptionScheduleAddInvoiceItemPeriod
     /// ID of the price used to generate the invoice item.
     @Expandable<Price>
     public var price: String?
     /// The quantity of the invoice item.
     public var quantity: Int?
     /// The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
-    @ExpandableCollection<TaxRate>
-    public var taxRates: [String]?
+    public var taxRates: [TaxRate]?
 
     public enum CodingKeys: String, CodingKey {
         case discountable

@@ -9,17 +9,13 @@ import Foundation
 
 public struct PaymentLinksResourceCustomText: Codable, Sendable {
     /// Custom text that should be displayed after the payment confirmation button.
-    @Expandable<PaymentLinksResourceCustomTextPosition>
-    public var afterSubmit: String?
+    public var afterSubmit: PaymentLinksResourceCustomTextPosition?
     /// Custom text that should be displayed alongside shipping address collection.
-    @Expandable<PaymentLinksResourceCustomTextPosition>
-    public var shippingAddress: String?
+    public var shippingAddress: PaymentLinksResourceCustomTextPosition?
     /// Custom text that should be displayed alongside the payment confirmation button.
-    @Expandable<PaymentLinksResourceCustomTextPosition>
-    public var submit: String?
+    public var submit: PaymentLinksResourceCustomTextPosition?
     /// Custom text that should be displayed in place of the default terms of service agreement text.
-    @Expandable<PaymentLinksResourceCustomTextPosition>
-    public var termsOfServiceAcceptance: String?
+    public var termsOfServiceAcceptance: PaymentLinksResourceCustomTextPosition?
 
     public enum CodingKeys: String, CodingKey {
         case afterSubmit = "after_submit"

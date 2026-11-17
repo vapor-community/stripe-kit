@@ -9,8 +9,7 @@ import Foundation
 
 public struct PortalAfterExpiration: Codable, Sendable {
     /// Configuration for authenticating the customer after the session expires.
-    @Expandable<PortalAfterExpirationCustomerLogin>
-    public var customerLogin: String?
+    public var customerLogin: PortalAfterExpirationCustomerLogin?
     /// The behavior to apply when the session expires.
     public var type: PortalAfterExpirationType
 

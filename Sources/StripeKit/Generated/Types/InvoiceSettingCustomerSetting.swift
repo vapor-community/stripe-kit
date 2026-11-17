@@ -9,8 +9,7 @@ import Foundation
 
 public struct InvoiceSettingCustomerSetting: Codable, Sendable {
     /// Default custom fields to be displayed on invoices for this customer.
-    @ExpandableCollection<InvoiceSettingCustomField>
-    public var customFields: [String]?
+    public var customFields: [InvoiceSettingCustomField]?
     /// ID of a payment method that's attached to the customer, to be used as the customer's default payment
     /// method for subscriptions and invoices.
     @Expandable<PaymentMethod>
@@ -18,8 +17,7 @@ public struct InvoiceSettingCustomerSetting: Codable, Sendable {
     /// Default footer to be displayed on invoices for this customer.
     public var footer: String?
     /// Default options for invoice PDF rendering for this customer.
-    @Expandable<InvoiceSettingCustomerRenderingOptions>
-    public var renderingOptions: String?
+    public var renderingOptions: InvoiceSettingCustomerRenderingOptions?
 
     public enum CodingKeys: String, CodingKey {
         case customFields = "custom_fields"

@@ -13,8 +13,7 @@ public struct TerminalReaderReaderResourceCart: Codable, Sendable {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// List of line items in the cart.
-    @ExpandableCollection<TerminalReaderReaderResourceLineItem>
-    public var lineItems: [String]?
+    public var lineItems: [TerminalReaderReaderResourceLineItem]
     /// Tax amount for the entire cart. A positive integer in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal).
     public var tax: Int?

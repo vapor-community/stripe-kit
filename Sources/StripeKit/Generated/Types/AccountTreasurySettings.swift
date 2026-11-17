@@ -8,8 +8,7 @@
 import Foundation
 
 public struct AccountTreasurySettings: Codable, Sendable {
-    @Expandable<AccountTermsOfService>
-    public var tosAcceptance: String?
+    public var tosAcceptance: AccountTermsOfService?
 
     public enum CodingKeys: String, CodingKey {
         case tosAcceptance = "tos_acceptance"

@@ -33,8 +33,7 @@ public struct TaxRate: Codable, Sendable {
     /// The amount of the tax rate when the `rate_type` is `flat_amount`. Tax rates with `rate_type`
     /// `percentage` can vary based on the transaction, resulting in this field being `null`. This field
     /// exposes the amount and currency of the flat tax rate.
-    @Expandable<TaxRateFlatAmount>
-    public var flatAmount: String?
+    public var flatAmount: TaxRateFlatAmount?
     /// Unique identifier for the object.
     public var id: String
     /// This specifies if the tax rate is inclusive or exclusive.

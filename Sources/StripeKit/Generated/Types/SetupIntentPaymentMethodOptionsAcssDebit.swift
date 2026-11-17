@@ -10,8 +10,7 @@ import Foundation
 public struct SetupIntentPaymentMethodOptionsAcssDebit: Codable, Sendable {
     /// Currency supported by the bank account
     public var currency: SetupIntentPaymentMethodOptionsAcssDebitCurrency?
-    @Expandable<SetupIntentPaymentMethodOptionsMandateOptionsAcssDebit>
-    public var mandateOptions: String?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsMandateOptionsAcssDebit?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: SetupIntentPaymentMethodOptionsAcssDebitVerificationMethod?
 

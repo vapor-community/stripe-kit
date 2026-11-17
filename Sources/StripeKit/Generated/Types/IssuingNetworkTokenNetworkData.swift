@@ -8,17 +8,13 @@
 import Foundation
 
 public struct IssuingNetworkTokenNetworkData: Codable, Sendable {
-    @Expandable<IssuingNetworkTokenDevice>
-    public var device: String?
-    @Expandable<IssuingNetworkTokenMastercard>
-    public var mastercard: String?
+    public var device: IssuingNetworkTokenDevice?
+    public var mastercard: IssuingNetworkTokenMastercard?
     /// The network that the token is associated with. An additional hash is included with a name matching
     /// this value, containing tokenization data specific to the card network.
     public var type: IssuingNetworkTokenNetworkDataType
-    @Expandable<IssuingNetworkTokenVisa>
-    public var visa: String?
-    @Expandable<IssuingNetworkTokenWalletProvider>
-    public var walletProvider: String?
+    public var visa: IssuingNetworkTokenVisa?
+    public var walletProvider: IssuingNetworkTokenWalletProvider?
 
     public enum CodingKeys: String, CodingKey {
         case device

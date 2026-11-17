@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a VerificationSession transitions to verified
 public struct Verified: Codable, Sendable {
+    @Indirect
     public var object: VerificationSession
 }
 

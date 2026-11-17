@@ -12,17 +12,13 @@ public struct PaymentFlowsAmountDetails: Codable, Sendable {
     /// unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0. This field is
     /// mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
     public var discountAmount: Int?
-    @Expandable<PaymentFlowsAmountDetailsResourceError>
-    public var error: String?
+    public var error: PaymentFlowsAmountDetailsResourceError?
     /// A list of line items, each containing information about a product in the PaymentIntent. There is a
     /// maximum of 200 line items.
     public var lineItems: PaymentIntentAmountDetailsLineItemList?
-    @Expandable<PaymentFlowsAmountDetailsResourceShipping>
-    public var shipping: String?
-    @Expandable<PaymentFlowsAmountDetailsResourceTax>
-    public var tax: String?
-    @Expandable<PaymentFlowsAmountDetailsClientResourceTip>
-    public var tip: String?
+    public var shipping: PaymentFlowsAmountDetailsResourceShipping?
+    public var tax: PaymentFlowsAmountDetailsResourceTax?
+    public var tip: PaymentFlowsAmountDetailsClientResourceTip?
 
     public enum CodingKeys: String, CodingKey {
         case discountAmount = "discount_amount"

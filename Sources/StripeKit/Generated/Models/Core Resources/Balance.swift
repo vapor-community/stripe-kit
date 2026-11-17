@@ -16,19 +16,15 @@ public struct Balance: Codable, Sendable {
     /// [Transfers API](https://docs.stripe.com/api#transfers) or [Payouts
     /// API](https://docs.stripe.com/api#payouts). You can find the available balance for each currency and
     /// payment type in the `source_types` property.
-    @ExpandableCollection<BalanceAmount>
-    public var available: [String]?
+    public var available: [BalanceAmount]
     /// Funds held due to negative balances on connected accounts where
     /// [account.controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
     /// is `application`, which includes Custom accounts. You can find the connect reserve balance for each
     /// currency and payment type in the `source_types` property.
-    @ExpandableCollection<BalanceAmount>
-    public var connectReserved: [String]?
+    public var connectReserved: [BalanceAmount]?
     /// Funds that you can pay out using Instant Payouts.
-    @ExpandableCollection<BalanceAmountNet>
-    public var instantAvailable: [String]?
-    @Expandable<BalanceDetail>
-    public var issuing: String?
+    public var instantAvailable: [BalanceAmountNet]?
+    public var issuing: BalanceDetail?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -36,10 +32,8 @@ public struct Balance: Codable, Sendable {
     public var object: BalanceObject
     /// Funds that aren't available in the balance yet. You can find the pending balance for each currency
     /// and each payment type in the `source_types` property.
-    @ExpandableCollection<BalanceAmount>
-    public var pending: [String]?
-    @Expandable<BalanceDetailUngated>
-    public var refundAndDisputePrefunding: String?
+    public var pending: [BalanceAmount]
+    public var refundAndDisputePrefunding: BalanceDetailUngated?
 
     public enum CodingKeys: String, CodingKey {
         case available

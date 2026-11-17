@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a 3DS Authentication's status transitions to 'error'
 public struct Errored: Codable, Sendable {
+    @Indirect
     public var object: Authentication
 }
 

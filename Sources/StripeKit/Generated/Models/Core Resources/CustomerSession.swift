@@ -18,8 +18,7 @@ public struct CustomerSession: Codable, Sendable {
     /// should not be stored, logged, or exposed to anyone other than the relevant customer. Make sure that
     /// you have TLS enabled on any page that includes the client secret.
     public var clientSecret: String
-    @Expandable<CustomerSessionResourceComponents>
-    public var components: String?
+    public var components: CustomerSessionResourceComponents?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// The Customer the Customer Session was created for.

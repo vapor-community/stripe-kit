@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when a Climate order is delayed.
 public struct Delayed: Codable, Sendable {
+    @Indirect
     public var object: Order
 }
 

@@ -10,10 +10,8 @@ import Foundation
 public struct CustomerAcceptance: Codable, Sendable {
     /// The time that the customer accepts the mandate.
     public var acceptedAt: Int?
-    @Expandable<OfflineAcceptance>
-    public var offline: String?
-    @Expandable<OnlineAcceptance>
-    public var online: String?
+    public var offline: OfflineAcceptance?
+    public var online: OnlineAcceptance?
     /// The mandate includes the type of customer acceptance information, such as: `online` or `offline`.
     public var type: CustomerAcceptanceType
 

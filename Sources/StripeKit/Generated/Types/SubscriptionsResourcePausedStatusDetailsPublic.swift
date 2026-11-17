@@ -9,8 +9,7 @@ import Foundation
 
 /// Indicates when and why the subscription transitioned to the paused status.
 public struct SubscriptionsResourcePausedStatusDetailsPublic: Codable, Sendable {
-    @Expandable<SubscriptionsResourcePausedStatusDetailsSubscription>
-    public var subscription: String?
+    public var subscription: SubscriptionsResourcePausedStatusDetailsSubscription
     /// Unix timestamp in seconds of when the subscription status transitioned to `paused`.
     public var transitionedAt: Int
     /// The type of pause.

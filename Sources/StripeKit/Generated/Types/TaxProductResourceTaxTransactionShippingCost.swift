@@ -22,8 +22,7 @@ public struct TaxProductResourceTaxTransactionShippingCost: Codable, Sendable {
     public var taxBehavior: TaxProductResourceTaxTransactionShippingCostTaxBehavior
     /// Detailed account of taxes relevant to shipping cost. (It is not populated for the transaction
     /// resource object and will be removed in the next API version.)
-    @ExpandableCollection<TaxProductResourceLineItemTaxBreakdown>
-    public var taxBreakdown: [String]?
+    public var taxBreakdown: [TaxProductResourceLineItemTaxBreakdown]?
     /// The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for shipping.
     public var taxCode: String
 

@@ -9,11 +9,9 @@ import Foundation
 
 public struct PortalFlowsFlowAfterCompletion: Codable, Sendable {
     /// Configuration when `after_completion.type=hosted_confirmation`.
-    @Expandable<PortalFlowsAfterCompletionHostedConfirmation>
-    public var hostedConfirmation: String?
+    public var hostedConfirmation: PortalFlowsAfterCompletionHostedConfirmation?
     /// Configuration when `after_completion.type=redirect`.
-    @Expandable<PortalFlowsAfterCompletionRedirect>
-    public var redirect: String?
+    public var redirect: PortalFlowsAfterCompletionRedirect?
     /// The specified type of behavior after the flow is completed.
     public var type: PortalFlowsFlowAfterCompletionType
 

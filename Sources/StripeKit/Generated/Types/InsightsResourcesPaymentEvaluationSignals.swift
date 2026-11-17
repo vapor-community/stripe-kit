@@ -10,13 +10,10 @@ import Foundation
 /// Collection of signals for this payment evaluation.
 public struct InsightsResourcesPaymentEvaluationSignals: Codable, Sendable {
     /// The likelihood that this `PaymentEvaluation` results in an early fraud warning.
-    @Expandable<InsightsResourcesPaymentEvaluationSignalV2>
-    public var earlyFraudWarning: String?
+    public var earlyFraudWarning: InsightsResourcesPaymentEvaluationSignalV2?
     /// The likelihood that this `PaymentEvaluation` results in a dispute with reason code `fraudulent`.
-    @Expandable<InsightsResourcesPaymentEvaluationSignalV2>
-    public var fraudulentDispute: String?
-    @Expandable<InsightsResourcesPaymentEvaluationSignalV2>
-    public var fraudulentPayment: String?
+    public var fraudulentDispute: InsightsResourcesPaymentEvaluationSignalV2?
+    public var fraudulentPayment: InsightsResourcesPaymentEvaluationSignalV2
 
     public enum CodingKeys: String, CodingKey {
         case earlyFraudWarning = "early_fraud_warning"

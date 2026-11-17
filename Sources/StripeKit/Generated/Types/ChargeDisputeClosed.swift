@@ -10,6 +10,7 @@ import Foundation
 /// Occurs when a dispute is closed and the dispute status changes to `lost`, `warning_closed`, or
 /// `won`.
 public struct ChargeDisputeClosed: Codable, Sendable {
+    @Indirect
     public var object: Dispute
 }
 

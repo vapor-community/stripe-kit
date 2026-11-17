@@ -8,8 +8,7 @@
 import Foundation
 
 public struct RefundNextAction: Codable, Sendable {
-    @Expandable<RefundNextActionDisplayDetails>
-    public var displayDetails: String?
+    public var displayDetails: RefundNextActionDisplayDetails?
     /// Type of the next action to perform.
     public var type: String
 

@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs when the supported_payment_method_types array on a Financial Connections account changes.
 public struct SupportedPaymentMethodTypesUpdated: Codable, Sendable {
+    @Indirect
     public var object: FinancialConnectionsAccount
 }
 

@@ -8,8 +8,7 @@
 import Foundation
 
 public struct LegalEntityCompanyVerification: Codable, Sendable {
-    @Expandable<LegalEntityCompanyVerificationDocument>
-    public var document: String?
+    public var document: LegalEntityCompanyVerificationDocument
 }
 
 public struct LegalEntityCompanyVerificationList: Codable, Sendable {

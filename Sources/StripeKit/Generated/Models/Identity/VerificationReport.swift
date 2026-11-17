@@ -22,25 +22,19 @@ public struct VerificationReport: Codable, Sendable {
     public var clientReferenceId: String?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
-    @Expandable<GelatoDocumentReport>
-    public var document: String?
-    @Expandable<GelatoEmailReport>
-    public var email: String?
+    public var document: GelatoDocumentReport?
+    public var email: GelatoEmailReport?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<GelatoIdNumberReport>
-    public var idNumber: String?
+    public var idNumber: GelatoIdNumberReport?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: VerificationReportObject
-    @Expandable<GelatoVerificationReportOptions>
-    public var options: String?
-    @Expandable<GelatoPhoneReport>
-    public var phone: String?
-    @Expandable<GelatoSelfieReport>
-    public var selfie: String?
+    public var options: GelatoVerificationReportOptions?
+    public var phone: GelatoPhoneReport?
+    public var selfie: GelatoSelfieReport?
     /// Type of report.
     public var type: VerificationReportType
     /// The configuration token of a verification flow from the dashboard.

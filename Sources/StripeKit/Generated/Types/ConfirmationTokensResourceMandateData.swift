@@ -9,8 +9,7 @@ import Foundation
 
 /// Data used for generating a Mandate.
 public struct ConfirmationTokensResourceMandateData: Codable, Sendable {
-    @Expandable<ConfirmationTokensResourceMandateDataResourceCustomerAcceptance>
-    public var customerAcceptance: String?
+    public var customerAcceptance: ConfirmationTokensResourceMandateDataResourceCustomerAcceptance
 
     public enum CodingKeys: String, CodingKey {
         case customerAcceptance = "customer_acceptance"

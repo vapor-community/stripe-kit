@@ -10,8 +10,7 @@ import Foundation
 public struct LineItemsDiscountAmount: Codable, Sendable {
     /// The amount discounted.
     public var amount: Int
-    @Expandable<Discount>
-    public var discount: String?
+    public var discount: Discount
 }
 
 public struct LineItemsDiscountAmountList: Codable, Sendable {

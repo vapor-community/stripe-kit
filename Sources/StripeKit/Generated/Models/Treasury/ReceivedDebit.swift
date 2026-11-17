@@ -35,10 +35,8 @@ public struct ReceivedDebit: Codable, Sendable {
     public var hostedRegulatoryReceiptUrl: String?
     /// Unique identifier for the object.
     public var id: String
-    @Expandable<TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetails>
-    public var initiatingPaymentMethodDetails: String?
-    @Expandable<TreasuryReceivedDebitsResourceLinkedFlows>
-    public var linkedFlows: String?
+    public var initiatingPaymentMethodDetails: TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetails?
+    public var linkedFlows: TreasuryReceivedDebitsResourceLinkedFlows
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -47,8 +45,7 @@ public struct ReceivedDebit: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: ReceivedDebitObject
     /// Details describing when a ReceivedDebit might be reversed.
-    @Expandable<TreasuryReceivedDebitsResourceReversalDetails>
-    public var reversalDetails: String?
+    public var reversalDetails: TreasuryReceivedDebitsResourceReversalDetails?
     /// Status of the ReceivedDebit. ReceivedDebits are created with a status of either `succeeded`
     /// (approved) or `failed` (declined). The failure reason can be found under the `failure_code`.
     public var status: ReceivedDebitStatus

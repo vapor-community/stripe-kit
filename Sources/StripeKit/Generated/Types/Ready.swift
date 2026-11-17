@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a test clock transitions to a ready status.
 public struct Ready: Codable, Sendable {
+    @Indirect
     public var object: TestClock
 }
 

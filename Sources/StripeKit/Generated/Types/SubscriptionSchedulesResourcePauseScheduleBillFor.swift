@@ -8,10 +8,8 @@
 import Foundation
 
 public struct SubscriptionSchedulesResourcePauseScheduleBillFor: Codable, Sendable {
-    @Expandable<SubscriptionSchedulesResourcePauseScheduleOutstandingUsageThrough>
-    public var outstandingUsageThrough: String?
-    @Expandable<SubscriptionSchedulesResourcePauseScheduleUnusedTimeFrom>
-    public var unusedTimeFrom: String?
+    public var outstandingUsageThrough: SubscriptionSchedulesResourcePauseScheduleOutstandingUsageThrough
+    public var unusedTimeFrom: SubscriptionSchedulesResourcePauseScheduleUnusedTimeFrom
 
     public enum CodingKeys: String, CodingKey {
         case outstandingUsageThrough = "outstanding_usage_through"

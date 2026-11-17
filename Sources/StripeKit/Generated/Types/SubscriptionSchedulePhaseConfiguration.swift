@@ -12,14 +12,12 @@ import Foundation
 public struct SubscriptionSchedulePhaseConfiguration: Codable, Sendable {
     /// A list of prices and quantities that will generate invoice items appended to the next invoice for
     /// this phase.
-    @ExpandableCollection<SubscriptionScheduleAddInvoiceItem>
-    public var addInvoiceItems: [String]?
+    public var addInvoiceItems: [SubscriptionScheduleAddInvoiceItem]
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
     /// percentage of the subscription invoice total that will be transferred to the application owner's
     /// Stripe account during this phase of the schedule.
     public var applicationFeePercent: Double?
-    @Expandable<SchedulesPhaseAutomaticTax>
-    public var automaticTax: String?
+    public var automaticTax: SchedulesPhaseAutomaticTax?
     /// Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the
     /// subscription is set to the start of the phase when entering the phase. If `automatic` then the
     /// billing cycle anchor is automatically modified as needed when entering the phase. For more
@@ -28,8 +26,7 @@ public struct SubscriptionSchedulePhaseConfiguration: Codable, Sendable {
     public var billingCycleAnchor: SubscriptionSchedulePhaseConfigurationBillingCycleAnchor?
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period
-    @Expandable<SubscriptionBillingThresholds>
-    public var billingThresholds: String?
+    public var billingThresholds: SubscriptionBillingThresholds?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay the underlying subscription at the end of each billing cycle using the default source
     /// attached to the customer. When sending an invoice, Stripe will email your customer an invoice with
@@ -44,24 +41,20 @@ public struct SubscriptionSchedulePhaseConfiguration: Codable, Sendable {
     @Expandable<PaymentMethod>
     public var defaultPaymentMethod: String?
     /// The default tax rates to apply to the subscription during this phase of the subscription schedule.
-    @ExpandableCollection<TaxRate>
-    public var defaultTaxRates: [String]?
+    public var defaultTaxRates: [TaxRate]?
     /// Subscription description, meant to be displayable to the customer. Use this field to optionally
     /// store an explanation of the subscription for rendering in Stripe surfaces and certain local payment
     /// methods UIs.
     public var description: String?
     /// The stackable discounts that will be applied to the subscription on this phase. Subscription item
     /// discounts are applied before subscription discounts.
-    @ExpandableCollection<StackableDiscountWithDiscountSettingsAndDiscountEnd>
-    public var discounts: [String]?
+    public var discounts: [StackableDiscountWithDiscountSettingsAndDiscountEnd]
     /// The end of this phase of the subscription schedule.
     public var endDate: Int
     /// The invoice settings applicable during this phase.
-    @Expandable<InvoiceSettingSubscriptionSchedulePhaseSetting>
-    public var invoiceSettings: String?
+    public var invoiceSettings: InvoiceSettingSubscriptionSchedulePhaseSetting?
     /// Subscription items to configure the subscription to during this phase of the subscription schedule.
-    @ExpandableCollection<SubscriptionScheduleConfigurationItem>
-    public var items: [String]?
+    public var items: [SubscriptionScheduleConfigurationItem]
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a phase.
     /// Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase
     /// is entered. Updating the underlying subscription's `metadata` directly will not affect the current
@@ -78,8 +71,7 @@ public struct SubscriptionSchedulePhaseConfiguration: Codable, Sendable {
     public var startDate: Int
     /// The account (if any) the associated subscription's payments will be attributed to for tax reporting,
     /// and where funds from each payment will be transferred to for each of the subscription's invoices.
-    @Expandable<SubscriptionTransferData>
-    public var transferData: String?
+    public var transferData: SubscriptionTransferData?
     /// If set to true the entire phase is counted as a trial and the customer will not be charged for any
     /// fees.
     public var trial: Bool?

@@ -10,8 +10,7 @@ import Foundation
 public struct PaymentMethodDetailsCardWalletMasterpass: Codable, Sendable {
     /// Owner's verified billing address. Values are verified or provided by the wallet directly (if
     /// supported) at the time of authorization or settlement. They cannot be set or mutated.
-    @Expandable<Address>
-    public var billingAddress: String?
+    public var billingAddress: Address?
     /// Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the
     /// time of authorization or settlement. They cannot be set or mutated.
     public var email: String?
@@ -20,8 +19,7 @@ public struct PaymentMethodDetailsCardWalletMasterpass: Codable, Sendable {
     public var name: String?
     /// Owner's verified shipping address. Values are verified or provided by the wallet directly (if
     /// supported) at the time of authorization or settlement. They cannot be set or mutated.
-    @Expandable<Address>
-    public var shippingAddress: String?
+    public var shippingAddress: Address?
 
     public enum CodingKeys: String, CodingKey {
         case billingAddress = "billing_address"

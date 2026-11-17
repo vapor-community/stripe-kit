@@ -9,11 +9,9 @@ import Foundation
 
 public struct PersonUsCfpbData: Codable, Sendable {
     /// The persons ethnicity details
-    @Expandable<PersonEthnicityDetails>
-    public var ethnicityDetails: String?
+    public var ethnicityDetails: PersonEthnicityDetails?
     /// The persons race details
-    @Expandable<PersonRaceDetails>
-    public var raceDetails: String?
+    public var raceDetails: PersonRaceDetails?
     /// The persons self-identified gender
     public var selfIdentifiedGender: String?
 

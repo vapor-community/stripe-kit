@@ -17,8 +17,7 @@ public struct QuotesResourceRecurring: Codable, Sendable {
     /// The number of intervals (specified in the `interval` attribute) between subscription billings. For
     /// example, `interval=month` and `interval_count=3` bills every 3 months.
     public var intervalCount: Int
-    @Expandable<QuotesResourceTotalDetails>
-    public var totalDetails: String?
+    public var totalDetails: QuotesResourceTotalDetails
 
     public enum CodingKeys: String, CodingKey {
         case amountSubtotal = "amount_subtotal"

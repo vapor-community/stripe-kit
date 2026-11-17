@@ -9,13 +9,12 @@ import Foundation
 
 /// Represents a reader action to collect a payment method
 public struct TerminalReaderReaderResourceCollectPaymentMethodAction: Codable, Sendable {
-    @Expandable<TerminalReaderReaderResourceCollectConfig>
-    public var collectConfig: String?
+    public var collectConfig: TerminalReaderReaderResourceCollectConfig?
     /// Most recent PaymentIntent processed by the reader.
     @Expandable<PaymentIntent>
     public var paymentIntent: String?
-    @Expandable<PaymentMethod>
-    public var paymentMethod: String?
+    @Indirect
+    public var paymentMethod: PaymentMethod?
 
     public enum CodingKeys: String, CodingKey {
         case collectConfig = "collect_config"

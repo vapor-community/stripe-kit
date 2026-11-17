@@ -11,8 +11,7 @@ import Foundation
 public struct PaymentMethodDomainResourcePaymentMethodStatus: Codable, Sendable {
     /// The status of the payment method on the domain.
     public var status: PaymentMethodDomainResourcePaymentMethodStatusStatus
-    @Expandable<PaymentMethodDomainResourcePaymentMethodStatusDetails>
-    public var statusDetails: String?
+    public var statusDetails: PaymentMethodDomainResourcePaymentMethodStatusDetails?
 
     public enum CodingKeys: String, CodingKey {
         case status

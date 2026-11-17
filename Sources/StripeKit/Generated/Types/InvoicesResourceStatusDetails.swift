@@ -8,8 +8,7 @@
 import Foundation
 
 public struct InvoicesResourceStatusDetails: Codable, Sendable {
-    @Expandable<InvoicesResourceUncollectibleStatusDetails>
-    public var uncollectible: String?
+    public var uncollectible: InvoicesResourceUncollectibleStatusDetails?
 }
 
 public struct InvoicesResourceStatusDetailsList: Codable, Sendable {

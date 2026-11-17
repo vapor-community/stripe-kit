@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a payout is canceled.
 public struct PayoutCanceled: Codable, Sendable {
+    @Indirect
     public var object: Payout
 }
 

@@ -36,8 +36,7 @@ public struct IssuingCardholderAuthorizationControls: Codable, Sendable {
     /// `allowed_merchant_countries`. Provide an empty value to unset this control.
     public var blockedMerchantCountries: [String]?
     /// Limit spending with amount-based rules that apply across this cardholder's cards.
-    @ExpandableCollection<IssuingCardholderSpendingLimit>
-    public var spendingLimits: [String]?
+    public var spendingLimits: [IssuingCardholderSpendingLimit]?
     /// Currency of the amounts within `spending_limits`.
     public var spendingLimitsCurrency: String?
 

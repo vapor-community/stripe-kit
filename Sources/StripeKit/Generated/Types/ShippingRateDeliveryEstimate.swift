@@ -9,11 +9,9 @@ import Foundation
 
 public struct ShippingRateDeliveryEstimate: Codable, Sendable {
     /// The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
-    @Expandable<ShippingRateDeliveryEstimateBound>
-    public var maximum: String?
+    public var maximum: ShippingRateDeliveryEstimateBound?
     /// The lower bound of the estimated range. If empty, represents no lower bound.
-    @Expandable<ShippingRateDeliveryEstimateBound>
-    public var minimum: String?
+    public var minimum: ShippingRateDeliveryEstimateBound?
 }
 
 public struct ShippingRateDeliveryEstimateList: Codable, Sendable {

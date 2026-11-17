@@ -8,8 +8,7 @@
 import Foundation
 
 public struct InvoicePaymentMethodOptionsUsBankAccount: Codable, Sendable {
-    @Expandable<InvoicePaymentMethodOptionsUsBankAccountLinkedAccountOptions>
-    public var financialConnections: String?
+    public var financialConnections: InvoicePaymentMethodOptionsUsBankAccountLinkedAccountOptions?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: InvoicePaymentMethodOptionsUsBankAccountVerificationMethod?
 

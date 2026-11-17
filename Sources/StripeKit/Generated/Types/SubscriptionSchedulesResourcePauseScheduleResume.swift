@@ -10,10 +10,8 @@ import Foundation
 public struct SubscriptionSchedulesResourcePauseScheduleResume: Codable, Sendable {
     /// Time at which the subscription resumes.
     public var resumeAt: Int
-    @Expandable<SubscriptionSchedulesResourcePauseScheduleResumeSettings>
-    public var settings: String?
-    @Expandable<SubscriptionSchedulesResourcePauseScheduleResumeStatus>
-    public var status: String?
+    public var settings: SubscriptionSchedulesResourcePauseScheduleResumeSettings
+    public var status: SubscriptionSchedulesResourcePauseScheduleResumeStatus
 
     public enum CodingKeys: String, CodingKey {
         case resumeAt = "resume_at"

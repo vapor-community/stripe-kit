@@ -14,8 +14,7 @@ public struct SubscriptionSchedule: Codable, Sendable {
     /// ID of the Connect Application that created the schedule.
     @Expandable<Application>
     public var application: String?
-    @Expandable<SubscriptionsResourceBillingMode>
-    public var billingMode: String?
+    public var billingMode: SubscriptionsResourceBillingMode
     /// Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
     public var canceledAt: Int?
     /// Time at which the subscription schedule was completed. Measured in seconds since the Unix epoch.
@@ -24,15 +23,13 @@ public struct SubscriptionSchedule: Codable, Sendable {
     public var created: Int
     /// Object representing the start and end dates for the current phase of the subscription schedule, if
     /// it is `active`.
-    @Expandable<SubscriptionScheduleCurrentPhase>
-    public var currentPhase: String?
+    public var currentPhase: SubscriptionScheduleCurrentPhase?
     /// ID of the customer who owns the subscription schedule.
     @Expandable<Customer>
     public var customer: String?
     /// ID of the account who owns the subscription schedule.
     public var customerAccount: String?
-    @Expandable<SubscriptionSchedulesResourceDefaultSettings>
-    public var defaultSettings: String?
+    public var defaultSettings: SubscriptionSchedulesResourceDefaultSettings
     /// Behavior of the subscription schedule and underlying subscription when it ends. Possible values are
     /// `release` or `cancel` with the default being `release`. `release` will end the subscription schedule
     /// and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel
@@ -49,11 +46,9 @@ public struct SubscriptionSchedule: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: SubscriptionScheduleObject
     /// The pause schedules for this subscription schedule.
-    @ExpandableCollection<SubscriptionSchedulesResourcePauseSchedule>
-    public var pauseSchedules: [String]?
+    public var pauseSchedules: [SubscriptionSchedulesResourcePauseSchedule]
     /// Configuration for the subscription schedule's phases.
-    @ExpandableCollection<SubscriptionSchedulePhaseConfiguration>
-    public var phases: [String]?
+    public var phases: [SubscriptionSchedulePhaseConfiguration]
     /// Time at which the subscription schedule was released. Measured in seconds since the Unix epoch.
     public var releasedAt: Int?
     /// ID of the subscription once managed by the subscription schedule (if it is released).

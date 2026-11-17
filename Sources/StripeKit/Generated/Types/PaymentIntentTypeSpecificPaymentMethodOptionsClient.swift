@@ -10,10 +10,8 @@ import Foundation
 public struct PaymentIntentTypeSpecificPaymentMethodOptionsClient: Codable, Sendable {
     /// Controls when the funds will be captured from the customer's account.
     public var captureMethod: PaymentIntentTypeSpecificPaymentMethodOptionsClientCaptureMethod?
-    @Expandable<PaymentFlowsInstallmentOptions>
-    public var installments: String?
-    @Expandable<PaymentIntentPaymentMethodOptionsMandateOptionsPayto>
-    public var mandateOptions: String?
+    public var installments: PaymentFlowsInstallmentOptions?
+    public var mandateOptions: PaymentIntentPaymentMethodOptionsMandateOptionsPayto?
     /// Request ability to [increment](https://docs.stripe.com/terminal/features/incremental-authorizations)
     /// this PaymentIntent if the combination of MCC and card brand is eligible. Check
     /// [incremental_authorization_supported](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported)
@@ -22,8 +20,7 @@ public struct PaymentIntentTypeSpecificPaymentMethodOptionsClient: Codable, Send
     /// When enabled, using a card that is attached to a customer will require the CVC to be provided again
     /// (i.e. using the cvc_token parameter).
     public var requireCvcRecollection: Bool?
-    @Expandable<PaymentMethodOptionsCardPresentRouting>
-    public var routing: String?
+    public var routing: PaymentMethodOptionsCardPresentRouting?
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
     /// method](/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the

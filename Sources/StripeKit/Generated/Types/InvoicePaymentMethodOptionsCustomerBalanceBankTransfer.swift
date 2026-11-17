@@ -8,8 +8,7 @@
 import Foundation
 
 public struct InvoicePaymentMethodOptionsCustomerBalanceBankTransfer: Codable, Sendable {
-    @Expandable<InvoicePaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer>
-    public var euBankTransfer: String?
+    public var euBankTransfer: InvoicePaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer?
     /// The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`,
     /// `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
     public var type: String?

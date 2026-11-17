@@ -27,8 +27,7 @@ public struct IssuingToken: Codable, Sendable {
     public var livemode: Bool
     /// The token service provider / card network associated with the token.
     public var network: IssuingTokenNetwork
-    @Expandable<IssuingNetworkTokenNetworkData>
-    public var networkData: String?
+    public var networkData: IssuingNetworkTokenNetworkData?
     /// Time at which the token was last updated by the card network. Measured in seconds since the Unix
     /// epoch.
     public var networkUpdatedAt: Int

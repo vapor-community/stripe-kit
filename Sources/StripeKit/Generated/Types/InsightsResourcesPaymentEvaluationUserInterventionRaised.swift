@@ -9,8 +9,7 @@ import Foundation
 
 /// User intervention raised event details attached to this payment evaluation
 public struct InsightsResourcesPaymentEvaluationUserInterventionRaised: Codable, Sendable {
-    @Expandable<InsightsResourcesPaymentEvaluationUserInterventionRaisedCustom>
-    public var custom: String?
+    public var custom: InsightsResourcesPaymentEvaluationUserInterventionRaisedCustom?
     /// Unique identifier for the user intervention event.
     public var key: String
     /// Type of user intervention raised.

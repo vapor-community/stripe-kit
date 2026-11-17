@@ -9,8 +9,7 @@ import Foundation
 
 /// Installment configuration for payments.
 public struct ConfirmationTokensResourcePaymentMethodOptionsResourceCardResourceInstallment: Codable, Sendable {
-    @Expandable<PaymentMethodDetailsCardInstallmentsPlan>
-    public var plan: String?
+    public var plan: PaymentMethodDetailsCardInstallmentsPlan?
 }
 
 public struct ConfirmationTokensResourcePaymentMethodOptionsResourceCardResourceInstallmentList: Codable, Sendable {

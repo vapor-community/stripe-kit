@@ -40,8 +40,7 @@ public struct CalculationLineItem: Codable, Sendable {
     /// taxes.
     public var taxBehavior: CalculationLineItemTaxBehavior
     /// Detailed account of taxes relevant to this line item.
-    @ExpandableCollection<TaxProductResourceLineItemTaxBreakdown>
-    public var taxBreakdown: [String]?
+    public var taxBreakdown: [TaxProductResourceLineItemTaxBreakdown]?
     /// The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for this resource.
     public var taxCode: String
 

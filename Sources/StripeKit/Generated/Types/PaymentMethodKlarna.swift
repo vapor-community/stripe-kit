@@ -9,8 +9,7 @@ import Foundation
 
 public struct PaymentMethodKlarna: Codable, Sendable {
     /// The customer's date of birth, if provided.
-    @Expandable<PaymentFlowsPrivatePaymentMethodsKlarnaDob>
-    public var dob: String?
+    public var dob: PaymentFlowsPrivatePaymentMethodsKlarnaDob?
 }
 
 public struct PaymentMethodKlarnaList: Codable, Sendable {

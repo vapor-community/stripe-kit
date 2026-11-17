@@ -9,6 +9,7 @@ import Foundation
 
 /// Occurs whenever a price is deleted.
 public struct PriceDeleted: Codable, Sendable {
+    @Indirect
     public var object: Price
 }
 

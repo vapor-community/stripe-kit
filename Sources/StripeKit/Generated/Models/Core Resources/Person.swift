@@ -18,20 +18,15 @@ import Foundation
 public struct Person: Codable, Sendable {
     /// The account the person is associated with.
     public var account: String?
-    @Expandable<PersonAdditionalTosAcceptances>
-    public var additionalTosAcceptances: String?
-    @Expandable<Address>
-    public var address: String?
+    public var additionalTosAcceptances: PersonAdditionalTosAcceptances?
+    public var address: Address?
     /// The Kana variation of the person's address (Japan only).
-    @Expandable<LegalEntityJapanAddress>
-    public var addressKana: String?
+    public var addressKana: LegalEntityJapanAddress?
     /// The Kanji variation of the person's address (Japan only).
-    @Expandable<LegalEntityJapanAddress>
-    public var addressKanji: String?
+    public var addressKanji: LegalEntityJapanAddress?
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
-    @Expandable<LegalEntityDob>
-    public var dob: String?
+    public var dob: LegalEntityDob?
     /// The person's email address. Also available for accounts where
     /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
     /// is `stripe`.
@@ -55,8 +50,7 @@ public struct Person: Codable, Sendable {
     /// Information about the [upcoming new requirements for this
     /// person](https://docs.stripe.com/connect/custom-accounts/future-requirements), including what
     /// information needs to be collected, and by when.
-    @Expandable<PersonFutureRequirements>
-    public var futureRequirements: String?
+    public var futureRequirements: PersonFutureRequirements?
     /// The person's gender.
     public var gender: String?
     /// Unique identifier for the object.
@@ -94,21 +88,16 @@ public struct Person: Codable, Sendable {
     /// persons, declares that they hold or have held an important public job or function, in any
     /// jurisdiction.
     public var politicalExposure: PersonPoliticalExposure?
-    @Expandable<Address>
-    public var registeredAddress: String?
-    @Expandable<PersonRelationship>
-    public var relationship: String?
+    public var registeredAddress: Address?
+    public var relationship: PersonRelationship?
     /// Information about the requirements for this person, including what information needs to be
     /// collected, and by when.
-    @Expandable<PersonRequirements>
-    public var requirements: String?
+    public var requirements: PersonRequirements?
     /// Whether the last four digits of the person's Social Security number have been provided (U.S. only).
     public var ssnLast4Provided: Bool?
     /// Demographic data related to the person.
-    @Expandable<PersonUsCfpbData>
-    public var usCfpbData: String?
-    @Expandable<LegalEntityPersonVerification>
-    public var verification: String?
+    public var usCfpbData: PersonUsCfpbData?
+    public var verification: LegalEntityPersonVerification?
 
     public enum CodingKeys: String, CodingKey {
         case account

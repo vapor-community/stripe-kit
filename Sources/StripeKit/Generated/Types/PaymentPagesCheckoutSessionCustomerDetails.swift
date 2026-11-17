@@ -10,8 +10,7 @@ import Foundation
 public struct PaymentPagesCheckoutSessionCustomerDetails: Codable, Sendable {
     /// The customer's address after a completed Checkout Session. Note: This property is populated only for
     /// sessions on or after March 30, 2022.
-    @Expandable<Address>
-    public var address: String?
+    public var address: Address?
     /// The customer's business name after a completed Checkout Session.
     public var businessName: String?
     /// The email associated with the Customer, if one exists, on the Checkout Session after a completed
@@ -29,8 +28,7 @@ public struct PaymentPagesCheckoutSessionCustomerDetails: Codable, Sendable {
     /// The customer’s tax exempt status after a completed Checkout Session.
     public var taxExempt: PaymentPagesCheckoutSessionCustomerDetailsTaxExempt?
     /// The customer’s tax IDs after a completed Checkout Session.
-    @ExpandableCollection<PaymentPagesCheckoutSessionTaxId>
-    public var taxIds: [String]?
+    public var taxIds: [PaymentPagesCheckoutSessionTaxId]?
 
     public enum CodingKeys: String, CodingKey {
         case address

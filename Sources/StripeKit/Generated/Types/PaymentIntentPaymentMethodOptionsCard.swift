@@ -12,11 +12,9 @@ public struct PaymentIntentPaymentMethodOptionsCard: Codable, Sendable {
     public var captureMethod: PaymentIntentPaymentMethodOptionsCardCaptureMethod?
     /// Installment details for this payment. For more information, see the [installments integration
     /// guide](https://docs.stripe.com/payments/installments).
-    @Expandable<PaymentMethodOptionsCardInstallments>
-    public var installments: String?
+    public var installments: PaymentMethodOptionsCardInstallments?
     /// Configuration options for setting up an eMandate for cards issued in India.
-    @Expandable<PaymentMethodOptionsCardMandateOptions>
-    public var mandateOptions: String?
+    public var mandateOptions: PaymentMethodOptionsCardMandateOptions?
     /// Selected network to process this payment intent on. Depends on the available networks of the card
     /// attached to the payment intent. Can be only set confirm-time.
     public var network: PaymentIntentPaymentMethodOptionsCardNetwork?
