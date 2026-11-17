@@ -12,16 +12,52 @@ import NIOHTTP1
 
 public struct SubscriptionRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: SubscriptionCreateParams, _ options: RequestOptions) async throws -> Subscription
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Subscription
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ subscriptionExposedId: String, _ params: SubscriptionUpdateParams, _ options: RequestOptions) async throws -> Subscription
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: SubscriptionListParams, _ options: RequestOptions) async throws -> SubscriptionList
+
+    /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var search: @Sendable (_ params: SubscriptionSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Subscription>
+
+    /// Performs `cancel(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Subscription
+
+    /// Performs `deleteDiscount(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var deleteDiscount: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedDiscount
+
+    /// Performs `migrate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var migrate: @Sendable (_ subscription: String, _ params: SubscriptionMigrateParams, _ options: RequestOptions) async throws -> Subscription
+
+    /// Performs `pause(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var pause: @Sendable (_ subscription: String, _ params: SubscriptionPauseParams, _ options: RequestOptions) async throws -> Subscription
+
+    /// Performs `resume(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var resume: @Sendable (_ subscription: String, _ params: SubscriptionResumeParams, _ options: RequestOptions) async throws -> Subscription
+}
+
+extension SubscriptionRoutes {
     /// Creates a new subscription on an existing customer. Each customer can have up to 500 active or
     /// scheduled subscriptions. When you create a subscription with collection_method=charge_automatically,
     /// the first invoice is finalized as part of the request. The payment_behavior parameter determines the
     /// exact behavior of the initial payment. To start subscriptions where the first invoice always begins
     /// in a draft status, use subscription schedules instead. Schedules provide the flexibility to model
     /// more complex billing configurations that change over time.
-    public var create: @Sendable (_ params: SubscriptionCreateParams?) async throws -> Subscription
+    public func create(_ params: SubscriptionCreateParams = .init(), options: RequestOptions = .init()) async throws -> Subscription {
+        try await create(params, options)
+    }
 
     /// Retrieves the subscription with the given ID.
-    public var retrieve: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?) async throws -> Subscription
+    public func retrieve(_ subscriptionExposedId: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Subscription {
+        try await retrieve(subscriptionExposedId, expand, options)
+    }
 
     /// Updates an existing subscription to match the specified parameters. When changing prices or
     /// quantities, we optionally prorate the price we charge next month to make up for any price changes.
@@ -48,18 +84,24 @@ public struct SubscriptionRoutes: Sendable {
     /// subscription. Updating the quantity on a subscription many times in an hour may result in rate
     /// limiting. If you need to bill for a frequently changing quantity, consider integrating usage-based
     /// billing instead.
-    public var update: @Sendable (_ subscriptionExposedId: String, _ params: SubscriptionUpdateParams?) async throws -> Subscription
+    public func update(_ subscriptionExposedId: String, _ params: SubscriptionUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Subscription {
+        try await update(subscriptionExposedId, params, options)
+    }
 
     /// By default, returns a list of subscriptions that have not been canceled. In order to list canceled
     /// subscriptions, specify status=canceled.
-    public var list: @Sendable (_ params: SubscriptionListParams?) async throws -> SubscriptionList
+    public func list(_ params: SubscriptionListParams = .init(), options: RequestOptions = .init()) async throws -> SubscriptionList {
+        try await list(params, options)
+    }
 
     /// Search for subscriptions you’ve previously created using Stripe’s Search Query Language. Don’t use
     /// search in read-after-write flows where strict consistency is necessary. Under normal operating
     /// conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated
     /// data can be up to an hour behind during outages. Search functionality is not available to merchants
     /// in India.
-    public var search: @Sendable (_ params: SubscriptionSearchParams) async throws -> StripeSearchResult<Subscription>
+    public func search(_ params: SubscriptionSearchParams, options: RequestOptions = .init()) async throws -> StripeSearchResult<Subscription> {
+        try await search(params, options)
+    }
 
     /// Cancels a customer’s subscription immediately. The customer won’t be charged again for the
     /// subscription. After it’s canceled, the subscription is largely immutable. You can still update its
@@ -73,18 +115,26 @@ public struct SubscriptionRoutes: Sendable {
     /// payment attempts after the customer has canceled a subscription. However, you can resume automatic
     /// collection of the invoices manually after subscription cancellation to have us proceed. Or, you
     /// could check for unpaid invoices before allowing the customer to cancel the subscription at all.
-    public var cancel: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?) async throws -> Subscription
+    public func cancel(_ subscriptionExposedId: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Subscription {
+        try await cancel(subscriptionExposedId, expand, options)
+    }
 
     /// Removes the currently applied discount on a subscription.
-    public var deleteDiscount: @Sendable (_ subscriptionExposedId: String, _ expand: [String]?) async throws -> DeletedDiscount
+    public func deleteDiscount(_ subscriptionExposedId: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedDiscount {
+        try await deleteDiscount(subscriptionExposedId, expand, options)
+    }
 
     /// Upgrade the billing_mode of an existing subscription.
-    public var migrate: @Sendable (_ subscription: String, _ params: SubscriptionMigrateParams) async throws -> Subscription
+    public func migrate(_ subscription: String, _ params: SubscriptionMigrateParams, options: RequestOptions = .init()) async throws -> Subscription {
+        try await migrate(subscription, params, options)
+    }
 
     /// Pauses a subscription by transitioning it to the paused status. A paused subscription does not
     /// generate invoices and will not advance to new billing periods. The subscription can be resumed later
     /// using the resume endpoint. Cannot pause subscriptions with attached schedules.
-    public var pause: @Sendable (_ subscription: String, _ params: SubscriptionPauseParams?) async throws -> Subscription
+    public func pause(_ subscription: String, _ params: SubscriptionPauseParams = .init(), options: RequestOptions = .init()) async throws -> Subscription {
+        try await pause(subscription, params, options)
+    }
 
     /// Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and
     /// creating prorations. Resume is only available for subscriptions that use charge_automatically
@@ -93,41 +143,43 @@ public struct SubscriptionRoutes: Sendable {
     /// is paid or marked uncollectible, the subscription becomes active. If the invoice is manually voided,
     /// the subscription stays paused. If there is no payment attempt within 23 hours, Stripe voids the
     /// invoice and the subscription stays paused. Learn more about resuming subscriptions.
-    public var resume: @Sendable (_ subscription: String, _ params: SubscriptionResumeParams?) async throws -> Subscription
+    public func resume(_ subscription: String, _ params: SubscriptionResumeParams = .init(), options: RequestOptions = .init()) async throws -> Subscription {
+        try await resume(subscription, params, options)
+    }
 }
 
 extension SubscriptionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SubscriptionRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/subscriptions", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/subscriptions", params: params, options: options)
             },
-            retrieve: { subscriptionExposedId, expand in
-                try await handler.send(.GET, "/v1/subscriptions/\(subscriptionExposedId)", expand: expand)
+            retrieve: { subscriptionExposedId, expand, options in
+                try await handler.send(.GET, "/v1/subscriptions/\(subscriptionExposedId)", expand: expand, options: options)
             },
-            update: { subscriptionExposedId, params in
-                try await handler.send(.POST, "/v1/subscriptions/\(subscriptionExposedId)", params: params)
+            update: { subscriptionExposedId, params, options in
+                try await handler.send(.POST, "/v1/subscriptions/\(subscriptionExposedId)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/subscriptions", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/subscriptions", params: params, options: options)
             },
-            search: { params in
-                try await handler.send(.GET, "/v1/subscriptions/search", params: params)
+            search: { params, options in
+                try await handler.send(.GET, "/v1/subscriptions/search", params: params, options: options)
             },
-            cancel: { subscriptionExposedId, expand in
-                try await handler.send(.DELETE, "/v1/subscriptions/\(subscriptionExposedId)", expand: expand)
+            cancel: { subscriptionExposedId, expand, options in
+                try await handler.send(.DELETE, "/v1/subscriptions/\(subscriptionExposedId)", expand: expand, options: options)
             },
-            deleteDiscount: { subscriptionExposedId, expand in
-                try await handler.send(.DELETE, "/v1/subscriptions/\(subscriptionExposedId)/discount", expand: expand)
+            deleteDiscount: { subscriptionExposedId, expand, options in
+                try await handler.send(.DELETE, "/v1/subscriptions/\(subscriptionExposedId)/discount", expand: expand, options: options)
             },
-            migrate: { subscription, params in
-                try await handler.send(.POST, "/v1/subscriptions/\(subscription)/migrate", params: params)
+            migrate: { subscription, params, options in
+                try await handler.send(.POST, "/v1/subscriptions/\(subscription)/migrate", params: params, options: options)
             },
-            pause: { subscription, params in
-                try await handler.send(.POST, "/v1/subscriptions/\(subscription)/pause", params: params)
+            pause: { subscription, params, options in
+                try await handler.send(.POST, "/v1/subscriptions/\(subscription)/pause", params: params, options: options)
             },
-            resume: { subscription, params in
-                try await handler.send(.POST, "/v1/subscriptions/\(subscription)/resume", params: params)
+            resume: { subscription, params, options in
+                try await handler.send(.POST, "/v1/subscriptions/\(subscription)/resume", params: params, options: options)
             }
         )
     }

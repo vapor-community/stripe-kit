@@ -12,16 +12,23 @@ import NIOHTTP1
 
 public struct AccountSessionRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: AccountSessionCreateParams, _ options: RequestOptions) async throws -> AccountSession
+}
+
+extension AccountSessionRoutes {
     /// Creates an AccountSession object that includes a single-use token that the platform can use on their
     /// front-end to grant client-side API access.
-    public var create: @Sendable (_ params: AccountSessionCreateParams) async throws -> AccountSession
+    public func create(_ params: AccountSessionCreateParams, options: RequestOptions = .init()) async throws -> AccountSession {
+        try await create(params, options)
+    }
 }
 
 extension AccountSessionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AccountSessionRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/account_sessions", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/account_sessions", params: params, options: options)
             }
         )
     }

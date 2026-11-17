@@ -12,23 +12,35 @@ import NIOHTTP1
 
 public struct ApplicationFeeRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ApplicationFee
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ApplicationFeeListParams, _ options: RequestOptions) async throws -> ApplicationFeeList
+}
+
+extension ApplicationFeeRoutes {
     /// Retrieves the details of an application fee that your account has collected. The same information is
     /// returned when refunding the application fee.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> ApplicationFee
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ApplicationFee {
+        try await retrieve(id, expand, options)
+    }
 
     /// Returns a list of application fees you’ve previously collected. The application fees are returned in
     /// sorted order, with the most recent fees appearing first.
-    public var list: @Sendable (_ params: ApplicationFeeListParams?) async throws -> ApplicationFeeList
+    public func list(_ params: ApplicationFeeListParams = .init(), options: RequestOptions = .init()) async throws -> ApplicationFeeList {
+        try await list(params, options)
+    }
 }
 
 extension ApplicationFeeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ApplicationFeeRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/application_fees/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/application_fees/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/application_fees", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/application_fees", params: params, options: options)
             }
         )
     }

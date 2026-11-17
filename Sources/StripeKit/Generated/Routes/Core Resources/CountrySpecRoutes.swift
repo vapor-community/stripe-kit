@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct CountrySpecRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ country: String, _ expand: [String]?, _ options: RequestOptions) async throws -> CountrySpec
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: CountrySpecListParams, _ options: RequestOptions) async throws -> CountrySpecList
+}
+
+extension CountrySpecRoutes {
     /// Returns a Country Spec for a given Country code.
-    public var retrieve: @Sendable (_ country: String, _ expand: [String]?) async throws -> CountrySpec
+    public func retrieve(_ country: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> CountrySpec {
+        try await retrieve(country, expand, options)
+    }
 
     /// Lists all Country Spec objects available in the API.
-    public var list: @Sendable (_ params: CountrySpecListParams?) async throws -> CountrySpecList
+    public func list(_ params: CountrySpecListParams = .init(), options: RequestOptions = .init()) async throws -> CountrySpecList {
+        try await list(params, options)
+    }
 }
 
 extension CountrySpecRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CountrySpecRoutes(
-            retrieve: { country, expand in
-                try await handler.send(.GET, "/v1/country_specs/\(country)", expand: expand)
+            retrieve: { country, expand, options in
+                try await handler.send(.GET, "/v1/country_specs/\(country)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/country_specs", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/country_specs", params: params, options: options)
             }
         )
     }

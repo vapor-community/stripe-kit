@@ -99,9 +99,14 @@ struct InfraGenerator {
         let allProperties = coreProperties.map(\.name) + namespaceProperties.map(\.name)
         lines.append("extension StripeClient {")
         lines.append("    /// Create a live client connected to the Stripe API.")
-        lines.append("    public static func live(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil, idempotencyKey: String? = nil) -> StripeClient {")
-        lines.append("        let handler = StripeAPIHandler(httpClient: httpClient, apiKey: apiKey, stripeAccount: stripeAccount, idempotencyKey: idempotencyKey)")
-        lines.append("        return StripeClient(")
+        lines.append("    /// - Parameter stripeAccount: Make every request as this connected account (see `onBehalfOf(_:)`).")
+        lines.append("    public static func live(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil) -> StripeClient {")
+        lines.append("        .live(handler: StripeAPIHandler(httpClient: httpClient, apiKey: apiKey, stripeAccount: stripeAccount))")
+        lines.append("    }")
+        lines.append("")
+        lines.append("    /// A client whose routes all send their requests through `handler`.")
+        lines.append("    static func live(handler: StripeAPIHandler) -> StripeClient {")
+        lines.append("        StripeClient(")
         lines.append("            handler: handler,")
         for (index, name) in allProperties.enumerated() {
             let comma = index < allProperties.count - 1 ? "," : ""

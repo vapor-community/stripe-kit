@@ -12,31 +12,48 @@ import NIOHTTP1
 
 public struct FileRoutes: Sendable {
 
+    /// Performs `create(file:fileName:mimeType:purpose:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ file: Data, _ fileName: String, _ mimeType: String, _ purpose: String, _ options: RequestOptions) async throws -> File
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ file: String, _ expand: [String]?, _ options: RequestOptions) async throws -> File
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: FileListParams, _ options: RequestOptions) async throws -> FileList
+}
+
+extension FileRoutes {
     /// To upload a file to Stripe, you need to send a request of type multipart/form-data. Include the file
     /// you want to upload in the request, and the parameters for creating a file. All of Stripe’s
     /// officially supported Client libraries support sending multipart/form-data.
-    public var create: @Sendable (_ fileData: Data, _ fileName: String, _ mimeType: String, _ purpose: String) async throws -> File
+    public func create(file: Data, fileName: String, mimeType: String, purpose: String, options: RequestOptions = .init()) async throws -> File {
+        try await create(file, fileName, mimeType, purpose, options)
+    }
 
     /// Retrieves the details of an existing file object. After you supply a unique file ID, Stripe returns
     /// the corresponding file object. Learn how to access file contents.
-    public var retrieve: @Sendable (_ file: String, _ expand: [String]?) async throws -> File
+    public func retrieve(_ file: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> File {
+        try await retrieve(file, expand, options)
+    }
 
     /// Returns a list of the files that your account has access to. Stripe sorts and returns the files by
     /// their creation dates, placing the most recently created files at the top.
-    public var list: @Sendable (_ params: FileListParams?) async throws -> FileList
+    public func list(_ params: FileListParams = .init(), options: RequestOptions = .init()) async throws -> FileList {
+        try await list(params, options)
+    }
 }
 
 extension FileRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FileRoutes(
-            create: { fileData, fileName, mimeType, purpose in
-                try await handler.sendMultipart("/v1/files", baseURL: "https://files.stripe.com", fileData: fileData, fileName: fileName, mimeType: mimeType, purpose: purpose)
+            create: { file, fileName, mimeType, purpose, options in
+                try await handler.sendMultipart("/v1/files", baseURL: "https://files.stripe.com", fileData: file, fileName: fileName, mimeType: mimeType, purpose: purpose, options: options)
             },
-            retrieve: { file, expand in
-                try await handler.send(.GET, "/v1/files/\(file)", expand: expand)
+            retrieve: { file, expand, options in
+                try await handler.send(.GET, "/v1/files/\(file)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/files", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/files", params: params, options: options)
             }
         )
     }

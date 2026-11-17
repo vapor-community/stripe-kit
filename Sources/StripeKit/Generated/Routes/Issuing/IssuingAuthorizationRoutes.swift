@@ -12,91 +12,153 @@ import NIOHTTP1
 
 public struct IssuingAuthorizationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: IssuingAuthorizationCreateParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ authorization: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ authorization: String, _ params: IssuingAuthorizationUpdateParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: IssuingAuthorizationListParams, _ options: RequestOptions) async throws -> IssuingAuthorizationList
+
+    /// Performs `approve(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var approve: @Sendable (_ authorization: String, _ params: IssuingAuthorizationApproveParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `capture(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var capture: @Sendable (_ authorization: String, _ params: IssuingAuthorizationCaptureParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `decline(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var decline: @Sendable (_ authorization: String, _ params: IssuingAuthorizationDeclineParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `expire(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var expire: @Sendable (_ authorization: String, _ params: IssuingAuthorizationExpireParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `finalizeAmount(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var finalizeAmount: @Sendable (_ authorization: String, _ params: IssuingAuthorizationFinalizeAmountParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `increment(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var increment: @Sendable (_ authorization: String, _ params: IssuingAuthorizationIncrementParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `respond(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var respond: @Sendable (_ authorization: String, _ params: IssuingAuthorizationRespondParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+
+    /// Performs `reverse(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reverse: @Sendable (_ authorization: String, _ params: IssuingAuthorizationReverseParams, _ options: RequestOptions) async throws -> IssuingAuthorization
+}
+
+extension IssuingAuthorizationRoutes {
     /// Create a test-mode authorization.
-    public var create: @Sendable (_ params: IssuingAuthorizationCreateParams) async throws -> IssuingAuthorization
+    public func create(_ params: IssuingAuthorizationCreateParams, options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await create(params, options)
+    }
 
     /// Retrieves an Issuing Authorization object.
-    public var retrieve: @Sendable (_ authorization: String, _ expand: [String]?) async throws -> IssuingAuthorization
+    public func retrieve(_ authorization: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await retrieve(authorization, expand, options)
+    }
 
     /// Updates the specified Issuing Authorization object by setting the values of the parameters passed.
     /// Any parameters not provided will be left unchanged.
-    public var update: @Sendable (_ authorization: String, _ params: IssuingAuthorizationUpdateParams?) async throws -> IssuingAuthorization
+    public func update(_ authorization: String, _ params: IssuingAuthorizationUpdateParams = .init(), options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await update(authorization, params, options)
+    }
 
     /// Returns a list of Issuing Authorization objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
-    public var list: @Sendable (_ params: IssuingAuthorizationListParams?) async throws -> IssuingAuthorizationList
+    public func list(_ params: IssuingAuthorizationListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingAuthorizationList {
+        try await list(params, options)
+    }
 
     /// [Deprecated] Approves a pending Issuing Authorization object. This request should be made within the
     /// timeout window of the real-time authorization flow. This method is deprecated. Instead, respond
     /// directly to the webhook request to approve an authorization.
     @available(*, deprecated, message: "This API is deprecated by Stripe.")
-    public var approve: @Sendable (_ authorization: String, _ params: IssuingAuthorizationApproveParams?) async throws -> IssuingAuthorization
+    public func approve(_ authorization: String, _ params: IssuingAuthorizationApproveParams = .init(), options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await approve(authorization, params, options)
+    }
 
     /// Capture a test-mode authorization.
-    public var capture: @Sendable (_ authorization: String, _ params: IssuingAuthorizationCaptureParams?) async throws -> IssuingAuthorization
+    public func capture(_ authorization: String, _ params: IssuingAuthorizationCaptureParams = .init(), options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await capture(authorization, params, options)
+    }
 
     /// [Deprecated] Declines a pending Issuing Authorization object. This request should be made within the
     /// timeout window of the real time authorization flow. This method is deprecated. Instead, respond
     /// directly to the webhook request to decline an authorization.
     @available(*, deprecated, message: "This API is deprecated by Stripe.")
-    public var decline: @Sendable (_ authorization: String, _ params: IssuingAuthorizationDeclineParams?) async throws -> IssuingAuthorization
+    public func decline(_ authorization: String, _ params: IssuingAuthorizationDeclineParams = .init(), options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await decline(authorization, params, options)
+    }
 
     /// Expire a test-mode Authorization.
-    public var expire: @Sendable (_ authorization: String, _ params: IssuingAuthorizationExpireParams?) async throws -> IssuingAuthorization
+    public func expire(_ authorization: String, _ params: IssuingAuthorizationExpireParams = .init(), options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await expire(authorization, params, options)
+    }
 
     /// Finalize the amount on an Authorization prior to capture, when the initial authorization was for an
     /// estimated amount.
-    public var finalizeAmount: @Sendable (_ authorization: String, _ params: IssuingAuthorizationFinalizeAmountParams) async throws -> IssuingAuthorization
+    public func finalizeAmount(_ authorization: String, _ params: IssuingAuthorizationFinalizeAmountParams, options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await finalizeAmount(authorization, params, options)
+    }
 
     /// Increment a test-mode Authorization.
-    public var increment: @Sendable (_ authorization: String, _ params: IssuingAuthorizationIncrementParams) async throws -> IssuingAuthorization
+    public func increment(_ authorization: String, _ params: IssuingAuthorizationIncrementParams, options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await increment(authorization, params, options)
+    }
 
     /// Respond to a fraud challenge on a testmode Issuing authorization, simulating either a confirmation
     /// of fraud or a correction of legitimacy.
-    public var respond: @Sendable (_ authorization: String, _ params: IssuingAuthorizationRespondParams) async throws -> IssuingAuthorization
+    public func respond(_ authorization: String, _ params: IssuingAuthorizationRespondParams, options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await respond(authorization, params, options)
+    }
 
     /// Reverse a test-mode Authorization.
-    public var reverse: @Sendable (_ authorization: String, _ params: IssuingAuthorizationReverseParams?) async throws -> IssuingAuthorization
+    public func reverse(_ authorization: String, _ params: IssuingAuthorizationReverseParams = .init(), options: RequestOptions = .init()) async throws -> IssuingAuthorization {
+        try await reverse(authorization, params, options)
+    }
 }
 
 extension IssuingAuthorizationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingAuthorizationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations", params: params, options: options)
             },
-            retrieve: { authorization, expand in
-                try await handler.send(.GET, "/v1/issuing/authorizations/\(authorization)", expand: expand)
+            retrieve: { authorization, expand, options in
+                try await handler.send(.GET, "/v1/issuing/authorizations/\(authorization)", expand: expand, options: options)
             },
-            update: { authorization, params in
-                try await handler.send(.POST, "/v1/issuing/authorizations/\(authorization)", params: params)
+            update: { authorization, params, options in
+                try await handler.send(.POST, "/v1/issuing/authorizations/\(authorization)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/issuing/authorizations", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/issuing/authorizations", params: params, options: options)
             },
-            approve: { authorization, params in
-                try await handler.send(.POST, "/v1/issuing/authorizations/\(authorization)/approve", params: params)
+            approve: { authorization, params, options in
+                try await handler.send(.POST, "/v1/issuing/authorizations/\(authorization)/approve", params: params, options: options)
             },
-            capture: { authorization, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/capture", params: params)
+            capture: { authorization, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/capture", params: params, options: options)
             },
-            decline: { authorization, params in
-                try await handler.send(.POST, "/v1/issuing/authorizations/\(authorization)/decline", params: params)
+            decline: { authorization, params, options in
+                try await handler.send(.POST, "/v1/issuing/authorizations/\(authorization)/decline", params: params, options: options)
             },
-            expire: { authorization, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/expire", params: params)
+            expire: { authorization, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/expire", params: params, options: options)
             },
-            finalizeAmount: { authorization, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/finalize_amount", params: params)
+            finalizeAmount: { authorization, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/finalize_amount", params: params, options: options)
             },
-            increment: { authorization, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/increment", params: params)
+            increment: { authorization, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/increment", params: params, options: options)
             },
-            respond: { authorization, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/fraud_challenges/respond", params: params)
+            respond: { authorization, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/fraud_challenges/respond", params: params, options: options)
             },
-            reverse: { authorization, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/reverse", params: params)
+            reverse: { authorization, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/reverse", params: params, options: options)
             }
         )
     }

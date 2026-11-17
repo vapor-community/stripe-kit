@@ -12,62 +12,104 @@ import NIOHTTP1
 
 public struct TreasuryOutboundPaymentRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TreasuryOutboundPaymentCreateParams, _ options: RequestOptions) async throws -> TreasuryOutboundPayment
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryOutboundPayment
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentUpdateParams, _ options: RequestOptions) async throws -> TreasuryOutboundPayment
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryOutboundPaymentListParams, _ options: RequestOptions) async throws -> TreasuryOutboundPaymentList
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentCancelParams, _ options: RequestOptions) async throws -> TreasuryOutboundPayment
+
+    /// Performs `fail(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var fail: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentFailParams, _ options: RequestOptions) async throws -> TreasuryOutboundPayment
+
+    /// Performs `post(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var post: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentPostParams, _ options: RequestOptions) async throws -> TreasuryOutboundPayment
+
+    /// Performs `returnOutboundPayment(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var returnOutboundPayment: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentReturnOutboundPaymentParams, _ options: RequestOptions) async throws -> TreasuryOutboundPayment
+}
+
+extension TreasuryOutboundPaymentRoutes {
     /// Creates an OutboundPayment.
-    public var create: @Sendable (_ params: TreasuryOutboundPaymentCreateParams) async throws -> TreasuryOutboundPayment
+    public func create(_ params: TreasuryOutboundPaymentCreateParams, options: RequestOptions = .init()) async throws -> TreasuryOutboundPayment {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing OutboundPayment by passing the unique OutboundPayment ID from
     /// either the OutboundPayment creation request or OutboundPayment list.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TreasuryOutboundPayment
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryOutboundPayment {
+        try await retrieve(id, expand, options)
+    }
 
     /// Updates a test mode created OutboundPayment with tracking details. The OutboundPayment must not be
     /// cancelable, and cannot be in the canceled or failed states.
-    public var update: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentUpdateParams) async throws -> TreasuryOutboundPayment
+    public func update(_ id: String, _ params: TreasuryOutboundPaymentUpdateParams, options: RequestOptions = .init()) async throws -> TreasuryOutboundPayment {
+        try await update(id, params, options)
+    }
 
     /// Returns a list of OutboundPayments sent from the specified FinancialAccount.
-    public var list: @Sendable (_ params: TreasuryOutboundPaymentListParams) async throws -> TreasuryOutboundPaymentList
+    public func list(_ params: TreasuryOutboundPaymentListParams, options: RequestOptions = .init()) async throws -> TreasuryOutboundPaymentList {
+        try await list(params, options)
+    }
 
     /// Cancel an OutboundPayment.
-    public var cancel: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentCancelParams?) async throws -> TreasuryOutboundPayment
+    public func cancel(_ id: String, _ params: TreasuryOutboundPaymentCancelParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryOutboundPayment {
+        try await cancel(id, params, options)
+    }
 
     /// Transitions a test mode created OutboundPayment to the failed status. The OutboundPayment must
     /// already be in the processing state.
-    public var fail: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentFailParams?) async throws -> TreasuryOutboundPayment
+    public func fail(_ id: String, _ params: TreasuryOutboundPaymentFailParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryOutboundPayment {
+        try await fail(id, params, options)
+    }
 
     /// Transitions a test mode created OutboundPayment to the posted status. The OutboundPayment must
     /// already be in the processing state.
-    public var post: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentPostParams?) async throws -> TreasuryOutboundPayment
+    public func post(_ id: String, _ params: TreasuryOutboundPaymentPostParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryOutboundPayment {
+        try await post(id, params, options)
+    }
 
     /// Transitions a test mode created OutboundPayment to the returned status. The OutboundPayment must
     /// already be in the processing state.
-    public var returnOutboundPayment: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentReturnOutboundPaymentParams?) async throws -> TreasuryOutboundPayment
+    public func returnOutboundPayment(_ id: String, _ params: TreasuryOutboundPaymentReturnOutboundPaymentParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryOutboundPayment {
+        try await returnOutboundPayment(id, params, options)
+    }
 }
 
 extension TreasuryOutboundPaymentRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryOutboundPaymentRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/treasury/outbound_payments", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/treasury/outbound_payments", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/treasury/outbound_payments/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/treasury/outbound_payments/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/outbound_payments", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/outbound_payments", params: params, options: options)
             },
-            cancel: { id, params in
-                try await handler.send(.POST, "/v1/treasury/outbound_payments/\(id)/cancel", params: params)
+            cancel: { id, params, options in
+                try await handler.send(.POST, "/v1/treasury/outbound_payments/\(id)/cancel", params: params, options: options)
             },
-            fail: { id, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)/fail", params: params)
+            fail: { id, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)/fail", params: params, options: options)
             },
-            post: { id, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)/post", params: params)
+            post: { id, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)/post", params: params, options: options)
             },
-            returnOutboundPayment: { id, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)/return", params: params)
+            returnOutboundPayment: { id, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)/return", params: params, options: options)
             }
         )
     }

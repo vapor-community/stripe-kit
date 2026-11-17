@@ -12,22 +12,34 @@ import NIOHTTP1
 
 public struct InvoicePaymentRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ invoicePayment: String, _ expand: [String]?, _ options: RequestOptions) async throws -> InvoicePayment
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: InvoicePaymentListParams, _ options: RequestOptions) async throws -> InvoicePaymentList
+}
+
+extension InvoicePaymentRoutes {
     /// Retrieves the invoice payment with the given ID.
-    public var retrieve: @Sendable (_ invoicePayment: String, _ expand: [String]?) async throws -> InvoicePayment
+    public func retrieve(_ invoicePayment: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> InvoicePayment {
+        try await retrieve(invoicePayment, expand, options)
+    }
 
     /// When retrieving an invoice, there is an includable payments property containing the first handful of
     /// those items. There is also a URL where you can retrieve the full (paginated) list of payments.
-    public var list: @Sendable (_ params: InvoicePaymentListParams?) async throws -> InvoicePaymentList
+    public func list(_ params: InvoicePaymentListParams = .init(), options: RequestOptions = .init()) async throws -> InvoicePaymentList {
+        try await list(params, options)
+    }
 }
 
 extension InvoicePaymentRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InvoicePaymentRoutes(
-            retrieve: { invoicePayment, expand in
-                try await handler.send(.GET, "/v1/invoice_payments/\(invoicePayment)", expand: expand)
+            retrieve: { invoicePayment, expand, options in
+                try await handler.send(.GET, "/v1/invoice_payments/\(invoicePayment)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/invoice_payments", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/invoice_payments", params: params, options: options)
             }
         )
     }

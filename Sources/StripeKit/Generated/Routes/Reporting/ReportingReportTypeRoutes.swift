@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct ReportingReportTypeRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ reportType: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ReportingReportType
+
+    /// Performs `list(expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ expand: [String]?, _ options: RequestOptions) async throws -> ReportingReportTypeList
+}
+
+extension ReportingReportTypeRoutes {
     /// Retrieves the details of a Report Type. (Certain report types require a live-mode API key.)
-    public var retrieve: @Sendable (_ reportType: String, _ expand: [String]?) async throws -> ReportingReportType
+    public func retrieve(_ reportType: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ReportingReportType {
+        try await retrieve(reportType, expand, options)
+    }
 
     /// Returns a full list of Report Types.
-    public var list: @Sendable (_ expand: [String]?) async throws -> ReportingReportTypeList
+    public func list(expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ReportingReportTypeList {
+        try await list(expand, options)
+    }
 }
 
 extension ReportingReportTypeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ReportingReportTypeRoutes(
-            retrieve: { reportType, expand in
-                try await handler.send(.GET, "/v1/reporting/report_types/\(reportType)", expand: expand)
+            retrieve: { reportType, expand, options in
+                try await handler.send(.GET, "/v1/reporting/report_types/\(reportType)", expand: expand, options: options)
             },
-            list: { expand in
-                try await handler.send(.GET, "/v1/reporting/report_types", expand: expand)
+            list: { expand, options in
+                try await handler.send(.GET, "/v1/reporting/report_types", expand: expand, options: options)
             }
         )
     }

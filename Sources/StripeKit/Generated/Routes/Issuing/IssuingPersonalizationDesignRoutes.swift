@@ -12,52 +12,89 @@ import NIOHTTP1
 
 public struct IssuingPersonalizationDesignRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: IssuingPersonalizationDesignCreateParams, _ options: RequestOptions) async throws -> IssuingPersonalizationDesign
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ personalizationDesign: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IssuingPersonalizationDesign
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignUpdateParams, _ options: RequestOptions) async throws -> IssuingPersonalizationDesign
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: IssuingPersonalizationDesignListParams, _ options: RequestOptions) async throws -> IssuingPersonalizationDesignList
+
+    /// Performs `activate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var activate: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignActivateParams, _ options: RequestOptions) async throws -> IssuingPersonalizationDesign
+
+    /// Performs `deactivate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var deactivate: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignDeactivateParams, _ options: RequestOptions) async throws -> IssuingPersonalizationDesign
+
+    /// Performs `reject(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reject: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignRejectParams, _ options: RequestOptions) async throws -> IssuingPersonalizationDesign
+}
+
+extension IssuingPersonalizationDesignRoutes {
     /// Creates a personalization design object.
-    public var create: @Sendable (_ params: IssuingPersonalizationDesignCreateParams) async throws -> IssuingPersonalizationDesign
+    public func create(_ params: IssuingPersonalizationDesignCreateParams, options: RequestOptions = .init()) async throws -> IssuingPersonalizationDesign {
+        try await create(params, options)
+    }
 
     /// Retrieves a personalization design object.
-    public var retrieve: @Sendable (_ personalizationDesign: String, _ expand: [String]?) async throws -> IssuingPersonalizationDesign
+    public func retrieve(_ personalizationDesign: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> IssuingPersonalizationDesign {
+        try await retrieve(personalizationDesign, expand, options)
+    }
 
     /// Updates a card personalization object.
-    public var update: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignUpdateParams?) async throws -> IssuingPersonalizationDesign
+    public func update(_ personalizationDesign: String, _ params: IssuingPersonalizationDesignUpdateParams = .init(), options: RequestOptions = .init()) async throws -> IssuingPersonalizationDesign {
+        try await update(personalizationDesign, params, options)
+    }
 
     /// Returns a list of personalization design objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
-    public var list: @Sendable (_ params: IssuingPersonalizationDesignListParams?) async throws -> IssuingPersonalizationDesignList
+    public func list(_ params: IssuingPersonalizationDesignListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingPersonalizationDesignList {
+        try await list(params, options)
+    }
 
     /// Updates the status of the specified testmode personalization design object to active.
-    public var activate: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignActivateParams?) async throws -> IssuingPersonalizationDesign
+    public func activate(_ personalizationDesign: String, _ params: IssuingPersonalizationDesignActivateParams = .init(), options: RequestOptions = .init()) async throws -> IssuingPersonalizationDesign {
+        try await activate(personalizationDesign, params, options)
+    }
 
     /// Updates the status of the specified testmode personalization design object to inactive.
-    public var deactivate: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignDeactivateParams?) async throws -> IssuingPersonalizationDesign
+    public func deactivate(_ personalizationDesign: String, _ params: IssuingPersonalizationDesignDeactivateParams = .init(), options: RequestOptions = .init()) async throws -> IssuingPersonalizationDesign {
+        try await deactivate(personalizationDesign, params, options)
+    }
 
     /// Updates the status of the specified testmode personalization design object to rejected.
-    public var reject: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignRejectParams) async throws -> IssuingPersonalizationDesign
+    public func reject(_ personalizationDesign: String, _ params: IssuingPersonalizationDesignRejectParams, options: RequestOptions = .init()) async throws -> IssuingPersonalizationDesign {
+        try await reject(personalizationDesign, params, options)
+    }
 }
 
 extension IssuingPersonalizationDesignRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingPersonalizationDesignRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/issuing/personalization_designs", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/issuing/personalization_designs", params: params, options: options)
             },
-            retrieve: { personalizationDesign, expand in
-                try await handler.send(.GET, "/v1/issuing/personalization_designs/\(personalizationDesign)", expand: expand)
+            retrieve: { personalizationDesign, expand, options in
+                try await handler.send(.GET, "/v1/issuing/personalization_designs/\(personalizationDesign)", expand: expand, options: options)
             },
-            update: { personalizationDesign, params in
-                try await handler.send(.POST, "/v1/issuing/personalization_designs/\(personalizationDesign)", params: params)
+            update: { personalizationDesign, params, options in
+                try await handler.send(.POST, "/v1/issuing/personalization_designs/\(personalizationDesign)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/issuing/personalization_designs", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/issuing/personalization_designs", params: params, options: options)
             },
-            activate: { personalizationDesign, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/activate", params: params)
+            activate: { personalizationDesign, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/activate", params: params, options: options)
             },
-            deactivate: { personalizationDesign, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/deactivate", params: params)
+            deactivate: { personalizationDesign, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/deactivate", params: params, options: options)
             },
-            reject: { personalizationDesign, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/reject", params: params)
+            reject: { personalizationDesign, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/reject", params: params, options: options)
             }
         )
     }

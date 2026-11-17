@@ -12,36 +12,58 @@ import NIOHTTP1
 
 public struct PromotionCodeRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: PromotionCodeCreateParams, _ options: RequestOptions) async throws -> PromotionCode
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ promotionCode: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PromotionCode
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ promotionCode: String, _ params: PromotionCodeUpdateParams, _ options: RequestOptions) async throws -> PromotionCode
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PromotionCodeListParams, _ options: RequestOptions) async throws -> PromotionCodeList
+}
+
+extension PromotionCodeRoutes {
     /// A promotion code points to an underlying promotion. You can optionally restrict the code to a
     /// specific customer, redemption limit, and expiration date.
-    public var create: @Sendable (_ params: PromotionCodeCreateParams) async throws -> PromotionCode
+    public func create(_ params: PromotionCodeCreateParams, options: RequestOptions = .init()) async throws -> PromotionCode {
+        try await create(params, options)
+    }
 
     /// Retrieves the promotion code with the given ID. In order to retrieve a promotion code by the
     /// customer-facing code use list with the desired code.
-    public var retrieve: @Sendable (_ promotionCode: String, _ expand: [String]?) async throws -> PromotionCode
+    public func retrieve(_ promotionCode: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> PromotionCode {
+        try await retrieve(promotionCode, expand, options)
+    }
 
     /// Updates the specified promotion code by setting the values of the parameters passed. Most fields
     /// are, by design, not editable.
-    public var update: @Sendable (_ promotionCode: String, _ params: PromotionCodeUpdateParams?) async throws -> PromotionCode
+    public func update(_ promotionCode: String, _ params: PromotionCodeUpdateParams = .init(), options: RequestOptions = .init()) async throws -> PromotionCode {
+        try await update(promotionCode, params, options)
+    }
 
     /// Returns a list of your promotion codes.
-    public var list: @Sendable (_ params: PromotionCodeListParams?) async throws -> PromotionCodeList
+    public func list(_ params: PromotionCodeListParams = .init(), options: RequestOptions = .init()) async throws -> PromotionCodeList {
+        try await list(params, options)
+    }
 }
 
 extension PromotionCodeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PromotionCodeRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/promotion_codes", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/promotion_codes", params: params, options: options)
             },
-            retrieve: { promotionCode, expand in
-                try await handler.send(.GET, "/v1/promotion_codes/\(promotionCode)", expand: expand)
+            retrieve: { promotionCode, expand, options in
+                try await handler.send(.GET, "/v1/promotion_codes/\(promotionCode)", expand: expand, options: options)
             },
-            update: { promotionCode, params in
-                try await handler.send(.POST, "/v1/promotion_codes/\(promotionCode)", params: params)
+            update: { promotionCode, params, options in
+                try await handler.send(.POST, "/v1/promotion_codes/\(promotionCode)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/promotion_codes", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/promotion_codes", params: params, options: options)
             }
         )
     }

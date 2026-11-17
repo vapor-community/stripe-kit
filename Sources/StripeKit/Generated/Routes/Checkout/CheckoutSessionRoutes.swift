@@ -12,49 +12,81 @@ import NIOHTTP1
 
 public struct CheckoutSessionRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: CheckoutSessionCreateParams, _ options: RequestOptions) async throws -> CheckoutSession
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ session: String, _ expand: [String]?, _ options: RequestOptions) async throws -> CheckoutSession
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ session: String, _ params: CheckoutSessionUpdateParams, _ options: RequestOptions) async throws -> CheckoutSession
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: CheckoutSessionListParams, _ options: RequestOptions) async throws -> CheckoutSessionList
+
+    /// Performs `expire(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var expire: @Sendable (_ session: String, _ params: CheckoutSessionExpireParams, _ options: RequestOptions) async throws -> CheckoutSession
+
+    /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listLineItems: @Sendable (_ session: String, _ params: CheckoutSessionListLineItemsParams, _ options: RequestOptions) async throws -> ItemList
+}
+
+extension CheckoutSessionRoutes {
     /// Creates a Checkout Session object.
-    public var create: @Sendable (_ params: CheckoutSessionCreateParams?) async throws -> CheckoutSession
+    public func create(_ params: CheckoutSessionCreateParams = .init(), options: RequestOptions = .init()) async throws -> CheckoutSession {
+        try await create(params, options)
+    }
 
     /// Retrieves a Checkout Session object.
-    public var retrieve: @Sendable (_ session: String, _ expand: [String]?) async throws -> CheckoutSession
+    public func retrieve(_ session: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> CheckoutSession {
+        try await retrieve(session, expand, options)
+    }
 
     /// Updates a Checkout Session object. Related guide: Dynamically update a Checkout Session
-    public var update: @Sendable (_ session: String, _ params: CheckoutSessionUpdateParams?) async throws -> CheckoutSession
+    public func update(_ session: String, _ params: CheckoutSessionUpdateParams = .init(), options: RequestOptions = .init()) async throws -> CheckoutSession {
+        try await update(session, params, options)
+    }
 
     /// Returns a list of Checkout Sessions.
-    public var list: @Sendable (_ params: CheckoutSessionListParams?) async throws -> CheckoutSessionList
+    public func list(_ params: CheckoutSessionListParams = .init(), options: RequestOptions = .init()) async throws -> CheckoutSessionList {
+        try await list(params, options)
+    }
 
     /// A Checkout Session can be expired when it is in one of these statuses: open After it expires, a
     /// customer can’t complete a Checkout Session and customers loading the Checkout Session see a message
     /// saying the Checkout Session is expired.
-    public var expire: @Sendable (_ session: String, _ params: CheckoutSessionExpireParams?) async throws -> CheckoutSession
+    public func expire(_ session: String, _ params: CheckoutSessionExpireParams = .init(), options: RequestOptions = .init()) async throws -> CheckoutSession {
+        try await expire(session, params, options)
+    }
 
     /// When retrieving a Checkout Session, there is an includable line_items property containing the first
     /// handful of those items. There is also a URL where you can retrieve the full (paginated) list of line
     /// items.
-    public var listLineItems: @Sendable (_ session: String, _ params: CheckoutSessionListLineItemsParams?) async throws -> ItemList
+    public func listLineItems(_ session: String, _ params: CheckoutSessionListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> ItemList {
+        try await listLineItems(session, params, options)
+    }
 }
 
 extension CheckoutSessionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CheckoutSessionRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/checkout/sessions", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/checkout/sessions", params: params, options: options)
             },
-            retrieve: { session, expand in
-                try await handler.send(.GET, "/v1/checkout/sessions/\(session)", expand: expand)
+            retrieve: { session, expand, options in
+                try await handler.send(.GET, "/v1/checkout/sessions/\(session)", expand: expand, options: options)
             },
-            update: { session, params in
-                try await handler.send(.POST, "/v1/checkout/sessions/\(session)", params: params)
+            update: { session, params, options in
+                try await handler.send(.POST, "/v1/checkout/sessions/\(session)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/checkout/sessions", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/checkout/sessions", params: params, options: options)
             },
-            expire: { session, params in
-                try await handler.send(.POST, "/v1/checkout/sessions/\(session)/expire", params: params)
+            expire: { session, params, options in
+                try await handler.send(.POST, "/v1/checkout/sessions/\(session)/expire", params: params, options: options)
             },
-            listLineItems: { session, params in
-                try await handler.send(.GET, "/v1/checkout/sessions/\(session)/line_items", params: params)
+            listLineItems: { session, params, options in
+                try await handler.send(.GET, "/v1/checkout/sessions/\(session)/line_items", params: params, options: options)
             }
         )
     }

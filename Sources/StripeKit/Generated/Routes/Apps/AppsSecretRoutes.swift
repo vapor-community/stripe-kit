@@ -12,33 +12,55 @@ import NIOHTTP1
 
 public struct AppsSecretRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: AppsSecretCreateParams, _ options: RequestOptions) async throws -> AppsSecret
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: AppsSecretListParams, _ options: RequestOptions) async throws -> AppsSecretList
+
+    /// Performs `deleteWhere(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var deleteWhere: @Sendable (_ params: AppsSecretDeleteWhereParams, _ options: RequestOptions) async throws -> AppsSecret
+
+    /// Performs `find(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var find: @Sendable (_ params: AppsSecretFindParams, _ options: RequestOptions) async throws -> AppsSecret
+}
+
+extension AppsSecretRoutes {
     /// Create or replace a secret in the secret store.
-    public var create: @Sendable (_ params: AppsSecretCreateParams) async throws -> AppsSecret
+    public func create(_ params: AppsSecretCreateParams, options: RequestOptions = .init()) async throws -> AppsSecret {
+        try await create(params, options)
+    }
 
     /// List all secrets stored on the given scope.
-    public var list: @Sendable (_ params: AppsSecretListParams) async throws -> AppsSecretList
+    public func list(_ params: AppsSecretListParams, options: RequestOptions = .init()) async throws -> AppsSecretList {
+        try await list(params, options)
+    }
 
     /// Deletes a secret from the secret store by name and scope.
-    public var deleteWhere: @Sendable (_ params: AppsSecretDeleteWhereParams) async throws -> AppsSecret
+    public func deleteWhere(_ params: AppsSecretDeleteWhereParams, options: RequestOptions = .init()) async throws -> AppsSecret {
+        try await deleteWhere(params, options)
+    }
 
     /// Finds a secret in the secret store by name and scope.
-    public var find: @Sendable (_ params: AppsSecretFindParams) async throws -> AppsSecret
+    public func find(_ params: AppsSecretFindParams, options: RequestOptions = .init()) async throws -> AppsSecret {
+        try await find(params, options)
+    }
 }
 
 extension AppsSecretRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AppsSecretRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/apps/secrets", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/apps/secrets", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/apps/secrets", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/apps/secrets", params: params, options: options)
             },
-            deleteWhere: { params in
-                try await handler.send(.POST, "/v1/apps/secrets/delete", params: params)
+            deleteWhere: { params, options in
+                try await handler.send(.POST, "/v1/apps/secrets/delete", params: params, options: options)
             },
-            find: { params in
-                try await handler.send(.GET, "/v1/apps/secrets/find", params: params)
+            find: { params, options in
+                try await handler.send(.GET, "/v1/apps/secrets/find", params: params, options: options)
             }
         )
     }

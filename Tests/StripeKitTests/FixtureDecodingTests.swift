@@ -34,9 +34,9 @@ struct FixtureDecodingTests {
     /// The key paths only compile if the routes are typed to return the deleted types.
     @Test("Delete routes return deleted objects")
     func deleteRoutesReturnDeletedObjects() throws {
-        let _: KeyPath<CustomerRoutes, @Sendable (String, [String]?) async throws -> DeletedCustomer> = \.delete
-        let _: KeyPath<TerminalLocationRoutes, @Sendable (String, [String]?) async throws -> DeletedTerminalLocation> = \.delete
-        let _: KeyPath<PaymentSourceRoutes, @Sendable (String, String, [String]?) async throws -> ObjectOrDeleted<PaymentSource, DeletedPaymentSource>> = \.delete
+        let _: KeyPath<CustomerRoutes, @Sendable (String, [String]?, RequestOptions) async throws -> DeletedCustomer> = \.delete
+        let _: KeyPath<TerminalLocationRoutes, @Sendable (String, [String]?, RequestOptions) async throws -> DeletedTerminalLocation> = \.delete
+        let _: KeyPath<PaymentSourceRoutes, @Sendable (String, String, [String]?, RequestOptions) async throws -> ObjectOrDeleted<PaymentSource, DeletedPaymentSource>> = \.delete
 
         let card = try Fixtures.decode("deleted_card", as: ObjectOrDeleted<PaymentSource, DeletedPaymentSource>.self)
         #expect(card.deleted?.deletedCard != nil)
@@ -49,9 +49,9 @@ struct FixtureDecodingTests {
     /// the route returns `ObjectOrDeleted` (as async-stripe does), and both shapes decode.
     @Test("Retrieve routes return the object or a deleted object")
     func retrieveRoutesReturnObjectOrDeleted() throws {
-        let _: KeyPath<CustomerRoutes, @Sendable (String, [String]?) async throws -> ObjectOrDeleted<Customer, DeletedCustomer>> = \.retrieve
-        let _: KeyPath<TerminalLocationRoutes, @Sendable (String, [String]?) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>> = \.retrieve
-        let _: KeyPath<TerminalReaderRoutes, @Sendable (String, TerminalReaderUpdateParams?) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>> = \.update
+        let _: KeyPath<CustomerRoutes, @Sendable (String, [String]?, RequestOptions) async throws -> ObjectOrDeleted<Customer, DeletedCustomer>> = \.retrieve
+        let _: KeyPath<TerminalLocationRoutes, @Sendable (String, [String]?, RequestOptions) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>> = \.retrieve
+        let _: KeyPath<TerminalReaderRoutes, @Sendable (String, TerminalReaderUpdateParams, RequestOptions) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>> = \.update
 
         let live = try Fixtures.decode("customer", as: ObjectOrDeleted<Customer, DeletedCustomer>.self)
         #expect(live.object?.id == "cus_QXg1o8vcGmoR32")

@@ -12,21 +12,49 @@ import NIOHTTP1
 
 public struct PaymentMethodRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: PaymentMethodCreateParams, _ options: RequestOptions) async throws -> PaymentMethod
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ paymentMethod: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PaymentMethod
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ paymentMethod: String, _ params: PaymentMethodUpdateParams, _ options: RequestOptions) async throws -> PaymentMethod
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PaymentMethodListParams, _ options: RequestOptions) async throws -> PaymentMethodList
+
+    /// Performs `attach(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var attach: @Sendable (_ paymentMethod: String, _ params: PaymentMethodAttachParams, _ options: RequestOptions) async throws -> PaymentMethod
+
+    /// Performs `detach(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var detach: @Sendable (_ paymentMethod: String, _ params: PaymentMethodDetachParams, _ options: RequestOptions) async throws -> PaymentMethod
+}
+
+extension PaymentMethodRoutes {
     /// Creates a PaymentMethod object. Read the Stripe.js reference to learn how to create PaymentMethods
     /// via Stripe.js. Instead of creating a PaymentMethod directly, we recommend using the PaymentIntents
     /// API to accept a payment immediately or the SetupIntent API to collect payment method details ahead
     /// of a future payment.
-    public var create: @Sendable (_ params: PaymentMethodCreateParams?) async throws -> PaymentMethod
+    public func create(_ params: PaymentMethodCreateParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethod {
+        try await create(params, options)
+    }
 
     /// Retrieves a PaymentMethod object attached to the StripeAccount. To retrieve a payment method
     /// attached to a Customer, you should use Retrieve a Customer’s PaymentMethods
-    public var retrieve: @Sendable (_ paymentMethod: String, _ expand: [String]?) async throws -> PaymentMethod
+    public func retrieve(_ paymentMethod: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> PaymentMethod {
+        try await retrieve(paymentMethod, expand, options)
+    }
 
     /// Updates a PaymentMethod object. A PaymentMethod must be attached to a customer to be updated.
-    public var update: @Sendable (_ paymentMethod: String, _ params: PaymentMethodUpdateParams?) async throws -> PaymentMethod
+    public func update(_ paymentMethod: String, _ params: PaymentMethodUpdateParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethod {
+        try await update(paymentMethod, params, options)
+    }
 
     /// Returns a list of all PaymentMethods.
-    public var list: @Sendable (_ params: PaymentMethodListParams?) async throws -> PaymentMethodList
+    public func list(_ params: PaymentMethodListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodList {
+        try await list(params, options)
+    }
 
     /// Attaches a PaymentMethod object to a Customer. To attach a new PaymentMethod to a customer for
     /// future payments, we recommend you use a SetupIntent or a PaymentIntent with setup_future_usage.
@@ -37,33 +65,37 @@ public struct PaymentMethodRoutes: Sendable {
     /// information about setting up future payments. To use this PaymentMethod as the default for invoice
     /// or subscription payments, set invoice_settings.default_payment_method, on the Customer to the
     /// PaymentMethod’s ID.
-    public var attach: @Sendable (_ paymentMethod: String, _ params: PaymentMethodAttachParams?) async throws -> PaymentMethod
+    public func attach(_ paymentMethod: String, _ params: PaymentMethodAttachParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethod {
+        try await attach(paymentMethod, params, options)
+    }
 
     /// Detaches a PaymentMethod object from a Customer. Detachment is permanent and irreversible — once
     /// detached, a PaymentMethod can no longer be used for payments or re-attached to a Customer.
-    public var detach: @Sendable (_ paymentMethod: String, _ params: PaymentMethodDetachParams?) async throws -> PaymentMethod
+    public func detach(_ paymentMethod: String, _ params: PaymentMethodDetachParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethod {
+        try await detach(paymentMethod, params, options)
+    }
 }
 
 extension PaymentMethodRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentMethodRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/payment_methods", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/payment_methods", params: params, options: options)
             },
-            retrieve: { paymentMethod, expand in
-                try await handler.send(.GET, "/v1/payment_methods/\(paymentMethod)", expand: expand)
+            retrieve: { paymentMethod, expand, options in
+                try await handler.send(.GET, "/v1/payment_methods/\(paymentMethod)", expand: expand, options: options)
             },
-            update: { paymentMethod, params in
-                try await handler.send(.POST, "/v1/payment_methods/\(paymentMethod)", params: params)
+            update: { paymentMethod, params, options in
+                try await handler.send(.POST, "/v1/payment_methods/\(paymentMethod)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/payment_methods", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/payment_methods", params: params, options: options)
             },
-            attach: { paymentMethod, params in
-                try await handler.send(.POST, "/v1/payment_methods/\(paymentMethod)/attach", params: params)
+            attach: { paymentMethod, params, options in
+                try await handler.send(.POST, "/v1/payment_methods/\(paymentMethod)/attach", params: params, options: options)
             },
-            detach: { paymentMethod, params in
-                try await handler.send(.POST, "/v1/payment_methods/\(paymentMethod)/detach", params: params)
+            detach: { paymentMethod, params, options in
+                try await handler.send(.POST, "/v1/payment_methods/\(paymentMethod)/detach", params: params, options: options)
             }
         )
     }

@@ -12,6 +12,32 @@ import NIOHTTP1
 
 public struct RefundRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: RefundCreateParams, _ options: RequestOptions) async throws -> Refund
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ refund: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Refund
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ refund: String, _ params: RefundUpdateParams, _ options: RequestOptions) async throws -> Refund
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: RefundListParams, _ options: RequestOptions) async throws -> RefundList
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ refund: String, _ params: RefundCancelParams, _ options: RequestOptions) async throws -> Refund
+
+    /// Performs `expire(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var expire: @Sendable (_ refund: String, _ params: RefundExpireParams, _ options: RequestOptions) async throws -> Refund
+
+    /// Performs `listForCharge(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listForCharge: @Sendable (_ charge: String, _ params: RefundListForChargeParams, _ options: RequestOptions) async throws -> RefundList
+
+    /// Performs `retrieveForCharge(_:refund:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieveForCharge: @Sendable (_ charge: String, _ refund: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Refund
+}
+
+extension RefundRoutes {
     /// When you create a new refund, you must specify a Charge or a PaymentIntent object on which to create
     /// it. Creating a new refund will refund a charge that has previously been created but not yet
     /// refunded. Funds will be refunded to the credit or debit card that was originally charged. You can
@@ -19,63 +45,79 @@ public struct RefundRoutes: Sendable {
     /// been refunded. Once entirely refunded, a charge can’t be refunded again. This method will raise an
     /// error when called on an already-refunded charge, or when trying to refund more money than is left on
     /// a charge.
-    public var create: @Sendable (_ params: RefundCreateParams?) async throws -> Refund
+    public func create(_ params: RefundCreateParams = .init(), options: RequestOptions = .init()) async throws -> Refund {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing refund.
-    public var retrieve: @Sendable (_ refund: String, _ expand: [String]?) async throws -> Refund
+    public func retrieve(_ refund: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Refund {
+        try await retrieve(refund, expand, options)
+    }
 
     /// Updates the refund that you specify by setting the values of the passed parameters. Any parameters
     /// that you don’t provide remain unchanged. This request only accepts metadata as an argument.
-    public var update: @Sendable (_ refund: String, _ params: RefundUpdateParams?) async throws -> Refund
+    public func update(_ refund: String, _ params: RefundUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Refund {
+        try await update(refund, params, options)
+    }
 
     /// Returns a list of all refunds you created. We return the refunds in sorted order, with the most
     /// recent refunds appearing first. The 10 most recent refunds are always available by default on the
     /// Charge object.
-    public var list: @Sendable (_ params: RefundListParams?) async throws -> RefundList
+    public func list(_ params: RefundListParams = .init(), options: RequestOptions = .init()) async throws -> RefundList {
+        try await list(params, options)
+    }
 
     /// Cancels a refund with a status of requires_action. You can’t cancel refunds in other states. Only
     /// refunds for payment methods that require customer action can enter the requires_action state.
-    public var cancel: @Sendable (_ refund: String, _ params: RefundCancelParams?) async throws -> Refund
+    public func cancel(_ refund: String, _ params: RefundCancelParams = .init(), options: RequestOptions = .init()) async throws -> Refund {
+        try await cancel(refund, params, options)
+    }
 
     /// Expire a refund with a status of requires_action.
-    public var expire: @Sendable (_ refund: String, _ params: RefundExpireParams?) async throws -> Refund
+    public func expire(_ refund: String, _ params: RefundExpireParams = .init(), options: RequestOptions = .init()) async throws -> Refund {
+        try await expire(refund, params, options)
+    }
 
     /// You can see a list of the refunds belonging to a specific charge. Note that the 10 most recent
     /// refunds are always available by default on the charge object. If you need more than those 10, you
     /// can use this API method and the limit and starting_after parameters to page through additional
     /// refunds.
-    public var listForCharge: @Sendable (_ charge: String, _ params: RefundListForChargeParams?) async throws -> RefundList
+    public func listForCharge(_ charge: String, _ params: RefundListForChargeParams = .init(), options: RequestOptions = .init()) async throws -> RefundList {
+        try await listForCharge(charge, params, options)
+    }
 
     /// Retrieves the details of an existing refund.
-    public var retrieveForCharge: @Sendable (_ charge: String, _ refund: String, _ expand: [String]?) async throws -> Refund
+    public func retrieveForCharge(_ charge: String, refund: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Refund {
+        try await retrieveForCharge(charge, refund, expand, options)
+    }
 }
 
 extension RefundRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         RefundRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/refunds", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/refunds", params: params, options: options)
             },
-            retrieve: { refund, expand in
-                try await handler.send(.GET, "/v1/refunds/\(refund)", expand: expand)
+            retrieve: { refund, expand, options in
+                try await handler.send(.GET, "/v1/refunds/\(refund)", expand: expand, options: options)
             },
-            update: { refund, params in
-                try await handler.send(.POST, "/v1/refunds/\(refund)", params: params)
+            update: { refund, params, options in
+                try await handler.send(.POST, "/v1/refunds/\(refund)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/refunds", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/refunds", params: params, options: options)
             },
-            cancel: { refund, params in
-                try await handler.send(.POST, "/v1/refunds/\(refund)/cancel", params: params)
+            cancel: { refund, params, options in
+                try await handler.send(.POST, "/v1/refunds/\(refund)/cancel", params: params, options: options)
             },
-            expire: { refund, params in
-                try await handler.send(.POST, "/v1/test_helpers/refunds/\(refund)/expire", params: params)
+            expire: { refund, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/refunds/\(refund)/expire", params: params, options: options)
             },
-            listForCharge: { charge, params in
-                try await handler.send(.GET, "/v1/charges/\(charge)/refunds", params: params)
+            listForCharge: { charge, params, options in
+                try await handler.send(.GET, "/v1/charges/\(charge)/refunds", params: params, options: options)
             },
-            retrieveForCharge: { charge, refund, expand in
-                try await handler.send(.GET, "/v1/charges/\(charge)/refunds/\(refund)", expand: expand)
+            retrieveForCharge: { charge, refund, expand, options in
+                try await handler.send(.GET, "/v1/charges/\(charge)/refunds/\(refund)", expand: expand, options: options)
             }
         )
     }

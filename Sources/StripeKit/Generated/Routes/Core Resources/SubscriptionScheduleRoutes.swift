@@ -12,53 +12,85 @@ import NIOHTTP1
 
 public struct SubscriptionScheduleRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: SubscriptionScheduleCreateParams, _ options: RequestOptions) async throws -> SubscriptionSchedule
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ schedule: String, _ expand: [String]?, _ options: RequestOptions) async throws -> SubscriptionSchedule
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ schedule: String, _ params: SubscriptionScheduleUpdateParams, _ options: RequestOptions) async throws -> SubscriptionSchedule
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: SubscriptionScheduleListParams, _ options: RequestOptions) async throws -> SubscriptionScheduleList
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ schedule: String, _ params: SubscriptionScheduleCancelParams, _ options: RequestOptions) async throws -> SubscriptionSchedule
+
+    /// Performs `release(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var release: @Sendable (_ schedule: String, _ params: SubscriptionScheduleReleaseParams, _ options: RequestOptions) async throws -> SubscriptionSchedule
+}
+
+extension SubscriptionScheduleRoutes {
     /// Creates a new subscription schedule object. Each customer can have up to 500 active or scheduled
     /// subscriptions.
-    public var create: @Sendable (_ params: SubscriptionScheduleCreateParams?) async throws -> SubscriptionSchedule
+    public func create(_ params: SubscriptionScheduleCreateParams = .init(), options: RequestOptions = .init()) async throws -> SubscriptionSchedule {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing subscription schedule. You only need to supply the unique
     /// subscription schedule identifier that was returned upon subscription schedule creation.
-    public var retrieve: @Sendable (_ schedule: String, _ expand: [String]?) async throws -> SubscriptionSchedule
+    public func retrieve(_ schedule: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> SubscriptionSchedule {
+        try await retrieve(schedule, expand, options)
+    }
 
     /// Updates an existing subscription schedule.
-    public var update: @Sendable (_ schedule: String, _ params: SubscriptionScheduleUpdateParams?) async throws -> SubscriptionSchedule
+    public func update(_ schedule: String, _ params: SubscriptionScheduleUpdateParams = .init(), options: RequestOptions = .init()) async throws -> SubscriptionSchedule {
+        try await update(schedule, params, options)
+    }
 
     /// Retrieves the list of your subscription schedules.
-    public var list: @Sendable (_ params: SubscriptionScheduleListParams?) async throws -> SubscriptionScheduleList
+    public func list(_ params: SubscriptionScheduleListParams = .init(), options: RequestOptions = .init()) async throws -> SubscriptionScheduleList {
+        try await list(params, options)
+    }
 
     /// Cancels a subscription schedule and its associated subscription immediately (if the subscription
     /// schedule has an active subscription). A subscription schedule can only be canceled if its status is
     /// not_started or active.
-    public var cancel: @Sendable (_ schedule: String, _ params: SubscriptionScheduleCancelParams?) async throws -> SubscriptionSchedule
+    public func cancel(_ schedule: String, _ params: SubscriptionScheduleCancelParams = .init(), options: RequestOptions = .init()) async throws -> SubscriptionSchedule {
+        try await cancel(schedule, params, options)
+    }
 
     /// Releases the subscription schedule immediately, which will stop scheduling of its phases, but leave
     /// any existing subscription in place. A schedule can only be released if its status is not_started or
     /// active. If the subscription schedule is currently associated with a subscription, releasing it will
     /// remove its subscription property and set the subscription’s ID to the released_subscription
     /// property.
-    public var release: @Sendable (_ schedule: String, _ params: SubscriptionScheduleReleaseParams?) async throws -> SubscriptionSchedule
+    public func release(_ schedule: String, _ params: SubscriptionScheduleReleaseParams = .init(), options: RequestOptions = .init()) async throws -> SubscriptionSchedule {
+        try await release(schedule, params, options)
+    }
 }
 
 extension SubscriptionScheduleRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SubscriptionScheduleRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/subscription_schedules", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/subscription_schedules", params: params, options: options)
             },
-            retrieve: { schedule, expand in
-                try await handler.send(.GET, "/v1/subscription_schedules/\(schedule)", expand: expand)
+            retrieve: { schedule, expand, options in
+                try await handler.send(.GET, "/v1/subscription_schedules/\(schedule)", expand: expand, options: options)
             },
-            update: { schedule, params in
-                try await handler.send(.POST, "/v1/subscription_schedules/\(schedule)", params: params)
+            update: { schedule, params, options in
+                try await handler.send(.POST, "/v1/subscription_schedules/\(schedule)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/subscription_schedules", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/subscription_schedules", params: params, options: options)
             },
-            cancel: { schedule, params in
-                try await handler.send(.POST, "/v1/subscription_schedules/\(schedule)/cancel", params: params)
+            cancel: { schedule, params, options in
+                try await handler.send(.POST, "/v1/subscription_schedules/\(schedule)/cancel", params: params, options: options)
             },
-            release: { schedule, params in
-                try await handler.send(.POST, "/v1/subscription_schedules/\(schedule)/release", params: params)
+            release: { schedule, params, options in
+                try await handler.send(.POST, "/v1/subscription_schedules/\(schedule)/release", params: params, options: options)
             }
         )
     }

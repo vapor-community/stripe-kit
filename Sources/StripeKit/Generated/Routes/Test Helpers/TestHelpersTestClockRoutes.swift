@@ -12,40 +12,67 @@ import NIOHTTP1
 
 public struct TestHelpersTestClockRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TestHelpersTestClockCreateParams, _ options: RequestOptions) async throws -> TestHelpersTestClock
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ testClock: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TestHelpersTestClock
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TestHelpersTestClockListParams, _ options: RequestOptions) async throws -> TestHelpersTestClockList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ testClock: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTestHelpersTestClock
+
+    /// Performs `advance(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var advance: @Sendable (_ testClock: String, _ params: TestHelpersTestClockAdvanceParams, _ options: RequestOptions) async throws -> TestHelpersTestClock
+}
+
+extension TestHelpersTestClockRoutes {
     /// Creates a new test clock that can be attached to new customers and quotes.
-    public var create: @Sendable (_ params: TestHelpersTestClockCreateParams) async throws -> TestHelpersTestClock
+    public func create(_ params: TestHelpersTestClockCreateParams, options: RequestOptions = .init()) async throws -> TestHelpersTestClock {
+        try await create(params, options)
+    }
 
     /// Retrieves a test clock.
-    public var retrieve: @Sendable (_ testClock: String, _ expand: [String]?) async throws -> TestHelpersTestClock
+    public func retrieve(_ testClock: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TestHelpersTestClock {
+        try await retrieve(testClock, expand, options)
+    }
 
     /// Returns a list of your test clocks.
-    public var list: @Sendable (_ params: TestHelpersTestClockListParams?) async throws -> TestHelpersTestClockList
+    public func list(_ params: TestHelpersTestClockListParams = .init(), options: RequestOptions = .init()) async throws -> TestHelpersTestClockList {
+        try await list(params, options)
+    }
 
     /// Deletes a test clock.
-    public var delete: @Sendable (_ testClock: String, _ expand: [String]?) async throws -> DeletedTestHelpersTestClock
+    public func delete(_ testClock: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedTestHelpersTestClock {
+        try await delete(testClock, expand, options)
+    }
 
     /// Starts advancing a test clock to a specified time in the future. Advancement is done when status
     /// changes to Ready.
-    public var advance: @Sendable (_ testClock: String, _ params: TestHelpersTestClockAdvanceParams) async throws -> TestHelpersTestClock
+    public func advance(_ testClock: String, _ params: TestHelpersTestClockAdvanceParams, options: RequestOptions = .init()) async throws -> TestHelpersTestClock {
+        try await advance(testClock, params, options)
+    }
 }
 
 extension TestHelpersTestClockRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TestHelpersTestClockRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/test_helpers/test_clocks", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/test_helpers/test_clocks", params: params, options: options)
             },
-            retrieve: { testClock, expand in
-                try await handler.send(.GET, "/v1/test_helpers/test_clocks/\(testClock)", expand: expand)
+            retrieve: { testClock, expand, options in
+                try await handler.send(.GET, "/v1/test_helpers/test_clocks/\(testClock)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/test_helpers/test_clocks", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/test_helpers/test_clocks", params: params, options: options)
             },
-            delete: { testClock, expand in
-                try await handler.send(.DELETE, "/v1/test_helpers/test_clocks/\(testClock)", expand: expand)
+            delete: { testClock, expand, options in
+                try await handler.send(.DELETE, "/v1/test_helpers/test_clocks/\(testClock)", expand: expand, options: options)
             },
-            advance: { testClock, params in
-                try await handler.send(.POST, "/v1/test_helpers/test_clocks/\(testClock)/advance", params: params)
+            advance: { testClock, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/test_clocks/\(testClock)/advance", params: params, options: options)
             }
         )
     }

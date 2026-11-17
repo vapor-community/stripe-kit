@@ -12,34 +12,56 @@ import NIOHTTP1
 
 public struct ProductCatalogTrialOfferRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: ProductCatalogTrialOfferCreateParams, _ options: RequestOptions) async throws -> ProductCatalogTrialOffer
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ProductCatalogTrialOffer
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: ProductCatalogTrialOfferUpdateParams, _ options: RequestOptions) async throws -> ProductCatalogTrialOffer
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ProductCatalogTrialOfferListParams, _ options: RequestOptions) async throws -> ProductCatalogTrialOfferList
+}
+
+extension ProductCatalogTrialOfferRoutes {
     /// Creates a trial offer.
-    public var create: @Sendable (_ params: ProductCatalogTrialOfferCreateParams) async throws -> ProductCatalogTrialOffer
+    public func create(_ params: ProductCatalogTrialOfferCreateParams, options: RequestOptions = .init()) async throws -> ProductCatalogTrialOffer {
+        try await create(params, options)
+    }
 
     /// Retrieves the trial offer with the given ID.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> ProductCatalogTrialOffer
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ProductCatalogTrialOffer {
+        try await retrieve(id, expand, options)
+    }
 
     /// Updates the specified trial offer by setting the values of the parameters passed. Any parameters not
     /// provided are left unchanged.
-    public var update: @Sendable (_ id: String, _ params: ProductCatalogTrialOfferUpdateParams?) async throws -> ProductCatalogTrialOffer
+    public func update(_ id: String, _ params: ProductCatalogTrialOfferUpdateParams = .init(), options: RequestOptions = .init()) async throws -> ProductCatalogTrialOffer {
+        try await update(id, params, options)
+    }
 
     /// Returns a list of trial offers.
-    public var list: @Sendable (_ params: ProductCatalogTrialOfferListParams?) async throws -> ProductCatalogTrialOfferList
+    public func list(_ params: ProductCatalogTrialOfferListParams = .init(), options: RequestOptions = .init()) async throws -> ProductCatalogTrialOfferList {
+        try await list(params, options)
+    }
 }
 
 extension ProductCatalogTrialOfferRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ProductCatalogTrialOfferRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/product_catalog/trial_offers", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/product_catalog/trial_offers", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/product_catalog/trial_offers/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/product_catalog/trial_offers/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/product_catalog/trial_offers/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/product_catalog/trial_offers/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/product_catalog/trial_offers", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/product_catalog/trial_offers", params: params, options: options)
             }
         )
     }

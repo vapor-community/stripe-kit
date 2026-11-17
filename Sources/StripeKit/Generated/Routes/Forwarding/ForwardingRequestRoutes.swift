@@ -12,27 +12,44 @@ import NIOHTTP1
 
 public struct ForwardingRequestRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: ForwardingRequestCreateParams, _ options: RequestOptions) async throws -> ForwardingRequest
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ForwardingRequest
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ForwardingRequestListParams, _ options: RequestOptions) async throws -> ForwardingRequestList
+}
+
+extension ForwardingRequestRoutes {
     /// Creates a ForwardingRequest object.
-    public var create: @Sendable (_ params: ForwardingRequestCreateParams) async throws -> ForwardingRequest
+    public func create(_ params: ForwardingRequestCreateParams, options: RequestOptions = .init()) async throws -> ForwardingRequest {
+        try await create(params, options)
+    }
 
     /// Retrieves a ForwardingRequest object.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> ForwardingRequest
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ForwardingRequest {
+        try await retrieve(id, expand, options)
+    }
 
     /// Lists all ForwardingRequest objects.
-    public var list: @Sendable (_ params: ForwardingRequestListParams?) async throws -> ForwardingRequestList
+    public func list(_ params: ForwardingRequestListParams = .init(), options: RequestOptions = .init()) async throws -> ForwardingRequestList {
+        try await list(params, options)
+    }
 }
 
 extension ForwardingRequestRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ForwardingRequestRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/forwarding/requests", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/forwarding/requests", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/forwarding/requests/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/forwarding/requests/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/forwarding/requests", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/forwarding/requests", params: params, options: options)
             }
         )
     }

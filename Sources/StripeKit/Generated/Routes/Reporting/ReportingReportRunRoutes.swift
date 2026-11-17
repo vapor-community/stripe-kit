@@ -12,28 +12,45 @@ import NIOHTTP1
 
 public struct ReportingReportRunRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: ReportingReportRunCreateParams, _ options: RequestOptions) async throws -> ReportingReportRun
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ reportRun: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ReportingReportRun
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ReportingReportRunListParams, _ options: RequestOptions) async throws -> ReportingReportRunList
+}
+
+extension ReportingReportRunRoutes {
     /// Creates a new object and begin running the report. (Certain report types require a live-mode API
     /// key.)
-    public var create: @Sendable (_ params: ReportingReportRunCreateParams) async throws -> ReportingReportRun
+    public func create(_ params: ReportingReportRunCreateParams, options: RequestOptions = .init()) async throws -> ReportingReportRun {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing Report Run.
-    public var retrieve: @Sendable (_ reportRun: String, _ expand: [String]?) async throws -> ReportingReportRun
+    public func retrieve(_ reportRun: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ReportingReportRun {
+        try await retrieve(reportRun, expand, options)
+    }
 
     /// Returns a list of Report Runs, with the most recent appearing first.
-    public var list: @Sendable (_ params: ReportingReportRunListParams?) async throws -> ReportingReportRunList
+    public func list(_ params: ReportingReportRunListParams = .init(), options: RequestOptions = .init()) async throws -> ReportingReportRunList {
+        try await list(params, options)
+    }
 }
 
 extension ReportingReportRunRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ReportingReportRunRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/reporting/report_runs", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/reporting/report_runs", params: params, options: options)
             },
-            retrieve: { reportRun, expand in
-                try await handler.send(.GET, "/v1/reporting/report_runs/\(reportRun)", expand: expand)
+            retrieve: { reportRun, expand, options in
+                try await handler.send(.GET, "/v1/reporting/report_runs/\(reportRun)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/reporting/report_runs", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/reporting/report_runs", params: params, options: options)
             }
         )
     }

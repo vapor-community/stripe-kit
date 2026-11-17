@@ -12,33 +12,55 @@ import NIOHTTP1
 
 public struct ApplePayDomainRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: ApplePayDomainCreateParams, _ options: RequestOptions) async throws -> ApplePayDomain
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ domain: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ApplePayDomain
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ApplePayDomainListParams, _ options: RequestOptions) async throws -> ApplePayDomainList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ domain: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedApplePayDomain
+}
+
+extension ApplePayDomainRoutes {
     /// Create an apple pay domain.
-    public var create: @Sendable (_ params: ApplePayDomainCreateParams) async throws -> ApplePayDomain
+    public func create(_ params: ApplePayDomainCreateParams, options: RequestOptions = .init()) async throws -> ApplePayDomain {
+        try await create(params, options)
+    }
 
     /// Retrieve an apple pay domain.
-    public var retrieve: @Sendable (_ domain: String, _ expand: [String]?) async throws -> ApplePayDomain
+    public func retrieve(_ domain: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ApplePayDomain {
+        try await retrieve(domain, expand, options)
+    }
 
     /// List apple pay domains.
-    public var list: @Sendable (_ params: ApplePayDomainListParams?) async throws -> ApplePayDomainList
+    public func list(_ params: ApplePayDomainListParams = .init(), options: RequestOptions = .init()) async throws -> ApplePayDomainList {
+        try await list(params, options)
+    }
 
     /// Delete an apple pay domain.
-    public var delete: @Sendable (_ domain: String, _ expand: [String]?) async throws -> DeletedApplePayDomain
+    public func delete(_ domain: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedApplePayDomain {
+        try await delete(domain, expand, options)
+    }
 }
 
 extension ApplePayDomainRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ApplePayDomainRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/apple_pay/domains", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/apple_pay/domains", params: params, options: options)
             },
-            retrieve: { domain, expand in
-                try await handler.send(.GET, "/v1/apple_pay/domains/\(domain)", expand: expand)
+            retrieve: { domain, expand, options in
+                try await handler.send(.GET, "/v1/apple_pay/domains/\(domain)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/apple_pay/domains", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/apple_pay/domains", params: params, options: options)
             },
-            delete: { domain, expand in
-                try await handler.send(.DELETE, "/v1/apple_pay/domains/\(domain)", expand: expand)
+            delete: { domain, expand, options in
+                try await handler.send(.DELETE, "/v1/apple_pay/domains/\(domain)", expand: expand, options: options)
             }
         )
     }

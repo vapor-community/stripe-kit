@@ -12,22 +12,34 @@ import NIOHTTP1
 
 public struct FinancialConnectionsSessionRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: FinancialConnectionsSessionCreateParams, _ options: RequestOptions) async throws -> FinancialConnectionsSession
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ session: String, _ expand: [String]?, _ options: RequestOptions) async throws -> FinancialConnectionsSession
+}
+
+extension FinancialConnectionsSessionRoutes {
     /// To launch the Financial Connections authorization flow, create a Session. The session’s
     /// client_secret can be used to launch the flow using Stripe.js.
-    public var create: @Sendable (_ params: FinancialConnectionsSessionCreateParams) async throws -> FinancialConnectionsSession
+    public func create(_ params: FinancialConnectionsSessionCreateParams, options: RequestOptions = .init()) async throws -> FinancialConnectionsSession {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of a Financial Connections Session
-    public var retrieve: @Sendable (_ session: String, _ expand: [String]?) async throws -> FinancialConnectionsSession
+    public func retrieve(_ session: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> FinancialConnectionsSession {
+        try await retrieve(session, expand, options)
+    }
 }
 
 extension FinancialConnectionsSessionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FinancialConnectionsSessionRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/financial_connections/sessions", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/financial_connections/sessions", params: params, options: options)
             },
-            retrieve: { session, expand in
-                try await handler.send(.GET, "/v1/financial_connections/sessions/\(session)", expand: expand)
+            retrieve: { session, expand, options in
+                try await handler.send(.GET, "/v1/financial_connections/sessions/\(session)", expand: expand, options: options)
             }
         )
     }

@@ -12,33 +12,55 @@ import NIOHTTP1
 
 public struct EntitlementsFeatureRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: EntitlementsFeatureCreateParams, _ options: RequestOptions) async throws -> EntitlementsFeature
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> EntitlementsFeature
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: EntitlementsFeatureUpdateParams, _ options: RequestOptions) async throws -> EntitlementsFeature
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: EntitlementsFeatureListParams, _ options: RequestOptions) async throws -> EntitlementsFeatureList
+}
+
+extension EntitlementsFeatureRoutes {
     /// Creates a feature
-    public var create: @Sendable (_ params: EntitlementsFeatureCreateParams) async throws -> EntitlementsFeature
+    public func create(_ params: EntitlementsFeatureCreateParams, options: RequestOptions = .init()) async throws -> EntitlementsFeature {
+        try await create(params, options)
+    }
 
     /// Retrieves a feature
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> EntitlementsFeature
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> EntitlementsFeature {
+        try await retrieve(id, expand, options)
+    }
 
     /// Update a feature’s metadata or permanently deactivate it.
-    public var update: @Sendable (_ id: String, _ params: EntitlementsFeatureUpdateParams?) async throws -> EntitlementsFeature
+    public func update(_ id: String, _ params: EntitlementsFeatureUpdateParams = .init(), options: RequestOptions = .init()) async throws -> EntitlementsFeature {
+        try await update(id, params, options)
+    }
 
     /// Retrieve a list of features
-    public var list: @Sendable (_ params: EntitlementsFeatureListParams?) async throws -> EntitlementsFeatureList
+    public func list(_ params: EntitlementsFeatureListParams = .init(), options: RequestOptions = .init()) async throws -> EntitlementsFeatureList {
+        try await list(params, options)
+    }
 }
 
 extension EntitlementsFeatureRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         EntitlementsFeatureRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/entitlements/features", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/entitlements/features", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/entitlements/features/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/entitlements/features/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/entitlements/features/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/entitlements/features/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/entitlements/features", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/entitlements/features", params: params, options: options)
             }
         )
     }

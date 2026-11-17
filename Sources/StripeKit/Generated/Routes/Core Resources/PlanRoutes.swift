@@ -12,42 +12,69 @@ import NIOHTTP1
 
 public struct PlanRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: PlanCreateParams, _ options: RequestOptions) async throws -> Plan
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ plan: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Plan
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ plan: String, _ params: PlanUpdateParams, _ options: RequestOptions) async throws -> Plan
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PlanListParams, _ options: RequestOptions) async throws -> PlanList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ plan: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedPlan
+}
+
+extension PlanRoutes {
     /// You can now model subscriptions more flexibly using the Prices API. It replaces the Plans API and is
     /// backwards compatible to simplify your migration.
-    public var create: @Sendable (_ params: PlanCreateParams) async throws -> Plan
+    public func create(_ params: PlanCreateParams, options: RequestOptions = .init()) async throws -> Plan {
+        try await create(params, options)
+    }
 
     /// Retrieves the plan with the given ID.
-    public var retrieve: @Sendable (_ plan: String, _ expand: [String]?) async throws -> Plan
+    public func retrieve(_ plan: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Plan {
+        try await retrieve(plan, expand, options)
+    }
 
     /// Updates the specified plan by setting the values of the parameters passed. Any parameters not
     /// provided are left unchanged. By design, you cannot change a plan’s ID, amount, currency, or billing
     /// cycle.
-    public var update: @Sendable (_ plan: String, _ params: PlanUpdateParams?) async throws -> Plan
+    public func update(_ plan: String, _ params: PlanUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Plan {
+        try await update(plan, params, options)
+    }
 
     /// Returns a list of your plans.
-    public var list: @Sendable (_ params: PlanListParams?) async throws -> PlanList
+    public func list(_ params: PlanListParams = .init(), options: RequestOptions = .init()) async throws -> PlanList {
+        try await list(params, options)
+    }
 
     /// Deleting plans means new subscribers can’t be added. Existing subscribers aren’t affected.
-    public var delete: @Sendable (_ plan: String, _ expand: [String]?) async throws -> DeletedPlan
+    public func delete(_ plan: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedPlan {
+        try await delete(plan, expand, options)
+    }
 }
 
 extension PlanRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PlanRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/plans", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/plans", params: params, options: options)
             },
-            retrieve: { plan, expand in
-                try await handler.send(.GET, "/v1/plans/\(plan)", expand: expand)
+            retrieve: { plan, expand, options in
+                try await handler.send(.GET, "/v1/plans/\(plan)", expand: expand, options: options)
             },
-            update: { plan, params in
-                try await handler.send(.POST, "/v1/plans/\(plan)", params: params)
+            update: { plan, params, options in
+                try await handler.send(.POST, "/v1/plans/\(plan)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/plans", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/plans", params: params, options: options)
             },
-            delete: { plan, expand in
-                try await handler.send(.DELETE, "/v1/plans/\(plan)", expand: expand)
+            delete: { plan, expand, options in
+                try await handler.send(.DELETE, "/v1/plans/\(plan)", expand: expand, options: options)
             }
         )
     }

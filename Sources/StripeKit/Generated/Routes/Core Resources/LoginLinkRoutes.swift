@@ -12,16 +12,23 @@ import NIOHTTP1
 
 public struct LoginLinkRoutes: Sendable {
 
+    /// Performs `create(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ account: String, _ params: LoginLinkCreateParams, _ options: RequestOptions) async throws -> LoginLink
+}
+
+extension LoginLinkRoutes {
     /// Creates a login link for a connected account to access the Express Dashboard. You can only create
     /// login links for accounts that use the Express Dashboard and are connected to your platform.
-    public var create: @Sendable (_ account: String, _ params: LoginLinkCreateParams?) async throws -> LoginLink
+    public func create(_ account: String, _ params: LoginLinkCreateParams = .init(), options: RequestOptions = .init()) async throws -> LoginLink {
+        try await create(account, params, options)
+    }
 }
 
 extension LoginLinkRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         LoginLinkRoutes(
-            create: { account, params in
-                try await handler.send(.POST, "/v1/accounts/\(account)/login_links", params: params)
+            create: { account, params, options in
+                try await handler.send(.POST, "/v1/accounts/\(account)/login_links", params: params, options: options)
             }
         )
     }

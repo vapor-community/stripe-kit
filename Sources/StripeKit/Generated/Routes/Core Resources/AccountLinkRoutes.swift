@@ -12,16 +12,23 @@ import NIOHTTP1
 
 public struct AccountLinkRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: AccountLinkCreateParams, _ options: RequestOptions) async throws -> AccountLink
+}
+
+extension AccountLinkRoutes {
     /// Creates an AccountLink object that includes a single-use Stripe URL that the platform can redirect
     /// their user to in order to take them through the Connect Onboarding flow.
-    public var create: @Sendable (_ params: AccountLinkCreateParams) async throws -> AccountLink
+    public func create(_ params: AccountLinkCreateParams, options: RequestOptions = .init()) async throws -> AccountLink {
+        try await create(params, options)
+    }
 }
 
 extension AccountLinkRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AccountLinkRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/account_links", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/account_links", params: params, options: options)
             }
         )
     }

@@ -12,29 +12,46 @@ import NIOHTTP1
 
 public struct TreasuryReceivedDebitRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TreasuryReceivedDebitCreateParams, _ options: RequestOptions) async throws -> TreasuryReceivedDebit
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryReceivedDebit
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryReceivedDebitListParams, _ options: RequestOptions) async throws -> TreasuryReceivedDebitList
+}
+
+extension TreasuryReceivedDebitRoutes {
     /// Use this endpoint to simulate a test mode ReceivedDebit initiated by a third party. In live mode,
     /// you can’t directly create ReceivedDebits initiated by third parties.
-    public var create: @Sendable (_ params: TreasuryReceivedDebitCreateParams) async throws -> TreasuryReceivedDebit
+    public func create(_ params: TreasuryReceivedDebitCreateParams, options: RequestOptions = .init()) async throws -> TreasuryReceivedDebit {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing ReceivedDebit by passing the unique ReceivedDebit ID from the
     /// ReceivedDebit list
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TreasuryReceivedDebit
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryReceivedDebit {
+        try await retrieve(id, expand, options)
+    }
 
     /// Returns a list of ReceivedDebits.
-    public var list: @Sendable (_ params: TreasuryReceivedDebitListParams) async throws -> TreasuryReceivedDebitList
+    public func list(_ params: TreasuryReceivedDebitListParams, options: RequestOptions = .init()) async throws -> TreasuryReceivedDebitList {
+        try await list(params, options)
+    }
 }
 
 extension TreasuryReceivedDebitRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryReceivedDebitRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/received_debits", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/received_debits", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/treasury/received_debits/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/treasury/received_debits/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/received_debits", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/received_debits", params: params, options: options)
             }
         )
     }

@@ -12,43 +12,70 @@ import NIOHTTP1
 
 public struct PersonRoutes: Sendable {
 
+    /// Performs `create(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ account: String, _ params: PersonCreateParams, _ options: RequestOptions) async throws -> Person
+
+    /// Performs `retrieve(_:person:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ account: String, _ person: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Person
+
+    /// Performs `update(_:person:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ account: String, _ person: String, _ params: PersonUpdateParams, _ options: RequestOptions) async throws -> Person
+
+    /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ account: String, _ params: PersonListParams, _ options: RequestOptions) async throws -> PersonList
+
+    /// Performs `delete(_:person:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ account: String, _ person: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedPerson
+}
+
+extension PersonRoutes {
     /// Creates a new person.
-    public var create: @Sendable (_ account: String, _ params: PersonCreateParams?) async throws -> Person
+    public func create(_ account: String, _ params: PersonCreateParams = .init(), options: RequestOptions = .init()) async throws -> Person {
+        try await create(account, params, options)
+    }
 
     /// Retrieves an existing person.
-    public var retrieve: @Sendable (_ account: String, _ person: String, _ expand: [String]?) async throws -> Person
+    public func retrieve(_ account: String, person: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Person {
+        try await retrieve(account, person, expand, options)
+    }
 
     /// Updates an existing person.
-    public var update: @Sendable (_ account: String, _ person: String, _ params: PersonUpdateParams?) async throws -> Person
+    public func update(_ account: String, person: String, _ params: PersonUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Person {
+        try await update(account, person, params, options)
+    }
 
     /// Returns a list of people associated with the account’s legal entity. The people are returned sorted
     /// by creation date, with the most recent people appearing first.
-    public var list: @Sendable (_ account: String, _ params: PersonListParams?) async throws -> PersonList
+    public func list(_ account: String, _ params: PersonListParams = .init(), options: RequestOptions = .init()) async throws -> PersonList {
+        try await list(account, params, options)
+    }
 
     /// Deletes an existing person’s relationship to the account’s legal entity. Any person with a
     /// relationship for an account can be deleted through the API, except if the person is the
     /// representative. If your integration is using the executive parameter, you cannot delete the only
     /// verified executive on file.
-    public var delete: @Sendable (_ account: String, _ person: String, _ expand: [String]?) async throws -> DeletedPerson
+    public func delete(_ account: String, person: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedPerson {
+        try await delete(account, person, expand, options)
+    }
 }
 
 extension PersonRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PersonRoutes(
-            create: { account, params in
-                try await handler.send(.POST, "/v1/accounts/\(account)/persons", params: params)
+            create: { account, params, options in
+                try await handler.send(.POST, "/v1/accounts/\(account)/persons", params: params, options: options)
             },
-            retrieve: { account, person, expand in
-                try await handler.send(.GET, "/v1/accounts/\(account)/persons/\(person)", expand: expand)
+            retrieve: { account, person, expand, options in
+                try await handler.send(.GET, "/v1/accounts/\(account)/persons/\(person)", expand: expand, options: options)
             },
-            update: { account, person, params in
-                try await handler.send(.POST, "/v1/accounts/\(account)/persons/\(person)", params: params)
+            update: { account, person, params, options in
+                try await handler.send(.POST, "/v1/accounts/\(account)/persons/\(person)", params: params, options: options)
             },
-            list: { account, params in
-                try await handler.send(.GET, "/v1/accounts/\(account)/persons", params: params)
+            list: { account, params, options in
+                try await handler.send(.GET, "/v1/accounts/\(account)/persons", params: params, options: options)
             },
-            delete: { account, person, expand in
-                try await handler.send(.DELETE, "/v1/accounts/\(account)/persons/\(person)", expand: expand)
+            delete: { account, person, expand, options in
+                try await handler.send(.DELETE, "/v1/accounts/\(account)/persons/\(person)", expand: expand, options: options)
             }
         )
     }

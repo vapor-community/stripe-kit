@@ -12,18 +12,39 @@ import NIOHTTP1
 
 public struct AppsInstallRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: AppsInstallCreateParams, _ options: RequestOptions) async throws -> AppsInstall
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> AppsInstall
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: AppsInstallUpdateParams, _ options: RequestOptions) async throws -> AppsInstall
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: AppsInstallListParams, _ options: RequestOptions) async throws -> AppsInstallList
+
+    /// Performs `uninstall(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var uninstall: @Sendable (_ id: String, _ params: AppsInstallUninstallParams, _ options: RequestOptions) async throws -> AppsInstall
+}
+
+extension AppsInstallRoutes {
     /// Creates an app install. An account installs its own private app with its own key; public and testing
     /// installs are made from the Dashboard. An app developer acting on a connected account through
     /// Stripe-Account installs or reinstalls its app there, and an embedding platform can do the same once
     /// the app’s developer approves its request to embed the app. For a private app, creating an install
     /// installs the newest completed upload; when that version is already installed with nothing pending,
     /// the existing install is returned.
-    public var create: @Sendable (_ params: AppsInstallCreateParams) async throws -> AppsInstall
+    public func create(_ params: AppsInstallCreateParams, options: RequestOptions = .init()) async throws -> AppsInstall {
+        try await create(params, options)
+    }
 
     /// Retrieves an app install. The installing account, the app’s developer (with the keys of the account
     /// that owns the app or of the app’s managed sandbox), and the embedding platform that created the
     /// install can retrieve it.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> AppsInstall
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> AppsInstall {
+        try await retrieve(id, expand, options)
+    }
 
     /// Reauthorizes an app install. The installer grants the permissions, content security policy entries,
     /// and endpoints that the version being installed requests. An account reauthorizes its own installs on
@@ -32,7 +53,9 @@ public struct AppsInstallRoutes: Sendable {
     /// on connected accounts through Stripe-Account. An app developer can’t grant new access. An embedding
     /// platform can grant new access only once the app’s developer approves its request to embed the app.
     /// For private apps, the version being installed is the newest completed upload.
-    public var update: @Sendable (_ id: String, _ params: AppsInstallUpdateParams?) async throws -> AppsInstall
+    public func update(_ id: String, _ params: AppsInstallUpdateParams = .init(), options: RequestOptions = .init()) async throws -> AppsInstall {
+        try await update(id, params, options)
+    }
 
     /// Returns a list of app installs. An app developer filtering by its own app with its own key sees that
     /// app’s installs across the accounts that installed it. An app developer acting on a connected account
@@ -41,29 +64,33 @@ public struct AppsInstallRoutes: Sendable {
     /// callers see the installs on their own account. A live key lists live installs and a test key lists
     /// test installs; the key of an app’s managed sandbox filtering by app lists that app’s installs across
     /// every sandbox.
-    public var list: @Sendable (_ params: AppsInstallListParams?) async throws -> AppsInstallList
+    public func list(_ params: AppsInstallListParams = .init(), options: RequestOptions = .init()) async throws -> AppsInstallList {
+        try await list(params, options)
+    }
 
     /// Uninstalls an app from the account that installed it.
-    public var uninstall: @Sendable (_ id: String, _ params: AppsInstallUninstallParams?) async throws -> AppsInstall
+    public func uninstall(_ id: String, _ params: AppsInstallUninstallParams = .init(), options: RequestOptions = .init()) async throws -> AppsInstall {
+        try await uninstall(id, params, options)
+    }
 }
 
 extension AppsInstallRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AppsInstallRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/apps/installs", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/apps/installs", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/apps/installs/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/apps/installs/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/apps/installs/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/apps/installs/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/apps/installs", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/apps/installs", params: params, options: options)
             },
-            uninstall: { id, params in
-                try await handler.send(.POST, "/v1/apps/installs/\(id)/uninstall", params: params)
+            uninstall: { id, params, options in
+                try await handler.send(.POST, "/v1/apps/installs/\(id)/uninstall", params: params, options: options)
             }
         )
     }

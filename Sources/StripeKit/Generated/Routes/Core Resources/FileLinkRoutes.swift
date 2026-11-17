@@ -12,33 +12,55 @@ import NIOHTTP1
 
 public struct FileLinkRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: FileLinkCreateParams, _ options: RequestOptions) async throws -> FileLink
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ link: String, _ expand: [String]?, _ options: RequestOptions) async throws -> FileLink
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ link: String, _ params: FileLinkUpdateParams, _ options: RequestOptions) async throws -> FileLink
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: FileLinkListParams, _ options: RequestOptions) async throws -> FileLinkList
+}
+
+extension FileLinkRoutes {
     /// Creates a new file link object.
-    public var create: @Sendable (_ params: FileLinkCreateParams) async throws -> FileLink
+    public func create(_ params: FileLinkCreateParams, options: RequestOptions = .init()) async throws -> FileLink {
+        try await create(params, options)
+    }
 
     /// Retrieves the file link with the given ID.
-    public var retrieve: @Sendable (_ link: String, _ expand: [String]?) async throws -> FileLink
+    public func retrieve(_ link: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> FileLink {
+        try await retrieve(link, expand, options)
+    }
 
     /// Updates an existing file link object. Expired links can no longer be updated.
-    public var update: @Sendable (_ link: String, _ params: FileLinkUpdateParams?) async throws -> FileLink
+    public func update(_ link: String, _ params: FileLinkUpdateParams = .init(), options: RequestOptions = .init()) async throws -> FileLink {
+        try await update(link, params, options)
+    }
 
     /// Returns a list of file links.
-    public var list: @Sendable (_ params: FileLinkListParams?) async throws -> FileLinkList
+    public func list(_ params: FileLinkListParams = .init(), options: RequestOptions = .init()) async throws -> FileLinkList {
+        try await list(params, options)
+    }
 }
 
 extension FileLinkRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FileLinkRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/file_links", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/file_links", params: params, options: options)
             },
-            retrieve: { link, expand in
-                try await handler.send(.GET, "/v1/file_links/\(link)", expand: expand)
+            retrieve: { link, expand, options in
+                try await handler.send(.GET, "/v1/file_links/\(link)", expand: expand, options: options)
             },
-            update: { link, params in
-                try await handler.send(.POST, "/v1/file_links/\(link)", params: params)
+            update: { link, params, options in
+                try await handler.send(.POST, "/v1/file_links/\(link)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/file_links", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/file_links", params: params, options: options)
             }
         )
     }

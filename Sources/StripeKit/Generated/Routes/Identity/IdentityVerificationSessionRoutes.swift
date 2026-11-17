@@ -12,27 +12,57 @@ import NIOHTTP1
 
 public struct IdentityVerificationSessionRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: IdentityVerificationSessionCreateParams, _ options: RequestOptions) async throws -> IdentityVerificationSession
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ session: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IdentityVerificationSession
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ session: String, _ params: IdentityVerificationSessionUpdateParams, _ options: RequestOptions) async throws -> IdentityVerificationSession
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: IdentityVerificationSessionListParams, _ options: RequestOptions) async throws -> IdentityVerificationSessionList
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ session: String, _ params: IdentityVerificationSessionCancelParams, _ options: RequestOptions) async throws -> IdentityVerificationSession
+
+    /// Performs `redact(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var redact: @Sendable (_ session: String, _ params: IdentityVerificationSessionRedactParams, _ options: RequestOptions) async throws -> IdentityVerificationSession
+}
+
+extension IdentityVerificationSessionRoutes {
     /// Creates a VerificationSession object. After the VerificationSession is created, display a
     /// verification modal using the session client_secret or send your users to the session’s url. If your
     /// API key is in test mode, verification checks won’t actually process, though everything else will
     /// occur as if in live mode. Related guide: Verify your users’ identity documents
-    public var create: @Sendable (_ params: IdentityVerificationSessionCreateParams?) async throws -> IdentityVerificationSession
+    public func create(_ params: IdentityVerificationSessionCreateParams = .init(), options: RequestOptions = .init()) async throws -> IdentityVerificationSession {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of a VerificationSession that was previously created. When the session status
     /// is requires_input, you can use this method to retrieve a valid client_secret or url to allow
     /// re-submission.
-    public var retrieve: @Sendable (_ session: String, _ expand: [String]?) async throws -> IdentityVerificationSession
+    public func retrieve(_ session: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> IdentityVerificationSession {
+        try await retrieve(session, expand, options)
+    }
 
     /// Updates a VerificationSession object. When the session status is requires_input, you can use this
     /// method to update the verification check and options.
-    public var update: @Sendable (_ session: String, _ params: IdentityVerificationSessionUpdateParams?) async throws -> IdentityVerificationSession
+    public func update(_ session: String, _ params: IdentityVerificationSessionUpdateParams = .init(), options: RequestOptions = .init()) async throws -> IdentityVerificationSession {
+        try await update(session, params, options)
+    }
 
     /// Returns a list of VerificationSessions
-    public var list: @Sendable (_ params: IdentityVerificationSessionListParams?) async throws -> IdentityVerificationSessionList
+    public func list(_ params: IdentityVerificationSessionListParams = .init(), options: RequestOptions = .init()) async throws -> IdentityVerificationSessionList {
+        try await list(params, options)
+    }
 
     /// A VerificationSession object can be canceled when it is in requires_input status. Once canceled,
     /// future submission attempts are disabled. This cannot be undone. Learn more.
-    public var cancel: @Sendable (_ session: String, _ params: IdentityVerificationSessionCancelParams?) async throws -> IdentityVerificationSession
+    public func cancel(_ session: String, _ params: IdentityVerificationSessionCancelParams = .init(), options: RequestOptions = .init()) async throws -> IdentityVerificationSession {
+        try await cancel(session, params, options)
+    }
 
     /// Redact a VerificationSession to remove all collected information from Stripe. This will redact the
     /// VerificationSession and all objects related to it, including VerificationReports, Events, request
@@ -45,29 +75,31 @@ public struct IdentityVerificationSessionRoutes: Sendable {
     /// the fields that contain personal data will be replaced by the string [redacted] or a similar
     /// placeholder. The metadata field will also be erased. Redacted objects cannot be updated or used for
     /// any purpose. Learn more.
-    public var redact: @Sendable (_ session: String, _ params: IdentityVerificationSessionRedactParams?) async throws -> IdentityVerificationSession
+    public func redact(_ session: String, _ params: IdentityVerificationSessionRedactParams = .init(), options: RequestOptions = .init()) async throws -> IdentityVerificationSession {
+        try await redact(session, params, options)
+    }
 }
 
 extension IdentityVerificationSessionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IdentityVerificationSessionRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/identity/verification_sessions", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/identity/verification_sessions", params: params, options: options)
             },
-            retrieve: { session, expand in
-                try await handler.send(.GET, "/v1/identity/verification_sessions/\(session)", expand: expand)
+            retrieve: { session, expand, options in
+                try await handler.send(.GET, "/v1/identity/verification_sessions/\(session)", expand: expand, options: options)
             },
-            update: { session, params in
-                try await handler.send(.POST, "/v1/identity/verification_sessions/\(session)", params: params)
+            update: { session, params, options in
+                try await handler.send(.POST, "/v1/identity/verification_sessions/\(session)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/identity/verification_sessions", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/identity/verification_sessions", params: params, options: options)
             },
-            cancel: { session, params in
-                try await handler.send(.POST, "/v1/identity/verification_sessions/\(session)/cancel", params: params)
+            cancel: { session, params, options in
+                try await handler.send(.POST, "/v1/identity/verification_sessions/\(session)/cancel", params: params, options: options)
             },
-            redact: { session, params in
-                try await handler.send(.POST, "/v1/identity/verification_sessions/\(session)/redact", params: params)
+            redact: { session, params, options in
+                try await handler.send(.POST, "/v1/identity/verification_sessions/\(session)/redact", params: params, options: options)
             }
         )
     }

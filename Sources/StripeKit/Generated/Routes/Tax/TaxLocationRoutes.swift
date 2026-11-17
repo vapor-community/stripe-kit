@@ -12,33 +12,50 @@ import NIOHTTP1
 
 public struct TaxLocationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TaxLocationCreateParams, _ options: RequestOptions) async throws -> TaxLocation
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ location: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxLocation
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TaxLocationListParams, _ options: RequestOptions) async throws -> TaxLocationList
+}
+
+extension TaxLocationRoutes {
     /// Create a tax location to use in calculating taxes for a service, ticket, or other type of product.
     /// The resulting object contains the ID, address, type, and description of the tax location.
-    public var create: @Sendable (_ params: TaxLocationCreateParams) async throws -> TaxLocation
+    public func create(_ params: TaxLocationCreateParams, options: RequestOptions = .init()) async throws -> TaxLocation {
+        try await create(params, options)
+    }
 
     /// Fetch the details of a specific tax location using its unique identifier. Use a tax location to
     /// calculate taxes based on the location of the end product, such as a performance, instead of the
     /// customer address. For more details, check the integration guide.
-    public var retrieve: @Sendable (_ location: String, _ expand: [String]?) async throws -> TaxLocation
+    public func retrieve(_ location: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TaxLocation {
+        try await retrieve(location, expand, options)
+    }
 
     /// Retrieve a list of all tax locations. Tax locations can represent the venues for services, tickets,
     /// or other product types. The response includes detailed information for each tax location, such as
     /// its address, type, and description. You can paginate through the list by using the limit parameter
     /// to control the number of results returned in each request.
-    public var list: @Sendable (_ params: TaxLocationListParams) async throws -> TaxLocationList
+    public func list(_ params: TaxLocationListParams, options: RequestOptions = .init()) async throws -> TaxLocationList {
+        try await list(params, options)
+    }
 }
 
 extension TaxLocationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxLocationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/tax/locations", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/tax/locations", params: params, options: options)
             },
-            retrieve: { location, expand in
-                try await handler.send(.GET, "/v1/tax/locations/\(location)", expand: expand)
+            retrieve: { location, expand, options in
+                try await handler.send(.GET, "/v1/tax/locations/\(location)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/tax/locations", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/tax/locations", params: params, options: options)
             }
         )
     }

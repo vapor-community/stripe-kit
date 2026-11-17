@@ -12,16 +12,23 @@ import NIOHTTP1
 
 public struct BalanceRoutes: Sendable {
 
+    /// Performs `retrieve(expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ expand: [String]?, _ options: RequestOptions) async throws -> Balance
+}
+
+extension BalanceRoutes {
     /// Retrieves the current account balance, based on the authentication that was used to make the
     /// request. For a sample request, see Accounting for negative balances.
-    public var retrieve: @Sendable (_ expand: [String]?) async throws -> Balance
+    public func retrieve(expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Balance {
+        try await retrieve(expand, options)
+    }
 }
 
 extension BalanceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BalanceRoutes(
-            retrieve: { expand in
-                try await handler.send(.GET, "/v1/balance", expand: expand)
+            retrieve: { expand, options in
+                try await handler.send(.GET, "/v1/balance", expand: expand, options: options)
             }
         )
     }

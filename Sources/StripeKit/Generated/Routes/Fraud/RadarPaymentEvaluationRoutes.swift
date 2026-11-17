@@ -12,16 +12,23 @@ import NIOHTTP1
 
 public struct RadarPaymentEvaluationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: RadarPaymentEvaluationCreateParams, _ options: RequestOptions) async throws -> RadarPaymentEvaluation
+}
+
+extension RadarPaymentEvaluationRoutes {
     /// Request a Radar API fraud risk score from Stripe for a payment before sending it for external
     /// processor authorization.
-    public var create: @Sendable (_ params: RadarPaymentEvaluationCreateParams) async throws -> RadarPaymentEvaluation
+    public func create(_ params: RadarPaymentEvaluationCreateParams, options: RequestOptions = .init()) async throws -> RadarPaymentEvaluation {
+        try await create(params, options)
+    }
 }
 
 extension RadarPaymentEvaluationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         RadarPaymentEvaluationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/radar/payment_evaluations", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/radar/payment_evaluations", params: params, options: options)
             }
         )
     }

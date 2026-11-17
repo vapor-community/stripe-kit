@@ -12,15 +12,22 @@ import NIOHTTP1
 
 public struct BankAccountRoutes: Sendable {
 
+    /// Performs `verify(_:id:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var verify: @Sendable (_ customer: String, _ id: String, _ params: BankAccountVerifyParams, _ options: RequestOptions) async throws -> BankAccount
+}
+
+extension BankAccountRoutes {
     /// Verify a specified bank account for a given customer.
-    public var verify: @Sendable (_ customer: String, _ id: String, _ params: BankAccountVerifyParams?) async throws -> BankAccount
+    public func verify(_ customer: String, id: String, _ params: BankAccountVerifyParams = .init(), options: RequestOptions = .init()) async throws -> BankAccount {
+        try await verify(customer, id, params, options)
+    }
 }
 
 extension BankAccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BankAccountRoutes(
-            verify: { customer, id, params in
-                try await handler.send(.POST, "/v1/customers/\(customer)/sources/\(id)/verify", params: params)
+            verify: { customer, id, params, options in
+                try await handler.send(.POST, "/v1/customers/\(customer)/sources/\(id)/verify", params: params, options: options)
             }
         )
     }

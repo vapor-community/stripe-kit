@@ -12,39 +12,66 @@ import NIOHTTP1
 
 public struct BillingFeedbackOptionRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: BillingFeedbackOptionCreateParams, _ options: RequestOptions) async throws -> BillingFeedbackOption
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BillingFeedbackOption
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: BillingFeedbackOptionUpdateParams, _ options: RequestOptions) async throws -> BillingFeedbackOption
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: BillingFeedbackOptionListParams, _ options: RequestOptions) async throws -> BillingFeedbackOptionList
+
+    /// Performs `deactivate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var deactivate: @Sendable (_ id: String, _ params: BillingFeedbackOptionDeactivateParams, _ options: RequestOptions) async throws -> BillingFeedbackOption
+}
+
+extension BillingFeedbackOptionRoutes {
     /// Creates a new feedback option.
-    public var create: @Sendable (_ params: BillingFeedbackOptionCreateParams) async throws -> BillingFeedbackOption
+    public func create(_ params: BillingFeedbackOptionCreateParams, options: RequestOptions = .init()) async throws -> BillingFeedbackOption {
+        try await create(params, options)
+    }
 
     /// Retrieves a feedback option object given an ID.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> BillingFeedbackOption
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> BillingFeedbackOption {
+        try await retrieve(id, expand, options)
+    }
 
     /// Updates the description of an existing feedback option.
-    public var update: @Sendable (_ id: String, _ params: BillingFeedbackOptionUpdateParams?) async throws -> BillingFeedbackOption
+    public func update(_ id: String, _ params: BillingFeedbackOptionUpdateParams = .init(), options: RequestOptions = .init()) async throws -> BillingFeedbackOption {
+        try await update(id, params, options)
+    }
 
     /// Returns a list of your feedback options.
-    public var list: @Sendable (_ params: BillingFeedbackOptionListParams?) async throws -> BillingFeedbackOptionList
+    public func list(_ params: BillingFeedbackOptionListParams = .init(), options: RequestOptions = .init()) async throws -> BillingFeedbackOptionList {
+        try await list(params, options)
+    }
 
     /// Deactivates a feedback option. Deactivated feedback options cannot be used in portal configurations.
-    public var deactivate: @Sendable (_ id: String, _ params: BillingFeedbackOptionDeactivateParams?) async throws -> BillingFeedbackOption
+    public func deactivate(_ id: String, _ params: BillingFeedbackOptionDeactivateParams = .init(), options: RequestOptions = .init()) async throws -> BillingFeedbackOption {
+        try await deactivate(id, params, options)
+    }
 }
 
 extension BillingFeedbackOptionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingFeedbackOptionRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/billing/feedback_options", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/billing/feedback_options", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/billing/feedback_options/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/billing/feedback_options/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/billing/feedback_options/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/feedback_options/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/billing/feedback_options", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/billing/feedback_options", params: params, options: options)
             },
-            deactivate: { id, params in
-                try await handler.send(.POST, "/v1/billing/feedback_options/\(id)/deactivate", params: params)
+            deactivate: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/feedback_options/\(id)/deactivate", params: params, options: options)
             }
         )
     }

@@ -12,11 +12,50 @@ import NIOHTTP1
 
 public struct CustomerRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: CustomerCreateParams, _ options: RequestOptions) async throws -> Customer
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ customer: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ObjectOrDeleted<Customer, DeletedCustomer>
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ customer: String, _ params: CustomerUpdateParams, _ options: RequestOptions) async throws -> Customer
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: CustomerListParams, _ options: RequestOptions) async throws -> CustomerList
+
+    /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var search: @Sendable (_ params: CustomerSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Customer>
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ customer: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedCustomer
+
+    /// Performs `createFundingInstructions(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var createFundingInstructions: @Sendable (_ customer: String, _ params: CustomerCreateFundingInstructionsParams, _ options: RequestOptions) async throws -> FundingInstructions
+
+    /// Performs `deleteDiscount(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var deleteDiscount: @Sendable (_ customer: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedDiscount
+
+    /// Performs `fundCashBalance(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var fundCashBalance: @Sendable (_ customer: String, _ params: CustomerFundCashBalanceParams, _ options: RequestOptions) async throws -> CustomerCashBalanceTransaction
+
+    /// Performs `listPaymentMethods(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listPaymentMethods: @Sendable (_ customer: String, _ params: CustomerListPaymentMethodsParams, _ options: RequestOptions) async throws -> PaymentMethodList
+
+    /// Performs `retrievePaymentMethod(_:paymentMethod:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrievePaymentMethod: @Sendable (_ customer: String, _ paymentMethod: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PaymentMethod
+}
+
+extension CustomerRoutes {
     /// Creates a new customer object.
-    public var create: @Sendable (_ params: CustomerCreateParams?) async throws -> Customer
+    public func create(_ params: CustomerCreateParams = .init(), options: RequestOptions = .init()) async throws -> Customer {
+        try await create(params, options)
+    }
 
     /// Retrieves a Customer object.
-    public var retrieve: @Sendable (_ customer: String, _ expand: [String]?) async throws -> ObjectOrDeleted<Customer, DeletedCustomer>
+    public func retrieve(_ customer: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ObjectOrDeleted<Customer, DeletedCustomer> {
+        try await retrieve(customer, expand, options)
+    }
 
     /// Updates the specified customer by setting the values of the parameters passed. Any parameters not
     /// provided are left unchanged. For example, if you pass the source parameter, that becomes the
@@ -27,77 +66,95 @@ public struct CustomerRoutes: Sendable {
     /// retry doesn’t count as an automatic retry, and doesn’t affect the next regularly scheduled payment
     /// for the invoice. Changing the default_source for a customer doesn’t trigger this behavior. This
     /// request accepts mostly the same arguments as the customer creation call.
-    public var update: @Sendable (_ customer: String, _ params: CustomerUpdateParams?) async throws -> Customer
+    public func update(_ customer: String, _ params: CustomerUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Customer {
+        try await update(customer, params, options)
+    }
 
     /// Returns a list of your customers. The customers are returned sorted by creation date, with the most
     /// recent customers appearing first.
-    public var list: @Sendable (_ params: CustomerListParams?) async throws -> CustomerList
+    public func list(_ params: CustomerListParams = .init(), options: RequestOptions = .init()) async throws -> CustomerList {
+        try await list(params, options)
+    }
 
     /// Search for customers you’ve previously created using Stripe’s Search Query Language. Don’t use
     /// search in read-after-write flows where strict consistency is necessary. Under normal operating
     /// conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated
     /// data can be up to an hour behind during outages. Search functionality is not available to merchants
     /// in India.
-    public var search: @Sendable (_ params: CustomerSearchParams) async throws -> StripeSearchResult<Customer>
+    public func search(_ params: CustomerSearchParams, options: RequestOptions = .init()) async throws -> StripeSearchResult<Customer> {
+        try await search(params, options)
+    }
 
     /// Permanently deletes a customer. It cannot be undone. Also immediately cancels any active
     /// subscriptions on the customer.
-    public var delete: @Sendable (_ customer: String, _ expand: [String]?) async throws -> DeletedCustomer
+    public func delete(_ customer: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedCustomer {
+        try await delete(customer, expand, options)
+    }
 
     /// Retrieve funding instructions for a customer cash balance. If funding instructions do not yet exist
     /// for the customer, new funding instructions will be created. If funding instructions have already
     /// been created for a given customer, the same funding instructions will be retrieved. In other words,
     /// we will return the same funding instructions each time.
-    public var createFundingInstructions: @Sendable (_ customer: String, _ params: CustomerCreateFundingInstructionsParams) async throws -> FundingInstructions
+    public func createFundingInstructions(_ customer: String, _ params: CustomerCreateFundingInstructionsParams, options: RequestOptions = .init()) async throws -> FundingInstructions {
+        try await createFundingInstructions(customer, params, options)
+    }
 
     /// Removes the currently applied discount on a customer.
-    public var deleteDiscount: @Sendable (_ customer: String, _ expand: [String]?) async throws -> DeletedDiscount
+    public func deleteDiscount(_ customer: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedDiscount {
+        try await deleteDiscount(customer, expand, options)
+    }
 
     /// Create a test incoming bank transfer
-    public var fundCashBalance: @Sendable (_ customer: String, _ params: CustomerFundCashBalanceParams) async throws -> CustomerCashBalanceTransaction
+    public func fundCashBalance(_ customer: String, _ params: CustomerFundCashBalanceParams, options: RequestOptions = .init()) async throws -> CustomerCashBalanceTransaction {
+        try await fundCashBalance(customer, params, options)
+    }
 
     /// Returns a list of PaymentMethods for a given Customer
-    public var listPaymentMethods: @Sendable (_ customer: String, _ params: CustomerListPaymentMethodsParams?) async throws -> PaymentMethodList
+    public func listPaymentMethods(_ customer: String, _ params: CustomerListPaymentMethodsParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodList {
+        try await listPaymentMethods(customer, params, options)
+    }
 
     /// Retrieves a PaymentMethod object for a given Customer.
-    public var retrievePaymentMethod: @Sendable (_ customer: String, _ paymentMethod: String, _ expand: [String]?) async throws -> PaymentMethod
+    public func retrievePaymentMethod(_ customer: String, paymentMethod: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> PaymentMethod {
+        try await retrievePaymentMethod(customer, paymentMethod, expand, options)
+    }
 }
 
 extension CustomerRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CustomerRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/customers", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/customers", params: params, options: options)
             },
-            retrieve: { customer, expand in
-                try await handler.send(.GET, "/v1/customers/\(customer)", expand: expand)
+            retrieve: { customer, expand, options in
+                try await handler.send(.GET, "/v1/customers/\(customer)", expand: expand, options: options)
             },
-            update: { customer, params in
-                try await handler.send(.POST, "/v1/customers/\(customer)", params: params)
+            update: { customer, params, options in
+                try await handler.send(.POST, "/v1/customers/\(customer)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/customers", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/customers", params: params, options: options)
             },
-            search: { params in
-                try await handler.send(.GET, "/v1/customers/search", params: params)
+            search: { params, options in
+                try await handler.send(.GET, "/v1/customers/search", params: params, options: options)
             },
-            delete: { customer, expand in
-                try await handler.send(.DELETE, "/v1/customers/\(customer)", expand: expand)
+            delete: { customer, expand, options in
+                try await handler.send(.DELETE, "/v1/customers/\(customer)", expand: expand, options: options)
             },
-            createFundingInstructions: { customer, params in
-                try await handler.send(.POST, "/v1/customers/\(customer)/funding_instructions", params: params)
+            createFundingInstructions: { customer, params, options in
+                try await handler.send(.POST, "/v1/customers/\(customer)/funding_instructions", params: params, options: options)
             },
-            deleteDiscount: { customer, expand in
-                try await handler.send(.DELETE, "/v1/customers/\(customer)/discount", expand: expand)
+            deleteDiscount: { customer, expand, options in
+                try await handler.send(.DELETE, "/v1/customers/\(customer)/discount", expand: expand, options: options)
             },
-            fundCashBalance: { customer, params in
-                try await handler.send(.POST, "/v1/test_helpers/customers/\(customer)/fund_cash_balance", params: params)
+            fundCashBalance: { customer, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/customers/\(customer)/fund_cash_balance", params: params, options: options)
             },
-            listPaymentMethods: { customer, params in
-                try await handler.send(.GET, "/v1/customers/\(customer)/payment_methods", params: params)
+            listPaymentMethods: { customer, params, options in
+                try await handler.send(.GET, "/v1/customers/\(customer)/payment_methods", params: params, options: options)
             },
-            retrievePaymentMethod: { customer, paymentMethod, expand in
-                try await handler.send(.GET, "/v1/customers/\(customer)/payment_methods/\(paymentMethod)", expand: expand)
+            retrievePaymentMethod: { customer, paymentMethod, expand, options in
+                try await handler.send(.GET, "/v1/customers/\(customer)/payment_methods/\(paymentMethod)", expand: expand, options: options)
             }
         )
     }

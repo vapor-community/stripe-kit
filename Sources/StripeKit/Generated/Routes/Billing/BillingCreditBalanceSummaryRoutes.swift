@@ -12,15 +12,22 @@ import NIOHTTP1
 
 public struct BillingCreditBalanceSummaryRoutes: Sendable {
 
+    /// Performs `retrieve(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ params: BillingCreditBalanceSummaryRetrieveParams, _ options: RequestOptions) async throws -> BillingCreditBalanceSummary
+}
+
+extension BillingCreditBalanceSummaryRoutes {
     /// Retrieves the credit balance summary for a customer.
-    public var retrieve: @Sendable (_ params: BillingCreditBalanceSummaryRetrieveParams) async throws -> BillingCreditBalanceSummary
+    public func retrieve(_ params: BillingCreditBalanceSummaryRetrieveParams, options: RequestOptions = .init()) async throws -> BillingCreditBalanceSummary {
+        try await retrieve(params, options)
+    }
 }
 
 extension BillingCreditBalanceSummaryRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingCreditBalanceSummaryRoutes(
-            retrieve: { params in
-                try await handler.send(.GET, "/v1/billing/credit_balance_summary", params: params)
+            retrieve: { params, options in
+                try await handler.send(.GET, "/v1/billing/credit_balance_summary", params: params, options: options)
             }
         )
     }

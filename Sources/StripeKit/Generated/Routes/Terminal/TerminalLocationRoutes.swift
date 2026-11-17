@@ -12,41 +12,68 @@ import NIOHTTP1
 
 public struct TerminalLocationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TerminalLocationCreateParams, _ options: RequestOptions) async throws -> TerminalLocation
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ location: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ location: String, _ params: TerminalLocationUpdateParams, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TerminalLocationListParams, _ options: RequestOptions) async throws -> TerminalLocationList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ location: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTerminalLocation
+}
+
+extension TerminalLocationRoutes {
     /// Creates a new Location object. For further details, including which address fields are required in
     /// each country, see the Manage locations guide.
-    public var create: @Sendable (_ params: TerminalLocationCreateParams?) async throws -> TerminalLocation
+    public func create(_ params: TerminalLocationCreateParams = .init(), options: RequestOptions = .init()) async throws -> TerminalLocation {
+        try await create(params, options)
+    }
 
     /// Retrieves a Location object.
-    public var retrieve: @Sendable (_ location: String, _ expand: [String]?) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>
+    public func retrieve(_ location: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation> {
+        try await retrieve(location, expand, options)
+    }
 
     /// Updates a Location object by setting the values of the parameters passed. Any parameters not
     /// provided will be left unchanged.
-    public var update: @Sendable (_ location: String, _ params: TerminalLocationUpdateParams?) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>
+    public func update(_ location: String, _ params: TerminalLocationUpdateParams = .init(), options: RequestOptions = .init()) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation> {
+        try await update(location, params, options)
+    }
 
     /// Returns a list of Location objects.
-    public var list: @Sendable (_ params: TerminalLocationListParams?) async throws -> TerminalLocationList
+    public func list(_ params: TerminalLocationListParams = .init(), options: RequestOptions = .init()) async throws -> TerminalLocationList {
+        try await list(params, options)
+    }
 
     /// Deletes a Location object.
-    public var delete: @Sendable (_ location: String, _ expand: [String]?) async throws -> DeletedTerminalLocation
+    public func delete(_ location: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedTerminalLocation {
+        try await delete(location, expand, options)
+    }
 }
 
 extension TerminalLocationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TerminalLocationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/terminal/locations", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/terminal/locations", params: params, options: options)
             },
-            retrieve: { location, expand in
-                try await handler.send(.GET, "/v1/terminal/locations/\(location)", expand: expand)
+            retrieve: { location, expand, options in
+                try await handler.send(.GET, "/v1/terminal/locations/\(location)", expand: expand, options: options)
             },
-            update: { location, params in
-                try await handler.send(.POST, "/v1/terminal/locations/\(location)", params: params)
+            update: { location, params, options in
+                try await handler.send(.POST, "/v1/terminal/locations/\(location)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/terminal/locations", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/terminal/locations", params: params, options: options)
             },
-            delete: { location, expand in
-                try await handler.send(.DELETE, "/v1/terminal/locations/\(location)", expand: expand)
+            delete: { location, expand, options in
+                try await handler.send(.DELETE, "/v1/terminal/locations/\(location)", expand: expand, options: options)
             }
         )
     }

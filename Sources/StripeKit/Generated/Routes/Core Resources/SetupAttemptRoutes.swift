@@ -12,15 +12,22 @@ import NIOHTTP1
 
 public struct SetupAttemptRoutes: Sendable {
 
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: SetupAttemptListParams, _ options: RequestOptions) async throws -> SetupAttemptList
+}
+
+extension SetupAttemptRoutes {
     /// Returns a list of SetupAttempts that associate with a provided SetupIntent.
-    public var list: @Sendable (_ params: SetupAttemptListParams) async throws -> SetupAttemptList
+    public func list(_ params: SetupAttemptListParams, options: RequestOptions = .init()) async throws -> SetupAttemptList {
+        try await list(params, options)
+    }
 }
 
 extension SetupAttemptRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SetupAttemptRoutes(
-            list: { params in
-                try await handler.send(.GET, "/v1/setup_attempts", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/setup_attempts", params: params, options: options)
             }
         )
     }

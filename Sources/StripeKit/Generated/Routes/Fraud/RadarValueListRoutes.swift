@@ -12,42 +12,69 @@ import NIOHTTP1
 
 public struct RadarValueListRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: RadarValueListCreateParams, _ options: RequestOptions) async throws -> RadarValueList
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ valueList: String, _ expand: [String]?, _ options: RequestOptions) async throws -> RadarValueList
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ valueList: String, _ params: RadarValueListUpdateParams, _ options: RequestOptions) async throws -> RadarValueList
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: RadarValueListListParams, _ options: RequestOptions) async throws -> RadarValueListList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ valueList: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedRadarValueList
+}
+
+extension RadarValueListRoutes {
     /// Creates a new ValueList object, which can then be referenced in rules.
-    public var create: @Sendable (_ params: RadarValueListCreateParams) async throws -> RadarValueList
+    public func create(_ params: RadarValueListCreateParams, options: RequestOptions = .init()) async throws -> RadarValueList {
+        try await create(params, options)
+    }
 
     /// Retrieves a ValueList object.
-    public var retrieve: @Sendable (_ valueList: String, _ expand: [String]?) async throws -> RadarValueList
+    public func retrieve(_ valueList: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> RadarValueList {
+        try await retrieve(valueList, expand, options)
+    }
 
     /// Updates a ValueList object by setting the values of the parameters passed. Any parameters not
     /// provided will be left unchanged. Note that item_type is immutable.
-    public var update: @Sendable (_ valueList: String, _ params: RadarValueListUpdateParams?) async throws -> RadarValueList
+    public func update(_ valueList: String, _ params: RadarValueListUpdateParams = .init(), options: RequestOptions = .init()) async throws -> RadarValueList {
+        try await update(valueList, params, options)
+    }
 
     /// Returns a list of ValueList objects. The objects are sorted in descending order by creation date,
     /// with the most recently created object appearing first.
-    public var list: @Sendable (_ params: RadarValueListListParams?) async throws -> RadarValueListList
+    public func list(_ params: RadarValueListListParams = .init(), options: RequestOptions = .init()) async throws -> RadarValueListList {
+        try await list(params, options)
+    }
 
     /// Deletes a ValueList object, also deleting any items contained within the value list. To be deleted,
     /// a value list must not be referenced in any rules.
-    public var delete: @Sendable (_ valueList: String, _ expand: [String]?) async throws -> DeletedRadarValueList
+    public func delete(_ valueList: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedRadarValueList {
+        try await delete(valueList, expand, options)
+    }
 }
 
 extension RadarValueListRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         RadarValueListRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/radar/value_lists", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/radar/value_lists", params: params, options: options)
             },
-            retrieve: { valueList, expand in
-                try await handler.send(.GET, "/v1/radar/value_lists/\(valueList)", expand: expand)
+            retrieve: { valueList, expand, options in
+                try await handler.send(.GET, "/v1/radar/value_lists/\(valueList)", expand: expand, options: options)
             },
-            update: { valueList, params in
-                try await handler.send(.POST, "/v1/radar/value_lists/\(valueList)", params: params)
+            update: { valueList, params, options in
+                try await handler.send(.POST, "/v1/radar/value_lists/\(valueList)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/radar/value_lists", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/radar/value_lists", params: params, options: options)
             },
-            delete: { valueList, expand in
-                try await handler.send(.DELETE, "/v1/radar/value_lists/\(valueList)", expand: expand)
+            delete: { valueList, expand, options in
+                try await handler.send(.DELETE, "/v1/radar/value_lists/\(valueList)", expand: expand, options: options)
             }
         )
     }

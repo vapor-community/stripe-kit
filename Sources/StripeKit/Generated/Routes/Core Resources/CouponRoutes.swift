@@ -12,6 +12,23 @@ import NIOHTTP1
 
 public struct CouponRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: CouponCreateParams, _ options: RequestOptions) async throws -> Coupon
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ coupon: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Coupon
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ coupon: String, _ params: CouponUpdateParams, _ options: RequestOptions) async throws -> Coupon
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: CouponListParams, _ options: RequestOptions) async throws -> CouponList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ coupon: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedCoupon
+}
+
+extension CouponRoutes {
     /// You can create coupons easily via the coupon management page of the Stripe dashboard. Coupon
     /// creation is also accessible via the API if you need to create coupons on the fly. A coupon has
     /// either a percent_off or an amount_off and currency. If you set an amount_off, that amount will be
@@ -19,41 +36,51 @@ public struct CouponRoutes: Sendable {
     /// final total of 0 if a coupon with an amount_off of 200 is applied to it and an invoice with a
     /// subtotal of 300 will have a final total of 100 if a coupon with an amount_off of 200 is applied to
     /// it.
-    public var create: @Sendable (_ params: CouponCreateParams?) async throws -> Coupon
+    public func create(_ params: CouponCreateParams = .init(), options: RequestOptions = .init()) async throws -> Coupon {
+        try await create(params, options)
+    }
 
     /// Retrieves the coupon with the given ID.
-    public var retrieve: @Sendable (_ coupon: String, _ expand: [String]?) async throws -> Coupon
+    public func retrieve(_ coupon: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Coupon {
+        try await retrieve(coupon, expand, options)
+    }
 
     /// Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by
     /// design, not editable.
-    public var update: @Sendable (_ coupon: String, _ params: CouponUpdateParams?) async throws -> Coupon
+    public func update(_ coupon: String, _ params: CouponUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Coupon {
+        try await update(coupon, params, options)
+    }
 
     /// Returns a list of your coupons.
-    public var list: @Sendable (_ params: CouponListParams?) async throws -> CouponList
+    public func list(_ params: CouponListParams = .init(), options: RequestOptions = .init()) async throws -> CouponList {
+        try await list(params, options)
+    }
 
     /// You can delete coupons via the coupon management page of the Stripe dashboard. However, deleting a
     /// coupon does not affect any customers who have already applied the coupon; it means that new
     /// customers can’t redeem the coupon. You can also delete coupons via the API.
-    public var delete: @Sendable (_ coupon: String, _ expand: [String]?) async throws -> DeletedCoupon
+    public func delete(_ coupon: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedCoupon {
+        try await delete(coupon, expand, options)
+    }
 }
 
 extension CouponRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CouponRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/coupons", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/coupons", params: params, options: options)
             },
-            retrieve: { coupon, expand in
-                try await handler.send(.GET, "/v1/coupons/\(coupon)", expand: expand)
+            retrieve: { coupon, expand, options in
+                try await handler.send(.GET, "/v1/coupons/\(coupon)", expand: expand, options: options)
             },
-            update: { coupon, params in
-                try await handler.send(.POST, "/v1/coupons/\(coupon)", params: params)
+            update: { coupon, params, options in
+                try await handler.send(.POST, "/v1/coupons/\(coupon)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/coupons", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/coupons", params: params, options: options)
             },
-            delete: { coupon, expand in
-                try await handler.send(.DELETE, "/v1/coupons/\(coupon)", expand: expand)
+            delete: { coupon, expand, options in
+                try await handler.send(.DELETE, "/v1/coupons/\(coupon)", expand: expand, options: options)
             }
         )
     }

@@ -12,73 +12,125 @@ import NIOHTTP1
 
 public struct QuoteRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: QuoteCreateParams, _ options: RequestOptions) async throws -> Quote
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ quote: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Quote
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ quote: String, _ params: QuoteUpdateParams, _ options: RequestOptions) async throws -> Quote
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: QuoteListParams, _ options: RequestOptions) async throws -> QuoteList
+
+    /// Performs `accept(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var accept: @Sendable (_ quote: String, _ params: QuoteAcceptParams, _ options: RequestOptions) async throws -> Quote
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ quote: String, _ params: QuoteCancelParams, _ options: RequestOptions) async throws -> Quote
+
+    /// Performs `finalizeQuote(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var finalizeQuote: @Sendable (_ quote: String, _ params: QuoteFinalizeQuoteParams, _ options: RequestOptions) async throws -> Quote
+
+    /// Performs `listComputedUpfrontLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listComputedUpfrontLineItems: @Sendable (_ quote: String, _ params: QuoteListComputedUpfrontLineItemsParams, _ options: RequestOptions) async throws -> ItemList
+
+    /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listLineItems: @Sendable (_ quote: String, _ params: QuoteListLineItemsParams, _ options: RequestOptions) async throws -> ItemList
+
+    /// Performs `pdf(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var pdf: @Sendable (_ quote: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Data
+}
+
+extension QuoteRoutes {
     /// A quote models prices and services for a customer. Default options for header, description, footer,
     /// and expires_at can be set in the dashboard via the quote template.
-    public var create: @Sendable (_ params: QuoteCreateParams?) async throws -> Quote
+    public func create(_ params: QuoteCreateParams = .init(), options: RequestOptions = .init()) async throws -> Quote {
+        try await create(params, options)
+    }
 
     /// Retrieves the quote with the given ID.
-    public var retrieve: @Sendable (_ quote: String, _ expand: [String]?) async throws -> Quote
+    public func retrieve(_ quote: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Quote {
+        try await retrieve(quote, expand, options)
+    }
 
     /// A quote models prices and services for a customer.
-    public var update: @Sendable (_ quote: String, _ params: QuoteUpdateParams?) async throws -> Quote
+    public func update(_ quote: String, _ params: QuoteUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Quote {
+        try await update(quote, params, options)
+    }
 
     /// Returns a list of your quotes.
-    public var list: @Sendable (_ params: QuoteListParams?) async throws -> QuoteList
+    public func list(_ params: QuoteListParams = .init(), options: RequestOptions = .init()) async throws -> QuoteList {
+        try await list(params, options)
+    }
 
     /// Accepts the specified quote.
-    public var accept: @Sendable (_ quote: String, _ params: QuoteAcceptParams?) async throws -> Quote
+    public func accept(_ quote: String, _ params: QuoteAcceptParams = .init(), options: RequestOptions = .init()) async throws -> Quote {
+        try await accept(quote, params, options)
+    }
 
     /// Cancels the quote.
-    public var cancel: @Sendable (_ quote: String, _ params: QuoteCancelParams?) async throws -> Quote
+    public func cancel(_ quote: String, _ params: QuoteCancelParams = .init(), options: RequestOptions = .init()) async throws -> Quote {
+        try await cancel(quote, params, options)
+    }
 
     /// Finalizes the quote.
-    public var finalizeQuote: @Sendable (_ quote: String, _ params: QuoteFinalizeQuoteParams?) async throws -> Quote
+    public func finalizeQuote(_ quote: String, _ params: QuoteFinalizeQuoteParams = .init(), options: RequestOptions = .init()) async throws -> Quote {
+        try await finalizeQuote(quote, params, options)
+    }
 
     /// When retrieving a quote, there is an includable computed.upfront.line_items property containing the
     /// first handful of those items. There is also a URL where you can retrieve the full (paginated) list
     /// of upfront line items.
-    public var listComputedUpfrontLineItems: @Sendable (_ quote: String, _ params: QuoteListComputedUpfrontLineItemsParams?) async throws -> ItemList
+    public func listComputedUpfrontLineItems(_ quote: String, _ params: QuoteListComputedUpfrontLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> ItemList {
+        try await listComputedUpfrontLineItems(quote, params, options)
+    }
 
     /// When retrieving a quote, there is an includable line_items property containing the first handful of
     /// those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-    public var listLineItems: @Sendable (_ quote: String, _ params: QuoteListLineItemsParams?) async throws -> ItemList
+    public func listLineItems(_ quote: String, _ params: QuoteListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> ItemList {
+        try await listLineItems(quote, params, options)
+    }
 
     /// Download the PDF for a finalized quote. Explanation for special handling can be found here
-    public var pdf: @Sendable (_ quote: String, _ expand: [String]?) async throws -> Data
+    public func pdf(_ quote: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Data {
+        try await pdf(quote, expand, options)
+    }
 }
 
 extension QuoteRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         QuoteRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/quotes", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/quotes", params: params, options: options)
             },
-            retrieve: { quote, expand in
-                try await handler.send(.GET, "/v1/quotes/\(quote)", expand: expand)
+            retrieve: { quote, expand, options in
+                try await handler.send(.GET, "/v1/quotes/\(quote)", expand: expand, options: options)
             },
-            update: { quote, params in
-                try await handler.send(.POST, "/v1/quotes/\(quote)", params: params)
+            update: { quote, params, options in
+                try await handler.send(.POST, "/v1/quotes/\(quote)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/quotes", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/quotes", params: params, options: options)
             },
-            accept: { quote, params in
-                try await handler.send(.POST, "/v1/quotes/\(quote)/accept", params: params)
+            accept: { quote, params, options in
+                try await handler.send(.POST, "/v1/quotes/\(quote)/accept", params: params, options: options)
             },
-            cancel: { quote, params in
-                try await handler.send(.POST, "/v1/quotes/\(quote)/cancel", params: params)
+            cancel: { quote, params, options in
+                try await handler.send(.POST, "/v1/quotes/\(quote)/cancel", params: params, options: options)
             },
-            finalizeQuote: { quote, params in
-                try await handler.send(.POST, "/v1/quotes/\(quote)/finalize", params: params)
+            finalizeQuote: { quote, params, options in
+                try await handler.send(.POST, "/v1/quotes/\(quote)/finalize", params: params, options: options)
             },
-            listComputedUpfrontLineItems: { quote, params in
-                try await handler.send(.GET, "/v1/quotes/\(quote)/computed_upfront_line_items", params: params)
+            listComputedUpfrontLineItems: { quote, params, options in
+                try await handler.send(.GET, "/v1/quotes/\(quote)/computed_upfront_line_items", params: params, options: options)
             },
-            listLineItems: { quote, params in
-                try await handler.send(.GET, "/v1/quotes/\(quote)/line_items", params: params)
+            listLineItems: { quote, params, options in
+                try await handler.send(.GET, "/v1/quotes/\(quote)/line_items", params: params, options: options)
             },
-            pdf: { quote, expand in
-                try await handler.sendForData(.GET, "/v1/quotes/\(quote)/pdf", expand: expand, baseURL: "https://files.stripe.com")
+            pdf: { quote, expand, options in
+                try await handler.sendForData(.GET, "/v1/quotes/\(quote)/pdf", expand: expand, baseURL: "https://files.stripe.com", options: options)
             }
         )
     }

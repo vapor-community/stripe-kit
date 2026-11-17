@@ -12,43 +12,70 @@ import NIOHTTP1
 
 public struct InvoiceitemRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: InvoiceitemCreateParams, _ options: RequestOptions) async throws -> Invoiceitem
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ invoiceitem: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Invoiceitem
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ invoiceitem: String, _ params: InvoiceitemUpdateParams, _ options: RequestOptions) async throws -> Invoiceitem
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: InvoiceitemListParams, _ options: RequestOptions) async throws -> InvoiceitemList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ invoiceitem: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedInvoiceitem
+}
+
+extension InvoiceitemRoutes {
     /// Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is
     /// specified, the item will be on the next invoice created for the customer specified.
-    public var create: @Sendable (_ params: InvoiceitemCreateParams?) async throws -> Invoiceitem
+    public func create(_ params: InvoiceitemCreateParams = .init(), options: RequestOptions = .init()) async throws -> Invoiceitem {
+        try await create(params, options)
+    }
 
     /// Retrieves the invoice item with the given ID.
-    public var retrieve: @Sendable (_ invoiceitem: String, _ expand: [String]?) async throws -> Invoiceitem
+    public func retrieve(_ invoiceitem: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Invoiceitem {
+        try await retrieve(invoiceitem, expand, options)
+    }
 
     /// Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice
     /// item is only possible before the invoice it’s attached to is closed.
-    public var update: @Sendable (_ invoiceitem: String, _ params: InvoiceitemUpdateParams?) async throws -> Invoiceitem
+    public func update(_ invoiceitem: String, _ params: InvoiceitemUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Invoiceitem {
+        try await update(invoiceitem, params, options)
+    }
 
     /// Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the
     /// most recently created invoice items appearing first.
-    public var list: @Sendable (_ params: InvoiceitemListParams?) async throws -> InvoiceitemList
+    public func list(_ params: InvoiceitemListParams = .init(), options: RequestOptions = .init()) async throws -> InvoiceitemList {
+        try await list(params, options)
+    }
 
     /// Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when
     /// they’re not attached to invoices, or if it’s attached to a draft invoice.
-    public var delete: @Sendable (_ invoiceitem: String, _ expand: [String]?) async throws -> DeletedInvoiceitem
+    public func delete(_ invoiceitem: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedInvoiceitem {
+        try await delete(invoiceitem, expand, options)
+    }
 }
 
 extension InvoiceitemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InvoiceitemRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/invoiceitems", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/invoiceitems", params: params, options: options)
             },
-            retrieve: { invoiceitem, expand in
-                try await handler.send(.GET, "/v1/invoiceitems/\(invoiceitem)", expand: expand)
+            retrieve: { invoiceitem, expand, options in
+                try await handler.send(.GET, "/v1/invoiceitems/\(invoiceitem)", expand: expand, options: options)
             },
-            update: { invoiceitem, params in
-                try await handler.send(.POST, "/v1/invoiceitems/\(invoiceitem)", params: params)
+            update: { invoiceitem, params, options in
+                try await handler.send(.POST, "/v1/invoiceitems/\(invoiceitem)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/invoiceitems", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/invoiceitems", params: params, options: options)
             },
-            delete: { invoiceitem, expand in
-                try await handler.send(.DELETE, "/v1/invoiceitems/\(invoiceitem)", expand: expand)
+            delete: { invoiceitem, expand, options in
+                try await handler.send(.DELETE, "/v1/invoiceitems/\(invoiceitem)", expand: expand, options: options)
             }
         )
     }

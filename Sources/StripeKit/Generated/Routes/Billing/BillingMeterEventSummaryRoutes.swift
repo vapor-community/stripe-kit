@@ -12,15 +12,22 @@ import NIOHTTP1
 
 public struct BillingMeterEventSummaryRoutes: Sendable {
 
+    /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ id: String, _ params: BillingMeterEventSummaryListParams, _ options: RequestOptions) async throws -> BillingMeterEventSummaryList
+}
+
+extension BillingMeterEventSummaryRoutes {
     /// Retrieve a list of billing meter event summaries.
-    public var list: @Sendable (_ id: String, _ params: BillingMeterEventSummaryListParams) async throws -> BillingMeterEventSummaryList
+    public func list(_ id: String, _ params: BillingMeterEventSummaryListParams, options: RequestOptions = .init()) async throws -> BillingMeterEventSummaryList {
+        try await list(id, params, options)
+    }
 }
 
 extension BillingMeterEventSummaryRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingMeterEventSummaryRoutes(
-            list: { id, params in
-                try await handler.send(.GET, "/v1/billing/meters/\(id)/event_summaries", params: params)
+            list: { id, params, options in
+                try await handler.send(.GET, "/v1/billing/meters/\(id)/event_summaries", params: params, options: options)
             }
         )
     }

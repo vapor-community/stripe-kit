@@ -12,23 +12,35 @@ import NIOHTTP1
 
 public struct BalanceSettingsRoutes: Sendable {
 
+    /// Performs `retrieve(expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ expand: [String]?, _ options: RequestOptions) async throws -> BalanceSettings
+
+    /// Performs `update(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ params: BalanceSettingsUpdateParams, _ options: RequestOptions) async throws -> BalanceSettings
+}
+
+extension BalanceSettingsRoutes {
     /// Retrieves balance settings for a given connected account. Related guide: Making API calls for
     /// connected accounts
-    public var retrieve: @Sendable (_ expand: [String]?) async throws -> BalanceSettings
+    public func retrieve(expand: [String]? = nil, options: RequestOptions = .init()) async throws -> BalanceSettings {
+        try await retrieve(expand, options)
+    }
 
     /// Updates balance settings for a given connected account. Related guide: Making API calls for
     /// connected accounts
-    public var update: @Sendable (_ params: BalanceSettingsUpdateParams?) async throws -> BalanceSettings
+    public func update(_ params: BalanceSettingsUpdateParams = .init(), options: RequestOptions = .init()) async throws -> BalanceSettings {
+        try await update(params, options)
+    }
 }
 
 extension BalanceSettingsRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BalanceSettingsRoutes(
-            retrieve: { expand in
-                try await handler.send(.GET, "/v1/balance_settings", expand: expand)
+            retrieve: { expand, options in
+                try await handler.send(.GET, "/v1/balance_settings", expand: expand, options: options)
             },
-            update: { params in
-                try await handler.send(.POST, "/v1/balance_settings", params: params)
+            update: { params, options in
+                try await handler.send(.POST, "/v1/balance_settings", params: params, options: options)
             }
         )
     }

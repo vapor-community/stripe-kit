@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct TreasuryTransactionRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryTransaction
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryTransactionListParams, _ options: RequestOptions) async throws -> TreasuryTransactionList
+}
+
+extension TreasuryTransactionRoutes {
     /// Retrieves the details of an existing Transaction.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TreasuryTransaction
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryTransaction {
+        try await retrieve(id, expand, options)
+    }
 
     /// Retrieves a list of Transaction objects.
-    public var list: @Sendable (_ params: TreasuryTransactionListParams) async throws -> TreasuryTransactionList
+    public func list(_ params: TreasuryTransactionListParams, options: RequestOptions = .init()) async throws -> TreasuryTransactionList {
+        try await list(params, options)
+    }
 }
 
 extension TreasuryTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryTransactionRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/treasury/transactions/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/treasury/transactions/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/transactions", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/transactions", params: params, options: options)
             }
         )
     }

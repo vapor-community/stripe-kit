@@ -12,66 +12,113 @@ import NIOHTTP1
 
 public struct PaymentRecordRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PaymentRecord
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PaymentRecordListParams, _ options: RequestOptions) async throws -> PaymentRecordList
+
+    /// Performs `reportPayment(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reportPayment: @Sendable (_ params: PaymentRecordReportPaymentParams, _ options: RequestOptions) async throws -> PaymentRecord
+
+    /// Performs `reportPaymentAttempt(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reportPaymentAttempt: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptParams, _ options: RequestOptions) async throws -> PaymentRecord
+
+    /// Performs `reportPaymentAttemptCanceled(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reportPaymentAttemptCanceled: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptCanceledParams, _ options: RequestOptions) async throws -> PaymentRecord
+
+    /// Performs `reportPaymentAttemptFailed(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reportPaymentAttemptFailed: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptFailedParams, _ options: RequestOptions) async throws -> PaymentRecord
+
+    /// Performs `reportPaymentAttemptGuaranteed(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reportPaymentAttemptGuaranteed: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptGuaranteedParams, _ options: RequestOptions) async throws -> PaymentRecord
+
+    /// Performs `reportPaymentAttemptInformational(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reportPaymentAttemptInformational: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptInformationalParams, _ options: RequestOptions) async throws -> PaymentRecord
+
+    /// Performs `reportRefund(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reportRefund: @Sendable (_ id: String, _ params: PaymentRecordReportRefundParams, _ options: RequestOptions) async throws -> PaymentRecord
+}
+
+extension PaymentRecordRoutes {
     /// Retrieves a Payment Record with the given ID
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> PaymentRecord
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> PaymentRecord {
+        try await retrieve(id, expand, options)
+    }
 
     /// List all the Payment Records for a given merchant.
-    public var list: @Sendable (_ params: PaymentRecordListParams?) async throws -> PaymentRecordList
+    public func list(_ params: PaymentRecordListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentRecordList {
+        try await list(params, options)
+    }
 
     /// Report a new Payment Record. You may report a Payment Record as it is initialized and later report
     /// updates through the other report_* methods, or report Payment Records in a terminal state directly,
     /// through this method.
-    public var reportPayment: @Sendable (_ params: PaymentRecordReportPaymentParams) async throws -> PaymentRecord
+    public func reportPayment(_ params: PaymentRecordReportPaymentParams, options: RequestOptions = .init()) async throws -> PaymentRecord {
+        try await reportPayment(params, options)
+    }
 
     /// Report a new payment attempt on the specified Payment Record. A new payment attempt can only be
     /// specified if all other payment attempts are canceled or failed.
-    public var reportPaymentAttempt: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptParams) async throws -> PaymentRecord
+    public func reportPaymentAttempt(_ id: String, _ params: PaymentRecordReportPaymentAttemptParams, options: RequestOptions = .init()) async throws -> PaymentRecord {
+        try await reportPaymentAttempt(id, params, options)
+    }
 
     /// Report that the most recent payment attempt on the specified Payment Record was canceled.
-    public var reportPaymentAttemptCanceled: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptCanceledParams) async throws -> PaymentRecord
+    public func reportPaymentAttemptCanceled(_ id: String, _ params: PaymentRecordReportPaymentAttemptCanceledParams, options: RequestOptions = .init()) async throws -> PaymentRecord {
+        try await reportPaymentAttemptCanceled(id, params, options)
+    }
 
     /// Report that the most recent payment attempt on the specified Payment Record failed or errored.
-    public var reportPaymentAttemptFailed: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptFailedParams) async throws -> PaymentRecord
+    public func reportPaymentAttemptFailed(_ id: String, _ params: PaymentRecordReportPaymentAttemptFailedParams, options: RequestOptions = .init()) async throws -> PaymentRecord {
+        try await reportPaymentAttemptFailed(id, params, options)
+    }
 
     /// Report that the most recent payment attempt on the specified Payment Record was guaranteed.
-    public var reportPaymentAttemptGuaranteed: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptGuaranteedParams) async throws -> PaymentRecord
+    public func reportPaymentAttemptGuaranteed(_ id: String, _ params: PaymentRecordReportPaymentAttemptGuaranteedParams, options: RequestOptions = .init()) async throws -> PaymentRecord {
+        try await reportPaymentAttemptGuaranteed(id, params, options)
+    }
 
     /// Report informational updates on the specified Payment Record.
-    public var reportPaymentAttemptInformational: @Sendable (_ id: String, _ params: PaymentRecordReportPaymentAttemptInformationalParams?) async throws -> PaymentRecord
+    public func reportPaymentAttemptInformational(_ id: String, _ params: PaymentRecordReportPaymentAttemptInformationalParams = .init(), options: RequestOptions = .init()) async throws -> PaymentRecord {
+        try await reportPaymentAttemptInformational(id, params, options)
+    }
 
     /// Report that the most recent payment attempt on the specified Payment Record was refunded.
-    public var reportRefund: @Sendable (_ id: String, _ params: PaymentRecordReportRefundParams) async throws -> PaymentRecord
+    public func reportRefund(_ id: String, _ params: PaymentRecordReportRefundParams, options: RequestOptions = .init()) async throws -> PaymentRecord {
+        try await reportRefund(id, params, options)
+    }
 }
 
 extension PaymentRecordRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentRecordRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/payment_records/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/payment_records/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/payment_records", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/payment_records", params: params, options: options)
             },
-            reportPayment: { params in
-                try await handler.send(.POST, "/v1/payment_records/report_payment", params: params)
+            reportPayment: { params, options in
+                try await handler.send(.POST, "/v1/payment_records/report_payment", params: params, options: options)
             },
-            reportPaymentAttempt: { id, params in
-                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt", params: params)
+            reportPaymentAttempt: { id, params, options in
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt", params: params, options: options)
             },
-            reportPaymentAttemptCanceled: { id, params in
-                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_canceled", params: params)
+            reportPaymentAttemptCanceled: { id, params, options in
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_canceled", params: params, options: options)
             },
-            reportPaymentAttemptFailed: { id, params in
-                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_failed", params: params)
+            reportPaymentAttemptFailed: { id, params, options in
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_failed", params: params, options: options)
             },
-            reportPaymentAttemptGuaranteed: { id, params in
-                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_guaranteed", params: params)
+            reportPaymentAttemptGuaranteed: { id, params, options in
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_guaranteed", params: params, options: options)
             },
-            reportPaymentAttemptInformational: { id, params in
-                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_informational", params: params)
+            reportPaymentAttemptInformational: { id, params, options in
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_informational", params: params, options: options)
             },
-            reportRefund: { id, params in
-                try await handler.send(.POST, "/v1/payment_records/\(id)/report_refund", params: params)
+            reportRefund: { id, params, options in
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_refund", params: params, options: options)
             }
         )
     }

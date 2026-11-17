@@ -12,27 +12,44 @@ import NIOHTTP1
 
 public struct TreasuryDebitReversalRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TreasuryDebitReversalCreateParams, _ options: RequestOptions) async throws -> TreasuryDebitReversal
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ debitReversal: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryDebitReversal
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryDebitReversalListParams, _ options: RequestOptions) async throws -> TreasuryDebitReversalList
+}
+
+extension TreasuryDebitReversalRoutes {
     /// Reverses a ReceivedDebit and creates a DebitReversal object.
-    public var create: @Sendable (_ params: TreasuryDebitReversalCreateParams) async throws -> TreasuryDebitReversal
+    public func create(_ params: TreasuryDebitReversalCreateParams, options: RequestOptions = .init()) async throws -> TreasuryDebitReversal {
+        try await create(params, options)
+    }
 
     /// Retrieves a DebitReversal object.
-    public var retrieve: @Sendable (_ debitReversal: String, _ expand: [String]?) async throws -> TreasuryDebitReversal
+    public func retrieve(_ debitReversal: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryDebitReversal {
+        try await retrieve(debitReversal, expand, options)
+    }
 
     /// Returns a list of DebitReversals.
-    public var list: @Sendable (_ params: TreasuryDebitReversalListParams) async throws -> TreasuryDebitReversalList
+    public func list(_ params: TreasuryDebitReversalListParams, options: RequestOptions = .init()) async throws -> TreasuryDebitReversalList {
+        try await list(params, options)
+    }
 }
 
 extension TreasuryDebitReversalRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryDebitReversalRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/treasury/debit_reversals", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/treasury/debit_reversals", params: params, options: options)
             },
-            retrieve: { debitReversal, expand in
-                try await handler.send(.GET, "/v1/treasury/debit_reversals/\(debitReversal)", expand: expand)
+            retrieve: { debitReversal, expand, options in
+                try await handler.send(.GET, "/v1/treasury/debit_reversals/\(debitReversal)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/debit_reversals", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/debit_reversals", params: params, options: options)
             }
         )
     }

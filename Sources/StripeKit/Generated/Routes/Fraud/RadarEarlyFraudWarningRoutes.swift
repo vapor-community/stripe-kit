@@ -12,22 +12,34 @@ import NIOHTTP1
 
 public struct RadarEarlyFraudWarningRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ earlyFraudWarning: String, _ expand: [String]?, _ options: RequestOptions) async throws -> RadarEarlyFraudWarning
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: RadarEarlyFraudWarningListParams, _ options: RequestOptions) async throws -> RadarEarlyFraudWarningList
+}
+
+extension RadarEarlyFraudWarningRoutes {
     /// Retrieves the details of an early fraud warning that has previously been created. Please refer to
     /// the early fraud warning object reference for more details.
-    public var retrieve: @Sendable (_ earlyFraudWarning: String, _ expand: [String]?) async throws -> RadarEarlyFraudWarning
+    public func retrieve(_ earlyFraudWarning: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> RadarEarlyFraudWarning {
+        try await retrieve(earlyFraudWarning, expand, options)
+    }
 
     /// Returns a list of early fraud warnings.
-    public var list: @Sendable (_ params: RadarEarlyFraudWarningListParams?) async throws -> RadarEarlyFraudWarningList
+    public func list(_ params: RadarEarlyFraudWarningListParams = .init(), options: RequestOptions = .init()) async throws -> RadarEarlyFraudWarningList {
+        try await list(params, options)
+    }
 }
 
 extension RadarEarlyFraudWarningRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         RadarEarlyFraudWarningRoutes(
-            retrieve: { earlyFraudWarning, expand in
-                try await handler.send(.GET, "/v1/radar/early_fraud_warnings/\(earlyFraudWarning)", expand: expand)
+            retrieve: { earlyFraudWarning, expand, options in
+                try await handler.send(.GET, "/v1/radar/early_fraud_warnings/\(earlyFraudWarning)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/radar/early_fraud_warnings", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/radar/early_fraud_warnings", params: params, options: options)
             }
         )
     }

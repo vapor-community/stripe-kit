@@ -12,39 +12,61 @@ import NIOHTTP1
 
 public struct DisputeRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ dispute: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Dispute
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ dispute: String, _ params: DisputeUpdateParams, _ options: RequestOptions) async throws -> Dispute
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: DisputeListParams, _ options: RequestOptions) async throws -> DisputeList
+
+    /// Performs `close(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var close: @Sendable (_ dispute: String, _ params: DisputeCloseParams, _ options: RequestOptions) async throws -> Dispute
+}
+
+extension DisputeRoutes {
     /// Retrieves the dispute with the given ID.
-    public var retrieve: @Sendable (_ dispute: String, _ expand: [String]?) async throws -> Dispute
+    public func retrieve(_ dispute: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Dispute {
+        try await retrieve(dispute, expand, options)
+    }
 
     /// When you get a dispute, contacting your customer is always the best first step. If that doesn’t
     /// work, you can submit evidence to help us resolve the dispute in your favor. You can do this in your
     /// dashboard, but if you prefer, you can use the API to submit evidence programmatically. Depending on
     /// your dispute type, different evidence fields will give you a better chance of winning your dispute.
     /// To figure out which evidence fields to provide, see our guide to dispute types.
-    public var update: @Sendable (_ dispute: String, _ params: DisputeUpdateParams?) async throws -> Dispute
+    public func update(_ dispute: String, _ params: DisputeUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Dispute {
+        try await update(dispute, params, options)
+    }
 
     /// Returns a list of your disputes.
-    public var list: @Sendable (_ params: DisputeListParams?) async throws -> DisputeList
+    public func list(_ params: DisputeListParams = .init(), options: RequestOptions = .init()) async throws -> DisputeList {
+        try await list(params, options)
+    }
 
     /// Closing the dispute for a charge indicates that you do not have any evidence to submit and are
     /// essentially dismissing the dispute (accepting it), acknowledging it as lost. The status of the
     /// dispute will change from needs_response to lost. Closing a dispute is irreversible.
-    public var close: @Sendable (_ dispute: String, _ params: DisputeCloseParams?) async throws -> Dispute
+    public func close(_ dispute: String, _ params: DisputeCloseParams = .init(), options: RequestOptions = .init()) async throws -> Dispute {
+        try await close(dispute, params, options)
+    }
 }
 
 extension DisputeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         DisputeRoutes(
-            retrieve: { dispute, expand in
-                try await handler.send(.GET, "/v1/disputes/\(dispute)", expand: expand)
+            retrieve: { dispute, expand, options in
+                try await handler.send(.GET, "/v1/disputes/\(dispute)", expand: expand, options: options)
             },
-            update: { dispute, params in
-                try await handler.send(.POST, "/v1/disputes/\(dispute)", params: params)
+            update: { dispute, params, options in
+                try await handler.send(.POST, "/v1/disputes/\(dispute)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/disputes", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/disputes", params: params, options: options)
             },
-            close: { dispute, params in
-                try await handler.send(.POST, "/v1/disputes/\(dispute)/close", params: params)
+            close: { dispute, params, options in
+                try await handler.send(.POST, "/v1/disputes/\(dispute)/close", params: params, options: options)
             }
         )
     }

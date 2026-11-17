@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct BillingCreditBalanceTransactionRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BillingCreditBalanceTransaction
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: BillingCreditBalanceTransactionListParams, _ options: RequestOptions) async throws -> BillingCreditBalanceTransactionList
+}
+
+extension BillingCreditBalanceTransactionRoutes {
     /// Retrieves a credit balance transaction.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> BillingCreditBalanceTransaction
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> BillingCreditBalanceTransaction {
+        try await retrieve(id, expand, options)
+    }
 
     /// Retrieve a list of credit balance transactions.
-    public var list: @Sendable (_ params: BillingCreditBalanceTransactionListParams?) async throws -> BillingCreditBalanceTransactionList
+    public func list(_ params: BillingCreditBalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> BillingCreditBalanceTransactionList {
+        try await list(params, options)
+    }
 }
 
 extension BillingCreditBalanceTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingCreditBalanceTransactionRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/billing/credit_balance_transactions/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/billing/credit_balance_transactions/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/billing/credit_balance_transactions", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/billing/credit_balance_transactions", params: params, options: options)
             }
         )
     }

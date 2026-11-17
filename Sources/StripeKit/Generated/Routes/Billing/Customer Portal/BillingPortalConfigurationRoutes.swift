@@ -12,33 +12,55 @@ import NIOHTTP1
 
 public struct BillingPortalConfigurationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: BillingPortalConfigurationCreateParams, _ options: RequestOptions) async throws -> BillingPortalConfiguration
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ configuration: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BillingPortalConfiguration
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ configuration: String, _ params: BillingPortalConfigurationUpdateParams, _ options: RequestOptions) async throws -> BillingPortalConfiguration
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: BillingPortalConfigurationListParams, _ options: RequestOptions) async throws -> BillingPortalConfigurationList
+}
+
+extension BillingPortalConfigurationRoutes {
     /// Creates a configuration that describes the functionality and behavior of a PortalSession
-    public var create: @Sendable (_ params: BillingPortalConfigurationCreateParams) async throws -> BillingPortalConfiguration
+    public func create(_ params: BillingPortalConfigurationCreateParams, options: RequestOptions = .init()) async throws -> BillingPortalConfiguration {
+        try await create(params, options)
+    }
 
     /// Retrieves a configuration that describes the functionality of the customer portal.
-    public var retrieve: @Sendable (_ configuration: String, _ expand: [String]?) async throws -> BillingPortalConfiguration
+    public func retrieve(_ configuration: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> BillingPortalConfiguration {
+        try await retrieve(configuration, expand, options)
+    }
 
     /// Updates a configuration that describes the functionality of the customer portal.
-    public var update: @Sendable (_ configuration: String, _ params: BillingPortalConfigurationUpdateParams?) async throws -> BillingPortalConfiguration
+    public func update(_ configuration: String, _ params: BillingPortalConfigurationUpdateParams = .init(), options: RequestOptions = .init()) async throws -> BillingPortalConfiguration {
+        try await update(configuration, params, options)
+    }
 
     /// Returns a list of configurations that describe the functionality of the customer portal.
-    public var list: @Sendable (_ params: BillingPortalConfigurationListParams?) async throws -> BillingPortalConfigurationList
+    public func list(_ params: BillingPortalConfigurationListParams = .init(), options: RequestOptions = .init()) async throws -> BillingPortalConfigurationList {
+        try await list(params, options)
+    }
 }
 
 extension BillingPortalConfigurationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingPortalConfigurationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/billing_portal/configurations", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/billing_portal/configurations", params: params, options: options)
             },
-            retrieve: { configuration, expand in
-                try await handler.send(.GET, "/v1/billing_portal/configurations/\(configuration)", expand: expand)
+            retrieve: { configuration, expand, options in
+                try await handler.send(.GET, "/v1/billing_portal/configurations/\(configuration)", expand: expand, options: options)
             },
-            update: { configuration, params in
-                try await handler.send(.POST, "/v1/billing_portal/configurations/\(configuration)", params: params)
+            update: { configuration, params, options in
+                try await handler.send(.POST, "/v1/billing_portal/configurations/\(configuration)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/billing_portal/configurations", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/billing_portal/configurations", params: params, options: options)
             }
         )
     }

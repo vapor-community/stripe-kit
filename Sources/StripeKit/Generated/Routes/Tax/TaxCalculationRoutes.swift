@@ -12,27 +12,44 @@ import NIOHTTP1
 
 public struct TaxCalculationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TaxCalculationCreateParams, _ options: RequestOptions) async throws -> TaxCalculation
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ calculation: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxCalculation
+
+    /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listLineItems: @Sendable (_ calculation: String, _ params: TaxCalculationListLineItemsParams, _ options: RequestOptions) async throws -> TaxCalculationLineItemList
+}
+
+extension TaxCalculationRoutes {
     /// Calculates tax based on the input and returns a Tax Calculation object.
-    public var create: @Sendable (_ params: TaxCalculationCreateParams) async throws -> TaxCalculation
+    public func create(_ params: TaxCalculationCreateParams, options: RequestOptions = .init()) async throws -> TaxCalculation {
+        try await create(params, options)
+    }
 
     /// Retrieves a Tax Calculation object, if the calculation hasn’t expired.
-    public var retrieve: @Sendable (_ calculation: String, _ expand: [String]?) async throws -> TaxCalculation
+    public func retrieve(_ calculation: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TaxCalculation {
+        try await retrieve(calculation, expand, options)
+    }
 
     /// Retrieves the line items of a tax calculation as a collection, if the calculation hasn’t expired.
-    public var listLineItems: @Sendable (_ calculation: String, _ params: TaxCalculationListLineItemsParams?) async throws -> TaxCalculationLineItemList
+    public func listLineItems(_ calculation: String, _ params: TaxCalculationListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> TaxCalculationLineItemList {
+        try await listLineItems(calculation, params, options)
+    }
 }
 
 extension TaxCalculationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxCalculationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/tax/calculations", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/tax/calculations", params: params, options: options)
             },
-            retrieve: { calculation, expand in
-                try await handler.send(.GET, "/v1/tax/calculations/\(calculation)", expand: expand)
+            retrieve: { calculation, expand, options in
+                try await handler.send(.GET, "/v1/tax/calculations/\(calculation)", expand: expand, options: options)
             },
-            listLineItems: { calculation, params in
-                try await handler.send(.GET, "/v1/tax/calculations/\(calculation)/line_items", params: params)
+            listLineItems: { calculation, params, options in
+                try await handler.send(.GET, "/v1/tax/calculations/\(calculation)/line_items", params: params, options: options)
             }
         )
     }

@@ -12,54 +12,91 @@ import NIOHTTP1
 
 public struct TreasuryInboundTransferRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TreasuryInboundTransferCreateParams, _ options: RequestOptions) async throws -> TreasuryInboundTransfer
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryInboundTransfer
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryInboundTransferListParams, _ options: RequestOptions) async throws -> TreasuryInboundTransferList
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ inboundTransfer: String, _ params: TreasuryInboundTransferCancelParams, _ options: RequestOptions) async throws -> TreasuryInboundTransfer
+
+    /// Performs `fail(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var fail: @Sendable (_ id: String, _ params: TreasuryInboundTransferFailParams, _ options: RequestOptions) async throws -> TreasuryInboundTransfer
+
+    /// Performs `returnInboundTransfer(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var returnInboundTransfer: @Sendable (_ id: String, _ params: TreasuryInboundTransferReturnInboundTransferParams, _ options: RequestOptions) async throws -> TreasuryInboundTransfer
+
+    /// Performs `succeed(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var succeed: @Sendable (_ id: String, _ params: TreasuryInboundTransferSucceedParams, _ options: RequestOptions) async throws -> TreasuryInboundTransfer
+}
+
+extension TreasuryInboundTransferRoutes {
     /// Creates an InboundTransfer.
-    public var create: @Sendable (_ params: TreasuryInboundTransferCreateParams) async throws -> TreasuryInboundTransfer
+    public func create(_ params: TreasuryInboundTransferCreateParams, options: RequestOptions = .init()) async throws -> TreasuryInboundTransfer {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing InboundTransfer.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TreasuryInboundTransfer
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryInboundTransfer {
+        try await retrieve(id, expand, options)
+    }
 
     /// Returns a list of InboundTransfers sent from the specified FinancialAccount.
-    public var list: @Sendable (_ params: TreasuryInboundTransferListParams) async throws -> TreasuryInboundTransferList
+    public func list(_ params: TreasuryInboundTransferListParams, options: RequestOptions = .init()) async throws -> TreasuryInboundTransferList {
+        try await list(params, options)
+    }
 
     /// Cancels an InboundTransfer.
-    public var cancel: @Sendable (_ inboundTransfer: String, _ params: TreasuryInboundTransferCancelParams?) async throws -> TreasuryInboundTransfer
+    public func cancel(_ inboundTransfer: String, _ params: TreasuryInboundTransferCancelParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryInboundTransfer {
+        try await cancel(inboundTransfer, params, options)
+    }
 
     /// Transitions a test mode created InboundTransfer to the failed status. The InboundTransfer must
     /// already be in the processing state.
-    public var fail: @Sendable (_ id: String, _ params: TreasuryInboundTransferFailParams?) async throws -> TreasuryInboundTransfer
+    public func fail(_ id: String, _ params: TreasuryInboundTransferFailParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryInboundTransfer {
+        try await fail(id, params, options)
+    }
 
     /// Marks the test mode InboundTransfer object as returned and links the InboundTransfer to a
     /// ReceivedDebit. The InboundTransfer must already be in the succeeded state.
-    public var returnInboundTransfer: @Sendable (_ id: String, _ params: TreasuryInboundTransferReturnInboundTransferParams?) async throws -> TreasuryInboundTransfer
+    public func returnInboundTransfer(_ id: String, _ params: TreasuryInboundTransferReturnInboundTransferParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryInboundTransfer {
+        try await returnInboundTransfer(id, params, options)
+    }
 
     /// Transitions a test mode created InboundTransfer to the succeeded status. The InboundTransfer must
     /// already be in the processing state.
-    public var succeed: @Sendable (_ id: String, _ params: TreasuryInboundTransferSucceedParams?) async throws -> TreasuryInboundTransfer
+    public func succeed(_ id: String, _ params: TreasuryInboundTransferSucceedParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryInboundTransfer {
+        try await succeed(id, params, options)
+    }
 }
 
 extension TreasuryInboundTransferRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryInboundTransferRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/treasury/inbound_transfers", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/treasury/inbound_transfers", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/treasury/inbound_transfers/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/treasury/inbound_transfers/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/inbound_transfers", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/inbound_transfers", params: params, options: options)
             },
-            cancel: { inboundTransfer, params in
-                try await handler.send(.POST, "/v1/treasury/inbound_transfers/\(inboundTransfer)/cancel", params: params)
+            cancel: { inboundTransfer, params, options in
+                try await handler.send(.POST, "/v1/treasury/inbound_transfers/\(inboundTransfer)/cancel", params: params, options: options)
             },
-            fail: { id, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/inbound_transfers/\(id)/fail", params: params)
+            fail: { id, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/inbound_transfers/\(id)/fail", params: params, options: options)
             },
-            returnInboundTransfer: { id, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/inbound_transfers/\(id)/return", params: params)
+            returnInboundTransfer: { id, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/inbound_transfers/\(id)/return", params: params, options: options)
             },
-            succeed: { id, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/inbound_transfers/\(id)/succeed", params: params)
+            succeed: { id, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/inbound_transfers/\(id)/succeed", params: params, options: options)
             }
         )
     }

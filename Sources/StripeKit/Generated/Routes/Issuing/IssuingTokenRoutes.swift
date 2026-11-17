@@ -12,27 +12,44 @@ import NIOHTTP1
 
 public struct IssuingTokenRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ token: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IssuingToken
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ token: String, _ params: IssuingTokenUpdateParams, _ options: RequestOptions) async throws -> IssuingToken
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: IssuingTokenListParams, _ options: RequestOptions) async throws -> IssuingTokenList
+}
+
+extension IssuingTokenRoutes {
     /// Retrieves an Issuing Token object.
-    public var retrieve: @Sendable (_ token: String, _ expand: [String]?) async throws -> IssuingToken
+    public func retrieve(_ token: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> IssuingToken {
+        try await retrieve(token, expand, options)
+    }
 
     /// Attempts to update the specified Issuing Token object to the status specified.
-    public var update: @Sendable (_ token: String, _ params: IssuingTokenUpdateParams) async throws -> IssuingToken
+    public func update(_ token: String, _ params: IssuingTokenUpdateParams, options: RequestOptions = .init()) async throws -> IssuingToken {
+        try await update(token, params, options)
+    }
 
     /// Lists all Issuing Token objects for a given card.
-    public var list: @Sendable (_ params: IssuingTokenListParams) async throws -> IssuingTokenList
+    public func list(_ params: IssuingTokenListParams, options: RequestOptions = .init()) async throws -> IssuingTokenList {
+        try await list(params, options)
+    }
 }
 
 extension IssuingTokenRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingTokenRoutes(
-            retrieve: { token, expand in
-                try await handler.send(.GET, "/v1/issuing/tokens/\(token)", expand: expand)
+            retrieve: { token, expand, options in
+                try await handler.send(.GET, "/v1/issuing/tokens/\(token)", expand: expand, options: options)
             },
-            update: { token, params in
-                try await handler.send(.POST, "/v1/issuing/tokens/\(token)", params: params)
+            update: { token, params, options in
+                try await handler.send(.POST, "/v1/issuing/tokens/\(token)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/issuing/tokens", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/issuing/tokens", params: params, options: options)
             }
         )
     }

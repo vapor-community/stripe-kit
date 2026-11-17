@@ -35,13 +35,16 @@ public struct StripeAPIHandler: Sendable {
     ///   - params: Form-encoded as the body of a POST, or as the query string otherwise.
     ///   - expand: `expand[]` values, sent in the query string. (A params struct has its own
     ///     `expand`, encoded with the rest of its fields.)
+    ///   - options: This request's connected account and idempotency key.
     public func send<T: Decodable>(
         _ method: HTTPMethod,
         _ path: StripePath,
         params: (any StripeParams)? = nil,
-        expand: [String]? = nil
+        expand: [String]? = nil,
+        options: RequestOptions = .init()
     ) async throws -> T {
-        let data = try await execute(request(method, path, params: params, expand: expand), timeout: .seconds(60), maxBytes: 10 << 20)
+        let request = self.request(method, path, params: params, expand: expand, options: options)
+        let data = try await execute(request, timeout: .seconds(60), maxBytes: 10 << 20)
         return try Self.decoder.decode(T.self, from: data)
     }
 
@@ -52,9 +55,10 @@ public struct StripeAPIHandler: Sendable {
         _ path: StripePath,
         params: (any StripeParams)? = nil,
         expand: [String]? = nil,
-        baseURL: String? = nil
+        baseURL: String? = nil,
+        options: RequestOptions = .init()
     ) async throws -> Data {
-        let request = self.request(method, path, params: params, expand: expand, baseURL: baseURL)
+        let request = self.request(method, path, params: params, expand: expand, baseURL: baseURL, options: options)
         return try await execute(request, timeout: .seconds(120), maxBytes: 50 << 20)
     }
 
@@ -66,7 +70,8 @@ public struct StripeAPIHandler: Sendable {
         fileData: Data,
         fileName: String,
         mimeType: String,
-        purpose: String
+        purpose: String,
+        options: RequestOptions = .init()
     ) async throws -> T {
         let boundary = "StripeKit-\(UUID().uuidString)"
         var body = Data()
@@ -79,7 +84,7 @@ public struct StripeAPIHandler: Sendable {
         body.append(fileData)
         body.appendUTF8("\r\n--\(boundary)--\r\n")
 
-        var request = self.request(.POST, path, baseURL: baseURL)
+        var request = self.request(.POST, path, baseURL: baseURL, options: options)
         request.headers.replaceOrAdd(name: "Content-Type", value: "multipart/form-data; boundary=\(boundary)")
         request.body = .bytes(ByteBuffer(bytes: body))
         let data = try await execute(request, timeout: .seconds(120), maxBytes: 50 << 20)
@@ -96,13 +101,15 @@ public struct StripeAPIHandler: Sendable {
     }
 
     /// A request with Stripe's headers, and `params` and `expand` encoded as `send` describes.
+    /// `options` override the handler's own connected account and idempotency key.
     /// Internal rather than private so tests can check what gets sent.
     func request(
         _ method: HTTPMethod,
         _ path: StripePath,
         params: (any StripeParams)? = nil,
         expand: [String]? = nil,
-        baseURL: String? = nil
+        baseURL: String? = nil,
+        options: RequestOptions = .init()
     ) -> HTTPClientRequest {
         let form = params?.toFormBody() ?? ""
         var query: [String] = []
@@ -122,12 +129,12 @@ public struct StripeAPIHandler: Sendable {
         request.method = method
         request.headers.add(name: "Authorization", value: "Bearer \(apiKey)")
         request.headers.add(name: "Stripe-Version", value: apiVersion)
-        // Stripe-Account: act as a connected account (set via onBehalfOf(_:))
-        if let stripeAccount {
+        // Stripe-Account: act as a connected account (per request, or via onBehalfOf(_:))
+        if let stripeAccount = options.stripeAccount ?? stripeAccount {
             request.headers.add(name: "Stripe-Account", value: stripeAccount)
         }
-        // Idempotency-Key: safe retries (set via idempotent(_:))
-        if let idempotencyKey {
+        // Idempotency-Key: safe retries (per request, or the deprecated idempotent(_:))
+        if let idempotencyKey = options.idempotencyKey ?? idempotencyKey {
             request.headers.add(name: "Idempotency-Key", value: idempotencyKey)
         }
         if method == .POST {

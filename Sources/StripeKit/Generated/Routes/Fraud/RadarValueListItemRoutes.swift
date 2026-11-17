@@ -12,34 +12,56 @@ import NIOHTTP1
 
 public struct RadarValueListItemRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: RadarValueListItemCreateParams, _ options: RequestOptions) async throws -> RadarValueListItem
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ item: String, _ expand: [String]?, _ options: RequestOptions) async throws -> RadarValueListItem
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: RadarValueListItemListParams, _ options: RequestOptions) async throws -> RadarValueListItemList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ item: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedRadarValueListItem
+}
+
+extension RadarValueListItemRoutes {
     /// Creates a new ValueListItem object, which is added to the specified parent value list.
-    public var create: @Sendable (_ params: RadarValueListItemCreateParams) async throws -> RadarValueListItem
+    public func create(_ params: RadarValueListItemCreateParams, options: RequestOptions = .init()) async throws -> RadarValueListItem {
+        try await create(params, options)
+    }
 
     /// Retrieves a ValueListItem object.
-    public var retrieve: @Sendable (_ item: String, _ expand: [String]?) async throws -> RadarValueListItem
+    public func retrieve(_ item: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> RadarValueListItem {
+        try await retrieve(item, expand, options)
+    }
 
     /// Returns a list of ValueListItem objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public var list: @Sendable (_ params: RadarValueListItemListParams) async throws -> RadarValueListItemList
+    public func list(_ params: RadarValueListItemListParams, options: RequestOptions = .init()) async throws -> RadarValueListItemList {
+        try await list(params, options)
+    }
 
     /// Deletes a ValueListItem object, removing it from its parent value list.
-    public var delete: @Sendable (_ item: String, _ expand: [String]?) async throws -> DeletedRadarValueListItem
+    public func delete(_ item: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedRadarValueListItem {
+        try await delete(item, expand, options)
+    }
 }
 
 extension RadarValueListItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         RadarValueListItemRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/radar/value_list_items", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/radar/value_list_items", params: params, options: options)
             },
-            retrieve: { item, expand in
-                try await handler.send(.GET, "/v1/radar/value_list_items/\(item)", expand: expand)
+            retrieve: { item, expand, options in
+                try await handler.send(.GET, "/v1/radar/value_list_items/\(item)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/radar/value_list_items", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/radar/value_list_items", params: params, options: options)
             },
-            delete: { item, expand in
-                try await handler.send(.DELETE, "/v1/radar/value_list_items/\(item)", expand: expand)
+            delete: { item, expand, options in
+                try await handler.send(.DELETE, "/v1/radar/value_list_items/\(item)", expand: expand, options: options)
             }
         )
     }

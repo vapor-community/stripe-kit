@@ -12,47 +12,79 @@ import NIOHTTP1
 
 public struct BillingMeterRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: BillingMeterCreateParams, _ options: RequestOptions) async throws -> BillingMeter
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BillingMeter
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: BillingMeterUpdateParams, _ options: RequestOptions) async throws -> BillingMeter
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: BillingMeterListParams, _ options: RequestOptions) async throws -> BillingMeterList
+
+    /// Performs `deactivate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var deactivate: @Sendable (_ id: String, _ params: BillingMeterDeactivateParams, _ options: RequestOptions) async throws -> BillingMeter
+
+    /// Performs `reactivate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var reactivate: @Sendable (_ id: String, _ params: BillingMeterReactivateParams, _ options: RequestOptions) async throws -> BillingMeter
+}
+
+extension BillingMeterRoutes {
     /// Creates a billing meter.
-    public var create: @Sendable (_ params: BillingMeterCreateParams) async throws -> BillingMeter
+    public func create(_ params: BillingMeterCreateParams, options: RequestOptions = .init()) async throws -> BillingMeter {
+        try await create(params, options)
+    }
 
     /// Retrieves a billing meter given an ID.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> BillingMeter
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> BillingMeter {
+        try await retrieve(id, expand, options)
+    }
 
     /// Updates a billing meter.
-    public var update: @Sendable (_ id: String, _ params: BillingMeterUpdateParams?) async throws -> BillingMeter
+    public func update(_ id: String, _ params: BillingMeterUpdateParams = .init(), options: RequestOptions = .init()) async throws -> BillingMeter {
+        try await update(id, params, options)
+    }
 
     /// Retrieve a list of billing meters.
-    public var list: @Sendable (_ params: BillingMeterListParams?) async throws -> BillingMeterList
+    public func list(_ params: BillingMeterListParams = .init(), options: RequestOptions = .init()) async throws -> BillingMeterList {
+        try await list(params, options)
+    }
 
     /// When a meter is deactivated, no more meter events will be accepted for this meter. You can’t attach
     /// a deactivated meter to a price.
-    public var deactivate: @Sendable (_ id: String, _ params: BillingMeterDeactivateParams?) async throws -> BillingMeter
+    public func deactivate(_ id: String, _ params: BillingMeterDeactivateParams = .init(), options: RequestOptions = .init()) async throws -> BillingMeter {
+        try await deactivate(id, params, options)
+    }
 
     /// When a meter is reactivated, events for this meter can be accepted and you can attach the meter to a
     /// price.
-    public var reactivate: @Sendable (_ id: String, _ params: BillingMeterReactivateParams?) async throws -> BillingMeter
+    public func reactivate(_ id: String, _ params: BillingMeterReactivateParams = .init(), options: RequestOptions = .init()) async throws -> BillingMeter {
+        try await reactivate(id, params, options)
+    }
 }
 
 extension BillingMeterRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingMeterRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/billing/meters", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/billing/meters", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/billing/meters/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/billing/meters/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/billing/meters/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/meters/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/billing/meters", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/billing/meters", params: params, options: options)
             },
-            deactivate: { id, params in
-                try await handler.send(.POST, "/v1/billing/meters/\(id)/deactivate", params: params)
+            deactivate: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/meters/\(id)/deactivate", params: params, options: options)
             },
-            reactivate: { id, params in
-                try await handler.send(.POST, "/v1/billing/meters/\(id)/reactivate", params: params)
+            reactivate: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/meters/\(id)/reactivate", params: params, options: options)
             }
         )
     }

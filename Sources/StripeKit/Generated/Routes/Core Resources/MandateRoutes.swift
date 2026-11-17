@@ -12,15 +12,22 @@ import NIOHTTP1
 
 public struct MandateRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ mandate: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Mandate
+}
+
+extension MandateRoutes {
     /// Retrieves a Mandate object.
-    public var retrieve: @Sendable (_ mandate: String, _ expand: [String]?) async throws -> Mandate
+    public func retrieve(_ mandate: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Mandate {
+        try await retrieve(mandate, expand, options)
+    }
 }
 
 extension MandateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         MandateRoutes(
-            retrieve: { mandate, expand in
-                try await handler.send(.GET, "/v1/mandates/\(mandate)", expand: expand)
+            retrieve: { mandate, expand, options in
+                try await handler.send(.GET, "/v1/mandates/\(mandate)", expand: expand, options: options)
             }
         )
     }

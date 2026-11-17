@@ -12,17 +12,42 @@ import NIOHTTP1
 
 public struct PaymentMethodDomainRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: PaymentMethodDomainCreateParams, _ options: RequestOptions) async throws -> PaymentMethodDomain
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ paymentMethodDomain: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PaymentMethodDomain
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ paymentMethodDomain: String, _ params: PaymentMethodDomainUpdateParams, _ options: RequestOptions) async throws -> PaymentMethodDomain
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PaymentMethodDomainListParams, _ options: RequestOptions) async throws -> PaymentMethodDomainList
+
+    /// Performs `validate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var validate: @Sendable (_ paymentMethodDomain: String, _ params: PaymentMethodDomainValidateParams, _ options: RequestOptions) async throws -> PaymentMethodDomain
+}
+
+extension PaymentMethodDomainRoutes {
     /// Creates a payment method domain.
-    public var create: @Sendable (_ params: PaymentMethodDomainCreateParams) async throws -> PaymentMethodDomain
+    public func create(_ params: PaymentMethodDomainCreateParams, options: RequestOptions = .init()) async throws -> PaymentMethodDomain {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing payment method domain.
-    public var retrieve: @Sendable (_ paymentMethodDomain: String, _ expand: [String]?) async throws -> PaymentMethodDomain
+    public func retrieve(_ paymentMethodDomain: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> PaymentMethodDomain {
+        try await retrieve(paymentMethodDomain, expand, options)
+    }
 
     /// Updates an existing payment method domain.
-    public var update: @Sendable (_ paymentMethodDomain: String, _ params: PaymentMethodDomainUpdateParams?) async throws -> PaymentMethodDomain
+    public func update(_ paymentMethodDomain: String, _ params: PaymentMethodDomainUpdateParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodDomain {
+        try await update(paymentMethodDomain, params, options)
+    }
 
     /// Lists the details of existing payment method domains.
-    public var list: @Sendable (_ params: PaymentMethodDomainListParams?) async throws -> PaymentMethodDomainList
+    public func list(_ params: PaymentMethodDomainListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodDomainList {
+        try await list(params, options)
+    }
 
     /// Some payment methods might require additional steps to register a domain. If the requirements
     /// weren’t satisfied when the domain was created, the payment method will be inactive on the domain.
@@ -30,26 +55,28 @@ public struct PaymentMethodDomainRoutes: Sendable {
     /// active. To activate a payment method on an existing payment method domain, complete the required
     /// registration steps specific to the payment method, and then validate the payment method domain with
     /// this endpoint. Related guides: Payment method domains.
-    public var validate: @Sendable (_ paymentMethodDomain: String, _ params: PaymentMethodDomainValidateParams?) async throws -> PaymentMethodDomain
+    public func validate(_ paymentMethodDomain: String, _ params: PaymentMethodDomainValidateParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodDomain {
+        try await validate(paymentMethodDomain, params, options)
+    }
 }
 
 extension PaymentMethodDomainRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentMethodDomainRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/payment_method_domains", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/payment_method_domains", params: params, options: options)
             },
-            retrieve: { paymentMethodDomain, expand in
-                try await handler.send(.GET, "/v1/payment_method_domains/\(paymentMethodDomain)", expand: expand)
+            retrieve: { paymentMethodDomain, expand, options in
+                try await handler.send(.GET, "/v1/payment_method_domains/\(paymentMethodDomain)", expand: expand, options: options)
             },
-            update: { paymentMethodDomain, params in
-                try await handler.send(.POST, "/v1/payment_method_domains/\(paymentMethodDomain)", params: params)
+            update: { paymentMethodDomain, params, options in
+                try await handler.send(.POST, "/v1/payment_method_domains/\(paymentMethodDomain)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/payment_method_domains", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/payment_method_domains", params: params, options: options)
             },
-            validate: { paymentMethodDomain, params in
-                try await handler.send(.POST, "/v1/payment_method_domains/\(paymentMethodDomain)/validate", params: params)
+            validate: { paymentMethodDomain, params, options in
+                try await handler.send(.POST, "/v1/payment_method_domains/\(paymentMethodDomain)/validate", params: params, options: options)
             }
         )
     }

@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct FinancialConnectionsTransactionRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?, _ options: RequestOptions) async throws -> FinancialConnectionsTransaction
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: FinancialConnectionsTransactionListParams, _ options: RequestOptions) async throws -> FinancialConnectionsTransactionList
+}
+
+extension FinancialConnectionsTransactionRoutes {
     /// Retrieves the details of a Financial Connections Transaction
-    public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> FinancialConnectionsTransaction
+    public func retrieve(_ transaction: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> FinancialConnectionsTransaction {
+        try await retrieve(transaction, expand, options)
+    }
 
     /// Returns a list of Financial Connections Transaction objects.
-    public var list: @Sendable (_ params: FinancialConnectionsTransactionListParams) async throws -> FinancialConnectionsTransactionList
+    public func list(_ params: FinancialConnectionsTransactionListParams, options: RequestOptions = .init()) async throws -> FinancialConnectionsTransactionList {
+        try await list(params, options)
+    }
 }
 
 extension FinancialConnectionsTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FinancialConnectionsTransactionRoutes(
-            retrieve: { transaction, expand in
-                try await handler.send(.GET, "/v1/financial_connections/transactions/\(transaction)", expand: expand)
+            retrieve: { transaction, expand, options in
+                try await handler.send(.GET, "/v1/financial_connections/transactions/\(transaction)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/financial_connections/transactions", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/financial_connections/transactions", params: params, options: options)
             }
         )
     }

@@ -12,6 +12,29 @@ import NIOHTTP1
 
 public struct CreditNoteRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: CreditNoteCreateParams, _ options: RequestOptions) async throws -> CreditNote
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> CreditNote
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: CreditNoteUpdateParams, _ options: RequestOptions) async throws -> CreditNote
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: CreditNoteListParams, _ options: RequestOptions) async throws -> CreditNoteList
+
+    /// Performs `preview(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var preview: @Sendable (_ params: CreditNotePreviewParams, _ options: RequestOptions) async throws -> CreditNote
+
+    /// Performs `previewLines(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var previewLines: @Sendable (_ params: CreditNotePreviewLinesParams, _ options: RequestOptions) async throws -> CreditNoteLineItemList
+
+    /// Performs `voidCreditNote(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var voidCreditNote: @Sendable (_ id: String, _ params: CreditNoteVoidCreditNoteParams, _ options: RequestOptions) async throws -> CreditNote
+}
+
+extension CreditNoteRoutes {
     /// Issue a credit note to adjust the amount of a finalized invoice. A credit note will first reduce the
     /// invoice’s amount_remaining (and amount_due), but not below zero. This amount is indicated by the
     /// credit note’s pre_payment_amount. The excess amount is indicated by post_payment_amount, and it can
@@ -27,51 +50,65 @@ public struct CreditNoteRoutes: Sendable {
     /// refund amounts from the maximum creditable amount. This prevents the combined credit notes and
     /// refunds from exceeding the invoice amount. If you use both, ensure the combined total does not
     /// exceed the invoice’s paid amount.
-    public var create: @Sendable (_ params: CreditNoteCreateParams) async throws -> CreditNote
+    public func create(_ params: CreditNoteCreateParams, options: RequestOptions = .init()) async throws -> CreditNote {
+        try await create(params, options)
+    }
 
     /// Retrieves the credit note object with the given identifier.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> CreditNote
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> CreditNote {
+        try await retrieve(id, expand, options)
+    }
 
     /// Updates an existing credit note.
-    public var update: @Sendable (_ id: String, _ params: CreditNoteUpdateParams?) async throws -> CreditNote
+    public func update(_ id: String, _ params: CreditNoteUpdateParams = .init(), options: RequestOptions = .init()) async throws -> CreditNote {
+        try await update(id, params, options)
+    }
 
     /// Returns a list of credit notes.
-    public var list: @Sendable (_ params: CreditNoteListParams?) async throws -> CreditNoteList
+    public func list(_ params: CreditNoteListParams = .init(), options: RequestOptions = .init()) async throws -> CreditNoteList {
+        try await list(params, options)
+    }
 
     /// Get a preview of a credit note without creating it.
-    public var preview: @Sendable (_ params: CreditNotePreviewParams) async throws -> CreditNote
+    public func preview(_ params: CreditNotePreviewParams, options: RequestOptions = .init()) async throws -> CreditNote {
+        try await preview(params, options)
+    }
 
     /// When retrieving a credit note preview, you’ll get a lines property containing the first handful of
     /// those items. This URL you can retrieve the full (paginated) list of line items.
-    public var previewLines: @Sendable (_ params: CreditNotePreviewLinesParams) async throws -> CreditNoteLineItemList
+    public func previewLines(_ params: CreditNotePreviewLinesParams, options: RequestOptions = .init()) async throws -> CreditNoteLineItemList {
+        try await previewLines(params, options)
+    }
 
     /// Marks a credit note as void. Learn more about voiding credit notes.
-    public var voidCreditNote: @Sendable (_ id: String, _ params: CreditNoteVoidCreditNoteParams?) async throws -> CreditNote
+    public func voidCreditNote(_ id: String, _ params: CreditNoteVoidCreditNoteParams = .init(), options: RequestOptions = .init()) async throws -> CreditNote {
+        try await voidCreditNote(id, params, options)
+    }
 }
 
 extension CreditNoteRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CreditNoteRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/credit_notes", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/credit_notes", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/credit_notes/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/credit_notes/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/credit_notes/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/credit_notes/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/credit_notes", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/credit_notes", params: params, options: options)
             },
-            preview: { params in
-                try await handler.send(.GET, "/v1/credit_notes/preview", params: params)
+            preview: { params, options in
+                try await handler.send(.GET, "/v1/credit_notes/preview", params: params, options: options)
             },
-            previewLines: { params in
-                try await handler.send(.GET, "/v1/credit_notes/preview/lines", params: params)
+            previewLines: { params, options in
+                try await handler.send(.GET, "/v1/credit_notes/preview/lines", params: params, options: options)
             },
-            voidCreditNote: { id, params in
-                try await handler.send(.POST, "/v1/credit_notes/\(id)/void", params: params)
+            voidCreditNote: { id, params, options in
+                try await handler.send(.POST, "/v1/credit_notes/\(id)/void", params: params, options: options)
             }
         )
     }

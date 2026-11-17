@@ -12,62 +12,104 @@ import NIOHTTP1
 
 public struct TreasuryOutboundTransferRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TreasuryOutboundTransferCreateParams, _ options: RequestOptions) async throws -> TreasuryOutboundTransfer
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ outboundTransfer: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryOutboundTransfer
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferUpdateParams, _ options: RequestOptions) async throws -> TreasuryOutboundTransfer
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryOutboundTransferListParams, _ options: RequestOptions) async throws -> TreasuryOutboundTransferList
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferCancelParams, _ options: RequestOptions) async throws -> TreasuryOutboundTransfer
+
+    /// Performs `fail(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var fail: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferFailParams, _ options: RequestOptions) async throws -> TreasuryOutboundTransfer
+
+    /// Performs `post(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var post: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferPostParams, _ options: RequestOptions) async throws -> TreasuryOutboundTransfer
+
+    /// Performs `returnOutboundTransfer(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var returnOutboundTransfer: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferReturnOutboundTransferParams, _ options: RequestOptions) async throws -> TreasuryOutboundTransfer
+}
+
+extension TreasuryOutboundTransferRoutes {
     /// Creates an OutboundTransfer.
-    public var create: @Sendable (_ params: TreasuryOutboundTransferCreateParams) async throws -> TreasuryOutboundTransfer
+    public func create(_ params: TreasuryOutboundTransferCreateParams, options: RequestOptions = .init()) async throws -> TreasuryOutboundTransfer {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing OutboundTransfer by passing the unique OutboundTransfer ID from
     /// either the OutboundTransfer creation request or OutboundTransfer list.
-    public var retrieve: @Sendable (_ outboundTransfer: String, _ expand: [String]?) async throws -> TreasuryOutboundTransfer
+    public func retrieve(_ outboundTransfer: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryOutboundTransfer {
+        try await retrieve(outboundTransfer, expand, options)
+    }
 
     /// Updates a test mode created OutboundTransfer with tracking details. The OutboundTransfer must not be
     /// cancelable, and cannot be in the canceled or failed states.
-    public var update: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferUpdateParams) async throws -> TreasuryOutboundTransfer
+    public func update(_ outboundTransfer: String, _ params: TreasuryOutboundTransferUpdateParams, options: RequestOptions = .init()) async throws -> TreasuryOutboundTransfer {
+        try await update(outboundTransfer, params, options)
+    }
 
     /// Returns a list of OutboundTransfers sent from the specified FinancialAccount.
-    public var list: @Sendable (_ params: TreasuryOutboundTransferListParams) async throws -> TreasuryOutboundTransferList
+    public func list(_ params: TreasuryOutboundTransferListParams, options: RequestOptions = .init()) async throws -> TreasuryOutboundTransferList {
+        try await list(params, options)
+    }
 
     /// An OutboundTransfer can be canceled if the funds have not yet been paid out.
-    public var cancel: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferCancelParams?) async throws -> TreasuryOutboundTransfer
+    public func cancel(_ outboundTransfer: String, _ params: TreasuryOutboundTransferCancelParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryOutboundTransfer {
+        try await cancel(outboundTransfer, params, options)
+    }
 
     /// Transitions a test mode created OutboundTransfer to the failed status. The OutboundTransfer must
     /// already be in the processing state.
-    public var fail: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferFailParams?) async throws -> TreasuryOutboundTransfer
+    public func fail(_ outboundTransfer: String, _ params: TreasuryOutboundTransferFailParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryOutboundTransfer {
+        try await fail(outboundTransfer, params, options)
+    }
 
     /// Transitions a test mode created OutboundTransfer to the posted status. The OutboundTransfer must
     /// already be in the processing state.
-    public var post: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferPostParams?) async throws -> TreasuryOutboundTransfer
+    public func post(_ outboundTransfer: String, _ params: TreasuryOutboundTransferPostParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryOutboundTransfer {
+        try await post(outboundTransfer, params, options)
+    }
 
     /// Transitions a test mode created OutboundTransfer to the returned status. The OutboundTransfer must
     /// already be in the processing state.
-    public var returnOutboundTransfer: @Sendable (_ outboundTransfer: String, _ params: TreasuryOutboundTransferReturnOutboundTransferParams?) async throws -> TreasuryOutboundTransfer
+    public func returnOutboundTransfer(_ outboundTransfer: String, _ params: TreasuryOutboundTransferReturnOutboundTransferParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryOutboundTransfer {
+        try await returnOutboundTransfer(outboundTransfer, params, options)
+    }
 }
 
 extension TreasuryOutboundTransferRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryOutboundTransferRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/treasury/outbound_transfers", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/treasury/outbound_transfers", params: params, options: options)
             },
-            retrieve: { outboundTransfer, expand in
-                try await handler.send(.GET, "/v1/treasury/outbound_transfers/\(outboundTransfer)", expand: expand)
+            retrieve: { outboundTransfer, expand, options in
+                try await handler.send(.GET, "/v1/treasury/outbound_transfers/\(outboundTransfer)", expand: expand, options: options)
             },
-            update: { outboundTransfer, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)", params: params)
+            update: { outboundTransfer, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/outbound_transfers", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/outbound_transfers", params: params, options: options)
             },
-            cancel: { outboundTransfer, params in
-                try await handler.send(.POST, "/v1/treasury/outbound_transfers/\(outboundTransfer)/cancel", params: params)
+            cancel: { outboundTransfer, params, options in
+                try await handler.send(.POST, "/v1/treasury/outbound_transfers/\(outboundTransfer)/cancel", params: params, options: options)
             },
-            fail: { outboundTransfer, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/fail", params: params)
+            fail: { outboundTransfer, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/fail", params: params, options: options)
             },
-            post: { outboundTransfer, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/post", params: params)
+            post: { outboundTransfer, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/post", params: params, options: options)
             },
-            returnOutboundTransfer: { outboundTransfer, params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/return", params: params)
+            returnOutboundTransfer: { outboundTransfer, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/return", params: params, options: options)
             }
         )
     }

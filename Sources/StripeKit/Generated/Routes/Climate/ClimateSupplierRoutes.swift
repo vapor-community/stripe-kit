@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct ClimateSupplierRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ supplier: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ClimateSupplier
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ClimateSupplierListParams, _ options: RequestOptions) async throws -> ClimateSupplierList
+}
+
+extension ClimateSupplierRoutes {
     /// Retrieves a Climate supplier object.
-    public var retrieve: @Sendable (_ supplier: String, _ expand: [String]?) async throws -> ClimateSupplier
+    public func retrieve(_ supplier: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ClimateSupplier {
+        try await retrieve(supplier, expand, options)
+    }
 
     /// Lists all available Climate supplier objects.
-    public var list: @Sendable (_ params: ClimateSupplierListParams?) async throws -> ClimateSupplierList
+    public func list(_ params: ClimateSupplierListParams = .init(), options: RequestOptions = .init()) async throws -> ClimateSupplierList {
+        try await list(params, options)
+    }
 }
 
 extension ClimateSupplierRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ClimateSupplierRoutes(
-            retrieve: { supplier, expand in
-                try await handler.send(.GET, "/v1/climate/suppliers/\(supplier)", expand: expand)
+            retrieve: { supplier, expand, options in
+                try await handler.send(.GET, "/v1/climate/suppliers/\(supplier)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/climate/suppliers", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/climate/suppliers", params: params, options: options)
             }
         )
     }

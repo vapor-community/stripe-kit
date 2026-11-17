@@ -12,33 +12,55 @@ import NIOHTTP1
 
 public struct ShippingRateRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: ShippingRateCreateParams, _ options: RequestOptions) async throws -> ShippingRate
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ shippingRateToken: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ShippingRate
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ shippingRateToken: String, _ params: ShippingRateUpdateParams, _ options: RequestOptions) async throws -> ShippingRate
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ShippingRateListParams, _ options: RequestOptions) async throws -> ShippingRateList
+}
+
+extension ShippingRateRoutes {
     /// Creates a new shipping rate object.
-    public var create: @Sendable (_ params: ShippingRateCreateParams) async throws -> ShippingRate
+    public func create(_ params: ShippingRateCreateParams, options: RequestOptions = .init()) async throws -> ShippingRate {
+        try await create(params, options)
+    }
 
     /// Returns the shipping rate object with the given ID.
-    public var retrieve: @Sendable (_ shippingRateToken: String, _ expand: [String]?) async throws -> ShippingRate
+    public func retrieve(_ shippingRateToken: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ShippingRate {
+        try await retrieve(shippingRateToken, expand, options)
+    }
 
     /// Updates an existing shipping rate object.
-    public var update: @Sendable (_ shippingRateToken: String, _ params: ShippingRateUpdateParams?) async throws -> ShippingRate
+    public func update(_ shippingRateToken: String, _ params: ShippingRateUpdateParams = .init(), options: RequestOptions = .init()) async throws -> ShippingRate {
+        try await update(shippingRateToken, params, options)
+    }
 
     /// Returns a list of your shipping rates.
-    public var list: @Sendable (_ params: ShippingRateListParams?) async throws -> ShippingRateList
+    public func list(_ params: ShippingRateListParams = .init(), options: RequestOptions = .init()) async throws -> ShippingRateList {
+        try await list(params, options)
+    }
 }
 
 extension ShippingRateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ShippingRateRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/shipping_rates", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/shipping_rates", params: params, options: options)
             },
-            retrieve: { shippingRateToken, expand in
-                try await handler.send(.GET, "/v1/shipping_rates/\(shippingRateToken)", expand: expand)
+            retrieve: { shippingRateToken, expand, options in
+                try await handler.send(.GET, "/v1/shipping_rates/\(shippingRateToken)", expand: expand, options: options)
             },
-            update: { shippingRateToken, params in
-                try await handler.send(.POST, "/v1/shipping_rates/\(shippingRateToken)", params: params)
+            update: { shippingRateToken, params, options in
+                try await handler.send(.POST, "/v1/shipping_rates/\(shippingRateToken)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/shipping_rates", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/shipping_rates", params: params, options: options)
             }
         )
     }

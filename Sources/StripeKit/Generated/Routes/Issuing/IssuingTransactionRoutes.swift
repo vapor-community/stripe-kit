@@ -12,47 +12,79 @@ import NIOHTTP1
 
 public struct IssuingTransactionRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IssuingTransaction
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ transaction: String, _ params: IssuingTransactionUpdateParams, _ options: RequestOptions) async throws -> IssuingTransaction
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: IssuingTransactionListParams, _ options: RequestOptions) async throws -> IssuingTransactionList
+
+    /// Performs `createForceCapture(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var createForceCapture: @Sendable (_ params: IssuingTransactionCreateForceCaptureParams, _ options: RequestOptions) async throws -> IssuingTransaction
+
+    /// Performs `createUnlinkedRefund(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var createUnlinkedRefund: @Sendable (_ params: IssuingTransactionCreateUnlinkedRefundParams, _ options: RequestOptions) async throws -> IssuingTransaction
+
+    /// Performs `refund(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var refund: @Sendable (_ transaction: String, _ params: IssuingTransactionRefundParams, _ options: RequestOptions) async throws -> IssuingTransaction
+}
+
+extension IssuingTransactionRoutes {
     /// Retrieves an Issuing Transaction object.
-    public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> IssuingTransaction
+    public func retrieve(_ transaction: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> IssuingTransaction {
+        try await retrieve(transaction, expand, options)
+    }
 
     /// Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any
     /// parameters not provided will be left unchanged.
-    public var update: @Sendable (_ transaction: String, _ params: IssuingTransactionUpdateParams?) async throws -> IssuingTransaction
+    public func update(_ transaction: String, _ params: IssuingTransactionUpdateParams = .init(), options: RequestOptions = .init()) async throws -> IssuingTransaction {
+        try await update(transaction, params, options)
+    }
 
     /// Returns a list of Issuing Transaction objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
-    public var list: @Sendable (_ params: IssuingTransactionListParams?) async throws -> IssuingTransactionList
+    public func list(_ params: IssuingTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingTransactionList {
+        try await list(params, options)
+    }
 
     /// Allows the user to capture an arbitrary amount, also known as a forced capture.
-    public var createForceCapture: @Sendable (_ params: IssuingTransactionCreateForceCaptureParams) async throws -> IssuingTransaction
+    public func createForceCapture(_ params: IssuingTransactionCreateForceCaptureParams, options: RequestOptions = .init()) async throws -> IssuingTransaction {
+        try await createForceCapture(params, options)
+    }
 
     /// Allows the user to refund an arbitrary amount, also known as a unlinked refund.
-    public var createUnlinkedRefund: @Sendable (_ params: IssuingTransactionCreateUnlinkedRefundParams) async throws -> IssuingTransaction
+    public func createUnlinkedRefund(_ params: IssuingTransactionCreateUnlinkedRefundParams, options: RequestOptions = .init()) async throws -> IssuingTransaction {
+        try await createUnlinkedRefund(params, options)
+    }
 
     /// Refund a test-mode Transaction.
-    public var refund: @Sendable (_ transaction: String, _ params: IssuingTransactionRefundParams?) async throws -> IssuingTransaction
+    public func refund(_ transaction: String, _ params: IssuingTransactionRefundParams = .init(), options: RequestOptions = .init()) async throws -> IssuingTransaction {
+        try await refund(transaction, params, options)
+    }
 }
 
 extension IssuingTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingTransactionRoutes(
-            retrieve: { transaction, expand in
-                try await handler.send(.GET, "/v1/issuing/transactions/\(transaction)", expand: expand)
+            retrieve: { transaction, expand, options in
+                try await handler.send(.GET, "/v1/issuing/transactions/\(transaction)", expand: expand, options: options)
             },
-            update: { transaction, params in
-                try await handler.send(.POST, "/v1/issuing/transactions/\(transaction)", params: params)
+            update: { transaction, params, options in
+                try await handler.send(.POST, "/v1/issuing/transactions/\(transaction)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/issuing/transactions", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/issuing/transactions", params: params, options: options)
             },
-            createForceCapture: { params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/transactions/create_force_capture", params: params)
+            createForceCapture: { params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/transactions/create_force_capture", params: params, options: options)
             },
-            createUnlinkedRefund: { params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/transactions/create_unlinked_refund", params: params)
+            createUnlinkedRefund: { params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/transactions/create_unlinked_refund", params: params, options: options)
             },
-            refund: { transaction, params in
-                try await handler.send(.POST, "/v1/test_helpers/issuing/transactions/\(transaction)/refund", params: params)
+            refund: { transaction, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/issuing/transactions/\(transaction)/refund", params: params, options: options)
             }
         )
     }

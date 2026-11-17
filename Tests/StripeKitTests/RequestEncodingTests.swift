@@ -59,6 +59,17 @@ struct RequestEncodingTests {
         #expect(request.url == "https://api.stripe.com/v1/products/a%2Fb%20c")
     }
 
+    @Test("Per-request options override the client's account and idempotency key")
+    func requestOptionsOverride() {
+        let request = handler.request(.POST, "/v1/payouts", options: .init(stripeAccount: "acct_other", idempotencyKey: "key_other"))
+        #expect(request.headers["Stripe-Account"] == ["acct_other"])
+        #expect(request.headers["Idempotency-Key"] == ["key_other"])
+
+        let plain = StripeAPIHandler(httpClient: .shared, apiKey: "sk_test_123")
+        #expect(plain.request(.POST, "/v1/payouts").headers["Idempotency-Key"].isEmpty)
+        #expect(plain.request(.POST, "/v1/payouts", options: .init(idempotencyKey: "k")).headers["Idempotency-Key"] == ["k"])
+    }
+
     @Test("A route's own host replaces the API host")
     func baseURLOverride() {
         let request = handler.request(.GET, "/v1/quotes/qt_1/pdf", baseURL: "https://files.stripe.com")

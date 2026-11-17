@@ -12,34 +12,56 @@ import NIOHTTP1
 
 public struct TaxTransactionRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxTransaction
+
+    /// Performs `createFromCalculation(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var createFromCalculation: @Sendable (_ params: TaxTransactionCreateFromCalculationParams, _ options: RequestOptions) async throws -> TaxTransaction
+
+    /// Performs `createReversal(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var createReversal: @Sendable (_ params: TaxTransactionCreateReversalParams, _ options: RequestOptions) async throws -> TaxTransaction
+
+    /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listLineItems: @Sendable (_ transaction: String, _ params: TaxTransactionListLineItemsParams, _ options: RequestOptions) async throws -> TaxTransactionLineItemList
+}
+
+extension TaxTransactionRoutes {
     /// Retrieves a Tax Transaction object.
-    public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?) async throws -> TaxTransaction
+    public func retrieve(_ transaction: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TaxTransaction {
+        try await retrieve(transaction, expand, options)
+    }
 
     /// Creates a Tax Transaction from a calculation, if that calculation hasn’t expired. Calculations
     /// expire after 90 days.
-    public var createFromCalculation: @Sendable (_ params: TaxTransactionCreateFromCalculationParams) async throws -> TaxTransaction
+    public func createFromCalculation(_ params: TaxTransactionCreateFromCalculationParams, options: RequestOptions = .init()) async throws -> TaxTransaction {
+        try await createFromCalculation(params, options)
+    }
 
     /// Partially or fully reverses a previously created Transaction.
-    public var createReversal: @Sendable (_ params: TaxTransactionCreateReversalParams) async throws -> TaxTransaction
+    public func createReversal(_ params: TaxTransactionCreateReversalParams, options: RequestOptions = .init()) async throws -> TaxTransaction {
+        try await createReversal(params, options)
+    }
 
     /// Retrieves the line items of a committed standalone transaction as a collection.
-    public var listLineItems: @Sendable (_ transaction: String, _ params: TaxTransactionListLineItemsParams?) async throws -> TaxTransactionLineItemList
+    public func listLineItems(_ transaction: String, _ params: TaxTransactionListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> TaxTransactionLineItemList {
+        try await listLineItems(transaction, params, options)
+    }
 }
 
 extension TaxTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxTransactionRoutes(
-            retrieve: { transaction, expand in
-                try await handler.send(.GET, "/v1/tax/transactions/\(transaction)", expand: expand)
+            retrieve: { transaction, expand, options in
+                try await handler.send(.GET, "/v1/tax/transactions/\(transaction)", expand: expand, options: options)
             },
-            createFromCalculation: { params in
-                try await handler.send(.POST, "/v1/tax/transactions/create_from_calculation", params: params)
+            createFromCalculation: { params, options in
+                try await handler.send(.POST, "/v1/tax/transactions/create_from_calculation", params: params, options: options)
             },
-            createReversal: { params in
-                try await handler.send(.POST, "/v1/tax/transactions/create_reversal", params: params)
+            createReversal: { params, options in
+                try await handler.send(.POST, "/v1/tax/transactions/create_reversal", params: params, options: options)
             },
-            listLineItems: { transaction, params in
-                try await handler.send(.GET, "/v1/tax/transactions/\(transaction)/line_items", params: params)
+            listLineItems: { transaction, params, options in
+                try await handler.send(.GET, "/v1/tax/transactions/\(transaction)/line_items", params: params, options: options)
             }
         )
     }

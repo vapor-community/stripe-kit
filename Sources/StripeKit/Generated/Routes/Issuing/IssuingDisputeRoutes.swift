@@ -12,45 +12,72 @@ import NIOHTTP1
 
 public struct IssuingDisputeRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: IssuingDisputeCreateParams, _ options: RequestOptions) async throws -> IssuingDispute
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ dispute: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IssuingDispute
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ dispute: String, _ params: IssuingDisputeUpdateParams, _ options: RequestOptions) async throws -> IssuingDispute
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: IssuingDisputeListParams, _ options: RequestOptions) async throws -> IssuingDisputeList
+
+    /// Performs `submit(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var submit: @Sendable (_ dispute: String, _ params: IssuingDisputeSubmitParams, _ options: RequestOptions) async throws -> IssuingDispute
+}
+
+extension IssuingDisputeRoutes {
     /// Creates an Issuing Dispute object. Individual pieces of evidence within the evidence object are
     /// optional at this point. Stripe only validates that required evidence is present during submission.
     /// Refer to Dispute reasons and evidence for more details about evidence requirements.
-    public var create: @Sendable (_ params: IssuingDisputeCreateParams?) async throws -> IssuingDispute
+    public func create(_ params: IssuingDisputeCreateParams = .init(), options: RequestOptions = .init()) async throws -> IssuingDispute {
+        try await create(params, options)
+    }
 
     /// Retrieves an Issuing Dispute object.
-    public var retrieve: @Sendable (_ dispute: String, _ expand: [String]?) async throws -> IssuingDispute
+    public func retrieve(_ dispute: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> IssuingDispute {
+        try await retrieve(dispute, expand, options)
+    }
 
     /// Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any
     /// parameters not provided will be left unchanged. Properties on the evidence object can be unset by
     /// passing in an empty string.
-    public var update: @Sendable (_ dispute: String, _ params: IssuingDisputeUpdateParams?) async throws -> IssuingDispute
+    public func update(_ dispute: String, _ params: IssuingDisputeUpdateParams = .init(), options: RequestOptions = .init()) async throws -> IssuingDispute {
+        try await update(dispute, params, options)
+    }
 
     /// Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public var list: @Sendable (_ params: IssuingDisputeListParams?) async throws -> IssuingDisputeList
+    public func list(_ params: IssuingDisputeListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingDisputeList {
+        try await list(params, options)
+    }
 
     /// Submits an Issuing Dispute to the card network. Stripe validates that all evidence fields required
     /// for the dispute’s reason are present. For more details, see Dispute reasons and evidence.
-    public var submit: @Sendable (_ dispute: String, _ params: IssuingDisputeSubmitParams?) async throws -> IssuingDispute
+    public func submit(_ dispute: String, _ params: IssuingDisputeSubmitParams = .init(), options: RequestOptions = .init()) async throws -> IssuingDispute {
+        try await submit(dispute, params, options)
+    }
 }
 
 extension IssuingDisputeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingDisputeRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/issuing/disputes", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/issuing/disputes", params: params, options: options)
             },
-            retrieve: { dispute, expand in
-                try await handler.send(.GET, "/v1/issuing/disputes/\(dispute)", expand: expand)
+            retrieve: { dispute, expand, options in
+                try await handler.send(.GET, "/v1/issuing/disputes/\(dispute)", expand: expand, options: options)
             },
-            update: { dispute, params in
-                try await handler.send(.POST, "/v1/issuing/disputes/\(dispute)", params: params)
+            update: { dispute, params, options in
+                try await handler.send(.POST, "/v1/issuing/disputes/\(dispute)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/issuing/disputes", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/issuing/disputes", params: params, options: options)
             },
-            submit: { dispute, params in
-                try await handler.send(.POST, "/v1/issuing/disputes/\(dispute)/submit", params: params)
+            submit: { dispute, params, options in
+                try await handler.send(.POST, "/v1/issuing/disputes/\(dispute)/submit", params: params, options: options)
             }
         )
     }

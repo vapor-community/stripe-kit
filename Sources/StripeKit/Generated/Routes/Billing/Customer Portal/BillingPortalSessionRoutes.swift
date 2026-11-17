@@ -12,15 +12,22 @@ import NIOHTTP1
 
 public struct BillingPortalSessionRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: BillingPortalSessionCreateParams, _ options: RequestOptions) async throws -> BillingPortalSession
+}
+
+extension BillingPortalSessionRoutes {
     /// Creates a session of the customer portal.
-    public var create: @Sendable (_ params: BillingPortalSessionCreateParams?) async throws -> BillingPortalSession
+    public func create(_ params: BillingPortalSessionCreateParams = .init(), options: RequestOptions = .init()) async throws -> BillingPortalSession {
+        try await create(params, options)
+    }
 }
 
 extension BillingPortalSessionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingPortalSessionRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/billing_portal/sessions", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/billing_portal/sessions", params: params, options: options)
             }
         )
     }

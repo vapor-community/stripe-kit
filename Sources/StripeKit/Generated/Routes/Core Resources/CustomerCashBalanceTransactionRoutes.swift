@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct CustomerCashBalanceTransactionRoutes: Sendable {
 
+    /// Performs `retrieve(_:transaction:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ customer: String, _ transaction: String, _ expand: [String]?, _ options: RequestOptions) async throws -> CustomerCashBalanceTransaction
+
+    /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ customer: String, _ params: CustomerCashBalanceTransactionListParams, _ options: RequestOptions) async throws -> CustomerCashBalanceTransactionList
+}
+
+extension CustomerCashBalanceTransactionRoutes {
     /// Retrieves a specific cash balance transaction, which updated the customer’s cash balance.
-    public var retrieve: @Sendable (_ customer: String, _ transaction: String, _ expand: [String]?) async throws -> CustomerCashBalanceTransaction
+    public func retrieve(_ customer: String, transaction: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> CustomerCashBalanceTransaction {
+        try await retrieve(customer, transaction, expand, options)
+    }
 
     /// Returns a list of transactions that modified the customer’s cash balance.
-    public var list: @Sendable (_ customer: String, _ params: CustomerCashBalanceTransactionListParams?) async throws -> CustomerCashBalanceTransactionList
+    public func list(_ customer: String, _ params: CustomerCashBalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> CustomerCashBalanceTransactionList {
+        try await list(customer, params, options)
+    }
 }
 
 extension CustomerCashBalanceTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CustomerCashBalanceTransactionRoutes(
-            retrieve: { customer, transaction, expand in
-                try await handler.send(.GET, "/v1/customers/\(customer)/cash_balance_transactions/\(transaction)", expand: expand)
+            retrieve: { customer, transaction, expand, options in
+                try await handler.send(.GET, "/v1/customers/\(customer)/cash_balance_transactions/\(transaction)", expand: expand, options: options)
             },
-            list: { customer, params in
-                try await handler.send(.GET, "/v1/customers/\(customer)/cash_balance_transactions", params: params)
+            list: { customer, params, options in
+                try await handler.send(.GET, "/v1/customers/\(customer)/cash_balance_transactions", params: params, options: options)
             }
         )
     }

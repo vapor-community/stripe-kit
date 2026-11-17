@@ -1,7 +1,8 @@
 // MARK: - Route Generator
-// Generates closure-based route structs from spec paths.
-// Each resource gets a single struct with closure-stored operations, plus a
-// `.live(handler:)` factory that wires each closure to `StripeAPIHandler`.
+// Generates a route struct per resource from the spec's paths: a stored closure per operation
+// (replaceable, e.g. to stub in tests), a method per operation with argument labels and
+// defaults that calls it, and a `.live(handler:)` factory that wires each closure to
+// `StripeAPIHandler`.
 
 import Foundation
 
@@ -30,20 +31,38 @@ struct RouteGenerator {
         lines.append("import NIOHTTP1")
         lines.append("")
         
-        // Route struct with closure properties
+        // Route struct: one stored closure per operation (replaceable, e.g. to stub in tests)
         lines.append("// MARK: - \(resource.swiftTypeName) Routes")
         lines.append("")
         lines.append("public struct \(resource.swiftTypeName)Routes: Sendable {")
-        
         for op in operations {
+            let args = arguments(for: op, resource: resource)
             lines.append("")
+            lines.append("    /// Performs `\(selector(op, args))`. Replace it to stub that route, e.g. in tests.")
+            let closureParams = args.map { "_ \($0.name): \($0.type)" }.joined(separator: ", ")
+            lines.append("    public var \(escapedSwiftName(op.funcName)): @Sendable (\(closureParams)) async throws -> \(returnType(op, resource))")
+        }
+        lines.append("}")
+        lines.append("")
+
+        // The call API: a method per operation, with argument labels and defaults
+        lines.append("extension \(resource.swiftTypeName)Routes {")
+        for (index, op) in operations.enumerated() {
+            let args = arguments(for: op, resource: resource)
+            if index > 0 { lines.append("") }
             lines.append(contentsOf: docComment(op.description, indent: "    "))
             if op.isDeprecated {
                 lines.append("    @available(*, deprecated, message: \"This API is deprecated by Stripe.\")")
             }
-            lines.append("    public var \(escapedSwiftName(op.funcName)): \(closureType(for: op, resource: resource))")
+            let signature = args.map { arg in
+                let label = arg.label.map { $0 == arg.name ? $0 : "\($0) \(arg.name)" } ?? "_ \(arg.name)"
+                return "\(label): \(arg.type)" + (arg.defaultValue.map { " = \($0)" } ?? "")
+            }.joined(separator: ", ")
+            let name = escapedSwiftName(op.funcName)
+            lines.append("    public func \(name)(\(signature)) async throws -> \(returnType(op, resource)) {")
+            lines.append("        try await \(name)(\(args.map(\.name).joined(separator: ", ")))")
+            lines.append("    }")
         }
-        
         lines.append("}")
         lines.append("")
         
@@ -53,49 +72,55 @@ struct RouteGenerator {
         return lines.joined(separator: "\n")
     }
     
-    // MARK: - Closure Type Signatures
-    
-    private func closureType(for op: RouteOperation, resource: StripeResource) -> String {
-        let returnType = op.returnType ?? resource.swiftTypeName
-        
-        var paramParts: [String] = []
-        
-        // Path parameters get labeled underscore params
-        for param in op.pathParams {
-            paramParts.append("_ \(snakeToCamel(param)): String")
-        }
-        
-        // Multipart file upload operations
-        if op.isMultipart {
-            paramParts.append("_ fileData: Data")
-            paramParts.append("_ fileName: String")
-            paramParts.append("_ mimeType: String")
-            paramParts.append("_ purpose: String")
-        } else if op.hasBody {
-            // Request body params struct (for POST operations with body)
-            let structName = "\(resource.swiftTypeName)\(op.action)Params"
-            if op.hasRequiredBodyFields {
-                paramParts.append("_ params: \(structName)")
-            } else {
-                paramParts.append("_ params: \(structName)?")
-            }
-        } else if op.hasQueryParams {
-            // Query params struct (GET operations with query params beyond `expand`)
-            let structName = "\(resource.swiftTypeName)\(op.action)Params"
-            if op.hasRequiredQueryParams {
-                paramParts.append("_ params: \(structName)")
-            } else {
-                paramParts.append("_ params: \(structName)?")
-            }
-        } else {
-            // Operations with no body and no other query params just take expand
-            paramParts.append("_ expand: [String]?")
-        }
-        
-        let params = paramParts.isEmpty ? "()" : "(\(paramParts.joined(separator: ", ")))" 
-        return "@Sendable \(params) async throws -> \(returnType)"
+    // MARK: - Arguments
+
+    /// One argument of an operation: positional in its closure, and in its method with
+    /// `label` (nil for none) and `defaultValue`.
+    private struct RouteArgument {
+        let name: String
+        let type: String
+        let label: String?
+        let defaultValue: String?
     }
-    
+
+    /// An operation's arguments, in order. Following Swift's API guidelines and Stripe's SDKs
+    /// (`customers.retrieve(id, params, options)`):
+    /// - the first path parameter is unlabeled, later ones are labeled: `retrievePaymentMethod("cus_1", paymentMethod: "pm_1")`
+    /// - a params struct is unlabeled, defaulting to `.init()` when none of its fields is required
+    /// - otherwise `expand:` (default nil), and always `options:` last (default `.init()`)
+    private func arguments(for op: RouteOperation, resource: StripeResource) -> [RouteArgument] {
+        var args = op.pathParams.enumerated().map { index, param in
+            let name = snakeToCamel(param)
+            return RouteArgument(name: name, type: "String", label: index == 0 ? nil : name, defaultValue: nil)
+        }
+        if op.isMultipart {
+            args += [("file", "Data"), ("fileName", "String"), ("mimeType", "String"), ("purpose", "String")].map {
+                RouteArgument(name: $0.0, type: $0.1, label: $0.0, defaultValue: nil)
+            }
+        } else if op.hasBody || op.hasQueryParams {
+            let required = op.hasBody ? op.hasRequiredBodyFields : op.hasRequiredQueryParams
+            args.append(RouteArgument(
+                name: "params",
+                type: "\(resource.swiftTypeName)\(op.action)Params",
+                label: nil,
+                defaultValue: required ? nil : ".init()"
+            ))
+        } else {
+            args.append(RouteArgument(name: "expand", type: "[String]?", label: "expand", defaultValue: "nil"))
+        }
+        args.append(RouteArgument(name: "options", type: "RequestOptions", label: "options", defaultValue: ".init()"))
+        return args
+    }
+
+    /// The method's selector, e.g. `retrieve(_:expand:options:)`
+    private func selector(_ op: RouteOperation, _ args: [RouteArgument]) -> String {
+        "\(op.funcName)(\(args.map { "\($0.label ?? "_"):" }.joined()))"
+    }
+
+    private func returnType(_ op: RouteOperation, _ resource: StripeResource) -> String {
+        op.returnType ?? resource.swiftTypeName
+    }
+
     // MARK: - Live Factory
     
     private func generateLiveFactory(resource: StripeResource, operations: [RouteOperation]) -> [String] {
@@ -114,31 +139,25 @@ struct RouteGenerator {
                 apiPath = apiPath.replacing("{\(param)}", with: "\\(\(snakeToCamel(param)))")
             }
 
-            // The closure's parameters (as in `closureType`) and the handler call they feed
-            var closureParams = op.pathParams.map(snakeToCamel)
+            // The handler call the closure's arguments (see `arguments(for:)`) feed
             let call: String
             if op.isMultipart {
-                closureParams += ["fileData", "fileName", "mimeType", "purpose"]
                 var args = ["\"\(apiPath)\""]
                 if let serverURL = op.serverURL { args.append("baseURL: \"\(serverURL)\"") }
-                args += ["fileData: fileData", "fileName: fileName", "mimeType: mimeType", "purpose: purpose"]
+                args += ["fileData: file", "fileName: fileName", "mimeType: mimeType", "purpose: purpose", "options: options"]
                 call = "handler.sendMultipart(\(args.joined(separator: ", ")))"
             } else {
                 var args = [".\(op.httpMethod)", "\"\(apiPath)\""]
-                if op.hasBody || op.hasQueryParams {
-                    closureParams.append("params")
-                    args.append("params: params")
-                } else {
-                    closureParams.append("expand")
-                    args.append("expand: expand")
-                }
+                args.append(op.hasBody || op.hasQueryParams ? "params: params" : "expand: expand")
                 if op.returnsFile, let serverURL = op.serverURL {
                     args.append("baseURL: \"\(serverURL)\"")
                 }
+                args.append("options: options")
                 call = "handler.\(op.returnsFile ? "sendForData" : "send")(\(args.joined(separator: ", ")))"
             }
 
-            lines.append("            \(escapedSwiftName(op.funcName)): { \(closureParams.joined(separator: ", ")) in")
+            let closureParams = arguments(for: op, resource: resource).map(\.name).joined(separator: ", ")
+            lines.append("            \(escapedSwiftName(op.funcName)): { \(closureParams) in")
             lines.append("                try await \(call)")
             lines.append("            }\(comma)")
         }
@@ -148,7 +167,7 @@ struct RouteGenerator {
         lines.append("}")
         return lines
     }
-    
+
     // MARK: - Operation Discovery
     
     struct RouteOperation {

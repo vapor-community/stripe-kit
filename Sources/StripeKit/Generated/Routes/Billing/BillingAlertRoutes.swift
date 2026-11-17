@@ -12,45 +12,77 @@ import NIOHTTP1
 
 public struct BillingAlertRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: BillingAlertCreateParams, _ options: RequestOptions) async throws -> BillingAlert
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BillingAlert
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: BillingAlertListParams, _ options: RequestOptions) async throws -> BillingAlertList
+
+    /// Performs `activate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var activate: @Sendable (_ id: String, _ params: BillingAlertActivateParams, _ options: RequestOptions) async throws -> BillingAlert
+
+    /// Performs `archive(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var archive: @Sendable (_ id: String, _ params: BillingAlertArchiveParams, _ options: RequestOptions) async throws -> BillingAlert
+
+    /// Performs `deactivate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var deactivate: @Sendable (_ id: String, _ params: BillingAlertDeactivateParams, _ options: RequestOptions) async throws -> BillingAlert
+}
+
+extension BillingAlertRoutes {
     /// Creates a billing alert
-    public var create: @Sendable (_ params: BillingAlertCreateParams) async throws -> BillingAlert
+    public func create(_ params: BillingAlertCreateParams, options: RequestOptions = .init()) async throws -> BillingAlert {
+        try await create(params, options)
+    }
 
     /// Retrieves a billing alert given an ID
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> BillingAlert
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> BillingAlert {
+        try await retrieve(id, expand, options)
+    }
 
     /// Lists billing active and inactive alerts
-    public var list: @Sendable (_ params: BillingAlertListParams?) async throws -> BillingAlertList
+    public func list(_ params: BillingAlertListParams = .init(), options: RequestOptions = .init()) async throws -> BillingAlertList {
+        try await list(params, options)
+    }
 
     /// Reactivates this alert, allowing it to trigger again.
-    public var activate: @Sendable (_ id: String, _ params: BillingAlertActivateParams?) async throws -> BillingAlert
+    public func activate(_ id: String, _ params: BillingAlertActivateParams = .init(), options: RequestOptions = .init()) async throws -> BillingAlert {
+        try await activate(id, params, options)
+    }
 
     /// Archives this alert, removing it from the list view and APIs. This is non-reversible.
-    public var archive: @Sendable (_ id: String, _ params: BillingAlertArchiveParams?) async throws -> BillingAlert
+    public func archive(_ id: String, _ params: BillingAlertArchiveParams = .init(), options: RequestOptions = .init()) async throws -> BillingAlert {
+        try await archive(id, params, options)
+    }
 
     /// Deactivates this alert, preventing it from triggering.
-    public var deactivate: @Sendable (_ id: String, _ params: BillingAlertDeactivateParams?) async throws -> BillingAlert
+    public func deactivate(_ id: String, _ params: BillingAlertDeactivateParams = .init(), options: RequestOptions = .init()) async throws -> BillingAlert {
+        try await deactivate(id, params, options)
+    }
 }
 
 extension BillingAlertRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingAlertRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/billing/alerts", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/billing/alerts", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/billing/alerts/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/billing/alerts/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/billing/alerts", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/billing/alerts", params: params, options: options)
             },
-            activate: { id, params in
-                try await handler.send(.POST, "/v1/billing/alerts/\(id)/activate", params: params)
+            activate: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/alerts/\(id)/activate", params: params, options: options)
             },
-            archive: { id, params in
-                try await handler.send(.POST, "/v1/billing/alerts/\(id)/archive", params: params)
+            archive: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/alerts/\(id)/archive", params: params, options: options)
             },
-            deactivate: { id, params in
-                try await handler.send(.POST, "/v1/billing/alerts/\(id)/deactivate", params: params)
+            deactivate: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/alerts/\(id)/deactivate", params: params, options: options)
             }
         )
     }

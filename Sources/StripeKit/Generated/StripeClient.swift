@@ -421,9 +421,14 @@ extension StripeClient {
 
 extension StripeClient {
     /// Create a live client connected to the Stripe API.
-    public static func live(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil, idempotencyKey: String? = nil) -> StripeClient {
-        let handler = StripeAPIHandler(httpClient: httpClient, apiKey: apiKey, stripeAccount: stripeAccount, idempotencyKey: idempotencyKey)
-        return StripeClient(
+    /// - Parameter stripeAccount: Make every request as this connected account (see `onBehalfOf(_:)`).
+    public static func live(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil) -> StripeClient {
+        .live(handler: StripeAPIHandler(httpClient: httpClient, apiKey: apiKey, stripeAccount: stripeAccount))
+    }
+
+    /// A client whose routes all send their requests through `handler`.
+    static func live(handler: StripeAPIHandler) -> StripeClient {
+        StripeClient(
             handler: handler,
             accounts: .live(handler: handler),
             accountLinks: .live(handler: handler),

@@ -12,22 +12,34 @@ import NIOHTTP1
 
 public struct TaxCodeRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxCode
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TaxCodeListParams, _ options: RequestOptions) async throws -> TaxCodeList
+}
+
+extension TaxCodeRoutes {
     /// Retrieves the details of an existing tax code. Supply the unique tax code ID and Stripe will return
     /// the corresponding tax code information.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TaxCode
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TaxCode {
+        try await retrieve(id, expand, options)
+    }
 
     /// A list of all tax codes available to add to Products in order to allow specific tax calculations.
-    public var list: @Sendable (_ params: TaxCodeListParams?) async throws -> TaxCodeList
+    public func list(_ params: TaxCodeListParams = .init(), options: RequestOptions = .init()) async throws -> TaxCodeList {
+        try await list(params, options)
+    }
 }
 
 extension TaxCodeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxCodeRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/tax_codes/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/tax_codes/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/tax_codes", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/tax_codes", params: params, options: options)
             }
         )
     }

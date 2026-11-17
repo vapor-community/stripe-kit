@@ -12,15 +12,22 @@ import NIOHTTP1
 
 public struct PaymentIntentAmountDetailsLineItemRoutes: Sendable {
 
+    /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ intent: String, _ params: PaymentIntentAmountDetailsLineItemListParams, _ options: RequestOptions) async throws -> PaymentIntentAmountDetailsLineItemList
+}
+
+extension PaymentIntentAmountDetailsLineItemRoutes {
     /// Lists all LineItems of a given PaymentIntent.
-    public var list: @Sendable (_ intent: String, _ params: PaymentIntentAmountDetailsLineItemListParams?) async throws -> PaymentIntentAmountDetailsLineItemList
+    public func list(_ intent: String, _ params: PaymentIntentAmountDetailsLineItemListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntentAmountDetailsLineItemList {
+        try await list(intent, params, options)
+    }
 }
 
 extension PaymentIntentAmountDetailsLineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentIntentAmountDetailsLineItemRoutes(
-            list: { intent, params in
-                try await handler.send(.GET, "/v1/payment_intents/\(intent)/amount_details_line_items", params: params)
+            list: { intent, params, options in
+                try await handler.send(.GET, "/v1/payment_intents/\(intent)/amount_details_line_items", params: params, options: options)
             }
         )
     }

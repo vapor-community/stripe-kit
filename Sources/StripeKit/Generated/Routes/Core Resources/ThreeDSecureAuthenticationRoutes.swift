@@ -12,45 +12,72 @@ import NIOHTTP1
 
 public struct ThreeDSecureAuthenticationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: ThreeDSecureAuthenticationCreateParams, _ options: RequestOptions) async throws -> ThreeDSecureAuthentication
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ authentication: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ThreeDSecureAuthentication
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ThreeDSecureAuthenticationListParams, _ options: RequestOptions) async throws -> ThreeDSecureAuthenticationList
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ authentication: String, _ params: ThreeDSecureAuthenticationCancelParams, _ options: RequestOptions) async throws -> ThreeDSecureAuthentication
+
+    /// Performs `submit(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var submit: @Sendable (_ authentication: String, _ params: ThreeDSecureAuthenticationSubmitParams, _ options: RequestOptions) async throws -> ThreeDSecureAuthentication
+}
+
+extension ThreeDSecureAuthenticationRoutes {
     /// This endpoint creates a 3DS Authentication. Refer to the Create a 3DS Authentication object section
     /// of the Standalone 3DS guide for more information. You can pass the submit parameter to automatically
     /// submit the 3DS Authentication object when you create it. Refer to the Submit at creation section of
     /// the Standalone 3DS guide for more information.
-    public var create: @Sendable (_ params: ThreeDSecureAuthenticationCreateParams) async throws -> ThreeDSecureAuthentication
+    public func create(_ params: ThreeDSecureAuthenticationCreateParams, options: RequestOptions = .init()) async throws -> ThreeDSecureAuthentication {
+        try await create(params, options)
+    }
 
     /// This endpoint retrieves a 3DS Authentication.
-    public var retrieve: @Sendable (_ authentication: String, _ expand: [String]?) async throws -> ThreeDSecureAuthentication
+    public func retrieve(_ authentication: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ThreeDSecureAuthentication {
+        try await retrieve(authentication, expand, options)
+    }
 
     /// Returns a list of 3D Secure Authentications.
-    public var list: @Sendable (_ params: ThreeDSecureAuthenticationListParams?) async throws -> ThreeDSecureAuthenticationList
+    public func list(_ params: ThreeDSecureAuthenticationListParams = .init(), options: RequestOptions = .init()) async throws -> ThreeDSecureAuthenticationList {
+        try await list(params, options)
+    }
 
     /// This endpoint cancels a 3DS Authentication. You can cancel a 3DS Authentication object when it’s in
     /// a non-final status: requires_submission or requires_challenge.
-    public var cancel: @Sendable (_ authentication: String, _ params: ThreeDSecureAuthenticationCancelParams?) async throws -> ThreeDSecureAuthentication
+    public func cancel(_ authentication: String, _ params: ThreeDSecureAuthenticationCancelParams = .init(), options: RequestOptions = .init()) async throws -> ThreeDSecureAuthentication {
+        try await cancel(authentication, params, options)
+    }
 
     /// This endpoint submits a 3DS Authentication. You can submit a 3DS Authentication object when it has
     /// status requires_submission. Refer to the Submit the 3DS Authentication object section of the
     /// Standalone 3DS guide for more information.
-    public var submit: @Sendable (_ authentication: String, _ params: ThreeDSecureAuthenticationSubmitParams?) async throws -> ThreeDSecureAuthentication
+    public func submit(_ authentication: String, _ params: ThreeDSecureAuthenticationSubmitParams = .init(), options: RequestOptions = .init()) async throws -> ThreeDSecureAuthentication {
+        try await submit(authentication, params, options)
+    }
 }
 
 extension ThreeDSecureAuthenticationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ThreeDSecureAuthenticationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/three_d_secure/authentications", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/three_d_secure/authentications", params: params, options: options)
             },
-            retrieve: { authentication, expand in
-                try await handler.send(.GET, "/v1/three_d_secure/authentications/\(authentication)", expand: expand)
+            retrieve: { authentication, expand, options in
+                try await handler.send(.GET, "/v1/three_d_secure/authentications/\(authentication)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/three_d_secure/authentications", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/three_d_secure/authentications", params: params, options: options)
             },
-            cancel: { authentication, params in
-                try await handler.send(.POST, "/v1/three_d_secure/authentications/\(authentication)/cancel", params: params)
+            cancel: { authentication, params, options in
+                try await handler.send(.POST, "/v1/three_d_secure/authentications/\(authentication)/cancel", params: params, options: options)
             },
-            submit: { authentication, params in
-                try await handler.send(.POST, "/v1/three_d_secure/authentications/\(authentication)/submit", params: params)
+            submit: { authentication, params, options in
+                try await handler.send(.POST, "/v1/three_d_secure/authentications/\(authentication)/submit", params: params, options: options)
             }
         )
     }

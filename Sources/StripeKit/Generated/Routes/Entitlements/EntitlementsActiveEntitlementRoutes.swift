@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct EntitlementsActiveEntitlementRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> EntitlementsActiveEntitlement
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: EntitlementsActiveEntitlementListParams, _ options: RequestOptions) async throws -> EntitlementsActiveEntitlementList
+}
+
+extension EntitlementsActiveEntitlementRoutes {
     /// Retrieve an active entitlement
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> EntitlementsActiveEntitlement
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> EntitlementsActiveEntitlement {
+        try await retrieve(id, expand, options)
+    }
 
     /// Retrieve a list of active entitlements for a customer
-    public var list: @Sendable (_ params: EntitlementsActiveEntitlementListParams) async throws -> EntitlementsActiveEntitlementList
+    public func list(_ params: EntitlementsActiveEntitlementListParams, options: RequestOptions = .init()) async throws -> EntitlementsActiveEntitlementList {
+        try await list(params, options)
+    }
 }
 
 extension EntitlementsActiveEntitlementRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         EntitlementsActiveEntitlementRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/entitlements/active_entitlements/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/entitlements/active_entitlements/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/entitlements/active_entitlements", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/entitlements/active_entitlements", params: params, options: options)
             }
         )
     }

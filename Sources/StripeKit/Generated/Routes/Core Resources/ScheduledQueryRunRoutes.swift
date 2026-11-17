@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct ScheduledQueryRunRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ scheduledQueryRun: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ScheduledQueryRun
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ScheduledQueryRunListParams, _ options: RequestOptions) async throws -> ScheduledQueryRunList
+}
+
+extension ScheduledQueryRunRoutes {
     /// Retrieves the details of a scheduled query run.
-    public var retrieve: @Sendable (_ scheduledQueryRun: String, _ expand: [String]?) async throws -> ScheduledQueryRun
+    public func retrieve(_ scheduledQueryRun: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ScheduledQueryRun {
+        try await retrieve(scheduledQueryRun, expand, options)
+    }
 
     /// Returns a list of scheduled query runs.
-    public var list: @Sendable (_ params: ScheduledQueryRunListParams?) async throws -> ScheduledQueryRunList
+    public func list(_ params: ScheduledQueryRunListParams = .init(), options: RequestOptions = .init()) async throws -> ScheduledQueryRunList {
+        try await list(params, options)
+    }
 }
 
 extension ScheduledQueryRunRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ScheduledQueryRunRoutes(
-            retrieve: { scheduledQueryRun, expand in
-                try await handler.send(.GET, "/v1/sigma/scheduled_query_runs/\(scheduledQueryRun)", expand: expand)
+            retrieve: { scheduledQueryRun, expand, options in
+                try await handler.send(.GET, "/v1/sigma/scheduled_query_runs/\(scheduledQueryRun)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/sigma/scheduled_query_runs", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/sigma/scheduled_query_runs", params: params, options: options)
             }
         )
     }

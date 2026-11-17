@@ -12,43 +12,70 @@ import NIOHTTP1
 
 public struct SourceRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: SourceCreateParams, _ options: RequestOptions) async throws -> Source
+
+    /// Performs `retrieve(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ source: String, _ params: SourceRetrieveParams, _ options: RequestOptions) async throws -> Source
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ source: String, _ params: SourceUpdateParams, _ options: RequestOptions) async throws -> Source
+
+    /// Performs `sourceTransactions(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var sourceTransactions: @Sendable (_ source: String, _ params: SourceSourceTransactionsParams, _ options: RequestOptions) async throws -> SourceTransactionList
+
+    /// Performs `verify(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var verify: @Sendable (_ source: String, _ params: SourceVerifyParams, _ options: RequestOptions) async throws -> Source
+}
+
+extension SourceRoutes {
     /// Creates a new source object.
-    public var create: @Sendable (_ params: SourceCreateParams?) async throws -> Source
+    public func create(_ params: SourceCreateParams = .init(), options: RequestOptions = .init()) async throws -> Source {
+        try await create(params, options)
+    }
 
     /// Retrieves an existing source object. Supply the unique source ID from a source creation request and
     /// Stripe will return the corresponding up-to-date source object information.
-    public var retrieve: @Sendable (_ source: String, _ params: SourceRetrieveParams?) async throws -> Source
+    public func retrieve(_ source: String, _ params: SourceRetrieveParams = .init(), options: RequestOptions = .init()) async throws -> Source {
+        try await retrieve(source, params, options)
+    }
 
     /// Updates the specified source by setting the values of the parameters passed. Any parameters not
     /// provided will be left unchanged. This request accepts the metadata and owner as arguments. It is
     /// also possible to update type specific information for selected payment methods. Please refer to our
     /// payment method guides for more detail.
-    public var update: @Sendable (_ source: String, _ params: SourceUpdateParams?) async throws -> Source
+    public func update(_ source: String, _ params: SourceUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Source {
+        try await update(source, params, options)
+    }
 
     /// List source transactions for a given source.
-    public var sourceTransactions: @Sendable (_ source: String, _ params: SourceSourceTransactionsParams?) async throws -> SourceTransactionList
+    public func sourceTransactions(_ source: String, _ params: SourceSourceTransactionsParams = .init(), options: RequestOptions = .init()) async throws -> SourceTransactionList {
+        try await sourceTransactions(source, params, options)
+    }
 
     /// Verify a given source.
-    public var verify: @Sendable (_ source: String, _ params: SourceVerifyParams) async throws -> Source
+    public func verify(_ source: String, _ params: SourceVerifyParams, options: RequestOptions = .init()) async throws -> Source {
+        try await verify(source, params, options)
+    }
 }
 
 extension SourceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SourceRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/sources", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/sources", params: params, options: options)
             },
-            retrieve: { source, params in
-                try await handler.send(.GET, "/v1/sources/\(source)", params: params)
+            retrieve: { source, params, options in
+                try await handler.send(.GET, "/v1/sources/\(source)", params: params, options: options)
             },
-            update: { source, params in
-                try await handler.send(.POST, "/v1/sources/\(source)", params: params)
+            update: { source, params, options in
+                try await handler.send(.POST, "/v1/sources/\(source)", params: params, options: options)
             },
-            sourceTransactions: { source, params in
-                try await handler.send(.GET, "/v1/sources/\(source)/source_transactions", params: params)
+            sourceTransactions: { source, params, options in
+                try await handler.send(.GET, "/v1/sources/\(source)/source_transactions", params: params, options: options)
             },
-            verify: { source, params in
-                try await handler.send(.POST, "/v1/sources/\(source)/verify", params: params)
+            verify: { source, params, options in
+                try await handler.send(.POST, "/v1/sources/\(source)/verify", params: params, options: options)
             }
         )
     }

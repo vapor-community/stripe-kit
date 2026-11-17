@@ -12,34 +12,56 @@ import NIOHTTP1
 
 public struct TaxRegistrationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TaxRegistrationCreateParams, _ options: RequestOptions) async throws -> TaxRegistration
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxRegistration
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: TaxRegistrationUpdateParams, _ options: RequestOptions) async throws -> TaxRegistration
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TaxRegistrationListParams, _ options: RequestOptions) async throws -> TaxRegistrationList
+}
+
+extension TaxRegistrationRoutes {
     /// Creates a new Tax Registration object.
-    public var create: @Sendable (_ params: TaxRegistrationCreateParams) async throws -> TaxRegistration
+    public func create(_ params: TaxRegistrationCreateParams, options: RequestOptions = .init()) async throws -> TaxRegistration {
+        try await create(params, options)
+    }
 
     /// Returns a Tax Registration object.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TaxRegistration
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TaxRegistration {
+        try await retrieve(id, expand, options)
+    }
 
     /// Updates an existing Tax Registration object. A registration cannot be deleted after it has been
     /// created. If you wish to end a registration you may do so by setting expires_at.
-    public var update: @Sendable (_ id: String, _ params: TaxRegistrationUpdateParams?) async throws -> TaxRegistration
+    public func update(_ id: String, _ params: TaxRegistrationUpdateParams = .init(), options: RequestOptions = .init()) async throws -> TaxRegistration {
+        try await update(id, params, options)
+    }
 
     /// Returns a list of Tax Registration objects.
-    public var list: @Sendable (_ params: TaxRegistrationListParams?) async throws -> TaxRegistrationList
+    public func list(_ params: TaxRegistrationListParams = .init(), options: RequestOptions = .init()) async throws -> TaxRegistrationList {
+        try await list(params, options)
+    }
 }
 
 extension TaxRegistrationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxRegistrationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/tax/registrations", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/tax/registrations", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/tax/registrations/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/tax/registrations/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/tax/registrations/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/tax/registrations/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/tax/registrations", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/tax/registrations", params: params, options: options)
             }
         )
     }

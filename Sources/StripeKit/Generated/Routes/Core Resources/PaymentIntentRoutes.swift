@@ -12,37 +12,84 @@ import NIOHTTP1
 
 public struct PaymentIntentRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: PaymentIntentCreateParams, _ options: RequestOptions) async throws -> PaymentIntent
+
+    /// Performs `retrieve(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ intent: String, _ params: PaymentIntentRetrieveParams, _ options: RequestOptions) async throws -> PaymentIntent
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ intent: String, _ params: PaymentIntentUpdateParams, _ options: RequestOptions) async throws -> PaymentIntent
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PaymentIntentListParams, _ options: RequestOptions) async throws -> PaymentIntentList
+
+    /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var search: @Sendable (_ params: PaymentIntentSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<PaymentIntent>
+
+    /// Performs `applyCustomerBalance(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var applyCustomerBalance: @Sendable (_ intent: String, _ params: PaymentIntentApplyCustomerBalanceParams, _ options: RequestOptions) async throws -> PaymentIntent
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ intent: String, _ params: PaymentIntentCancelParams, _ options: RequestOptions) async throws -> PaymentIntent
+
+    /// Performs `capture(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var capture: @Sendable (_ intent: String, _ params: PaymentIntentCaptureParams, _ options: RequestOptions) async throws -> PaymentIntent
+
+    /// Performs `confirm(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var confirm: @Sendable (_ intent: String, _ params: PaymentIntentConfirmParams, _ options: RequestOptions) async throws -> PaymentIntent
+
+    /// Performs `incrementAuthorization(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var incrementAuthorization: @Sendable (_ intent: String, _ params: PaymentIntentIncrementAuthorizationParams, _ options: RequestOptions) async throws -> PaymentIntent
+
+    /// Performs `verifyMicrodeposits(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var verifyMicrodeposits: @Sendable (_ intent: String, _ params: PaymentIntentVerifyMicrodepositsParams, _ options: RequestOptions) async throws -> PaymentIntent
+}
+
+extension PaymentIntentRoutes {
     /// Creates a PaymentIntent object. After the PaymentIntent is created, attach a payment method and
     /// confirm to continue the payment. Learn more about the available payment flows with the Payment
     /// Intents API. When you use confirm=true during creation, it’s equivalent to creating and confirming
     /// the PaymentIntent in the same call. You can use any parameters available in the confirm API when you
     /// supply confirm=true.
-    public var create: @Sendable (_ params: PaymentIntentCreateParams) async throws -> PaymentIntent
+    public func create(_ params: PaymentIntentCreateParams, options: RequestOptions = .init()) async throws -> PaymentIntent {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of a PaymentIntent that has previously been created. You can retrieve a
     /// PaymentIntent client-side using a publishable key when the client_secret is in the query string. If
     /// you retrieve a PaymentIntent with a publishable key, it only returns a subset of properties. Refer
     /// to the payment intent object reference for more details.
-    public var retrieve: @Sendable (_ intent: String, _ params: PaymentIntentRetrieveParams?) async throws -> PaymentIntent
+    public func retrieve(_ intent: String, _ params: PaymentIntentRetrieveParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntent {
+        try await retrieve(intent, params, options)
+    }
 
     /// Updates properties on a PaymentIntent object without confirming. Depending on which properties you
     /// update, you might need to confirm the PaymentIntent again. For example, updating the payment_method
     /// always requires you to confirm the PaymentIntent again. If you prefer to update and confirm at the
     /// same time, we recommend updating properties through the confirm API instead.
-    public var update: @Sendable (_ intent: String, _ params: PaymentIntentUpdateParams?) async throws -> PaymentIntent
+    public func update(_ intent: String, _ params: PaymentIntentUpdateParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntent {
+        try await update(intent, params, options)
+    }
 
     /// Returns a list of PaymentIntents.
-    public var list: @Sendable (_ params: PaymentIntentListParams?) async throws -> PaymentIntentList
+    public func list(_ params: PaymentIntentListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntentList {
+        try await list(params, options)
+    }
 
     /// Search for PaymentIntents you’ve previously created using Stripe’s Search Query Language. Don’t use
     /// search in read-after-write flows where strict consistency is necessary. Under normal operating
     /// conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated
     /// data can be up to an hour behind during outages. Search functionality is not available to merchants
     /// in India.
-    public var search: @Sendable (_ params: PaymentIntentSearchParams) async throws -> StripeSearchResult<PaymentIntent>
+    public func search(_ params: PaymentIntentSearchParams, options: RequestOptions = .init()) async throws -> StripeSearchResult<PaymentIntent> {
+        try await search(params, options)
+    }
 
     /// Manually reconcile the remaining amount for a customer_balance PaymentIntent.
-    public var applyCustomerBalance: @Sendable (_ intent: String, _ params: PaymentIntentApplyCustomerBalanceParams?) async throws -> PaymentIntent
+    public func applyCustomerBalance(_ intent: String, _ params: PaymentIntentApplyCustomerBalanceParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntent {
+        try await applyCustomerBalance(intent, params, options)
+    }
 
     /// You can cancel a PaymentIntent object when it’s in one of these statuses: requires_payment_method,
     /// requires_capture, requires_confirmation, requires_action or, in rare cases, processing. After it’s
@@ -51,12 +98,16 @@ public struct PaymentIntentRoutes: Sendable {
     /// remaining amount_capturable is automatically refunded. You can directly cancel the PaymentIntent for
     /// a Checkout Session only when the PaymentIntent has a status of requires_capture. Otherwise, you must
     /// expire the Checkout Session.
-    public var cancel: @Sendable (_ intent: String, _ params: PaymentIntentCancelParams?) async throws -> PaymentIntent
+    public func cancel(_ intent: String, _ params: PaymentIntentCancelParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntent {
+        try await cancel(intent, params, options)
+    }
 
     /// Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
     /// Uncaptured PaymentIntents are cancelled a set number of days (7 by default) after their creation.
     /// Learn more about separate authorization and capture.
-    public var capture: @Sendable (_ intent: String, _ params: PaymentIntentCaptureParams?) async throws -> PaymentIntent
+    public func capture(_ intent: String, _ params: PaymentIntentCaptureParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntent {
+        try await capture(intent, params, options)
+    }
 
     /// Confirm that your customer intends to pay with current or provided payment method. Upon
     /// confirmation, the PaymentIntent will attempt to initiate a payment. If the selected payment method
@@ -73,7 +124,9 @@ public struct PaymentIntentRoutes: Sendable {
     /// re-confirm the PaymentIntent to initiate the next payment attempt. There is a variable upper limit
     /// on how many times a PaymentIntent can be confirmed. After this limit is reached, any further calls
     /// to this endpoint will transition the PaymentIntent to the canceled state.
-    public var confirm: @Sendable (_ intent: String, _ params: PaymentIntentConfirmParams?) async throws -> PaymentIntent
+    public func confirm(_ intent: String, _ params: PaymentIntentConfirmParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntent {
+        try await confirm(intent, params, options)
+    }
 
     /// Perform an incremental authorization on an eligible PaymentIntent. To be eligible, the
     /// PaymentIntent’s status must be requires_capture and incremental_authorization_supported must be
@@ -87,47 +140,51 @@ public struct PaymentIntentRoutes: Sendable {
     /// authorization attempts, including declines. After it’s captured, a PaymentIntent can no longer be
     /// incremented. Learn more about incremental authorizations with in-person payments and online
     /// payments.
-    public var incrementAuthorization: @Sendable (_ intent: String, _ params: PaymentIntentIncrementAuthorizationParams) async throws -> PaymentIntent
+    public func incrementAuthorization(_ intent: String, _ params: PaymentIntentIncrementAuthorizationParams, options: RequestOptions = .init()) async throws -> PaymentIntent {
+        try await incrementAuthorization(intent, params, options)
+    }
 
     /// Verifies microdeposits on a PaymentIntent object.
-    public var verifyMicrodeposits: @Sendable (_ intent: String, _ params: PaymentIntentVerifyMicrodepositsParams?) async throws -> PaymentIntent
+    public func verifyMicrodeposits(_ intent: String, _ params: PaymentIntentVerifyMicrodepositsParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntent {
+        try await verifyMicrodeposits(intent, params, options)
+    }
 }
 
 extension PaymentIntentRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentIntentRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/payment_intents", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/payment_intents", params: params, options: options)
             },
-            retrieve: { intent, params in
-                try await handler.send(.GET, "/v1/payment_intents/\(intent)", params: params)
+            retrieve: { intent, params, options in
+                try await handler.send(.GET, "/v1/payment_intents/\(intent)", params: params, options: options)
             },
-            update: { intent, params in
-                try await handler.send(.POST, "/v1/payment_intents/\(intent)", params: params)
+            update: { intent, params, options in
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/payment_intents", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/payment_intents", params: params, options: options)
             },
-            search: { params in
-                try await handler.send(.GET, "/v1/payment_intents/search", params: params)
+            search: { params, options in
+                try await handler.send(.GET, "/v1/payment_intents/search", params: params, options: options)
             },
-            applyCustomerBalance: { intent, params in
-                try await handler.send(.POST, "/v1/payment_intents/\(intent)/apply_customer_balance", params: params)
+            applyCustomerBalance: { intent, params, options in
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/apply_customer_balance", params: params, options: options)
             },
-            cancel: { intent, params in
-                try await handler.send(.POST, "/v1/payment_intents/\(intent)/cancel", params: params)
+            cancel: { intent, params, options in
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/cancel", params: params, options: options)
             },
-            capture: { intent, params in
-                try await handler.send(.POST, "/v1/payment_intents/\(intent)/capture", params: params)
+            capture: { intent, params, options in
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/capture", params: params, options: options)
             },
-            confirm: { intent, params in
-                try await handler.send(.POST, "/v1/payment_intents/\(intent)/confirm", params: params)
+            confirm: { intent, params, options in
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/confirm", params: params, options: options)
             },
-            incrementAuthorization: { intent, params in
-                try await handler.send(.POST, "/v1/payment_intents/\(intent)/increment_authorization", params: params)
+            incrementAuthorization: { intent, params, options in
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/increment_authorization", params: params, options: options)
             },
-            verifyMicrodeposits: { intent, params in
-                try await handler.send(.POST, "/v1/payment_intents/\(intent)/verify_microdeposits", params: params)
+            verifyMicrodeposits: { intent, params, options in
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/verify_microdeposits", params: params, options: options)
             }
         )
     }

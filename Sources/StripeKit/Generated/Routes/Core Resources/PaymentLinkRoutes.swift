@@ -12,41 +12,68 @@ import NIOHTTP1
 
 public struct PaymentLinkRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: PaymentLinkCreateParams, _ options: RequestOptions) async throws -> PaymentLink
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ paymentLink: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PaymentLink
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ paymentLink: String, _ params: PaymentLinkUpdateParams, _ options: RequestOptions) async throws -> PaymentLink
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PaymentLinkListParams, _ options: RequestOptions) async throws -> PaymentLinkList
+
+    /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listLineItems: @Sendable (_ paymentLink: String, _ params: PaymentLinkListLineItemsParams, _ options: RequestOptions) async throws -> ItemList
+}
+
+extension PaymentLinkRoutes {
     /// Creates a payment link.
-    public var create: @Sendable (_ params: PaymentLinkCreateParams) async throws -> PaymentLink
+    public func create(_ params: PaymentLinkCreateParams, options: RequestOptions = .init()) async throws -> PaymentLink {
+        try await create(params, options)
+    }
 
     /// Retrieve a payment link.
-    public var retrieve: @Sendable (_ paymentLink: String, _ expand: [String]?) async throws -> PaymentLink
+    public func retrieve(_ paymentLink: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> PaymentLink {
+        try await retrieve(paymentLink, expand, options)
+    }
 
     /// Updates a payment link.
-    public var update: @Sendable (_ paymentLink: String, _ params: PaymentLinkUpdateParams?) async throws -> PaymentLink
+    public func update(_ paymentLink: String, _ params: PaymentLinkUpdateParams = .init(), options: RequestOptions = .init()) async throws -> PaymentLink {
+        try await update(paymentLink, params, options)
+    }
 
     /// Returns a list of your payment links.
-    public var list: @Sendable (_ params: PaymentLinkListParams?) async throws -> PaymentLinkList
+    public func list(_ params: PaymentLinkListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentLinkList {
+        try await list(params, options)
+    }
 
     /// When retrieving a payment link, there is an includable line_items property containing the first
     /// handful of those items. There is also a URL where you can retrieve the full (paginated) list of line
     /// items.
-    public var listLineItems: @Sendable (_ paymentLink: String, _ params: PaymentLinkListLineItemsParams?) async throws -> ItemList
+    public func listLineItems(_ paymentLink: String, _ params: PaymentLinkListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> ItemList {
+        try await listLineItems(paymentLink, params, options)
+    }
 }
 
 extension PaymentLinkRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentLinkRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/payment_links", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/payment_links", params: params, options: options)
             },
-            retrieve: { paymentLink, expand in
-                try await handler.send(.GET, "/v1/payment_links/\(paymentLink)", expand: expand)
+            retrieve: { paymentLink, expand, options in
+                try await handler.send(.GET, "/v1/payment_links/\(paymentLink)", expand: expand, options: options)
             },
-            update: { paymentLink, params in
-                try await handler.send(.POST, "/v1/payment_links/\(paymentLink)", params: params)
+            update: { paymentLink, params, options in
+                try await handler.send(.POST, "/v1/payment_links/\(paymentLink)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/payment_links", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/payment_links", params: params, options: options)
             },
-            listLineItems: { paymentLink, params in
-                try await handler.send(.GET, "/v1/payment_links/\(paymentLink)/line_items", params: params)
+            listLineItems: { paymentLink, params, options in
+                try await handler.send(.GET, "/v1/payment_links/\(paymentLink)/line_items", params: params, options: options)
             }
         )
     }

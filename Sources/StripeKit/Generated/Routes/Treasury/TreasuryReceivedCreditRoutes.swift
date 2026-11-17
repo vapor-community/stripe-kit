@@ -12,29 +12,46 @@ import NIOHTTP1
 
 public struct TreasuryReceivedCreditRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TreasuryReceivedCreditCreateParams, _ options: RequestOptions) async throws -> TreasuryReceivedCredit
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryReceivedCredit
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryReceivedCreditListParams, _ options: RequestOptions) async throws -> TreasuryReceivedCreditList
+}
+
+extension TreasuryReceivedCreditRoutes {
     /// Use this endpoint to simulate a test mode ReceivedCredit initiated by a third party. In live mode,
     /// you can’t directly create ReceivedCredits initiated by third parties.
-    public var create: @Sendable (_ params: TreasuryReceivedCreditCreateParams) async throws -> TreasuryReceivedCredit
+    public func create(_ params: TreasuryReceivedCreditCreateParams, options: RequestOptions = .init()) async throws -> TreasuryReceivedCredit {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing ReceivedCredit by passing the unique ReceivedCredit ID from the
     /// ReceivedCredit list.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TreasuryReceivedCredit
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryReceivedCredit {
+        try await retrieve(id, expand, options)
+    }
 
     /// Returns a list of ReceivedCredits.
-    public var list: @Sendable (_ params: TreasuryReceivedCreditListParams) async throws -> TreasuryReceivedCreditList
+    public func list(_ params: TreasuryReceivedCreditListParams, options: RequestOptions = .init()) async throws -> TreasuryReceivedCreditList {
+        try await list(params, options)
+    }
 }
 
 extension TreasuryReceivedCreditRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryReceivedCreditRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/test_helpers/treasury/received_credits", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/test_helpers/treasury/received_credits", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/treasury/received_credits/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/treasury/received_credits/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/received_credits", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/received_credits", params: params, options: options)
             }
         )
     }

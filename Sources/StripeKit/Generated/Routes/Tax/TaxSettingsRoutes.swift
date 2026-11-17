@@ -12,22 +12,34 @@ import NIOHTTP1
 
 public struct TaxSettingsRoutes: Sendable {
 
+    /// Performs `retrieve(expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ expand: [String]?, _ options: RequestOptions) async throws -> TaxSettings
+
+    /// Performs `update(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ params: TaxSettingsUpdateParams, _ options: RequestOptions) async throws -> TaxSettings
+}
+
+extension TaxSettingsRoutes {
     /// Retrieves Tax Settings for a merchant.
-    public var retrieve: @Sendable (_ expand: [String]?) async throws -> TaxSettings
+    public func retrieve(expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TaxSettings {
+        try await retrieve(expand, options)
+    }
 
     /// Updates Tax Settings parameters used in tax calculations. All parameters are editable but none can
     /// be removed once set. Check the returned Tax Settings object and validate that its status is active.
-    public var update: @Sendable (_ params: TaxSettingsUpdateParams?) async throws -> TaxSettings
+    public func update(_ params: TaxSettingsUpdateParams = .init(), options: RequestOptions = .init()) async throws -> TaxSettings {
+        try await update(params, options)
+    }
 }
 
 extension TaxSettingsRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxSettingsRoutes(
-            retrieve: { expand in
-                try await handler.send(.GET, "/v1/tax/settings", expand: expand)
+            retrieve: { expand, options in
+                try await handler.send(.GET, "/v1/tax/settings", expand: expand, options: options)
             },
-            update: { params in
-                try await handler.send(.POST, "/v1/tax/settings", params: params)
+            update: { params, options in
+                try await handler.send(.POST, "/v1/tax/settings", params: params, options: options)
             }
         )
     }

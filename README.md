@@ -70,7 +70,7 @@ params.name = "Jane Doe"
 let customer = try await stripe.customers.create(params)
 
 // Retrieve with expanded fields (nil if the customer was deleted)
-let full = try await stripe.customers.retrieve(customer.id, ["default_source"]).object
+let full = try await stripe.customers.retrieve(customer.id, expand: ["default_source"]).object
 
 // Create a payment intent
 var piParams = PaymentIntentCreateParams()
@@ -80,7 +80,7 @@ piParams.customer = customer.id
 let intent = try await stripe.paymentIntents.create(piParams)
 
 // List all charges
-let charges = try await stripe.charges.list(nil)
+let charges = try await stripe.charges.list()
 for charge in charges.data ?? [] {
     print("\(charge.id): \(charge.amount ?? 0)")
 }
@@ -97,7 +97,7 @@ let results = try await stripe.customers.search(.init(query: "email:'jane@exampl
 print(results.data.count, results.nextPage ?? "last page")
 
 // Namespaced APIs are grouped like their paths: /v1/terminal/readers → stripe.terminal.readers
-let readers: TerminalReaderList = try await stripe.terminal.readers.list(nil)
+let readers: TerminalReaderList = try await stripe.terminal.readers.list()
 let calculation: TaxCalculation = try await stripe.tax.calculations.create(taxParams)
 ```
 
@@ -105,18 +105,30 @@ Types in a namespace always carry it in their name (`TerminalReader`, `TaxCalcul
 
 ## API Design
 
-### Routes (Closure-Based)
+### Routes
 
-Every route struct uses `@Sendable` closures:
+Each operation is a method with argument labels and defaults, following Stripe's SDKs (`retrieve(id, params, options)`):
+
+```swift
+try await stripe.customers.create()                                    // params default to .init()
+try await stripe.customers.update("cus_1", .init(email: "jane@example.com"))
+try await stripe.customers.retrieve("cus_1", expand: ["default_source"])
+try await stripe.customers.retrievePaymentMethod("cus_1", paymentMethod: "pm_1")
+try await stripe.customers.create(params, options: .init(idempotencyKey: key))
+```
+
+- The first path parameter is unlabeled; any others are labeled.
+- A params struct is unlabeled. It defaults to `.init()` unless it has required fields.
+- Routes without a params struct take `expand:`; a params struct has its own `expand`.
+- Every method ends with `options: RequestOptions` (connected account, idempotency key).
+
+Each method calls a `@Sendable` closure stored on the route struct, which you can replace, e.g. to stub a route in tests:
 
 ```swift
 public struct CustomerRoutes: Sendable {
-    public var create:   @Sendable (_ params: CustomerCreateParams?) async throws -> Customer
-    public var retrieve: @Sendable (_ customer: String, _ expand: [String]?) async throws -> ObjectOrDeleted<Customer, DeletedCustomer>
-    public var update:   @Sendable (_ customer: String, _ params: CustomerUpdateParams?) async throws -> Customer
-    public var list:     @Sendable (_ params: CustomerListParams?) async throws -> CustomerList
-    public var search:   @Sendable (_ params: CustomerSearchParams) async throws -> StripeSearchResult<Customer>
-    public var delete:   @Sendable (_ customer: String, _ expand: [String]?) async throws -> DeletedCustomer
+    public var create:   @Sendable (_ params: CustomerCreateParams, _ options: RequestOptions) async throws -> Customer
+    public var retrieve: @Sendable (_ customer: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ObjectOrDeleted<Customer, DeletedCustomer>
+    …
 }
 ```
 
@@ -127,7 +139,7 @@ Where Stripe can return either one, such as retrieving a customer that may have 
 the route returns `ObjectOrDeleted`:
 
 ```swift
-switch try await stripe.customers.retrieve("cus_123", nil) {
+switch try await stripe.customers.retrieve("cus_123") {
 case .object(let customer): print(customer.email ?? "")
 case .deleted(let deleted): print("\(deleted.id) was deleted")
 }
@@ -161,7 +173,7 @@ Stripe returns IDs by default but can expand nested objects on request. StripeKi
 The most common pattern. A field is either a string ID or a fully expanded object:
 
 ```swift
-guard let customer = try await stripe.customers.retrieve("cus_xxx", ["default_source"]).object else { return }
+guard let customer = try await stripe.customers.retrieve("cus_xxx", expand: ["default_source"]).object else { return }
 
 // wrappedValue → the ID (when not expanded)
 let sourceId: String? = customer.defaultSource
@@ -173,7 +185,7 @@ let source: PaymentSource? = customer.$defaultSource
 Where Stripe can expand a field to a deleted object (a charge's `customer` after the customer was deleted), the expanded value is an `ObjectOrDeleted`, the same type retrieve routes return:
 
 ```swift
-let charge = try await stripe.charges.retrieve("ch_xxx", ["customer"])
+let charge = try await stripe.charges.retrieve("ch_xxx", expand: ["customer"])
 
 switch charge.$customer {
 case .object(let customer)?: print(customer.email ?? "")
@@ -187,7 +199,7 @@ case nil: break  // not expanded
 For fields like an invoice's `discounts`, where the API returns an array that can be either string IDs or expanded objects:
 
 ```swift
-let invoice = try await stripe.invoices.retrieve("in_xxx", ["discounts"])
+let invoice = try await stripe.invoices.retrieve("in_xxx", expand: ["discounts"])
 
 // wrappedValue → array of IDs (when not expanded)
 let discountIds: [String]? = invoice.discounts
@@ -198,18 +210,21 @@ let discounts: [ObjectOrDeleted<Discount, DeletedDiscount>]? = invoice.$discount
 
 ### Idempotency
 
-Stripe supports [idempotency keys](https://docs.stripe.com/api/idempotent_requests) to safely retry requests:
+Stripe supports [idempotency keys](https://docs.stripe.com/api/idempotent_requests) to safely retry requests. Pass a new key with each request:
 
 ```swift
-let customer = try await stripe.idempotent("unique-key-\(UUID())").customers.create(params)
+let customer = try await stripe.customers.create(params, options: .init(idempotencyKey: UUID().uuidString))
 ```
 
 ### Stripe Connect (`onBehalfOf`)
 
-Make requests as a connected account (sends the `Stripe-Account` header; unrelated to the `on_behalf_of` param):
+Make requests as a connected account (sends the `Stripe-Account` header; unrelated to the `on_behalf_of` param), for one request or a whole client:
 
 ```swift
-let payout = try await stripe.onBehalfOf("acct_connected_123").payouts.create(payoutParams)
+let payout = try await stripe.payouts.create(payoutParams, options: .init(stripeAccount: "acct_connected_123"))
+
+let connected = stripe.onBehalfOf("acct_connected_123")
+let balance = try await connected.balances.retrieve()
 ```
 
 ### File Uploads
@@ -218,7 +233,7 @@ Upload files to the Stripe Files API using multipart form data:
 
 ```swift
 let file = try await stripe.files.create(
-    fileData: imageData,
+    file: imageData,
     fileName: "receipt.png",
     mimeType: "image/png",
     purpose: "dispute_evidence"
@@ -268,14 +283,14 @@ default:
 
 ## Testing
 
-Every route struct includes a `.test` stub with unimplemented closures. Override only what your tests need:
+Replace the closures of the routes your code uses. `StripeClient.test` has a placeholder API key, so any route you don't replace fails rather than reaching Stripe:
 
 ```swift
 var client = StripeClient.test
 
-// Override the customer create route
-client.customers.create = { params in
-    return Customer(created: Date(), id: "cus_test_123", livemode: false, object: .customer)
+// Stub the customer create route (models are Decodable; decode a recorded response)
+client.customers.create = { params, options in
+    try JSONDecoder().decode(Customer.self, from: customerJSON)
 }
 
 // Inject into your service
@@ -356,7 +371,7 @@ spec3.sdk.json
 2. **ModelGenerator** emits `Codable` structs from schema properties, handling enums, nested objects, and `@Expandable` fields
 3. **RouteGenerator** uses the `pathMapping` to find all API operations for each resource
 4. **ParamGenerator** extracts `requestBody` schemas from POST operations and generates typed param structs
-5. **InfraGenerator** wires all route structs into `StripeClient` with `.live()` and `.test` factories
+5. **InfraGenerator** wires all route structs into `StripeClient` with a `.live()` factory
 
 ### Updating to a New API Version
 

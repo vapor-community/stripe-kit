@@ -12,16 +12,23 @@ import NIOHTTP1
 
 public struct TerminalOnboardingLinkRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TerminalOnboardingLinkCreateParams, _ options: RequestOptions) async throws -> TerminalOnboardingLink
+}
+
+extension TerminalOnboardingLinkRoutes {
     /// Creates a new OnboardingLink object that contains a redirect_url used for onboarding onto Tap to Pay
     /// on iPhone.
-    public var create: @Sendable (_ params: TerminalOnboardingLinkCreateParams) async throws -> TerminalOnboardingLink
+    public func create(_ params: TerminalOnboardingLinkCreateParams, options: RequestOptions = .init()) async throws -> TerminalOnboardingLink {
+        try await create(params, options)
+    }
 }
 
 extension TerminalOnboardingLinkRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TerminalOnboardingLinkRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/terminal/onboarding_links", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/terminal/onboarding_links", params: params, options: options)
             }
         )
     }

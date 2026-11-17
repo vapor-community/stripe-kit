@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct PaymentAttemptRecordRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PaymentAttemptRecord
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PaymentAttemptRecordListParams, _ options: RequestOptions) async throws -> PaymentAttemptRecordList
+}
+
+extension PaymentAttemptRecordRoutes {
     /// Retrieves a Payment Attempt Record with the given ID
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> PaymentAttemptRecord
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> PaymentAttemptRecord {
+        try await retrieve(id, expand, options)
+    }
 
     /// List all the Payment Attempt Records attached to the specified Payment Record.
-    public var list: @Sendable (_ params: PaymentAttemptRecordListParams) async throws -> PaymentAttemptRecordList
+    public func list(_ params: PaymentAttemptRecordListParams, options: RequestOptions = .init()) async throws -> PaymentAttemptRecordList {
+        try await list(params, options)
+    }
 }
 
 extension PaymentAttemptRecordRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentAttemptRecordRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/payment_attempt_records/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/payment_attempt_records/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/payment_attempt_records", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/payment_attempt_records", params: params, options: options)
             }
         )
     }

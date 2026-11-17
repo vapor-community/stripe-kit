@@ -12,34 +12,56 @@ import NIOHTTP1
 
 public struct TaxRateRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TaxRateCreateParams, _ options: RequestOptions) async throws -> TaxRate
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ taxRate: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxRate
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ taxRate: String, _ params: TaxRateUpdateParams, _ options: RequestOptions) async throws -> TaxRate
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TaxRateListParams, _ options: RequestOptions) async throws -> TaxRateList
+}
+
+extension TaxRateRoutes {
     /// Creates a new tax rate.
-    public var create: @Sendable (_ params: TaxRateCreateParams) async throws -> TaxRate
+    public func create(_ params: TaxRateCreateParams, options: RequestOptions = .init()) async throws -> TaxRate {
+        try await create(params, options)
+    }
 
     /// Retrieves a tax rate with the given ID
-    public var retrieve: @Sendable (_ taxRate: String, _ expand: [String]?) async throws -> TaxRate
+    public func retrieve(_ taxRate: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TaxRate {
+        try await retrieve(taxRate, expand, options)
+    }
 
     /// Updates an existing tax rate.
-    public var update: @Sendable (_ taxRate: String, _ params: TaxRateUpdateParams?) async throws -> TaxRate
+    public func update(_ taxRate: String, _ params: TaxRateUpdateParams = .init(), options: RequestOptions = .init()) async throws -> TaxRate {
+        try await update(taxRate, params, options)
+    }
 
     /// Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most
     /// recently created tax rates appearing first.
-    public var list: @Sendable (_ params: TaxRateListParams?) async throws -> TaxRateList
+    public func list(_ params: TaxRateListParams = .init(), options: RequestOptions = .init()) async throws -> TaxRateList {
+        try await list(params, options)
+    }
 }
 
 extension TaxRateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxRateRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/tax_rates", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/tax_rates", params: params, options: options)
             },
-            retrieve: { taxRate, expand in
-                try await handler.send(.GET, "/v1/tax_rates/\(taxRate)", expand: expand)
+            retrieve: { taxRate, expand, options in
+                try await handler.send(.GET, "/v1/tax_rates/\(taxRate)", expand: expand, options: options)
             },
-            update: { taxRate, params in
-                try await handler.send(.POST, "/v1/tax_rates/\(taxRate)", params: params)
+            update: { taxRate, params, options in
+                try await handler.send(.POST, "/v1/tax_rates/\(taxRate)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/tax_rates", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/tax_rates", params: params, options: options)
             }
         )
     }

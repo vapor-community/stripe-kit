@@ -12,45 +12,72 @@ import NIOHTTP1
 
 public struct WebhookEndpointRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: WebhookEndpointCreateParams, _ options: RequestOptions) async throws -> WebhookEndpoint
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ webhookEndpoint: String, _ expand: [String]?, _ options: RequestOptions) async throws -> WebhookEndpoint
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ webhookEndpoint: String, _ params: WebhookEndpointUpdateParams, _ options: RequestOptions) async throws -> WebhookEndpoint
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: WebhookEndpointListParams, _ options: RequestOptions) async throws -> WebhookEndpointList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ webhookEndpoint: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedWebhookEndpoint
+}
+
+extension WebhookEndpointRoutes {
     /// A webhook endpoint must have a url and a list of enabled_events. You may optionally specify the
     /// Boolean connect parameter. If set to true, then a Connect webhook endpoint that notifies the
     /// specified url about events from all connected accounts is created; otherwise an account webhook
     /// endpoint that notifies the specified url only about events from your account is created. You can
     /// also create webhook endpoints in the webhooks settings section of the Dashboard.
-    public var create: @Sendable (_ params: WebhookEndpointCreateParams) async throws -> WebhookEndpoint
+    public func create(_ params: WebhookEndpointCreateParams, options: RequestOptions = .init()) async throws -> WebhookEndpoint {
+        try await create(params, options)
+    }
 
     /// Retrieves the webhook endpoint with the given ID.
-    public var retrieve: @Sendable (_ webhookEndpoint: String, _ expand: [String]?) async throws -> WebhookEndpoint
+    public func retrieve(_ webhookEndpoint: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> WebhookEndpoint {
+        try await retrieve(webhookEndpoint, expand, options)
+    }
 
     /// Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of
     /// your endpoint.
-    public var update: @Sendable (_ webhookEndpoint: String, _ params: WebhookEndpointUpdateParams?) async throws -> WebhookEndpoint
+    public func update(_ webhookEndpoint: String, _ params: WebhookEndpointUpdateParams = .init(), options: RequestOptions = .init()) async throws -> WebhookEndpoint {
+        try await update(webhookEndpoint, params, options)
+    }
 
     /// Returns a list of your webhook endpoints.
-    public var list: @Sendable (_ params: WebhookEndpointListParams?) async throws -> WebhookEndpointList
+    public func list(_ params: WebhookEndpointListParams = .init(), options: RequestOptions = .init()) async throws -> WebhookEndpointList {
+        try await list(params, options)
+    }
 
     /// You can also delete webhook endpoints via the webhook endpoint management page of the Stripe
     /// dashboard.
-    public var delete: @Sendable (_ webhookEndpoint: String, _ expand: [String]?) async throws -> DeletedWebhookEndpoint
+    public func delete(_ webhookEndpoint: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedWebhookEndpoint {
+        try await delete(webhookEndpoint, expand, options)
+    }
 }
 
 extension WebhookEndpointRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         WebhookEndpointRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/webhook_endpoints", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/webhook_endpoints", params: params, options: options)
             },
-            retrieve: { webhookEndpoint, expand in
-                try await handler.send(.GET, "/v1/webhook_endpoints/\(webhookEndpoint)", expand: expand)
+            retrieve: { webhookEndpoint, expand, options in
+                try await handler.send(.GET, "/v1/webhook_endpoints/\(webhookEndpoint)", expand: expand, options: options)
             },
-            update: { webhookEndpoint, params in
-                try await handler.send(.POST, "/v1/webhook_endpoints/\(webhookEndpoint)", params: params)
+            update: { webhookEndpoint, params, options in
+                try await handler.send(.POST, "/v1/webhook_endpoints/\(webhookEndpoint)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/webhook_endpoints", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/webhook_endpoints", params: params, options: options)
             },
-            delete: { webhookEndpoint, expand in
-                try await handler.send(.DELETE, "/v1/webhook_endpoints/\(webhookEndpoint)", expand: expand)
+            delete: { webhookEndpoint, expand, options in
+                try await handler.send(.DELETE, "/v1/webhook_endpoints/\(webhookEndpoint)", expand: expand, options: options)
             }
         )
     }

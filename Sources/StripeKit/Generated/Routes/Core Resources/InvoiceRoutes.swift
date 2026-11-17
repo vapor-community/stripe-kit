@@ -12,44 +12,110 @@ import NIOHTTP1
 
 public struct InvoiceRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: InvoiceCreateParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ invoice: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ invoice: String, _ params: InvoiceUpdateParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: InvoiceListParams, _ options: RequestOptions) async throws -> InvoiceList
+
+    /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var search: @Sendable (_ params: InvoiceSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Invoice>
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ invoice: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedInvoice
+
+    /// Performs `addLines(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var addLines: @Sendable (_ invoice: String, _ params: InvoiceAddLinesParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `attachPayment(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var attachPayment: @Sendable (_ invoice: String, _ params: InvoiceAttachPaymentParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `createPreview(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var createPreview: @Sendable (_ params: InvoiceCreatePreviewParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `finalizeInvoice(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var finalizeInvoice: @Sendable (_ invoice: String, _ params: InvoiceFinalizeInvoiceParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `markUncollectible(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var markUncollectible: @Sendable (_ invoice: String, _ params: InvoiceMarkUncollectibleParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `pay(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var pay: @Sendable (_ invoice: String, _ params: InvoicePayParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `removeLines(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var removeLines: @Sendable (_ invoice: String, _ params: InvoiceRemoveLinesParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `sendInvoice(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var sendInvoice: @Sendable (_ invoice: String, _ params: InvoiceSendInvoiceParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `updateLines(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var updateLines: @Sendable (_ invoice: String, _ params: InvoiceUpdateLinesParams, _ options: RequestOptions) async throws -> Invoice
+
+    /// Performs `voidInvoice(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var voidInvoice: @Sendable (_ invoice: String, _ params: InvoiceVoidInvoiceParams, _ options: RequestOptions) async throws -> Invoice
+}
+
+extension InvoiceRoutes {
     /// This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you
     /// finalize the invoice, which allows you to pay or send the invoice to your customers.
-    public var create: @Sendable (_ params: InvoiceCreateParams?) async throws -> Invoice
+    public func create(_ params: InvoiceCreateParams = .init(), options: RequestOptions = .init()) async throws -> Invoice {
+        try await create(params, options)
+    }
 
     /// Retrieves the invoice with the given ID.
-    public var retrieve: @Sendable (_ invoice: String, _ expand: [String]?) async throws -> Invoice
+    public func retrieve(_ invoice: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Invoice {
+        try await retrieve(invoice, expand, options)
+    }
 
     /// Draft invoices are fully editable. Once an invoice is finalized, you can no longer change most of
     /// its details, including monetary values and collection_method. For most invoices, this also includes
     /// description. If you would like to stop the Stripe Billing engine from automatically finalizing,
     /// reattempting payments on, sending reminders for, or automatically reconciling invoices, pass
     /// auto_advance=false.
-    public var update: @Sendable (_ invoice: String, _ params: InvoiceUpdateParams?) async throws -> Invoice
+    public func update(_ invoice: String, _ params: InvoiceUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Invoice {
+        try await update(invoice, params, options)
+    }
 
     /// You can list all invoices, or list the invoices for a specific customer. The invoices are returned
     /// sorted by creation date, with the most recently created invoices appearing first.
-    public var list: @Sendable (_ params: InvoiceListParams?) async throws -> InvoiceList
+    public func list(_ params: InvoiceListParams = .init(), options: RequestOptions = .init()) async throws -> InvoiceList {
+        try await list(params, options)
+    }
 
     /// Search for invoices you’ve previously created using Stripe’s Search Query Language. Don’t use search
     /// in read-after-write flows where strict consistency is necessary. Under normal operating conditions,
     /// data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
     /// to an hour behind during outages. Search functionality is not available to merchants in India.
-    public var search: @Sendable (_ params: InvoiceSearchParams) async throws -> StripeSearchResult<Invoice>
+    public func search(_ params: InvoiceSearchParams, options: RequestOptions = .init()) async throws -> StripeSearchResult<Invoice> {
+        try await search(params, options)
+    }
 
     /// Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that
     /// are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for
     /// a subscription, it must be voided.
-    public var delete: @Sendable (_ invoice: String, _ expand: [String]?) async throws -> DeletedInvoice
+    public func delete(_ invoice: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedInvoice {
+        try await delete(invoice, expand, options)
+    }
 
     /// Adds multiple line items to an invoice. This is only possible when an invoice is still a draft.
-    public var addLines: @Sendable (_ invoice: String, _ params: InvoiceAddLinesParams) async throws -> Invoice
+    public func addLines(_ invoice: String, _ params: InvoiceAddLinesParams, options: RequestOptions = .init()) async throws -> Invoice {
+        try await addLines(invoice, params, options)
+    }
 
     /// Attaches a PaymentIntent or an Out of Band Payment to the invoice, adding it to the list of
     /// payments. For the PaymentIntent, when the PaymentIntent’s status changes to succeeded, the payment
     /// is credited to the invoice, increasing its amount_paid. When the invoice is fully paid, the
     /// invoice’s status becomes paid. If the PaymentIntent’s status is already succeeded when it’s
     /// attached, it’s credited to the invoice immediately. See: Partial payments to learn more.
-    public var attachPayment: @Sendable (_ invoice: String, _ params: InvoiceAttachPaymentParams?) async throws -> Invoice
+    public func attachPayment(_ invoice: String, _ params: InvoiceAttachPaymentParams = .init(), options: RequestOptions = .init()) async throws -> Invoice {
+        try await attachPayment(invoice, params, options)
+    }
 
     /// At any time, you can preview the upcoming invoice for a subscription or subscription schedule. This
     /// will show you all the charges that are pending, including subscription renewal charges, invoice item
@@ -66,33 +132,47 @@ public struct InvoiceRoutes: Sendable {
     /// remove, or update pending invoice items, or update the customer’s discount. Note: Currency
     /// conversion calculations use the latest exchange rates. Exchange rates may vary between the time of
     /// the preview and the time of the actual invoice creation. Learn more
-    public var createPreview: @Sendable (_ params: InvoiceCreatePreviewParams?) async throws -> Invoice
+    public func createPreview(_ params: InvoiceCreatePreviewParams = .init(), options: RequestOptions = .init()) async throws -> Invoice {
+        try await createPreview(params, options)
+    }
 
     /// Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if
     /// you’d like to finalize a draft invoice manually, you can do so using this method.
-    public var finalizeInvoice: @Sendable (_ invoice: String, _ params: InvoiceFinalizeInvoiceParams?) async throws -> Invoice
+    public func finalizeInvoice(_ invoice: String, _ params: InvoiceFinalizeInvoiceParams = .init(), options: RequestOptions = .init()) async throws -> Invoice {
+        try await finalizeInvoice(invoice, params, options)
+    }
 
     /// Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off
     /// for accounting purposes.
-    public var markUncollectible: @Sendable (_ invoice: String, _ params: InvoiceMarkUncollectibleParams?) async throws -> Invoice
+    public func markUncollectible(_ invoice: String, _ params: InvoiceMarkUncollectibleParams = .init(), options: RequestOptions = .init()) async throws -> Invoice {
+        try await markUncollectible(invoice, params, options)
+    }
 
     /// Stripe automatically creates and then attempts to collect payment on invoices for customers on
     /// subscriptions according to your subscriptions settings. However, if you’d like to attempt payment on
     /// an invoice out of the normal collection schedule or for some other reason, you can do so.
-    public var pay: @Sendable (_ invoice: String, _ params: InvoicePayParams?) async throws -> Invoice
+    public func pay(_ invoice: String, _ params: InvoicePayParams = .init(), options: RequestOptions = .init()) async throws -> Invoice {
+        try await pay(invoice, params, options)
+    }
 
     /// Removes multiple line items from an invoice. This is only possible when an invoice is still a draft.
-    public var removeLines: @Sendable (_ invoice: String, _ params: InvoiceRemoveLinesParams) async throws -> Invoice
+    public func removeLines(_ invoice: String, _ params: InvoiceRemoveLinesParams, options: RequestOptions = .init()) async throws -> Invoice {
+        try await removeLines(invoice, params, options)
+    }
 
     /// Stripe will automatically send invoices to customers according to your subscriptions settings.
     /// However, if you’d like to manually send an invoice to your customer out of the normal schedule, you
     /// can do so. When sending invoices that have already been paid, there will be no reference to the
     /// payment in the email. Requests made in test-mode result in no emails being sent, despite sending an
     /// invoice.sent event.
-    public var sendInvoice: @Sendable (_ invoice: String, _ params: InvoiceSendInvoiceParams?) async throws -> Invoice
+    public func sendInvoice(_ invoice: String, _ params: InvoiceSendInvoiceParams = .init(), options: RequestOptions = .init()) async throws -> Invoice {
+        try await sendInvoice(invoice, params, options)
+    }
 
     /// Updates multiple line items on an invoice. This is only possible when an invoice is still a draft.
-    public var updateLines: @Sendable (_ invoice: String, _ params: InvoiceUpdateLinesParams) async throws -> Invoice
+    public func updateLines(_ invoice: String, _ params: InvoiceUpdateLinesParams, options: RequestOptions = .init()) async throws -> Invoice {
+        try await updateLines(invoice, params, options)
+    }
 
     /// Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to deletion,
     /// however it only applies to finalized invoices and maintains a papertrail where the invoice can still
@@ -100,59 +180,61 @@ public struct InvoiceRoutes: Sendable {
     /// canceled, or voided in the jurisdiction you’re doing business in. You might need to issue another
     /// invoice or credit note instead. Stripe recommends that you consult with your legal counsel for
     /// advice specific to your business.
-    public var voidInvoice: @Sendable (_ invoice: String, _ params: InvoiceVoidInvoiceParams?) async throws -> Invoice
+    public func voidInvoice(_ invoice: String, _ params: InvoiceVoidInvoiceParams = .init(), options: RequestOptions = .init()) async throws -> Invoice {
+        try await voidInvoice(invoice, params, options)
+    }
 }
 
 extension InvoiceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InvoiceRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/invoices", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/invoices", params: params, options: options)
             },
-            retrieve: { invoice, expand in
-                try await handler.send(.GET, "/v1/invoices/\(invoice)", expand: expand)
+            retrieve: { invoice, expand, options in
+                try await handler.send(.GET, "/v1/invoices/\(invoice)", expand: expand, options: options)
             },
-            update: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)", params: params)
+            update: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/invoices", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/invoices", params: params, options: options)
             },
-            search: { params in
-                try await handler.send(.GET, "/v1/invoices/search", params: params)
+            search: { params, options in
+                try await handler.send(.GET, "/v1/invoices/search", params: params, options: options)
             },
-            delete: { invoice, expand in
-                try await handler.send(.DELETE, "/v1/invoices/\(invoice)", expand: expand)
+            delete: { invoice, expand, options in
+                try await handler.send(.DELETE, "/v1/invoices/\(invoice)", expand: expand, options: options)
             },
-            addLines: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/add_lines", params: params)
+            addLines: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/add_lines", params: params, options: options)
             },
-            attachPayment: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/attach_payment", params: params)
+            attachPayment: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/attach_payment", params: params, options: options)
             },
-            createPreview: { params in
-                try await handler.send(.POST, "/v1/invoices/create_preview", params: params)
+            createPreview: { params, options in
+                try await handler.send(.POST, "/v1/invoices/create_preview", params: params, options: options)
             },
-            finalizeInvoice: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/finalize", params: params)
+            finalizeInvoice: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/finalize", params: params, options: options)
             },
-            markUncollectible: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/mark_uncollectible", params: params)
+            markUncollectible: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/mark_uncollectible", params: params, options: options)
             },
-            pay: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/pay", params: params)
+            pay: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/pay", params: params, options: options)
             },
-            removeLines: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/remove_lines", params: params)
+            removeLines: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/remove_lines", params: params, options: options)
             },
-            sendInvoice: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/send", params: params)
+            sendInvoice: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/send", params: params, options: options)
             },
-            updateLines: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/update_lines", params: params)
+            updateLines: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/update_lines", params: params, options: options)
             },
-            voidInvoice: { invoice, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/void", params: params)
+            voidInvoice: { invoice, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/void", params: params, options: options)
             }
         )
     }

@@ -12,34 +12,56 @@ import NIOHTTP1
 
 public struct CustomerBalanceTransactionRoutes: Sendable {
 
+    /// Performs `create(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ customer: String, _ params: CustomerBalanceTransactionCreateParams, _ options: RequestOptions) async throws -> CustomerBalanceTransaction
+
+    /// Performs `retrieve(_:transaction:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ customer: String, _ transaction: String, _ expand: [String]?, _ options: RequestOptions) async throws -> CustomerBalanceTransaction
+
+    /// Performs `update(_:transaction:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ customer: String, _ transaction: String, _ params: CustomerBalanceTransactionUpdateParams, _ options: RequestOptions) async throws -> CustomerBalanceTransaction
+
+    /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ customer: String, _ params: CustomerBalanceTransactionListParams, _ options: RequestOptions) async throws -> CustomerBalanceTransactionList
+}
+
+extension CustomerBalanceTransactionRoutes {
     /// Creates an immutable transaction that updates the customer’s credit balance.
-    public var create: @Sendable (_ customer: String, _ params: CustomerBalanceTransactionCreateParams) async throws -> CustomerBalanceTransaction
+    public func create(_ customer: String, _ params: CustomerBalanceTransactionCreateParams, options: RequestOptions = .init()) async throws -> CustomerBalanceTransaction {
+        try await create(customer, params, options)
+    }
 
     /// Retrieves a specific customer balance transaction that updated the customer’s balances.
-    public var retrieve: @Sendable (_ customer: String, _ transaction: String, _ expand: [String]?) async throws -> CustomerBalanceTransaction
+    public func retrieve(_ customer: String, transaction: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> CustomerBalanceTransaction {
+        try await retrieve(customer, transaction, expand, options)
+    }
 
     /// Most credit balance transaction fields are immutable, but you may update its description and
     /// metadata.
-    public var update: @Sendable (_ customer: String, _ transaction: String, _ params: CustomerBalanceTransactionUpdateParams?) async throws -> CustomerBalanceTransaction
+    public func update(_ customer: String, transaction: String, _ params: CustomerBalanceTransactionUpdateParams = .init(), options: RequestOptions = .init()) async throws -> CustomerBalanceTransaction {
+        try await update(customer, transaction, params, options)
+    }
 
     /// Returns a list of transactions that updated the customer’s balances.
-    public var list: @Sendable (_ customer: String, _ params: CustomerBalanceTransactionListParams?) async throws -> CustomerBalanceTransactionList
+    public func list(_ customer: String, _ params: CustomerBalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> CustomerBalanceTransactionList {
+        try await list(customer, params, options)
+    }
 }
 
 extension CustomerBalanceTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CustomerBalanceTransactionRoutes(
-            create: { customer, params in
-                try await handler.send(.POST, "/v1/customers/\(customer)/balance_transactions", params: params)
+            create: { customer, params, options in
+                try await handler.send(.POST, "/v1/customers/\(customer)/balance_transactions", params: params, options: options)
             },
-            retrieve: { customer, transaction, expand in
-                try await handler.send(.GET, "/v1/customers/\(customer)/balance_transactions/\(transaction)", expand: expand)
+            retrieve: { customer, transaction, expand, options in
+                try await handler.send(.GET, "/v1/customers/\(customer)/balance_transactions/\(transaction)", expand: expand, options: options)
             },
-            update: { customer, transaction, params in
-                try await handler.send(.POST, "/v1/customers/\(customer)/balance_transactions/\(transaction)", params: params)
+            update: { customer, transaction, params, options in
+                try await handler.send(.POST, "/v1/customers/\(customer)/balance_transactions/\(transaction)", params: params, options: options)
             },
-            list: { customer, params in
-                try await handler.send(.GET, "/v1/customers/\(customer)/balance_transactions", params: params)
+            list: { customer, params, options in
+                try await handler.send(.GET, "/v1/customers/\(customer)/balance_transactions", params: params, options: options)
             }
         )
     }

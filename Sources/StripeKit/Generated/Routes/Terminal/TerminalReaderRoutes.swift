@@ -12,109 +12,191 @@ import NIOHTTP1
 
 public struct TerminalReaderRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TerminalReaderCreateParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ reader: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ reader: String, _ params: TerminalReaderUpdateParams, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TerminalReaderListParams, _ options: RequestOptions) async throws -> TerminalReaderList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ reader: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTerminalReader
+
+    /// Performs `cancelAction(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancelAction: @Sendable (_ reader: String, _ params: TerminalReaderCancelActionParams, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>
+
+    /// Performs `collectInputs(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var collectInputs: @Sendable (_ reader: String, _ params: TerminalReaderCollectInputsParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `collectPaymentMethod(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var collectPaymentMethod: @Sendable (_ reader: String, _ params: TerminalReaderCollectPaymentMethodParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `confirmPaymentIntent(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var confirmPaymentIntent: @Sendable (_ reader: String, _ params: TerminalReaderConfirmPaymentIntentParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `presentPaymentMethod(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var presentPaymentMethod: @Sendable (_ reader: String, _ params: TerminalReaderPresentPaymentMethodParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `processPaymentIntent(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var processPaymentIntent: @Sendable (_ reader: String, _ params: TerminalReaderProcessPaymentIntentParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `processSetupIntent(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var processSetupIntent: @Sendable (_ reader: String, _ params: TerminalReaderProcessSetupIntentParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `refundPayment(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var refundPayment: @Sendable (_ reader: String, _ params: TerminalReaderRefundPaymentParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `setReaderDisplay(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var setReaderDisplay: @Sendable (_ reader: String, _ params: TerminalReaderSetReaderDisplayParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `succeedInputCollection(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var succeedInputCollection: @Sendable (_ reader: String, _ params: TerminalReaderSucceedInputCollectionParams, _ options: RequestOptions) async throws -> TerminalReader
+
+    /// Performs `timeoutInputCollection(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var timeoutInputCollection: @Sendable (_ reader: String, _ params: TerminalReaderTimeoutInputCollectionParams, _ options: RequestOptions) async throws -> TerminalReader
+}
+
+extension TerminalReaderRoutes {
     /// Creates a new Reader object.
-    public var create: @Sendable (_ params: TerminalReaderCreateParams) async throws -> TerminalReader
+    public func create(_ params: TerminalReaderCreateParams, options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await create(params, options)
+    }
 
     /// Retrieves a Reader object.
-    public var retrieve: @Sendable (_ reader: String, _ expand: [String]?) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>
+    public func retrieve(_ reader: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader> {
+        try await retrieve(reader, expand, options)
+    }
 
     /// Updates a Reader object by setting the values of the parameters passed. Any parameters not provided
     /// will be left unchanged.
-    public var update: @Sendable (_ reader: String, _ params: TerminalReaderUpdateParams?) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>
+    public func update(_ reader: String, _ params: TerminalReaderUpdateParams = .init(), options: RequestOptions = .init()) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader> {
+        try await update(reader, params, options)
+    }
 
     /// Returns a list of Reader objects.
-    public var list: @Sendable (_ params: TerminalReaderListParams?) async throws -> TerminalReaderList
+    public func list(_ params: TerminalReaderListParams = .init(), options: RequestOptions = .init()) async throws -> TerminalReaderList {
+        try await list(params, options)
+    }
 
     /// Deletes a Reader object.
-    public var delete: @Sendable (_ reader: String, _ expand: [String]?) async throws -> DeletedTerminalReader
+    public func delete(_ reader: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedTerminalReader {
+        try await delete(reader, expand, options)
+    }
 
     /// Cancels the current reader action. See Programmatic Cancellation for more details.
-    public var cancelAction: @Sendable (_ reader: String, _ params: TerminalReaderCancelActionParams?) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>
+    public func cancelAction(_ reader: String, _ params: TerminalReaderCancelActionParams = .init(), options: RequestOptions = .init()) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader> {
+        try await cancelAction(reader, params, options)
+    }
 
     /// Initiates an input collection flow on a Reader to display input forms and collect information from
     /// your customers.
-    public var collectInputs: @Sendable (_ reader: String, _ params: TerminalReaderCollectInputsParams) async throws -> TerminalReader
+    public func collectInputs(_ reader: String, _ params: TerminalReaderCollectInputsParams, options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await collectInputs(reader, params, options)
+    }
 
     /// Initiates a payment flow on a Reader and updates the PaymentIntent with card details before manual
     /// confirmation. See Collecting a Payment method for more details.
-    public var collectPaymentMethod: @Sendable (_ reader: String, _ params: TerminalReaderCollectPaymentMethodParams) async throws -> TerminalReader
+    public func collectPaymentMethod(_ reader: String, _ params: TerminalReaderCollectPaymentMethodParams, options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await collectPaymentMethod(reader, params, options)
+    }
 
     /// Finalizes a payment on a Reader. See Confirming a Payment for more details.
-    public var confirmPaymentIntent: @Sendable (_ reader: String, _ params: TerminalReaderConfirmPaymentIntentParams) async throws -> TerminalReader
+    public func confirmPaymentIntent(_ reader: String, _ params: TerminalReaderConfirmPaymentIntentParams, options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await confirmPaymentIntent(reader, params, options)
+    }
 
     /// Presents a payment method on a simulated reader. Can be used to simulate accepting a payment, saving
     /// a card or refunding a transaction.
-    public var presentPaymentMethod: @Sendable (_ reader: String, _ params: TerminalReaderPresentPaymentMethodParams?) async throws -> TerminalReader
+    public func presentPaymentMethod(_ reader: String, _ params: TerminalReaderPresentPaymentMethodParams = .init(), options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await presentPaymentMethod(reader, params, options)
+    }
 
     /// Initiates a payment flow on a Reader. See process the payment for more details.
-    public var processPaymentIntent: @Sendable (_ reader: String, _ params: TerminalReaderProcessPaymentIntentParams) async throws -> TerminalReader
+    public func processPaymentIntent(_ reader: String, _ params: TerminalReaderProcessPaymentIntentParams, options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await processPaymentIntent(reader, params, options)
+    }
 
     /// Initiates a SetupIntent flow on a Reader. See Save directly without charging for more details.
-    public var processSetupIntent: @Sendable (_ reader: String, _ params: TerminalReaderProcessSetupIntentParams) async throws -> TerminalReader
+    public func processSetupIntent(_ reader: String, _ params: TerminalReaderProcessSetupIntentParams, options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await processSetupIntent(reader, params, options)
+    }
 
     /// Initiates an in-person refund on a Reader. See Refund an Interac Payment for more details.
-    public var refundPayment: @Sendable (_ reader: String, _ params: TerminalReaderRefundPaymentParams?) async throws -> TerminalReader
+    public func refundPayment(_ reader: String, _ params: TerminalReaderRefundPaymentParams = .init(), options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await refundPayment(reader, params, options)
+    }
 
     /// Sets the reader display to show cart details.
-    public var setReaderDisplay: @Sendable (_ reader: String, _ params: TerminalReaderSetReaderDisplayParams) async throws -> TerminalReader
+    public func setReaderDisplay(_ reader: String, _ params: TerminalReaderSetReaderDisplayParams, options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await setReaderDisplay(reader, params, options)
+    }
 
     /// Use this endpoint to trigger a successful input collection on a simulated reader.
-    public var succeedInputCollection: @Sendable (_ reader: String, _ params: TerminalReaderSucceedInputCollectionParams?) async throws -> TerminalReader
+    public func succeedInputCollection(_ reader: String, _ params: TerminalReaderSucceedInputCollectionParams = .init(), options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await succeedInputCollection(reader, params, options)
+    }
 
     /// Use this endpoint to complete an input collection with a timeout error on a simulated reader.
-    public var timeoutInputCollection: @Sendable (_ reader: String, _ params: TerminalReaderTimeoutInputCollectionParams?) async throws -> TerminalReader
+    public func timeoutInputCollection(_ reader: String, _ params: TerminalReaderTimeoutInputCollectionParams = .init(), options: RequestOptions = .init()) async throws -> TerminalReader {
+        try await timeoutInputCollection(reader, params, options)
+    }
 }
 
 extension TerminalReaderRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TerminalReaderRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/terminal/readers", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/terminal/readers", params: params, options: options)
             },
-            retrieve: { reader, expand in
-                try await handler.send(.GET, "/v1/terminal/readers/\(reader)", expand: expand)
+            retrieve: { reader, expand, options in
+                try await handler.send(.GET, "/v1/terminal/readers/\(reader)", expand: expand, options: options)
             },
-            update: { reader, params in
-                try await handler.send(.POST, "/v1/terminal/readers/\(reader)", params: params)
+            update: { reader, params, options in
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/terminal/readers", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/terminal/readers", params: params, options: options)
             },
-            delete: { reader, expand in
-                try await handler.send(.DELETE, "/v1/terminal/readers/\(reader)", expand: expand)
+            delete: { reader, expand, options in
+                try await handler.send(.DELETE, "/v1/terminal/readers/\(reader)", expand: expand, options: options)
             },
-            cancelAction: { reader, params in
-                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/cancel_action", params: params)
+            cancelAction: { reader, params, options in
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/cancel_action", params: params, options: options)
             },
-            collectInputs: { reader, params in
-                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/collect_inputs", params: params)
+            collectInputs: { reader, params, options in
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/collect_inputs", params: params, options: options)
             },
-            collectPaymentMethod: { reader, params in
-                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/collect_payment_method", params: params)
+            collectPaymentMethod: { reader, params, options in
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/collect_payment_method", params: params, options: options)
             },
-            confirmPaymentIntent: { reader, params in
-                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/confirm_payment_intent", params: params)
+            confirmPaymentIntent: { reader, params, options in
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/confirm_payment_intent", params: params, options: options)
             },
-            presentPaymentMethod: { reader, params in
-                try await handler.send(.POST, "/v1/test_helpers/terminal/readers/\(reader)/present_payment_method", params: params)
+            presentPaymentMethod: { reader, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/terminal/readers/\(reader)/present_payment_method", params: params, options: options)
             },
-            processPaymentIntent: { reader, params in
-                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/process_payment_intent", params: params)
+            processPaymentIntent: { reader, params, options in
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/process_payment_intent", params: params, options: options)
             },
-            processSetupIntent: { reader, params in
-                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/process_setup_intent", params: params)
+            processSetupIntent: { reader, params, options in
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/process_setup_intent", params: params, options: options)
             },
-            refundPayment: { reader, params in
-                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/refund_payment", params: params)
+            refundPayment: { reader, params, options in
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/refund_payment", params: params, options: options)
             },
-            setReaderDisplay: { reader, params in
-                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/set_reader_display", params: params)
+            setReaderDisplay: { reader, params, options in
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/set_reader_display", params: params, options: options)
             },
-            succeedInputCollection: { reader, params in
-                try await handler.send(.POST, "/v1/test_helpers/terminal/readers/\(reader)/succeed_input_collection", params: params)
+            succeedInputCollection: { reader, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/terminal/readers/\(reader)/succeed_input_collection", params: params, options: options)
             },
-            timeoutInputCollection: { reader, params in
-                try await handler.send(.POST, "/v1/test_helpers/terminal/readers/\(reader)/timeout_input_collection", params: params)
+            timeoutInputCollection: { reader, params, options in
+                try await handler.send(.POST, "/v1/test_helpers/terminal/readers/\(reader)/timeout_input_collection", params: params, options: options)
             }
         )
     }

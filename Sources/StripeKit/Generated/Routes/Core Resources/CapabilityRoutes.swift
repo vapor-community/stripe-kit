@@ -12,29 +12,46 @@ import NIOHTTP1
 
 public struct CapabilityRoutes: Sendable {
 
+    /// Performs `retrieve(_:capability:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ account: String, _ capability: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Capability
+
+    /// Performs `update(_:capability:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ account: String, _ capability: String, _ params: CapabilityUpdateParams, _ options: RequestOptions) async throws -> Capability
+
+    /// Performs `list(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ account: String, _ expand: [String]?, _ options: RequestOptions) async throws -> CapabilityList
+}
+
+extension CapabilityRoutes {
     /// Retrieves information about the specified Account Capability.
-    public var retrieve: @Sendable (_ account: String, _ capability: String, _ expand: [String]?) async throws -> Capability
+    public func retrieve(_ account: String, capability: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Capability {
+        try await retrieve(account, capability, expand, options)
+    }
 
     /// Updates an existing Account Capability. Request or remove a capability by updating its requested
     /// parameter.
-    public var update: @Sendable (_ account: String, _ capability: String, _ params: CapabilityUpdateParams?) async throws -> Capability
+    public func update(_ account: String, capability: String, _ params: CapabilityUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Capability {
+        try await update(account, capability, params, options)
+    }
 
     /// Returns a list of capabilities associated with the account. The capabilities are returned sorted by
     /// creation date, with the most recent capability appearing first.
-    public var list: @Sendable (_ account: String, _ expand: [String]?) async throws -> CapabilityList
+    public func list(_ account: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> CapabilityList {
+        try await list(account, expand, options)
+    }
 }
 
 extension CapabilityRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CapabilityRoutes(
-            retrieve: { account, capability, expand in
-                try await handler.send(.GET, "/v1/accounts/\(account)/capabilities/\(capability)", expand: expand)
+            retrieve: { account, capability, expand, options in
+                try await handler.send(.GET, "/v1/accounts/\(account)/capabilities/\(capability)", expand: expand, options: options)
             },
-            update: { account, capability, params in
-                try await handler.send(.POST, "/v1/accounts/\(account)/capabilities/\(capability)", params: params)
+            update: { account, capability, params, options in
+                try await handler.send(.POST, "/v1/accounts/\(account)/capabilities/\(capability)", params: params, options: options)
             },
-            list: { account, expand in
-                try await handler.send(.GET, "/v1/accounts/\(account)/capabilities", expand: expand)
+            list: { account, expand, options in
+                try await handler.send(.GET, "/v1/accounts/\(account)/capabilities", expand: expand, options: options)
             }
         )
     }

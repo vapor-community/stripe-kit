@@ -12,27 +12,60 @@ import NIOHTTP1
 
 public struct SetupIntentRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: SetupIntentCreateParams, _ options: RequestOptions) async throws -> SetupIntent
+
+    /// Performs `retrieve(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ intent: String, _ params: SetupIntentRetrieveParams, _ options: RequestOptions) async throws -> SetupIntent
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ intent: String, _ params: SetupIntentUpdateParams, _ options: RequestOptions) async throws -> SetupIntent
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: SetupIntentListParams, _ options: RequestOptions) async throws -> SetupIntentList
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ intent: String, _ params: SetupIntentCancelParams, _ options: RequestOptions) async throws -> SetupIntent
+
+    /// Performs `confirm(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var confirm: @Sendable (_ intent: String, _ params: SetupIntentConfirmParams, _ options: RequestOptions) async throws -> SetupIntent
+
+    /// Performs `verifyMicrodeposits(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var verifyMicrodeposits: @Sendable (_ intent: String, _ params: SetupIntentVerifyMicrodepositsParams, _ options: RequestOptions) async throws -> SetupIntent
+}
+
+extension SetupIntentRoutes {
     /// Creates a SetupIntent object. After you create the SetupIntent, attach a payment method and confirm
     /// it to collect any required permissions to charge the payment method later.
-    public var create: @Sendable (_ params: SetupIntentCreateParams?) async throws -> SetupIntent
+    public func create(_ params: SetupIntentCreateParams = .init(), options: RequestOptions = .init()) async throws -> SetupIntent {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of a SetupIntent that has previously been created. Client-side retrieval using
     /// a publishable key is allowed when the client_secret is provided in the query string. When retrieved
     /// with a publishable key, only a subset of properties will be returned. Please refer to the
     /// SetupIntent object reference for more details.
-    public var retrieve: @Sendable (_ intent: String, _ params: SetupIntentRetrieveParams?) async throws -> SetupIntent
+    public func retrieve(_ intent: String, _ params: SetupIntentRetrieveParams = .init(), options: RequestOptions = .init()) async throws -> SetupIntent {
+        try await retrieve(intent, params, options)
+    }
 
     /// Updates a SetupIntent object.
-    public var update: @Sendable (_ intent: String, _ params: SetupIntentUpdateParams?) async throws -> SetupIntent
+    public func update(_ intent: String, _ params: SetupIntentUpdateParams = .init(), options: RequestOptions = .init()) async throws -> SetupIntent {
+        try await update(intent, params, options)
+    }
 
     /// Returns a list of SetupIntents.
-    public var list: @Sendable (_ params: SetupIntentListParams?) async throws -> SetupIntentList
+    public func list(_ params: SetupIntentListParams = .init(), options: RequestOptions = .init()) async throws -> SetupIntentList {
+        try await list(params, options)
+    }
 
     /// You can cancel a SetupIntent object when it’s in one of these statuses: requires_payment_method,
     /// requires_confirmation, or requires_action. After you cancel it, setup is abandoned and any
     /// operations on the SetupIntent fail with an error. You can’t cancel the SetupIntent for a Checkout
     /// Session. Expire the Checkout Session instead.
-    public var cancel: @Sendable (_ intent: String, _ params: SetupIntentCancelParams?) async throws -> SetupIntent
+    public func cancel(_ intent: String, _ params: SetupIntentCancelParams = .init(), options: RequestOptions = .init()) async throws -> SetupIntent {
+        try await cancel(intent, params, options)
+    }
 
     /// Confirm that your customer intends to set up the current or provided payment method. For example,
     /// you would confirm a SetupIntent when a customer hits the “Save” button on a payment method
@@ -41,35 +74,39 @@ public struct SetupIntentRoutes: Sendable {
     /// transition to the requires_action status and suggest additional actions via next_action. If setup
     /// fails, the SetupIntent will transition to the requires_payment_method status or the canceled status
     /// if the confirmation limit is reached.
-    public var confirm: @Sendable (_ intent: String, _ params: SetupIntentConfirmParams?) async throws -> SetupIntent
+    public func confirm(_ intent: String, _ params: SetupIntentConfirmParams = .init(), options: RequestOptions = .init()) async throws -> SetupIntent {
+        try await confirm(intent, params, options)
+    }
 
     /// Verifies microdeposits on a SetupIntent object.
-    public var verifyMicrodeposits: @Sendable (_ intent: String, _ params: SetupIntentVerifyMicrodepositsParams?) async throws -> SetupIntent
+    public func verifyMicrodeposits(_ intent: String, _ params: SetupIntentVerifyMicrodepositsParams = .init(), options: RequestOptions = .init()) async throws -> SetupIntent {
+        try await verifyMicrodeposits(intent, params, options)
+    }
 }
 
 extension SetupIntentRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SetupIntentRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/setup_intents", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/setup_intents", params: params, options: options)
             },
-            retrieve: { intent, params in
-                try await handler.send(.GET, "/v1/setup_intents/\(intent)", params: params)
+            retrieve: { intent, params, options in
+                try await handler.send(.GET, "/v1/setup_intents/\(intent)", params: params, options: options)
             },
-            update: { intent, params in
-                try await handler.send(.POST, "/v1/setup_intents/\(intent)", params: params)
+            update: { intent, params, options in
+                try await handler.send(.POST, "/v1/setup_intents/\(intent)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/setup_intents", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/setup_intents", params: params, options: options)
             },
-            cancel: { intent, params in
-                try await handler.send(.POST, "/v1/setup_intents/\(intent)/cancel", params: params)
+            cancel: { intent, params, options in
+                try await handler.send(.POST, "/v1/setup_intents/\(intent)/cancel", params: params, options: options)
             },
-            confirm: { intent, params in
-                try await handler.send(.POST, "/v1/setup_intents/\(intent)/confirm", params: params)
+            confirm: { intent, params, options in
+                try await handler.send(.POST, "/v1/setup_intents/\(intent)/confirm", params: params, options: options)
             },
-            verifyMicrodeposits: { intent, params in
-                try await handler.send(.POST, "/v1/setup_intents/\(intent)/verify_microdeposits", params: params)
+            verifyMicrodeposits: { intent, params, options in
+                try await handler.send(.POST, "/v1/setup_intents/\(intent)/verify_microdeposits", params: params, options: options)
             }
         )
     }

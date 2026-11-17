@@ -12,54 +12,86 @@ import NIOHTTP1
 
 public struct ChargeRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: ChargeCreateParams, _ options: RequestOptions) async throws -> Charge
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ charge: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Charge
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ charge: String, _ params: ChargeUpdateParams, _ options: RequestOptions) async throws -> Charge
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ChargeListParams, _ options: RequestOptions) async throws -> ChargeList
+
+    /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var search: @Sendable (_ params: ChargeSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Charge>
+
+    /// Performs `capture(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var capture: @Sendable (_ charge: String, _ params: ChargeCaptureParams, _ options: RequestOptions) async throws -> Charge
+}
+
+extension ChargeRoutes {
     /// This method is deprecated and will be removed soon. If your integration uses it, you need to update
     /// it to use a different payment flow, such as the Payment Intents API.
-    public var create: @Sendable (_ params: ChargeCreateParams?) async throws -> Charge
+    public func create(_ params: ChargeCreateParams = .init(), options: RequestOptions = .init()) async throws -> Charge {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of a charge that has previously been created. Supply the unique charge ID that
     /// was returned from your previous request, and Stripe will return the corresponding charge
     /// information. The same information is returned when creating or refunding the charge.
-    public var retrieve: @Sendable (_ charge: String, _ expand: [String]?) async throws -> Charge
+    public func retrieve(_ charge: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Charge {
+        try await retrieve(charge, expand, options)
+    }
 
     /// Updates the specified charge by setting the values of the parameters passed. Any parameters not
     /// provided will be left unchanged.
-    public var update: @Sendable (_ charge: String, _ params: ChargeUpdateParams?) async throws -> Charge
+    public func update(_ charge: String, _ params: ChargeUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Charge {
+        try await update(charge, params, options)
+    }
 
     /// Returns a list of charges you’ve previously created. The charges are returned in sorted order, with
     /// the most recent charges appearing first.
-    public var list: @Sendable (_ params: ChargeListParams?) async throws -> ChargeList
+    public func list(_ params: ChargeListParams = .init(), options: RequestOptions = .init()) async throws -> ChargeList {
+        try await list(params, options)
+    }
 
     /// Search for charges you’ve previously created using Stripe’s Search Query Language. Don’t use search
     /// in read-after-write flows where strict consistency is necessary. Under normal operating conditions,
     /// data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
     /// to an hour behind during outages. Search functionality is not available to merchants in India.
-    public var search: @Sendable (_ params: ChargeSearchParams) async throws -> StripeSearchResult<Charge>
+    public func search(_ params: ChargeSearchParams, options: RequestOptions = .init()) async throws -> StripeSearchResult<Charge> {
+        try await search(params, options)
+    }
 
     /// This method is deprecated and will be removed soon. If your integration uses it, you need to update
     /// it to use a different payment flow, such as the Payment Intents API.
-    public var capture: @Sendable (_ charge: String, _ params: ChargeCaptureParams?) async throws -> Charge
+    public func capture(_ charge: String, _ params: ChargeCaptureParams = .init(), options: RequestOptions = .init()) async throws -> Charge {
+        try await capture(charge, params, options)
+    }
 }
 
 extension ChargeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ChargeRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/charges", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/charges", params: params, options: options)
             },
-            retrieve: { charge, expand in
-                try await handler.send(.GET, "/v1/charges/\(charge)", expand: expand)
+            retrieve: { charge, expand, options in
+                try await handler.send(.GET, "/v1/charges/\(charge)", expand: expand, options: options)
             },
-            update: { charge, params in
-                try await handler.send(.POST, "/v1/charges/\(charge)", params: params)
+            update: { charge, params, options in
+                try await handler.send(.POST, "/v1/charges/\(charge)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/charges", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/charges", params: params, options: options)
             },
-            search: { params in
-                try await handler.send(.GET, "/v1/charges/search", params: params)
+            search: { params, options in
+                try await handler.send(.GET, "/v1/charges/search", params: params, options: options)
             },
-            capture: { charge, params in
-                try await handler.send(.POST, "/v1/charges/\(charge)/capture", params: params)
+            capture: { charge, params, options in
+                try await handler.send(.POST, "/v1/charges/\(charge)/capture", params: params, options: options)
             }
         )
     }

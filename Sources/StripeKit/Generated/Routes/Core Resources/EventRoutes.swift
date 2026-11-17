@@ -12,24 +12,36 @@ import NIOHTTP1
 
 public struct EventRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Event
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: EventListParams, _ options: RequestOptions) async throws -> EventList
+}
+
+extension EventRoutes {
     /// Retrieves the details of an event if it was created in the last 30 days. Supply the unique
     /// identifier of the event, which you might have received in a webhook.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> Event
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Event {
+        try await retrieve(id, expand, options)
+    }
 
     /// List events, going back up to 30 days. Each event data is rendered according to Stripe API version
     /// at its creation time, specified in event object api_version attribute (not according to your current
     /// Stripe API version or Stripe-Version header).
-    public var list: @Sendable (_ params: EventListParams?) async throws -> EventList
+    public func list(_ params: EventListParams = .init(), options: RequestOptions = .init()) async throws -> EventList {
+        try await list(params, options)
+    }
 }
 
 extension EventRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         EventRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/events/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/events/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/events", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/events", params: params, options: options)
             }
         )
     }

@@ -12,35 +12,57 @@ import NIOHTTP1
 
 public struct IssuingCardholderRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: IssuingCardholderCreateParams, _ options: RequestOptions) async throws -> IssuingCardholder
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ cardholder: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IssuingCardholder
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ cardholder: String, _ params: IssuingCardholderUpdateParams, _ options: RequestOptions) async throws -> IssuingCardholder
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: IssuingCardholderListParams, _ options: RequestOptions) async throws -> IssuingCardholderList
+}
+
+extension IssuingCardholderRoutes {
     /// Creates a new Issuing Cardholder object that can be issued cards.
-    public var create: @Sendable (_ params: IssuingCardholderCreateParams) async throws -> IssuingCardholder
+    public func create(_ params: IssuingCardholderCreateParams, options: RequestOptions = .init()) async throws -> IssuingCardholder {
+        try await create(params, options)
+    }
 
     /// Retrieves an Issuing Cardholder object.
-    public var retrieve: @Sendable (_ cardholder: String, _ expand: [String]?) async throws -> IssuingCardholder
+    public func retrieve(_ cardholder: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> IssuingCardholder {
+        try await retrieve(cardholder, expand, options)
+    }
 
     /// Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any
     /// parameters not provided will be left unchanged.
-    public var update: @Sendable (_ cardholder: String, _ params: IssuingCardholderUpdateParams?) async throws -> IssuingCardholder
+    public func update(_ cardholder: String, _ params: IssuingCardholderUpdateParams = .init(), options: RequestOptions = .init()) async throws -> IssuingCardholder {
+        try await update(cardholder, params, options)
+    }
 
     /// Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public var list: @Sendable (_ params: IssuingCardholderListParams?) async throws -> IssuingCardholderList
+    public func list(_ params: IssuingCardholderListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingCardholderList {
+        try await list(params, options)
+    }
 }
 
 extension IssuingCardholderRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingCardholderRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/issuing/cardholders", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/issuing/cardholders", params: params, options: options)
             },
-            retrieve: { cardholder, expand in
-                try await handler.send(.GET, "/v1/issuing/cardholders/\(cardholder)", expand: expand)
+            retrieve: { cardholder, expand, options in
+                try await handler.send(.GET, "/v1/issuing/cardholders/\(cardholder)", expand: expand, options: options)
             },
-            update: { cardholder, params in
-                try await handler.send(.POST, "/v1/issuing/cardholders/\(cardholder)", params: params)
+            update: { cardholder, params, options in
+                try await handler.send(.POST, "/v1/issuing/cardholders/\(cardholder)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/issuing/cardholders", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/issuing/cardholders", params: params, options: options)
             }
         )
     }

@@ -12,22 +12,34 @@ import NIOHTTP1
 
 public struct IssuingPhysicalBundleRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ physicalBundle: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IssuingPhysicalBundle
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: IssuingPhysicalBundleListParams, _ options: RequestOptions) async throws -> IssuingPhysicalBundleList
+}
+
+extension IssuingPhysicalBundleRoutes {
     /// Retrieves a physical bundle object.
-    public var retrieve: @Sendable (_ physicalBundle: String, _ expand: [String]?) async throws -> IssuingPhysicalBundle
+    public func retrieve(_ physicalBundle: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> IssuingPhysicalBundle {
+        try await retrieve(physicalBundle, expand, options)
+    }
 
     /// Returns a list of physical bundle objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public var list: @Sendable (_ params: IssuingPhysicalBundleListParams?) async throws -> IssuingPhysicalBundleList
+    public func list(_ params: IssuingPhysicalBundleListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingPhysicalBundleList {
+        try await list(params, options)
+    }
 }
 
 extension IssuingPhysicalBundleRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingPhysicalBundleRoutes(
-            retrieve: { physicalBundle, expand in
-                try await handler.send(.GET, "/v1/issuing/physical_bundles/\(physicalBundle)", expand: expand)
+            retrieve: { physicalBundle, expand, options in
+                try await handler.send(.GET, "/v1/issuing/physical_bundles/\(physicalBundle)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/issuing/physical_bundles", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/issuing/physical_bundles", params: params, options: options)
             }
         )
     }

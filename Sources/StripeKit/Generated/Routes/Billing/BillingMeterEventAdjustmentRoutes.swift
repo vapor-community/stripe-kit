@@ -12,15 +12,22 @@ import NIOHTTP1
 
 public struct BillingMeterEventAdjustmentRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: BillingMeterEventAdjustmentCreateParams, _ options: RequestOptions) async throws -> BillingMeterEventAdjustment
+}
+
+extension BillingMeterEventAdjustmentRoutes {
     /// Creates a billing meter event adjustment.
-    public var create: @Sendable (_ params: BillingMeterEventAdjustmentCreateParams) async throws -> BillingMeterEventAdjustment
+    public func create(_ params: BillingMeterEventAdjustmentCreateParams, options: RequestOptions = .init()) async throws -> BillingMeterEventAdjustment {
+        try await create(params, options)
+    }
 }
 
 extension BillingMeterEventAdjustmentRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingMeterEventAdjustmentRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/billing/meter_event_adjustments", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/billing/meter_event_adjustments", params: params, options: options)
             }
         )
     }

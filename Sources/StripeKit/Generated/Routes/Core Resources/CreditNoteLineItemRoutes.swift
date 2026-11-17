@@ -12,16 +12,23 @@ import NIOHTTP1
 
 public struct CreditNoteLineItemRoutes: Sendable {
 
+    /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ creditNote: String, _ params: CreditNoteLineItemListParams, _ options: RequestOptions) async throws -> CreditNoteLineItemList
+}
+
+extension CreditNoteLineItemRoutes {
     /// When retrieving a credit note, you’ll get a lines property containing the first handful of those
     /// items. There is also a URL where you can retrieve the full (paginated) list of line items.
-    public var list: @Sendable (_ creditNote: String, _ params: CreditNoteLineItemListParams?) async throws -> CreditNoteLineItemList
+    public func list(_ creditNote: String, _ params: CreditNoteLineItemListParams = .init(), options: RequestOptions = .init()) async throws -> CreditNoteLineItemList {
+        try await list(creditNote, params, options)
+    }
 }
 
 extension CreditNoteLineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CreditNoteLineItemRoutes(
-            list: { creditNote, params in
-                try await handler.send(.GET, "/v1/credit_notes/\(creditNote)/lines", params: params)
+            list: { creditNote, params, options in
+                try await handler.send(.GET, "/v1/credit_notes/\(creditNote)/lines", params: params, options: options)
             }
         )
     }

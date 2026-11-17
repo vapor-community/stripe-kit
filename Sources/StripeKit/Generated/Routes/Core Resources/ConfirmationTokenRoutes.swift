@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct ConfirmationTokenRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: ConfirmationTokenCreateParams, _ options: RequestOptions) async throws -> ConfirmationToken
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ confirmationToken: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ConfirmationToken
+}
+
+extension ConfirmationTokenRoutes {
     /// Creates a test mode Confirmation Token server side for your integration tests.
-    public var create: @Sendable (_ params: ConfirmationTokenCreateParams?) async throws -> ConfirmationToken
+    public func create(_ params: ConfirmationTokenCreateParams = .init(), options: RequestOptions = .init()) async throws -> ConfirmationToken {
+        try await create(params, options)
+    }
 
     /// Retrieves an existing ConfirmationToken object
-    public var retrieve: @Sendable (_ confirmationToken: String, _ expand: [String]?) async throws -> ConfirmationToken
+    public func retrieve(_ confirmationToken: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ConfirmationToken {
+        try await retrieve(confirmationToken, expand, options)
+    }
 }
 
 extension ConfirmationTokenRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ConfirmationTokenRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/test_helpers/confirmation_tokens", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/test_helpers/confirmation_tokens", params: params, options: options)
             },
-            retrieve: { confirmationToken, expand in
-                try await handler.send(.GET, "/v1/confirmation_tokens/\(confirmationToken)", expand: expand)
+            retrieve: { confirmationToken, expand, options in
+                try await handler.send(.GET, "/v1/confirmation_tokens/\(confirmationToken)", expand: expand, options: options)
             }
         )
     }

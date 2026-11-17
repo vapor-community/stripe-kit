@@ -12,39 +12,66 @@ import NIOHTTP1
 
 public struct TerminalConfigurationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TerminalConfigurationCreateParams, _ options: RequestOptions) async throws -> TerminalConfiguration
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ configuration: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration>
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ configuration: String, _ params: TerminalConfigurationUpdateParams, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration>
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TerminalConfigurationListParams, _ options: RequestOptions) async throws -> TerminalConfigurationList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ configuration: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTerminalConfiguration
+}
+
+extension TerminalConfigurationRoutes {
     /// Creates a new Configuration object.
-    public var create: @Sendable (_ params: TerminalConfigurationCreateParams?) async throws -> TerminalConfiguration
+    public func create(_ params: TerminalConfigurationCreateParams = .init(), options: RequestOptions = .init()) async throws -> TerminalConfiguration {
+        try await create(params, options)
+    }
 
     /// Retrieves a Configuration object.
-    public var retrieve: @Sendable (_ configuration: String, _ expand: [String]?) async throws -> ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration>
+    public func retrieve(_ configuration: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration> {
+        try await retrieve(configuration, expand, options)
+    }
 
     /// Updates a new Configuration object.
-    public var update: @Sendable (_ configuration: String, _ params: TerminalConfigurationUpdateParams?) async throws -> ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration>
+    public func update(_ configuration: String, _ params: TerminalConfigurationUpdateParams = .init(), options: RequestOptions = .init()) async throws -> ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration> {
+        try await update(configuration, params, options)
+    }
 
     /// Returns a list of Configuration objects.
-    public var list: @Sendable (_ params: TerminalConfigurationListParams?) async throws -> TerminalConfigurationList
+    public func list(_ params: TerminalConfigurationListParams = .init(), options: RequestOptions = .init()) async throws -> TerminalConfigurationList {
+        try await list(params, options)
+    }
 
     /// Deletes a Configuration object.
-    public var delete: @Sendable (_ configuration: String, _ expand: [String]?) async throws -> DeletedTerminalConfiguration
+    public func delete(_ configuration: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedTerminalConfiguration {
+        try await delete(configuration, expand, options)
+    }
 }
 
 extension TerminalConfigurationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TerminalConfigurationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/terminal/configurations", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/terminal/configurations", params: params, options: options)
             },
-            retrieve: { configuration, expand in
-                try await handler.send(.GET, "/v1/terminal/configurations/\(configuration)", expand: expand)
+            retrieve: { configuration, expand, options in
+                try await handler.send(.GET, "/v1/terminal/configurations/\(configuration)", expand: expand, options: options)
             },
-            update: { configuration, params in
-                try await handler.send(.POST, "/v1/terminal/configurations/\(configuration)", params: params)
+            update: { configuration, params, options in
+                try await handler.send(.POST, "/v1/terminal/configurations/\(configuration)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/terminal/configurations", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/terminal/configurations", params: params, options: options)
             },
-            delete: { configuration, expand in
-                try await handler.send(.DELETE, "/v1/terminal/configurations/\(configuration)", expand: expand)
+            delete: { configuration, expand, options in
+                try await handler.send(.DELETE, "/v1/terminal/configurations/\(configuration)", expand: expand, options: options)
             }
         )
     }

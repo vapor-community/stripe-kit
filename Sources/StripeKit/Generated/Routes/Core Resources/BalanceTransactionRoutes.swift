@@ -12,25 +12,37 @@ import NIOHTTP1
 
 public struct BalanceTransactionRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BalanceTransaction
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: BalanceTransactionListParams, _ options: RequestOptions) async throws -> BalanceTransactionList
+}
+
+extension BalanceTransactionRoutes {
     /// Retrieves the balance transaction with the given ID. Note that this endpoint previously used the
     /// path /v1/balance/history/:id.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> BalanceTransaction
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> BalanceTransaction {
+        try await retrieve(id, expand, options)
+    }
 
     /// Returns a list of transactions that have contributed to the Stripe account balance (for example,
     /// charges, transfers, and so on). The transactions return in sorted order, with the most recent
     /// transactions appearing first. The previous name of this endpoint was “Balance history,” and it used
     /// the path /v1/balance/history.
-    public var list: @Sendable (_ params: BalanceTransactionListParams?) async throws -> BalanceTransactionList
+    public func list(_ params: BalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> BalanceTransactionList {
+        try await list(params, options)
+    }
 }
 
 extension BalanceTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BalanceTransactionRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/balance_transactions/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/balance_transactions/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/balance_transactions", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/balance_transactions", params: params, options: options)
             }
         )
     }

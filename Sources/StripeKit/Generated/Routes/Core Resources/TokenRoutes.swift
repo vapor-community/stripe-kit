@@ -12,24 +12,36 @@ import NIOHTTP1
 
 public struct TokenRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TokenCreateParams, _ options: RequestOptions) async throws -> Token
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ token: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Token
+}
+
+extension TokenRoutes {
     /// Creates a single-use token that represents a bank account’s details. You can use this token with any
     /// v1 API method in place of a bank account dictionary. You can only use this token once. To do so,
     /// attach it to a connected account where controller.requirement_collection is application, which
     /// includes Custom accounts.
-    public var create: @Sendable (_ params: TokenCreateParams?) async throws -> Token
+    public func create(_ params: TokenCreateParams = .init(), options: RequestOptions = .init()) async throws -> Token {
+        try await create(params, options)
+    }
 
     /// Retrieves the token with the given ID.
-    public var retrieve: @Sendable (_ token: String, _ expand: [String]?) async throws -> Token
+    public func retrieve(_ token: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Token {
+        try await retrieve(token, expand, options)
+    }
 }
 
 extension TokenRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TokenRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/tokens", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/tokens", params: params, options: options)
             },
-            retrieve: { token, expand in
-                try await handler.send(.GET, "/v1/tokens/\(token)", expand: expand)
+            retrieve: { token, expand, options in
+                try await handler.send(.GET, "/v1/tokens/\(token)", expand: expand, options: options)
             }
         )
     }

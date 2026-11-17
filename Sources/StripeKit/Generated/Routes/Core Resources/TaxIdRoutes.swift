@@ -12,57 +12,99 @@ import NIOHTTP1
 
 public struct TaxIdRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TaxIdCreateParams, _ options: RequestOptions) async throws -> TaxId
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxId
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TaxIdListParams, _ options: RequestOptions) async throws -> TaxIdList
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTaxId
+
+    /// Performs `createForCustomer(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var createForCustomer: @Sendable (_ customer: String, _ params: TaxIdCreateForCustomerParams, _ options: RequestOptions) async throws -> TaxId
+
+    /// Performs `deleteForCustomer(_:id:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var deleteForCustomer: @Sendable (_ customer: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTaxId
+
+    /// Performs `listForCustomer(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listForCustomer: @Sendable (_ customer: String, _ params: TaxIdListForCustomerParams, _ options: RequestOptions) async throws -> TaxIdList
+
+    /// Performs `retrieveForCustomer(_:id:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieveForCustomer: @Sendable (_ customer: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxId
+}
+
+extension TaxIdRoutes {
     /// Creates a new account or customer tax_id object.
-    public var create: @Sendable (_ params: TaxIdCreateParams) async throws -> TaxId
+    public func create(_ params: TaxIdCreateParams, options: RequestOptions = .init()) async throws -> TaxId {
+        try await create(params, options)
+    }
 
     /// Retrieves an account or customer tax_id object.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TaxId
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TaxId {
+        try await retrieve(id, expand, options)
+    }
 
     /// Returns a list of tax IDs.
-    public var list: @Sendable (_ params: TaxIdListParams?) async throws -> TaxIdList
+    public func list(_ params: TaxIdListParams = .init(), options: RequestOptions = .init()) async throws -> TaxIdList {
+        try await list(params, options)
+    }
 
     /// Deletes an existing account or customer tax_id object.
-    public var delete: @Sendable (_ id: String, _ expand: [String]?) async throws -> DeletedTaxId
+    public func delete(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedTaxId {
+        try await delete(id, expand, options)
+    }
 
     /// Creates a new tax_id object for a customer.
-    public var createForCustomer: @Sendable (_ customer: String, _ params: TaxIdCreateForCustomerParams) async throws -> TaxId
+    public func createForCustomer(_ customer: String, _ params: TaxIdCreateForCustomerParams, options: RequestOptions = .init()) async throws -> TaxId {
+        try await createForCustomer(customer, params, options)
+    }
 
     /// Deletes an existing tax_id object.
-    public var deleteForCustomer: @Sendable (_ customer: String, _ id: String, _ expand: [String]?) async throws -> DeletedTaxId
+    public func deleteForCustomer(_ customer: String, id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedTaxId {
+        try await deleteForCustomer(customer, id, expand, options)
+    }
 
     /// Returns a list of tax IDs for a customer.
-    public var listForCustomer: @Sendable (_ customer: String, _ params: TaxIdListForCustomerParams?) async throws -> TaxIdList
+    public func listForCustomer(_ customer: String, _ params: TaxIdListForCustomerParams = .init(), options: RequestOptions = .init()) async throws -> TaxIdList {
+        try await listForCustomer(customer, params, options)
+    }
 
     /// Retrieves the tax_id object with the given identifier.
-    public var retrieveForCustomer: @Sendable (_ customer: String, _ id: String, _ expand: [String]?) async throws -> TaxId
+    public func retrieveForCustomer(_ customer: String, id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TaxId {
+        try await retrieveForCustomer(customer, id, expand, options)
+    }
 }
 
 extension TaxIdRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxIdRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/tax_ids", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/tax_ids", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/tax_ids/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/tax_ids/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/tax_ids", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/tax_ids", params: params, options: options)
             },
-            delete: { id, expand in
-                try await handler.send(.DELETE, "/v1/tax_ids/\(id)", expand: expand)
+            delete: { id, expand, options in
+                try await handler.send(.DELETE, "/v1/tax_ids/\(id)", expand: expand, options: options)
             },
-            createForCustomer: { customer, params in
-                try await handler.send(.POST, "/v1/customers/\(customer)/tax_ids", params: params)
+            createForCustomer: { customer, params, options in
+                try await handler.send(.POST, "/v1/customers/\(customer)/tax_ids", params: params, options: options)
             },
-            deleteForCustomer: { customer, id, expand in
-                try await handler.send(.DELETE, "/v1/customers/\(customer)/tax_ids/\(id)", expand: expand)
+            deleteForCustomer: { customer, id, expand, options in
+                try await handler.send(.DELETE, "/v1/customers/\(customer)/tax_ids/\(id)", expand: expand, options: options)
             },
-            listForCustomer: { customer, params in
-                try await handler.send(.GET, "/v1/customers/\(customer)/tax_ids", params: params)
+            listForCustomer: { customer, params, options in
+                try await handler.send(.GET, "/v1/customers/\(customer)/tax_ids", params: params, options: options)
             },
-            retrieveForCustomer: { customer, id, expand in
-                try await handler.send(.GET, "/v1/customers/\(customer)/tax_ids/\(id)", expand: expand)
+            retrieveForCustomer: { customer, id, expand, options in
+                try await handler.send(.GET, "/v1/customers/\(customer)/tax_ids/\(id)", expand: expand, options: options)
             }
         )
     }

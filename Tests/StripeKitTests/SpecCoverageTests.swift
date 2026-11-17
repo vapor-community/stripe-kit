@@ -98,9 +98,9 @@ struct SpecCoverageTests {
     @Test("File and current-object routes have their expected signatures")
     func specialRouteSignatures() {
         // application/pdf from files.stripe.com, returned as bytes
-        let _: KeyPath<QuoteRoutes, @Sendable (String, [String]?) async throws -> Data> = \.pdf
+        let _: KeyPath<QuoteRoutes, @Sendable (String, [String]?, RequestOptions) async throws -> Data> = \.pdf
         // GET /v1/account: the API key's own account, next to GET /v1/accounts/{account}
-        let _: KeyPath<AccountRoutes, @Sendable ([String]?) async throws -> Account> = \.retrieveCurrent
+        let _: KeyPath<AccountRoutes, @Sendable ([String]?, RequestOptions) async throws -> Account> = \.retrieveCurrent
     }
 
     @Test("Skipped operations aren't also generated")

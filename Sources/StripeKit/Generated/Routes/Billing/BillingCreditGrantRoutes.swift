@@ -12,45 +12,77 @@ import NIOHTTP1
 
 public struct BillingCreditGrantRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: BillingCreditGrantCreateParams, _ options: RequestOptions) async throws -> BillingCreditGrant
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BillingCreditGrant
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: BillingCreditGrantUpdateParams, _ options: RequestOptions) async throws -> BillingCreditGrant
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: BillingCreditGrantListParams, _ options: RequestOptions) async throws -> BillingCreditGrantList
+
+    /// Performs `expire(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var expire: @Sendable (_ id: String, _ params: BillingCreditGrantExpireParams, _ options: RequestOptions) async throws -> BillingCreditGrant
+
+    /// Performs `voidGrant(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var voidGrant: @Sendable (_ id: String, _ params: BillingCreditGrantVoidGrantParams, _ options: RequestOptions) async throws -> BillingCreditGrant
+}
+
+extension BillingCreditGrantRoutes {
     /// Creates a credit grant.
-    public var create: @Sendable (_ params: BillingCreditGrantCreateParams) async throws -> BillingCreditGrant
+    public func create(_ params: BillingCreditGrantCreateParams, options: RequestOptions = .init()) async throws -> BillingCreditGrant {
+        try await create(params, options)
+    }
 
     /// Retrieves a credit grant.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> BillingCreditGrant
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> BillingCreditGrant {
+        try await retrieve(id, expand, options)
+    }
 
     /// Updates a credit grant.
-    public var update: @Sendable (_ id: String, _ params: BillingCreditGrantUpdateParams?) async throws -> BillingCreditGrant
+    public func update(_ id: String, _ params: BillingCreditGrantUpdateParams = .init(), options: RequestOptions = .init()) async throws -> BillingCreditGrant {
+        try await update(id, params, options)
+    }
 
     /// Retrieve a list of credit grants.
-    public var list: @Sendable (_ params: BillingCreditGrantListParams?) async throws -> BillingCreditGrantList
+    public func list(_ params: BillingCreditGrantListParams = .init(), options: RequestOptions = .init()) async throws -> BillingCreditGrantList {
+        try await list(params, options)
+    }
 
     /// Expires a credit grant.
-    public var expire: @Sendable (_ id: String, _ params: BillingCreditGrantExpireParams?) async throws -> BillingCreditGrant
+    public func expire(_ id: String, _ params: BillingCreditGrantExpireParams = .init(), options: RequestOptions = .init()) async throws -> BillingCreditGrant {
+        try await expire(id, params, options)
+    }
 
     /// Voids a credit grant.
-    public var voidGrant: @Sendable (_ id: String, _ params: BillingCreditGrantVoidGrantParams?) async throws -> BillingCreditGrant
+    public func voidGrant(_ id: String, _ params: BillingCreditGrantVoidGrantParams = .init(), options: RequestOptions = .init()) async throws -> BillingCreditGrant {
+        try await voidGrant(id, params, options)
+    }
 }
 
 extension BillingCreditGrantRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingCreditGrantRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/billing/credit_grants", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/billing/credit_grants", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/billing/credit_grants/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/billing/credit_grants/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/billing/credit_grants/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/credit_grants/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/billing/credit_grants", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/billing/credit_grants", params: params, options: options)
             },
-            expire: { id, params in
-                try await handler.send(.POST, "/v1/billing/credit_grants/\(id)/expire", params: params)
+            expire: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/credit_grants/\(id)/expire", params: params, options: options)
             },
-            voidGrant: { id, params in
-                try await handler.send(.POST, "/v1/billing/credit_grants/\(id)/void", params: params)
+            voidGrant: { id, params, options in
+                try await handler.send(.POST, "/v1/billing/credit_grants/\(id)/void", params: params, options: options)
             }
         )
     }

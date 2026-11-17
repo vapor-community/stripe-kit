@@ -12,28 +12,45 @@ import NIOHTTP1
 
 public struct TreasuryCreditReversalRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TreasuryCreditReversalCreateParams, _ options: RequestOptions) async throws -> TreasuryCreditReversal
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ creditReversal: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryCreditReversal
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryCreditReversalListParams, _ options: RequestOptions) async throws -> TreasuryCreditReversalList
+}
+
+extension TreasuryCreditReversalRoutes {
     /// Reverses a ReceivedCredit and creates a CreditReversal object.
-    public var create: @Sendable (_ params: TreasuryCreditReversalCreateParams) async throws -> TreasuryCreditReversal
+    public func create(_ params: TreasuryCreditReversalCreateParams, options: RequestOptions = .init()) async throws -> TreasuryCreditReversal {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing CreditReversal by passing the unique CreditReversal ID from
     /// either the CreditReversal creation request or CreditReversal list
-    public var retrieve: @Sendable (_ creditReversal: String, _ expand: [String]?) async throws -> TreasuryCreditReversal
+    public func retrieve(_ creditReversal: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryCreditReversal {
+        try await retrieve(creditReversal, expand, options)
+    }
 
     /// Returns a list of CreditReversals.
-    public var list: @Sendable (_ params: TreasuryCreditReversalListParams) async throws -> TreasuryCreditReversalList
+    public func list(_ params: TreasuryCreditReversalListParams, options: RequestOptions = .init()) async throws -> TreasuryCreditReversalList {
+        try await list(params, options)
+    }
 }
 
 extension TreasuryCreditReversalRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryCreditReversalRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/treasury/credit_reversals", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/treasury/credit_reversals", params: params, options: options)
             },
-            retrieve: { creditReversal, expand in
-                try await handler.send(.GET, "/v1/treasury/credit_reversals/\(creditReversal)", expand: expand)
+            retrieve: { creditReversal, expand, options in
+                try await handler.send(.GET, "/v1/treasury/credit_reversals/\(creditReversal)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/credit_reversals", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/credit_reversals", params: params, options: options)
             }
         )
     }

@@ -20,27 +20,33 @@ extension StripeClient {
     /// ```swift
     /// let payout = try await stripe.onBehalfOf("acct_xxx").payouts.create(params)
     /// ```
+    ///
+    /// For a single request, pass `options: RequestOptions(stripeAccount:)` instead.
     public func onBehalfOf(_ accountId: String) -> StripeClient {
-        return .live(
+        .live(handler: StripeAPIHandler(
             httpClient: handler.httpClient,
             apiKey: handler.apiKey,
-            stripeAccount: accountId
-        )
+            stripeAccount: accountId,
+            idempotencyKey: handler.idempotencyKey
+        ))
     }
 
-    /// Returns a scoped client that sends all requests with the given idempotency key.
-    /// Stripe guarantees that requests with the same key produce the same result.
+    /// Returns a scoped client that sends every request with the given idempotency key.
+    ///
+    /// Every request must have its own key, so a client scoped this way is only safe for a
+    /// single request. Pass the key with that request instead:
     ///
     /// ```swift
-    /// let customer = try await stripe.idempotent("unique-key").customers.create(params)
+    /// let customer = try await stripe.customers.create(params, options: .init(idempotencyKey: key))
     /// ```
+    @available(*, deprecated, message: "Pass the key per request: options: RequestOptions(idempotencyKey:)")
     public func idempotent(_ key: String) -> StripeClient {
-        return .live(
+        .live(handler: StripeAPIHandler(
             httpClient: handler.httpClient,
             apiKey: handler.apiKey,
             stripeAccount: handler.stripeAccount,
             idempotencyKey: key
-        )
+        ))
     }
 
     /// A test client with a placeholder API key.

@@ -12,41 +12,68 @@ import NIOHTTP1
 
 public struct TopupRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TopupCreateParams, _ options: RequestOptions) async throws -> Topup
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ topup: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Topup
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ topup: String, _ params: TopupUpdateParams, _ options: RequestOptions) async throws -> Topup
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TopupListParams, _ options: RequestOptions) async throws -> TopupList
+
+    /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var cancel: @Sendable (_ topup: String, _ params: TopupCancelParams, _ options: RequestOptions) async throws -> Topup
+}
+
+extension TopupRoutes {
     /// Top up the balance of an account
-    public var create: @Sendable (_ params: TopupCreateParams) async throws -> Topup
+    public func create(_ params: TopupCreateParams, options: RequestOptions = .init()) async throws -> Topup {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that
     /// was returned from your previous request, and Stripe will return the corresponding top-up
     /// information.
-    public var retrieve: @Sendable (_ topup: String, _ expand: [String]?) async throws -> Topup
+    public func retrieve(_ topup: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Topup {
+        try await retrieve(topup, expand, options)
+    }
 
     /// Updates the metadata of a top-up. Other top-up details are not editable by design.
-    public var update: @Sendable (_ topup: String, _ params: TopupUpdateParams?) async throws -> Topup
+    public func update(_ topup: String, _ params: TopupUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Topup {
+        try await update(topup, params, options)
+    }
 
     /// Returns a list of top-ups.
-    public var list: @Sendable (_ params: TopupListParams?) async throws -> TopupList
+    public func list(_ params: TopupListParams = .init(), options: RequestOptions = .init()) async throws -> TopupList {
+        try await list(params, options)
+    }
 
     /// Cancels a top-up. Only pending top-ups can be canceled.
-    public var cancel: @Sendable (_ topup: String, _ params: TopupCancelParams?) async throws -> Topup
+    public func cancel(_ topup: String, _ params: TopupCancelParams = .init(), options: RequestOptions = .init()) async throws -> Topup {
+        try await cancel(topup, params, options)
+    }
 }
 
 extension TopupRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TopupRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/topups", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/topups", params: params, options: options)
             },
-            retrieve: { topup, expand in
-                try await handler.send(.GET, "/v1/topups/\(topup)", expand: expand)
+            retrieve: { topup, expand, options in
+                try await handler.send(.GET, "/v1/topups/\(topup)", expand: expand, options: options)
             },
-            update: { topup, params in
-                try await handler.send(.POST, "/v1/topups/\(topup)", params: params)
+            update: { topup, params, options in
+                try await handler.send(.POST, "/v1/topups/\(topup)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/topups", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/topups", params: params, options: options)
             },
-            cancel: { topup, params in
-                try await handler.send(.POST, "/v1/topups/\(topup)/cancel", params: params)
+            cancel: { topup, params, options in
+                try await handler.send(.POST, "/v1/topups/\(topup)/cancel", params: params, options: options)
             }
         )
     }

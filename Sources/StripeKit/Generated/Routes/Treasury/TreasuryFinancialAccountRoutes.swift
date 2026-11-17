@@ -12,53 +12,90 @@ import NIOHTTP1
 
 public struct TreasuryFinancialAccountRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TreasuryFinancialAccountCreateParams, _ options: RequestOptions) async throws -> TreasuryFinancialAccount
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ financialAccount: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryFinancialAccount
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ financialAccount: String, _ params: TreasuryFinancialAccountUpdateParams, _ options: RequestOptions) async throws -> TreasuryFinancialAccount
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryFinancialAccountListParams, _ options: RequestOptions) async throws -> TreasuryFinancialAccountList
+
+    /// Performs `close(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var close: @Sendable (_ financialAccount: String, _ params: TreasuryFinancialAccountCloseParams, _ options: RequestOptions) async throws -> TreasuryFinancialAccount
+
+    /// Performs `retrieveFeatures(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieveFeatures: @Sendable (_ financialAccount: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryFinancialAccountFeatures
+
+    /// Performs `updateFeatures(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var updateFeatures: @Sendable (_ financialAccount: String, _ params: TreasuryFinancialAccountUpdateFeaturesParams, _ options: RequestOptions) async throws -> TreasuryFinancialAccountFeatures
+}
+
+extension TreasuryFinancialAccountRoutes {
     /// Creates a new FinancialAccount. Each connected account can have up to three FinancialAccounts by
     /// default.
-    public var create: @Sendable (_ params: TreasuryFinancialAccountCreateParams) async throws -> TreasuryFinancialAccount
+    public func create(_ params: TreasuryFinancialAccountCreateParams, options: RequestOptions = .init()) async throws -> TreasuryFinancialAccount {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of a FinancialAccount.
-    public var retrieve: @Sendable (_ financialAccount: String, _ expand: [String]?) async throws -> TreasuryFinancialAccount
+    public func retrieve(_ financialAccount: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryFinancialAccount {
+        try await retrieve(financialAccount, expand, options)
+    }
 
     /// Updates the details of a FinancialAccount.
-    public var update: @Sendable (_ financialAccount: String, _ params: TreasuryFinancialAccountUpdateParams?) async throws -> TreasuryFinancialAccount
+    public func update(_ financialAccount: String, _ params: TreasuryFinancialAccountUpdateParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryFinancialAccount {
+        try await update(financialAccount, params, options)
+    }
 
     /// Returns a list of FinancialAccounts.
-    public var list: @Sendable (_ params: TreasuryFinancialAccountListParams?) async throws -> TreasuryFinancialAccountList
+    public func list(_ params: TreasuryFinancialAccountListParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryFinancialAccountList {
+        try await list(params, options)
+    }
 
     /// Closes a FinancialAccount. A FinancialAccount can only be closed if it has a zero balance, has no
     /// pending InboundTransfers, and has canceled all attached Issuing cards.
-    public var close: @Sendable (_ financialAccount: String, _ params: TreasuryFinancialAccountCloseParams?) async throws -> TreasuryFinancialAccount
+    public func close(_ financialAccount: String, _ params: TreasuryFinancialAccountCloseParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryFinancialAccount {
+        try await close(financialAccount, params, options)
+    }
 
     /// Retrieves Features information associated with the FinancialAccount.
-    public var retrieveFeatures: @Sendable (_ financialAccount: String, _ expand: [String]?) async throws -> TreasuryFinancialAccountFeatures
+    public func retrieveFeatures(_ financialAccount: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryFinancialAccountFeatures {
+        try await retrieveFeatures(financialAccount, expand, options)
+    }
 
     /// Updates the Features associated with a FinancialAccount.
-    public var updateFeatures: @Sendable (_ financialAccount: String, _ params: TreasuryFinancialAccountUpdateFeaturesParams?) async throws -> TreasuryFinancialAccountFeatures
+    public func updateFeatures(_ financialAccount: String, _ params: TreasuryFinancialAccountUpdateFeaturesParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryFinancialAccountFeatures {
+        try await updateFeatures(financialAccount, params, options)
+    }
 }
 
 extension TreasuryFinancialAccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryFinancialAccountRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/treasury/financial_accounts", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/treasury/financial_accounts", params: params, options: options)
             },
-            retrieve: { financialAccount, expand in
-                try await handler.send(.GET, "/v1/treasury/financial_accounts/\(financialAccount)", expand: expand)
+            retrieve: { financialAccount, expand, options in
+                try await handler.send(.GET, "/v1/treasury/financial_accounts/\(financialAccount)", expand: expand, options: options)
             },
-            update: { financialAccount, params in
-                try await handler.send(.POST, "/v1/treasury/financial_accounts/\(financialAccount)", params: params)
+            update: { financialAccount, params, options in
+                try await handler.send(.POST, "/v1/treasury/financial_accounts/\(financialAccount)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/financial_accounts", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/financial_accounts", params: params, options: options)
             },
-            close: { financialAccount, params in
-                try await handler.send(.POST, "/v1/treasury/financial_accounts/\(financialAccount)/close", params: params)
+            close: { financialAccount, params, options in
+                try await handler.send(.POST, "/v1/treasury/financial_accounts/\(financialAccount)/close", params: params, options: options)
             },
-            retrieveFeatures: { financialAccount, expand in
-                try await handler.send(.GET, "/v1/treasury/financial_accounts/\(financialAccount)/features", expand: expand)
+            retrieveFeatures: { financialAccount, expand, options in
+                try await handler.send(.GET, "/v1/treasury/financial_accounts/\(financialAccount)/features", expand: expand, options: options)
             },
-            updateFeatures: { financialAccount, params in
-                try await handler.send(.POST, "/v1/treasury/financial_accounts/\(financialAccount)/features", params: params)
+            updateFeatures: { financialAccount, params, options in
+                try await handler.send(.POST, "/v1/treasury/financial_accounts/\(financialAccount)/features", params: params, options: options)
             }
         )
     }

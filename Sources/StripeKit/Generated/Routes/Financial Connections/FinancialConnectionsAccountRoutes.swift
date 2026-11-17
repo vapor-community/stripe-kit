@@ -12,53 +12,90 @@ import NIOHTTP1
 
 public struct FinancialConnectionsAccountRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ account: String, _ expand: [String]?, _ options: RequestOptions) async throws -> FinancialConnectionsAccount
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: FinancialConnectionsAccountListParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccountList
+
+    /// Performs `disconnect(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var disconnect: @Sendable (_ account: String, _ params: FinancialConnectionsAccountDisconnectParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccount
+
+    /// Performs `listOwners(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var listOwners: @Sendable (_ account: String, _ params: FinancialConnectionsAccountListOwnersParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccountOwnerList
+
+    /// Performs `refresh(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var refresh: @Sendable (_ account: String, _ params: FinancialConnectionsAccountRefreshParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccount
+
+    /// Performs `subscribe(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var subscribe: @Sendable (_ account: String, _ params: FinancialConnectionsAccountSubscribeParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccount
+
+    /// Performs `unsubscribe(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var unsubscribe: @Sendable (_ account: String, _ params: FinancialConnectionsAccountUnsubscribeParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccount
+}
+
+extension FinancialConnectionsAccountRoutes {
     /// Retrieves the details of a Financial Connections Account.
-    public var retrieve: @Sendable (_ account: String, _ expand: [String]?) async throws -> FinancialConnectionsAccount
+    public func retrieve(_ account: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> FinancialConnectionsAccount {
+        try await retrieve(account, expand, options)
+    }
 
     /// Returns a list of Financial Connections Account objects.
-    public var list: @Sendable (_ params: FinancialConnectionsAccountListParams?) async throws -> FinancialConnectionsAccountList
+    public func list(_ params: FinancialConnectionsAccountListParams = .init(), options: RequestOptions = .init()) async throws -> FinancialConnectionsAccountList {
+        try await list(params, options)
+    }
 
     /// Disables your access to a Financial Connections Account. You will no longer be able to access data
     /// associated with the account (e.g. balances, transactions).
-    public var disconnect: @Sendable (_ account: String, _ params: FinancialConnectionsAccountDisconnectParams?) async throws -> FinancialConnectionsAccount
+    public func disconnect(_ account: String, _ params: FinancialConnectionsAccountDisconnectParams = .init(), options: RequestOptions = .init()) async throws -> FinancialConnectionsAccount {
+        try await disconnect(account, params, options)
+    }
 
     /// Lists all owners for a given Account
-    public var listOwners: @Sendable (_ account: String, _ params: FinancialConnectionsAccountListOwnersParams) async throws -> FinancialConnectionsAccountOwnerList
+    public func listOwners(_ account: String, _ params: FinancialConnectionsAccountListOwnersParams, options: RequestOptions = .init()) async throws -> FinancialConnectionsAccountOwnerList {
+        try await listOwners(account, params, options)
+    }
 
     /// Refreshes the data associated with a Financial Connections Account.
-    public var refresh: @Sendable (_ account: String, _ params: FinancialConnectionsAccountRefreshParams) async throws -> FinancialConnectionsAccount
+    public func refresh(_ account: String, _ params: FinancialConnectionsAccountRefreshParams, options: RequestOptions = .init()) async throws -> FinancialConnectionsAccount {
+        try await refresh(account, params, options)
+    }
 
     /// Subscribes to periodic refreshes of data associated with a Financial Connections Account. When the
     /// account status is active, data is typically refreshed once a day.
-    public var subscribe: @Sendable (_ account: String, _ params: FinancialConnectionsAccountSubscribeParams) async throws -> FinancialConnectionsAccount
+    public func subscribe(_ account: String, _ params: FinancialConnectionsAccountSubscribeParams, options: RequestOptions = .init()) async throws -> FinancialConnectionsAccount {
+        try await subscribe(account, params, options)
+    }
 
     /// Unsubscribes from periodic refreshes of data associated with a Financial Connections Account.
-    public var unsubscribe: @Sendable (_ account: String, _ params: FinancialConnectionsAccountUnsubscribeParams) async throws -> FinancialConnectionsAccount
+    public func unsubscribe(_ account: String, _ params: FinancialConnectionsAccountUnsubscribeParams, options: RequestOptions = .init()) async throws -> FinancialConnectionsAccount {
+        try await unsubscribe(account, params, options)
+    }
 }
 
 extension FinancialConnectionsAccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FinancialConnectionsAccountRoutes(
-            retrieve: { account, expand in
-                try await handler.send(.GET, "/v1/financial_connections/accounts/\(account)", expand: expand)
+            retrieve: { account, expand, options in
+                try await handler.send(.GET, "/v1/financial_connections/accounts/\(account)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/financial_connections/accounts", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/financial_connections/accounts", params: params, options: options)
             },
-            disconnect: { account, params in
-                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/disconnect", params: params)
+            disconnect: { account, params, options in
+                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/disconnect", params: params, options: options)
             },
-            listOwners: { account, params in
-                try await handler.send(.GET, "/v1/financial_connections/accounts/\(account)/owners", params: params)
+            listOwners: { account, params, options in
+                try await handler.send(.GET, "/v1/financial_connections/accounts/\(account)/owners", params: params, options: options)
             },
-            refresh: { account, params in
-                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/refresh", params: params)
+            refresh: { account, params, options in
+                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/refresh", params: params, options: options)
             },
-            subscribe: { account, params in
-                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/subscribe", params: params)
+            subscribe: { account, params, options in
+                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/subscribe", params: params, options: options)
             },
-            unsubscribe: { account, params in
-                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/unsubscribe", params: params)
+            unsubscribe: { account, params, options in
+                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/unsubscribe", params: params, options: options)
             }
         )
     }

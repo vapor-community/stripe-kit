@@ -12,33 +12,55 @@ import NIOHTTP1
 
 public struct PaymentMethodConfigurationRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: PaymentMethodConfigurationCreateParams, _ options: RequestOptions) async throws -> PaymentMethodConfiguration
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ configuration: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PaymentMethodConfiguration
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ configuration: String, _ params: PaymentMethodConfigurationUpdateParams, _ options: RequestOptions) async throws -> PaymentMethodConfiguration
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PaymentMethodConfigurationListParams, _ options: RequestOptions) async throws -> PaymentMethodConfigurationList
+}
+
+extension PaymentMethodConfigurationRoutes {
     /// Creates a payment method configuration
-    public var create: @Sendable (_ params: PaymentMethodConfigurationCreateParams?) async throws -> PaymentMethodConfiguration
+    public func create(_ params: PaymentMethodConfigurationCreateParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodConfiguration {
+        try await create(params, options)
+    }
 
     /// Retrieve payment method configuration
-    public var retrieve: @Sendable (_ configuration: String, _ expand: [String]?) async throws -> PaymentMethodConfiguration
+    public func retrieve(_ configuration: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> PaymentMethodConfiguration {
+        try await retrieve(configuration, expand, options)
+    }
 
     /// Update payment method configuration
-    public var update: @Sendable (_ configuration: String, _ params: PaymentMethodConfigurationUpdateParams?) async throws -> PaymentMethodConfiguration
+    public func update(_ configuration: String, _ params: PaymentMethodConfigurationUpdateParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodConfiguration {
+        try await update(configuration, params, options)
+    }
 
     /// List payment method configurations
-    public var list: @Sendable (_ params: PaymentMethodConfigurationListParams?) async throws -> PaymentMethodConfigurationList
+    public func list(_ params: PaymentMethodConfigurationListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodConfigurationList {
+        try await list(params, options)
+    }
 }
 
 extension PaymentMethodConfigurationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentMethodConfigurationRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/payment_method_configurations", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/payment_method_configurations", params: params, options: options)
             },
-            retrieve: { configuration, expand in
-                try await handler.send(.GET, "/v1/payment_method_configurations/\(configuration)", expand: expand)
+            retrieve: { configuration, expand, options in
+                try await handler.send(.GET, "/v1/payment_method_configurations/\(configuration)", expand: expand, options: options)
             },
-            update: { configuration, params in
-                try await handler.send(.POST, "/v1/payment_method_configurations/\(configuration)", params: params)
+            update: { configuration, params, options in
+                try await handler.send(.POST, "/v1/payment_method_configurations/\(configuration)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/payment_method_configurations", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/payment_method_configurations", params: params, options: options)
             }
         )
     }

@@ -12,42 +12,64 @@ import NIOHTTP1
 
 public struct TransferReversalRoutes: Sendable {
 
+    /// Performs `create(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ id: String, _ params: TransferReversalCreateParams, _ options: RequestOptions) async throws -> TransferReversal
+
+    /// Performs `retrieve(_:id:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ transfer: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TransferReversal
+
+    /// Performs `update(_:id:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ transfer: String, _ id: String, _ params: TransferReversalUpdateParams, _ options: RequestOptions) async throws -> TransferReversal
+
+    /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ id: String, _ params: TransferReversalListParams, _ options: RequestOptions) async throws -> TransferReversalList
+}
+
+extension TransferReversalRoutes {
     /// When you create a new reversal, you must specify a transfer to create it on. When reversing
     /// transfers, you can optionally reverse part of the transfer. You can do so as many times as you wish
     /// until the entire transfer has been reversed. Once entirely reversed, a transfer can’t be reversed
     /// again. This method will return an error when called on an already-reversed transfer, or when trying
     /// to reverse more money than is left on a transfer.
-    public var create: @Sendable (_ id: String, _ params: TransferReversalCreateParams?) async throws -> TransferReversal
+    public func create(_ id: String, _ params: TransferReversalCreateParams = .init(), options: RequestOptions = .init()) async throws -> TransferReversal {
+        try await create(id, params, options)
+    }
 
     /// By default, you can see the 10 most recent reversals stored directly on the transfer object, but you
     /// can also retrieve details about a specific reversal stored on the transfer.
-    public var retrieve: @Sendable (_ transfer: String, _ id: String, _ expand: [String]?) async throws -> TransferReversal
+    public func retrieve(_ transfer: String, id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TransferReversal {
+        try await retrieve(transfer, id, expand, options)
+    }
 
     /// Updates the specified reversal by setting the values of the parameters passed. Any parameters not
     /// provided will be left unchanged. This request only accepts metadata and description as arguments.
-    public var update: @Sendable (_ transfer: String, _ id: String, _ params: TransferReversalUpdateParams?) async throws -> TransferReversal
+    public func update(_ transfer: String, id: String, _ params: TransferReversalUpdateParams = .init(), options: RequestOptions = .init()) async throws -> TransferReversal {
+        try await update(transfer, id, params, options)
+    }
 
     /// You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent
     /// reversals are always available by default on the transfer object. If you need more than those 10,
     /// you can use this API method and the limit and starting_after parameters to page through additional
     /// reversals.
-    public var list: @Sendable (_ id: String, _ params: TransferReversalListParams?) async throws -> TransferReversalList
+    public func list(_ id: String, _ params: TransferReversalListParams = .init(), options: RequestOptions = .init()) async throws -> TransferReversalList {
+        try await list(id, params, options)
+    }
 }
 
 extension TransferReversalRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TransferReversalRoutes(
-            create: { id, params in
-                try await handler.send(.POST, "/v1/transfers/\(id)/reversals", params: params)
+            create: { id, params, options in
+                try await handler.send(.POST, "/v1/transfers/\(id)/reversals", params: params, options: options)
             },
-            retrieve: { transfer, id, expand in
-                try await handler.send(.GET, "/v1/transfers/\(transfer)/reversals/\(id)", expand: expand)
+            retrieve: { transfer, id, expand, options in
+                try await handler.send(.GET, "/v1/transfers/\(transfer)/reversals/\(id)", expand: expand, options: options)
             },
-            update: { transfer, id, params in
-                try await handler.send(.POST, "/v1/transfers/\(transfer)/reversals/\(id)", params: params)
+            update: { transfer, id, params, options in
+                try await handler.send(.POST, "/v1/transfers/\(transfer)/reversals/\(id)", params: params, options: options)
             },
-            list: { id, params in
-                try await handler.send(.GET, "/v1/transfers/\(id)/reversals", params: params)
+            list: { id, params, options in
+                try await handler.send(.GET, "/v1/transfers/\(id)/reversals", params: params, options: options)
             }
         )
     }

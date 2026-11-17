@@ -12,27 +12,39 @@ import NIOHTTP1
 
 public struct LineItemRoutes: Sendable {
 
+    /// Performs `update(_:lineItemId:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ invoice: String, _ lineItemId: String, _ params: LineItemUpdateParams, _ options: RequestOptions) async throws -> LineItem
+
+    /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ invoice: String, _ params: LineItemListParams, _ options: RequestOptions) async throws -> LineItemList
+}
+
+extension LineItemRoutes {
     /// Updates an invoice’s line item. Some fields, such as tax_amounts, only live on the invoice line
     /// item, so they can only be updated through this endpoint. Other fields, such as amount, live on both
     /// the invoice item and the invoice line item, so updates on this endpoint will propagate to the
     /// invoice item as well. Updating an invoice’s line item is only possible before the invoice is
     /// finalized.
-    public var update: @Sendable (_ invoice: String, _ lineItemId: String, _ params: LineItemUpdateParams?) async throws -> LineItem
+    public func update(_ invoice: String, lineItemId: String, _ params: LineItemUpdateParams = .init(), options: RequestOptions = .init()) async throws -> LineItem {
+        try await update(invoice, lineItemId, params, options)
+    }
 
     /// When retrieving an invoice, you’ll get a lines property containing the total count of line items and
     /// the first handful of those items. There is also a URL where you can retrieve the full (paginated)
     /// list of line items.
-    public var list: @Sendable (_ invoice: String, _ params: LineItemListParams?) async throws -> LineItemList
+    public func list(_ invoice: String, _ params: LineItemListParams = .init(), options: RequestOptions = .init()) async throws -> LineItemList {
+        try await list(invoice, params, options)
+    }
 }
 
 extension LineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         LineItemRoutes(
-            update: { invoice, lineItemId, params in
-                try await handler.send(.POST, "/v1/invoices/\(invoice)/lines/\(lineItemId)", params: params)
+            update: { invoice, lineItemId, params, options in
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/lines/\(lineItemId)", params: params, options: options)
             },
-            list: { invoice, params in
-                try await handler.send(.GET, "/v1/invoices/\(invoice)/lines", params: params)
+            list: { invoice, params, options in
+                try await handler.send(.GET, "/v1/invoices/\(invoice)/lines", params: params, options: options)
             }
         )
     }

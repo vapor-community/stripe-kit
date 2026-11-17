@@ -12,17 +12,24 @@ import NIOHTTP1
 
 public struct TerminalConnectionTokenRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TerminalConnectionTokenCreateParams, _ options: RequestOptions) async throws -> TerminalConnectionToken
+}
+
+extension TerminalConnectionTokenRoutes {
     /// To connect to a reader the Stripe Terminal SDK needs to retrieve a short-lived connection token from
     /// Stripe, proxied through your server. On your backend, add an endpoint that creates and returns a
     /// connection token.
-    public var create: @Sendable (_ params: TerminalConnectionTokenCreateParams?) async throws -> TerminalConnectionToken
+    public func create(_ params: TerminalConnectionTokenCreateParams = .init(), options: RequestOptions = .init()) async throws -> TerminalConnectionToken {
+        try await create(params, options)
+    }
 }
 
 extension TerminalConnectionTokenRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TerminalConnectionTokenRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/terminal/connection_tokens", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/terminal/connection_tokens", params: params, options: options)
             }
         )
     }

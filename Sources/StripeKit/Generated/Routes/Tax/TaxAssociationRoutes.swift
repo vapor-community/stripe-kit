@@ -12,15 +12,22 @@ import NIOHTTP1
 
 public struct TaxAssociationRoutes: Sendable {
 
+    /// Performs `find(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var find: @Sendable (_ params: TaxAssociationFindParams, _ options: RequestOptions) async throws -> TaxAssociation
+}
+
+extension TaxAssociationRoutes {
     /// Finds a tax association object by PaymentIntent id.
-    public var find: @Sendable (_ params: TaxAssociationFindParams) async throws -> TaxAssociation
+    public func find(_ params: TaxAssociationFindParams, options: RequestOptions = .init()) async throws -> TaxAssociation {
+        try await find(params, options)
+    }
 }
 
 extension TaxAssociationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxAssociationRoutes(
-            find: { params in
-                try await handler.send(.GET, "/v1/tax/associations/find", params: params)
+            find: { params, options in
+                try await handler.send(.GET, "/v1/tax/associations/find", params: params, options: options)
             }
         )
     }

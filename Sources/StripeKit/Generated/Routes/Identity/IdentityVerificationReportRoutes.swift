@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct IdentityVerificationReportRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ report: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IdentityVerificationReport
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: IdentityVerificationReportListParams, _ options: RequestOptions) async throws -> IdentityVerificationReportList
+}
+
+extension IdentityVerificationReportRoutes {
     /// Retrieves an existing VerificationReport
-    public var retrieve: @Sendable (_ report: String, _ expand: [String]?) async throws -> IdentityVerificationReport
+    public func retrieve(_ report: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> IdentityVerificationReport {
+        try await retrieve(report, expand, options)
+    }
 
     /// List all verification reports.
-    public var list: @Sendable (_ params: IdentityVerificationReportListParams?) async throws -> IdentityVerificationReportList
+    public func list(_ params: IdentityVerificationReportListParams = .init(), options: RequestOptions = .init()) async throws -> IdentityVerificationReportList {
+        try await list(params, options)
+    }
 }
 
 extension IdentityVerificationReportRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IdentityVerificationReportRoutes(
-            retrieve: { report, expand in
-                try await handler.send(.GET, "/v1/identity/verification_reports/\(report)", expand: expand)
+            retrieve: { report, expand, options in
+                try await handler.send(.GET, "/v1/identity/verification_reports/\(report)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/identity/verification_reports", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/identity/verification_reports", params: params, options: options)
             }
         )
     }

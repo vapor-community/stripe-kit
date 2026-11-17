@@ -12,11 +12,32 @@ import NIOHTTP1
 
 public struct ExternalAccountRoutes: Sendable {
 
+    /// Performs `create(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ account: String, _ params: ExternalAccountCreateParams, _ options: RequestOptions) async throws -> ExternalAccount
+
+    /// Performs `retrieve(_:id:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ account: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ExternalAccount
+
+    /// Performs `update(_:id:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ account: String, _ id: String, _ params: ExternalAccountUpdateParams, _ options: RequestOptions) async throws -> ExternalAccount
+
+    /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ account: String, _ params: ExternalAccountListParams, _ options: RequestOptions) async throws -> ExternalAccountList
+
+    /// Performs `delete(_:id:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ account: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedExternalAccount
+}
+
+extension ExternalAccountRoutes {
     /// Create an external account for a given account.
-    public var create: @Sendable (_ account: String, _ params: ExternalAccountCreateParams) async throws -> ExternalAccount
+    public func create(_ account: String, _ params: ExternalAccountCreateParams, options: RequestOptions = .init()) async throws -> ExternalAccount {
+        try await create(account, params, options)
+    }
 
     /// Retrieve a specified external account for a given account.
-    public var retrieve: @Sendable (_ account: String, _ id: String, _ expand: [String]?) async throws -> ExternalAccount
+    public func retrieve(_ account: String, id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ExternalAccount {
+        try await retrieve(account, id, expand, options)
+    }
 
     /// Updates the metadata, account holder name, account holder type of a bank account belonging to a
     /// connected account and optionally sets it as the default for its currency. Other bank account details
@@ -24,32 +45,38 @@ public struct ExternalAccountRoutes: Sendable {
     /// account.controller.requirement_collection is application, which includes Custom accounts. You can
     /// re-enable a disabled bank account by performing an update call without providing any arguments or
     /// changes.
-    public var update: @Sendable (_ account: String, _ id: String, _ params: ExternalAccountUpdateParams?) async throws -> ExternalAccount
+    public func update(_ account: String, id: String, _ params: ExternalAccountUpdateParams = .init(), options: RequestOptions = .init()) async throws -> ExternalAccount {
+        try await update(account, id, params, options)
+    }
 
     /// List external accounts for an account.
-    public var list: @Sendable (_ account: String, _ params: ExternalAccountListParams?) async throws -> ExternalAccountList
+    public func list(_ account: String, _ params: ExternalAccountListParams = .init(), options: RequestOptions = .init()) async throws -> ExternalAccountList {
+        try await list(account, params, options)
+    }
 
     /// Delete a specified external account for a given account.
-    public var delete: @Sendable (_ account: String, _ id: String, _ expand: [String]?) async throws -> DeletedExternalAccount
+    public func delete(_ account: String, id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedExternalAccount {
+        try await delete(account, id, expand, options)
+    }
 }
 
 extension ExternalAccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ExternalAccountRoutes(
-            create: { account, params in
-                try await handler.send(.POST, "/v1/accounts/\(account)/external_accounts", params: params)
+            create: { account, params, options in
+                try await handler.send(.POST, "/v1/accounts/\(account)/external_accounts", params: params, options: options)
             },
-            retrieve: { account, id, expand in
-                try await handler.send(.GET, "/v1/accounts/\(account)/external_accounts/\(id)", expand: expand)
+            retrieve: { account, id, expand, options in
+                try await handler.send(.GET, "/v1/accounts/\(account)/external_accounts/\(id)", expand: expand, options: options)
             },
-            update: { account, id, params in
-                try await handler.send(.POST, "/v1/accounts/\(account)/external_accounts/\(id)", params: params)
+            update: { account, id, params, options in
+                try await handler.send(.POST, "/v1/accounts/\(account)/external_accounts/\(id)", params: params, options: options)
             },
-            list: { account, params in
-                try await handler.send(.GET, "/v1/accounts/\(account)/external_accounts", params: params)
+            list: { account, params, options in
+                try await handler.send(.GET, "/v1/accounts/\(account)/external_accounts", params: params, options: options)
             },
-            delete: { account, id, expand in
-                try await handler.send(.DELETE, "/v1/accounts/\(account)/external_accounts/\(id)", expand: expand)
+            delete: { account, id, expand, options in
+                try await handler.send(.DELETE, "/v1/accounts/\(account)/external_accounts/\(id)", expand: expand, options: options)
             }
         )
     }

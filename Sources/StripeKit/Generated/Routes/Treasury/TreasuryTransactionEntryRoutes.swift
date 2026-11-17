@@ -12,21 +12,33 @@ import NIOHTTP1
 
 public struct TreasuryTransactionEntryRoutes: Sendable {
 
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryTransactionEntry
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TreasuryTransactionEntryListParams, _ options: RequestOptions) async throws -> TreasuryTransactionEntryList
+}
+
+extension TreasuryTransactionEntryRoutes {
     /// Retrieves a TransactionEntry object.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> TreasuryTransactionEntry
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> TreasuryTransactionEntry {
+        try await retrieve(id, expand, options)
+    }
 
     /// Retrieves a list of TransactionEntry objects.
-    public var list: @Sendable (_ params: TreasuryTransactionEntryListParams) async throws -> TreasuryTransactionEntryList
+    public func list(_ params: TreasuryTransactionEntryListParams, options: RequestOptions = .init()) async throws -> TreasuryTransactionEntryList {
+        try await list(params, options)
+    }
 }
 
 extension TreasuryTransactionEntryRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TreasuryTransactionEntryRoutes(
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/treasury/transaction_entries/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/treasury/transaction_entries/\(id)", expand: expand, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/treasury/transaction_entries", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/treasury/transaction_entries", params: params, options: options)
             }
         )
     }

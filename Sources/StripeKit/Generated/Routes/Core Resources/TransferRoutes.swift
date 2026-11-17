@@ -12,39 +12,61 @@ import NIOHTTP1
 
 public struct TransferRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: TransferCreateParams, _ options: RequestOptions) async throws -> Transfer
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ transfer: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Transfer
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ transfer: String, _ params: TransferUpdateParams, _ options: RequestOptions) async throws -> Transfer
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: TransferListParams, _ options: RequestOptions) async throws -> TransferList
+}
+
+extension TransferRoutes {
     /// To send funds from your Stripe account to a connected account, you create a new transfer object.
     /// Your Stripe balance must be able to cover the transfer amount, or you’ll receive an “Insufficient
     /// Funds” error.
-    public var create: @Sendable (_ params: TransferCreateParams) async throws -> Transfer
+    public func create(_ params: TransferCreateParams, options: RequestOptions = .init()) async throws -> Transfer {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer
     /// creation request or the transfer list, and Stripe will return the corresponding transfer
     /// information.
-    public var retrieve: @Sendable (_ transfer: String, _ expand: [String]?) async throws -> Transfer
+    public func retrieve(_ transfer: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Transfer {
+        try await retrieve(transfer, expand, options)
+    }
 
     /// Updates the specified transfer by setting the values of the parameters passed. Any parameters not
     /// provided will be left unchanged. This request accepts only metadata as an argument.
-    public var update: @Sendable (_ transfer: String, _ params: TransferUpdateParams?) async throws -> Transfer
+    public func update(_ transfer: String, _ params: TransferUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Transfer {
+        try await update(transfer, params, options)
+    }
 
     /// Returns a list of existing transfers sent to connected accounts. The transfers are returned in
     /// sorted order, with the most recently created transfers appearing first.
-    public var list: @Sendable (_ params: TransferListParams?) async throws -> TransferList
+    public func list(_ params: TransferListParams = .init(), options: RequestOptions = .init()) async throws -> TransferList {
+        try await list(params, options)
+    }
 }
 
 extension TransferRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TransferRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/transfers", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/transfers", params: params, options: options)
             },
-            retrieve: { transfer, expand in
-                try await handler.send(.GET, "/v1/transfers/\(transfer)", expand: expand)
+            retrieve: { transfer, expand, options in
+                try await handler.send(.GET, "/v1/transfers/\(transfer)", expand: expand, options: options)
             },
-            update: { transfer, params in
-                try await handler.send(.POST, "/v1/transfers/\(transfer)", params: params)
+            update: { transfer, params, options in
+                try await handler.send(.POST, "/v1/transfers/\(transfer)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/transfers", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/transfers", params: params, options: options)
             }
         )
     }

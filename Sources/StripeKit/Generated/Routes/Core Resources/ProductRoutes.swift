@@ -12,53 +12,85 @@ import NIOHTTP1
 
 public struct ProductRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: ProductCreateParams, _ options: RequestOptions) async throws -> Product
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Product
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ id: String, _ params: ProductUpdateParams, _ options: RequestOptions) async throws -> Product
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: ProductListParams, _ options: RequestOptions) async throws -> ProductList
+
+    /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var search: @Sendable (_ params: ProductSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Product>
+
+    /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var delete: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedProduct
+}
+
+extension ProductRoutes {
     /// Creates a new product object.
-    public var create: @Sendable (_ params: ProductCreateParams) async throws -> Product
+    public func create(_ params: ProductCreateParams, options: RequestOptions = .init()) async throws -> Product {
+        try await create(params, options)
+    }
 
     /// Retrieves the details of an existing product. Supply the unique product ID from either a product
     /// creation request or the product list, and Stripe will return the corresponding product information.
-    public var retrieve: @Sendable (_ id: String, _ expand: [String]?) async throws -> Product
+    public func retrieve(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Product {
+        try await retrieve(id, expand, options)
+    }
 
     /// Updates the specific product by setting the values of the parameters passed. Any parameters not
     /// provided will be left unchanged.
-    public var update: @Sendable (_ id: String, _ params: ProductUpdateParams?) async throws -> Product
+    public func update(_ id: String, _ params: ProductUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Product {
+        try await update(id, params, options)
+    }
 
     /// Returns a list of your products. The products are returned sorted by creation date, with the most
     /// recently created products appearing first.
-    public var list: @Sendable (_ params: ProductListParams?) async throws -> ProductList
+    public func list(_ params: ProductListParams = .init(), options: RequestOptions = .init()) async throws -> ProductList {
+        try await list(params, options)
+    }
 
     /// Search for products you’ve previously created using Stripe’s Search Query Language. Don’t use search
     /// in read-after-write flows where strict consistency is necessary. Under normal operating conditions,
     /// data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
     /// to an hour behind during outages. Search functionality is not available to merchants in India.
-    public var search: @Sendable (_ params: ProductSearchParams) async throws -> StripeSearchResult<Product>
+    public func search(_ params: ProductSearchParams, options: RequestOptions = .init()) async throws -> StripeSearchResult<Product> {
+        try await search(params, options)
+    }
 
     /// Delete a product. Deleting a product is only possible if it has no prices associated with it.
     /// Additionally, deleting a product with type=good is only possible if it has no SKUs associated with
     /// it.
-    public var delete: @Sendable (_ id: String, _ expand: [String]?) async throws -> DeletedProduct
+    public func delete(_ id: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> DeletedProduct {
+        try await delete(id, expand, options)
+    }
 }
 
 extension ProductRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ProductRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/products", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/products", params: params, options: options)
             },
-            retrieve: { id, expand in
-                try await handler.send(.GET, "/v1/products/\(id)", expand: expand)
+            retrieve: { id, expand, options in
+                try await handler.send(.GET, "/v1/products/\(id)", expand: expand, options: options)
             },
-            update: { id, params in
-                try await handler.send(.POST, "/v1/products/\(id)", params: params)
+            update: { id, params, options in
+                try await handler.send(.POST, "/v1/products/\(id)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/products", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/products", params: params, options: options)
             },
-            search: { params in
-                try await handler.send(.GET, "/v1/products/search", params: params)
+            search: { params, options in
+                try await handler.send(.GET, "/v1/products/search", params: params, options: options)
             },
-            delete: { id, expand in
-                try await handler.send(.DELETE, "/v1/products/\(id)", expand: expand)
+            delete: { id, expand, options in
+                try await handler.send(.DELETE, "/v1/products/\(id)", expand: expand, options: options)
             }
         )
     }

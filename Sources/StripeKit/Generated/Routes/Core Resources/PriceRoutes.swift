@@ -12,44 +12,71 @@ import NIOHTTP1
 
 public struct PriceRoutes: Sendable {
 
+    /// Performs `create(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var create: @Sendable (_ params: PriceCreateParams, _ options: RequestOptions) async throws -> Price
+
+    /// Performs `retrieve(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
+    public var retrieve: @Sendable (_ price: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Price
+
+    /// Performs `update(_:_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var update: @Sendable (_ price: String, _ params: PriceUpdateParams, _ options: RequestOptions) async throws -> Price
+
+    /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var list: @Sendable (_ params: PriceListParams, _ options: RequestOptions) async throws -> PriceList
+
+    /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
+    public var search: @Sendable (_ params: PriceSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Price>
+}
+
+extension PriceRoutes {
     /// Creates a new Price for an existing Product. The Price can be recurring or one-time.
-    public var create: @Sendable (_ params: PriceCreateParams) async throws -> Price
+    public func create(_ params: PriceCreateParams, options: RequestOptions = .init()) async throws -> Price {
+        try await create(params, options)
+    }
 
     /// Retrieves the price with the given ID.
-    public var retrieve: @Sendable (_ price: String, _ expand: [String]?) async throws -> Price
+    public func retrieve(_ price: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> Price {
+        try await retrieve(price, expand, options)
+    }
 
     /// Updates the specified price by setting the values of the parameters passed. Any parameters not
     /// provided are left unchanged.
-    public var update: @Sendable (_ price: String, _ params: PriceUpdateParams?) async throws -> Price
+    public func update(_ price: String, _ params: PriceUpdateParams = .init(), options: RequestOptions = .init()) async throws -> Price {
+        try await update(price, params, options)
+    }
 
     /// Returns a list of your active prices, excluding inline prices. For the list of inactive prices, set
     /// active to false.
-    public var list: @Sendable (_ params: PriceListParams?) async throws -> PriceList
+    public func list(_ params: PriceListParams = .init(), options: RequestOptions = .init()) async throws -> PriceList {
+        try await list(params, options)
+    }
 
     /// Search for prices you’ve previously created using Stripe’s Search Query Language. Don’t use search
     /// in read-after-write flows where strict consistency is necessary. Under normal operating conditions,
     /// data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
     /// to an hour behind during outages. Search functionality is not available to merchants in India.
-    public var search: @Sendable (_ params: PriceSearchParams) async throws -> StripeSearchResult<Price>
+    public func search(_ params: PriceSearchParams, options: RequestOptions = .init()) async throws -> StripeSearchResult<Price> {
+        try await search(params, options)
+    }
 }
 
 extension PriceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PriceRoutes(
-            create: { params in
-                try await handler.send(.POST, "/v1/prices", params: params)
+            create: { params, options in
+                try await handler.send(.POST, "/v1/prices", params: params, options: options)
             },
-            retrieve: { price, expand in
-                try await handler.send(.GET, "/v1/prices/\(price)", expand: expand)
+            retrieve: { price, expand, options in
+                try await handler.send(.GET, "/v1/prices/\(price)", expand: expand, options: options)
             },
-            update: { price, params in
-                try await handler.send(.POST, "/v1/prices/\(price)", params: params)
+            update: { price, params, options in
+                try await handler.send(.POST, "/v1/prices/\(price)", params: params, options: options)
             },
-            list: { params in
-                try await handler.send(.GET, "/v1/prices", params: params)
+            list: { params, options in
+                try await handler.send(.GET, "/v1/prices", params: params, options: options)
             },
-            search: { params in
-                try await handler.send(.GET, "/v1/prices/search", params: params)
+            search: { params, options in
+                try await handler.send(.GET, "/v1/prices/search", params: params, options: options)
             }
         )
     }
