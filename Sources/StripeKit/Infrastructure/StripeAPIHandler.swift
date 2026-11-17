@@ -76,13 +76,7 @@ public struct StripeAPIHandler: Sendable {
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
-        // Note: NOT using .convertFromSnakeCase — all models have explicit CodingKeys
-        do {
-            return try decoder.decode(T.self, from: data)
-        } catch {
-            print("[StripeKit DEBUG] Decode error for \(T.self): \(error)")
-            throw error
-        }
+        return try decoder.decode(T.self, from: data)
     }
 
     let filesBaseURL = "https://files.stripe.com"
@@ -171,12 +165,7 @@ public struct StripeAPIHandler: Sendable {
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
-        do {
-            return try decoder.decode(T.self, from: data)
-        } catch {
-            print("[StripeKit DEBUG] Multipart decode error for \(T.self): \(error)")
-            throw error
-        }
+        return try decoder.decode(T.self, from: data)
     }
 }
 
