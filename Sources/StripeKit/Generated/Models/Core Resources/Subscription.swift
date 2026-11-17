@@ -11,7 +11,7 @@ import Foundation
 /// subscriptions](https://docs.stripe.com/billing/subscriptions/creating)
 public struct Subscription: Codable, Sendable {
     /// ID of the Connect Application that created the subscription.
-    @Expandable<Application>
+    @Expandable<ObjectOrDeleted<Application, DeletedApplication>>
     public var application: String?
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
     /// percentage of the subscription invoice total that will be transferred to the application owner's
@@ -54,7 +54,7 @@ public struct Subscription: Codable, Sendable {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// ID of the customer who owns the subscription.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// ID of the account representing the customer who owns the subscription.
     public var customerAccount: String?

@@ -36,7 +36,7 @@ public struct Invoice: Codable, Sendable {
     /// invoice.
     public var accountName: String?
     /// The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
-    @ExpandableCollection<TaxId>
+    @ExpandableCollection<ObjectOrDeleted<TaxId, DeletedTaxId>>
     public var accountTaxIds: [String]?
     /// Final amount due at this time for this invoice. If the invoice's total is smaller than the minimum
     /// charge amount, for example, or if there is account credit that can be applied to the invoice, the
@@ -56,7 +56,7 @@ public struct Invoice: Codable, Sendable {
     /// This is the sum of all the shipping amounts.
     public var amountShipping: Int
     /// ID of the Connect Application that created the invoice.
-    @Expandable<Application>
+    @Expandable<ObjectOrDeleted<Application, DeletedApplication>>
     public var application: String?
     /// Number of payment attempts made for this invoice, from the perspective of the payment retry
     /// schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries
@@ -104,7 +104,7 @@ public struct Invoice: Codable, Sendable {
     /// Custom fields displayed on the invoice.
     public var customFields: [InvoiceSettingCustomField]?
     /// The ID of the customer to bill.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// The ID of the account representing the customer to bill.
     public var customerAccount: String?
@@ -146,7 +146,7 @@ public struct Invoice: Codable, Sendable {
     public var description: String?
     /// The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use
     /// `expand[]=discounts` to expand each discount.
-    @ExpandableCollection<Discount>
+    @ExpandableCollection<ObjectOrDeleted<Discount, DeletedDiscount>>
     public var discounts: [String]?
     /// The date on which payment for this invoice is due. This value will be `null` for invoices where
     /// `collection_method=charge_automatically`.

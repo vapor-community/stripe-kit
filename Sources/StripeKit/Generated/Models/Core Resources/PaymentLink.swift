@@ -22,7 +22,7 @@ public struct PaymentLink: Codable, Sendable {
     /// Whether user redeemable promotion codes are enabled.
     public var allowPromotionCodes: Bool
     /// The ID of the Connect application that created the Payment Link.
-    @Expandable<Application>
+    @Expandable<ObjectOrDeleted<Application, DeletedApplication>>
     public var application: String?
     /// The amount of the application fee (if any) that will be requested to be applied to the payment and
     /// transferred to the application owner's Stripe account.

@@ -14,7 +14,7 @@ public struct CreditNotesPretaxCreditAmount: Codable, Sendable {
     @Expandable<CreditBalanceTransaction>
     public var creditBalanceTransaction: String?
     /// The discount that was applied to get this pretax credit amount.
-    @Expandable<Discount>
+    @Expandable<ObjectOrDeleted<Discount, DeletedDiscount>>
     public var discount: String?
     /// Type of the pretax credit amount referenced.
     public var type: CreditNotesPretaxCreditAmountType

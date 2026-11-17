@@ -29,7 +29,7 @@ public struct InvoicePayment: Codable, Sendable {
     /// Unique identifier for the object.
     public var id: String
     /// The invoice that was paid.
-    @Expandable<Invoice>
+    @Expandable<ObjectOrDeleted<Invoice, DeletedInvoice>>
     public var invoice: String?
     /// Stripe automatically creates a default InvoicePayment when the invoice is finalized, and keeps it
     /// synchronized with the invoice’s `amount_remaining`. The PaymentIntent associated with the default

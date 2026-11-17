@@ -27,7 +27,7 @@ public struct Invoiceitem: Codable, Sendable {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// The ID of the customer to bill for this invoice item.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// The ID of the account to bill for this invoice item.
     public var customerAccount: String?

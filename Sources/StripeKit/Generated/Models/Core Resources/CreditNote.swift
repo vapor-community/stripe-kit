@@ -21,7 +21,7 @@ public struct CreditNote: Codable, Sendable {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// ID of the customer.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// ID of the account representing the customer.
     public var customerAccount: String?

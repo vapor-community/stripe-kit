@@ -15,7 +15,7 @@ public struct Quote: Codable, Sendable {
     /// Total after discounts and taxes are applied.
     public var amountTotal: Int
     /// ID of the Connect Application that created the quote.
-    @Expandable<Application>
+    @Expandable<ObjectOrDeleted<Application, DeletedApplication>>
     public var application: String?
     /// The amount of the application fee (if any) that will be requested to be applied to the payment and
     /// transferred to the application owner's Stripe account. Only applicable if there are no line items
@@ -40,7 +40,7 @@ public struct Quote: Codable, Sendable {
     public var currency: String?
     /// The customer who received this quote. A customer is required to finalize the quote. Once specified,
     /// you can't change it.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// The account representing the customer who received this quote. A customer or account is required to
     /// finalize the quote. Once specified, you can't change it.
@@ -66,7 +66,7 @@ public struct Quote: Codable, Sendable {
     /// Unique identifier for the object.
     public var id: String
     /// The invoice that was created from this quote.
-    @Expandable<Invoice>
+    @Expandable<ObjectOrDeleted<Invoice, DeletedInvoice>>
     public var invoice: String?
     public var invoiceSettings: InvoiceSettingQuoteSetting
     /// A list of items the customer is being quoted for.

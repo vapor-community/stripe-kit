@@ -36,7 +36,7 @@ public struct BankAccount: Codable, Sendable {
     /// account.
     public var currency: String
     /// The ID of the customer that the bank account is associated with.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// Whether this bank account is the default external account for its currency.
     public var defaultForCurrency: Bool?

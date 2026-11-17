@@ -19,7 +19,7 @@ public struct SubscriptionScheduleAddInvoiceItem: Codable, Sendable {
     public var metadata: [String: String]?
     public var period: SubscriptionScheduleAddInvoiceItemPeriod
     /// ID of the price used to generate the invoice item.
-    @Expandable<Price>
+    @Expandable<ObjectOrDeleted<Price, DeletedPrice>>
     public var price: String?
     /// The quantity of the invoice item.
     public var quantity: Int?

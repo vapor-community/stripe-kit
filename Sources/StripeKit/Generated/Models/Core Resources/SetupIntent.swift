@@ -53,7 +53,7 @@ public struct SetupIntent: Codable, Sendable {
     /// ID of the Customer this SetupIntent belongs to, if one exists. If present, the SetupIntent's payment
     /// method will be attached to the Customer on successful setup. Payment methods attached to other
     /// Customers cannot be used with this SetupIntent.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// ID of the Account this SetupIntent belongs to, if one exists. If present, the SetupIntent's payment
     /// method will be attached to the Account on successful setup. Payment methods attached to other

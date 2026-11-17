@@ -20,10 +20,10 @@ public struct SubscriptionScheduleConfigurationItem: Codable, Sendable {
     /// entered.
     public var metadata: [String: String]?
     /// ID of the plan to which the customer should be subscribed.
-    @Expandable<Plan>
+    @Expandable<ObjectOrDeleted<Plan, DeletedPlan>>
     public var plan: String?
     /// ID of the price to which the customer should be subscribed.
-    @Expandable<Price>
+    @Expandable<ObjectOrDeleted<Price, DeletedPrice>>
     public var price: String?
     /// Quantity of the plan to which the customer should be subscribed.
     public var quantity: Int?

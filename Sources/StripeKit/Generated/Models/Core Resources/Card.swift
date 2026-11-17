@@ -58,7 +58,7 @@ public struct Card: Codable, Sendable {
     public var currency: String?
     /// The customer that this card belongs to. This attribute will not be in the card object if the card
     /// belongs to an account or recipient instead.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`. A result
     /// of unchecked indicates that CVC was provided but hasn't been checked yet. Checks are typically

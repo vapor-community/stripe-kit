@@ -27,7 +27,7 @@ public struct TrialOffer: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: TrialOfferObject
     /// The price during the trial offer.
-    @Expandable<Price>
+    @Expandable<ObjectOrDeleted<Price, DeletedPrice>>
     public var price: String?
 
     public enum CodingKeys: String, CodingKey {

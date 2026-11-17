@@ -57,7 +57,7 @@ public struct Charge: Codable, Sendable {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// ID of the customer this charge is for if one exists.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?

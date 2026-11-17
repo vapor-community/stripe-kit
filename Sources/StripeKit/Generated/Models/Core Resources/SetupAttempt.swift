@@ -26,7 +26,7 @@ public struct SetupAttempt: Codable, Sendable {
     /// The value of
     /// [customer](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-customer) on the
     /// SetupIntent at the time of this confirmation.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// The value of
     /// [customer_account](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-customer_account)

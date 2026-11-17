@@ -19,7 +19,7 @@ public struct CreditGrant: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// ID of the customer receiving the billing credits.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// ID of the account representing the customer receiving the billing credits
     public var customerAccount: String?

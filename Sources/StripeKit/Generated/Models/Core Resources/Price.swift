@@ -53,7 +53,7 @@ public struct Price: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PriceObject
     /// The ID of the product this price is associated with.
-    @Expandable<Product>
+    @Expandable<ObjectOrDeleted<Product, DeletedProduct>>
     public var product: String?
     /// The recurring components of a price such as `interval` and `usage_type`.
     public var recurring: Recurring?

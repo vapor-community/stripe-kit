@@ -356,16 +356,22 @@ struct SpecParser {
         }
     }
     
-    /// The Swift type an expandable field expands to: its one live resource. Deleted variants
-    /// are left out, so `customer` (customer | deleted_customer) expands to `Customer`.
+    /// The Swift type an expandable field expands to: its resource, or, when the spec says the
+    /// expanded object can also be a deleted one (`charge.customer` → customer |
+    /// deleted_customer), `ObjectOrDeleted<Customer, DeletedCustomer>`, the type retrieve
+    /// routes return for the same shape. Expanding a deleted customer gives
+    /// `{id, object, deleted}`, which wouldn't decode as a `Customer`.
     private func expandedType(_ resources: [PropertyObject], fieldName: String) -> String {
         let refs = resources.compactMap(\.ref).map(refToSchemaName)
         let live = refs.filter { !$0.starts(with: SpecParser.deletedPrefix) }
+        let deleted = refs.filter { $0.starts(with: SpecParser.deletedPrefix) }
         precondition(
-            live.count == 1,
-            "Expandable field `\(fieldName)` expands to \(refs.joined(separator: " | ")); expected exactly one non-deleted type"
+            live.count == 1 && deleted.count <= 1,
+            "Expandable field `\(fieldName)` expands to \(refs.joined(separator: " | ")); expected one type, plus at most one deleted type"
         )
-        return schemaNameToSwiftType(live[0])
+        let object = schemaNameToSwiftType(live[0])
+        guard let deleted = deleted.first else { return object }
+        return "ObjectOrDeleted<\(object), \(schemaNameToSwiftType(deleted))>"
     }
 
     private func resolveAnyOf(_ variants: [PropertyObject], fieldName: String) -> StripePropertyType {

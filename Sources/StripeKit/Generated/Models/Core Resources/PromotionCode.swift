@@ -23,7 +23,7 @@ public struct PromotionCode: Codable, Sendable {
     /// Time at which the object was created. Measured in seconds since the Unix epoch.
     public var created: Int
     /// The customer who can use this promotion code.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// The account representing the customer who can use this promotion code.
     public var customerAccount: String?

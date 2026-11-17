@@ -13,7 +13,7 @@ public struct CreditBalanceSummary: Codable, Sendable {
     /// grants in a single currency, then this will have a single balance entry.
     public var balances: [CreditBalance]
     /// The customer the balance is for.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// The account the balance is for.
     public var customerAccount: String?

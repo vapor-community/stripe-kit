@@ -57,7 +57,7 @@ public struct Plan: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: PlanObject
     /// The product whose pricing this plan determines.
-    @Expandable<Product>
+    @Expandable<ObjectOrDeleted<Product, DeletedProduct>>
     public var product: String?
     /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
     /// `tiered`. See also the documentation for `billing_scheme`.

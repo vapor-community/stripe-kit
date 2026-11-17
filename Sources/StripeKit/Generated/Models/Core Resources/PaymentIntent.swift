@@ -74,7 +74,7 @@ public struct PaymentIntent: Codable, Sendable {
     /// complete. If the payment method is `card_present` and isn't a digital wallet, then a
     /// [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card)
     /// payment method representing the card is created and attached to the Customer instead.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// ID of the Account representing the customer that this PaymentIntent belongs to, if one exists.
     /// Payment methods attached to other Accounts cannot be used with this PaymentIntent. If
@@ -163,7 +163,7 @@ public struct PaymentIntent: Codable, Sendable {
     public var shipping: Shipping?
     /// This is a legacy field that will be removed in the future. It is the ID of the Source object that is
     /// associated with this PaymentIntent, if one was supplied.
-    @Expandable<PaymentSource>
+    @Expandable<ObjectOrDeleted<PaymentSource, DeletedPaymentSource>>
     public var source: String?
     /// Text that appears on the customer's statement as the statement descriptor for a non-card charge.
     /// This value overrides the account's default statement descriptor. For information about requirements,

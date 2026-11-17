@@ -157,26 +157,37 @@ The most common pattern. A field is either a string ID or a fully expanded objec
 ```swift
 guard let customer = try await stripe.customers.retrieve("cus_xxx", ["default_source"]).object else { return }
 
-// wrappedValue → the ID (always available)
+// wrappedValue → the ID (when not expanded)
 let sourceId: String? = customer.defaultSource
 
 // projectedValue ($) → the expanded object (only when requested)
 let source: PaymentSource? = customer.$defaultSource
 ```
 
-#### `@ExpandableCollection<T>` — Array of IDs ↔ Objects
-
-For fields like `discounts`, `tax_rates`, or `balances` where the API returns an array that can be either string IDs or expanded objects:
+Where Stripe can expand a field to a deleted object (a charge's `customer` after the customer was deleted), the expanded value is an `ObjectOrDeleted`, the same type retrieve routes return:
 
 ```swift
-let invoice = try await stripe.invoices.retrieve("in_xxx", ["discounts", "default_tax_rates"])
+let charge = try await stripe.charges.retrieve("ch_xxx", ["customer"])
 
-// wrappedValue → array of IDs
+switch charge.$customer {
+case .object(let customer)?: print(customer.email ?? "")
+case .deleted(let deleted)?: print("\(deleted.id) was deleted")
+case nil: break  // not expanded
+}
+```
+
+#### `@ExpandableCollection<T>` — Array of IDs ↔ Objects
+
+For fields like an invoice's `discounts`, where the API returns an array that can be either string IDs or expanded objects:
+
+```swift
+let invoice = try await stripe.invoices.retrieve("in_xxx", ["discounts"])
+
+// wrappedValue → array of IDs (when not expanded)
 let discountIds: [String]? = invoice.discounts
 
-// projectedValue ($) → array of expanded objects
-let discounts: [DiscountsResourceDiscountAmount]? = invoice.$discounts
-let taxRates: [TaxRate]? = invoice.$defaultTaxRates
+// projectedValue ($) → array of expanded objects (a discount can be a deleted one)
+let discounts: [ObjectOrDeleted<Discount, DeletedDiscount>]? = invoice.$discounts
 ```
 
 ### Idempotency

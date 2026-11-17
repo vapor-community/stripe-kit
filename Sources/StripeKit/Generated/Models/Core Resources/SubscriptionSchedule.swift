@@ -12,7 +12,7 @@ import Foundation
 /// schedules](https://docs.stripe.com/billing/subscriptions/subscription-schedules)
 public struct SubscriptionSchedule: Codable, Sendable {
     /// ID of the Connect Application that created the schedule.
-    @Expandable<Application>
+    @Expandable<ObjectOrDeleted<Application, DeletedApplication>>
     public var application: String?
     public var billingMode: SubscriptionsResourceBillingMode
     /// Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
@@ -25,7 +25,7 @@ public struct SubscriptionSchedule: Codable, Sendable {
     /// it is `active`.
     public var currentPhase: SubscriptionScheduleCurrentPhase?
     /// ID of the customer who owns the subscription schedule.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// ID of the account who owns the subscription schedule.
     public var customerAccount: String?

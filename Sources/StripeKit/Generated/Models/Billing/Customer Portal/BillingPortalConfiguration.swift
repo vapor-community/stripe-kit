@@ -13,7 +13,7 @@ public struct BillingPortalConfiguration: Codable, Sendable {
     /// Whether the configuration is active and can be used to create portal sessions.
     public var active: Bool
     /// ID of the Connect Application that created the configuration.
-    @Expandable<Application>
+    @Expandable<ObjectOrDeleted<Application, DeletedApplication>>
     public var application: String?
     public var businessProfile: PortalBusinessProfile
     /// Time at which the object was created. Measured in seconds since the Unix epoch.

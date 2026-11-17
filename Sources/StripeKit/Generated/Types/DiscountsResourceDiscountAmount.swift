@@ -11,7 +11,7 @@ public struct DiscountsResourceDiscountAmount: Codable, Sendable {
     /// The amount, in cents (or local equivalent), of the discount.
     public var amount: Int
     /// The discount that was applied to get this discount amount.
-    @Expandable<Discount>
+    @Expandable<ObjectOrDeleted<Discount, DeletedDiscount>>
     public var discount: String?
 }
 

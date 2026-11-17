@@ -68,7 +68,7 @@ public struct CheckoutSession: Codable, Sendable {
     /// Sessions with `customer_creation` set as `always` in `payment` mode, Checkout will create a new
     /// customer object based on information provided during the payment flow unless an existing customer
     /// was provided when the Session was created.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// The ID of the account for this Session.
     public var customerAccount: String?

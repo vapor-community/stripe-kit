@@ -100,8 +100,34 @@ struct FixtureDecodingTests {
         invoiceJSON["customer"] = try JSONSerialization.jsonObject(with: Fixtures.all["customer"]!)
         invoiceJSON["discounts"] = [try JSONSerialization.jsonObject(with: Fixtures.all["discount"]!)]
         let expanded = try Fixtures.decoder.decode(Invoice.self, from: JSONSerialization.data(withJSONObject: invoiceJSON))
-        #expect(expanded.$customer?.id == "cus_QXg1o8vcGmoR32")
+        #expect(expanded.$customer?.object?.id == "cus_QXg1o8vcGmoR32")
         #expect(expanded.$discounts?.count == 1)
+        #expect(expanded.$discounts?.first?.object != nil)
+    }
+
+    /// When the spec says an expandable field can expand to a deleted object (charge.customer →
+    /// customer | deleted_customer), it expands to `ObjectOrDeleted`, so expanding a deleted
+    /// customer decodes as `.deleted` instead of failing as an incomplete `Customer`.
+    @Test("Expandable fields decode an expanded deleted object")
+    func expandedDeletedObjectsDecode() throws {
+        let _: KeyPath<Charge, ObjectOrDeleted<Customer, DeletedCustomer>?> = \.$customer
+        let _: KeyPath<Invoice, [ObjectOrDeleted<Discount, DeletedDiscount>]?> = \.$discounts
+
+        var invoiceJSON = try #require(JSONSerialization.jsonObject(with: Fixtures.all["invoice"]!) as? [String: Any])
+        invoiceJSON["customer"] = try JSONSerialization.jsonObject(with: Fixtures.all["deleted_customer"]!)
+        invoiceJSON["discounts"] = [
+            try JSONSerialization.jsonObject(with: Fixtures.all["discount"]!),
+            try JSONSerialization.jsonObject(with: Fixtures.all["deleted_discount"]!),
+        ]
+        let invoice = try Fixtures.decoder.decode(Invoice.self, from: JSONSerialization.data(withJSONObject: invoiceJSON))
+        #expect(invoice.$customer?.deleted?.id == "cus_QXg1o8vcGmoR32")
+        #expect(invoice.$customer?.object == nil)
+        #expect(invoice.$discounts?.map { $0.deleted != nil } == [false, true])
+
+        // Still survives an encode/decode round trip
+        let roundTripped = try Fixtures.decoder.decode(Invoice.self, from: JSONEncoder().encode(invoice))
+        #expect(roundTripped.$customer?.deleted?.id == "cus_QXg1o8vcGmoR32")
+        #expect(roundTripped.$discounts?.count == 2)
     }
 
     /// PaymentIntent → ApiErrors → PaymentIntent is a cycle of plain objects. The generator

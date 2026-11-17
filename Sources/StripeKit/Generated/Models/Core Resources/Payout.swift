@@ -40,7 +40,7 @@ public struct Payout: Codable, Sendable {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// ID of the bank account or card the payout is sent to.
-    @Expandable<ExternalAccount>
+    @Expandable<ObjectOrDeleted<ExternalAccount, DeletedExternalAccount>>
     public var destination: String?
     /// If the payout fails or cancels, this is the ID of the balance transaction that reverses the initial
     /// balance transaction and returns the funds from the failed payout back in your balance.

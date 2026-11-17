@@ -16,7 +16,7 @@ public struct Discount: Codable, Sendable {
     /// payment mode. Not present for subscription mode.
     public var checkoutSession: String?
     /// The ID of the customer associated with this discount.
-    @Expandable<Customer>
+    @Expandable<ObjectOrDeleted<Customer, DeletedCustomer>>
     public var customer: String?
     /// The ID of the account representing the customer associated with this discount.
     public var customerAccount: String?

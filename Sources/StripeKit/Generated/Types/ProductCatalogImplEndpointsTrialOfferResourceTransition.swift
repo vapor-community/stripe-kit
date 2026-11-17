@@ -9,7 +9,7 @@ import Foundation
 
 public struct ProductCatalogImplEndpointsTrialOfferResourceTransition: Codable, Sendable {
     /// The new price to use at the end of the trial offer period.
-    @Expandable<Price>
+    @Expandable<ObjectOrDeleted<Price, DeletedPrice>>
     public var price: String?
 }
 
