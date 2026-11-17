@@ -81,9 +81,9 @@ func refToSchemaName(_ ref: String) -> String {
 
 /// `///` doc comment lines for a spec description (HTML stripped, wrapped at 100 columns).
 /// Empty when there's no description.
-func docComment(_ description: String?, indent: String = "") -> [String] {
+func docComment(_ description: String?) -> [String] {
     guard let description, !description.isEmpty else { return [] }
-    return wordWrap(cleanDescription(description), lineLength: 100).map { "\(indent)/// \($0)" }
+    return wordWrap(cleanDescription(description), lineLength: 100).map { "/// \($0)" }
 }
 
 /// The case a polymorphic enum (`ExternalAccount`, `PaymentSource`) holds an object of a type it
@@ -129,20 +129,19 @@ func generateStringEnum(
     }
     guard !members.isEmpty else { return [] }
 
-    var lines = docComment(description)
-    lines.append("public struct \(name): RawRepresentable, Codable, Hashable, Sendable {")
-    lines.append("    public let rawValue: String")
-    lines.append("")
-    lines.append("    public init(rawValue: String) {")
-    lines.append("        self.rawValue = rawValue")
-    lines.append("    }")
-    lines.append("")
-    for member in members {
-        lines.append(contentsOf: docComment(valueDescriptions[member.rawValue], indent: "    "))
-        lines.append("    public static var \(member.name): Self { .init(rawValue: \(swiftStringLiteral(member.rawValue))) }")
+    var w = CodeWriter()
+    w.doc(description)
+    w.block("public struct \(name): RawRepresentable, Codable, Hashable, Sendable {") { w in
+        w.line("public let rawValue: String")
+        w.line()
+        w.block("public init(rawValue: String) {") { $0.line("self.rawValue = rawValue") }
+        w.line()
+        for member in members {
+            w.doc(valueDescriptions[member.rawValue])
+            w.line("public static var \(member.name): Self { .init(rawValue: \(swiftStringLiteral(member.rawValue))) }")
+        }
     }
-    lines.append("}")
-    return lines
+    return w.lines
 }
 
 /// Word-wrap text to a given line length
