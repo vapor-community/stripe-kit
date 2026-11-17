@@ -31,12 +31,13 @@ public struct StripeAPIHandler: Sendable {
 
     /// Send a request and decode its JSON response.
     /// - Parameters:
+    ///   - path: The path, with each interpolated value escaped (see `StripePath`).
     ///   - params: Form-encoded as the body of a POST, or as the query string otherwise.
     ///   - expand: `expand[]` values, sent in the query string. (A params struct has its own
     ///     `expand`, encoded with the rest of its fields.)
     public func send<T: Decodable>(
         _ method: HTTPMethod,
-        _ path: String,
+        _ path: StripePath,
         params: (any StripeParams)? = nil,
         expand: [String]? = nil
     ) async throws -> T {
@@ -48,7 +49,7 @@ public struct StripeAPIHandler: Sendable {
     /// - Parameter baseURL: The host to send it to, when it isn't the API host (files.stripe.com).
     public func sendForData(
         _ method: HTTPMethod,
-        _ path: String,
+        _ path: StripePath,
         params: (any StripeParams)? = nil,
         expand: [String]? = nil,
         baseURL: String? = nil
@@ -60,7 +61,7 @@ public struct StripeAPIHandler: Sendable {
     /// Upload a file as `multipart/form-data` and decode the JSON response.
     /// - Parameter baseURL: The host to send it to, when it isn't the API host (files.stripe.com).
     public func sendMultipart<T: Decodable>(
-        _ path: String,
+        _ path: StripePath,
         baseURL: String? = nil,
         fileData: Data,
         fileName: String,
@@ -98,7 +99,7 @@ public struct StripeAPIHandler: Sendable {
     /// Internal rather than private so tests can check what gets sent.
     func request(
         _ method: HTTPMethod,
-        _ path: String,
+        _ path: StripePath,
         params: (any StripeParams)? = nil,
         expand: [String]? = nil,
         baseURL: String? = nil
@@ -112,7 +113,7 @@ public struct StripeAPIHandler: Sendable {
             query.append("expand[]=\(value.addingPercentEncoding(withAllowedCharacters: .stripeQueryAllowed) ?? value)")
         }
 
-        var url = (baseURL ?? self.baseURL) + path
+        var url = (baseURL ?? self.baseURL) + path.description
         if !query.isEmpty {
             url += "?" + query.joined(separator: "&")
         }

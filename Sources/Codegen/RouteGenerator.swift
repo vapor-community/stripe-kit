@@ -107,7 +107,8 @@ struct RouteGenerator {
         for (idx, op) in operations.enumerated() {
             let comma = idx < operations.count - 1 ? "," : ""
 
-            // Path params interpolated into the path
+            // Path params interpolated into the path. The handler takes it as a `StripePath`,
+            // which escapes each interpolated value as one path segment.
             var apiPath = op.path
             for param in op.pathParams {
                 apiPath = apiPath.replacing("{\(param)}", with: "\\(\(snakeToCamel(param)))")

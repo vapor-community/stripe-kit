@@ -41,6 +41,24 @@ struct RequestEncodingTests {
         #expect(request.headers["Idempotency-Key"] == ["key_123"])
     }
 
+    @Test("Interpolated path values are escaped as a single path segment")
+    func pathParametersEscaped() {
+        func path(_ id: String) -> String { StripePath("/v1/products/\(id)").description }
+        // IDs Stripe generates pass through unchanged
+        #expect(path("cus_QXg1o8vcGmoR32") == "/v1/products/cus_QXg1o8vcGmoR32")
+        #expect(path("price.v2-test~1") == "/v1/products/price.v2-test~1")
+        // A chosen ID can't break out of its segment or into the query string
+        #expect(path("prod/../secret?x=1#y") == "/v1/products/prod%2F..%2Fsecret%3Fx%3D1%23y")
+        #expect(path("my product+ü") == "/v1/products/my%20product%2B%C3%BC")
+        // Literal parts, and an explicitly unescaped path, are used as written
+        #expect(StripePath("/v1/a/b").description == "/v1/a/b")
+        #expect(StripePath(unescaped: "/v1/a%2Fb").description == "/v1/a%2Fb")
+
+        let id = "a/b c"
+        let request = handler.request(.GET, "/v1/products/\(id)")
+        #expect(request.url == "https://api.stripe.com/v1/products/a%2Fb%20c")
+    }
+
     @Test("A route's own host replaces the API host")
     func baseURLOverride() {
         let request = handler.request(.GET, "/v1/quotes/qt_1/pdf", baseURL: "https://files.stripe.com")
