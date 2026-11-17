@@ -82,35 +82,32 @@ public enum PaymentSource: Codable, Sendable {
 
 }
 
-/// Polymorphic list — decodes items by `object` discriminator into typed arrays.
+/// A list of `PaymentSource`s, each decoded by its `object` field. Items of a type this
+/// version of StripeKit doesn't know are skipped.
 public struct PaymentSourceList: Codable, Sendable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
+    /// The items, in order
+    public var data: [PaymentSource]
 
-    /// Account items in this list
-    public var accounts: [Account]
-    /// BankAccount items in this list
-    public var bankAccounts: [BankAccount]
-    /// Card items in this list
-    public var cards: [Card]
-    /// Source items in this list
-    public var sources: [Source]
+    /// The `Account` items in `data`
+    public var accounts: [Account] { data.compactMap(\.account) }
 
-    public init(object: String = "list", hasMore: Bool? = nil, url: String? = nil, accounts: [Account] = [], bankAccounts: [BankAccount] = [], cards: [Card] = [], sources: [Source] = []) {
+    /// The `BankAccount` items in `data`
+    public var bankAccounts: [BankAccount] { data.compactMap(\.bankAccount) }
+
+    /// The `Card` items in `data`
+    public var cards: [Card] { data.compactMap(\.card) }
+
+    /// The `Source` items in `data`
+    public var sources: [Source] { data.compactMap(\.source) }
+
+    public init(object: String = "list", hasMore: Bool? = nil, url: String? = nil, data: [PaymentSource] = []) {
         self.object = object
         self.hasMore = hasMore
         self.url = url
-        self.accounts = accounts
-        self.bankAccounts = bankAccounts
-        self.cards = cards
-        self.sources = sources
-    }
-
-    // MARK: - Polymorphic Decoding
-
-    private struct ObjectDiscriminator: Codable {
-        let object: String
+        self.data = data
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -120,47 +117,30 @@ public struct PaymentSourceList: Codable, Sendable {
         case data
     }
 
+    private struct ObjectDiscriminator: Decodable {
+        let object: String
+    }
+
+    private static let knownObjects: Set<String> = ["account", "bank_account", "card", "source"]
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decode(String.self, forKey: .object)
-        self.hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)
-        self.url = try container.decodeIfPresent(String.self, forKey: .url)
-
-        var accounts: [Account] = []
-        var bankAccounts: [BankAccount] = []
-        var cards: [Card] = []
-        var sources: [Source] = []
-
-        if var dataContainer = try? container.nestedUnkeyedContainer(forKey: .data) {
-            var itemsContainer = try container.nestedUnkeyedContainer(forKey: .data)
-            while !dataContainer.isAtEnd {
-                let discriminator = try dataContainer.decode(ObjectDiscriminator.self)
-                switch discriminator.object {
-                case "account":
-                    accounts.append(try itemsContainer.decode(Account.self))
-                case "bank_account":
-                    bankAccounts.append(try itemsContainer.decode(BankAccount.self))
-                case "card":
-                    cards.append(try itemsContainer.decode(Card.self))
-                case "source":
-                    sources.append(try itemsContainer.decode(Source.self))
-                default:
-                    _ = try itemsContainer.decode(ObjectDiscriminator.self)
-                }
+        object = try container.decode(String.self, forKey: .object)
+        hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)
+        url = try container.decodeIfPresent(String.self, forKey: .url)
+        data = []
+        guard container.contains(.data), try !container.decodeNil(forKey: .data) else { return }
+        // Read each item's `object` first (from a second container over the same array),
+        // then decode it as the enum, or skip it if its type is unknown
+        var discriminators = try container.nestedUnkeyedContainer(forKey: .data)
+        var items = try container.nestedUnkeyedContainer(forKey: .data)
+        while !items.isAtEnd {
+            let itemObject = try discriminators.decode(ObjectDiscriminator.self).object
+            if Self.knownObjects.contains(itemObject) {
+                data.append(try items.decode(PaymentSource.self))
+            } else {
+                _ = try items.decode(ObjectDiscriminator.self)
             }
         }
-
-        self.accounts = accounts
-        self.bankAccounts = bankAccounts
-        self.cards = cards
-        self.sources = sources
     }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(object, forKey: .object)
-        try container.encodeIfPresent(hasMore, forKey: .hasMore)
-        try container.encodeIfPresent(url, forKey: .url)
-    }
-
 }

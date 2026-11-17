@@ -212,7 +212,8 @@ struct ModelGenerator {
         // Free-form objects (no declared fields or value type) and unresolvable anyOf unions:
         // values can be any JSON, so [String: String] would fail on numbers, bools and nulls.
         case .hash: return "[String: JSONValue]"
-        case .any: return "String"
+        // A schema with no type at all: it can be any JSON
+        case .any: return "JSONValue"
         }
     }
     
@@ -314,109 +315,74 @@ struct ModelGenerator {
         id.starts(with: SpecParser.deletedPrefix) ? String(id.dropFirst(SpecParser.deletedPrefix.count)) : id
     }
 
-    /// Generate a polymorphic list type that decodes items into typed arrays
+    /// Generate the list type for a polymorphic schema: `data` holds the items in order as the
+    /// enum, decoded by their `object` field, with a read-only array per variant
+    /// (`bankAccounts`, `cards`). Items of a type this version doesn't know are skipped, so a
+    /// new kind of item doesn't fail the whole list.
     private func generatePolymorphicListType(
         resource: StripeResource,
         variantInfos: [(id: String, swiftType: String, caseName: String)]
     ) -> [String] {
-        let listName = "\(resource.swiftTypeName)List"
+        let type = resource.swiftTypeName
+        let knownObjects = variantInfos.map { "\"\(objectValue(forVariant: $0.id))\"" }.joined(separator: ", ")
         var lines: [String] = []
-        
-        lines.append("/// Polymorphic list — decodes items by `object` discriminator into typed arrays.")
-        lines.append("public struct \(listName): Codable, Sendable {")
+        lines.append("/// A list of `\(type)`s, each decoded by its `object` field. Items of a type this")
+        lines.append("/// version of StripeKit doesn't know are skipped.")
+        lines.append("public struct \(type)List: Codable, Sendable {")
         lines.append("    public var object: String")
         lines.append("    public var hasMore: Bool?")
         lines.append("    public var url: String?")
+        lines.append("    /// The items, in order")
+        lines.append("    public var data: [\(type)]")
         lines.append("")
-        
-        // Typed arrays for each variant
         for v in variantInfos {
-            let pluralName = pluralPropertyName(v.caseName)
-            lines.append("    /// \(v.swiftType) items in this list")
-            lines.append("    public var \(pluralName): [\(v.swiftType)]")
+            lines.append("    /// The `\(v.swiftType)` items in `data`")
+            lines.append("    public var \(pluralPropertyName(v.caseName)): [\(v.swiftType)] { data.compactMap(\\.\(v.caseName)) }")
+            lines.append("")
         }
-        
-        lines.append("")
-        
-        // Initializer
-        var initParams = ["object: String = \"list\"", "hasMore: Bool? = nil", "url: String? = nil"]
-        for v in variantInfos {
-            initParams.append("\(pluralPropertyName(v.caseName)): [\(v.swiftType)] = []")
-        }
-        lines.append("    public init(\(initParams.joined(separator: ", "))) {")
-        lines.append("        self.object = object")
-        lines.append("        self.hasMore = hasMore")
-        lines.append("        self.url = url")
-        for v in variantInfos {
-            let name = pluralPropertyName(v.caseName)
-            lines.append("        self.\(name) = \(name)")
-        }
-        lines.append("    }")
-        
-        lines.append("")
-        lines.append("    // MARK: - Polymorphic Decoding")
-        lines.append("")
-        lines.append("    private struct ObjectDiscriminator: Codable {")
-        lines.append("        let object: String")
-        lines.append("    }")
-        lines.append("")
-        lines.append("    private enum CodingKeys: String, CodingKey {")
-        lines.append("        case object")
-        lines.append("        case hasMore = \"has_more\"")
-        lines.append("        case url")
-        lines.append("        case data")
-        lines.append("    }")
-        lines.append("")
-        
-        // Custom init(from:)
-        lines.append("    public init(from decoder: Decoder) throws {")
-        lines.append("        let container = try decoder.container(keyedBy: CodingKeys.self)")
-        lines.append("        self.object = try container.decode(String.self, forKey: .object)")
-        lines.append("        self.hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)")
-        lines.append("        self.url = try container.decodeIfPresent(String.self, forKey: .url)")
-        lines.append("")
-        
-        // Initialize typed arrays
-        for v in variantInfos {
-            lines.append("        var \(pluralPropertyName(v.caseName)): [\(v.swiftType)] = []")
-        }
-        lines.append("")
-        
-        lines.append("        if var dataContainer = try? container.nestedUnkeyedContainer(forKey: .data) {")
-        lines.append("            var itemsContainer = try container.nestedUnkeyedContainer(forKey: .data)")
-        lines.append("            while !dataContainer.isAtEnd {")
-        lines.append("                let discriminator = try dataContainer.decode(ObjectDiscriminator.self)")
-        lines.append("                switch discriminator.object {")
-        for v in variantInfos {
-            lines.append("                case \"\(objectValue(forVariant: v.id))\":")
-            lines.append("                    \(pluralPropertyName(v.caseName)).append(try itemsContainer.decode(\(v.swiftType).self))")
-        }
-        lines.append("                default:")
-        lines.append("                    _ = try itemsContainer.decode(ObjectDiscriminator.self)")
-        lines.append("                }")
-        lines.append("            }")
-        lines.append("        }")
-        lines.append("")
-        
-        for v in variantInfos {
-            lines.append("        self.\(pluralPropertyName(v.caseName)) = \(pluralPropertyName(v.caseName))")
-        }
-        
-        lines.append("    }")
-        lines.append("")
-        
         lines.append(contentsOf: [
-            "    public func encode(to encoder: Encoder) throws {",
-            "        var container = encoder.container(keyedBy: CodingKeys.self)",
-            "        try container.encode(object, forKey: .object)",
-            "        try container.encodeIfPresent(hasMore, forKey: .hasMore)",
-            "        try container.encodeIfPresent(url, forKey: .url)",
+            "    public init(object: String = \"list\", hasMore: Bool? = nil, url: String? = nil, data: [\(type)] = []) {",
+            "        self.object = object",
+            "        self.hasMore = hasMore",
+            "        self.url = url",
+            "        self.data = data",
             "    }",
             "",
+            "    private enum CodingKeys: String, CodingKey {",
+            "        case object",
+            "        case hasMore = \"has_more\"",
+            "        case url",
+            "        case data",
+            "    }",
+            "",
+            "    private struct ObjectDiscriminator: Decodable {",
+            "        let object: String",
+            "    }",
+            "",
+            "    private static let knownObjects: Set<String> = [\(knownObjects)]",
+            "",
+            "    public init(from decoder: Decoder) throws {",
+            "        let container = try decoder.container(keyedBy: CodingKeys.self)",
+            "        object = try container.decode(String.self, forKey: .object)",
+            "        hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)",
+            "        url = try container.decodeIfPresent(String.self, forKey: .url)",
+            "        data = []",
+            "        guard container.contains(.data), try !container.decodeNil(forKey: .data) else { return }",
+            "        // Read each item's `object` first (from a second container over the same array),",
+            "        // then decode it as the enum, or skip it if its type is unknown",
+            "        var discriminators = try container.nestedUnkeyedContainer(forKey: .data)",
+            "        var items = try container.nestedUnkeyedContainer(forKey: .data)",
+            "        while !items.isAtEnd {",
+            "            let itemObject = try discriminators.decode(ObjectDiscriminator.self).object",
+            "            if Self.knownObjects.contains(itemObject) {",
+            "                data.append(try items.decode(\(type).self))",
+            "            } else {",
+            "                _ = try items.decode(ObjectDiscriminator.self)",
+            "            }",
+            "        }",
+            "    }",
+            "}",
         ])
-        
-        lines.append("}")
-        
         return lines
     }
     

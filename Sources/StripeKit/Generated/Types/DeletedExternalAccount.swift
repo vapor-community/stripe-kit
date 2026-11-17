@@ -60,29 +60,26 @@ public enum DeletedExternalAccount: Codable, Sendable {
 
 }
 
-/// Polymorphic list — decodes items by `object` discriminator into typed arrays.
+/// A list of `DeletedExternalAccount`s, each decoded by its `object` field. Items of a type this
+/// version of StripeKit doesn't know are skipped.
 public struct DeletedExternalAccountList: Codable, Sendable {
     public var object: String
     public var hasMore: Bool?
     public var url: String?
+    /// The items, in order
+    public var data: [DeletedExternalAccount]
 
-    /// DeletedBankAccount items in this list
-    public var deletedBankAccounts: [DeletedBankAccount]
-    /// DeletedCard items in this list
-    public var deletedCards: [DeletedCard]
+    /// The `DeletedBankAccount` items in `data`
+    public var deletedBankAccounts: [DeletedBankAccount] { data.compactMap(\.deletedBankAccount) }
 
-    public init(object: String = "list", hasMore: Bool? = nil, url: String? = nil, deletedBankAccounts: [DeletedBankAccount] = [], deletedCards: [DeletedCard] = []) {
+    /// The `DeletedCard` items in `data`
+    public var deletedCards: [DeletedCard] { data.compactMap(\.deletedCard) }
+
+    public init(object: String = "list", hasMore: Bool? = nil, url: String? = nil, data: [DeletedExternalAccount] = []) {
         self.object = object
         self.hasMore = hasMore
         self.url = url
-        self.deletedBankAccounts = deletedBankAccounts
-        self.deletedCards = deletedCards
-    }
-
-    // MARK: - Polymorphic Decoding
-
-    private struct ObjectDiscriminator: Codable {
-        let object: String
+        self.data = data
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -92,39 +89,30 @@ public struct DeletedExternalAccountList: Codable, Sendable {
         case data
     }
 
+    private struct ObjectDiscriminator: Decodable {
+        let object: String
+    }
+
+    private static let knownObjects: Set<String> = ["bank_account", "card"]
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decode(String.self, forKey: .object)
-        self.hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)
-        self.url = try container.decodeIfPresent(String.self, forKey: .url)
-
-        var deletedBankAccounts: [DeletedBankAccount] = []
-        var deletedCards: [DeletedCard] = []
-
-        if var dataContainer = try? container.nestedUnkeyedContainer(forKey: .data) {
-            var itemsContainer = try container.nestedUnkeyedContainer(forKey: .data)
-            while !dataContainer.isAtEnd {
-                let discriminator = try dataContainer.decode(ObjectDiscriminator.self)
-                switch discriminator.object {
-                case "bank_account":
-                    deletedBankAccounts.append(try itemsContainer.decode(DeletedBankAccount.self))
-                case "card":
-                    deletedCards.append(try itemsContainer.decode(DeletedCard.self))
-                default:
-                    _ = try itemsContainer.decode(ObjectDiscriminator.self)
-                }
+        object = try container.decode(String.self, forKey: .object)
+        hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)
+        url = try container.decodeIfPresent(String.self, forKey: .url)
+        data = []
+        guard container.contains(.data), try !container.decodeNil(forKey: .data) else { return }
+        // Read each item's `object` first (from a second container over the same array),
+        // then decode it as the enum, or skip it if its type is unknown
+        var discriminators = try container.nestedUnkeyedContainer(forKey: .data)
+        var items = try container.nestedUnkeyedContainer(forKey: .data)
+        while !items.isAtEnd {
+            let itemObject = try discriminators.decode(ObjectDiscriminator.self).object
+            if Self.knownObjects.contains(itemObject) {
+                data.append(try items.decode(DeletedExternalAccount.self))
+            } else {
+                _ = try items.decode(ObjectDiscriminator.self)
             }
         }
-
-        self.deletedBankAccounts = deletedBankAccounts
-        self.deletedCards = deletedCards
     }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(object, forKey: .object)
-        try container.encodeIfPresent(hasMore, forKey: .hasMore)
-        try container.encodeIfPresent(url, forKey: .url)
-    }
-
 }
