@@ -28,17 +28,3 @@ public struct InsightsResourcesPaymentEvaluationUserInterventionRaisedType: RawR
     public static var captcha: Self { .init(rawValue: "captcha") }
     public static var custom: Self { .init(rawValue: "custom") }
 }
-
-public struct InsightsResourcesPaymentEvaluationUserInterventionRaisedList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationUserInterventionRaised]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -26,17 +26,3 @@ public struct DeletedRadarValueListObject: RawRepresentable, Codable, Hashable, 
 
     public static var radarValueList: Self { .init(rawValue: "radar.value_list") }
 }
-
-public struct DeletedRadarValueListList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DeletedRadarValueList]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

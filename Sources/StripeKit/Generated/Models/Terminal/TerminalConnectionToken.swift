@@ -31,16 +31,4 @@ public struct TerminalConnectionTokenObject: RawRepresentable, Codable, Hashable
     public static var terminalConnectionToken: Self { .init(rawValue: "terminal.connection_token") }
 }
 
-public struct TerminalConnectionTokenList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalConnectionToken]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TerminalConnectionTokenList = StripeList<TerminalConnectionToken>

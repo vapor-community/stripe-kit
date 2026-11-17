@@ -25,17 +25,3 @@ public struct IssuingAuthorizationThreeDSecureResult: RawRepresentable, Codable,
     public static var failed: Self { .init(rawValue: "failed") }
     public static var required: Self { .init(rawValue: "required") }
 }
-
-public struct IssuingAuthorizationThreeDSecureList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingAuthorizationThreeDSecure]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

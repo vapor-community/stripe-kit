@@ -41,17 +41,3 @@ public struct PaymentMethodConfigResourceDisplayPreferenceValue: RawRepresentabl
     public static var off: Self { .init(rawValue: "off") }
     public static var on: Self { .init(rawValue: "on") }
 }
-
-public struct PaymentMethodConfigResourceDisplayPreferenceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodConfigResourceDisplayPreference]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

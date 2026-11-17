@@ -22,7 +22,7 @@ public struct EntitlementsFeatureRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: EntitlementsFeatureUpdateParams, _ options: RequestOptions) async throws -> EntitlementsFeature
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: EntitlementsFeatureListParams, _ options: RequestOptions) async throws -> EntitlementsFeatureList
+    public var list: @Sendable (_ params: EntitlementsFeatureListParams, _ options: RequestOptions) async throws -> StripeList<EntitlementsFeature>
 }
 
 extension EntitlementsFeatureRoutes {
@@ -42,7 +42,7 @@ extension EntitlementsFeatureRoutes {
     }
 
     /// Retrieve a list of features
-    public func list(_ params: EntitlementsFeatureListParams = .init(), options: RequestOptions = .init()) async throws -> EntitlementsFeatureList {
+    public func list(_ params: EntitlementsFeatureListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<EntitlementsFeature> {
         try await list(params, options)
     }
 }

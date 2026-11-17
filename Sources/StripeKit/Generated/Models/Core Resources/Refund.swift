@@ -148,16 +148,4 @@ public struct RefundReason: RawRepresentable, Codable, Hashable, Sendable {
     public static var requestedByCustomer: Self { .init(rawValue: "requested_by_customer") }
 }
 
-public struct RefundList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Refund]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias RefundList = StripeList<Refund>

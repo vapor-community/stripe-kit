@@ -57,16 +57,4 @@ public struct FundingInstructionsObject: RawRepresentable, Codable, Hashable, Se
     public static var fundingInstructions: Self { .init(rawValue: "funding_instructions") }
 }
 
-public struct FundingInstructionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FundingInstructions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias FundingInstructionsList = StripeList<FundingInstructions>

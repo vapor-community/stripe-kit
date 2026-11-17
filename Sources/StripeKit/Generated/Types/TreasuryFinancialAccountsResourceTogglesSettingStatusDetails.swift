@@ -60,17 +60,3 @@ public struct TreasuryFinancialAccountsResourceTogglesSettingStatusDetailsRestri
     public static var inboundFlows: Self { .init(rawValue: "inbound_flows") }
     public static var outboundFlows: Self { .init(rawValue: "outbound_flows") }
 }
-
-public struct TreasuryFinancialAccountsResourceTogglesSettingStatusDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccountsResourceTogglesSettingStatusDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

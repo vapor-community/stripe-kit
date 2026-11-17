@@ -38,17 +38,3 @@ public struct PaymentFlowsAutomaticPaymentMethodsSetupIntentAllowRedirects: RawR
     public static var always: Self { .init(rawValue: "always") }
     public static var never: Self { .init(rawValue: "never") }
 }
-
-public struct PaymentFlowsAutomaticPaymentMethodsSetupIntentList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsAutomaticPaymentMethodsSetupIntent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

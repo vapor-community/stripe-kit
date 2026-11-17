@@ -71,16 +71,4 @@ public struct BillingCreditBalanceTransactionType: RawRepresentable, Codable, Ha
     public static var debit: Self { .init(rawValue: "debit") }
 }
 
-public struct BillingCreditBalanceTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingCreditBalanceTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias BillingCreditBalanceTransactionList = StripeList<BillingCreditBalanceTransaction>

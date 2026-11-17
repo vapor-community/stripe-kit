@@ -54,17 +54,3 @@ public struct PaymentPagesCheckoutSessionCustomerDetailsTaxExempt: RawRepresenta
     public static var none: Self { .init(rawValue: "none") }
     public static var reverse: Self { .init(rawValue: "reverse") }
 }
-
-public struct PaymentPagesCheckoutSessionCustomerDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionCustomerDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

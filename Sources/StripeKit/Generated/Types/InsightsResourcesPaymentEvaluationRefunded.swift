@@ -33,17 +33,3 @@ public struct InsightsResourcesPaymentEvaluationRefundedReason: RawRepresentable
     public static var other: Self { .init(rawValue: "other") }
     public static var requestedByCustomer: Self { .init(rawValue: "requested_by_customer") }
 }
-
-public struct InsightsResourcesPaymentEvaluationRefundedList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationRefunded]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

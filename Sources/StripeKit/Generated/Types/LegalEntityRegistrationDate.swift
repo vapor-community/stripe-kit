@@ -15,17 +15,3 @@ public struct LegalEntityRegistrationDate: Codable, Sendable {
     /// The four-digit year of registration.
     public var year: Int?
 }
-
-public struct LegalEntityRegistrationDateList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [LegalEntityRegistrationDate]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

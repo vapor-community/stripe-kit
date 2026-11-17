@@ -25,17 +25,3 @@ public struct SubscriptionSchedulesResourcePauseScheduleOutstandingUsageThroughT
     /// Collect metered usage accrued through the pause date.
     public static var pauseAt: Self { .init(rawValue: "pause_at") }
 }
-
-public struct SubscriptionSchedulesResourcePauseScheduleOutstandingUsageThroughList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionSchedulesResourcePauseScheduleOutstandingUsageThrough]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -11,17 +11,3 @@ public struct BillingCreditGrantsResourceApplicablePrice: Codable, Sendable {
     /// Unique identifier for the object.
     public var id: String?
 }
-
-public struct BillingCreditGrantsResourceApplicablePriceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingCreditGrantsResourceApplicablePrice]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -31,17 +31,3 @@ public struct IssuingCardGooglePayIneligibleReason: RawRepresentable, Codable, H
     public static var missingCardholderContact: Self { .init(rawValue: "missing_cardholder_contact") }
     public static var unsupportedRegion: Self { .init(rawValue: "unsupported_region") }
 }
-
-public struct IssuingCardGooglePayList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardGooglePay]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

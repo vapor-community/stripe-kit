@@ -29,17 +29,3 @@ public struct SubscriptionsResourceBillingModeFlexibleProrationDiscounts: RawRep
     /// Amounts are gross of discounts, and discount amounts are accurate.
     public static var itemized: Self { .init(rawValue: "itemized") }
 }
-
-public struct SubscriptionsResourceBillingModeFlexibleList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionsResourceBillingModeFlexible]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

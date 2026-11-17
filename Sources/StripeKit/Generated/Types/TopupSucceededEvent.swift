@@ -12,17 +12,3 @@ public struct TopupSucceededEvent: Codable, Sendable {
     @Indirect
     public var object: Topup
 }
-
-public struct TopupSucceededEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TopupSucceededEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

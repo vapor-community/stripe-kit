@@ -74,17 +74,3 @@ public struct PaymentMethodDetailsEpsBank: RawRepresentable, Codable, Hashable, 
     public static var volkskreditbankAg: Self { .init(rawValue: "volkskreditbank_ag") }
     public static var vrBankBraunau: Self { .init(rawValue: "vr_bank_braunau") }
 }
-
-public struct PaymentMethodDetailsEpsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsEps]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

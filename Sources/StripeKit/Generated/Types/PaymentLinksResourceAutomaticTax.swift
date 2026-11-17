@@ -15,17 +15,3 @@ public struct PaymentLinksResourceAutomaticTax: Codable, Sendable {
     /// report of the connected account.
     public var liability: ConnectAccountReference?
 }
-
-public struct PaymentLinksResourceAutomaticTaxList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceAutomaticTax]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

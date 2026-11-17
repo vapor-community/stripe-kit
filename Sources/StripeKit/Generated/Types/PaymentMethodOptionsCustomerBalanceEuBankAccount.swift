@@ -29,17 +29,3 @@ public struct PaymentMethodOptionsCustomerBalanceEuBankAccountCountry: RawRepres
     public static var ie: Self { .init(rawValue: "IE") }
     public static var nl: Self { .init(rawValue: "NL") }
 }
-
-public struct PaymentMethodOptionsCustomerBalanceEuBankAccountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodOptionsCustomerBalanceEuBankAccount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

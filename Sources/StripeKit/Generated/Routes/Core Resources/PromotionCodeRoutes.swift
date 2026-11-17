@@ -22,7 +22,7 @@ public struct PromotionCodeRoutes: Sendable {
     public var update: @Sendable (_ promotionCode: String, _ params: PromotionCodeUpdateParams, _ options: RequestOptions) async throws -> PromotionCode
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: PromotionCodeListParams, _ options: RequestOptions) async throws -> PromotionCodeList
+    public var list: @Sendable (_ params: PromotionCodeListParams, _ options: RequestOptions) async throws -> StripeList<PromotionCode>
 }
 
 extension PromotionCodeRoutes {
@@ -45,7 +45,7 @@ extension PromotionCodeRoutes {
     }
 
     /// Returns a list of your promotion codes.
-    public func list(_ params: PromotionCodeListParams = .init(), options: RequestOptions = .init()) async throws -> PromotionCodeList {
+    public func list(_ params: PromotionCodeListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<PromotionCode> {
         try await list(params, options)
     }
 }

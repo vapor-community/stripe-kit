@@ -12,17 +12,3 @@ public struct FinancialConnectionsAccountCreatedEvent: Codable, Sendable {
     @Indirect
     public var object: FinancialConnectionsAccount
 }
-
-public struct FinancialConnectionsAccountCreatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FinancialConnectionsAccountCreatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

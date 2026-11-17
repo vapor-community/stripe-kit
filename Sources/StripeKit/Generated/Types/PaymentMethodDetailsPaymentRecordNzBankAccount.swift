@@ -34,17 +34,3 @@ public struct PaymentMethodDetailsPaymentRecordNzBankAccount: Codable, Sendable 
         case suffix
     }
 }
-
-public struct PaymentMethodDetailsPaymentRecordNzBankAccountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPaymentRecordNzBankAccount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

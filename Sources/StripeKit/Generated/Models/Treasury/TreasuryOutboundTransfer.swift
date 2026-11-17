@@ -125,16 +125,4 @@ public struct TreasuryOutboundTransferStatus: RawRepresentable, Codable, Hashabl
     public static var returned: Self { .init(rawValue: "returned") }
 }
 
-public struct TreasuryOutboundTransferList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryOutboundTransfer]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TreasuryOutboundTransferList = StripeList<TreasuryOutboundTransfer>

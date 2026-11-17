@@ -26,17 +26,3 @@ public struct DeletedTestHelpersTestClockObject: RawRepresentable, Codable, Hash
 
     public static var testHelpersTestClock: Self { .init(rawValue: "test_helpers.test_clock") }
 }
-
-public struct DeletedTestHelpersTestClockList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DeletedTestHelpersTestClock]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

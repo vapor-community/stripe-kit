@@ -64,17 +64,3 @@ public struct SubscriptionPaymentMethodOptionsBillieCompanyDetailsRegistrationTy
     /// United Kingdom Company Registration Number
     public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
-
-public struct SubscriptionPaymentMethodOptionsBillieCompanyDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionPaymentMethodOptionsBillieCompanyDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

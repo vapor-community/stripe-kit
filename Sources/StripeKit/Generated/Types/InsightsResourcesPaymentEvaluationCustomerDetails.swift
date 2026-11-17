@@ -28,17 +28,3 @@ public struct InsightsResourcesPaymentEvaluationCustomerDetails: Codable, Sendab
         case phone
     }
 }
-
-public struct InsightsResourcesPaymentEvaluationCustomerDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationCustomerDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

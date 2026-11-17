@@ -52,17 +52,3 @@ public struct TaxProductResourceCustomerDetailsTaxabilityOverride: RawRepresenta
     public static var none: Self { .init(rawValue: "none") }
     public static var reverseCharge: Self { .init(rawValue: "reverse_charge") }
 }
-
-public struct TaxProductResourceCustomerDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductResourceCustomerDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

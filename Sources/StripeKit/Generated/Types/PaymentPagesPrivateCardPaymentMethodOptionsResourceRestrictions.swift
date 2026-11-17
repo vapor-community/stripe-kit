@@ -20,17 +20,3 @@ public struct PaymentPagesPrivateCardPaymentMethodOptionsResourceRestrictions: C
         case fundingTypesBlocked = "funding_types_blocked"
     }
 }
-
-public struct PaymentPagesPrivateCardPaymentMethodOptionsResourceRestrictionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesPrivateCardPaymentMethodOptionsResourceRestrictions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

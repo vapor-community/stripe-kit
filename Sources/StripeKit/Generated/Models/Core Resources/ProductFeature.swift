@@ -40,16 +40,4 @@ public struct ProductFeatureObject: RawRepresentable, Codable, Hashable, Sendabl
     public static var productFeature: Self { .init(rawValue: "product_feature") }
 }
 
-public struct ProductFeatureList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ProductFeature]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ProductFeatureList = StripeList<ProductFeature>

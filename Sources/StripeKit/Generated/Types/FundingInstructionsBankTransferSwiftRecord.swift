@@ -32,17 +32,3 @@ public struct FundingInstructionsBankTransferSwiftRecord: Codable, Sendable {
         case swiftCode = "swift_code"
     }
 }
-
-public struct FundingInstructionsBankTransferSwiftRecordList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FundingInstructionsBankTransferSwiftRecord]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

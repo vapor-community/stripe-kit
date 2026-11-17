@@ -22,17 +22,3 @@ public struct TreasuryFinancialAccountsResourceBalance: Codable, Sendable {
         case outboundPending = "outbound_pending"
     }
 }
-
-public struct TreasuryFinancialAccountsResourceBalanceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccountsResourceBalance]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

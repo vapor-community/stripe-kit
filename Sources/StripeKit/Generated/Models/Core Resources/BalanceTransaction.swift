@@ -193,16 +193,4 @@ public struct BalanceTransactionType: RawRepresentable, Codable, Hashable, Senda
     public static var transferRefund: Self { .init(rawValue: "transfer_refund") }
 }
 
-public struct BalanceTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BalanceTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias BalanceTransactionList = StripeList<BalanceTransaction>

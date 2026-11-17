@@ -21,17 +21,3 @@ public struct IssuingPersonalizationDesignPreferences: Codable, Sendable {
         case isPlatformDefault = "is_platform_default"
     }
 }
-
-public struct IssuingPersonalizationDesignPreferencesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingPersonalizationDesignPreferences]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

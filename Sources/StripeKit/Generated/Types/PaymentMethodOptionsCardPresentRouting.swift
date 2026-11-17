@@ -27,17 +27,3 @@ public struct PaymentMethodOptionsCardPresentRoutingRequestedPriority: RawRepres
     public static var domestic: Self { .init(rawValue: "domestic") }
     public static var international: Self { .init(rawValue: "international") }
 }
-
-public struct PaymentMethodOptionsCardPresentRoutingList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodOptionsCardPresentRouting]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

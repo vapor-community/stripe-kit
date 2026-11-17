@@ -25,17 +25,3 @@ public struct QuotesResourceSubscriptionDataBillingModeType: RawRepresentable, C
     public static var classic: Self { .init(rawValue: "classic") }
     public static var flexible: Self { .init(rawValue: "flexible") }
 }
-
-public struct QuotesResourceSubscriptionDataBillingModeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [QuotesResourceSubscriptionDataBillingMode]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

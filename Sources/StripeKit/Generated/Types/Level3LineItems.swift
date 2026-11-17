@@ -24,17 +24,3 @@ public struct Level3LineItems: Codable, Sendable {
         case unitCost = "unit_cost"
     }
 }
-
-public struct Level3LineItemsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Level3LineItems]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

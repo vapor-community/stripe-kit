@@ -24,17 +24,3 @@ public struct InvoicesResourceInvoiceRendering: Codable, Sendable {
         case templateVersion = "template_version"
     }
 }
-
-public struct InvoicesResourceInvoiceRenderingList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicesResourceInvoiceRendering]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

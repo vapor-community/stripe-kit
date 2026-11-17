@@ -30,17 +30,3 @@ public struct ReserveTransactionObject: RawRepresentable, Codable, Hashable, Sen
 
     public static var reserveTransaction: Self { .init(rawValue: "reserve_transaction") }
 }
-
-public struct ReserveTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ReserveTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

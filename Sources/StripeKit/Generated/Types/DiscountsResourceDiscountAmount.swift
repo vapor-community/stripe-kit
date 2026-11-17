@@ -14,17 +14,3 @@ public struct DiscountsResourceDiscountAmount: Codable, Sendable {
     @Expandable<ObjectOrDeleted<Discount, DeletedDiscount>>
     public var discount: String?
 }
-
-public struct DiscountsResourceDiscountAmountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DiscountsResourceDiscountAmount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

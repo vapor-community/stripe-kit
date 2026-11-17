@@ -60,17 +60,3 @@ public struct CheckoutSunbitPaymentMethodOptionsSetupFutureUsage: RawRepresentab
 
     public static var none: Self { .init(rawValue: "none") }
 }
-
-public struct CheckoutSunbitPaymentMethodOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CheckoutSunbitPaymentMethodOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -19,7 +19,7 @@ public struct DisputeRoutes: Sendable {
     public var update: @Sendable (_ dispute: String, _ params: DisputeUpdateParams, _ options: RequestOptions) async throws -> Dispute
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: DisputeListParams, _ options: RequestOptions) async throws -> DisputeList
+    public var list: @Sendable (_ params: DisputeListParams, _ options: RequestOptions) async throws -> StripeList<Dispute>
 
     /// Performs `close(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var close: @Sendable (_ dispute: String, _ params: DisputeCloseParams, _ options: RequestOptions) async throws -> Dispute
@@ -41,7 +41,7 @@ extension DisputeRoutes {
     }
 
     /// Returns a list of your disputes.
-    public func list(_ params: DisputeListParams = .init(), options: RequestOptions = .init()) async throws -> DisputeList {
+    public func list(_ params: DisputeListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Dispute> {
         try await list(params, options)
     }
 

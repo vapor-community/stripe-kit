@@ -21,7 +21,7 @@ public struct File: Codable, Sendable {
     /// Unique identifier for the object.
     public var id: String
     /// A list of [file links](https://docs.stripe.com/api#file_links) that point at this file.
-    public var links: FileLinkList?
+    public var links: StripeList<FileLink>?
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: FileObject
     /// The [purpose](https://docs.stripe.com/file-upload#uploading-a-file) of the uploaded file.
@@ -92,16 +92,4 @@ public struct FilePurpose: RawRepresentable, Codable, Hashable, Sendable {
     public static var terminalWifiPrivateKey: Self { .init(rawValue: "terminal_wifi_private_key") }
 }
 
-public struct FileList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [File]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias FileList = StripeList<File>

@@ -25,17 +25,3 @@ public struct TerminalReaderReaderResourceProcessConfig: Codable, Sendable {
         case tipping
     }
 }
-
-public struct TerminalReaderReaderResourceProcessConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceProcessConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

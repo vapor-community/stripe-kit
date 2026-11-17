@@ -195,16 +195,4 @@ public struct CardRegulatedStatus: RawRepresentable, Codable, Hashable, Sendable
     public static var unregulated: Self { .init(rawValue: "unregulated") }
 }
 
-public struct CardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Card]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias CardList = StripeList<Card>

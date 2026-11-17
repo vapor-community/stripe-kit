@@ -74,17 +74,3 @@ public struct PaymentMethodDetailsFpxBank: RawRepresentable, Codable, Hashable, 
     public static var standardChartered: Self { .init(rawValue: "standard_chartered") }
     public static var uob: Self { .init(rawValue: "uob") }
 }
-
-public struct PaymentMethodDetailsFpxList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsFpx]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

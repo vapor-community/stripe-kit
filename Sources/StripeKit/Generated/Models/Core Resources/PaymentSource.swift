@@ -81,14 +81,9 @@ public enum PaymentSource: Codable, Sendable {
 
 }
 
-/// A list of `PaymentSource`s, each decoded by its `object` field.
-public struct PaymentSourceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    /// The items, in order
-    public var data: [PaymentSource]
+public typealias PaymentSourceList = StripeList<PaymentSource>
 
+extension StripeList where Item == PaymentSource {
     /// The `Account` items in `data`
     public var accounts: [Account] { data.compactMap(\.account) }
 
@@ -100,18 +95,4 @@ public struct PaymentSourceList: Codable, Sendable {
 
     /// The `Source` items in `data`
     public var sources: [Source] { data.compactMap(\.source) }
-
-    public init(object: String = "list", hasMore: Bool? = nil, url: String? = nil, data: [PaymentSource] = []) {
-        self.object = object
-        self.hasMore = hasMore
-        self.url = url
-        self.data = data
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }

@@ -52,17 +52,3 @@ public struct IssuingCardAuthorizationControls: Codable, Sendable {
         case spendingLimitsCurrency = "spending_limits_currency"
     }
 }
-
-public struct IssuingCardAuthorizationControlsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardAuthorizationControls]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -26,17 +26,3 @@ public struct DeletedApplePayDomainObject: RawRepresentable, Codable, Hashable, 
 
     public static var applePayDomain: Self { .init(rawValue: "apple_pay_domain") }
 }
-
-public struct DeletedApplePayDomainList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DeletedApplePayDomain]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

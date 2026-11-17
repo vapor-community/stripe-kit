@@ -16,7 +16,7 @@ public struct AppsSecretRoutes: Sendable {
     public var create: @Sendable (_ params: AppsSecretCreateParams, _ options: RequestOptions) async throws -> AppsSecret
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: AppsSecretListParams, _ options: RequestOptions) async throws -> AppsSecretList
+    public var list: @Sendable (_ params: AppsSecretListParams, _ options: RequestOptions) async throws -> StripeList<AppsSecret>
 
     /// Performs `deleteWhere(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var deleteWhere: @Sendable (_ params: AppsSecretDeleteWhereParams, _ options: RequestOptions) async throws -> AppsSecret
@@ -32,7 +32,7 @@ extension AppsSecretRoutes {
     }
 
     /// List all secrets stored on the given scope.
-    public func list(_ params: AppsSecretListParams, options: RequestOptions = .init()) async throws -> AppsSecretList {
+    public func list(_ params: AppsSecretListParams, options: RequestOptions = .init()) async throws -> StripeList<AppsSecret> {
         try await list(params, options)
     }
 

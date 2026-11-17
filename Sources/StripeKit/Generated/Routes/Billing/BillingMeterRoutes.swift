@@ -22,7 +22,7 @@ public struct BillingMeterRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: BillingMeterUpdateParams, _ options: RequestOptions) async throws -> BillingMeter
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: BillingMeterListParams, _ options: RequestOptions) async throws -> BillingMeterList
+    public var list: @Sendable (_ params: BillingMeterListParams, _ options: RequestOptions) async throws -> StripeList<BillingMeter>
 
     /// Performs `deactivate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var deactivate: @Sendable (_ id: String, _ params: BillingMeterDeactivateParams, _ options: RequestOptions) async throws -> BillingMeter
@@ -48,7 +48,7 @@ extension BillingMeterRoutes {
     }
 
     /// Retrieve a list of billing meters.
-    public func list(_ params: BillingMeterListParams = .init(), options: RequestOptions = .init()) async throws -> BillingMeterList {
+    public func list(_ params: BillingMeterListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<BillingMeter> {
         try await list(params, options)
     }
 

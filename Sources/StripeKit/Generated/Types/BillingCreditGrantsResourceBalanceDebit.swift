@@ -34,17 +34,3 @@ public struct BillingCreditGrantsResourceBalanceDebitType: RawRepresentable, Cod
     public static var creditsExpired: Self { .init(rawValue: "credits_expired") }
     public static var creditsVoided: Self { .init(rawValue: "credits_voided") }
 }
-
-public struct BillingCreditGrantsResourceBalanceDebitList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingCreditGrantsResourceBalanceDebit]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

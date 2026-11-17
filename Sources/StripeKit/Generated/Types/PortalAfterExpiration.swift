@@ -30,17 +30,3 @@ public struct PortalAfterExpirationType: RawRepresentable, Codable, Hashable, Se
     /// Allow the customer to authenticate by email to create a replacement session.
     public static var customerLogin: Self { .init(rawValue: "customer_login") }
 }
-
-public struct PortalAfterExpirationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalAfterExpiration]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

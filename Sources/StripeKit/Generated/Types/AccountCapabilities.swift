@@ -1264,17 +1264,3 @@ public struct AccountCapabilitiesZipPayments: RawRepresentable, Codable, Hashabl
     public static var inactive: Self { .init(rawValue: "inactive") }
     public static var pending: Self { .init(rawValue: "pending") }
 }
-
-public struct AccountCapabilitiesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountCapabilities]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

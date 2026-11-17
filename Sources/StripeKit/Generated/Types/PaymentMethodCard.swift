@@ -88,17 +88,3 @@ public struct PaymentMethodCardRegulatedStatus: RawRepresentable, Codable, Hasha
     public static var regulated: Self { .init(rawValue: "regulated") }
     public static var unregulated: Self { .init(rawValue: "unregulated") }
 }
-
-public struct PaymentMethodCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -22,7 +22,7 @@ public struct CustomerBalanceTransactionRoutes: Sendable {
     public var update: @Sendable (_ customer: String, _ transaction: String, _ params: CustomerBalanceTransactionUpdateParams, _ options: RequestOptions) async throws -> CustomerBalanceTransaction
 
     /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ customer: String, _ params: CustomerBalanceTransactionListParams, _ options: RequestOptions) async throws -> CustomerBalanceTransactionList
+    public var list: @Sendable (_ customer: String, _ params: CustomerBalanceTransactionListParams, _ options: RequestOptions) async throws -> StripeList<CustomerBalanceTransaction>
 }
 
 extension CustomerBalanceTransactionRoutes {
@@ -43,7 +43,7 @@ extension CustomerBalanceTransactionRoutes {
     }
 
     /// Returns a list of transactions that updated the customer’s balances.
-    public func list(_ customer: String, _ params: CustomerBalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> CustomerBalanceTransactionList {
+    public func list(_ customer: String, _ params: CustomerBalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<CustomerBalanceTransaction> {
         try await list(customer, params, options)
     }
 }

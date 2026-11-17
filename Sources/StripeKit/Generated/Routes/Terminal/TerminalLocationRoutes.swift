@@ -22,7 +22,7 @@ public struct TerminalLocationRoutes: Sendable {
     public var update: @Sendable (_ location: String, _ params: TerminalLocationUpdateParams, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TerminalLocationListParams, _ options: RequestOptions) async throws -> TerminalLocationList
+    public var list: @Sendable (_ params: TerminalLocationListParams, _ options: RequestOptions) async throws -> StripeList<TerminalLocation>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ location: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTerminalLocation
@@ -47,7 +47,7 @@ extension TerminalLocationRoutes {
     }
 
     /// Returns a list of Location objects.
-    public func list(_ params: TerminalLocationListParams = .init(), options: RequestOptions = .init()) async throws -> TerminalLocationList {
+    public func list(_ params: TerminalLocationListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TerminalLocation> {
         try await list(params, options)
     }
 

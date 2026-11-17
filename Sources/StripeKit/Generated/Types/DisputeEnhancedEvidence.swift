@@ -18,17 +18,3 @@ public struct DisputeEnhancedEvidence: Codable, Sendable {
         case visaCompliance = "visa_compliance"
     }
 }
-
-public struct DisputeEnhancedEvidenceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DisputeEnhancedEvidence]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

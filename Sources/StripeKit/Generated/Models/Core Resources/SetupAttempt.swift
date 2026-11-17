@@ -96,16 +96,4 @@ public struct SetupAttemptObject: RawRepresentable, Codable, Hashable, Sendable 
     public static var setupAttempt: Self { .init(rawValue: "setup_attempt") }
 }
 
-public struct SetupAttemptList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupAttempt]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias SetupAttemptList = StripeList<SetupAttempt>

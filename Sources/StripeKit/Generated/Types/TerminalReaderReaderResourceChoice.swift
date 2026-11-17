@@ -28,17 +28,3 @@ public struct TerminalReaderReaderResourceChoiceStyle: RawRepresentable, Codable
     public static var primary: Self { .init(rawValue: "primary") }
     public static var secondary: Self { .init(rawValue: "secondary") }
 }
-
-public struct TerminalReaderReaderResourceChoiceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceChoice]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

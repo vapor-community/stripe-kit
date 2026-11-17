@@ -35,17 +35,3 @@ public struct TaxIdVerificationStatus: RawRepresentable, Codable, Hashable, Send
     public static var unverified: Self { .init(rawValue: "unverified") }
     public static var verified: Self { .init(rawValue: "verified") }
 }
-
-public struct TaxIdVerificationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxIdVerification]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

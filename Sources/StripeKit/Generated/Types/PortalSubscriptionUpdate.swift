@@ -84,17 +84,3 @@ public struct PortalSubscriptionUpdateTrialUpdateBehavior: RawRepresentable, Cod
     public static var continueTrial: Self { .init(rawValue: "continue_trial") }
     public static var endTrial: Self { .init(rawValue: "end_trial") }
 }
-
-public struct PortalSubscriptionUpdateList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalSubscriptionUpdate]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

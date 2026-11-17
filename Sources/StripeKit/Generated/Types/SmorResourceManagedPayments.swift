@@ -12,17 +12,3 @@ public struct SmorResourceManagedPayments: Codable, Sendable {
     /// Stripe's merchant of record solution, for this session.
     public var enabled: Bool
 }
-
-public struct SmorResourceManagedPaymentsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SmorResourceManagedPayments]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

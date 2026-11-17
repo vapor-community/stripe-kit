@@ -37,17 +37,3 @@ public struct GelatoSessionMatchingOptionsName: RawRepresentable, Codable, Hasha
     public static var none: Self { .init(rawValue: "none") }
     public static var similar: Self { .init(rawValue: "similar") }
 }
-
-public struct GelatoSessionMatchingOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoSessionMatchingOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

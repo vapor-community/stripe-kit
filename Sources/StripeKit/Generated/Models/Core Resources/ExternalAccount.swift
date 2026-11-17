@@ -59,31 +59,12 @@ public enum ExternalAccount: Codable, Sendable {
 
 }
 
-/// A list of `ExternalAccount`s, each decoded by its `object` field.
-public struct ExternalAccountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    /// The items, in order
-    public var data: [ExternalAccount]
+public typealias ExternalAccountList = StripeList<ExternalAccount>
 
+extension StripeList where Item == ExternalAccount {
     /// The `BankAccount` items in `data`
     public var bankAccounts: [BankAccount] { data.compactMap(\.bankAccount) }
 
     /// The `Card` items in `data`
     public var cards: [Card] { data.compactMap(\.card) }
-
-    public init(object: String = "list", hasMore: Bool? = nil, url: String? = nil, data: [ExternalAccount] = []) {
-        self.object = object
-        self.hasMore = hasMore
-        self.url = url
-        self.data = data
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }

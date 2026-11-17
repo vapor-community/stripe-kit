@@ -55,17 +55,3 @@ public struct SetupAttemptPaymentMethodDetailsSofortPreferredLanguage: RawRepres
     public static var fr: Self { .init(rawValue: "fr") }
     public static var nl: Self { .init(rawValue: "nl") }
 }
-
-public struct SetupAttemptPaymentMethodDetailsSofortList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupAttemptPaymentMethodDetailsSofort]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

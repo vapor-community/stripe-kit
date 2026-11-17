@@ -42,7 +42,7 @@ public struct CreditNote: Codable, Sendable {
     @Expandable<Invoice>
     public var invoice: String?
     /// Line items that make up the credit note
-    public var lines: CreditNoteLineItemList
+    public var lines: StripeList<CreditNoteLineItem>
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -191,16 +191,4 @@ public struct CreditNoteType: RawRepresentable, Codable, Hashable, Sendable {
     public static var prePayment: Self { .init(rawValue: "pre_payment") }
 }
 
-public struct CreditNoteList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CreditNote]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias CreditNoteList = StripeList<CreditNote>

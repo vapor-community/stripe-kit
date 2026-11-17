@@ -22,7 +22,7 @@ public struct RefundRoutes: Sendable {
     public var update: @Sendable (_ refund: String, _ params: RefundUpdateParams, _ options: RequestOptions) async throws -> Refund
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: RefundListParams, _ options: RequestOptions) async throws -> RefundList
+    public var list: @Sendable (_ params: RefundListParams, _ options: RequestOptions) async throws -> StripeList<Refund>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ refund: String, _ params: RefundCancelParams, _ options: RequestOptions) async throws -> Refund
@@ -31,7 +31,7 @@ public struct RefundRoutes: Sendable {
     public var expire: @Sendable (_ refund: String, _ params: RefundExpireParams, _ options: RequestOptions) async throws -> Refund
 
     /// Performs `listForCharge(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listForCharge: @Sendable (_ charge: String, _ params: RefundListForChargeParams, _ options: RequestOptions) async throws -> RefundList
+    public var listForCharge: @Sendable (_ charge: String, _ params: RefundListForChargeParams, _ options: RequestOptions) async throws -> StripeList<Refund>
 
     /// Performs `retrieveForCharge(_:refund:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var retrieveForCharge: @Sendable (_ charge: String, _ refund: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Refund
@@ -63,7 +63,7 @@ extension RefundRoutes {
     /// Returns a list of all refunds you created. We return the refunds in sorted order, with the most
     /// recent refunds appearing first. The 10 most recent refunds are always available by default on the
     /// Charge object.
-    public func list(_ params: RefundListParams = .init(), options: RequestOptions = .init()) async throws -> RefundList {
+    public func list(_ params: RefundListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Refund> {
         try await list(params, options)
     }
 
@@ -82,7 +82,7 @@ extension RefundRoutes {
     /// refunds are always available by default on the charge object. If you need more than those 10, you
     /// can use this API method and the limit and starting_after parameters to page through additional
     /// refunds.
-    public func listForCharge(_ charge: String, _ params: RefundListForChargeParams = .init(), options: RequestOptions = .init()) async throws -> RefundList {
+    public func listForCharge(_ charge: String, _ params: RefundListForChargeParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Refund> {
         try await listForCharge(charge, params, options)
     }
 

@@ -19,7 +19,7 @@ public struct TaxLocationRoutes: Sendable {
     public var retrieve: @Sendable (_ location: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxLocation
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TaxLocationListParams, _ options: RequestOptions) async throws -> TaxLocationList
+    public var list: @Sendable (_ params: TaxLocationListParams, _ options: RequestOptions) async throws -> StripeList<TaxLocation>
 }
 
 extension TaxLocationRoutes {
@@ -40,7 +40,7 @@ extension TaxLocationRoutes {
     /// or other product types. The response includes detailed information for each tax location, such as
     /// its address, type, and description. You can paginate through the list by using the limit parameter
     /// to control the number of results returned in each request.
-    public func list(_ params: TaxLocationListParams, options: RequestOptions = .init()) async throws -> TaxLocationList {
+    public func list(_ params: TaxLocationListParams, options: RequestOptions = .init()) async throws -> StripeList<TaxLocation> {
         try await list(params, options)
     }
 }

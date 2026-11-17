@@ -13,17 +13,3 @@ public struct PaymentPagesCheckoutSessionTotalDetailsResourceBreakdown: Codable,
     /// The aggregated tax amounts by rate.
     public var taxes: [LineItemsTaxAmount]
 }
-
-public struct PaymentPagesCheckoutSessionTotalDetailsResourceBreakdownList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionTotalDetailsResourceBreakdown]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

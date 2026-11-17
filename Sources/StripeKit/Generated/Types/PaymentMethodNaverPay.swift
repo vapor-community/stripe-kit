@@ -31,17 +31,3 @@ public struct PaymentMethodNaverPayFunding: RawRepresentable, Codable, Hashable,
     public static var card: Self { .init(rawValue: "card") }
     public static var points: Self { .init(rawValue: "points") }
 }
-
-public struct PaymentMethodNaverPayList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodNaverPay]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

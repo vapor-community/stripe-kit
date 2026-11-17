@@ -15,17 +15,3 @@ public struct ConnectEmbeddedFinancialAccountTransactionsFeatures: Codable, Send
         case cardSpendDisputeManagement = "card_spend_dispute_management"
     }
 }
-
-public struct ConnectEmbeddedFinancialAccountTransactionsFeaturesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectEmbeddedFinancialAccountTransactionsFeatures]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

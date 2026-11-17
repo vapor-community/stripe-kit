@@ -44,17 +44,3 @@ public struct TaxIDsOwnerType: RawRepresentable, Codable, Hashable, Sendable {
     public static var customer: Self { .init(rawValue: "customer") }
     public static var `self`: Self { .init(rawValue: "self") }
 }
-
-public struct TaxIDsOwnerList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxIDsOwner]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

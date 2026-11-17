@@ -12,7 +12,7 @@ public struct EntitlementsActiveEntitlementSummary: Codable, Sendable {
     /// The customer that is entitled to this feature.
     public var customer: String
     /// The list of entitlements this customer has.
-    public var entitlements: EntitlementsActiveEntitlementList
+    public var entitlements: StripeList<EntitlementsActiveEntitlement>
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -29,18 +29,4 @@ public struct EntitlementsActiveEntitlementSummaryObject: RawRepresentable, Coda
     }
 
     public static var entitlementsActiveEntitlementSummary: Self { .init(rawValue: "entitlements.active_entitlement_summary") }
-}
-
-public struct EntitlementsActiveEntitlementSummaryList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [EntitlementsActiveEntitlementSummary]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }

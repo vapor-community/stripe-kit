@@ -31,17 +31,3 @@ public struct InvoicesResourceUncollectibleStatusDetailsReason: RawRepresentable
     /// The invoice was marked uncollectible by the user.
     public static var userForgiven: Self { .init(rawValue: "user_forgiven") }
 }
-
-public struct InvoicesResourceUncollectibleStatusDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicesResourceUncollectibleStatusDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

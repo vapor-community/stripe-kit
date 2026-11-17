@@ -22,7 +22,7 @@ public struct BillingPortalConfigurationRoutes: Sendable {
     public var update: @Sendable (_ configuration: String, _ params: BillingPortalConfigurationUpdateParams, _ options: RequestOptions) async throws -> BillingPortalConfiguration
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: BillingPortalConfigurationListParams, _ options: RequestOptions) async throws -> BillingPortalConfigurationList
+    public var list: @Sendable (_ params: BillingPortalConfigurationListParams, _ options: RequestOptions) async throws -> StripeList<BillingPortalConfiguration>
 }
 
 extension BillingPortalConfigurationRoutes {
@@ -42,7 +42,7 @@ extension BillingPortalConfigurationRoutes {
     }
 
     /// Returns a list of configurations that describe the functionality of the customer portal.
-    public func list(_ params: BillingPortalConfigurationListParams = .init(), options: RequestOptions = .init()) async throws -> BillingPortalConfigurationList {
+    public func list(_ params: BillingPortalConfigurationListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<BillingPortalConfiguration> {
         try await list(params, options)
     }
 }

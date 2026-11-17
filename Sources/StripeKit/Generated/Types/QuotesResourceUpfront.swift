@@ -15,7 +15,7 @@ public struct QuotesResourceUpfront: Codable, Sendable {
     /// The line items that will appear on the next invoice after this quote is accepted. This does not
     /// include pending invoice items that exist on the customer but may still be included in the next
     /// invoice.
-    public var lineItems: ItemList?
+    public var lineItems: StripeList<Item>?
     public var totalDetails: QuotesResourceTotalDetails
 
     public enum CodingKeys: String, CodingKey {
@@ -23,19 +23,5 @@ public struct QuotesResourceUpfront: Codable, Sendable {
         case amountTotal = "amount_total"
         case lineItems = "line_items"
         case totalDetails = "total_details"
-    }
-}
-
-public struct QuotesResourceUpfrontList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [QuotesResourceUpfront]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
     }
 }

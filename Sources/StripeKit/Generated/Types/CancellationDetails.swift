@@ -69,17 +69,3 @@ public struct CancellationDetailsReason: RawRepresentable, Codable, Hashable, Se
     /// settings](https://dashboard.stripe.com/settings/billing/subscriptions).
     public static var paymentFailed: Self { .init(rawValue: "payment_failed") }
 }
-
-public struct CancellationDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CancellationDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -21,17 +21,3 @@ public struct PortalBusinessProfile: Codable, Sendable {
         case termsOfServiceUrl = "terms_of_service_url"
     }
 }
-
-public struct PortalBusinessProfileList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalBusinessProfile]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

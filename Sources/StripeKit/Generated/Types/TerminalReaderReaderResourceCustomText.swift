@@ -25,17 +25,3 @@ public struct TerminalReaderReaderResourceCustomText: Codable, Sendable {
         case title
     }
 }
-
-public struct TerminalReaderReaderResourceCustomTextList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceCustomText]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

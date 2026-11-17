@@ -28,17 +28,3 @@ public struct PaymentPagesCheckoutSessionBrandingSettingsIconType: RawRepresenta
     public static var file: Self { .init(rawValue: "file") }
     public static var url: Self { .init(rawValue: "url") }
 }
-
-public struct PaymentPagesCheckoutSessionBrandingSettingsIconList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionBrandingSettingsIcon]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

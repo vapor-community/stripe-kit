@@ -20,17 +20,3 @@ public struct PortalFlowsSubscriptionUpdateConfirmItem: Codable, Sendable {
     /// subscribe to through this flow.
     public var quantity: Int?
 }
-
-public struct PortalFlowsSubscriptionUpdateConfirmItemList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalFlowsSubscriptionUpdateConfirmItem]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

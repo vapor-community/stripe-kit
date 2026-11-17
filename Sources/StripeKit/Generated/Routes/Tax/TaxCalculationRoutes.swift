@@ -19,7 +19,7 @@ public struct TaxCalculationRoutes: Sendable {
     public var retrieve: @Sendable (_ calculation: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxCalculation
 
     /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listLineItems: @Sendable (_ calculation: String, _ params: TaxCalculationListLineItemsParams, _ options: RequestOptions) async throws -> TaxCalculationLineItemList
+    public var listLineItems: @Sendable (_ calculation: String, _ params: TaxCalculationListLineItemsParams, _ options: RequestOptions) async throws -> StripeList<TaxCalculationLineItem>
 }
 
 extension TaxCalculationRoutes {
@@ -34,7 +34,7 @@ extension TaxCalculationRoutes {
     }
 
     /// Retrieves the line items of a tax calculation as a collection, if the calculation hasn’t expired.
-    public func listLineItems(_ calculation: String, _ params: TaxCalculationListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> TaxCalculationLineItemList {
+    public func listLineItems(_ calculation: String, _ params: TaxCalculationListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TaxCalculationLineItem> {
         try await listLineItems(calculation, params, options)
     }
 }

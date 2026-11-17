@@ -26,17 +26,3 @@ public struct TaxProductRegistrationsResourceCountryOptionsEuropeType: RawRepres
     public static var ossUnion: Self { .init(rawValue: "oss_union") }
     public static var standard: Self { .init(rawValue: "standard") }
 }
-
-public struct TaxProductRegistrationsResourceCountryOptionsEuropeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductRegistrationsResourceCountryOptionsEurope]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

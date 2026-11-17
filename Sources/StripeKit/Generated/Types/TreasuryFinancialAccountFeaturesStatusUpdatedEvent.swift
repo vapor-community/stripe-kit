@@ -12,17 +12,3 @@ public struct TreasuryFinancialAccountFeaturesStatusUpdatedEvent: Codable, Senda
     @Indirect
     public var object: TreasuryFinancialAccount
 }
-
-public struct TreasuryFinancialAccountFeaturesStatusUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccountFeaturesStatusUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

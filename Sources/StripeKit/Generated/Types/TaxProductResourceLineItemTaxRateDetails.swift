@@ -90,17 +90,3 @@ public struct TaxProductResourceLineItemTaxRateDetailsTaxType: RawRepresentable,
     /// Value-Added Tax
     public static var vat: Self { .init(rawValue: "vat") }
 }
-
-public struct TaxProductResourceLineItemTaxRateDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductResourceLineItemTaxRateDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

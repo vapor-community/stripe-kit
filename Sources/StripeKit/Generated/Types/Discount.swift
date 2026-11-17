@@ -74,17 +74,3 @@ public struct DiscountObject: RawRepresentable, Codable, Hashable, Sendable {
 
     public static var discount: Self { .init(rawValue: "discount") }
 }
-
-public struct DiscountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Discount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

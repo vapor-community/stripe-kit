@@ -36,17 +36,3 @@ public struct TerminalConfigurationConfigurationResourceWifiConfigType: RawRepre
     public static var enterpriseEapTls: Self { .init(rawValue: "enterprise_eap_tls") }
     public static var personalPsk: Self { .init(rawValue: "personal_psk") }
 }
-
-public struct TerminalConfigurationConfigurationResourceWifiConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalConfigurationConfigurationResourceWifiConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

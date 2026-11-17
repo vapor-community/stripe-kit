@@ -16,7 +16,7 @@ public struct FinancialConnectionsTransactionRoutes: Sendable {
     public var retrieve: @Sendable (_ transaction: String, _ expand: [String]?, _ options: RequestOptions) async throws -> FinancialConnectionsTransaction
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: FinancialConnectionsTransactionListParams, _ options: RequestOptions) async throws -> FinancialConnectionsTransactionList
+    public var list: @Sendable (_ params: FinancialConnectionsTransactionListParams, _ options: RequestOptions) async throws -> StripeList<FinancialConnectionsTransaction>
 }
 
 extension FinancialConnectionsTransactionRoutes {
@@ -26,7 +26,7 @@ extension FinancialConnectionsTransactionRoutes {
     }
 
     /// Returns a list of Financial Connections Transaction objects.
-    public func list(_ params: FinancialConnectionsTransactionListParams, options: RequestOptions = .init()) async throws -> FinancialConnectionsTransactionList {
+    public func list(_ params: FinancialConnectionsTransactionListParams, options: RequestOptions = .init()) async throws -> StripeList<FinancialConnectionsTransaction> {
         try await list(params, options)
     }
 }

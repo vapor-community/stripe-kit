@@ -22,7 +22,7 @@ public struct PriceRoutes: Sendable {
     public var update: @Sendable (_ price: String, _ params: PriceUpdateParams, _ options: RequestOptions) async throws -> Price
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: PriceListParams, _ options: RequestOptions) async throws -> PriceList
+    public var list: @Sendable (_ params: PriceListParams, _ options: RequestOptions) async throws -> StripeList<Price>
 
     /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var search: @Sendable (_ params: PriceSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Price>
@@ -47,7 +47,7 @@ extension PriceRoutes {
 
     /// Returns a list of your active prices, excluding inline prices. For the list of inactive prices, set
     /// active to false.
-    public func list(_ params: PriceListParams = .init(), options: RequestOptions = .init()) async throws -> PriceList {
+    public func list(_ params: PriceListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Price> {
         try await list(params, options)
     }
 

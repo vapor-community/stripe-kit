@@ -11,17 +11,3 @@ public struct PaymentFlowsPrivatePaymentMethodsAlmaDetailsResourceInstallments: 
     /// The number of installments.
     public var count: Int
 }
-
-public struct PaymentFlowsPrivatePaymentMethodsAlmaDetailsResourceInstallmentsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsPrivatePaymentMethodsAlmaDetailsResourceInstallments]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

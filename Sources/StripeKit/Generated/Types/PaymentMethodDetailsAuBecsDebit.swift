@@ -28,17 +28,3 @@ public struct PaymentMethodDetailsAuBecsDebit: Codable, Sendable {
         case mandate
     }
 }
-
-public struct PaymentMethodDetailsAuBecsDebitList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsAuBecsDebit]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

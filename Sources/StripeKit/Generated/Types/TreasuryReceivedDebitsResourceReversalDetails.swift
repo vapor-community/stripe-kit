@@ -33,17 +33,3 @@ public struct TreasuryReceivedDebitsResourceReversalDetailsRestrictedReason: Raw
     public static var other: Self { .init(rawValue: "other") }
     public static var sourceFlowRestricted: Self { .init(rawValue: "source_flow_restricted") }
 }
-
-public struct TreasuryReceivedDebitsResourceReversalDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryReceivedDebitsResourceReversalDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

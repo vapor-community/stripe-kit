@@ -23,17 +23,3 @@ public struct ThreeDSecureStandaloneResourceDataShareDetailsType: RawRepresentab
     public static var dsSpecific: Self { .init(rawValue: "ds_specific") }
     public static var emvStandard: Self { .init(rawValue: "emv_standard") }
 }
-
-public struct ThreeDSecureStandaloneResourceDataShareDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ThreeDSecureStandaloneResourceDataShareDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

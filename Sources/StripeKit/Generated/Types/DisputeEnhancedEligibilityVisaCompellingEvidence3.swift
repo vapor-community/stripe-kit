@@ -31,17 +31,3 @@ public struct DisputeEnhancedEligibilityVisaCompellingEvidence3Status: RawRepres
     public static var qualified: Self { .init(rawValue: "qualified") }
     public static var requiresAction: Self { .init(rawValue: "requires_action") }
 }
-
-public struct DisputeEnhancedEligibilityVisaCompellingEvidence3List: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DisputeEnhancedEligibilityVisaCompellingEvidence3]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

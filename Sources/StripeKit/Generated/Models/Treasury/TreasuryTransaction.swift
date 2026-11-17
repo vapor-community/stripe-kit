@@ -25,7 +25,7 @@ public struct TreasuryTransaction: Codable, Sendable {
     public var description: String
     /// A list of TransactionEntries that are part of this Transaction. This cannot be expanded in any list
     /// endpoints.
-    public var entries: TreasuryTransactionEntryList?
+    public var entries: StripeList<TreasuryTransactionEntry>?
     /// The FinancialAccount associated with this object.
     public var financialAccount: String
     /// ID of the flow that created the Transaction.
@@ -107,16 +107,4 @@ public struct TreasuryTransactionStatus: RawRepresentable, Codable, Hashable, Se
     public static var void: Self { .init(rawValue: "void") }
 }
 
-public struct TreasuryTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TreasuryTransactionList = StripeList<TreasuryTransaction>

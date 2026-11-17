@@ -17,17 +17,3 @@ public struct TreasuryFinancialAccountsResourceOutboundPayments: Codable, Sendab
         case usDomesticWire = "us_domestic_wire"
     }
 }
-
-public struct TreasuryFinancialAccountsResourceOutboundPaymentsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccountsResourceOutboundPayments]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

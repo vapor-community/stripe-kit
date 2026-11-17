@@ -13,17 +13,3 @@ public struct InvoiceLineItemPeriod: Codable, Sendable {
     /// The start of the period. This value is inclusive.
     public var start: Date
 }
-
-public struct InvoiceLineItemPeriodList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoiceLineItemPeriod]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

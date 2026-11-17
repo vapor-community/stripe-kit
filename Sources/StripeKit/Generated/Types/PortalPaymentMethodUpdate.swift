@@ -21,17 +21,3 @@ public struct PortalPaymentMethodUpdate: Codable, Sendable {
         case paymentMethodConfiguration = "payment_method_configuration"
     }
 }
-
-public struct PortalPaymentMethodUpdateList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalPaymentMethodUpdate]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

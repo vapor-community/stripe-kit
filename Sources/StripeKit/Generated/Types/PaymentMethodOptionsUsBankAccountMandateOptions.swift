@@ -26,17 +26,3 @@ public struct PaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: R
 
     public static var paper: Self { .init(rawValue: "paper") }
 }
-
-public struct PaymentMethodOptionsUsBankAccountMandateOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodOptionsUsBankAccountMandateOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -19,17 +19,3 @@ public struct TaxRateFlatAmount: Codable, Sendable {
     /// Three-letter ISO currency code, in lowercase.
     public var currency: String
 }
-
-public struct TaxRateFlatAmountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxRateFlatAmount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

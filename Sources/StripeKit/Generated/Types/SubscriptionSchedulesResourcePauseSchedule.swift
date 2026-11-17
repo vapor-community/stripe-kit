@@ -14,17 +14,3 @@ public struct SubscriptionSchedulesResourcePauseSchedule: Codable, Sendable {
     /// Details about when and how the subscription resumes.
     public var resume: SubscriptionSchedulesResourcePauseScheduleResume?
 }
-
-public struct SubscriptionSchedulesResourcePauseScheduleList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionSchedulesResourcePauseSchedule]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

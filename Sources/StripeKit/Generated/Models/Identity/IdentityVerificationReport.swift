@@ -84,16 +84,4 @@ public struct IdentityVerificationReportType: RawRepresentable, Codable, Hashabl
     public static var verificationFlow: Self { .init(rawValue: "verification_flow") }
 }
 
-public struct IdentityVerificationReportList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IdentityVerificationReport]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias IdentityVerificationReportList = StripeList<IdentityVerificationReport>

@@ -22,7 +22,7 @@ public struct ProductCatalogTrialOfferRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: ProductCatalogTrialOfferUpdateParams, _ options: RequestOptions) async throws -> ProductCatalogTrialOffer
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ProductCatalogTrialOfferListParams, _ options: RequestOptions) async throws -> ProductCatalogTrialOfferList
+    public var list: @Sendable (_ params: ProductCatalogTrialOfferListParams, _ options: RequestOptions) async throws -> StripeList<ProductCatalogTrialOffer>
 }
 
 extension ProductCatalogTrialOfferRoutes {
@@ -43,7 +43,7 @@ extension ProductCatalogTrialOfferRoutes {
     }
 
     /// Returns a list of trial offers.
-    public func list(_ params: ProductCatalogTrialOfferListParams = .init(), options: RequestOptions = .init()) async throws -> ProductCatalogTrialOfferList {
+    public func list(_ params: ProductCatalogTrialOfferListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ProductCatalogTrialOffer> {
         try await list(params, options)
     }
 }

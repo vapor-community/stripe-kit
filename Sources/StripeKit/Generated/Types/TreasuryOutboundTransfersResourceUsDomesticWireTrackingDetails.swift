@@ -16,17 +16,3 @@ public struct TreasuryOutboundTransfersResourceUsDomesticWireTrackingDetails: Co
     /// OMAD of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
     public var omad: String?
 }
-
-public struct TreasuryOutboundTransfersResourceUsDomesticWireTrackingDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryOutboundTransfersResourceUsDomesticWireTrackingDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

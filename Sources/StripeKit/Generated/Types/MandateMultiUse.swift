@@ -13,17 +13,3 @@ public struct MandateMultiUse: Codable, Sendable {
     /// The currency of the payment on a multi use mandate.
     public var currency: String?
 }
-
-public struct MandateMultiUseList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [MandateMultiUse]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

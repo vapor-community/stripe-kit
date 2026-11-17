@@ -13,17 +13,3 @@ public struct IssuingPersonalizationDesignDeactivatedEvent: Codable, Sendable {
     @Indirect
     public var object: IssuingPersonalizationDesign
 }
-
-public struct IssuingPersonalizationDesignDeactivatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingPersonalizationDesignDeactivatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

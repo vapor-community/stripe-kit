@@ -48,17 +48,3 @@ public struct PortalFlowsFlowType: RawRepresentable, Codable, Hashable, Sendable
     public static var subscriptionUpdate: Self { .init(rawValue: "subscription_update") }
     public static var subscriptionUpdateConfirm: Self { .init(rawValue: "subscription_update_confirm") }
 }
-
-public struct PortalFlowsFlowList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalFlowsFlow]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

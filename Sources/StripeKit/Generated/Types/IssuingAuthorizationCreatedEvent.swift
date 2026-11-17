@@ -13,17 +13,3 @@ public struct IssuingAuthorizationCreatedEvent: Codable, Sendable {
     @Indirect
     public var object: IssuingAuthorization
 }
-
-public struct IssuingAuthorizationCreatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingAuthorizationCreatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

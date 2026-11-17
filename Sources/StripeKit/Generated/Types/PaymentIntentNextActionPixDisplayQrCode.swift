@@ -27,17 +27,3 @@ public struct PaymentIntentNextActionPixDisplayQrCode: Codable, Sendable {
         case imageUrlSvg = "image_url_svg"
     }
 }
-
-public struct PaymentIntentNextActionPixDisplayQrCodeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentIntentNextActionPixDisplayQrCode]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

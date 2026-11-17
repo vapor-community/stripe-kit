@@ -278,17 +278,3 @@ public struct AccountRequirementsErrorCode: RawRepresentable, Codable, Hashable,
     /// list](https://stripe.com/legal/restricted-businesses).
     public static var verificationSupportability: Self { .init(rawValue: "verification_supportability") }
 }
-
-public struct AccountRequirementsErrorList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountRequirementsError]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

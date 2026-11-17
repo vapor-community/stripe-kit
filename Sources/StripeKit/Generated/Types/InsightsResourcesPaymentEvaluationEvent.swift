@@ -44,17 +44,3 @@ public struct InsightsResourcesPaymentEvaluationEventType: RawRepresentable, Cod
     public static var userInterventionRaised: Self { .init(rawValue: "user_intervention_raised") }
     public static var userInterventionResolved: Self { .init(rawValue: "user_intervention_resolved") }
 }
-
-public struct InsightsResourcesPaymentEvaluationEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

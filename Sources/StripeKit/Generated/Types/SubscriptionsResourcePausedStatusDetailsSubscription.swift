@@ -33,17 +33,3 @@ public struct SubscriptionsResourcePausedStatusDetailsSubscriptionType: RawRepre
     /// method.
     public static var trialEndWithoutPaymentMethod: Self { .init(rawValue: "trial_end_without_payment_method") }
 }
-
-public struct SubscriptionsResourcePausedStatusDetailsSubscriptionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionsResourcePausedStatusDetailsSubscription]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

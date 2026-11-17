@@ -16,7 +16,7 @@ public struct BillingCreditBalanceTransactionRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BillingCreditBalanceTransaction
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: BillingCreditBalanceTransactionListParams, _ options: RequestOptions) async throws -> BillingCreditBalanceTransactionList
+    public var list: @Sendable (_ params: BillingCreditBalanceTransactionListParams, _ options: RequestOptions) async throws -> StripeList<BillingCreditBalanceTransaction>
 }
 
 extension BillingCreditBalanceTransactionRoutes {
@@ -26,7 +26,7 @@ extension BillingCreditBalanceTransactionRoutes {
     }
 
     /// Retrieve a list of credit balance transactions.
-    public func list(_ params: BillingCreditBalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> BillingCreditBalanceTransactionList {
+    public func list(_ params: BillingCreditBalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<BillingCreditBalanceTransaction> {
         try await list(params, options)
     }
 }

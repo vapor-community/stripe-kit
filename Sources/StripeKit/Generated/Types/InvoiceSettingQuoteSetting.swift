@@ -27,17 +27,3 @@ public struct InvoiceSettingQuoteSetting: Codable, Sendable {
         case issuer
     }
 }
-
-public struct InvoiceSettingQuoteSettingList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoiceSettingQuoteSetting]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -18,17 +18,3 @@ public struct PaymentFlowsAmountDetailsResourceLineItemsListResourceLineItemReso
         case totalTaxAmount = "total_tax_amount"
     }
 }
-
-public struct PaymentFlowsAmountDetailsResourceLineItemsListResourceLineItemResourceTaxList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsAmountDetailsResourceLineItemsListResourceLineItemResourceTax]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

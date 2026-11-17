@@ -124,16 +124,4 @@ public struct TopupStatus: RawRepresentable, Codable, Hashable, Sendable {
     public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
-public struct TopupList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Topup]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TopupList = StripeList<Topup>

@@ -12,17 +12,3 @@ public struct LineItemsDiscountAmount: Codable, Sendable {
     public var amount: Int
     public var discount: Discount
 }
-
-public struct LineItemsDiscountAmountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [LineItemsDiscountAmount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

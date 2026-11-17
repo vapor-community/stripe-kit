@@ -28,17 +28,3 @@ public struct ShippingRateDeliveryEstimateBoundUnit: RawRepresentable, Codable, 
     public static var month: Self { .init(rawValue: "month") }
     public static var week: Self { .init(rawValue: "week") }
 }
-
-public struct ShippingRateDeliveryEstimateBoundList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ShippingRateDeliveryEstimateBound]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

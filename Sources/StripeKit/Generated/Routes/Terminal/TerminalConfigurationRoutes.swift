@@ -22,7 +22,7 @@ public struct TerminalConfigurationRoutes: Sendable {
     public var update: @Sendable (_ configuration: String, _ params: TerminalConfigurationUpdateParams, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration>
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TerminalConfigurationListParams, _ options: RequestOptions) async throws -> TerminalConfigurationList
+    public var list: @Sendable (_ params: TerminalConfigurationListParams, _ options: RequestOptions) async throws -> StripeList<TerminalConfiguration>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ configuration: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTerminalConfiguration
@@ -45,7 +45,7 @@ extension TerminalConfigurationRoutes {
     }
 
     /// Returns a list of Configuration objects.
-    public func list(_ params: TerminalConfigurationListParams = .init(), options: RequestOptions = .init()) async throws -> TerminalConfigurationList {
+    public func list(_ params: TerminalConfigurationListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TerminalConfiguration> {
         try await list(params, options)
     }
 

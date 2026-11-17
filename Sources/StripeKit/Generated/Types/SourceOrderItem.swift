@@ -23,17 +23,3 @@ public struct SourceOrderItem: Codable, Sendable {
     /// The type of this order item. Must be `sku`, `tax`, or `shipping`.
     public var type: String?
 }
-
-public struct SourceOrderItemList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SourceOrderItem]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

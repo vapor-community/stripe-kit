@@ -30,17 +30,3 @@ public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseF
     public static var available: Self { .init(rawValue: "available") }
     public static var unavailable: Self { .init(rawValue: "unavailable") }
 }
-
-public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesOvercaptureOvercaptureList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesOvercaptureOvercapture]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

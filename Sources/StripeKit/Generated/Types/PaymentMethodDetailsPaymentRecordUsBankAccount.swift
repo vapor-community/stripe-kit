@@ -69,17 +69,3 @@ public struct PaymentMethodDetailsPaymentRecordUsBankAccountAccountType: RawRepr
     /// Bank account type is savings
     public static var savings: Self { .init(rawValue: "savings") }
 }
-
-public struct PaymentMethodDetailsPaymentRecordUsBankAccountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPaymentRecordUsBankAccount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

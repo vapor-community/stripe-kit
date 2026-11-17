@@ -30,17 +30,3 @@ public struct InsightsResourcesPaymentEvaluationEarlyFraudWarningReceivedFraudTy
     public static var other: Self { .init(rawValue: "other") }
     public static var unauthorizedUseOfCard: Self { .init(rawValue: "unauthorized_use_of_card") }
 }
-
-public struct InsightsResourcesPaymentEvaluationEarlyFraudWarningReceivedList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationEarlyFraudWarningReceived]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

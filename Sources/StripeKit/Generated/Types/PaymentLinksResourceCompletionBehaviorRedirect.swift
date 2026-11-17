@@ -11,17 +11,3 @@ public struct PaymentLinksResourceCompletionBehaviorRedirect: Codable, Sendable 
     /// The URL the customer will be redirected to after the purchase is complete.
     public var url: String
 }
-
-public struct PaymentLinksResourceCompletionBehaviorRedirectList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceCompletionBehaviorRedirect]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

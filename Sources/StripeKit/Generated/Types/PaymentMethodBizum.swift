@@ -15,17 +15,3 @@ public struct PaymentMethodBizum: Codable, Sendable {
         case buyerId = "buyer_id"
     }
 }
-
-public struct PaymentMethodBizumList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodBizum]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

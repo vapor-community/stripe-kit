@@ -16,17 +16,3 @@ public struct PromotionCodeCurrencyOption: Codable, Sendable {
         case minimumAmount = "minimum_amount"
     }
 }
-
-public struct PromotionCodeCurrencyOptionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PromotionCodeCurrencyOption]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

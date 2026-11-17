@@ -22,7 +22,7 @@ public struct SubscriptionRoutes: Sendable {
     public var update: @Sendable (_ subscriptionExposedId: String, _ params: SubscriptionUpdateParams, _ options: RequestOptions) async throws -> Subscription
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: SubscriptionListParams, _ options: RequestOptions) async throws -> SubscriptionList
+    public var list: @Sendable (_ params: SubscriptionListParams, _ options: RequestOptions) async throws -> StripeList<Subscription>
 
     /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var search: @Sendable (_ params: SubscriptionSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Subscription>
@@ -90,7 +90,7 @@ extension SubscriptionRoutes {
 
     /// By default, returns a list of subscriptions that have not been canceled. In order to list canceled
     /// subscriptions, specify status=canceled.
-    public func list(_ params: SubscriptionListParams = .init(), options: RequestOptions = .init()) async throws -> SubscriptionList {
+    public func list(_ params: SubscriptionListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Subscription> {
         try await list(params, options)
     }
 

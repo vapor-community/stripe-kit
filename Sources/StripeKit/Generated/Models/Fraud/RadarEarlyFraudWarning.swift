@@ -57,16 +57,4 @@ public struct RadarEarlyFraudWarningObject: RawRepresentable, Codable, Hashable,
     public static var radarEarlyFraudWarning: Self { .init(rawValue: "radar.early_fraud_warning") }
 }
 
-public struct RadarEarlyFraudWarningList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [RadarEarlyFraudWarning]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias RadarEarlyFraudWarningList = StripeList<RadarEarlyFraudWarning>

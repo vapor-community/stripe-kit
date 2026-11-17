@@ -30,17 +30,3 @@ public struct InvoiceRenderingPdfPageSize: RawRepresentable, Codable, Hashable, 
     public static var auto: Self { .init(rawValue: "auto") }
     public static var letter: Self { .init(rawValue: "letter") }
 }
-
-public struct InvoiceRenderingPdfList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoiceRenderingPdf]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

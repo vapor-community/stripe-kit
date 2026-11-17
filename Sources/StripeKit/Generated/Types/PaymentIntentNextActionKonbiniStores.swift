@@ -17,17 +17,3 @@ public struct PaymentIntentNextActionKonbiniStores: Codable, Sendable {
     /// Seicomart instruction details.
     public var seicomart: PaymentIntentNextActionKonbiniSeicomart?
 }
-
-public struct PaymentIntentNextActionKonbiniStoresList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentIntentNextActionKonbiniStores]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

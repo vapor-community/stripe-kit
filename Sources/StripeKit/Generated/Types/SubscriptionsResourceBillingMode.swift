@@ -34,17 +34,3 @@ public struct SubscriptionsResourceBillingModeType: RawRepresentable, Codable, H
     public static var classic: Self { .init(rawValue: "classic") }
     public static var flexible: Self { .init(rawValue: "flexible") }
 }
-
-public struct SubscriptionsResourceBillingModeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionsResourceBillingMode]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

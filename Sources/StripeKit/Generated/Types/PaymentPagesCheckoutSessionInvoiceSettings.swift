@@ -36,17 +36,3 @@ public struct PaymentPagesCheckoutSessionInvoiceSettings: Codable, Sendable {
         case renderingOptions = "rendering_options"
     }
 }
-
-public struct PaymentPagesCheckoutSessionInvoiceSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionInvoiceSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

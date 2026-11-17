@@ -22,7 +22,7 @@ public struct PlanRoutes: Sendable {
     public var update: @Sendable (_ plan: String, _ params: PlanUpdateParams, _ options: RequestOptions) async throws -> Plan
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: PlanListParams, _ options: RequestOptions) async throws -> PlanList
+    public var list: @Sendable (_ params: PlanListParams, _ options: RequestOptions) async throws -> StripeList<Plan>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ plan: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedPlan
@@ -48,7 +48,7 @@ extension PlanRoutes {
     }
 
     /// Returns a list of your plans.
-    public func list(_ params: PlanListParams = .init(), options: RequestOptions = .init()) async throws -> PlanList {
+    public func list(_ params: PlanListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Plan> {
         try await list(params, options)
     }
 

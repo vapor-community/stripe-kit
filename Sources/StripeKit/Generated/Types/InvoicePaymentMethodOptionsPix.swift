@@ -31,17 +31,3 @@ public struct InvoicePaymentMethodOptionsPixAmountIncludesIof: RawRepresentable,
     public static var always: Self { .init(rawValue: "always") }
     public static var never: Self { .init(rawValue: "never") }
 }
-
-public struct InvoicePaymentMethodOptionsPixList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicePaymentMethodOptionsPix]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -96,17 +96,3 @@ public struct PaymentIntentTypeSpecificPaymentMethodOptionsClientVerificationMet
     public static var instant: Self { .init(rawValue: "instant") }
     public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
-
-public struct PaymentIntentTypeSpecificPaymentMethodOptionsClientList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentIntentTypeSpecificPaymentMethodOptionsClient]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

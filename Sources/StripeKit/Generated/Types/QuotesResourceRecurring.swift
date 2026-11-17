@@ -41,17 +41,3 @@ public struct QuotesResourceRecurringInterval: RawRepresentable, Codable, Hashab
     public static var week: Self { .init(rawValue: "week") }
     public static var year: Self { .init(rawValue: "year") }
 }
-
-public struct QuotesResourceRecurringList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [QuotesResourceRecurring]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

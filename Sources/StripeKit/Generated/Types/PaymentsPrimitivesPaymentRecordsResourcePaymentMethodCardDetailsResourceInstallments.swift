@@ -11,17 +11,3 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsRe
     /// Installment plan selected for the payment.
     public var plan: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlan?
 }
-
-public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallments]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

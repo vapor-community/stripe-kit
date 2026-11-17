@@ -25,17 +25,3 @@ public struct PaymentFlowsPrivatePaymentMethodsCardPresentCommonWalletType: RawR
     public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
     public static var unknown: Self { .init(rawValue: "unknown") }
 }
-
-public struct PaymentFlowsPrivatePaymentMethodsCardPresentCommonWalletList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

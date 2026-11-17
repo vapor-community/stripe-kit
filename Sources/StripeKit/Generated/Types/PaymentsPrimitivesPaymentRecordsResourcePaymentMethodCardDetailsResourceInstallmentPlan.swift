@@ -42,17 +42,3 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsRe
     public static var fixedCount: Self { .init(rawValue: "fixed_count") }
     public static var revolving: Self { .init(rawValue: "revolving") }
 }
-
-public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlanList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlan]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

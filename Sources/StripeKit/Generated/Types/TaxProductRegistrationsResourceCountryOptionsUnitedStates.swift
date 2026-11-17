@@ -90,17 +90,3 @@ public struct TaxProductRegistrationsResourceCountryOptionsUnitedStatesType: Raw
     /// A Tax Registration in the specified local jurisdiction to collect utility users tax.
     public static var utilityUsersTax: Self { .init(rawValue: "utility_users_tax") }
 }
-
-public struct TaxProductRegistrationsResourceCountryOptionsUnitedStatesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductRegistrationsResourceCountryOptionsUnitedStates]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -44,17 +44,3 @@ public struct CustomerSessionResourceComponentsResourceCustomerSheetResourceFeat
     public static var disabled: Self { .init(rawValue: "disabled") }
     public static var enabled: Self { .init(rawValue: "enabled") }
 }
-
-public struct CustomerSessionResourceComponentsResourceCustomerSheetResourceFeaturesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerSessionResourceComponentsResourceCustomerSheetResourceFeatures]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

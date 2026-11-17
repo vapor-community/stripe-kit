@@ -22,7 +22,7 @@ public struct PaymentMethodConfigurationRoutes: Sendable {
     public var update: @Sendable (_ configuration: String, _ params: PaymentMethodConfigurationUpdateParams, _ options: RequestOptions) async throws -> PaymentMethodConfiguration
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: PaymentMethodConfigurationListParams, _ options: RequestOptions) async throws -> PaymentMethodConfigurationList
+    public var list: @Sendable (_ params: PaymentMethodConfigurationListParams, _ options: RequestOptions) async throws -> StripeList<PaymentMethodConfiguration>
 }
 
 extension PaymentMethodConfigurationRoutes {
@@ -42,7 +42,7 @@ extension PaymentMethodConfigurationRoutes {
     }
 
     /// List payment method configurations
-    public func list(_ params: PaymentMethodConfigurationListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodConfigurationList {
+    public func list(_ params: PaymentMethodConfigurationListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<PaymentMethodConfiguration> {
         try await list(params, options)
     }
 }

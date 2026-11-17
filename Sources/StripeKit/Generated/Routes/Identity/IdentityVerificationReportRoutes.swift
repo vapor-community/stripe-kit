@@ -16,7 +16,7 @@ public struct IdentityVerificationReportRoutes: Sendable {
     public var retrieve: @Sendable (_ report: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IdentityVerificationReport
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: IdentityVerificationReportListParams, _ options: RequestOptions) async throws -> IdentityVerificationReportList
+    public var list: @Sendable (_ params: IdentityVerificationReportListParams, _ options: RequestOptions) async throws -> StripeList<IdentityVerificationReport>
 }
 
 extension IdentityVerificationReportRoutes {
@@ -26,7 +26,7 @@ extension IdentityVerificationReportRoutes {
     }
 
     /// List all verification reports.
-    public func list(_ params: IdentityVerificationReportListParams = .init(), options: RequestOptions = .init()) async throws -> IdentityVerificationReportList {
+    public func list(_ params: IdentityVerificationReportListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<IdentityVerificationReport> {
         try await list(params, options)
     }
 }

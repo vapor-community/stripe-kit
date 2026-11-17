@@ -27,17 +27,3 @@ public struct TerminalConfigurationConfigurationResourceEnterpriseTlsWifi: Codab
         case ssid
     }
 }
-
-public struct TerminalConfigurationConfigurationResourceEnterpriseTlsWifiList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalConfigurationConfigurationResourceEnterpriseTlsWifi]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

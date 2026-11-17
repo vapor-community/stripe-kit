@@ -28,17 +28,3 @@ public struct ConnectEmbeddedInstantPayoutsPromotionFeatures: Codable, Sendable 
         case instantPayouts = "instant_payouts"
     }
 }
-
-public struct ConnectEmbeddedInstantPayoutsPromotionFeaturesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectEmbeddedInstantPayoutsPromotionFeatures]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

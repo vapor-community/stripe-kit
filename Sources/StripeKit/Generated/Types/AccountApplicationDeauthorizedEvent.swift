@@ -11,17 +11,3 @@ import Foundation
 public struct AccountApplicationDeauthorizedEvent: Codable, Sendable {
     public var object: Application
 }
-
-public struct AccountApplicationDeauthorizedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountApplicationDeauthorizedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

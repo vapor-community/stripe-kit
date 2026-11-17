@@ -12,17 +12,3 @@ public struct MandateAuBecsDebit: Codable, Sendable {
     /// should be shared with them exclusively.
     public var url: String
 }
-
-public struct MandateAuBecsDebitList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [MandateAuBecsDebit]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

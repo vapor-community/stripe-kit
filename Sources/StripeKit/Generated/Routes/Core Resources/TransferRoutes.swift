@@ -22,7 +22,7 @@ public struct TransferRoutes: Sendable {
     public var update: @Sendable (_ transfer: String, _ params: TransferUpdateParams, _ options: RequestOptions) async throws -> Transfer
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TransferListParams, _ options: RequestOptions) async throws -> TransferList
+    public var list: @Sendable (_ params: TransferListParams, _ options: RequestOptions) async throws -> StripeList<Transfer>
 }
 
 extension TransferRoutes {
@@ -48,7 +48,7 @@ extension TransferRoutes {
 
     /// Returns a list of existing transfers sent to connected accounts. The transfers are returned in
     /// sorted order, with the most recently created transfers appearing first.
-    public func list(_ params: TransferListParams = .init(), options: RequestOptions = .init()) async throws -> TransferList {
+    public func list(_ params: TransferListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Transfer> {
         try await list(params, options)
     }
 }

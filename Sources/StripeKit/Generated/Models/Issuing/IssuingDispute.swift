@@ -118,16 +118,4 @@ public struct IssuingDisputeStatus: RawRepresentable, Codable, Hashable, Sendabl
     public static var won: Self { .init(rawValue: "won") }
 }
 
-public struct IssuingDisputeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingDispute]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias IssuingDisputeList = StripeList<IssuingDispute>

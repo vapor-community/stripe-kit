@@ -54,17 +54,3 @@ public struct IssuingAuthorizationFleetDataServiceType: RawRepresentable, Codabl
     public static var nonFuelTransaction: Self { .init(rawValue: "non_fuel_transaction") }
     public static var selfService: Self { .init(rawValue: "self_service") }
 }
-
-public struct IssuingAuthorizationFleetDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingAuthorizationFleetData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

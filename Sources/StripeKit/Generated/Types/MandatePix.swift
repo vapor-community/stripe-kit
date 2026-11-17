@@ -69,17 +69,3 @@ public struct MandatePixPaymentSchedule: RawRepresentable, Codable, Hashable, Se
     public static var weekly: Self { .init(rawValue: "weekly") }
     public static var yearly: Self { .init(rawValue: "yearly") }
 }
-
-public struct MandatePixList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [MandatePix]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

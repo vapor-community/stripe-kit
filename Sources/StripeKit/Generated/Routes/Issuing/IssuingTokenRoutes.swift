@@ -19,7 +19,7 @@ public struct IssuingTokenRoutes: Sendable {
     public var update: @Sendable (_ token: String, _ params: IssuingTokenUpdateParams, _ options: RequestOptions) async throws -> IssuingToken
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: IssuingTokenListParams, _ options: RequestOptions) async throws -> IssuingTokenList
+    public var list: @Sendable (_ params: IssuingTokenListParams, _ options: RequestOptions) async throws -> StripeList<IssuingToken>
 }
 
 extension IssuingTokenRoutes {
@@ -34,7 +34,7 @@ extension IssuingTokenRoutes {
     }
 
     /// Lists all Issuing Token objects for a given card.
-    public func list(_ params: IssuingTokenListParams, options: RequestOptions = .init()) async throws -> IssuingTokenList {
+    public func list(_ params: IssuingTokenListParams, options: RequestOptions = .init()) async throws -> StripeList<IssuingToken> {
         try await list(params, options)
     }
 }

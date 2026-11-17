@@ -36,17 +36,3 @@ public struct QuotesResourceSubscriptionDataSubscriptionData: Codable, Sendable 
         case trialPeriodDays = "trial_period_days"
     }
 }
-
-public struct QuotesResourceSubscriptionDataSubscriptionDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [QuotesResourceSubscriptionDataSubscriptionData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

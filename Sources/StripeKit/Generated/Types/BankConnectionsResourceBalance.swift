@@ -44,17 +44,3 @@ public struct BankConnectionsResourceBalanceType: RawRepresentable, Codable, Has
     public static var cash: Self { .init(rawValue: "cash") }
     public static var credit: Self { .init(rawValue: "credit") }
 }
-
-public struct BankConnectionsResourceBalanceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BankConnectionsResourceBalance]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

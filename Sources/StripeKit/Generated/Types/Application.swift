@@ -26,17 +26,3 @@ public struct ApplicationObject: RawRepresentable, Codable, Hashable, Sendable {
 
     public static var application: Self { .init(rawValue: "application") }
 }
-
-public struct ApplicationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Application]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

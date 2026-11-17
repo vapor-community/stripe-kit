@@ -11,17 +11,3 @@ public struct PaymentLinksResourceCardPaymentMethodOptions: Codable, Sendable {
     /// Restrictions to apply to the card payment method. For example, you can block specific card brands.
     public var restrictions: PaymentLinksResourceCardRestrictions?
 }
-
-public struct PaymentLinksResourceCardPaymentMethodOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceCardPaymentMethodOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -19,7 +19,7 @@ public struct TreasuryInboundTransferRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryInboundTransfer
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TreasuryInboundTransferListParams, _ options: RequestOptions) async throws -> TreasuryInboundTransferList
+    public var list: @Sendable (_ params: TreasuryInboundTransferListParams, _ options: RequestOptions) async throws -> StripeList<TreasuryInboundTransfer>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ inboundTransfer: String, _ params: TreasuryInboundTransferCancelParams, _ options: RequestOptions) async throws -> TreasuryInboundTransfer
@@ -46,7 +46,7 @@ extension TreasuryInboundTransferRoutes {
     }
 
     /// Returns a list of InboundTransfers sent from the specified FinancialAccount.
-    public func list(_ params: TreasuryInboundTransferListParams, options: RequestOptions = .init()) async throws -> TreasuryInboundTransferList {
+    public func list(_ params: TreasuryInboundTransferListParams, options: RequestOptions = .init()) async throws -> StripeList<TreasuryInboundTransfer> {
         try await list(params, options)
     }
 

@@ -37,17 +37,3 @@ public struct PaymentMethodDetailsSepaDebit: Codable, Sendable {
         case mandate
     }
 }
-
-public struct PaymentMethodDetailsSepaDebitList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsSepaDebit]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

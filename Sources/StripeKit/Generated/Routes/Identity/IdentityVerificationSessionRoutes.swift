@@ -22,7 +22,7 @@ public struct IdentityVerificationSessionRoutes: Sendable {
     public var update: @Sendable (_ session: String, _ params: IdentityVerificationSessionUpdateParams, _ options: RequestOptions) async throws -> IdentityVerificationSession
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: IdentityVerificationSessionListParams, _ options: RequestOptions) async throws -> IdentityVerificationSessionList
+    public var list: @Sendable (_ params: IdentityVerificationSessionListParams, _ options: RequestOptions) async throws -> StripeList<IdentityVerificationSession>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ session: String, _ params: IdentityVerificationSessionCancelParams, _ options: RequestOptions) async throws -> IdentityVerificationSession
@@ -54,7 +54,7 @@ extension IdentityVerificationSessionRoutes {
     }
 
     /// Returns a list of VerificationSessions
-    public func list(_ params: IdentityVerificationSessionListParams = .init(), options: RequestOptions = .init()) async throws -> IdentityVerificationSessionList {
+    public func list(_ params: IdentityVerificationSessionListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<IdentityVerificationSession> {
         try await list(params, options)
     }
 

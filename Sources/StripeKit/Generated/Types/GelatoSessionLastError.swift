@@ -43,17 +43,3 @@ public struct GelatoSessionLastErrorCode: RawRepresentable, Codable, Hashable, S
     public static var selfieUnverifiedOther: Self { .init(rawValue: "selfie_unverified_other") }
     public static var underSupportedAge: Self { .init(rawValue: "under_supported_age") }
 }
-
-public struct GelatoSessionLastErrorList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoSessionLastError]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

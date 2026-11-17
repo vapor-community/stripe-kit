@@ -10,17 +10,3 @@ import Foundation
 public struct PaymentFlowsPaymentIntentAsyncWorkflowsResourceInputs: Codable, Sendable {
     public var tax: PaymentFlowsPaymentIntentAsyncWorkflowsResourceInputsResourceTax?
 }
-
-public struct PaymentFlowsPaymentIntentAsyncWorkflowsResourceInputsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsPaymentIntentAsyncWorkflowsResourceInputs]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -138,17 +138,3 @@ public struct ReservePlanType: RawRepresentable, Codable, Hashable, Sendable {
     /// The ReservePlan releases funds on a rolling basis.
     public static var rollingRelease: Self { .init(rawValue: "rolling_release") }
 }
-
-public struct ReservePlanList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ReservePlan]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

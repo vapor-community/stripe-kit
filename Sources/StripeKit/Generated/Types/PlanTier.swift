@@ -27,17 +27,3 @@ public struct PlanTier: Codable, Sendable {
         case upTo = "up_to"
     }
 }
-
-public struct PlanTierList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PlanTier]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

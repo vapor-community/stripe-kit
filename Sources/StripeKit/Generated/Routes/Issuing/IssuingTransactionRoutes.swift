@@ -19,7 +19,7 @@ public struct IssuingTransactionRoutes: Sendable {
     public var update: @Sendable (_ transaction: String, _ params: IssuingTransactionUpdateParams, _ options: RequestOptions) async throws -> IssuingTransaction
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: IssuingTransactionListParams, _ options: RequestOptions) async throws -> IssuingTransactionList
+    public var list: @Sendable (_ params: IssuingTransactionListParams, _ options: RequestOptions) async throws -> StripeList<IssuingTransaction>
 
     /// Performs `createForceCapture(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var createForceCapture: @Sendable (_ params: IssuingTransactionCreateForceCaptureParams, _ options: RequestOptions) async throws -> IssuingTransaction
@@ -45,7 +45,7 @@ extension IssuingTransactionRoutes {
 
     /// Returns a list of Issuing Transaction objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
-    public func list(_ params: IssuingTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingTransactionList {
+    public func list(_ params: IssuingTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<IssuingTransaction> {
         try await list(params, options)
     }
 

@@ -25,17 +25,3 @@ public struct AccountBacsDebitPaymentsSettings: Codable, Sendable {
         case serviceUserNumber = "service_user_number"
     }
 }
-
-public struct AccountBacsDebitPaymentsSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountBacsDebitPaymentsSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

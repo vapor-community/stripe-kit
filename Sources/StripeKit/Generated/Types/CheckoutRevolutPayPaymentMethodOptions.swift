@@ -64,17 +64,3 @@ public struct CheckoutRevolutPayPaymentMethodOptionsSetupFutureUsage: RawReprese
     /// Use `off_session` if your customer may or may not be present in your checkout flow.
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
-
-public struct CheckoutRevolutPayPaymentMethodOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CheckoutRevolutPayPaymentMethodOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

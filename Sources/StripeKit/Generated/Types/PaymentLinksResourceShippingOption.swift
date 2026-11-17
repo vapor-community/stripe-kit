@@ -19,17 +19,3 @@ public struct PaymentLinksResourceShippingOption: Codable, Sendable {
         case shippingRate = "shipping_rate"
     }
 }
-
-public struct PaymentLinksResourceShippingOptionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceShippingOption]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

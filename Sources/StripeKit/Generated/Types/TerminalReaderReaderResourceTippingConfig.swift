@@ -18,17 +18,3 @@ public struct TerminalReaderReaderResourceTippingConfig: Codable, Sendable {
         case amountEligible = "amount_eligible"
     }
 }
-
-public struct TerminalReaderReaderResourceTippingConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceTippingConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

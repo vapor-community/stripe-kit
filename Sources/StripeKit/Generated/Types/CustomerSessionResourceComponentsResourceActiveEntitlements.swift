@@ -12,17 +12,3 @@ public struct CustomerSessionResourceComponentsResourceActiveEntitlements: Codab
     /// Whether the active entitlements is enabled.
     public var enabled: Bool
 }
-
-public struct CustomerSessionResourceComponentsResourceActiveEntitlementsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerSessionResourceComponentsResourceActiveEntitlements]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

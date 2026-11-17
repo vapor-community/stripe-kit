@@ -34,17 +34,3 @@ public struct SourceTypeSepaCreditTransfer: Codable, Sendable {
         case refundIban = "refund_iban"
     }
 }
-
-public struct SourceTypeSepaCreditTransferList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SourceTypeSepaCreditTransfer]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

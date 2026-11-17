@@ -164,17 +164,3 @@ public struct LegalEntityCompanyStructure: RawRepresentable, Codable, Hashable, 
     public static var unincorporatedNonProfit: Self { .init(rawValue: "unincorporated_non_profit") }
     public static var unincorporatedPartnership: Self { .init(rawValue: "unincorporated_partnership") }
 }
-
-public struct LegalEntityCompanyList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [LegalEntityCompany]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

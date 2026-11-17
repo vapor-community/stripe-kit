@@ -11,17 +11,3 @@ public struct TaxProductResourceTaxAssociationTransactionAttemptsResourceCommitt
     /// The [Tax Transaction](https://docs.stripe.com/api/tax/transaction/object)
     public var transaction: String
 }
-
-public struct TaxProductResourceTaxAssociationTransactionAttemptsResourceCommittedList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductResourceTaxAssociationTransactionAttemptsResourceCommitted]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -22,7 +22,7 @@ public struct AppsInstallRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: AppsInstallUpdateParams, _ options: RequestOptions) async throws -> AppsInstall
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: AppsInstallListParams, _ options: RequestOptions) async throws -> AppsInstallList
+    public var list: @Sendable (_ params: AppsInstallListParams, _ options: RequestOptions) async throws -> StripeList<AppsInstall>
 
     /// Performs `uninstall(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var uninstall: @Sendable (_ id: String, _ params: AppsInstallUninstallParams, _ options: RequestOptions) async throws -> AppsInstall
@@ -64,7 +64,7 @@ extension AppsInstallRoutes {
     /// callers see the installs on their own account. A live key lists live installs and a test key lists
     /// test installs; the key of an app’s managed sandbox filtering by app lists that app’s installs across
     /// every sandbox.
-    public func list(_ params: AppsInstallListParams = .init(), options: RequestOptions = .init()) async throws -> AppsInstallList {
+    public func list(_ params: AppsInstallListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<AppsInstall> {
         try await list(params, options)
     }
 

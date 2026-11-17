@@ -12,17 +12,3 @@ public struct ReportingReportRunFailedEvent: Codable, Sendable {
     @Indirect
     public var object: ReportingReportRun
 }
-
-public struct ReportingReportRunFailedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ReportingReportRunFailedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

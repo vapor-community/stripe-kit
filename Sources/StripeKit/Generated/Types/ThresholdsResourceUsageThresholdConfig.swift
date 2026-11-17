@@ -32,17 +32,3 @@ public struct ThresholdsResourceUsageThresholdConfigRecurrence: RawRepresentable
 
     public static var oneTime: Self { .init(rawValue: "one_time") }
 }
-
-public struct ThresholdsResourceUsageThresholdConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ThresholdsResourceUsageThresholdConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

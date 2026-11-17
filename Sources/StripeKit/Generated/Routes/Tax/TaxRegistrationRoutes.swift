@@ -22,7 +22,7 @@ public struct TaxRegistrationRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: TaxRegistrationUpdateParams, _ options: RequestOptions) async throws -> TaxRegistration
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TaxRegistrationListParams, _ options: RequestOptions) async throws -> TaxRegistrationList
+    public var list: @Sendable (_ params: TaxRegistrationListParams, _ options: RequestOptions) async throws -> StripeList<TaxRegistration>
 }
 
 extension TaxRegistrationRoutes {
@@ -43,7 +43,7 @@ extension TaxRegistrationRoutes {
     }
 
     /// Returns a list of Tax Registration objects.
-    public func list(_ params: TaxRegistrationListParams = .init(), options: RequestOptions = .init()) async throws -> TaxRegistrationList {
+    public func list(_ params: TaxRegistrationListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TaxRegistration> {
         try await list(params, options)
     }
 }

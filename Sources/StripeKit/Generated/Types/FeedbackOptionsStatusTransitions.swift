@@ -15,17 +15,3 @@ public struct FeedbackOptionsStatusTransitions: Codable, Sendable {
         case deactivatedAt = "deactivated_at"
     }
 }
-
-public struct FeedbackOptionsStatusTransitionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FeedbackOptionsStatusTransitions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -16,7 +16,7 @@ public struct ScheduledQueryRunRoutes: Sendable {
     public var retrieve: @Sendable (_ scheduledQueryRun: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ScheduledQueryRun
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ScheduledQueryRunListParams, _ options: RequestOptions) async throws -> ScheduledQueryRunList
+    public var list: @Sendable (_ params: ScheduledQueryRunListParams, _ options: RequestOptions) async throws -> StripeList<ScheduledQueryRun>
 }
 
 extension ScheduledQueryRunRoutes {
@@ -26,7 +26,7 @@ extension ScheduledQueryRunRoutes {
     }
 
     /// Returns a list of scheduled query runs.
-    public func list(_ params: ScheduledQueryRunListParams = .init(), options: RequestOptions = .init()) async throws -> ScheduledQueryRunList {
+    public func list(_ params: ScheduledQueryRunListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ScheduledQueryRun> {
         try await list(params, options)
     }
 }

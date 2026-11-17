@@ -97,17 +97,3 @@ public struct SetupIntentPaymentMethodOptionsCardSetupCredentialUsage: RawRepres
     /// regular intervals on a scheduled date.
     public static var unscheduled: Self { .init(rawValue: "unscheduled") }
 }
-
-public struct SetupIntentPaymentMethodOptionsCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupIntentPaymentMethodOptionsCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

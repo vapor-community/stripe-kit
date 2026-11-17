@@ -11,17 +11,3 @@ public struct PaymentMethodKlarna: Codable, Sendable {
     /// The customer's date of birth, if provided.
     public var dob: PaymentFlowsPrivatePaymentMethodsKlarnaDob?
 }
-
-public struct PaymentMethodKlarnaList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodKlarna]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

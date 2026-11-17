@@ -170,16 +170,4 @@ public struct PlanUsageType: RawRepresentable, Codable, Hashable, Sendable {
     public static var metered: Self { .init(rawValue: "metered") }
 }
 
-public struct PlanList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Plan]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias PlanList = StripeList<Plan>

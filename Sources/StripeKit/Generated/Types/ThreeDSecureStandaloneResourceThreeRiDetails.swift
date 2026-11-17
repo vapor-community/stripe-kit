@@ -33,17 +33,3 @@ public struct ThreeDSecureStandaloneResourceThreeRiDetailsType: RawRepresentable
     public static var recurring: Self { .init(rawValue: "recurring") }
     public static var splitShipment: Self { .init(rawValue: "split_shipment") }
 }
-
-public struct ThreeDSecureStandaloneResourceThreeRiDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ThreeDSecureStandaloneResourceThreeRiDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

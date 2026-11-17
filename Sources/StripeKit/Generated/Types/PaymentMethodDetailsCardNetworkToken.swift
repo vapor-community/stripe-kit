@@ -12,17 +12,3 @@ public struct PaymentMethodDetailsCardNetworkToken: Codable, Sendable {
     /// transaction.
     public var used: Bool
 }
-
-public struct PaymentMethodDetailsCardNetworkTokenList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsCardNetworkToken]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -135,17 +135,3 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsRe
     public static var v230: Self { .init(rawValue: "2.3.0") }
     public static var v231: Self { .init(rawValue: "2.3.1") }
 }
-
-public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecure]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

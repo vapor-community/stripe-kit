@@ -19,7 +19,7 @@ public struct BillingAlertRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BillingAlert
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: BillingAlertListParams, _ options: RequestOptions) async throws -> BillingAlertList
+    public var list: @Sendable (_ params: BillingAlertListParams, _ options: RequestOptions) async throws -> StripeList<BillingAlert>
 
     /// Performs `activate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var activate: @Sendable (_ id: String, _ params: BillingAlertActivateParams, _ options: RequestOptions) async throws -> BillingAlert
@@ -43,7 +43,7 @@ extension BillingAlertRoutes {
     }
 
     /// Lists billing active and inactive alerts
-    public func list(_ params: BillingAlertListParams = .init(), options: RequestOptions = .init()) async throws -> BillingAlertList {
+    public func list(_ params: BillingAlertListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<BillingAlert> {
         try await list(params, options)
     }
 

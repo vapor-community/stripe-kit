@@ -33,17 +33,3 @@ public struct PaymentPagesCheckoutSessionPermissionsUpdateShippingDetails: RawRe
     public static var clientOnly: Self { .init(rawValue: "client_only") }
     public static var serverOnly: Self { .init(rawValue: "server_only") }
 }
-
-public struct PaymentPagesCheckoutSessionPermissionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionPermissions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

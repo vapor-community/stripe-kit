@@ -36,17 +36,3 @@ public struct AccountPaymentsSettings: Codable, Sendable {
         case statementDescriptorPrefixKanji = "statement_descriptor_prefix_kanji"
     }
 }
-
-public struct AccountPaymentsSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountPaymentsSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -23,17 +23,3 @@ public struct BankConnectionsResourceAuthorizationStatusDetailsApiResourceInacti
     public static var none: Self { .init(rawValue: "none") }
     public static var relinkRequired: Self { .init(rawValue: "relink_required") }
 }
-
-public struct BankConnectionsResourceAuthorizationStatusDetailsApiResourceInactiveStatusDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BankConnectionsResourceAuthorizationStatusDetailsApiResourceInactiveStatusDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

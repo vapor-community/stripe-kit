@@ -32,17 +32,3 @@ public struct PortalSubscriptionPauseIntervalOptionInterval: RawRepresentable, C
     public static var week: Self { .init(rawValue: "week") }
     public static var year: Self { .init(rawValue: "year") }
 }
-
-public struct PortalSubscriptionPauseIntervalOptionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalSubscriptionPauseIntervalOption]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

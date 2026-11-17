@@ -45,17 +45,3 @@ public struct DisputeEvidenceDetailsSubmissionMethod: RawRepresentable, Codable,
     public static var notSubmitted: Self { .init(rawValue: "not_submitted") }
     public static var smartDisputes: Self { .init(rawValue: "smart_disputes") }
 }
-
-public struct DisputeEvidenceDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DisputeEvidenceDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

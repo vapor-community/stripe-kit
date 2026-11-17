@@ -357,16 +357,4 @@ public struct EventType: RawRepresentable, Codable, Hashable, Sendable {
     public static var treasuryReceivedDebitCreated: Self { .init(rawValue: "treasury.received_debit.created") }
 }
 
-public struct EventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Event]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias EventList = StripeList<Event>

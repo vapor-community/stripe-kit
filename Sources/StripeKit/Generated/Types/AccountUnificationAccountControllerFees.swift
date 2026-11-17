@@ -29,17 +29,3 @@ public struct AccountUnificationAccountControllerFeesPayer: RawRepresentable, Co
     public static var applicationCustom: Self { .init(rawValue: "application_custom") }
     public static var applicationExpress: Self { .init(rawValue: "application_express") }
 }
-
-public struct AccountUnificationAccountControllerFeesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountUnificationAccountControllerFees]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

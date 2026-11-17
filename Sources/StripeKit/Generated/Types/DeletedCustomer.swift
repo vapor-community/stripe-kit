@@ -26,17 +26,3 @@ public struct DeletedCustomerObject: RawRepresentable, Codable, Hashable, Sendab
 
     public static var customer: Self { .init(rawValue: "customer") }
 }
-
-public struct DeletedCustomerList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DeletedCustomer]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

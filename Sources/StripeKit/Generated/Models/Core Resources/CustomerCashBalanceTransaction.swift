@@ -98,16 +98,4 @@ public struct CustomerCashBalanceTransactionType: RawRepresentable, Codable, Has
     public static var unappliedFromPayment: Self { .init(rawValue: "unapplied_from_payment") }
 }
 
-public struct CustomerCashBalanceTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerCashBalanceTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias CustomerCashBalanceTransactionList = StripeList<CustomerCashBalanceTransaction>

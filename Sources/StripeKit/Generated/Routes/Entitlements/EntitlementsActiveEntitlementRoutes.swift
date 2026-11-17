@@ -16,7 +16,7 @@ public struct EntitlementsActiveEntitlementRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> EntitlementsActiveEntitlement
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: EntitlementsActiveEntitlementListParams, _ options: RequestOptions) async throws -> EntitlementsActiveEntitlementList
+    public var list: @Sendable (_ params: EntitlementsActiveEntitlementListParams, _ options: RequestOptions) async throws -> StripeList<EntitlementsActiveEntitlement>
 }
 
 extension EntitlementsActiveEntitlementRoutes {
@@ -26,7 +26,7 @@ extension EntitlementsActiveEntitlementRoutes {
     }
 
     /// Retrieve a list of active entitlements for a customer
-    public func list(_ params: EntitlementsActiveEntitlementListParams, options: RequestOptions = .init()) async throws -> EntitlementsActiveEntitlementList {
+    public func list(_ params: EntitlementsActiveEntitlementListParams, options: RequestOptions = .init()) async throws -> StripeList<EntitlementsActiveEntitlement> {
         try await list(params, options)
     }
 }

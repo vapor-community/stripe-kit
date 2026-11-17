@@ -39,16 +39,4 @@ public struct ApplePayDomainObject: RawRepresentable, Codable, Hashable, Sendabl
     public static var applePayDomain: Self { .init(rawValue: "apple_pay_domain") }
 }
 
-public struct ApplePayDomainList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ApplePayDomain]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ApplePayDomainList = StripeList<ApplePayDomain>

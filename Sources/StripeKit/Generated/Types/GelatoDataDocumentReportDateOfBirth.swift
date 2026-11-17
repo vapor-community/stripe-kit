@@ -16,17 +16,3 @@ public struct GelatoDataDocumentReportDateOfBirth: Codable, Sendable {
     /// The four-digit year.
     public var year: Int?
 }
-
-public struct GelatoDataDocumentReportDateOfBirthList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoDataDocumentReportDateOfBirth]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

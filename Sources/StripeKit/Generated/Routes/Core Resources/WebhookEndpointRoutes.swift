@@ -22,7 +22,7 @@ public struct WebhookEndpointRoutes: Sendable {
     public var update: @Sendable (_ webhookEndpoint: String, _ params: WebhookEndpointUpdateParams, _ options: RequestOptions) async throws -> WebhookEndpoint
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: WebhookEndpointListParams, _ options: RequestOptions) async throws -> WebhookEndpointList
+    public var list: @Sendable (_ params: WebhookEndpointListParams, _ options: RequestOptions) async throws -> StripeList<WebhookEndpoint>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ webhookEndpoint: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedWebhookEndpoint
@@ -50,7 +50,7 @@ extension WebhookEndpointRoutes {
     }
 
     /// Returns a list of your webhook endpoints.
-    public func list(_ params: WebhookEndpointListParams = .init(), options: RequestOptions = .init()) async throws -> WebhookEndpointList {
+    public func list(_ params: WebhookEndpointListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<WebhookEndpoint> {
         try await list(params, options)
     }
 

@@ -12,17 +12,3 @@ public struct ConfirmationTokensResourcePaymentMethodOptions: Codable, Sendable 
     /// This hash contains the card payment method options.
     public var card: ConfirmationTokensResourcePaymentMethodOptionsResourceCard?
 }
-
-public struct ConfirmationTokensResourcePaymentMethodOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConfirmationTokensResourcePaymentMethodOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

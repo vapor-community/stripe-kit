@@ -336,7 +336,7 @@ struct RouteGenerator {
                     returnType = "Data"
                     returnTypeFromSpec = true
                 case "list":
-                    returnType = "\(itemType)List"
+                    returnType = "StripeList<\(itemType)>"
                     returnTypeFromSpec = listItem != nil
                 case "search_result":
                     returnType = "StripeSearchResult<\(itemType)>"

@@ -41,17 +41,3 @@ public struct IssuingDisputeNotReceivedEvidenceProductType: RawRepresentable, Co
     public static var merchandise: Self { .init(rawValue: "merchandise") }
     public static var service: Self { .init(rawValue: "service") }
 }
-
-public struct IssuingDisputeNotReceivedEvidenceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingDisputeNotReceivedEvidence]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

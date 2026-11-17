@@ -38,17 +38,3 @@ public struct SubscriptionsResourcePaymentSettingsSaveDefaultPaymentMethod: RawR
     public static var off: Self { .init(rawValue: "off") }
     public static var onSubscription: Self { .init(rawValue: "on_subscription") }
 }
-
-public struct SubscriptionsResourcePaymentSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionsResourcePaymentSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

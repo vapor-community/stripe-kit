@@ -13,17 +13,3 @@ public struct PortalSubscriptionPause: Codable, Sendable {
     /// portal](/customer-management).
     public var enabled: Bool
 }
-
-public struct PortalSubscriptionPauseList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalSubscriptionPause]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

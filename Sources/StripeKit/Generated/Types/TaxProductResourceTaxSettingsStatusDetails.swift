@@ -11,17 +11,3 @@ public struct TaxProductResourceTaxSettingsStatusDetails: Codable, Sendable {
     public var active: TaxProductResourceTaxSettingsStatusDetailsResourceActive?
     public var pending: TaxProductResourceTaxSettingsStatusDetailsResourcePending?
 }
-
-public struct TaxProductResourceTaxSettingsStatusDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductResourceTaxSettingsStatusDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -54,17 +54,3 @@ public struct TaxProductResourceTaxBreakdownTaxabilityReason: RawRepresentable, 
     public static var taxableBasisReduced: Self { .init(rawValue: "taxable_basis_reduced") }
     public static var zeroRated: Self { .init(rawValue: "zero_rated") }
 }
-
-public struct TaxProductResourceTaxBreakdownList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductResourceTaxBreakdown]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

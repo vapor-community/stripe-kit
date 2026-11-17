@@ -16,7 +16,7 @@ public struct PaymentRecordRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PaymentRecord
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: PaymentRecordListParams, _ options: RequestOptions) async throws -> PaymentRecordList
+    public var list: @Sendable (_ params: PaymentRecordListParams, _ options: RequestOptions) async throws -> StripeList<PaymentRecord>
 
     /// Performs `reportPayment(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var reportPayment: @Sendable (_ params: PaymentRecordReportPaymentParams, _ options: RequestOptions) async throws -> PaymentRecord
@@ -47,7 +47,7 @@ extension PaymentRecordRoutes {
     }
 
     /// List all the Payment Records for a given merchant.
-    public func list(_ params: PaymentRecordListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentRecordList {
+    public func list(_ params: PaymentRecordListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<PaymentRecord> {
         try await list(params, options)
     }
 

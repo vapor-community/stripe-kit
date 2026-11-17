@@ -44,7 +44,7 @@ public struct Account: Codable, Sendable {
     public var email: String?
     /// External accounts (bank accounts and debit cards) currently attached to this account. External
     /// accounts are only returned for requests where `controller[is_controller]` is true.
-    public var externalAccounts: ExternalAccountList?
+    public var externalAccounts: StripeList<ExternalAccount>?
     public var futureRequirements: AccountFutureRequirements?
     /// The groups associated with the account.
     public var groups: AccountGroupMembership?
@@ -132,16 +132,4 @@ public struct AccountType: RawRepresentable, Codable, Hashable, Sendable {
     public static var standard: Self { .init(rawValue: "standard") }
 }
 
-public struct AccountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Account]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias AccountList = StripeList<Account>

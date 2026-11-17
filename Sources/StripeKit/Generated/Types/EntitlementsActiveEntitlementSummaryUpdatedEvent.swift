@@ -11,17 +11,3 @@ import Foundation
 public struct EntitlementsActiveEntitlementSummaryUpdatedEvent: Codable, Sendable {
     public var object: EntitlementsActiveEntitlementSummary
 }
-
-public struct EntitlementsActiveEntitlementSummaryUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [EntitlementsActiveEntitlementSummaryUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

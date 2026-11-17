@@ -11,17 +11,3 @@ public struct SubscriptionScheduleAddInvoiceItemPeriod: Codable, Sendable {
     public var end: SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEnd
     public var start: SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStart
 }
-
-public struct SubscriptionScheduleAddInvoiceItemPeriodList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionScheduleAddInvoiceItemPeriod]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

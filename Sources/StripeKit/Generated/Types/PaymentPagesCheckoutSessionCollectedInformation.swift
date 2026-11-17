@@ -21,17 +21,3 @@ public struct PaymentPagesCheckoutSessionCollectedInformation: Codable, Sendable
         case shippingDetails = "shipping_details"
     }
 }
-
-public struct PaymentPagesCheckoutSessionCollectedInformationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionCollectedInformation]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

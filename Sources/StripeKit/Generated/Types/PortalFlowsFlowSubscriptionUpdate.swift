@@ -11,17 +11,3 @@ public struct PortalFlowsFlowSubscriptionUpdate: Codable, Sendable {
     /// The ID of the subscription to be updated.
     public var subscription: String
 }
-
-public struct PortalFlowsFlowSubscriptionUpdateList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalFlowsFlowSubscriptionUpdate]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

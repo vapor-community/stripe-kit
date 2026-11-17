@@ -19,17 +19,3 @@ public struct RadarReviewResourceLocation: Codable, Sendable {
     /// The state/county/province/region where the payment originated.
     public var region: String?
 }
-
-public struct RadarReviewResourceLocationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [RadarReviewResourceLocation]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -31,17 +31,3 @@ public struct PaymentLinksResourceAfterCompletionType: RawRepresentable, Codable
     public static var hostedConfirmation: Self { .init(rawValue: "hosted_confirmation") }
     public static var redirect: Self { .init(rawValue: "redirect") }
 }
-
-public struct PaymentLinksResourceAfterCompletionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceAfterCompletion]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

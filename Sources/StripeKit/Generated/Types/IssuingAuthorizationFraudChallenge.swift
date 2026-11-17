@@ -59,17 +59,3 @@ public struct IssuingAuthorizationFraudChallengeUndeliverableReason: RawRepresen
     public static var noPhoneNumber: Self { .init(rawValue: "no_phone_number") }
     public static var unsupportedPhoneNumber: Self { .init(rawValue: "unsupported_phone_number") }
 }
-
-public struct IssuingAuthorizationFraudChallengeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingAuthorizationFraudChallenge]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

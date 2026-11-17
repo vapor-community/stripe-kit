@@ -14,17 +14,3 @@ public struct PaymentMethodCardPresentNetworks: Codable, Sendable {
     /// The preferred network for the card.
     public var preferred: String?
 }
-
-public struct PaymentMethodCardPresentNetworksList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodCardPresentNetworks]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

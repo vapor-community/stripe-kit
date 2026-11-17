@@ -69,16 +69,4 @@ public struct TestHelpersTestClockStatus: RawRepresentable, Codable, Hashable, S
     public static var ready: Self { .init(rawValue: "ready") }
 }
 
-public struct TestHelpersTestClockList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TestHelpersTestClock]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TestHelpersTestClockList = StripeList<TestHelpersTestClock>

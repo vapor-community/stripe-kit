@@ -23,7 +23,7 @@ public struct RadarValueList: Codable, Sendable {
     /// `sepa_debit_fingerprint`, or `us_bank_account_fingerprint`.
     public var itemType: RadarValueListItemType
     /// List of items contained within this value list.
-    public var listItems: RadarValueListItemList
+    public var listItems: StripeList<RadarValueListItem>
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -96,16 +96,4 @@ public struct RadarValueListObject: RawRepresentable, Codable, Hashable, Sendabl
     public static var radarValueList: Self { .init(rawValue: "radar.value_list") }
 }
 
-public struct RadarValueListList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [RadarValueList]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias RadarValueListList = StripeList<RadarValueList>

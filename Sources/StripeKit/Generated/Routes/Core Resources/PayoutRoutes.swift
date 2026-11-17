@@ -22,7 +22,7 @@ public struct PayoutRoutes: Sendable {
     public var update: @Sendable (_ payout: String, _ params: PayoutUpdateParams, _ options: RequestOptions) async throws -> Payout
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: PayoutListParams, _ options: RequestOptions) async throws -> PayoutList
+    public var list: @Sendable (_ params: PayoutListParams, _ options: RequestOptions) async throws -> StripeList<Payout>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ payout: String, _ params: PayoutCancelParams, _ options: RequestOptions) async throws -> Payout
@@ -56,7 +56,7 @@ extension PayoutRoutes {
 
     /// Returns a list of existing payouts sent to third-party bank accounts or payouts that Stripe sent to
     /// you. The payouts return in sorted order, with the most recently created payouts appearing first.
-    public func list(_ params: PayoutListParams = .init(), options: RequestOptions = .init()) async throws -> PayoutList {
+    public func list(_ params: PayoutListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Payout> {
         try await list(params, options)
     }
 

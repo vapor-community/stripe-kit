@@ -13,17 +13,3 @@ public struct TaxProductRegistrationsResourceCountryOptionsUsMassTransitParkingT
     /// representing the local jurisdiction.
     public var jurisdiction: String
 }
-
-public struct TaxProductRegistrationsResourceCountryOptionsUsMassTransitParkingTaxList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductRegistrationsResourceCountryOptionsUsMassTransitParkingTax]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

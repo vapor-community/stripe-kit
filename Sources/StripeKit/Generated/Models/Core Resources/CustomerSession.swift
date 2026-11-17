@@ -57,16 +57,4 @@ public struct CustomerSessionObject: RawRepresentable, Codable, Hashable, Sendab
     public static var customerSession: Self { .init(rawValue: "customer_session") }
 }
 
-public struct CustomerSessionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerSession]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias CustomerSessionList = StripeList<CustomerSession>

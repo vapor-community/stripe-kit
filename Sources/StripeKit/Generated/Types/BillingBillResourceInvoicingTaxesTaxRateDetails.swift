@@ -16,17 +16,3 @@ public struct BillingBillResourceInvoicingTaxesTaxRateDetails: Codable, Sendable
         case taxRate = "tax_rate"
     }
 }
-
-public struct BillingBillResourceInvoicingTaxesTaxRateDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingBillResourceInvoicingTaxesTaxRateDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -56,17 +56,3 @@ public struct TerminalReaderReaderResourceInputType: RawRepresentable, Codable, 
     public static var signature: Self { .init(rawValue: "signature") }
     public static var text: Self { .init(rawValue: "text") }
 }
-
-public struct TerminalReaderReaderResourceInputList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceInput]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

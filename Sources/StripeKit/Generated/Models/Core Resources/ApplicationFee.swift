@@ -53,7 +53,7 @@ public struct ApplicationFee: Codable, Sendable {
     /// still be false.
     public var refunded: Bool
     /// A list of refunds that have been applied to the fee.
-    public var refunds: FeeRefundList
+    public var refunds: StripeList<FeeRefund>
 
     public enum CodingKeys: String, CodingKey {
         case account
@@ -85,16 +85,4 @@ public struct ApplicationFeeObject: RawRepresentable, Codable, Hashable, Sendabl
     public static var applicationFee: Self { .init(rawValue: "application_fee") }
 }
 
-public struct ApplicationFeeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ApplicationFee]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ApplicationFeeList = StripeList<ApplicationFee>

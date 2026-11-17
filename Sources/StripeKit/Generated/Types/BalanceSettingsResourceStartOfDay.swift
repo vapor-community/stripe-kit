@@ -19,17 +19,3 @@ public struct BalanceSettingsResourceStartOfDay: Codable, Sendable {
     /// timezone](/connect/customized-start-of-day#available-timezones-and-cutoffs).
     public var timezone: String
 }
-
-public struct BalanceSettingsResourceStartOfDayList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BalanceSettingsResourceStartOfDay]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -23,17 +23,3 @@ public struct PortalResourceScheduleUpdateAtPeriodEndConditionType: RawRepresent
     public static var decreasingItemAmount: Self { .init(rawValue: "decreasing_item_amount") }
     public static var shorteningInterval: Self { .init(rawValue: "shortening_interval") }
 }
-
-public struct PortalResourceScheduleUpdateAtPeriodEndConditionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalResourceScheduleUpdateAtPeriodEndCondition]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

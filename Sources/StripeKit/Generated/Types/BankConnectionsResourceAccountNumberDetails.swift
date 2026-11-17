@@ -50,17 +50,3 @@ public struct BankConnectionsResourceAccountNumberDetailsStatus: RawRepresentabl
     public static var pending: Self { .init(rawValue: "pending") }
     public static var transactable: Self { .init(rawValue: "transactable") }
 }
-
-public struct BankConnectionsResourceAccountNumberDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BankConnectionsResourceAccountNumberDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

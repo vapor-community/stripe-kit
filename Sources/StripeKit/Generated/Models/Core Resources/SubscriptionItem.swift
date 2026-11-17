@@ -77,16 +77,4 @@ public struct SubscriptionItemObject: RawRepresentable, Codable, Hashable, Senda
     public static var subscriptionItem: Self { .init(rawValue: "subscription_item") }
 }
 
-public struct SubscriptionItemList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionItem]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias SubscriptionItemList = StripeList<SubscriptionItem>

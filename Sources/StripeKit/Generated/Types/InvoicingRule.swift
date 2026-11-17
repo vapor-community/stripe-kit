@@ -27,17 +27,3 @@ public struct InvoicingRuleType: RawRepresentable, Codable, Hashable, Sendable {
     /// be satisfied.
     public static var deferUntilCreditedItemsResolved: Self { .init(rawValue: "defer_until_credited_items_resolved") }
 }
-
-public struct InvoicingRuleList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicingRule]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

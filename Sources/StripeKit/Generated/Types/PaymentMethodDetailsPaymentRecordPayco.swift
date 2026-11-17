@@ -18,17 +18,3 @@ public struct PaymentMethodDetailsPaymentRecordPayco: Codable, Sendable {
         case transactionId = "transaction_id"
     }
 }
-
-public struct PaymentMethodDetailsPaymentRecordPaycoList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPaymentRecordPayco]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

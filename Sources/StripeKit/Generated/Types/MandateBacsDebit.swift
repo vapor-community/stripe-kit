@@ -61,17 +61,3 @@ public struct MandateBacsDebitRevocationReason: RawRepresentable, Codable, Hasha
     public static var couldNotProcess: Self { .init(rawValue: "could_not_process") }
     public static var debitNotAuthorized: Self { .init(rawValue: "debit_not_authorized") }
 }
-
-public struct MandateBacsDebitList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [MandateBacsDebit]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

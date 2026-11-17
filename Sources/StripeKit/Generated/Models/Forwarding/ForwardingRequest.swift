@@ -71,16 +71,4 @@ public struct ForwardingRequestObject: RawRepresentable, Codable, Hashable, Send
     public static var forwardingRequest: Self { .init(rawValue: "forwarding.request") }
 }
 
-public struct ForwardingRequestList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ForwardingRequest]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ForwardingRequestList = StripeList<ForwardingRequest>

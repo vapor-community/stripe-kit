@@ -16,7 +16,7 @@ public struct ReportingReportTypeRoutes: Sendable {
     public var retrieve: @Sendable (_ reportType: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ReportingReportType
 
     /// Performs `list(expand:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ expand: [String]?, _ options: RequestOptions) async throws -> ReportingReportTypeList
+    public var list: @Sendable (_ expand: [String]?, _ options: RequestOptions) async throws -> StripeList<ReportingReportType>
 }
 
 extension ReportingReportTypeRoutes {
@@ -26,7 +26,7 @@ extension ReportingReportTypeRoutes {
     }
 
     /// Returns a full list of Report Types.
-    public func list(expand: [String]? = nil, options: RequestOptions = .init()) async throws -> ReportingReportTypeList {
+    public func list(expand: [String]? = nil, options: RequestOptions = .init()) async throws -> StripeList<ReportingReportType> {
         try await list(expand, options)
     }
 }

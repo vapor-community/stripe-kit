@@ -66,17 +66,3 @@ public struct InsightsResourcesPaymentEvaluationSucceededCardCvcCheck: RawRepres
     public static var unavailable: Self { .init(rawValue: "unavailable") }
     public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
-
-public struct InsightsResourcesPaymentEvaluationSucceededCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationSucceededCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

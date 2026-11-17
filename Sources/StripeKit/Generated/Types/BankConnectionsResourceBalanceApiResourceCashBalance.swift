@@ -15,17 +15,3 @@ public struct BankConnectionsResourceBalanceApiResourceCashBalance: Codable, Sen
     /// negative amount indicates money owed by the account holder.
     public var available: [String: Int]?
 }
-
-public struct BankConnectionsResourceBalanceApiResourceCashBalanceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BankConnectionsResourceBalanceApiResourceCashBalance]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

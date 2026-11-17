@@ -17,17 +17,3 @@ public struct TerminalReaderReaderResourceConfirmConfig: Codable, Sendable {
         case returnUrl = "return_url"
     }
 }
-
-public struct TerminalReaderReaderResourceConfirmConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceConfirmConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

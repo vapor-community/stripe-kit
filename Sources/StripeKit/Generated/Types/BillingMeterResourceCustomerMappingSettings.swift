@@ -29,17 +29,3 @@ public struct BillingMeterResourceCustomerMappingSettingsType: RawRepresentable,
 
     public static var byId: Self { .init(rawValue: "by_id") }
 }
-
-public struct BillingMeterResourceCustomerMappingSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingMeterResourceCustomerMappingSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

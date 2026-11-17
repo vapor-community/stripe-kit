@@ -34,17 +34,3 @@ public struct CardMandatePaymentMethodDetailsIndiaInactiveReason: RawRepresentab
     public static var processingError: Self { .init(rawValue: "processing_error") }
     public static var undetermined: Self { .init(rawValue: "undetermined") }
 }
-
-public struct CardMandatePaymentMethodDetailsIndiaList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CardMandatePaymentMethodDetailsIndia]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

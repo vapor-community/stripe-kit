@@ -30,17 +30,3 @@ public struct PaymentMethodDomainResourcePaymentMethodStatusStatus: RawRepresent
     public static var active: Self { .init(rawValue: "active") }
     public static var inactive: Self { .init(rawValue: "inactive") }
 }
-
-public struct PaymentMethodDomainResourcePaymentMethodStatusList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDomainResourcePaymentMethodStatus]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

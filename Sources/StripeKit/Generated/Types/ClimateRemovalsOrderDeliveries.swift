@@ -28,17 +28,3 @@ public struct ClimateRemovalsOrderDeliveries: Codable, Sendable {
         case supplier
     }
 }
-
-public struct ClimateRemovalsOrderDeliveriesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ClimateRemovalsOrderDeliveries]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

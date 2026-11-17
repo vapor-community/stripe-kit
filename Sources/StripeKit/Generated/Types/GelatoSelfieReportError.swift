@@ -28,17 +28,3 @@ public struct GelatoSelfieReportErrorCode: RawRepresentable, Codable, Hashable, 
     public static var selfieManipulated: Self { .init(rawValue: "selfie_manipulated") }
     public static var selfieUnverifiedOther: Self { .init(rawValue: "selfie_unverified_other") }
 }
-
-public struct GelatoSelfieReportErrorList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoSelfieReportError]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

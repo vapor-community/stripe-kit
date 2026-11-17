@@ -11,17 +11,3 @@ public struct PaymentPagesCheckoutSessionCustomTextPosition: Codable, Sendable {
     /// Text can be up to 1200 characters in length.
     public var message: String
 }
-
-public struct PaymentPagesCheckoutSessionCustomTextPositionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionCustomTextPosition]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

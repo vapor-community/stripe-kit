@@ -109,16 +109,4 @@ public struct PaymentAttemptRecordReportedBy: RawRepresentable, Codable, Hashabl
     public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
-public struct PaymentAttemptRecordList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentAttemptRecord]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias PaymentAttemptRecordList = StripeList<PaymentAttemptRecord>

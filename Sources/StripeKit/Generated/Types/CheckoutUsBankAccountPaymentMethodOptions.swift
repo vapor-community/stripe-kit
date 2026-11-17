@@ -70,17 +70,3 @@ public struct CheckoutUsBankAccountPaymentMethodOptionsVerificationMethod: RawRe
     public static var automatic: Self { .init(rawValue: "automatic") }
     public static var instant: Self { .init(rawValue: "instant") }
 }
-
-public struct CheckoutUsBankAccountPaymentMethodOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CheckoutUsBankAccountPaymentMethodOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

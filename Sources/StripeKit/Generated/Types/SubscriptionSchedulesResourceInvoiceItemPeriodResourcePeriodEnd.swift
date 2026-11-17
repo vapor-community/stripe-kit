@@ -27,17 +27,3 @@ public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEndTyp
     public static var phaseEnd: Self { .init(rawValue: "phase_end") }
     public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
-
-public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEndList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEnd]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

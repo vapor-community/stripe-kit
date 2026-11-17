@@ -12,17 +12,3 @@ public struct ClimateProductPricingUpdatedEvent: Codable, Sendable {
     @Indirect
     public var object: ClimateProduct
 }
-
-public struct ClimateProductPricingUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ClimateProductPricingUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

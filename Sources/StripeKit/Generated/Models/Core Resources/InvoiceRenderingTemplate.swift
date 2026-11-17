@@ -55,16 +55,4 @@ public struct InvoiceRenderingTemplateStatus: RawRepresentable, Codable, Hashabl
     public static var archived: Self { .init(rawValue: "archived") }
 }
 
-public struct InvoiceRenderingTemplateList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoiceRenderingTemplate]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias InvoiceRenderingTemplateList = StripeList<InvoiceRenderingTemplate>

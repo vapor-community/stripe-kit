@@ -37,17 +37,3 @@ public struct IssuingNetworkTokenNetworkDataType: RawRepresentable, Codable, Has
     public static var mastercard: Self { .init(rawValue: "mastercard") }
     public static var visa: Self { .init(rawValue: "visa") }
 }
-
-public struct IssuingNetworkTokenNetworkDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingNetworkTokenNetworkData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

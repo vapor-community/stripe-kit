@@ -45,17 +45,3 @@ public struct InsightsResourcesPaymentEvaluationMoneyMovementCardPaymentType: Ra
     public static var setupOneOff: Self { .init(rawValue: "setup_one_off") }
     public static var setupRecurring: Self { .init(rawValue: "setup_recurring") }
 }
-
-public struct InsightsResourcesPaymentEvaluationMoneyMovementCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationMoneyMovementCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -22,7 +22,7 @@ public struct RadarValueListRoutes: Sendable {
     public var update: @Sendable (_ valueList: String, _ params: RadarValueListUpdateParams, _ options: RequestOptions) async throws -> RadarValueList
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: RadarValueListListParams, _ options: RequestOptions) async throws -> RadarValueListList
+    public var list: @Sendable (_ params: RadarValueListListParams, _ options: RequestOptions) async throws -> StripeList<RadarValueList>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ valueList: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedRadarValueList
@@ -47,7 +47,7 @@ extension RadarValueListRoutes {
 
     /// Returns a list of ValueList objects. The objects are sorted in descending order by creation date,
     /// with the most recently created object appearing first.
-    public func list(_ params: RadarValueListListParams = .init(), options: RequestOptions = .init()) async throws -> RadarValueListList {
+    public func list(_ params: RadarValueListListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<RadarValueList> {
         try await list(params, options)
     }
 

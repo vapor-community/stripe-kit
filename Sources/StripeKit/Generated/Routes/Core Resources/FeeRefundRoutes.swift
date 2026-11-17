@@ -22,7 +22,7 @@ public struct FeeRefundRoutes: Sendable {
     public var update: @Sendable (_ fee: String, _ id: String, _ params: FeeRefundUpdateParams, _ options: RequestOptions) async throws -> FeeRefund
 
     /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ id: String, _ params: FeeRefundListParams, _ options: RequestOptions) async throws -> FeeRefundList
+    public var list: @Sendable (_ id: String, _ params: FeeRefundListParams, _ options: RequestOptions) async throws -> StripeList<FeeRefund>
 }
 
 extension FeeRefundRoutes {
@@ -52,7 +52,7 @@ extension FeeRefundRoutes {
     /// recent refunds are always available by default on the application fee object. If you need more than
     /// those 10, you can use this API method and the limit and starting_after parameters to page through
     /// additional refunds.
-    public func list(_ id: String, _ params: FeeRefundListParams = .init(), options: RequestOptions = .init()) async throws -> FeeRefundList {
+    public func list(_ id: String, _ params: FeeRefundListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<FeeRefund> {
         try await list(id, params, options)
     }
 }

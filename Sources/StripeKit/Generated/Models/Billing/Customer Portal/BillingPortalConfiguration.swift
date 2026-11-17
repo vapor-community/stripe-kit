@@ -73,16 +73,4 @@ public struct BillingPortalConfigurationObject: RawRepresentable, Codable, Hasha
     public static var billingPortalConfiguration: Self { .init(rawValue: "billing_portal.configuration") }
 }
 
-public struct BillingPortalConfigurationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingPortalConfiguration]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias BillingPortalConfigurationList = StripeList<BillingPortalConfiguration>

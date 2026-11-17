@@ -24,17 +24,3 @@ public struct PaymentLinksResourceCustomText: Codable, Sendable {
         case termsOfServiceAcceptance = "terms_of_service_acceptance"
     }
 }
-
-public struct PaymentLinksResourceCustomTextList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceCustomText]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

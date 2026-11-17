@@ -120,7 +120,7 @@ struct CodegenCLI: AsyncParsableCommand {
                 .appending(path: domain)
             try FileManager.default.createDirectory(at: modelDir, withIntermediateDirectories: true)
             
-            let modelSource = modelGen.generate(resource: resource)
+            let modelSource = modelGen.generate(resource: resource, listAlias: true)
             let modelFile = modelDir.appending(path: "\(resource.swiftTypeName).swift")
             try modelSource.write(to: modelFile, atomically: true, encoding: .utf8)
             modelCount += 1

@@ -11,17 +11,3 @@ public struct PaymentPagesCheckoutSessionAfterExpiration: Codable, Sendable {
     /// When set, configuration used to recover the Checkout Session on expiry.
     public var recovery: PaymentPagesCheckoutSessionAfterExpirationRecovery?
 }
-
-public struct PaymentPagesCheckoutSessionAfterExpirationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionAfterExpiration]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

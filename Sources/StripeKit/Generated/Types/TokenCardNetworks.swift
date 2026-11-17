@@ -12,17 +12,3 @@ public struct TokenCardNetworks: Codable, Sendable {
     /// `invalid_preference` if requested network is not valid for the card.
     public var preferred: String?
 }
-
-public struct TokenCardNetworksList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TokenCardNetworks]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

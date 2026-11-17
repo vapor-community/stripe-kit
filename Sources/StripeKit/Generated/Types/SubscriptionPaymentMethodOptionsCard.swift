@@ -70,17 +70,3 @@ public struct SubscriptionPaymentMethodOptionsCardRequestThreeDSecure: RawRepres
     public static var automatic: Self { .init(rawValue: "automatic") }
     public static var challenge: Self { .init(rawValue: "challenge") }
 }
-
-public struct SubscriptionPaymentMethodOptionsCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionPaymentMethodOptionsCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

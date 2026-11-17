@@ -22,7 +22,7 @@ public struct SourceRoutes: Sendable {
     public var update: @Sendable (_ source: String, _ params: SourceUpdateParams, _ options: RequestOptions) async throws -> Source
 
     /// Performs `sourceTransactions(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var sourceTransactions: @Sendable (_ source: String, _ params: SourceSourceTransactionsParams, _ options: RequestOptions) async throws -> SourceTransactionList
+    public var sourceTransactions: @Sendable (_ source: String, _ params: SourceSourceTransactionsParams, _ options: RequestOptions) async throws -> StripeList<SourceTransaction>
 
     /// Performs `verify(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var verify: @Sendable (_ source: String, _ params: SourceVerifyParams, _ options: RequestOptions) async throws -> Source
@@ -49,7 +49,7 @@ extension SourceRoutes {
     }
 
     /// List source transactions for a given source.
-    public func sourceTransactions(_ source: String, _ params: SourceSourceTransactionsParams = .init(), options: RequestOptions = .init()) async throws -> SourceTransactionList {
+    public func sourceTransactions(_ source: String, _ params: SourceSourceTransactionsParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<SourceTransaction> {
         try await sourceTransactions(source, params, options)
     }
 

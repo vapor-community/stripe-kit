@@ -23,17 +23,3 @@ public struct BankConnectionsResourceLinkAccountSessionManualEntryMode: RawRepre
     public static var automatic: Self { .init(rawValue: "automatic") }
     public static var disabled: Self { .init(rawValue: "disabled") }
 }
-
-public struct BankConnectionsResourceLinkAccountSessionManualEntryList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BankConnectionsResourceLinkAccountSessionManualEntry]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

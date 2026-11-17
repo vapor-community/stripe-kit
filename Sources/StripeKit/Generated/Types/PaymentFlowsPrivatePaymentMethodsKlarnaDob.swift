@@ -15,17 +15,3 @@ public struct PaymentFlowsPrivatePaymentMethodsKlarnaDob: Codable, Sendable {
     /// The four-digit year of birth.
     public var year: Int?
 }
-
-public struct PaymentFlowsPrivatePaymentMethodsKlarnaDobList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsPrivatePaymentMethodsKlarnaDob]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

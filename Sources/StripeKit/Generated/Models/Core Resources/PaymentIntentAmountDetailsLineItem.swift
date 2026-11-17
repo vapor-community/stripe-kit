@@ -62,16 +62,4 @@ public struct PaymentIntentAmountDetailsLineItemObject: RawRepresentable, Codabl
     public static var paymentIntentAmountDetailsLineItem: Self { .init(rawValue: "payment_intent_amount_details_line_item") }
 }
 
-public struct PaymentIntentAmountDetailsLineItemList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentIntentAmountDetailsLineItem]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias PaymentIntentAmountDetailsLineItemList = StripeList<PaymentIntentAmountDetailsLineItem>

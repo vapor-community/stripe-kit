@@ -12,17 +12,3 @@ public struct IdentityVerificationSessionCreatedEvent: Codable, Sendable {
     @Indirect
     public var object: IdentityVerificationSession
 }
-
-public struct IdentityVerificationSessionCreatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IdentityVerificationSessionCreatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -43,16 +43,4 @@ public struct TreasuryFinancialAccountFeaturesObject: RawRepresentable, Codable,
     public static var treasuryFinancialAccountFeatures: Self { .init(rawValue: "treasury.financial_account_features") }
 }
 
-public struct TreasuryFinancialAccountFeaturesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccountFeatures]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TreasuryFinancialAccountFeaturesList = StripeList<TreasuryFinancialAccountFeatures>

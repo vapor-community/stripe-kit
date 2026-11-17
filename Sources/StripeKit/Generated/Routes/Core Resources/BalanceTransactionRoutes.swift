@@ -16,7 +16,7 @@ public struct BalanceTransactionRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> BalanceTransaction
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: BalanceTransactionListParams, _ options: RequestOptions) async throws -> BalanceTransactionList
+    public var list: @Sendable (_ params: BalanceTransactionListParams, _ options: RequestOptions) async throws -> StripeList<BalanceTransaction>
 }
 
 extension BalanceTransactionRoutes {
@@ -30,7 +30,7 @@ extension BalanceTransactionRoutes {
     /// charges, transfers, and so on). The transactions return in sorted order, with the most recent
     /// transactions appearing first. The previous name of this endpoint was “Balance history,” and it used
     /// the path /v1/balance/history.
-    public func list(_ params: BalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> BalanceTransactionList {
+    public func list(_ params: BalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<BalanceTransaction> {
         try await list(params, options)
     }
 }

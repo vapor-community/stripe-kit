@@ -25,17 +25,3 @@ public struct InvoicesPaymentSettings: Codable, Sendable {
         case paymentMethodTypes = "payment_method_types"
     }
 }
-
-public struct InvoicesPaymentSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicesPaymentSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

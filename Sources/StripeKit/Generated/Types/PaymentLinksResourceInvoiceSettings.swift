@@ -36,17 +36,3 @@ public struct PaymentLinksResourceInvoiceSettings: Codable, Sendable {
         case renderingOptions = "rendering_options"
     }
 }
-
-public struct PaymentLinksResourceInvoiceSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceInvoiceSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

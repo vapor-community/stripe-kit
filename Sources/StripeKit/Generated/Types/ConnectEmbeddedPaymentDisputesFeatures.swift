@@ -27,17 +27,3 @@ public struct ConnectEmbeddedPaymentDisputesFeatures: Codable, Sendable {
         case smartDisputesManagement = "smart_disputes_management"
     }
 }
-
-public struct ConnectEmbeddedPaymentDisputesFeaturesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectEmbeddedPaymentDisputesFeatures]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

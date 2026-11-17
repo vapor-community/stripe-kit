@@ -271,16 +271,4 @@ public struct PaymentMethodType: RawRepresentable, Codable, Hashable, Sendable {
     public static var zip: Self { .init(rawValue: "zip") }
 }
 
-public struct PaymentMethodList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethod]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias PaymentMethodList = StripeList<PaymentMethod>

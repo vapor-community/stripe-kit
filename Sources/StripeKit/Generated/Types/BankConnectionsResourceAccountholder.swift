@@ -39,17 +39,3 @@ public struct BankConnectionsResourceAccountholderType: RawRepresentable, Codabl
     public static var account: Self { .init(rawValue: "account") }
     public static var customer: Self { .init(rawValue: "customer") }
 }
-
-public struct BankConnectionsResourceAccountholderList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BankConnectionsResourceAccountholder]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

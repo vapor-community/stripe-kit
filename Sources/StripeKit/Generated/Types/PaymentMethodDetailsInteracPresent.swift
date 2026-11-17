@@ -107,17 +107,3 @@ public struct PaymentMethodDetailsInteracPresentReadMethod: RawRepresentable, Co
     public static var magneticStripeFallback: Self { .init(rawValue: "magnetic_stripe_fallback") }
     public static var magneticStripeTrack2: Self { .init(rawValue: "magnetic_stripe_track2") }
 }
-
-public struct PaymentMethodDetailsInteracPresentList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsInteracPresent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

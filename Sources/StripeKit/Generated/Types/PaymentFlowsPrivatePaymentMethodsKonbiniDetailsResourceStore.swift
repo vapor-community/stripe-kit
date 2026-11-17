@@ -29,17 +29,3 @@ public struct PaymentFlowsPrivatePaymentMethodsKonbiniDetailsResourceStoreChain:
     /// Seicomart convenience store chain.
     public static var seicomart: Self { .init(rawValue: "seicomart") }
 }
-
-public struct PaymentFlowsPrivatePaymentMethodsKonbiniDetailsResourceStoreList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsPrivatePaymentMethodsKonbiniDetailsResourceStore]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

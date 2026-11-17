@@ -117,7 +117,7 @@ public struct Charge: Codable, Sendable {
     /// will still be false.
     public var refunded: Bool
     /// A list of refunds that have been applied to the charge.
-    public var refunds: RefundList?
+    public var refunds: StripeList<Refund>?
     /// ID of the review associated with this charge if one exists.
     @Expandable<Review>
     public var review: String?
@@ -236,16 +236,4 @@ public struct ChargeStatus: RawRepresentable, Codable, Hashable, Sendable {
     public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
-public struct ChargeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Charge]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ChargeList = StripeList<Charge>

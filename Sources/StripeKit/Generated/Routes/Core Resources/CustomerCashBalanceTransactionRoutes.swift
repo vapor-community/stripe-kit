@@ -16,7 +16,7 @@ public struct CustomerCashBalanceTransactionRoutes: Sendable {
     public var retrieve: @Sendable (_ customer: String, _ transaction: String, _ expand: [String]?, _ options: RequestOptions) async throws -> CustomerCashBalanceTransaction
 
     /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ customer: String, _ params: CustomerCashBalanceTransactionListParams, _ options: RequestOptions) async throws -> CustomerCashBalanceTransactionList
+    public var list: @Sendable (_ customer: String, _ params: CustomerCashBalanceTransactionListParams, _ options: RequestOptions) async throws -> StripeList<CustomerCashBalanceTransaction>
 }
 
 extension CustomerCashBalanceTransactionRoutes {
@@ -26,7 +26,7 @@ extension CustomerCashBalanceTransactionRoutes {
     }
 
     /// Returns a list of transactions that modified the customer’s cash balance.
-    public func list(_ customer: String, _ params: CustomerCashBalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> CustomerCashBalanceTransactionList {
+    public func list(_ customer: String, _ params: CustomerCashBalanceTransactionListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<CustomerCashBalanceTransaction> {
         try await list(customer, params, options)
     }
 }

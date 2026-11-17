@@ -17,17 +17,3 @@ public struct IssuingCardholderIdDocument: Codable, Sendable {
     @Expandable<File>
     public var front: String?
 }
-
-public struct IssuingCardholderIdDocumentList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardholderIdDocument]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -22,7 +22,7 @@ public struct InvoiceRoutes: Sendable {
     public var update: @Sendable (_ invoice: String, _ params: InvoiceUpdateParams, _ options: RequestOptions) async throws -> Invoice
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: InvoiceListParams, _ options: RequestOptions) async throws -> InvoiceList
+    public var list: @Sendable (_ params: InvoiceListParams, _ options: RequestOptions) async throws -> StripeList<Invoice>
 
     /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var search: @Sendable (_ params: InvoiceSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Invoice>
@@ -84,7 +84,7 @@ extension InvoiceRoutes {
 
     /// You can list all invoices, or list the invoices for a specific customer. The invoices are returned
     /// sorted by creation date, with the most recently created invoices appearing first.
-    public func list(_ params: InvoiceListParams = .init(), options: RequestOptions = .init()) async throws -> InvoiceList {
+    public func list(_ params: InvoiceListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Invoice> {
         try await list(params, options)
     }
 

@@ -23,17 +23,3 @@ public struct NotificationEventData: Codable, Sendable {
         case previousAttributes = "previous_attributes"
     }
 }
-
-public struct NotificationEventDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [NotificationEventData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

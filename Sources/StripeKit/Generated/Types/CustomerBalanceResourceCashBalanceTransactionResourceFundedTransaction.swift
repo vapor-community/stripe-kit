@@ -14,17 +14,3 @@ public struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransac
         case bankTransfer = "bank_transfer"
     }
 }
-
-public struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerBalanceResourceCashBalanceTransactionResourceFundedTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

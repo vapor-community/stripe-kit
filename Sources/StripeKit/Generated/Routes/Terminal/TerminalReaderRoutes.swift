@@ -22,7 +22,7 @@ public struct TerminalReaderRoutes: Sendable {
     public var update: @Sendable (_ reader: String, _ params: TerminalReaderUpdateParams, _ options: RequestOptions) async throws -> ObjectOrDeleted<TerminalReader, DeletedTerminalReader>
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TerminalReaderListParams, _ options: RequestOptions) async throws -> TerminalReaderList
+    public var list: @Sendable (_ params: TerminalReaderListParams, _ options: RequestOptions) async throws -> StripeList<TerminalReader>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ reader: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTerminalReader
@@ -79,7 +79,7 @@ extension TerminalReaderRoutes {
     }
 
     /// Returns a list of Reader objects.
-    public func list(_ params: TerminalReaderListParams = .init(), options: RequestOptions = .init()) async throws -> TerminalReaderList {
+    public func list(_ params: TerminalReaderListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TerminalReader> {
         try await list(params, options)
     }
 

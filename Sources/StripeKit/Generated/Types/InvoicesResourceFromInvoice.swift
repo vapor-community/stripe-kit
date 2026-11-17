@@ -14,17 +14,3 @@ public struct InvoicesResourceFromInvoice: Codable, Sendable {
     @Expandable<Invoice>
     public var invoice: String?
 }
-
-public struct InvoicesResourceFromInvoiceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicesResourceFromInvoice]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

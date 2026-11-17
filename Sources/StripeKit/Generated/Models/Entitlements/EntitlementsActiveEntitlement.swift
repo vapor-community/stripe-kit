@@ -42,16 +42,4 @@ public struct EntitlementsActiveEntitlementObject: RawRepresentable, Codable, Ha
     public static var entitlementsActiveEntitlement: Self { .init(rawValue: "entitlements.active_entitlement") }
 }
 
-public struct EntitlementsActiveEntitlementList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [EntitlementsActiveEntitlement]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias EntitlementsActiveEntitlementList = StripeList<EntitlementsActiveEntitlement>

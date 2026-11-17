@@ -14,17 +14,3 @@ public struct TreasurySharedResourceBillingDetails: Codable, Sendable {
     /// Full name.
     public var name: String?
 }
-
-public struct TreasurySharedResourceBillingDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasurySharedResourceBillingDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

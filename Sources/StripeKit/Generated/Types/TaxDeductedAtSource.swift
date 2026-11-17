@@ -40,17 +40,3 @@ public struct TaxDeductedAtSourceObject: RawRepresentable, Codable, Hashable, Se
 
     public static var taxDeductedAtSource: Self { .init(rawValue: "tax_deducted_at_source") }
 }
-
-public struct TaxDeductedAtSourceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxDeductedAtSource]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

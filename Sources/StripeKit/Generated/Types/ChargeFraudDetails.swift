@@ -18,17 +18,3 @@ public struct ChargeFraudDetails: Codable, Sendable {
         case userReport = "user_report"
     }
 }
-
-public struct ChargeFraudDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ChargeFraudDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

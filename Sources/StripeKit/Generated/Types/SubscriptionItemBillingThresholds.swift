@@ -15,17 +15,3 @@ public struct SubscriptionItemBillingThresholds: Codable, Sendable {
         case usageGte = "usage_gte"
     }
 }
-
-public struct SubscriptionItemBillingThresholdsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionItemBillingThresholds]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

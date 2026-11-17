@@ -22,17 +22,3 @@ public struct PaymentFlowsPaymentDetails: Codable, Sendable {
         case orderReference = "order_reference"
     }
 }
-
-public struct PaymentFlowsPaymentDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsPaymentDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

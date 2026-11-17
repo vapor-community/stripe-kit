@@ -13,17 +13,3 @@ public struct UsBankAccountNetworks: Codable, Sendable {
     /// All supported networks.
     public var supported: [String]
 }
-
-public struct UsBankAccountNetworksList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [UsBankAccountNetworks]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

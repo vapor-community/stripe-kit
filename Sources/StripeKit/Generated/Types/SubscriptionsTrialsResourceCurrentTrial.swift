@@ -22,17 +22,3 @@ public struct SubscriptionsTrialsResourceCurrentTrial: Codable, Sendable {
         case trialOffer = "trial_offer"
     }
 }
-
-public struct SubscriptionsTrialsResourceCurrentTrialList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionsTrialsResourceCurrentTrial]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

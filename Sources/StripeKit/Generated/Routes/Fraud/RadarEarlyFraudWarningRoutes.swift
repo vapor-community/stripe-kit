@@ -16,7 +16,7 @@ public struct RadarEarlyFraudWarningRoutes: Sendable {
     public var retrieve: @Sendable (_ earlyFraudWarning: String, _ expand: [String]?, _ options: RequestOptions) async throws -> RadarEarlyFraudWarning
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: RadarEarlyFraudWarningListParams, _ options: RequestOptions) async throws -> RadarEarlyFraudWarningList
+    public var list: @Sendable (_ params: RadarEarlyFraudWarningListParams, _ options: RequestOptions) async throws -> StripeList<RadarEarlyFraudWarning>
 }
 
 extension RadarEarlyFraudWarningRoutes {
@@ -27,7 +27,7 @@ extension RadarEarlyFraudWarningRoutes {
     }
 
     /// Returns a list of early fraud warnings.
-    public func list(_ params: RadarEarlyFraudWarningListParams = .init(), options: RequestOptions = .init()) async throws -> RadarEarlyFraudWarningList {
+    public func list(_ params: RadarEarlyFraudWarningListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<RadarEarlyFraudWarning> {
         try await list(params, options)
     }
 }

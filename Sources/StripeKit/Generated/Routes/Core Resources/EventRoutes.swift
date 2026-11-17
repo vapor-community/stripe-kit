@@ -16,7 +16,7 @@ public struct EventRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Event
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: EventListParams, _ options: RequestOptions) async throws -> EventList
+    public var list: @Sendable (_ params: EventListParams, _ options: RequestOptions) async throws -> StripeList<Event>
 }
 
 extension EventRoutes {
@@ -29,7 +29,7 @@ extension EventRoutes {
     /// List events, going back up to 30 days. Each event data is rendered according to Stripe API version
     /// at its creation time, specified in event object api_version attribute (not according to your current
     /// Stripe API version or Stripe-Version header).
-    public func list(_ params: EventListParams = .init(), options: RequestOptions = .init()) async throws -> EventList {
+    public func list(_ params: EventListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Event> {
         try await list(params, options)
     }
 }

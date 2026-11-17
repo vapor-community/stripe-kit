@@ -43,17 +43,3 @@ public struct TreasuryFinancialAccountsResourcePlatformRestrictionsOutboundFlows
     public static var restricted: Self { .init(rawValue: "restricted") }
     public static var unrestricted: Self { .init(rawValue: "unrestricted") }
 }
-
-public struct TreasuryFinancialAccountsResourcePlatformRestrictionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccountsResourcePlatformRestrictions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

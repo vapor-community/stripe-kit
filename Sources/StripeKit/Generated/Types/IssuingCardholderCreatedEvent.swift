@@ -12,17 +12,3 @@ public struct IssuingCardholderCreatedEvent: Codable, Sendable {
     @Indirect
     public var object: IssuingCardholder
 }
-
-public struct IssuingCardholderCreatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardholderCreatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -41,17 +41,3 @@ public struct PersonRequirements: Codable, Sendable {
         case pendingVerification = "pending_verification"
     }
 }
-
-public struct PersonRequirementsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PersonRequirements]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

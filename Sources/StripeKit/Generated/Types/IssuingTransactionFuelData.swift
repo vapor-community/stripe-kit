@@ -33,17 +33,3 @@ public struct IssuingTransactionFuelData: Codable, Sendable {
         case unitCostDecimal = "unit_cost_decimal"
     }
 }
-
-public struct IssuingTransactionFuelDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingTransactionFuelData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

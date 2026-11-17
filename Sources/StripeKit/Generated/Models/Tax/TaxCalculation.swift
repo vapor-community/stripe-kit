@@ -25,7 +25,7 @@ public struct TaxCalculation: Codable, Sendable {
     /// Unique identifier for the calculation.
     public var id: String?
     /// The list of items the customer is purchasing.
-    public var lineItems: TaxCalculationLineItemList?
+    public var lineItems: StripeList<TaxCalculationLineItem>?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -78,16 +78,4 @@ public struct TaxCalculationObject: RawRepresentable, Codable, Hashable, Sendabl
     public static var taxCalculation: Self { .init(rawValue: "tax.calculation") }
 }
 
-public struct TaxCalculationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxCalculation]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TaxCalculationList = StripeList<TaxCalculation>

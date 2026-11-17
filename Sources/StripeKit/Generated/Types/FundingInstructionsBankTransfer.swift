@@ -33,17 +33,3 @@ public struct FundingInstructionsBankTransferType: RawRepresentable, Codable, Ha
     public static var euBankTransfer: Self { .init(rawValue: "eu_bank_transfer") }
     public static var jpBankTransfer: Self { .init(rawValue: "jp_bank_transfer") }
 }
-
-public struct FundingInstructionsBankTransferList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FundingInstructionsBankTransfer]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

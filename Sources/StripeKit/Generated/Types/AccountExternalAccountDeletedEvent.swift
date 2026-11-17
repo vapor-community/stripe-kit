@@ -11,17 +11,3 @@ import Foundation
 public struct AccountExternalAccountDeletedEvent: Codable, Sendable {
     public var object: [String: JSONValue]
 }
-
-public struct AccountExternalAccountDeletedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountExternalAccountDeletedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

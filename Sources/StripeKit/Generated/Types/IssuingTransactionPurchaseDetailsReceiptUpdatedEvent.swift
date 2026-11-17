@@ -12,17 +12,3 @@ public struct IssuingTransactionPurchaseDetailsReceiptUpdatedEvent: Codable, Sen
     @Indirect
     public var object: IssuingTransaction
 }
-
-public struct IssuingTransactionPurchaseDetailsReceiptUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingTransactionPurchaseDetailsReceiptUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

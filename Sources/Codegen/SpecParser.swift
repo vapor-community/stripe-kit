@@ -305,7 +305,7 @@ struct SpecParser {
                 return .dictionary(value: resolveType(property: additionalProperties, fieldName: fieldName))
             }
             // Detect Stripe list sub-objects: inline objects with {object, data, has_more, url}
-            // where data is an array of items. These should map to "ElementTypeList".
+            // where data is an array of items. These map to `StripeList<Element>`.
             if let props = property.properties,
                props["object"] != nil,
                props["has_more"] != nil,
@@ -317,7 +317,7 @@ struct SpecParser {
                 if let ref = items.ref {
                     let elementTypeName = refToSchemaName(ref)
                     let swiftElementType = schemaNameToSwiftType(elementTypeName)
-                    return .object(name: "\(swiftElementType)List")
+                    return .object(name: "StripeList<\(swiftElementType)>")
                 }
                 // Polymorphic anyOf (e.g., external_accounts → [bank_account, card])
                 // Use the field name to derive the list type, since Stripe has dedicated
@@ -325,7 +325,7 @@ struct SpecParser {
                 if items.anyOf != nil {
                     let singular = fieldName.hasSuffix("s") ? String(fieldName.dropLast()) : fieldName
                     let swiftType = schemaNameToSwiftType(singular)
-                    return .object(name: "\(swiftType)List")
+                    return .object(name: "StripeList<\(swiftType)>")
                 }
             }
             // Any other object (inline fields or none) is a free-form hash

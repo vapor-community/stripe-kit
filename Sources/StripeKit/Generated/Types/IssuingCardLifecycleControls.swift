@@ -14,17 +14,3 @@ public struct IssuingCardLifecycleControls: Codable, Sendable {
         case cancelAfter = "cancel_after"
     }
 }
-
-public struct IssuingCardLifecycleControlsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardLifecycleControls]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

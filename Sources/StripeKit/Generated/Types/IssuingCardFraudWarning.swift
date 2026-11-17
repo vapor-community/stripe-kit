@@ -40,17 +40,3 @@ public struct IssuingCardFraudWarningType: RawRepresentable, Codable, Hashable, 
     /// Tools](https://docs.stripe.com/issuing/controls/advanced-fraud-tools).
     public static var userIndicatedFraud: Self { .init(rawValue: "user_indicated_fraud") }
 }
-
-public struct IssuingCardFraudWarningList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardFraudWarning]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

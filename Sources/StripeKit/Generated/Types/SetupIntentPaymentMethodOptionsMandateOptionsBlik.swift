@@ -29,17 +29,3 @@ public struct SetupIntentPaymentMethodOptionsMandateOptionsBlikType: RawRepresen
 
     public static var offSession: Self { .init(rawValue: "off_session") }
 }
-
-public struct SetupIntentPaymentMethodOptionsMandateOptionsBlikList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupIntentPaymentMethodOptionsMandateOptionsBlik]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

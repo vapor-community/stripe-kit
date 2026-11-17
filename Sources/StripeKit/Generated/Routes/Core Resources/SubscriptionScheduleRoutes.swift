@@ -22,7 +22,7 @@ public struct SubscriptionScheduleRoutes: Sendable {
     public var update: @Sendable (_ schedule: String, _ params: SubscriptionScheduleUpdateParams, _ options: RequestOptions) async throws -> SubscriptionSchedule
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: SubscriptionScheduleListParams, _ options: RequestOptions) async throws -> SubscriptionScheduleList
+    public var list: @Sendable (_ params: SubscriptionScheduleListParams, _ options: RequestOptions) async throws -> StripeList<SubscriptionSchedule>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ schedule: String, _ params: SubscriptionScheduleCancelParams, _ options: RequestOptions) async throws -> SubscriptionSchedule
@@ -50,7 +50,7 @@ extension SubscriptionScheduleRoutes {
     }
 
     /// Retrieves the list of your subscription schedules.
-    public func list(_ params: SubscriptionScheduleListParams = .init(), options: RequestOptions = .init()) async throws -> SubscriptionScheduleList {
+    public func list(_ params: SubscriptionScheduleListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<SubscriptionSchedule> {
         try await list(params, options)
     }
 

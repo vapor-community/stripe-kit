@@ -77,8 +77,9 @@ struct ModelGenerator {
         return result
     }
     
-    /// Generate the full Swift source for a resource's model file
-    func generate(resource: StripeResource) -> String {
+    /// Generate the full Swift source for a resource's model file. `listAlias` adds
+    /// `{Type}List = StripeList<{Type}>`, as resources (types with an x-resourceId) get.
+    func generate(resource: StripeResource, listAlias: Bool = false) -> String {
         // Polymorphic anyOf schemas → generate enum instead of struct
         if let variants = resource.anyOfVariants, !variants.isEmpty {
             return generatePolymorphicEnum(resource: resource, variants: variants)
@@ -139,9 +140,10 @@ struct ModelGenerator {
             lines.append("")
         }
         
-        // Generate List type
-        lines.append(contentsOf: generateListType(resource: resource))
-        lines.append("")
+        if listAlias {
+            lines.append("public typealias \(resource.swiftTypeName)List = StripeList<\(resource.swiftTypeName)>")
+            lines.append("")
+        }
         
         return lines.joined(separator: "\n")
     }
@@ -316,44 +318,24 @@ struct ModelGenerator {
         id.starts(with: SpecParser.deletedPrefix) ? String(id.dropFirst(SpecParser.deletedPrefix.count)) : id
     }
 
-    /// Generate the list type for a polymorphic schema: `data` holds the items in order as the
-    /// enum (an item of an unknown type as `.undocumented`), with a read-only array per variant
-    /// (`bankAccounts`, `cards`).
+    /// The list alias for a polymorphic schema, with a read-only array per variant
+    /// (`bankAccounts`, `cards`) over `data`.
     private func generatePolymorphicListType(
         resource: StripeResource,
         variantInfos: [(id: String, swiftType: String, caseName: String)]
     ) -> [String] {
         let type = resource.swiftTypeName
-        var lines: [String] = []
-        lines.append("/// A list of `\(type)`s, each decoded by its `object` field.")
-        lines.append("public struct \(type)List: Codable, Sendable {")
-        lines.append("    public var object: String")
-        lines.append("    public var hasMore: Bool?")
-        lines.append("    public var url: String?")
-        lines.append("    /// The items, in order")
-        lines.append("    public var data: [\(type)]")
-        lines.append("")
-        for v in variantInfos {
+        var lines = [
+            "public typealias \(type)List = StripeList<\(type)>",
+            "",
+            "extension StripeList where Item == \(type) {",
+        ]
+        for (index, v) in variantInfos.enumerated() {
+            if index > 0 { lines.append("") }
             lines.append("    /// The `\(v.swiftType)` items in `data`")
             lines.append("    public var \(pluralPropertyName(v.caseName)): [\(v.swiftType)] { data.compactMap(\\.\(v.caseName)) }")
-            lines.append("")
         }
-        lines.append(contentsOf: [
-            "    public init(object: String = \"list\", hasMore: Bool? = nil, url: String? = nil, data: [\(type)] = []) {",
-            "        self.object = object",
-            "        self.hasMore = hasMore",
-            "        self.url = url",
-            "        self.data = data",
-            "    }",
-            "",
-            "    public enum CodingKeys: String, CodingKey {",
-            "        case object",
-            "        case hasMore = \"has_more\"",
-            "        case url",
-            "        case data",
-            "    }",
-            "}",
-        ])
+        lines.append("}")
         return lines
     }
     
@@ -364,25 +346,5 @@ struct ModelGenerator {
             return caseName + "es"
         }
         return caseName + "s"
-    }
-    
-    // MARK: - List Type Generation
-
-    private func generateListType(resource: StripeResource) -> [String] {
-        return [
-            "public struct \(resource.swiftTypeName)List: Codable, Sendable {",
-            "    public var object: String",
-            "    public var hasMore: Bool?",
-            "    public var url: String?",
-            "    public var data: [\(resource.swiftTypeName)]?",
-            "",
-            "    public enum CodingKeys: String, CodingKey {",
-            "        case object",
-            "        case hasMore = \"has_more\"",
-            "        case url",
-            "        case data",
-            "    }",
-            "}",
-        ]
     }
 }

@@ -55,17 +55,3 @@ public struct InvoiceMandateOptionsPaytoPurpose: RawRepresentable, Codable, Hash
     public static var tax: Self { .init(rawValue: "tax") }
     public static var utility: Self { .init(rawValue: "utility") }
 }
-
-public struct InvoiceMandateOptionsPaytoList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoiceMandateOptionsPayto]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

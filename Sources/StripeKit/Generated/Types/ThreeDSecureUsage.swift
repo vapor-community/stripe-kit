@@ -11,17 +11,3 @@ public struct ThreeDSecureUsage: Codable, Sendable {
     /// Whether 3D Secure is supported on this card.
     public var supported: Bool
 }
-
-public struct ThreeDSecureUsageList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ThreeDSecureUsage]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

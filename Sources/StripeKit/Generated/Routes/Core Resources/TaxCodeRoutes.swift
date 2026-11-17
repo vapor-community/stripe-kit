@@ -16,7 +16,7 @@ public struct TaxCodeRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxCode
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TaxCodeListParams, _ options: RequestOptions) async throws -> TaxCodeList
+    public var list: @Sendable (_ params: TaxCodeListParams, _ options: RequestOptions) async throws -> StripeList<TaxCode>
 }
 
 extension TaxCodeRoutes {
@@ -27,7 +27,7 @@ extension TaxCodeRoutes {
     }
 
     /// A list of all tax codes available to add to Products in order to allow specific tax calculations.
-    public func list(_ params: TaxCodeListParams = .init(), options: RequestOptions = .init()) async throws -> TaxCodeList {
+    public func list(_ params: TaxCodeListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TaxCode> {
         try await list(params, options)
     }
 }

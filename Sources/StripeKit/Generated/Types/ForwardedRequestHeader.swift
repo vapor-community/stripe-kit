@@ -14,17 +14,3 @@ public struct ForwardedRequestHeader: Codable, Sendable {
     /// The header value.
     public var value: String
 }
-
-public struct ForwardedRequestHeaderList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ForwardedRequestHeader]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

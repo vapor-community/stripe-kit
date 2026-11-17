@@ -89,17 +89,3 @@ public struct IssuingAuthorizationVerificationDataExpiryCheck: RawRepresentable,
     public static var mismatch: Self { .init(rawValue: "mismatch") }
     public static var notProvided: Self { .init(rawValue: "not_provided") }
 }
-
-public struct IssuingAuthorizationVerificationDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingAuthorizationVerificationData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

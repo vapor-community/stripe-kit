@@ -19,7 +19,7 @@ public struct TestHelpersTestClockRoutes: Sendable {
     public var retrieve: @Sendable (_ testClock: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TestHelpersTestClock
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TestHelpersTestClockListParams, _ options: RequestOptions) async throws -> TestHelpersTestClockList
+    public var list: @Sendable (_ params: TestHelpersTestClockListParams, _ options: RequestOptions) async throws -> StripeList<TestHelpersTestClock>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ testClock: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTestHelpersTestClock
@@ -40,7 +40,7 @@ extension TestHelpersTestClockRoutes {
     }
 
     /// Returns a list of your test clocks.
-    public func list(_ params: TestHelpersTestClockListParams = .init(), options: RequestOptions = .init()) async throws -> TestHelpersTestClockList {
+    public func list(_ params: TestHelpersTestClockListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TestHelpersTestClock> {
         try await list(params, options)
     }
 

@@ -20,17 +20,3 @@ public struct BalanceNetAvailable: Codable, Sendable {
         case sourceTypes = "source_types"
     }
 }
-
-public struct BalanceNetAvailableList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BalanceNetAvailable]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

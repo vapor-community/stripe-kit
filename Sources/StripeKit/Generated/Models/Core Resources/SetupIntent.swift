@@ -198,16 +198,4 @@ public struct SetupIntentStatus: RawRepresentable, Codable, Hashable, Sendable {
     public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
-public struct SetupIntentList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupIntent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias SetupIntentList = StripeList<SetupIntent>

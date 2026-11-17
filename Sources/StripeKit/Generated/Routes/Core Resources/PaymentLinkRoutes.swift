@@ -22,10 +22,10 @@ public struct PaymentLinkRoutes: Sendable {
     public var update: @Sendable (_ paymentLink: String, _ params: PaymentLinkUpdateParams, _ options: RequestOptions) async throws -> PaymentLink
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: PaymentLinkListParams, _ options: RequestOptions) async throws -> PaymentLinkList
+    public var list: @Sendable (_ params: PaymentLinkListParams, _ options: RequestOptions) async throws -> StripeList<PaymentLink>
 
     /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listLineItems: @Sendable (_ paymentLink: String, _ params: PaymentLinkListLineItemsParams, _ options: RequestOptions) async throws -> ItemList
+    public var listLineItems: @Sendable (_ paymentLink: String, _ params: PaymentLinkListLineItemsParams, _ options: RequestOptions) async throws -> StripeList<Item>
 }
 
 extension PaymentLinkRoutes {
@@ -45,14 +45,14 @@ extension PaymentLinkRoutes {
     }
 
     /// Returns a list of your payment links.
-    public func list(_ params: PaymentLinkListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentLinkList {
+    public func list(_ params: PaymentLinkListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<PaymentLink> {
         try await list(params, options)
     }
 
     /// When retrieving a payment link, there is an includable line_items property containing the first
     /// handful of those items. There is also a URL where you can retrieve the full (paginated) list of line
     /// items.
-    public func listLineItems(_ paymentLink: String, _ params: PaymentLinkListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> ItemList {
+    public func listLineItems(_ paymentLink: String, _ params: PaymentLinkListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Item> {
         try await listLineItems(paymentLink, params, options)
     }
 }

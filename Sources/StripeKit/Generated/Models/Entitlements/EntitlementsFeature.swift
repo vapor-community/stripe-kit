@@ -51,16 +51,4 @@ public struct EntitlementsFeatureObject: RawRepresentable, Codable, Hashable, Se
     public static var entitlementsFeature: Self { .init(rawValue: "entitlements.feature") }
 }
 
-public struct EntitlementsFeatureList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [EntitlementsFeature]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias EntitlementsFeatureList = StripeList<EntitlementsFeature>

@@ -16,17 +16,3 @@ public struct ConnectEmbeddedPaymentMethodSettingsFeatures: Codable, Sendable {
         case disableStripeUserAuthentication = "disable_stripe_user_authentication"
     }
 }
-
-public struct ConnectEmbeddedPaymentMethodSettingsFeaturesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectEmbeddedPaymentMethodSettingsFeatures]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

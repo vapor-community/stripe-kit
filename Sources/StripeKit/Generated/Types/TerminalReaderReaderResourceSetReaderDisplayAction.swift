@@ -25,17 +25,3 @@ public struct TerminalReaderReaderResourceSetReaderDisplayActionType: RawReprese
 
     public static var cart: Self { .init(rawValue: "cart") }
 }
-
-public struct TerminalReaderReaderResourceSetReaderDisplayActionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceSetReaderDisplayAction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

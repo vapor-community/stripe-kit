@@ -42,17 +42,3 @@ public struct TreasuryReceivedCreditsResourceSourceFlowsDetailsType: RawRepresen
     public static var outboundTransfer: Self { .init(rawValue: "outbound_transfer") }
     public static var payout: Self { .init(rawValue: "payout") }
 }
-
-public struct TreasuryReceivedCreditsResourceSourceFlowsDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryReceivedCreditsResourceSourceFlowsDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

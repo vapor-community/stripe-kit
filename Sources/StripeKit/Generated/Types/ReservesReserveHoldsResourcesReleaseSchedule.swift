@@ -19,17 +19,3 @@ public struct ReservesReserveHoldsResourcesReleaseSchedule: Codable, Sendable {
         case scheduledRelease = "scheduled_release"
     }
 }
-
-public struct ReservesReserveHoldsResourcesReleaseScheduleList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ReservesReserveHoldsResourcesReleaseSchedule]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

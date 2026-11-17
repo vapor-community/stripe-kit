@@ -14,17 +14,3 @@ public struct PaymentData: Codable, Sendable {
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
 }
-
-public struct PaymentDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

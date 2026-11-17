@@ -15,17 +15,3 @@ public struct PaymentMethodDetailsBoleto: Codable, Sendable {
         case taxId = "tax_id"
     }
 }
-
-public struct PaymentMethodDetailsBoletoList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsBoleto]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

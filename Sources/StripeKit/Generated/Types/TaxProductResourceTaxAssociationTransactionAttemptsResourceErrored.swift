@@ -26,17 +26,3 @@ public struct TaxProductResourceTaxAssociationTransactionAttemptsResourceErrored
     public static var originalTransactionVoided: Self { .init(rawValue: "original_transaction_voided") }
     public static var uniqueReferenceViolation: Self { .init(rawValue: "unique_reference_violation") }
 }
-
-public struct TaxProductResourceTaxAssociationTransactionAttemptsResourceErroredList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductResourceTaxAssociationTransactionAttemptsResourceErrored]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

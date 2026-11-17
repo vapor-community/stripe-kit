@@ -23,17 +23,3 @@ public struct ThresholdsResourceUsageAlertFilterType: RawRepresentable, Codable,
 
     public static var customer: Self { .init(rawValue: "customer") }
 }
-
-public struct ThresholdsResourceUsageAlertFilterList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ThresholdsResourceUsageAlertFilter]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

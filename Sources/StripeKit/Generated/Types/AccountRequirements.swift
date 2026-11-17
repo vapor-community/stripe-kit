@@ -89,17 +89,3 @@ public struct AccountRequirementsDisabledReason: RawRepresentable, Codable, Hash
     /// The account has been disabled because it is under review.
     public static var underReview: Self { .init(rawValue: "under_review") }
 }
-
-public struct AccountRequirementsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountRequirements]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

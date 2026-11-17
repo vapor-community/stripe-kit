@@ -29,17 +29,3 @@ public struct CustomerTaxLocationSource: RawRepresentable, Codable, Hashable, Se
     public static var paymentMethod: Self { .init(rawValue: "payment_method") }
     public static var shippingDestination: Self { .init(rawValue: "shipping_destination") }
 }
-
-public struct CustomerTaxLocationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerTaxLocation]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

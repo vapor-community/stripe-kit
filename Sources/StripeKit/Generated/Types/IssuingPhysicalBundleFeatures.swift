@@ -60,17 +60,3 @@ public struct IssuingPhysicalBundleFeaturesSecondLine: RawRepresentable, Codable
     public static var required: Self { .init(rawValue: "required") }
     public static var unsupported: Self { .init(rawValue: "unsupported") }
 }
-
-public struct IssuingPhysicalBundleFeaturesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingPhysicalBundleFeatures]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

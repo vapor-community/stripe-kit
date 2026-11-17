@@ -32,17 +32,3 @@ public struct PortalSubscriptionPauseDurationType: RawRepresentable, Codable, Ha
     /// Require customers to choose from configured pause duration options.
     public static var intervalOptions: Self { .init(rawValue: "interval_options") }
 }
-
-public struct PortalSubscriptionPauseDurationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalSubscriptionPauseDuration]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

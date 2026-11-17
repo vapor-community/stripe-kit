@@ -17,17 +17,3 @@ public struct PaymentLinksResourceOptionalItemAdjustableQuantity: Codable, Senda
     /// `minimum` configured here is greater than 0. By default this value is 0.
     public var minimum: Int?
 }
-
-public struct PaymentLinksResourceOptionalItemAdjustableQuantityList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceOptionalItemAdjustableQuantity]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

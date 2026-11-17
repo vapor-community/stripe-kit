@@ -24,17 +24,3 @@ public struct PaymentsPrimitivesPaymentRecordsResourceProcessorDetailsType: RawR
 
     public static var custom: Self { .init(rawValue: "custom") }
 }
-
-public struct PaymentsPrimitivesPaymentRecordsResourceProcessorDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentsPrimitivesPaymentRecordsResourceProcessorDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

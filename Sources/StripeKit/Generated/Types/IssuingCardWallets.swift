@@ -19,17 +19,3 @@ public struct IssuingCardWallets: Codable, Sendable {
         case primaryAccountIdentifier = "primary_account_identifier"
     }
 }
-
-public struct IssuingCardWalletsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardWallets]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

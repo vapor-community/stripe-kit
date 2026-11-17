@@ -16,17 +16,3 @@ public struct SetupAttemptPaymentMethodDetailsNaverPay: Codable, Sendable {
         case buyerId = "buyer_id"
     }
 }
-
-public struct SetupAttemptPaymentMethodDetailsNaverPayList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupAttemptPaymentMethodDetailsNaverPay]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

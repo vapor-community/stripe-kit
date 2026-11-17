@@ -47,17 +47,3 @@ public struct SubscriptionSchedulesResourcePauseSchedulePauseSettingsType: RawRe
     /// Pauses collection, billing, and servicing.
     public static var subscription: Self { .init(rawValue: "subscription") }
 }
-
-public struct SubscriptionSchedulesResourcePauseSchedulePauseSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionSchedulesResourcePauseSchedulePauseSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

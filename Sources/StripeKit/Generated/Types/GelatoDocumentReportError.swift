@@ -27,17 +27,3 @@ public struct GelatoDocumentReportErrorCode: RawRepresentable, Codable, Hashable
     public static var documentTypeNotSupported: Self { .init(rawValue: "document_type_not_supported") }
     public static var documentUnverifiedOther: Self { .init(rawValue: "document_unverified_other") }
 }
-
-public struct GelatoDocumentReportErrorList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoDocumentReportError]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

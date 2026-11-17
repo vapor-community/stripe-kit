@@ -43,16 +43,4 @@ public struct BillingCreditBalanceSummaryObject: RawRepresentable, Codable, Hash
     public static var billingCreditBalanceSummary: Self { .init(rawValue: "billing.credit_balance_summary") }
 }
 
-public struct BillingCreditBalanceSummaryList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingCreditBalanceSummary]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias BillingCreditBalanceSummaryList = StripeList<BillingCreditBalanceSummary>

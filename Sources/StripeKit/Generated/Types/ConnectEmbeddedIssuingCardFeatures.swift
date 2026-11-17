@@ -24,17 +24,3 @@ public struct ConnectEmbeddedIssuingCardFeatures: Codable, Sendable {
         case spendControlManagement = "spend_control_management"
     }
 }
-
-public struct ConnectEmbeddedIssuingCardFeaturesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectEmbeddedIssuingCardFeatures]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

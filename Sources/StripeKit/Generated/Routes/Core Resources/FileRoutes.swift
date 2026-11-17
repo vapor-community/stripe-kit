@@ -19,7 +19,7 @@ public struct FileRoutes: Sendable {
     public var retrieve: @Sendable (_ file: String, _ expand: [String]?, _ options: RequestOptions) async throws -> File
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: FileListParams, _ options: RequestOptions) async throws -> FileList
+    public var list: @Sendable (_ params: FileListParams, _ options: RequestOptions) async throws -> StripeList<File>
 }
 
 extension FileRoutes {
@@ -38,7 +38,7 @@ extension FileRoutes {
 
     /// Returns a list of the files that your account has access to. Stripe sorts and returns the files by
     /// their creation dates, placing the most recently created files at the top.
-    public func list(_ params: FileListParams = .init(), options: RequestOptions = .init()) async throws -> FileList {
+    public func list(_ params: FileListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<File> {
         try await list(params, options)
     }
 }

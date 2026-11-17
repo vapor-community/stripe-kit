@@ -14,17 +14,3 @@ public struct PaymentMethodDetailsPaymentRecordMomo: Codable, Sendable {
     /// ID of the multi-use Mandate created by, or used to make, this MoMo payment.
     public var mandate: String?
 }
-
-public struct PaymentMethodDetailsPaymentRecordMomoList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPaymentRecordMomo]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

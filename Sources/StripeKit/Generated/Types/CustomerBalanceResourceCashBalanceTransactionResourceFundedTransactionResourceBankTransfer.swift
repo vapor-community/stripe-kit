@@ -45,17 +45,3 @@ public struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransac
     public static var mxBankTransfer: Self { .init(rawValue: "mx_bank_transfer") }
     public static var usBankTransfer: Self { .init(rawValue: "us_bank_transfer") }
 }
-
-public struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransfer]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

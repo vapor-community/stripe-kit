@@ -13,7 +13,7 @@ public struct FinancialConnectionsSession: Codable, Sendable {
     /// The account holder for whom accounts are collected in this session.
     public var accountHolder: BankConnectionsResourceAccountholder?
     /// The accounts that were collected as part of this Session.
-    public var accounts: FinancialConnectionsAccountList
+    public var accounts: StripeList<FinancialConnectionsAccount>
     @Indirect
     public var bankAccountToken: Token?
     /// A value that will be passed to the client to launch the authentication flow.
@@ -64,16 +64,4 @@ public struct FinancialConnectionsSessionObject: RawRepresentable, Codable, Hash
     public static var financialConnectionsSession: Self { .init(rawValue: "financial_connections.session") }
 }
 
-public struct FinancialConnectionsSessionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FinancialConnectionsSession]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias FinancialConnectionsSessionList = StripeList<FinancialConnectionsSession>

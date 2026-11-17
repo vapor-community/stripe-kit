@@ -46,17 +46,3 @@ public struct PaymentMethodOptionsP24SetupFutureUsage: RawRepresentable, Codable
 
     public static var none: Self { .init(rawValue: "none") }
 }
-
-public struct PaymentMethodOptionsP24List: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodOptionsP24]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

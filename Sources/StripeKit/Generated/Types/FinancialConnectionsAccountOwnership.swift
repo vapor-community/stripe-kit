@@ -16,7 +16,7 @@ public struct FinancialConnectionsAccountOwnership: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: FinancialConnectionsAccountOwnershipObject
     /// A paginated list of owners for this account.
-    public var owners: FinancialConnectionsAccountOwnerList
+    public var owners: StripeList<FinancialConnectionsAccountOwner>
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
@@ -28,18 +28,4 @@ public struct FinancialConnectionsAccountOwnershipObject: RawRepresentable, Coda
     }
 
     public static var financialConnectionsAccountOwnership: Self { .init(rawValue: "financial_connections.account_ownership") }
-}
-
-public struct FinancialConnectionsAccountOwnershipList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FinancialConnectionsAccountOwnership]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
 }

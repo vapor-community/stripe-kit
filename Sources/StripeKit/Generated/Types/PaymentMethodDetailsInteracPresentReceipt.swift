@@ -60,17 +60,3 @@ public struct PaymentMethodDetailsInteracPresentReceiptAccountType: RawRepresent
     public static var savings: Self { .init(rawValue: "savings") }
     public static var unknown: Self { .init(rawValue: "unknown") }
 }
-
-public struct PaymentMethodDetailsInteracPresentReceiptList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsInteracPresentReceipt]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

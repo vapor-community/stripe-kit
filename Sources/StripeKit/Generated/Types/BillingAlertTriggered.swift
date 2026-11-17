@@ -33,17 +33,3 @@ public struct BillingAlertTriggeredObject: RawRepresentable, Codable, Hashable, 
 
     public static var billingAlertTriggered: Self { .init(rawValue: "billing.alert_triggered") }
 }
-
-public struct BillingAlertTriggeredList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingAlertTriggered]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

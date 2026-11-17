@@ -10,17 +10,3 @@ import Foundation
 public struct BillingCreditGrantsResourceApplicabilityConfig: Codable, Sendable {
     public var scope: BillingCreditGrantsResourceScope
 }
-
-public struct BillingCreditGrantsResourceApplicabilityConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingCreditGrantsResourceApplicabilityConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

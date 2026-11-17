@@ -11,17 +11,3 @@ import Foundation
 public struct TreasuryFinancialAccountsResourceFinancialAddressesFeatures: Codable, Sendable {
     public var aba: TreasuryFinancialAccountsResourceAbaToggleSettings?
 }
-
-public struct TreasuryFinancialAccountsResourceFinancialAddressesFeaturesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccountsResourceFinancialAddressesFeatures]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

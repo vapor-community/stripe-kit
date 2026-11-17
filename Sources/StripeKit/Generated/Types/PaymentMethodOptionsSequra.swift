@@ -60,17 +60,3 @@ public struct PaymentMethodOptionsSequraSetupFutureUsage: RawRepresentable, Coda
 
     public static var none: Self { .init(rawValue: "none") }
 }
-
-public struct PaymentMethodOptionsSequraList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodOptionsSequra]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

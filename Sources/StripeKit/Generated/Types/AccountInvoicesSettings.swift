@@ -37,17 +37,3 @@ public struct AccountInvoicesSettingsHostedPaymentMethodSave: RawRepresentable, 
     public static var never: Self { .init(rawValue: "never") }
     public static var offer: Self { .init(rawValue: "offer") }
 }
-
-public struct AccountInvoicesSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountInvoicesSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

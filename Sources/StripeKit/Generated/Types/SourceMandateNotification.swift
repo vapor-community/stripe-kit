@@ -63,17 +63,3 @@ public struct SourceMandateNotificationObject: RawRepresentable, Codable, Hashab
 
     public static var sourceMandateNotification: Self { .init(rawValue: "source_mandate_notification") }
 }
-
-public struct SourceMandateNotificationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SourceMandateNotification]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

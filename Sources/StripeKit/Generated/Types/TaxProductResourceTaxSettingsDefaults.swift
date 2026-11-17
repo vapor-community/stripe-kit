@@ -57,17 +57,3 @@ public struct TaxProductResourceTaxSettingsDefaultsTaxBehavior: RawRepresentable
     public static var inclusive: Self { .init(rawValue: "inclusive") }
     public static var inferredByCurrency: Self { .init(rawValue: "inferred_by_currency") }
 }
-
-public struct TaxProductResourceTaxSettingsDefaultsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductResourceTaxSettingsDefaults]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

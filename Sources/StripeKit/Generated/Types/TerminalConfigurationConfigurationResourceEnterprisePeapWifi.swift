@@ -24,17 +24,3 @@ public struct TerminalConfigurationConfigurationResourceEnterprisePeapWifi: Coda
         case username
     }
 }
-
-public struct TerminalConfigurationConfigurationResourceEnterprisePeapWifiList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalConfigurationConfigurationResourceEnterprisePeapWifi]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

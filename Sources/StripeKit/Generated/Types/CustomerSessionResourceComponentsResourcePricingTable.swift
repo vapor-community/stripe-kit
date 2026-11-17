@@ -12,17 +12,3 @@ public struct CustomerSessionResourceComponentsResourcePricingTable: Codable, Se
     /// Whether the pricing table is enabled.
     public var enabled: Bool
 }
-
-public struct CustomerSessionResourceComponentsResourcePricingTableList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerSessionResourceComponentsResourcePricingTable]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

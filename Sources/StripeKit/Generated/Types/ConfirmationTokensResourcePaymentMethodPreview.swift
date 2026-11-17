@@ -234,17 +234,3 @@ public struct ConfirmationTokensResourcePaymentMethodPreviewType: RawRepresentab
     public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
     public static var zip: Self { .init(rawValue: "zip") }
 }
-
-public struct ConfirmationTokensResourcePaymentMethodPreviewList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConfirmationTokensResourcePaymentMethodPreview]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

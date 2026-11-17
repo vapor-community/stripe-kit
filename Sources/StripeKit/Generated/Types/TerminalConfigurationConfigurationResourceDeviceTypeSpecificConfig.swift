@@ -12,17 +12,3 @@ public struct TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig
     @Expandable<File>
     public var splashscreen: String?
 }
-
-public struct TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -12,17 +12,3 @@ public struct PaymentPagesCheckoutSessionAdaptivePricing: Codable, Sendable {
     /// sessions](https://docs.stripe.com/payments/currencies/localize-prices/adaptive-pricing?payment-ui=stripe-hosted#restrictions).
     public var enabled: Bool
 }
-
-public struct PaymentPagesCheckoutSessionAdaptivePricingList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionAdaptivePricing]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

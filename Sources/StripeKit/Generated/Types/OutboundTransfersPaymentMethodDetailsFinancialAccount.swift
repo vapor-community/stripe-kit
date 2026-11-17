@@ -24,17 +24,3 @@ public struct OutboundTransfersPaymentMethodDetailsFinancialAccountNetwork: RawR
 
     public static var stripe: Self { .init(rawValue: "stripe") }
 }
-
-public struct OutboundTransfersPaymentMethodDetailsFinancialAccountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [OutboundTransfersPaymentMethodDetailsFinancialAccount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -34,17 +34,3 @@ public struct BalanceSettingsResourceAutomaticTransferRuleType: RawRepresentable
     public static var transferAll: Self { .init(rawValue: "transfer_all") }
     public static var transferUpToAmount: Self { .init(rawValue: "transfer_up_to_amount") }
 }
-
-public struct BalanceSettingsResourceAutomaticTransferRuleList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BalanceSettingsResourceAutomaticTransferRule]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

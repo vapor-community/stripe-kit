@@ -26,17 +26,3 @@ public struct ThreeDSecureStandaloneResourceCartesBancaires: Codable, Sendable {
         case cbScore = "cb_score"
     }
 }
-
-public struct ThreeDSecureStandaloneResourceCartesBancairesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ThreeDSecureStandaloneResourceCartesBancaires]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

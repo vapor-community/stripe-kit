@@ -11,17 +11,3 @@ public struct PaymentFlowsAmountDetailsClientResourceTip: Codable, Sendable {
     /// Portion of the amount that corresponds to a tip.
     public var amount: Int?
 }
-
-public struct PaymentFlowsAmountDetailsClientResourceTipList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsAmountDetailsClientResourceTip]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

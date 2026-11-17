@@ -12,17 +12,3 @@ public struct ThreeDSecureAuthenticationRequiresChallengeEvent: Codable, Sendabl
     @Indirect
     public var object: ThreeDSecureAuthentication
 }
-
-public struct ThreeDSecureAuthenticationRequiresChallengeEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ThreeDSecureAuthenticationRequiresChallengeEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

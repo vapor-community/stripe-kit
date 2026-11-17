@@ -15,17 +15,3 @@ public struct TaxProductResourceTaxAssociationTransactionAttempts: Codable, Send
     /// The status of the transaction attempt. This can be `errored` or `committed`.
     public var status: String
 }
-
-public struct TaxProductResourceTaxAssociationTransactionAttemptsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductResourceTaxAssociationTransactionAttempts]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

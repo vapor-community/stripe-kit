@@ -16,7 +16,7 @@ public struct ClimateSupplierRoutes: Sendable {
     public var retrieve: @Sendable (_ supplier: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ClimateSupplier
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ClimateSupplierListParams, _ options: RequestOptions) async throws -> ClimateSupplierList
+    public var list: @Sendable (_ params: ClimateSupplierListParams, _ options: RequestOptions) async throws -> StripeList<ClimateSupplier>
 }
 
 extension ClimateSupplierRoutes {
@@ -26,7 +26,7 @@ extension ClimateSupplierRoutes {
     }
 
     /// Lists all available Climate supplier objects.
-    public func list(_ params: ClimateSupplierListParams = .init(), options: RequestOptions = .init()) async throws -> ClimateSupplierList {
+    public func list(_ params: ClimateSupplierListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ClimateSupplier> {
         try await list(params, options)
     }
 }

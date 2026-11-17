@@ -15,17 +15,3 @@ public struct RadarRule: Codable, Sendable {
     /// The predicate to evaluate the payment against.
     public var predicate: String
 }
-
-public struct RadarRuleList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [RadarRule]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

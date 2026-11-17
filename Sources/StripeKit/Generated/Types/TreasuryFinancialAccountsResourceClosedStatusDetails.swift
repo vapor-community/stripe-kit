@@ -11,17 +11,3 @@ public struct TreasuryFinancialAccountsResourceClosedStatusDetails: Codable, Sen
     /// The array that contains reasons for a FinancialAccount closure.
     public var reasons: [String]
 }
-
-public struct TreasuryFinancialAccountsResourceClosedStatusDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccountsResourceClosedStatusDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

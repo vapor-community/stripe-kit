@@ -90,15 +90,15 @@ public struct Customer: Codable, Sendable {
     /// Mailing and shipping address for the customer. Appears on invoices emailed to this customer.
     public var shipping: Shipping?
     /// The customer's payment sources, if any.
-    public var sources: PaymentSourceList?
+    public var sources: StripeList<PaymentSource>?
     /// The customer's current subscriptions, if any.
-    public var subscriptions: SubscriptionList?
+    public var subscriptions: StripeList<Subscription>?
     public var tax: CustomerTax?
     /// Describes the customer's tax exemption status, which is `none`, `exempt`, or `reverse`. When set to
     /// `reverse`, invoice and receipt PDFs include the following text: **"Reverse charge"**.
     public var taxExempt: CustomerTaxExempt?
     /// The customer's tax IDs.
-    public var taxIds: TaxIdList?
+    public var taxIds: StripeList<TaxId>?
     /// ID of the test clock that this customer belongs to.
     @Expandable<TestHelpersTestClock>
     public var testClock: String?
@@ -163,16 +163,4 @@ public struct CustomerTaxExempt: RawRepresentable, Codable, Hashable, Sendable {
     public static var reverse: Self { .init(rawValue: "reverse") }
 }
 
-public struct CustomerList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Customer]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias CustomerList = StripeList<Customer>

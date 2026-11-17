@@ -19,17 +19,3 @@ public struct SourceTransactionPaperCheckData: Codable, Sendable {
         case invoices
     }
 }
-
-public struct SourceTransactionPaperCheckDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SourceTransactionPaperCheckData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

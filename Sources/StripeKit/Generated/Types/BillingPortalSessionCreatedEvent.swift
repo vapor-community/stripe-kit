@@ -12,17 +12,3 @@ public struct BillingPortalSessionCreatedEvent: Codable, Sendable {
     @Indirect
     public var object: BillingPortalSession
 }
-
-public struct BillingPortalSessionCreatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingPortalSessionCreatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

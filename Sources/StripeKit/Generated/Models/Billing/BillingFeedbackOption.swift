@@ -60,16 +60,4 @@ public struct BillingFeedbackOptionStatus: RawRepresentable, Codable, Hashable, 
     public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
-public struct BillingFeedbackOptionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingFeedbackOption]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias BillingFeedbackOptionList = StripeList<BillingFeedbackOption>

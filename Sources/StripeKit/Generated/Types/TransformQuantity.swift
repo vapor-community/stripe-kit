@@ -30,17 +30,3 @@ public struct TransformQuantityRound: RawRepresentable, Codable, Hashable, Senda
     public static var down: Self { .init(rawValue: "down") }
     public static var up: Self { .init(rawValue: "up") }
 }
-
-public struct TransformQuantityList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TransformQuantity]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

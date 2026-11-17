@@ -27,17 +27,3 @@ public struct PaymentFlowsAmountDetailsResourceErrorCode: RawRepresentable, Coda
     /// The sum of tax + shipping - discount is greater than the amount on the PaymentIntent.
     public static var amountDetailsTaxShippingDiscountGreaterThanAmount: Self { .init(rawValue: "amount_details_tax_shipping_discount_greater_than_amount") }
 }
-
-public struct PaymentFlowsAmountDetailsResourceErrorList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsAmountDetailsResourceError]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -11,17 +11,3 @@ import Foundation
 public struct CustomerDiscountUpdatedEvent: Codable, Sendable {
     public var object: Discount
 }
-
-public struct CustomerDiscountUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerDiscountUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

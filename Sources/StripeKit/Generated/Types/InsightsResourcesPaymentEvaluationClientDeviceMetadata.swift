@@ -18,17 +18,3 @@ public struct InsightsResourcesPaymentEvaluationClientDeviceMetadata: Codable, S
         case radarSession = "radar_session"
     }
 }
-
-public struct InsightsResourcesPaymentEvaluationClientDeviceMetadataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationClientDeviceMetadata]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

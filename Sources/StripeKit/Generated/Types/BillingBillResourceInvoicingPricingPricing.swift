@@ -32,17 +32,3 @@ public struct BillingBillResourceInvoicingPricingPricingType: RawRepresentable, 
 
     public static var priceDetails: Self { .init(rawValue: "price_details") }
 }
-
-public struct BillingBillResourceInvoicingPricingPricingList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingBillResourceInvoicingPricingPricing]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

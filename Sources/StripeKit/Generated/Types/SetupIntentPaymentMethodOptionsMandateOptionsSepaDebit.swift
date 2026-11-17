@@ -17,17 +17,3 @@ public struct SetupIntentPaymentMethodOptionsMandateOptionsSepaDebit: Codable, S
         case referencePrefix = "reference_prefix"
     }
 }
-
-public struct SetupIntentPaymentMethodOptionsMandateOptionsSepaDebitList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupIntentPaymentMethodOptionsMandateOptionsSepaDebit]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

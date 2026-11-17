@@ -22,7 +22,7 @@ public struct TransferReversalRoutes: Sendable {
     public var update: @Sendable (_ transfer: String, _ id: String, _ params: TransferReversalUpdateParams, _ options: RequestOptions) async throws -> TransferReversal
 
     /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ id: String, _ params: TransferReversalListParams, _ options: RequestOptions) async throws -> TransferReversalList
+    public var list: @Sendable (_ id: String, _ params: TransferReversalListParams, _ options: RequestOptions) async throws -> StripeList<TransferReversal>
 }
 
 extension TransferReversalRoutes {
@@ -51,7 +51,7 @@ extension TransferReversalRoutes {
     /// reversals are always available by default on the transfer object. If you need more than those 10,
     /// you can use this API method and the limit and starting_after parameters to page through additional
     /// reversals.
-    public func list(_ id: String, _ params: TransferReversalListParams = .init(), options: RequestOptions = .init()) async throws -> TransferReversalList {
+    public func list(_ id: String, _ params: TransferReversalListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TransferReversal> {
         try await list(id, params, options)
     }
 }

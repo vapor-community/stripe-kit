@@ -26,17 +26,3 @@ public struct GelatoPhoneReportErrorCode: RawRepresentable, Codable, Hashable, S
     public static var phoneUnverifiedOther: Self { .init(rawValue: "phone_unverified_other") }
     public static var phoneVerificationDeclined: Self { .init(rawValue: "phone_verification_declined") }
 }
-
-public struct GelatoPhoneReportErrorList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoPhoneReportError]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

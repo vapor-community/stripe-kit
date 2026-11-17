@@ -27,17 +27,3 @@ public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStartT
     public static var phaseStart: Self { .init(rawValue: "phase_start") }
     public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
-
-public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStartList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStart]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

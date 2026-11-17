@@ -38,16 +38,4 @@ public struct EphemeralKeyObject: RawRepresentable, Codable, Hashable, Sendable 
     public static var ephemeralKey: Self { .init(rawValue: "ephemeral_key") }
 }
 
-public struct EphemeralKeyList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [EphemeralKey]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias EphemeralKeyList = StripeList<EphemeralKey>

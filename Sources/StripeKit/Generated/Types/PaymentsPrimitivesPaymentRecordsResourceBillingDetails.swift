@@ -17,17 +17,3 @@ public struct PaymentsPrimitivesPaymentRecordsResourceBillingDetails: Codable, S
     /// The billing phone number associated with the method of payment.
     public var phone: String?
 }
-
-public struct PaymentsPrimitivesPaymentRecordsResourceBillingDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentsPrimitivesPaymentRecordsResourceBillingDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

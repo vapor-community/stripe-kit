@@ -11,17 +11,3 @@ public struct KlarnaPayerDetails: Codable, Sendable {
     /// The payer's address
     public var address: KlarnaAddress?
 }
-
-public struct KlarnaPayerDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [KlarnaPayerDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -22,7 +22,7 @@ public struct CustomerRoutes: Sendable {
     public var update: @Sendable (_ customer: String, _ params: CustomerUpdateParams, _ options: RequestOptions) async throws -> Customer
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: CustomerListParams, _ options: RequestOptions) async throws -> CustomerList
+    public var list: @Sendable (_ params: CustomerListParams, _ options: RequestOptions) async throws -> StripeList<Customer>
 
     /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var search: @Sendable (_ params: CustomerSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Customer>
@@ -40,7 +40,7 @@ public struct CustomerRoutes: Sendable {
     public var fundCashBalance: @Sendable (_ customer: String, _ params: CustomerFundCashBalanceParams, _ options: RequestOptions) async throws -> CustomerCashBalanceTransaction
 
     /// Performs `listPaymentMethods(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listPaymentMethods: @Sendable (_ customer: String, _ params: CustomerListPaymentMethodsParams, _ options: RequestOptions) async throws -> PaymentMethodList
+    public var listPaymentMethods: @Sendable (_ customer: String, _ params: CustomerListPaymentMethodsParams, _ options: RequestOptions) async throws -> StripeList<PaymentMethod>
 
     /// Performs `retrievePaymentMethod(_:paymentMethod:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var retrievePaymentMethod: @Sendable (_ customer: String, _ paymentMethod: String, _ expand: [String]?, _ options: RequestOptions) async throws -> PaymentMethod
@@ -72,7 +72,7 @@ extension CustomerRoutes {
 
     /// Returns a list of your customers. The customers are returned sorted by creation date, with the most
     /// recent customers appearing first.
-    public func list(_ params: CustomerListParams = .init(), options: RequestOptions = .init()) async throws -> CustomerList {
+    public func list(_ params: CustomerListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Customer> {
         try await list(params, options)
     }
 
@@ -110,7 +110,7 @@ extension CustomerRoutes {
     }
 
     /// Returns a list of PaymentMethods for a given Customer
-    public func listPaymentMethods(_ customer: String, _ params: CustomerListPaymentMethodsParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodList {
+    public func listPaymentMethods(_ customer: String, _ params: CustomerListPaymentMethodsParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<PaymentMethod> {
         try await listPaymentMethods(customer, params, options)
     }
 

@@ -40,17 +40,3 @@ public struct TaxProductResourceJurisdictionLevel: RawRepresentable, Codable, Ha
     public static var district: Self { .init(rawValue: "district") }
     public static var state: Self { .init(rawValue: "state") }
 }
-
-public struct TaxProductResourceJurisdictionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductResourceJurisdiction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

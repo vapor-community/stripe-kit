@@ -47,17 +47,3 @@ public struct PaymentPagesCheckoutSessionBrandingSettingsBorderStyle: RawReprese
     public static var rectangular: Self { .init(rawValue: "rectangular") }
     public static var rounded: Self { .init(rawValue: "rounded") }
 }
-
-public struct PaymentPagesCheckoutSessionBrandingSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionBrandingSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

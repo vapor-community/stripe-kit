@@ -18,17 +18,3 @@ public struct PaymentMethodLink: Codable, Sendable {
         case persistentToken = "persistent_token"
     }
 }
-
-public struct PaymentMethodLinkList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodLink]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

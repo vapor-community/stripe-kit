@@ -11,17 +11,3 @@ public struct BalanceDetail: Codable, Sendable {
     /// Funds that are available for use.
     public var available: [BalanceAmount]
 }
-
-public struct BalanceDetailList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BalanceDetail]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

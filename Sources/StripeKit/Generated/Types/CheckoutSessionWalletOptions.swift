@@ -10,17 +10,3 @@ import Foundation
 public struct CheckoutSessionWalletOptions: Codable, Sendable {
     public var link: CheckoutLinkWalletOptions?
 }
-
-public struct CheckoutSessionWalletOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CheckoutSessionWalletOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

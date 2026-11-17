@@ -56,16 +56,4 @@ public struct FeeRefundObject: RawRepresentable, Codable, Hashable, Sendable {
     public static var feeRefund: Self { .init(rawValue: "fee_refund") }
 }
 
-public struct FeeRefundList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FeeRefund]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias FeeRefundList = StripeList<FeeRefund>

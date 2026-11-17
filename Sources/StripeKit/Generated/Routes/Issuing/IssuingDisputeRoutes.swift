@@ -22,7 +22,7 @@ public struct IssuingDisputeRoutes: Sendable {
     public var update: @Sendable (_ dispute: String, _ params: IssuingDisputeUpdateParams, _ options: RequestOptions) async throws -> IssuingDispute
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: IssuingDisputeListParams, _ options: RequestOptions) async throws -> IssuingDisputeList
+    public var list: @Sendable (_ params: IssuingDisputeListParams, _ options: RequestOptions) async throws -> StripeList<IssuingDispute>
 
     /// Performs `submit(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var submit: @Sendable (_ dispute: String, _ params: IssuingDisputeSubmitParams, _ options: RequestOptions) async throws -> IssuingDispute
@@ -50,7 +50,7 @@ extension IssuingDisputeRoutes {
 
     /// Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public func list(_ params: IssuingDisputeListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingDisputeList {
+    public func list(_ params: IssuingDisputeListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<IssuingDispute> {
         try await list(params, options)
     }
 

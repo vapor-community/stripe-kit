@@ -16,7 +16,7 @@ public struct TreasuryTransactionRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryTransaction
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TreasuryTransactionListParams, _ options: RequestOptions) async throws -> TreasuryTransactionList
+    public var list: @Sendable (_ params: TreasuryTransactionListParams, _ options: RequestOptions) async throws -> StripeList<TreasuryTransaction>
 }
 
 extension TreasuryTransactionRoutes {
@@ -26,7 +26,7 @@ extension TreasuryTransactionRoutes {
     }
 
     /// Retrieves a list of Transaction objects.
-    public func list(_ params: TreasuryTransactionListParams, options: RequestOptions = .init()) async throws -> TreasuryTransactionList {
+    public func list(_ params: TreasuryTransactionListParams, options: RequestOptions = .init()) async throws -> StripeList<TreasuryTransaction> {
         try await list(params, options)
     }
 }

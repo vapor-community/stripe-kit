@@ -17,17 +17,3 @@ public struct TerminalReaderReaderResourceLineItem: Codable, Sendable {
     /// The quantity of the line item.
     public var quantity: Int
 }
-
-public struct TerminalReaderReaderResourceLineItemList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceLineItem]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -26,17 +26,3 @@ public struct DeletedWebhookEndpointObject: RawRepresentable, Codable, Hashable,
 
     public static var webhookEndpoint: Self { .init(rawValue: "webhook_endpoint") }
 }
-
-public struct DeletedWebhookEndpointList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DeletedWebhookEndpoint]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

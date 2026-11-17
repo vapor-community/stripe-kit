@@ -63,17 +63,3 @@ public struct PaymentMethodDetailsCryptoTokenCurrency: RawRepresentable, Codable
     public static var usdsui: Self { .init(rawValue: "usdsui") }
     public static var usdt: Self { .init(rawValue: "usdt") }
 }
-
-public struct PaymentMethodDetailsCryptoList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsCrypto]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

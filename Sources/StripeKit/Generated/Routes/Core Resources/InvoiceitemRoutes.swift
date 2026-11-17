@@ -22,7 +22,7 @@ public struct InvoiceitemRoutes: Sendable {
     public var update: @Sendable (_ invoiceitem: String, _ params: InvoiceitemUpdateParams, _ options: RequestOptions) async throws -> Invoiceitem
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: InvoiceitemListParams, _ options: RequestOptions) async throws -> InvoiceitemList
+    public var list: @Sendable (_ params: InvoiceitemListParams, _ options: RequestOptions) async throws -> StripeList<Invoiceitem>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ invoiceitem: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedInvoiceitem
@@ -48,7 +48,7 @@ extension InvoiceitemRoutes {
 
     /// Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the
     /// most recently created invoice items appearing first.
-    public func list(_ params: InvoiceitemListParams = .init(), options: RequestOptions = .init()) async throws -> InvoiceitemList {
+    public func list(_ params: InvoiceitemListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Invoiceitem> {
         try await list(params, options)
     }
 

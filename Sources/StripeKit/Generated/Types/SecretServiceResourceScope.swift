@@ -25,17 +25,3 @@ public struct SecretServiceResourceScopeType: RawRepresentable, Codable, Hashabl
     public static var account: Self { .init(rawValue: "account") }
     public static var user: Self { .init(rawValue: "user") }
 }
-
-public struct SecretServiceResourceScopeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SecretServiceResourceScope]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

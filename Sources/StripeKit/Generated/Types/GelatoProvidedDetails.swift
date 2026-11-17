@@ -13,17 +13,3 @@ public struct GelatoProvidedDetails: Codable, Sendable {
     /// Phone number of user being verified
     public var phone: String?
 }
-
-public struct GelatoProvidedDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoProvidedDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

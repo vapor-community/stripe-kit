@@ -15,17 +15,3 @@ public struct PortalFlowsAfterCompletionHostedConfirmation: Codable, Sendable {
         case customMessage = "custom_message"
     }
 }
-
-public struct PortalFlowsAfterCompletionHostedConfirmationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalFlowsAfterCompletionHostedConfirmation]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

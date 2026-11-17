@@ -24,17 +24,3 @@ public struct StackableDiscountWithDiscountSettingsAndDiscountEnd: Codable, Send
         case promotionCode = "promotion_code"
     }
 }
-
-public struct StackableDiscountWithDiscountSettingsAndDiscountEndList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [StackableDiscountWithDiscountSettingsAndDiscountEnd]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

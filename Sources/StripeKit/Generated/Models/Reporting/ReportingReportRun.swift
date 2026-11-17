@@ -66,16 +66,4 @@ public struct ReportingReportRunObject: RawRepresentable, Codable, Hashable, Sen
     public static var reportingReportRun: Self { .init(rawValue: "reporting.report_run") }
 }
 
-public struct ReportingReportRunList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ReportingReportRun]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ReportingReportRunList = StripeList<ReportingReportRun>

@@ -12,17 +12,3 @@ public struct CheckoutSessionAsyncPaymentSucceededEvent: Codable, Sendable {
     @Indirect
     public var object: CheckoutSession
 }
-
-public struct CheckoutSessionAsyncPaymentSucceededEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CheckoutSessionAsyncPaymentSucceededEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

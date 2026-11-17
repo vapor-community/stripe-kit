@@ -22,7 +22,7 @@ public struct CouponRoutes: Sendable {
     public var update: @Sendable (_ coupon: String, _ params: CouponUpdateParams, _ options: RequestOptions) async throws -> Coupon
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: CouponListParams, _ options: RequestOptions) async throws -> CouponList
+    public var list: @Sendable (_ params: CouponListParams, _ options: RequestOptions) async throws -> StripeList<Coupon>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ coupon: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedCoupon
@@ -52,7 +52,7 @@ extension CouponRoutes {
     }
 
     /// Returns a list of your coupons.
-    public func list(_ params: CouponListParams = .init(), options: RequestOptions = .init()) async throws -> CouponList {
+    public func list(_ params: CouponListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Coupon> {
         try await list(params, options)
     }
 

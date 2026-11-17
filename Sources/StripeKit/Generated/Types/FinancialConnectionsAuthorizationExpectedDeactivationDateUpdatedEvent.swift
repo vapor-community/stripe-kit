@@ -11,17 +11,3 @@ import Foundation
 public struct FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent: Codable, Sendable {
     public var object: FinancialConnectionsAuthorization
 }
-
-public struct FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FinancialConnectionsAuthorizationExpectedDeactivationDateUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

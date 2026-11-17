@@ -16,7 +16,7 @@ public struct InvoicePaymentRoutes: Sendable {
     public var retrieve: @Sendable (_ invoicePayment: String, _ expand: [String]?, _ options: RequestOptions) async throws -> InvoicePayment
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: InvoicePaymentListParams, _ options: RequestOptions) async throws -> InvoicePaymentList
+    public var list: @Sendable (_ params: InvoicePaymentListParams, _ options: RequestOptions) async throws -> StripeList<InvoicePayment>
 }
 
 extension InvoicePaymentRoutes {
@@ -27,7 +27,7 @@ extension InvoicePaymentRoutes {
 
     /// When retrieving an invoice, there is an includable payments property containing the first handful of
     /// those items. There is also a URL where you can retrieve the full (paginated) list of payments.
-    public func list(_ params: InvoicePaymentListParams = .init(), options: RequestOptions = .init()) async throws -> InvoicePaymentList {
+    public func list(_ params: InvoicePaymentListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<InvoicePayment> {
         try await list(params, options)
     }
 }

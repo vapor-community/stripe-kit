@@ -15,7 +15,7 @@ public struct PaymentFlowsAmountDetails: Codable, Sendable {
     public var error: PaymentFlowsAmountDetailsResourceError?
     /// A list of line items, each containing information about a product in the PaymentIntent. There is a
     /// maximum of 200 line items.
-    public var lineItems: PaymentIntentAmountDetailsLineItemList?
+    public var lineItems: StripeList<PaymentIntentAmountDetailsLineItem>?
     public var shipping: PaymentFlowsAmountDetailsResourceShipping?
     public var tax: PaymentFlowsAmountDetailsResourceTax?
     public var tip: PaymentFlowsAmountDetailsClientResourceTip?
@@ -27,19 +27,5 @@ public struct PaymentFlowsAmountDetails: Codable, Sendable {
         case shipping
         case tax
         case tip
-    }
-}
-
-public struct PaymentFlowsAmountDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsAmountDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
     }
 }

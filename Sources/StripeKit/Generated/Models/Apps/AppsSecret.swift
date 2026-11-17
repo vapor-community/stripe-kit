@@ -60,16 +60,4 @@ public struct AppsSecretObject: RawRepresentable, Codable, Hashable, Sendable {
     public static var appsSecret: Self { .init(rawValue: "apps.secret") }
 }
 
-public struct AppsSecretList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AppsSecret]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias AppsSecretList = StripeList<AppsSecret>

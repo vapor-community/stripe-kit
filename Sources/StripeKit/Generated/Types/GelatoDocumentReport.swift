@@ -97,17 +97,3 @@ public struct GelatoDocumentReportType: RawRepresentable, Codable, Hashable, Sen
     public static var idCard: Self { .init(rawValue: "id_card") }
     public static var passport: Self { .init(rawValue: "passport") }
 }
-
-public struct GelatoDocumentReportList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoDocumentReport]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

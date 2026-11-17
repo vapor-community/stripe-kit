@@ -23,17 +23,3 @@ public struct PaymentLinksResourceTaxIdCollectionRequired: RawRepresentable, Cod
     public static var ifSupported: Self { .init(rawValue: "if_supported") }
     public static var never: Self { .init(rawValue: "never") }
 }
-
-public struct PaymentLinksResourceTaxIdCollectionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceTaxIdCollection]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

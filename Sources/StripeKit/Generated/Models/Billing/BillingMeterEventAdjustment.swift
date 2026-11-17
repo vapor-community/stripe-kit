@@ -71,16 +71,4 @@ public struct BillingMeterEventAdjustmentType: RawRepresentable, Codable, Hashab
     public static var cancel: Self { .init(rawValue: "cancel") }
 }
 
-public struct BillingMeterEventAdjustmentList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingMeterEventAdjustment]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias BillingMeterEventAdjustmentList = StripeList<BillingMeterEventAdjustment>

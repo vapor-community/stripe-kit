@@ -9,17 +9,3 @@ import Foundation
 
 public struct PaymentMethodDetailsPayByBank: Codable, Sendable {
 }
-
-public struct PaymentMethodDetailsPayByBankList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPayByBank]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

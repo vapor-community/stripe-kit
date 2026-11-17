@@ -93,16 +93,4 @@ public struct CreditNoteLineItemType: RawRepresentable, Codable, Hashable, Senda
     public static var invoiceLineItem: Self { .init(rawValue: "invoice_line_item") }
 }
 
-public struct CreditNoteLineItemList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CreditNoteLineItem]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias CreditNoteLineItemList = StripeList<CreditNoteLineItem>

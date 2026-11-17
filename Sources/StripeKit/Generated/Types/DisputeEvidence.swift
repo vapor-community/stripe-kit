@@ -131,17 +131,3 @@ public struct DisputeEvidence: Codable, Sendable {
         case uncategorizedText = "uncategorized_text"
     }
 }
-
-public struct DisputeEvidenceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DisputeEvidence]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

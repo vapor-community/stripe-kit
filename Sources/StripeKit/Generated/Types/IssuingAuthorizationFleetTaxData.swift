@@ -20,17 +20,3 @@ public struct IssuingAuthorizationFleetTaxData: Codable, Sendable {
         case nationalAmountDecimal = "national_amount_decimal"
     }
 }
-
-public struct IssuingAuthorizationFleetTaxDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingAuthorizationFleetTaxData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

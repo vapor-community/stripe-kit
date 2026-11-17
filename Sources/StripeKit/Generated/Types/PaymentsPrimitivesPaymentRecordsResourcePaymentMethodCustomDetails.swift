@@ -20,17 +20,3 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCustomDetails
         case type
     }
 }
-
-public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCustomDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCustomDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

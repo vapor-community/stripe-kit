@@ -22,7 +22,7 @@ public struct IssuingCardholderRoutes: Sendable {
     public var update: @Sendable (_ cardholder: String, _ params: IssuingCardholderUpdateParams, _ options: RequestOptions) async throws -> IssuingCardholder
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: IssuingCardholderListParams, _ options: RequestOptions) async throws -> IssuingCardholderList
+    public var list: @Sendable (_ params: IssuingCardholderListParams, _ options: RequestOptions) async throws -> StripeList<IssuingCardholder>
 }
 
 extension IssuingCardholderRoutes {
@@ -44,7 +44,7 @@ extension IssuingCardholderRoutes {
 
     /// Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public func list(_ params: IssuingCardholderListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingCardholderList {
+    public func list(_ params: IssuingCardholderListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<IssuingCardholder> {
         try await list(params, options)
     }
 }

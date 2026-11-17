@@ -33,17 +33,3 @@ public struct BillingBillResourceInvoicingParentsInvoiceParentType: RawRepresent
     public static var quoteDetails: Self { .init(rawValue: "quote_details") }
     public static var subscriptionDetails: Self { .init(rawValue: "subscription_details") }
 }
-
-public struct BillingBillResourceInvoicingParentsInvoiceParentList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingBillResourceInvoicingParentsInvoiceParent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

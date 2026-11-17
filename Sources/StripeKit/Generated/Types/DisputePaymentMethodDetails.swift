@@ -37,17 +37,3 @@ public struct DisputePaymentMethodDetailsType: RawRepresentable, Codable, Hashab
     public static var klarna: Self { .init(rawValue: "klarna") }
     public static var paypal: Self { .init(rawValue: "paypal") }
 }
-
-public struct DisputePaymentMethodDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DisputePaymentMethodDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

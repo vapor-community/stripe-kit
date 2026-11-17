@@ -26,17 +26,3 @@ public struct PaymentMethodOptionsAlmaCaptureMethod: RawRepresentable, Codable, 
 
     public static var manual: Self { .init(rawValue: "manual") }
 }
-
-public struct PaymentMethodOptionsAlmaList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodOptionsAlma]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

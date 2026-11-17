@@ -70,17 +70,3 @@ public struct CheckoutWechatPayPaymentMethodOptionsSetupFutureUsage: RawRepresen
     /// `setup_future_usage` value for this payment method.
     public static var none: Self { .init(rawValue: "none") }
 }
-
-public struct CheckoutWechatPayPaymentMethodOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CheckoutWechatPayPaymentMethodOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -29,17 +29,3 @@ public struct PaymentMethodDetailsCardPresentOfflineType: RawRepresentable, Coda
 
     public static var deferred: Self { .init(rawValue: "deferred") }
 }
-
-public struct PaymentMethodDetailsCardPresentOfflineList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsCardPresentOffline]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -22,7 +22,7 @@ public struct TopupRoutes: Sendable {
     public var update: @Sendable (_ topup: String, _ params: TopupUpdateParams, _ options: RequestOptions) async throws -> Topup
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TopupListParams, _ options: RequestOptions) async throws -> TopupList
+    public var list: @Sendable (_ params: TopupListParams, _ options: RequestOptions) async throws -> StripeList<Topup>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ topup: String, _ params: TopupCancelParams, _ options: RequestOptions) async throws -> Topup
@@ -47,7 +47,7 @@ extension TopupRoutes {
     }
 
     /// Returns a list of top-ups.
-    public func list(_ params: TopupListParams = .init(), options: RequestOptions = .init()) async throws -> TopupList {
+    public func list(_ params: TopupListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Topup> {
         try await list(params, options)
     }
 

@@ -22,7 +22,7 @@ public struct ClimateOrderRoutes: Sendable {
     public var update: @Sendable (_ order: String, _ params: ClimateOrderUpdateParams, _ options: RequestOptions) async throws -> ClimateOrder
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ClimateOrderListParams, _ options: RequestOptions) async throws -> ClimateOrderList
+    public var list: @Sendable (_ params: ClimateOrderListParams, _ options: RequestOptions) async throws -> StripeList<ClimateOrder>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ order: String, _ params: ClimateOrderCancelParams, _ options: RequestOptions) async throws -> ClimateOrder
@@ -47,7 +47,7 @@ extension ClimateOrderRoutes {
 
     /// Lists all Climate order objects. The orders are returned sorted by creation date, with the most
     /// recently created orders appearing first.
-    public func list(_ params: ClimateOrderListParams = .init(), options: RequestOptions = .init()) async throws -> ClimateOrderList {
+    public func list(_ params: ClimateOrderListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ClimateOrder> {
         try await list(params, options)
     }
 

@@ -34,17 +34,3 @@ public struct PaymentPagesCheckoutSessionCustomFieldsType: RawRepresentable, Cod
     public static var numeric: Self { .init(rawValue: "numeric") }
     public static var text: Self { .init(rawValue: "text") }
 }
-
-public struct PaymentPagesCheckoutSessionCustomFieldsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionCustomFields]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

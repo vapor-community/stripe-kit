@@ -12,17 +12,3 @@ public struct ConnectEmbeddedDisputesListConfig: Codable, Sendable {
     public var enabled: Bool
     public var features: ConnectEmbeddedDisputesListFeatures
 }
-
-public struct ConnectEmbeddedDisputesListConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectEmbeddedDisputesListConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

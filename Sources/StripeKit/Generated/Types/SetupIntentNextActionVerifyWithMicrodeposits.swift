@@ -35,17 +35,3 @@ public struct SetupIntentNextActionVerifyWithMicrodepositsMicrodepositType: RawR
     public static var amounts: Self { .init(rawValue: "amounts") }
     public static var descriptorCode: Self { .init(rawValue: "descriptor_code") }
 }
-
-public struct SetupIntentNextActionVerifyWithMicrodepositsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupIntentNextActionVerifyWithMicrodeposits]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

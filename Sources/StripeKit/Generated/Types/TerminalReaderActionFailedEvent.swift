@@ -12,17 +12,3 @@ public struct TerminalReaderActionFailedEvent: Codable, Sendable {
     @Indirect
     public var object: TerminalReader
 }
-
-public struct TerminalReaderActionFailedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderActionFailedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

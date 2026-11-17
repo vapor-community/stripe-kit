@@ -24,17 +24,3 @@ public struct InvoicesResourceStatusTransitions: Codable, Sendable {
         case voidedAt = "voided_at"
     }
 }
-
-public struct InvoicesResourceStatusTransitionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicesResourceStatusTransitions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

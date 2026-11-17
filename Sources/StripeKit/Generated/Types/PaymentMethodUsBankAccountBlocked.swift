@@ -57,17 +57,3 @@ public struct PaymentMethodUsBankAccountBlockedReason: RawRepresentable, Codable
     public static var debitNotAuthorized: Self { .init(rawValue: "debit_not_authorized") }
     public static var tokenizedAccountNumberDeactivated: Self { .init(rawValue: "tokenized_account_number_deactivated") }
 }
-
-public struct PaymentMethodUsBankAccountBlockedList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodUsBankAccountBlocked]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

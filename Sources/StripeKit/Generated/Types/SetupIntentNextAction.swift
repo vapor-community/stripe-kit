@@ -34,17 +34,3 @@ public struct SetupIntentNextAction: Codable, Sendable {
         case verifyWithMicrodeposits = "verify_with_microdeposits"
     }
 }
-
-public struct SetupIntentNextActionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupIntentNextAction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

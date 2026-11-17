@@ -13,17 +13,3 @@ public struct PaymentLinksResourceIndividualName: Codable, Sendable {
     /// Whether the customer is required to complete the field before checking out. Defaults to `false`.
     public var optional: Bool
 }
-
-public struct PaymentLinksResourceIndividualNameList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceIndividualName]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

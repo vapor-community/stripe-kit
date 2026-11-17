@@ -58,17 +58,3 @@ public struct AccountUnificationAccountControllerType: RawRepresentable, Codable
     public static var account: Self { .init(rawValue: "account") }
     public static var application: Self { .init(rawValue: "application") }
 }
-
-public struct AccountUnificationAccountControllerList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountUnificationAccountController]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

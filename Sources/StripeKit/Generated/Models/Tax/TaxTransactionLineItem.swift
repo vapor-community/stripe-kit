@@ -95,16 +95,4 @@ public struct TaxTransactionLineItemType: RawRepresentable, Codable, Hashable, S
     public static var transaction: Self { .init(rawValue: "transaction") }
 }
 
-public struct TaxTransactionLineItemList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxTransactionLineItem]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TaxTransactionLineItemList = StripeList<TaxTransactionLineItem>

@@ -52,17 +52,3 @@ public struct BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatus
     /// The account is expected to become inactive for an unspecified or ambiguous reason.
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
-
-public struct BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

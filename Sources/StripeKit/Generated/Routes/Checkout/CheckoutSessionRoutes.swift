@@ -22,13 +22,13 @@ public struct CheckoutSessionRoutes: Sendable {
     public var update: @Sendable (_ session: String, _ params: CheckoutSessionUpdateParams, _ options: RequestOptions) async throws -> CheckoutSession
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: CheckoutSessionListParams, _ options: RequestOptions) async throws -> CheckoutSessionList
+    public var list: @Sendable (_ params: CheckoutSessionListParams, _ options: RequestOptions) async throws -> StripeList<CheckoutSession>
 
     /// Performs `expire(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var expire: @Sendable (_ session: String, _ params: CheckoutSessionExpireParams, _ options: RequestOptions) async throws -> CheckoutSession
 
     /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listLineItems: @Sendable (_ session: String, _ params: CheckoutSessionListLineItemsParams, _ options: RequestOptions) async throws -> ItemList
+    public var listLineItems: @Sendable (_ session: String, _ params: CheckoutSessionListLineItemsParams, _ options: RequestOptions) async throws -> StripeList<Item>
 }
 
 extension CheckoutSessionRoutes {
@@ -48,7 +48,7 @@ extension CheckoutSessionRoutes {
     }
 
     /// Returns a list of Checkout Sessions.
-    public func list(_ params: CheckoutSessionListParams = .init(), options: RequestOptions = .init()) async throws -> CheckoutSessionList {
+    public func list(_ params: CheckoutSessionListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<CheckoutSession> {
         try await list(params, options)
     }
 
@@ -62,7 +62,7 @@ extension CheckoutSessionRoutes {
     /// When retrieving a Checkout Session, there is an includable line_items property containing the first
     /// handful of those items. There is also a URL where you can retrieve the full (paginated) list of line
     /// items.
-    public func listLineItems(_ session: String, _ params: CheckoutSessionListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> ItemList {
+    public func listLineItems(_ session: String, _ params: CheckoutSessionListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Item> {
         try await listLineItems(session, params, options)
     }
 }

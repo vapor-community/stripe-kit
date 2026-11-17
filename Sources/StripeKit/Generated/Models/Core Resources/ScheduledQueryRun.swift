@@ -62,16 +62,4 @@ public struct ScheduledQueryRunObject: RawRepresentable, Codable, Hashable, Send
     public static var scheduledQueryRun: Self { .init(rawValue: "scheduled_query_run") }
 }
 
-public struct ScheduledQueryRunList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ScheduledQueryRun]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ScheduledQueryRunList = StripeList<ScheduledQueryRun>

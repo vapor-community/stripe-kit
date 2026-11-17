@@ -58,17 +58,3 @@ public struct TreasuryTransactionsResourceFlowDetailsType: RawRepresentable, Cod
     public static var receivedCredit: Self { .init(rawValue: "received_credit") }
     public static var receivedDebit: Self { .init(rawValue: "received_debit") }
 }
-
-public struct TreasuryTransactionsResourceFlowDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryTransactionsResourceFlowDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

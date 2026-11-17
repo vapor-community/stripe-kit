@@ -11,17 +11,3 @@ import Foundation
 public struct SubscriptionsResourceStatusDetailsPublic: Codable, Sendable {
     public var paused: SubscriptionsResourcePausedStatusDetailsPublic
 }
-
-public struct SubscriptionsResourceStatusDetailsPublicList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionsResourceStatusDetailsPublic]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

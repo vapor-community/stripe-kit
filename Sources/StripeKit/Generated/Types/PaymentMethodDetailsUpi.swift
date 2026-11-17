@@ -11,17 +11,3 @@ public struct PaymentMethodDetailsUpi: Codable, Sendable {
     /// Customer's unique Virtual Payment Address.
     public var vpa: String?
 }
-
-public struct PaymentMethodDetailsUpiList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsUpi]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

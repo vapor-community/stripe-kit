@@ -43,17 +43,3 @@ public struct InvoicesPaymentsInvoicePaymentAssociatedPaymentType: RawRepresenta
     public static var paymentIntent: Self { .init(rawValue: "payment_intent") }
     public static var paymentRecord: Self { .init(rawValue: "payment_record") }
 }
-
-public struct InvoicesPaymentsInvoicePaymentAssociatedPaymentList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicesPaymentsInvoicePaymentAssociatedPayment]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

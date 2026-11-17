@@ -22,7 +22,7 @@ public struct TaxTransaction: Codable, Sendable {
     /// Unique identifier for the transaction.
     public var id: String
     /// The tax collected or refunded, by line item.
-    public var lineItems: TaxTransactionLineItemList?
+    public var lineItems: StripeList<TaxTransactionLineItem>?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -93,16 +93,4 @@ public struct TaxTransactionType: RawRepresentable, Codable, Hashable, Sendable 
     public static var transaction: Self { .init(rawValue: "transaction") }
 }
 
-public struct TaxTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TaxTransactionList = StripeList<TaxTransaction>

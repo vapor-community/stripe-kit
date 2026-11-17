@@ -55,17 +55,3 @@ public struct PaymentMethodDetailsCardWalletType: RawRepresentable, Codable, Has
     public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
     public static var visaCheckout: Self { .init(rawValue: "visa_checkout") }
 }
-
-public struct PaymentMethodDetailsCardWalletList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsCardWallet]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

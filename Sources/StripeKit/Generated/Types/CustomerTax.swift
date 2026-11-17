@@ -54,17 +54,3 @@ public struct CustomerTaxProvider: RawRepresentable, Codable, Hashable, Sendable
     public static var sphere: Self { .init(rawValue: "sphere") }
     public static var stripe: Self { .init(rawValue: "stripe") }
 }
-
-public struct CustomerTaxList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerTax]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

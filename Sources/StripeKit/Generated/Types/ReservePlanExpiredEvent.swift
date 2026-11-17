@@ -11,17 +11,3 @@ import Foundation
 public struct ReservePlanExpiredEvent: Codable, Sendable {
     public var object: ReservePlan
 }
-
-public struct ReservePlanExpiredEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ReservePlanExpiredEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

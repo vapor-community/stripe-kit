@@ -77,16 +77,4 @@ public struct RadarPaymentEvaluationRecommendedAction: RawRepresentable, Codable
     public static var `continue`: Self { .init(rawValue: "continue") }
 }
 
-public struct RadarPaymentEvaluationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [RadarPaymentEvaluation]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias RadarPaymentEvaluationList = StripeList<RadarPaymentEvaluation>

@@ -66,16 +66,4 @@ public struct TokenObject: RawRepresentable, Codable, Hashable, Sendable {
     public static var token: Self { .init(rawValue: "token") }
 }
 
-public struct TokenList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Token]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TokenList = StripeList<Token>

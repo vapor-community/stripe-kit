@@ -24,17 +24,3 @@ public struct ProductCatalogImplEndpointsTrialOfferResourceTrialOfferDurationTyp
     /// The duration of trials created from this offer are determined relative to the trial start date.
     public static var relative: Self { .init(rawValue: "relative") }
 }
-
-public struct ProductCatalogImplEndpointsTrialOfferResourceTrialOfferDurationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ProductCatalogImplEndpointsTrialOfferResourceTrialOfferDuration]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

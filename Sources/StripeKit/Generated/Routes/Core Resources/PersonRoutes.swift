@@ -22,7 +22,7 @@ public struct PersonRoutes: Sendable {
     public var update: @Sendable (_ account: String, _ person: String, _ params: PersonUpdateParams, _ options: RequestOptions) async throws -> Person
 
     /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ account: String, _ params: PersonListParams, _ options: RequestOptions) async throws -> PersonList
+    public var list: @Sendable (_ account: String, _ params: PersonListParams, _ options: RequestOptions) async throws -> StripeList<Person>
 
     /// Performs `delete(_:person:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ account: String, _ person: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedPerson
@@ -46,7 +46,7 @@ extension PersonRoutes {
 
     /// Returns a list of people associated with the account’s legal entity. The people are returned sorted
     /// by creation date, with the most recent people appearing first.
-    public func list(_ account: String, _ params: PersonListParams = .init(), options: RequestOptions = .init()) async throws -> PersonList {
+    public func list(_ account: String, _ params: PersonListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Person> {
         try await list(account, params, options)
     }
 

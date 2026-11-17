@@ -94,16 +94,4 @@ public struct SourceTransactionType: RawRepresentable, Codable, Hashable, Sendab
     public static var wechat: Self { .init(rawValue: "wechat") }
 }
 
-public struct SourceTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SourceTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias SourceTransactionList = StripeList<SourceTransaction>

@@ -16,7 +16,7 @@ public struct ApplicationFeeRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ApplicationFee
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ApplicationFeeListParams, _ options: RequestOptions) async throws -> ApplicationFeeList
+    public var list: @Sendable (_ params: ApplicationFeeListParams, _ options: RequestOptions) async throws -> StripeList<ApplicationFee>
 }
 
 extension ApplicationFeeRoutes {
@@ -28,7 +28,7 @@ extension ApplicationFeeRoutes {
 
     /// Returns a list of application fees you’ve previously collected. The application fees are returned in
     /// sorted order, with the most recent fees appearing first.
-    public func list(_ params: ApplicationFeeListParams = .init(), options: RequestOptions = .init()) async throws -> ApplicationFeeList {
+    public func list(_ params: ApplicationFeeListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ApplicationFee> {
         try await list(params, options)
     }
 }

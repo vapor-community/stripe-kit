@@ -27,17 +27,3 @@ public struct PaymentLinksResourcePaymentMethodReuseAgreementPosition: RawRepres
     public static var auto: Self { .init(rawValue: "auto") }
     public static var hidden: Self { .init(rawValue: "hidden") }
 }
-
-public struct PaymentLinksResourcePaymentMethodReuseAgreementList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourcePaymentMethodReuseAgreement]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

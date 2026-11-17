@@ -20,17 +20,3 @@ public struct PaymentMethodDetailsPaymentRecordLink: Codable, Sendable {
         case fundingSourceGroup = "funding_source_group"
     }
 }
-
-public struct PaymentMethodDetailsPaymentRecordLinkList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPaymentRecordLink]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

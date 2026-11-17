@@ -12,17 +12,3 @@ public struct ProductCatalogImplEndpointsTrialOfferResourceTransition: Codable, 
     @Expandable<ObjectOrDeleted<Price, DeletedPrice>>
     public var price: String?
 }
-
-public struct ProductCatalogImplEndpointsTrialOfferResourceTransitionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ProductCatalogImplEndpointsTrialOfferResourceTransition]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -11,17 +11,3 @@ public struct IssuingCardholderVerification: Codable, Sendable {
     /// An identifying document, either a passport or local ID card.
     public var document: IssuingCardholderIdDocument?
 }
-
-public struct IssuingCardholderVerificationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardholderVerification]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

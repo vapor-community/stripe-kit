@@ -15,17 +15,3 @@ public struct PaymentsPrimitivesPaymentRecordsResourceShippingDetails: Codable, 
     /// The shipping recipient's phone number.
     public var phone: String?
 }
-
-public struct PaymentsPrimitivesPaymentRecordsResourceShippingDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentsPrimitivesPaymentRecordsResourceShippingDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

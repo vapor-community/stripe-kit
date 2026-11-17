@@ -19,7 +19,7 @@ public struct ReportingReportRunRoutes: Sendable {
     public var retrieve: @Sendable (_ reportRun: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ReportingReportRun
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ReportingReportRunListParams, _ options: RequestOptions) async throws -> ReportingReportRunList
+    public var list: @Sendable (_ params: ReportingReportRunListParams, _ options: RequestOptions) async throws -> StripeList<ReportingReportRun>
 }
 
 extension ReportingReportRunRoutes {
@@ -35,7 +35,7 @@ extension ReportingReportRunRoutes {
     }
 
     /// Returns a list of Report Runs, with the most recent appearing first.
-    public func list(_ params: ReportingReportRunListParams = .init(), options: RequestOptions = .init()) async throws -> ReportingReportRunList {
+    public func list(_ params: ReportingReportRunListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ReportingReportRun> {
         try await list(params, options)
     }
 }

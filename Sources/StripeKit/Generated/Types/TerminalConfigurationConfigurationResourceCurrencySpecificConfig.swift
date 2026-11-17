@@ -21,17 +21,3 @@ public struct TerminalConfigurationConfigurationResourceCurrencySpecificConfig: 
         case smartTipThreshold = "smart_tip_threshold"
     }
 }
-
-public struct TerminalConfigurationConfigurationResourceCurrencySpecificConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalConfigurationConfigurationResourceCurrencySpecificConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

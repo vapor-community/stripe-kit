@@ -11,17 +11,3 @@ public struct PaymentLinksResourceCustomTextPosition: Codable, Sendable {
     /// Text can be up to 1200 characters in length.
     public var message: String
 }
-
-public struct PaymentLinksResourceCustomTextPositionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceCustomTextPosition]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

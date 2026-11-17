@@ -11,17 +11,3 @@ public struct BankConnectionsResourceAuthorizationStatusDetails: Codable, Sendab
     public var active: BankConnectionsResourceAuthorizationStatusDetailsApiResourceActiveStatusDetails?
     public var inactive: BankConnectionsResourceAuthorizationStatusDetailsApiResourceInactiveStatusDetails?
 }
-
-public struct BankConnectionsResourceAuthorizationStatusDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BankConnectionsResourceAuthorizationStatusDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

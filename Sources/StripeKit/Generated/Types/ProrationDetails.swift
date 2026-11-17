@@ -21,17 +21,3 @@ public struct ProrationDetails: Codable, Sendable {
         case discountAmounts = "discount_amounts"
     }
 }
-
-public struct ProrationDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ProrationDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

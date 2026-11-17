@@ -22,7 +22,7 @@ public struct ShippingRateRoutes: Sendable {
     public var update: @Sendable (_ shippingRateToken: String, _ params: ShippingRateUpdateParams, _ options: RequestOptions) async throws -> ShippingRate
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ShippingRateListParams, _ options: RequestOptions) async throws -> ShippingRateList
+    public var list: @Sendable (_ params: ShippingRateListParams, _ options: RequestOptions) async throws -> StripeList<ShippingRate>
 }
 
 extension ShippingRateRoutes {
@@ -42,7 +42,7 @@ extension ShippingRateRoutes {
     }
 
     /// Returns a list of your shipping rates.
-    public func list(_ params: ShippingRateListParams = .init(), options: RequestOptions = .init()) async throws -> ShippingRateList {
+    public func list(_ params: ShippingRateListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ShippingRate> {
         try await list(params, options)
     }
 }

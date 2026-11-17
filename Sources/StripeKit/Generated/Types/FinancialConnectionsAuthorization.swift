@@ -55,17 +55,3 @@ public struct FinancialConnectionsAuthorizationStatus: RawRepresentable, Codable
     public static var active: Self { .init(rawValue: "active") }
     public static var inactive: Self { .init(rawValue: "inactive") }
 }
-
-public struct FinancialConnectionsAuthorizationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FinancialConnectionsAuthorization]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -62,16 +62,4 @@ public struct IssuingPhysicalBundleType: RawRepresentable, Codable, Hashable, Se
     public static var standard: Self { .init(rawValue: "standard") }
 }
 
-public struct IssuingPhysicalBundleList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingPhysicalBundle]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias IssuingPhysicalBundleList = StripeList<IssuingPhysicalBundle>

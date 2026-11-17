@@ -13,17 +13,3 @@ public struct CountrySpecVerificationFieldDetails: Codable, Sendable {
     /// Fields which every account must eventually provide.
     public var minimum: [String]
 }
-
-public struct CountrySpecVerificationFieldDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CountrySpecVerificationFieldDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

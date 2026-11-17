@@ -29,17 +29,3 @@ public struct IssuingDisputeServiceNotAsDescribedEvidence: Codable, Sendable {
         case receivedAt = "received_at"
     }
 }
-
-public struct IssuingDisputeServiceNotAsDescribedEvidenceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingDisputeServiceNotAsDescribedEvidence]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

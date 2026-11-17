@@ -18,17 +18,3 @@ public struct SubscriptionScheduleCurrentPhase: Codable, Sendable {
         case startDate = "start_date"
     }
 }
-
-public struct SubscriptionScheduleCurrentPhaseList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionScheduleCurrentPhase]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -26,17 +26,3 @@ public struct InsightsResourcesPaymentEvaluationMerchantBlockedReason: RawRepres
     public static var invalidPayment: Self { .init(rawValue: "invalid_payment") }
     public static var other: Self { .init(rawValue: "other") }
 }
-
-public struct InsightsResourcesPaymentEvaluationMerchantBlockedList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationMerchantBlocked]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

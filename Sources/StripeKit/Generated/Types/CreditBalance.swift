@@ -16,17 +16,3 @@ public struct CreditBalance: Codable, Sendable {
         case ledgerBalance = "ledger_balance"
     }
 }
-
-public struct CreditBalanceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CreditBalance]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

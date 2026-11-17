@@ -26,17 +26,3 @@ public struct DeletedProductFeatureObject: RawRepresentable, Codable, Hashable, 
 
     public static var productFeature: Self { .init(rawValue: "product_feature") }
 }
-
-public struct DeletedProductFeatureList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DeletedProductFeature]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

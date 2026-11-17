@@ -34,17 +34,3 @@ public struct AccountPaypaySiteSettingsType: RawRepresentable, Codable, Hashable
     public static var inDevelopment: Self { .init(rawValue: "in_development") }
     public static var restricted: Self { .init(rawValue: "restricted") }
 }
-
-public struct AccountPaypaySiteSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountPaypaySiteSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -15,17 +15,3 @@ public struct AccountPaypaySiteRestrictedSettings: Codable, Sendable {
         case paymentFlowFile = "payment_flow_file"
     }
 }
-
-public struct AccountPaypaySiteRestrictedSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountPaypaySiteRestrictedSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

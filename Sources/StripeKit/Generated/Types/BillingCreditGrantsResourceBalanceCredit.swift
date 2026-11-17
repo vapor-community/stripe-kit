@@ -33,17 +33,3 @@ public struct BillingCreditGrantsResourceBalanceCreditType: RawRepresentable, Co
     public static var creditsApplicationInvoiceVoided: Self { .init(rawValue: "credits_application_invoice_voided") }
     public static var creditsGranted: Self { .init(rawValue: "credits_granted") }
 }
-
-public struct BillingCreditGrantsResourceBalanceCreditList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingCreditGrantsResourceBalanceCredit]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

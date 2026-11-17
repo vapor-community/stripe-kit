@@ -26,17 +26,3 @@ public struct GelatoEmailReportErrorCode: RawRepresentable, Codable, Hashable, S
     public static var emailUnverifiedOther: Self { .init(rawValue: "email_unverified_other") }
     public static var emailVerificationDeclined: Self { .init(rawValue: "email_verification_declined") }
 }
-
-public struct GelatoEmailReportErrorList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoEmailReportError]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

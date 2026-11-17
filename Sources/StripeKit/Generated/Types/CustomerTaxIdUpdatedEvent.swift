@@ -12,17 +12,3 @@ public struct CustomerTaxIdUpdatedEvent: Codable, Sendable {
     @Indirect
     public var object: TaxId
 }
-
-public struct CustomerTaxIdUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerTaxIdUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

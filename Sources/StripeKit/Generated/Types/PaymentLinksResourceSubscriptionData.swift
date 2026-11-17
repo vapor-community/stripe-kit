@@ -30,17 +30,3 @@ public struct PaymentLinksResourceSubscriptionData: Codable, Sendable {
         case trialSettings = "trial_settings"
     }
 }
-
-public struct PaymentLinksResourceSubscriptionDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceSubscriptionData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

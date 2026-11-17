@@ -61,17 +61,3 @@ public struct TerminalReaderReaderResourceRefundPaymentActionReason: RawRepresen
     public static var fraudulent: Self { .init(rawValue: "fraudulent") }
     public static var requestedByCustomer: Self { .init(rawValue: "requested_by_customer") }
 }
-
-public struct TerminalReaderReaderResourceRefundPaymentActionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceRefundPaymentAction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

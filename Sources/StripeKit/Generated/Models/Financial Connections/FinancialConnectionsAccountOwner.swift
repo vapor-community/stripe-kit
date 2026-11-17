@@ -49,16 +49,4 @@ public struct FinancialConnectionsAccountOwnerObject: RawRepresentable, Codable,
     public static var financialConnectionsAccountOwner: Self { .init(rawValue: "financial_connections.account_owner") }
 }
 
-public struct FinancialConnectionsAccountOwnerList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FinancialConnectionsAccountOwner]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias FinancialConnectionsAccountOwnerList = StripeList<FinancialConnectionsAccountOwner>

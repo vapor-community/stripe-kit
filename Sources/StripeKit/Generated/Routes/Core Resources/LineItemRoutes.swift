@@ -16,7 +16,7 @@ public struct LineItemRoutes: Sendable {
     public var update: @Sendable (_ invoice: String, _ lineItemId: String, _ params: LineItemUpdateParams, _ options: RequestOptions) async throws -> LineItem
 
     /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ invoice: String, _ params: LineItemListParams, _ options: RequestOptions) async throws -> LineItemList
+    public var list: @Sendable (_ invoice: String, _ params: LineItemListParams, _ options: RequestOptions) async throws -> StripeList<LineItem>
 }
 
 extension LineItemRoutes {
@@ -32,7 +32,7 @@ extension LineItemRoutes {
     /// When retrieving an invoice, you’ll get a lines property containing the total count of line items and
     /// the first handful of those items. There is also a URL where you can retrieve the full (paginated)
     /// list of line items.
-    public func list(_ invoice: String, _ params: LineItemListParams = .init(), options: RequestOptions = .init()) async throws -> LineItemList {
+    public func list(_ invoice: String, _ params: LineItemListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<LineItem> {
         try await list(invoice, params, options)
     }
 }

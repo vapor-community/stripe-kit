@@ -18,17 +18,3 @@ public struct CreditNotesPaymentRecordRefund: Codable, Sendable {
         case refundGroup = "refund_group"
     }
 }
-
-public struct CreditNotesPaymentRecordRefundList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CreditNotesPaymentRecordRefund]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

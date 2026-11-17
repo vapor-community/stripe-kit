@@ -22,7 +22,7 @@ public struct AccountRoutes: Sendable {
     public var update: @Sendable (_ account: String, _ params: AccountUpdateParams, _ options: RequestOptions) async throws -> Account
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: AccountListParams, _ options: RequestOptions) async throws -> AccountList
+    public var list: @Sendable (_ params: AccountListParams, _ options: RequestOptions) async throws -> StripeList<Account>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ account: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedAccount
@@ -64,7 +64,7 @@ extension AccountRoutes {
 
     /// Returns a list of accounts connected to your platform via Connect. If you’re not a platform, the
     /// list is empty.
-    public func list(_ params: AccountListParams = .init(), options: RequestOptions = .init()) async throws -> AccountList {
+    public func list(_ params: AccountListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Account> {
         try await list(params, options)
     }
 

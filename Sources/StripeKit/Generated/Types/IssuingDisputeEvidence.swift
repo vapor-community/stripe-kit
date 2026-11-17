@@ -49,17 +49,3 @@ public struct IssuingDisputeEvidenceReason: RawRepresentable, Codable, Hashable,
     public static var other: Self { .init(rawValue: "other") }
     public static var serviceNotAsDescribed: Self { .init(rawValue: "service_not_as_described") }
 }
-
-public struct IssuingDisputeEvidenceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingDisputeEvidence]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -11,17 +11,3 @@ public struct CountrySpecVerificationFields: Codable, Sendable {
     public var company: CountrySpecVerificationFieldDetails
     public var individual: CountrySpecVerificationFieldDetails
 }
-
-public struct CountrySpecVerificationFieldsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CountrySpecVerificationFields]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

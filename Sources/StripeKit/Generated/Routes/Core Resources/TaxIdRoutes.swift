@@ -19,7 +19,7 @@ public struct TaxIdRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxId
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TaxIdListParams, _ options: RequestOptions) async throws -> TaxIdList
+    public var list: @Sendable (_ params: TaxIdListParams, _ options: RequestOptions) async throws -> StripeList<TaxId>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTaxId
@@ -31,7 +31,7 @@ public struct TaxIdRoutes: Sendable {
     public var deleteForCustomer: @Sendable (_ customer: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedTaxId
 
     /// Performs `listForCustomer(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listForCustomer: @Sendable (_ customer: String, _ params: TaxIdListForCustomerParams, _ options: RequestOptions) async throws -> TaxIdList
+    public var listForCustomer: @Sendable (_ customer: String, _ params: TaxIdListForCustomerParams, _ options: RequestOptions) async throws -> StripeList<TaxId>
 
     /// Performs `retrieveForCustomer(_:id:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var retrieveForCustomer: @Sendable (_ customer: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TaxId
@@ -49,7 +49,7 @@ extension TaxIdRoutes {
     }
 
     /// Returns a list of tax IDs.
-    public func list(_ params: TaxIdListParams = .init(), options: RequestOptions = .init()) async throws -> TaxIdList {
+    public func list(_ params: TaxIdListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TaxId> {
         try await list(params, options)
     }
 
@@ -69,7 +69,7 @@ extension TaxIdRoutes {
     }
 
     /// Returns a list of tax IDs for a customer.
-    public func listForCustomer(_ customer: String, _ params: TaxIdListForCustomerParams = .init(), options: RequestOptions = .init()) async throws -> TaxIdList {
+    public func listForCustomer(_ customer: String, _ params: TaxIdListForCustomerParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TaxId> {
         try await listForCustomer(customer, params, options)
     }
 

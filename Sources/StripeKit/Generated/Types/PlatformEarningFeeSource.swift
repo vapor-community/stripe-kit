@@ -27,17 +27,3 @@ public struct PlatformEarningFeeSourceType: RawRepresentable, Codable, Hashable,
     public static var charge: Self { .init(rawValue: "charge") }
     public static var payout: Self { .init(rawValue: "payout") }
 }
-
-public struct PlatformEarningFeeSourceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PlatformEarningFeeSource]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

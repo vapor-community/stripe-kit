@@ -11,17 +11,3 @@ import Foundation
 public struct InsightsResourcesPaymentEvaluationSucceeded: Codable, Sendable {
     public var card: InsightsResourcesPaymentEvaluationSucceededCard?
 }
-
-public struct InsightsResourcesPaymentEvaluationSucceededList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationSucceeded]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

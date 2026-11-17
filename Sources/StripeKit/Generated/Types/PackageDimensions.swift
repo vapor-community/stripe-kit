@@ -17,17 +17,3 @@ public struct PackageDimensions: Codable, Sendable {
     /// Width, in inches.
     public var width: Double
 }
-
-public struct PackageDimensionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PackageDimensions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

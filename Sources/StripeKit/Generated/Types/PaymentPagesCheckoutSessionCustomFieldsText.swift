@@ -24,17 +24,3 @@ public struct PaymentPagesCheckoutSessionCustomFieldsText: Codable, Sendable {
         case value
     }
 }
-
-public struct PaymentPagesCheckoutSessionCustomFieldsTextList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionCustomFieldsText]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

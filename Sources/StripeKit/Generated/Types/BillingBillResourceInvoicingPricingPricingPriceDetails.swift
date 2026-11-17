@@ -14,17 +14,3 @@ public struct BillingBillResourceInvoicingPricingPricingPriceDetails: Codable, S
     /// The ID of the product this item is associated with.
     public var product: String
 }
-
-public struct BillingBillResourceInvoicingPricingPricingPriceDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingBillResourceInvoicingPricingPricingPriceDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

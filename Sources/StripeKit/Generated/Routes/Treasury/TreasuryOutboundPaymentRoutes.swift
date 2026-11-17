@@ -22,7 +22,7 @@ public struct TreasuryOutboundPaymentRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentUpdateParams, _ options: RequestOptions) async throws -> TreasuryOutboundPayment
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TreasuryOutboundPaymentListParams, _ options: RequestOptions) async throws -> TreasuryOutboundPaymentList
+    public var list: @Sendable (_ params: TreasuryOutboundPaymentListParams, _ options: RequestOptions) async throws -> StripeList<TreasuryOutboundPayment>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ id: String, _ params: TreasuryOutboundPaymentCancelParams, _ options: RequestOptions) async throws -> TreasuryOutboundPayment
@@ -56,7 +56,7 @@ extension TreasuryOutboundPaymentRoutes {
     }
 
     /// Returns a list of OutboundPayments sent from the specified FinancialAccount.
-    public func list(_ params: TreasuryOutboundPaymentListParams, options: RequestOptions = .init()) async throws -> TreasuryOutboundPaymentList {
+    public func list(_ params: TreasuryOutboundPaymentListParams, options: RequestOptions = .init()) async throws -> StripeList<TreasuryOutboundPayment> {
         try await list(params, options)
     }
 

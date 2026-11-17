@@ -16,17 +16,3 @@ public struct SourceTypeEps: Codable, Sendable {
         case statementDescriptor = "statement_descriptor"
     }
 }
-
-public struct SourceTypeEpsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SourceTypeEps]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

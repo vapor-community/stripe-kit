@@ -23,17 +23,3 @@ public struct TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoodsTy
 
     public static var standard: Self { .init(rawValue: "standard") }
 }
-
-public struct TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoodsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductRegistrationsResourceCountryOptionsDefaultInboundGoods]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -23,17 +23,3 @@ public struct DisputeEnhancedEligibilityVisaComplianceStatus: RawRepresentable, 
     public static var feeAcknowledged: Self { .init(rawValue: "fee_acknowledged") }
     public static var requiresFeeAcknowledgement: Self { .init(rawValue: "requires_fee_acknowledgement") }
 }
-
-public struct DisputeEnhancedEligibilityVisaComplianceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DisputeEnhancedEligibilityVisaCompliance]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

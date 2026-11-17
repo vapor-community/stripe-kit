@@ -35,17 +35,3 @@ public struct PaymentFlowsPrivatePaymentMethodsPaypalAmountDetailsLineItemPaymen
     public static var donation: Self { .init(rawValue: "donation") }
     public static var physicalGoods: Self { .init(rawValue: "physical_goods") }
 }
-
-public struct PaymentFlowsPrivatePaymentMethodsPaypalAmountDetailsLineItemPaymentMethodOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsPrivatePaymentMethodsPaypalAmountDetailsLineItemPaymentMethodOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

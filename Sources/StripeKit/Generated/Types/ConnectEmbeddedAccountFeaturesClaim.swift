@@ -24,17 +24,3 @@ public struct ConnectEmbeddedAccountFeaturesClaim: Codable, Sendable {
         case externalAccountCollection = "external_account_collection"
     }
 }
-
-public struct ConnectEmbeddedAccountFeaturesClaimList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectEmbeddedAccountFeaturesClaim]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

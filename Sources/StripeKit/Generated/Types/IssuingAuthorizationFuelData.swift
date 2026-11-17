@@ -64,17 +64,3 @@ public struct IssuingAuthorizationFuelDataUnit: RawRepresentable, Codable, Hasha
     public static var pound: Self { .init(rawValue: "pound") }
     public static var usGallon: Self { .init(rawValue: "us_gallon") }
 }
-
-public struct IssuingAuthorizationFuelDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingAuthorizationFuelData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

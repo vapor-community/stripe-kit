@@ -31,17 +31,3 @@ public struct IssuingCardApplePayIneligibleReason: RawRepresentable, Codable, Ha
     public static var missingCardholderContact: Self { .init(rawValue: "missing_cardholder_contact") }
     public static var unsupportedRegion: Self { .init(rawValue: "unsupported_region") }
 }
-
-public struct IssuingCardApplePayList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardApplePay]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

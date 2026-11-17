@@ -12,17 +12,3 @@ public struct ProductUpdatedEvent: Codable, Sendable {
     @Indirect
     public var object: Product
 }
-
-public struct ProductUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ProductUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

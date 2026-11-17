@@ -81,8 +81,8 @@ let intent = try await stripe.paymentIntents.create(piParams)
 
 // List all charges
 let charges = try await stripe.charges.list()
-for charge in charges.data ?? [] {
-    print("\(charge.id): \(charge.amount ?? 0)")
+for charge in charges.data {
+    print("\(charge.id): \(charge.amount)")
 }
 
 // List with filters (query params are typed too)

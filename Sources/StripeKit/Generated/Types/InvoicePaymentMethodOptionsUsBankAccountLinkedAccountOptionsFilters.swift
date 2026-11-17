@@ -16,17 +16,3 @@ public struct InvoicePaymentMethodOptionsUsBankAccountLinkedAccountOptionsFilter
         case accountSubcategories = "account_subcategories"
     }
 }
-
-public struct InvoicePaymentMethodOptionsUsBankAccountLinkedAccountOptionsFiltersList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicePaymentMethodOptionsUsBankAccountLinkedAccountOptionsFilters]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

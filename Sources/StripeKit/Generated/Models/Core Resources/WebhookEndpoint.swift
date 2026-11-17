@@ -70,16 +70,4 @@ public struct WebhookEndpointObject: RawRepresentable, Codable, Hashable, Sendab
     public static var webhookEndpoint: Self { .init(rawValue: "webhook_endpoint") }
 }
 
-public struct WebhookEndpointList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [WebhookEndpoint]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias WebhookEndpointList = StripeList<WebhookEndpoint>

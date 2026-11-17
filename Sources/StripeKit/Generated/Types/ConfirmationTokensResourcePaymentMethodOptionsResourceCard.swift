@@ -18,17 +18,3 @@ public struct ConfirmationTokensResourcePaymentMethodOptionsResourceCard: Codabl
         case installments
     }
 }
-
-public struct ConfirmationTokensResourcePaymentMethodOptionsResourceCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConfirmationTokensResourcePaymentMethodOptionsResourceCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

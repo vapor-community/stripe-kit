@@ -22,7 +22,7 @@ public struct IssuingAuthorizationRoutes: Sendable {
     public var update: @Sendable (_ authorization: String, _ params: IssuingAuthorizationUpdateParams, _ options: RequestOptions) async throws -> IssuingAuthorization
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: IssuingAuthorizationListParams, _ options: RequestOptions) async throws -> IssuingAuthorizationList
+    public var list: @Sendable (_ params: IssuingAuthorizationListParams, _ options: RequestOptions) async throws -> StripeList<IssuingAuthorization>
 
     /// Performs `approve(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var approve: @Sendable (_ authorization: String, _ params: IssuingAuthorizationApproveParams, _ options: RequestOptions) async throws -> IssuingAuthorization
@@ -68,7 +68,7 @@ extension IssuingAuthorizationRoutes {
 
     /// Returns a list of Issuing Authorization objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
-    public func list(_ params: IssuingAuthorizationListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingAuthorizationList {
+    public func list(_ params: IssuingAuthorizationListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<IssuingAuthorization> {
         try await list(params, options)
     }
 

@@ -24,17 +24,3 @@ public struct PaymentFlowsAmountDetailsResourceShipping: Codable, Sendable {
         case toPostalCode = "to_postal_code"
     }
 }
-
-public struct PaymentFlowsAmountDetailsResourceShippingList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentFlowsAmountDetailsResourceShipping]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

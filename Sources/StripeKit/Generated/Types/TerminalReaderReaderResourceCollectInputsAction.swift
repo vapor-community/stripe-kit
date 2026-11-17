@@ -15,17 +15,3 @@ public struct TerminalReaderReaderResourceCollectInputsAction: Codable, Sendable
     /// This can be useful for storing additional information about the object in a structured format.
     public var metadata: [String: String]?
 }
-
-public struct TerminalReaderReaderResourceCollectInputsActionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceCollectInputsAction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

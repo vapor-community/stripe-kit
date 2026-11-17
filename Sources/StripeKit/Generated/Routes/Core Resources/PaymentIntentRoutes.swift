@@ -22,7 +22,7 @@ public struct PaymentIntentRoutes: Sendable {
     public var update: @Sendable (_ intent: String, _ params: PaymentIntentUpdateParams, _ options: RequestOptions) async throws -> PaymentIntent
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: PaymentIntentListParams, _ options: RequestOptions) async throws -> PaymentIntentList
+    public var list: @Sendable (_ params: PaymentIntentListParams, _ options: RequestOptions) async throws -> StripeList<PaymentIntent>
 
     /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var search: @Sendable (_ params: PaymentIntentSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<PaymentIntent>
@@ -73,7 +73,7 @@ extension PaymentIntentRoutes {
     }
 
     /// Returns a list of PaymentIntents.
-    public func list(_ params: PaymentIntentListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentIntentList {
+    public func list(_ params: PaymentIntentListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<PaymentIntent> {
         try await list(params, options)
     }
 

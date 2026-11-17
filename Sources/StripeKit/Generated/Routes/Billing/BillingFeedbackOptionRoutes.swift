@@ -22,7 +22,7 @@ public struct BillingFeedbackOptionRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: BillingFeedbackOptionUpdateParams, _ options: RequestOptions) async throws -> BillingFeedbackOption
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: BillingFeedbackOptionListParams, _ options: RequestOptions) async throws -> BillingFeedbackOptionList
+    public var list: @Sendable (_ params: BillingFeedbackOptionListParams, _ options: RequestOptions) async throws -> StripeList<BillingFeedbackOption>
 
     /// Performs `deactivate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var deactivate: @Sendable (_ id: String, _ params: BillingFeedbackOptionDeactivateParams, _ options: RequestOptions) async throws -> BillingFeedbackOption
@@ -45,7 +45,7 @@ extension BillingFeedbackOptionRoutes {
     }
 
     /// Returns a list of your feedback options.
-    public func list(_ params: BillingFeedbackOptionListParams = .init(), options: RequestOptions = .init()) async throws -> BillingFeedbackOptionList {
+    public func list(_ params: BillingFeedbackOptionListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<BillingFeedbackOption> {
         try await list(params, options)
     }
 

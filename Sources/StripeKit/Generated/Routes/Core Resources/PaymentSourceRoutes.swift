@@ -22,7 +22,7 @@ public struct PaymentSourceRoutes: Sendable {
     public var update: @Sendable (_ customer: String, _ id: String, _ params: PaymentSourceUpdateParams, _ options: RequestOptions) async throws -> PaymentSource
 
     /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ customer: String, _ params: PaymentSourceListParams, _ options: RequestOptions) async throws -> PaymentSourceList
+    public var list: @Sendable (_ customer: String, _ params: PaymentSourceListParams, _ options: RequestOptions) async throws -> StripeList<PaymentSource>
 
     /// Performs `delete(_:id:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ customer: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ObjectOrDeleted<PaymentSource, DeletedPaymentSource>
@@ -48,7 +48,7 @@ extension PaymentSourceRoutes {
     }
 
     /// List sources for a specified customer.
-    public func list(_ customer: String, _ params: PaymentSourceListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentSourceList {
+    public func list(_ customer: String, _ params: PaymentSourceListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<PaymentSource> {
         try await list(customer, params, options)
     }
 

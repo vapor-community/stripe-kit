@@ -27,17 +27,3 @@ public struct TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxElecti
     public static var simplifiedSellersUseTax: Self { .init(rawValue: "simplified_sellers_use_tax") }
     public static var singleLocalUseTax: Self { .init(rawValue: "single_local_use_tax") }
 }
-
-public struct TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxElectionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxElection]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

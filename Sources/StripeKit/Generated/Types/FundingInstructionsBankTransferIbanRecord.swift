@@ -29,17 +29,3 @@ public struct FundingInstructionsBankTransferIbanRecord: Codable, Sendable {
         case iban
     }
 }
-
-public struct FundingInstructionsBankTransferIbanRecordList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FundingInstructionsBankTransferIbanRecord]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

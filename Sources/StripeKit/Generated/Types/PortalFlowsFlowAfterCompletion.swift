@@ -34,17 +34,3 @@ public struct PortalFlowsFlowAfterCompletionType: RawRepresentable, Codable, Has
     public static var portalHomepage: Self { .init(rawValue: "portal_homepage") }
     public static var redirect: Self { .init(rawValue: "redirect") }
 }
-
-public struct PortalFlowsFlowAfterCompletionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalFlowsFlowAfterCompletion]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

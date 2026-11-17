@@ -23,17 +23,3 @@ public struct ThreeDSecureStandaloneResourceChallengeDetailsType: RawRepresentab
     public static var mandated: Self { .init(rawValue: "mandated") }
     public static var preferred: Self { .init(rawValue: "preferred") }
 }
-
-public struct ThreeDSecureStandaloneResourceChallengeDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ThreeDSecureStandaloneResourceChallengeDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

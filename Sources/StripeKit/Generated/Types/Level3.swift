@@ -24,17 +24,3 @@ public struct Level3: Codable, Sendable {
         case shippingFromZip = "shipping_from_zip"
     }
 }
-
-public struct Level3List: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Level3]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

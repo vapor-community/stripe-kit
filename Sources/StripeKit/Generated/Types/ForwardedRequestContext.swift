@@ -19,17 +19,3 @@ public struct ForwardedRequestContext: Codable, Sendable {
         case destinationIpAddress = "destination_ip_address"
     }
 }
-
-public struct ForwardedRequestContextList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ForwardedRequestContext]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

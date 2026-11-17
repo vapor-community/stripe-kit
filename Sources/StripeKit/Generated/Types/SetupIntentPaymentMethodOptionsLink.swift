@@ -15,17 +15,3 @@ public struct SetupIntentPaymentMethodOptionsLink: Codable, Sendable {
         case persistentToken = "persistent_token"
     }
 }
-
-public struct SetupIntentPaymentMethodOptionsLinkList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupIntentPaymentMethodOptionsLink]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

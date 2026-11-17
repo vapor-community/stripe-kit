@@ -62,17 +62,3 @@ public struct PaymentIntentNextAction: Codable, Sendable {
         case wechatPayRedirectToIosApp = "wechat_pay_redirect_to_ios_app"
     }
 }
-
-public struct PaymentIntentNextActionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentIntentNextAction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

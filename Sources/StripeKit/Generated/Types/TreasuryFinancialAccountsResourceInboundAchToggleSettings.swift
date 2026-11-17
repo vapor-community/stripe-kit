@@ -35,17 +35,3 @@ public struct TreasuryFinancialAccountsResourceInboundAchToggleSettingsStatus: R
     public static var pending: Self { .init(rawValue: "pending") }
     public static var restricted: Self { .init(rawValue: "restricted") }
 }
-
-public struct TreasuryFinancialAccountsResourceInboundAchToggleSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccountsResourceInboundAchToggleSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

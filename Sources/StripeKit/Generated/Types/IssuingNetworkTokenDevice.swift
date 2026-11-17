@@ -44,17 +44,3 @@ public struct IssuingNetworkTokenDeviceType: RawRepresentable, Codable, Hashable
     public static var phone: Self { .init(rawValue: "phone") }
     public static var watch: Self { .init(rawValue: "watch") }
 }
-
-public struct IssuingNetworkTokenDeviceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingNetworkTokenDevice]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

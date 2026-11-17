@@ -184,7 +184,7 @@ public struct Invoice: Codable, Sendable {
     /// invoice items (including prorations) in reverse chronological order, (2) subscription items in
     /// reverse chronological order, and (3) invoice items added after invoice creation in chronological
     /// order.
-    public var lines: LineItemList
+    public var lines: StripeList<LineItem>
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -208,7 +208,7 @@ public struct Invoice: Codable, Sendable {
     public var parent: BillingBillResourceInvoicingParentsInvoiceParent?
     public var paymentSettings: InvoicesPaymentSettings
     /// Payments for this invoice. Use [invoice payment](/api/invoice-payment) to get more details.
-    public var payments: InvoicePaymentList?
+    public var payments: StripeList<InvoicePayment>?
     /// The latest timestamp at which invoice items can be associated with this invoice. Use the [line item
     /// period](/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each
     /// price.
@@ -437,16 +437,4 @@ public struct InvoiceStatus: RawRepresentable, Codable, Hashable, Sendable {
     public static var void: Self { .init(rawValue: "void") }
 }
 
-public struct InvoiceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Invoice]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias InvoiceList = StripeList<Invoice>

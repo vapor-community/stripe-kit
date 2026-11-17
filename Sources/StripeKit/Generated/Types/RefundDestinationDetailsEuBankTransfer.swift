@@ -18,17 +18,3 @@ public struct RefundDestinationDetailsEuBankTransfer: Codable, Sendable {
         case referenceStatus = "reference_status"
     }
 }
-
-public struct RefundDestinationDetailsEuBankTransferList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [RefundDestinationDetailsEuBankTransfer]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

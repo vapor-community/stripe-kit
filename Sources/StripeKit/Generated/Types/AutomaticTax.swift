@@ -56,17 +56,3 @@ public struct AutomaticTaxStatus: RawRepresentable, Codable, Hashable, Sendable 
     public static var failed: Self { .init(rawValue: "failed") }
     public static var requiresLocationInputs: Self { .init(rawValue: "requires_location_inputs") }
 }
-
-public struct AutomaticTaxList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AutomaticTax]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

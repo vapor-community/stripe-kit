@@ -40,17 +40,3 @@ public struct InsightsResourcesPaymentEvaluationDisputeOpenedReason: RawRepresen
     public static var subscriptionCanceled: Self { .init(rawValue: "subscription_canceled") }
     public static var unrecognized: Self { .init(rawValue: "unrecognized") }
 }
-
-public struct InsightsResourcesPaymentEvaluationDisputeOpenedList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationDisputeOpened]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

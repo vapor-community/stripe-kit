@@ -19,7 +19,7 @@ public struct CapabilityRoutes: Sendable {
     public var update: @Sendable (_ account: String, _ capability: String, _ params: CapabilityUpdateParams, _ options: RequestOptions) async throws -> Capability
 
     /// Performs `list(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ account: String, _ expand: [String]?, _ options: RequestOptions) async throws -> CapabilityList
+    public var list: @Sendable (_ account: String, _ expand: [String]?, _ options: RequestOptions) async throws -> StripeList<Capability>
 }
 
 extension CapabilityRoutes {
@@ -36,7 +36,7 @@ extension CapabilityRoutes {
 
     /// Returns a list of capabilities associated with the account. The capabilities are returned sorted by
     /// creation date, with the most recent capability appearing first.
-    public func list(_ account: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> CapabilityList {
+    public func list(_ account: String, expand: [String]? = nil, options: RequestOptions = .init()) async throws -> StripeList<Capability> {
         try await list(account, expand, options)
     }
 }

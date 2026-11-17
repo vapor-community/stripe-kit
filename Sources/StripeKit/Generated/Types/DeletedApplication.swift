@@ -28,17 +28,3 @@ public struct DeletedApplicationObject: RawRepresentable, Codable, Hashable, Sen
 
     public static var application: Self { .init(rawValue: "application") }
 }
-
-public struct DeletedApplicationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DeletedApplication]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

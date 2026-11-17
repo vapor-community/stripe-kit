@@ -12,17 +12,3 @@ public struct ConnectEmbeddedPayoutsConfig: Codable, Sendable {
     public var enabled: Bool
     public var features: ConnectEmbeddedPayoutsFeatures
 }
-
-public struct ConnectEmbeddedPayoutsConfigList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectEmbeddedPayoutsConfig]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

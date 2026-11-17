@@ -38,17 +38,3 @@ public struct BankConnectionsResourceTransactionRefreshStatus: RawRepresentable,
     public static var pending: Self { .init(rawValue: "pending") }
     public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
-
-public struct BankConnectionsResourceTransactionRefreshList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BankConnectionsResourceTransactionRefresh]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

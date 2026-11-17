@@ -16,7 +16,7 @@ public struct ExchangeRateRoutes: Sendable {
     public var retrieve: @Sendable (_ rateId: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ExchangeRate
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ExchangeRateListParams, _ options: RequestOptions) async throws -> ExchangeRateList
+    public var list: @Sendable (_ params: ExchangeRateListParams, _ options: RequestOptions) async throws -> StripeList<ExchangeRate>
 }
 
 extension ExchangeRateRoutes {
@@ -29,7 +29,7 @@ extension ExchangeRateRoutes {
     /// [Deprecated] The ExchangeRate APIs are deprecated. Please use the FX Quotes API instead. Returns a
     /// list of objects that contain the rates at which foreign currencies are converted to one another.
     /// Only shows the currencies for which Stripe supports.
-    public func list(_ params: ExchangeRateListParams = .init(), options: RequestOptions = .init()) async throws -> ExchangeRateList {
+    public func list(_ params: ExchangeRateListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ExchangeRate> {
         try await list(params, options)
     }
 }

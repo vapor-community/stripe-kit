@@ -14,17 +14,3 @@ public struct CustomerSessionResourceComponentsResourceCustomerSheet: Codable, S
     /// This hash defines whether the customer sheet supports certain features.
     public var features: CustomerSessionResourceComponentsResourceCustomerSheetResourceFeatures?
 }
-
-public struct CustomerSessionResourceComponentsResourceCustomerSheetList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerSessionResourceComponentsResourceCustomerSheet]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -36,17 +36,3 @@ public struct SubscriptionScheduleAddInvoiceItem: Codable, Sendable {
         case taxRates = "tax_rates"
     }
 }
-
-public struct SubscriptionScheduleAddInvoiceItemList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionScheduleAddInvoiceItem]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

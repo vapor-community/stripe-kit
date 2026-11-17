@@ -26,17 +26,3 @@ public struct ConnectAccountReferenceType: RawRepresentable, Codable, Hashable, 
     public static var account: Self { .init(rawValue: "account") }
     public static var `self`: Self { .init(rawValue: "self") }
 }
-
-public struct ConnectAccountReferenceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectAccountReference]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

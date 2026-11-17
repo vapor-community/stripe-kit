@@ -22,7 +22,7 @@ public struct SubscriptionItemRoutes: Sendable {
     public var update: @Sendable (_ item: String, _ params: SubscriptionItemUpdateParams, _ options: RequestOptions) async throws -> SubscriptionItem
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: SubscriptionItemListParams, _ options: RequestOptions) async throws -> SubscriptionItemList
+    public var list: @Sendable (_ params: SubscriptionItemListParams, _ options: RequestOptions) async throws -> StripeList<SubscriptionItem>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ item: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedSubscriptionItem
@@ -45,7 +45,7 @@ extension SubscriptionItemRoutes {
     }
 
     /// Returns a list of your subscription items for a given subscription.
-    public func list(_ params: SubscriptionItemListParams, options: RequestOptions = .init()) async throws -> SubscriptionItemList {
+    public func list(_ params: SubscriptionItemListParams, options: RequestOptions = .init()) async throws -> StripeList<SubscriptionItem> {
         try await list(params, options)
     }
 

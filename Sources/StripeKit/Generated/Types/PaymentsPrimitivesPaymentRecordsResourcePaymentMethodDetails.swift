@@ -155,17 +155,3 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodDetails: Coda
         case zip
     }
 }
-
-public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentsPrimitivesPaymentRecordsResourcePaymentMethodDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

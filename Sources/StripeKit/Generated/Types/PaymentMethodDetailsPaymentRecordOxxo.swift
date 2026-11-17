@@ -11,17 +11,3 @@ public struct PaymentMethodDetailsPaymentRecordOxxo: Codable, Sendable {
     /// OXXO reference number
     public var number: String?
 }
-
-public struct PaymentMethodDetailsPaymentRecordOxxoList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPaymentRecordOxxo]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

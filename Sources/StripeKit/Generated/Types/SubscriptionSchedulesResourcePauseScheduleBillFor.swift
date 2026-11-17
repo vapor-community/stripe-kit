@@ -16,17 +16,3 @@ public struct SubscriptionSchedulesResourcePauseScheduleBillFor: Codable, Sendab
         case unusedTimeFrom = "unused_time_from"
     }
 }
-
-public struct SubscriptionSchedulesResourcePauseScheduleBillForList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionSchedulesResourcePauseScheduleBillFor]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

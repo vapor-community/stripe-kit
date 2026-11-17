@@ -12,17 +12,3 @@ public struct TreasuryOutboundPaymentFailedEvent: Codable, Sendable {
     @Indirect
     public var object: TreasuryOutboundPayment
 }
-
-public struct TreasuryOutboundPaymentFailedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryOutboundPaymentFailedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

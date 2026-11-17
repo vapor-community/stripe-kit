@@ -18,17 +18,3 @@ public struct IssuingAuthorizationAmountDetails: Codable, Sendable {
         case cashbackAmount = "cashback_amount"
     }
 }
-
-public struct IssuingAuthorizationAmountDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingAuthorizationAmountDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

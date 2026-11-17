@@ -13,17 +13,3 @@ public struct ReportingReportTypeUpdatedEvent: Codable, Sendable {
     @Indirect
     public var object: ReportingReportType
 }
-
-public struct ReportingReportTypeUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ReportingReportTypeUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

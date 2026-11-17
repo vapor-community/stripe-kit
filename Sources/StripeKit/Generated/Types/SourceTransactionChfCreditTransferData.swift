@@ -27,17 +27,3 @@ public struct SourceTransactionChfCreditTransferData: Codable, Sendable {
         case senderName = "sender_name"
     }
 }
-
-public struct SourceTransactionChfCreditTransferDataList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SourceTransactionChfCreditTransferData]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

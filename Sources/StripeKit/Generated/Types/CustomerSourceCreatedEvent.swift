@@ -11,17 +11,3 @@ import Foundation
 public struct CustomerSourceCreatedEvent: Codable, Sendable {
     public var object: [String: JSONValue]
 }
-
-public struct CustomerSourceCreatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerSourceCreatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

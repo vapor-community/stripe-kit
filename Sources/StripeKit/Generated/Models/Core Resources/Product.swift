@@ -117,16 +117,4 @@ public struct ProductType: RawRepresentable, Codable, Hashable, Sendable {
     public static var service: Self { .init(rawValue: "service") }
 }
 
-public struct ProductList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Product]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ProductList = StripeList<Product>

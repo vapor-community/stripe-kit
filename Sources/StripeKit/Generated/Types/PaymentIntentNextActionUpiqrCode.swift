@@ -21,17 +21,3 @@ public struct PaymentIntentNextActionUpiqrCode: Codable, Sendable {
         case imageUrlSvg = "image_url_svg"
     }
 }
-
-public struct PaymentIntentNextActionUpiqrCodeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentIntentNextActionUpiqrCode]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

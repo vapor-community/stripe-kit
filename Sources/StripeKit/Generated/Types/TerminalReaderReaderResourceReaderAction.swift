@@ -80,17 +80,3 @@ public struct TerminalReaderReaderResourceReaderActionType: RawRepresentable, Co
     public static var refundPayment: Self { .init(rawValue: "refund_payment") }
     public static var setReaderDisplay: Self { .init(rawValue: "set_reader_display") }
 }
-
-public struct TerminalReaderReaderResourceReaderActionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceReaderAction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

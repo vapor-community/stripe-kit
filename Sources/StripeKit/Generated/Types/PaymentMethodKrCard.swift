@@ -45,17 +45,3 @@ public struct PaymentMethodKrCardBrand: RawRepresentable, Codable, Hashable, Sen
     public static var tossbank: Self { .init(rawValue: "tossbank") }
     public static var woori: Self { .init(rawValue: "woori") }
 }
-
-public struct PaymentMethodKrCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodKrCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

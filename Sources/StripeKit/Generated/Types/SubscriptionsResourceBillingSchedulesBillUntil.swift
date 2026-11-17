@@ -37,17 +37,3 @@ public struct SubscriptionsResourceBillingSchedulesBillUntilType: RawRepresentab
     public static var duration: Self { .init(rawValue: "duration") }
     public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
-
-public struct SubscriptionsResourceBillingSchedulesBillUntilList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionsResourceBillingSchedulesBillUntil]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

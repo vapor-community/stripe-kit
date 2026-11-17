@@ -19,7 +19,7 @@ public struct ForwardingRequestRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ForwardingRequest
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ForwardingRequestListParams, _ options: RequestOptions) async throws -> ForwardingRequestList
+    public var list: @Sendable (_ params: ForwardingRequestListParams, _ options: RequestOptions) async throws -> StripeList<ForwardingRequest>
 }
 
 extension ForwardingRequestRoutes {
@@ -34,7 +34,7 @@ extension ForwardingRequestRoutes {
     }
 
     /// Lists all ForwardingRequest objects.
-    public func list(_ params: ForwardingRequestListParams = .init(), options: RequestOptions = .init()) async throws -> ForwardingRequestList {
+    public func list(_ params: ForwardingRequestListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ForwardingRequest> {
         try await list(params, options)
     }
 }

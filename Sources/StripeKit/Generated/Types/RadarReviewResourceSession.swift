@@ -17,17 +17,3 @@ public struct RadarReviewResourceSession: Codable, Sendable {
     /// The version for the browser session (e.g., `61.0.3163.100`).
     public var version: String?
 }
-
-public struct RadarReviewResourceSessionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [RadarReviewResourceSession]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

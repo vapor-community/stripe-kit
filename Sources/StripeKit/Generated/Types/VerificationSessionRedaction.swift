@@ -24,17 +24,3 @@ public struct VerificationSessionRedactionStatus: RawRepresentable, Codable, Has
     public static var redacted: Self { .init(rawValue: "redacted") }
     public static var validated: Self { .init(rawValue: "validated") }
 }
-
-public struct VerificationSessionRedactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [VerificationSessionRedaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

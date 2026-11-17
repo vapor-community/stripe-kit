@@ -42,17 +42,3 @@ public struct InvoicePaymentMethodOptionsCardRequestThreeDSecure: RawRepresentab
     public static var automatic: Self { .init(rawValue: "automatic") }
     public static var challenge: Self { .init(rawValue: "challenge") }
 }
-
-public struct InvoicePaymentMethodOptionsCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicePaymentMethodOptionsCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

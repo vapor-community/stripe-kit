@@ -24,17 +24,3 @@ public struct BillingMeterResourceAggregationSettingsFormula: RawRepresentable, 
     public static var last: Self { .init(rawValue: "last") }
     public static var sum: Self { .init(rawValue: "sum") }
 }
-
-public struct BillingMeterResourceAggregationSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingMeterResourceAggregationSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

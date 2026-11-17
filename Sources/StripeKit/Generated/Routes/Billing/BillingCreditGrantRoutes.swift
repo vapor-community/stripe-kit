@@ -22,7 +22,7 @@ public struct BillingCreditGrantRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: BillingCreditGrantUpdateParams, _ options: RequestOptions) async throws -> BillingCreditGrant
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: BillingCreditGrantListParams, _ options: RequestOptions) async throws -> BillingCreditGrantList
+    public var list: @Sendable (_ params: BillingCreditGrantListParams, _ options: RequestOptions) async throws -> StripeList<BillingCreditGrant>
 
     /// Performs `expire(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var expire: @Sendable (_ id: String, _ params: BillingCreditGrantExpireParams, _ options: RequestOptions) async throws -> BillingCreditGrant
@@ -48,7 +48,7 @@ extension BillingCreditGrantRoutes {
     }
 
     /// Retrieve a list of credit grants.
-    public func list(_ params: BillingCreditGrantListParams = .init(), options: RequestOptions = .init()) async throws -> BillingCreditGrantList {
+    public func list(_ params: BillingCreditGrantListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<BillingCreditGrant> {
         try await list(params, options)
     }
 

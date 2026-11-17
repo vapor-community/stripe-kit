@@ -12,17 +12,3 @@ public struct ConnectEmbeddedPaymentsConfigClaim: Codable, Sendable {
     public var enabled: Bool
     public var features: ConnectEmbeddedPaymentsFeatures
 }
-
-public struct ConnectEmbeddedPaymentsConfigClaimList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConnectEmbeddedPaymentsConfigClaim]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

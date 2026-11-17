@@ -30,17 +30,3 @@ public struct TaxProductRegistrationsResourceCountryOptionsSpainType: RawReprese
     /// Common for businesses selling goods and services to customers in this country.
     public static var standard: Self { .init(rawValue: "standard") }
 }
-
-public struct TaxProductRegistrationsResourceCountryOptionsSpainList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductRegistrationsResourceCountryOptionsSpain]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

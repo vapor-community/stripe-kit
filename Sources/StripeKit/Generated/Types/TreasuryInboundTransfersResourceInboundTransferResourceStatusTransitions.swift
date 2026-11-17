@@ -21,17 +21,3 @@ public struct TreasuryInboundTransfersResourceInboundTransferResourceStatusTrans
         case succeededAt = "succeeded_at"
     }
 }
-
-public struct TreasuryInboundTransfersResourceInboundTransferResourceStatusTransitionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryInboundTransfersResourceInboundTransferResourceStatusTransitions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

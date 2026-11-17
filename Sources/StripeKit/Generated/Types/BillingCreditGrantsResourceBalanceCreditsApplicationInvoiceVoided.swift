@@ -19,17 +19,3 @@ public struct BillingCreditGrantsResourceBalanceCreditsApplicationInvoiceVoided:
         case invoiceLineItem = "invoice_line_item"
     }
 }
-
-public struct BillingCreditGrantsResourceBalanceCreditsApplicationInvoiceVoidedList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingCreditGrantsResourceBalanceCreditsApplicationInvoiceVoided]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

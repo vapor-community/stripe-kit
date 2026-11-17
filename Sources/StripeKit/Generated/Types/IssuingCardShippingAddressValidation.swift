@@ -47,17 +47,3 @@ public struct IssuingCardShippingAddressValidationResult: RawRepresentable, Coda
     public static var likelyDeliverable: Self { .init(rawValue: "likely_deliverable") }
     public static var likelyUndeliverable: Self { .init(rawValue: "likely_undeliverable") }
 }
-
-public struct IssuingCardShippingAddressValidationList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardShippingAddressValidation]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

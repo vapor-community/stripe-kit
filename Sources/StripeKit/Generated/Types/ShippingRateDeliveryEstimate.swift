@@ -13,17 +13,3 @@ public struct ShippingRateDeliveryEstimate: Codable, Sendable {
     /// The lower bound of the estimated range. If empty, represents no lower bound.
     public var minimum: ShippingRateDeliveryEstimateBound?
 }
-
-public struct ShippingRateDeliveryEstimateList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ShippingRateDeliveryEstimate]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

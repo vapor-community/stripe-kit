@@ -104,16 +104,4 @@ public struct TreasuryCreditReversalStatus: RawRepresentable, Codable, Hashable,
     public static var processing: Self { .init(rawValue: "processing") }
 }
 
-public struct TreasuryCreditReversalList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryCreditReversal]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TreasuryCreditReversalList = StripeList<TreasuryCreditReversal>

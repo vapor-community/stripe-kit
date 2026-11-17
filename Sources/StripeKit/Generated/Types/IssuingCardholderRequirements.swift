@@ -34,17 +34,3 @@ public struct IssuingCardholderRequirementsDisabledReason: RawRepresentable, Cod
     public static var requirementsPastDue: Self { .init(rawValue: "requirements.past_due") }
     public static var underReview: Self { .init(rawValue: "under_review") }
 }
-
-public struct IssuingCardholderRequirementsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardholderRequirements]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

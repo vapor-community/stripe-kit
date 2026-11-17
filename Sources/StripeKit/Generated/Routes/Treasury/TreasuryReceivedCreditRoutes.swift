@@ -19,7 +19,7 @@ public struct TreasuryReceivedCreditRoutes: Sendable {
     public var retrieve: @Sendable (_ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> TreasuryReceivedCredit
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TreasuryReceivedCreditListParams, _ options: RequestOptions) async throws -> TreasuryReceivedCreditList
+    public var list: @Sendable (_ params: TreasuryReceivedCreditListParams, _ options: RequestOptions) async throws -> StripeList<TreasuryReceivedCredit>
 }
 
 extension TreasuryReceivedCreditRoutes {
@@ -36,7 +36,7 @@ extension TreasuryReceivedCreditRoutes {
     }
 
     /// Returns a list of ReceivedCredits.
-    public func list(_ params: TreasuryReceivedCreditListParams, options: RequestOptions = .init()) async throws -> TreasuryReceivedCreditList {
+    public func list(_ params: TreasuryReceivedCreditListParams, options: RequestOptions = .init()) async throws -> StripeList<TreasuryReceivedCredit> {
         try await list(params, options)
     }
 }

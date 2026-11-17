@@ -14,17 +14,3 @@ public struct ConfirmationTokensResourceMandateDataResourceCustomerAcceptance: C
     /// The type of customer acceptance information included with the Mandate.
     public var type: String
 }
-
-public struct ConfirmationTokensResourceMandateDataResourceCustomerAcceptanceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConfirmationTokensResourceMandateDataResourceCustomerAcceptance]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

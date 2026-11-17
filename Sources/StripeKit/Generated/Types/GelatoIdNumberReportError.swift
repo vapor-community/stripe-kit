@@ -27,17 +27,3 @@ public struct GelatoIdNumberReportErrorCode: RawRepresentable, Codable, Hashable
     public static var idNumberMismatch: Self { .init(rawValue: "id_number_mismatch") }
     public static var idNumberUnverifiedOther: Self { .init(rawValue: "id_number_unverified_other") }
 }
-
-public struct GelatoIdNumberReportErrorList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoIdNumberReportError]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

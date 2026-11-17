@@ -11,17 +11,3 @@ public struct TaxProductRegistrationsResourceCountryOptionsCaProvinceStandard: C
     /// Two-letter CA province code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
     public var province: String
 }
-
-public struct TaxProductRegistrationsResourceCountryOptionsCaProvinceStandardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductRegistrationsResourceCountryOptionsCaProvinceStandard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

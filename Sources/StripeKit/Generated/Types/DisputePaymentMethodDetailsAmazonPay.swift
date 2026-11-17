@@ -27,17 +27,3 @@ public struct DisputePaymentMethodDetailsAmazonPayDisputeType: RawRepresentable,
     public static var chargeback: Self { .init(rawValue: "chargeback") }
     public static var claim: Self { .init(rawValue: "claim") }
 }
-
-public struct DisputePaymentMethodDetailsAmazonPayList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DisputePaymentMethodDetailsAmazonPay]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

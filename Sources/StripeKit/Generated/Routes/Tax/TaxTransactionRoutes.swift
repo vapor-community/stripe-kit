@@ -22,7 +22,7 @@ public struct TaxTransactionRoutes: Sendable {
     public var createReversal: @Sendable (_ params: TaxTransactionCreateReversalParams, _ options: RequestOptions) async throws -> TaxTransaction
 
     /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listLineItems: @Sendable (_ transaction: String, _ params: TaxTransactionListLineItemsParams, _ options: RequestOptions) async throws -> TaxTransactionLineItemList
+    public var listLineItems: @Sendable (_ transaction: String, _ params: TaxTransactionListLineItemsParams, _ options: RequestOptions) async throws -> StripeList<TaxTransactionLineItem>
 }
 
 extension TaxTransactionRoutes {
@@ -43,7 +43,7 @@ extension TaxTransactionRoutes {
     }
 
     /// Retrieves the line items of a committed standalone transaction as a collection.
-    public func listLineItems(_ transaction: String, _ params: TaxTransactionListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> TaxTransactionLineItemList {
+    public func listLineItems(_ transaction: String, _ params: TaxTransactionListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TaxTransactionLineItem> {
         try await listLineItems(transaction, params, options)
     }
 }

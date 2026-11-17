@@ -43,17 +43,3 @@ public struct IssuingAuthorizationAuthenticationExemptionType: RawRepresentable,
     public static var transactionRiskAnalysis: Self { .init(rawValue: "transaction_risk_analysis") }
     public static var unknown: Self { .init(rawValue: "unknown") }
 }
-
-public struct IssuingAuthorizationAuthenticationExemptionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingAuthorizationAuthenticationExemption]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

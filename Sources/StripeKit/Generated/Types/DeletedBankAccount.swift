@@ -29,17 +29,3 @@ public struct DeletedBankAccountObject: RawRepresentable, Codable, Hashable, Sen
 
     public static var bankAccount: Self { .init(rawValue: "bank_account") }
 }
-
-public struct DeletedBankAccountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DeletedBankAccount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

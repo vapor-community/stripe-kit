@@ -22,7 +22,7 @@ public struct TaxRateRoutes: Sendable {
     public var update: @Sendable (_ taxRate: String, _ params: TaxRateUpdateParams, _ options: RequestOptions) async throws -> TaxRate
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TaxRateListParams, _ options: RequestOptions) async throws -> TaxRateList
+    public var list: @Sendable (_ params: TaxRateListParams, _ options: RequestOptions) async throws -> StripeList<TaxRate>
 }
 
 extension TaxRateRoutes {
@@ -43,7 +43,7 @@ extension TaxRateRoutes {
 
     /// Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most
     /// recently created tax rates appearing first.
-    public func list(_ params: TaxRateListParams = .init(), options: RequestOptions = .init()) async throws -> TaxRateList {
+    public func list(_ params: TaxRateListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TaxRate> {
         try await list(params, options)
     }
 }

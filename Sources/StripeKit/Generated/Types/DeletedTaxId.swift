@@ -26,17 +26,3 @@ public struct DeletedTaxIdObject: RawRepresentable, Codable, Hashable, Sendable 
 
     public static var taxId: Self { .init(rawValue: "tax_id") }
 }
-
-public struct DeletedTaxIdList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DeletedTaxId]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

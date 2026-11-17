@@ -22,7 +22,7 @@ public struct SetupIntentRoutes: Sendable {
     public var update: @Sendable (_ intent: String, _ params: SetupIntentUpdateParams, _ options: RequestOptions) async throws -> SetupIntent
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: SetupIntentListParams, _ options: RequestOptions) async throws -> SetupIntentList
+    public var list: @Sendable (_ params: SetupIntentListParams, _ options: RequestOptions) async throws -> StripeList<SetupIntent>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ intent: String, _ params: SetupIntentCancelParams, _ options: RequestOptions) async throws -> SetupIntent
@@ -55,7 +55,7 @@ extension SetupIntentRoutes {
     }
 
     /// Returns a list of SetupIntents.
-    public func list(_ params: SetupIntentListParams = .init(), options: RequestOptions = .init()) async throws -> SetupIntentList {
+    public func list(_ params: SetupIntentListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<SetupIntent> {
         try await list(params, options)
     }
 

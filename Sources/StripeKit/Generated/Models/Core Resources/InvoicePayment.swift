@@ -72,16 +72,4 @@ public struct InvoicePaymentObject: RawRepresentable, Codable, Hashable, Sendabl
     public static var invoicePayment: Self { .init(rawValue: "invoice_payment") }
 }
 
-public struct InvoicePaymentList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoicePayment]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias InvoicePaymentList = StripeList<InvoicePayment>

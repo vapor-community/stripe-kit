@@ -13,17 +13,3 @@ public struct InvoiceSettingCustomField: Codable, Sendable {
     /// The value of the custom field.
     public var value: String
 }
-
-public struct InvoiceSettingCustomFieldList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoiceSettingCustomField]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

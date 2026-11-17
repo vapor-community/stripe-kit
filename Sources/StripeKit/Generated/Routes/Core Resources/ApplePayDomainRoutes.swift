@@ -19,7 +19,7 @@ public struct ApplePayDomainRoutes: Sendable {
     public var retrieve: @Sendable (_ domain: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ApplePayDomain
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ApplePayDomainListParams, _ options: RequestOptions) async throws -> ApplePayDomainList
+    public var list: @Sendable (_ params: ApplePayDomainListParams, _ options: RequestOptions) async throws -> StripeList<ApplePayDomain>
 
     /// Performs `delete(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ domain: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedApplePayDomain
@@ -37,7 +37,7 @@ extension ApplePayDomainRoutes {
     }
 
     /// List apple pay domains.
-    public func list(_ params: ApplePayDomainListParams = .init(), options: RequestOptions = .init()) async throws -> ApplePayDomainList {
+    public func list(_ params: ApplePayDomainListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ApplePayDomain> {
         try await list(params, options)
     }
 

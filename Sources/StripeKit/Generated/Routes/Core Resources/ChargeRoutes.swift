@@ -22,7 +22,7 @@ public struct ChargeRoutes: Sendable {
     public var update: @Sendable (_ charge: String, _ params: ChargeUpdateParams, _ options: RequestOptions) async throws -> Charge
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ChargeListParams, _ options: RequestOptions) async throws -> ChargeList
+    public var list: @Sendable (_ params: ChargeListParams, _ options: RequestOptions) async throws -> StripeList<Charge>
 
     /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var search: @Sendable (_ params: ChargeSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Charge>
@@ -53,7 +53,7 @@ extension ChargeRoutes {
 
     /// Returns a list of charges you’ve previously created. The charges are returned in sorted order, with
     /// the most recent charges appearing first.
-    public func list(_ params: ChargeListParams = .init(), options: RequestOptions = .init()) async throws -> ChargeList {
+    public func list(_ params: ChargeListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Charge> {
         try await list(params, options)
     }
 

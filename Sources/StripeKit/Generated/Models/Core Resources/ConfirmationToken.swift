@@ -100,16 +100,4 @@ public struct ConfirmationTokenSetupFutureUsage: RawRepresentable, Codable, Hash
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct ConfirmationTokenList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ConfirmationToken]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ConfirmationTokenList = StripeList<ConfirmationToken>

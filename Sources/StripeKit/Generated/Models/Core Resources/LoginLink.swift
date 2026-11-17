@@ -31,16 +31,4 @@ public struct LoginLinkObject: RawRepresentable, Codable, Hashable, Sendable {
     public static var loginLink: Self { .init(rawValue: "login_link") }
 }
 
-public struct LoginLinkList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [LoginLink]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias LoginLinkList = StripeList<LoginLink>

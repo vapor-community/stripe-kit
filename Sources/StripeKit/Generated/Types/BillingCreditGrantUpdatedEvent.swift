@@ -12,17 +12,3 @@ public struct BillingCreditGrantUpdatedEvent: Codable, Sendable {
     @Indirect
     public var object: BillingCreditGrant
 }
-
-public struct BillingCreditGrantUpdatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingCreditGrantUpdatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

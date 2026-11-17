@@ -48,7 +48,7 @@ public struct Transfer: Codable, Sendable {
     /// String representing the object's type. Objects of the same type share the same value.
     public var object: TransferObject
     /// A list of reversals that have been applied to the transfer.
-    public var reversals: TransferReversalList
+    public var reversals: StripeList<TransferReversal>
     /// Whether the transfer has been fully reversed. If the transfer is only partially reversed, this
     /// attribute will still be false.
     public var reversed: Bool
@@ -95,16 +95,4 @@ public struct TransferObject: RawRepresentable, Codable, Hashable, Sendable {
     public static var transfer: Self { .init(rawValue: "transfer") }
 }
 
-public struct TransferList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Transfer]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TransferList = StripeList<Transfer>

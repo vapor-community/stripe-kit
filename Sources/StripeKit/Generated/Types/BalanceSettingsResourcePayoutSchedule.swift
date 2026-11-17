@@ -39,17 +39,3 @@ public struct BalanceSettingsResourcePayoutScheduleInterval: RawRepresentable, C
     public static var monthly: Self { .init(rawValue: "monthly") }
     public static var weekly: Self { .init(rawValue: "weekly") }
 }
-
-public struct BalanceSettingsResourcePayoutScheduleList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BalanceSettingsResourcePayoutSchedule]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

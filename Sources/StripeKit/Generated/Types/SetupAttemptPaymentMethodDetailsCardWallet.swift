@@ -36,17 +36,3 @@ public struct SetupAttemptPaymentMethodDetailsCardWalletType: RawRepresentable, 
     public static var googlePay: Self { .init(rawValue: "google_pay") }
     public static var link: Self { .init(rawValue: "link") }
 }
-
-public struct SetupAttemptPaymentMethodDetailsCardWalletList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SetupAttemptPaymentMethodDetailsCardWallet]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

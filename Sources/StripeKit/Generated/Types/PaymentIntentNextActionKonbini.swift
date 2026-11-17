@@ -21,17 +21,3 @@ public struct PaymentIntentNextActionKonbini: Codable, Sendable {
         case stores
     }
 }
-
-public struct PaymentIntentNextActionKonbiniList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentIntentNextActionKonbini]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

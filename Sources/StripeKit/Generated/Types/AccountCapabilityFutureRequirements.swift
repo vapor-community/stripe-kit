@@ -75,17 +75,3 @@ public struct AccountCapabilityFutureRequirementsDisabledReason: RawRepresentabl
     public static var rejectedUnsupportedBusiness: Self { .init(rawValue: "rejected.unsupported_business") }
     public static var requirementsFieldsNeeded: Self { .init(rawValue: "requirements.fields_needed") }
 }
-
-public struct AccountCapabilityFutureRequirementsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountCapabilityFutureRequirements]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -30,17 +30,3 @@ public struct TaxProductRegistrationsResourceCountryOptionsCanadaType: RawRepres
     public static var simplified: Self { .init(rawValue: "simplified") }
     public static var standard: Self { .init(rawValue: "standard") }
 }
-
-public struct TaxProductRegistrationsResourceCountryOptionsCanadaList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductRegistrationsResourceCountryOptionsCanada]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

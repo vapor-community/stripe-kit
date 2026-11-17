@@ -22,7 +22,7 @@ public struct PaymentMethodDomainRoutes: Sendable {
     public var update: @Sendable (_ paymentMethodDomain: String, _ params: PaymentMethodDomainUpdateParams, _ options: RequestOptions) async throws -> PaymentMethodDomain
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: PaymentMethodDomainListParams, _ options: RequestOptions) async throws -> PaymentMethodDomainList
+    public var list: @Sendable (_ params: PaymentMethodDomainListParams, _ options: RequestOptions) async throws -> StripeList<PaymentMethodDomain>
 
     /// Performs `validate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var validate: @Sendable (_ paymentMethodDomain: String, _ params: PaymentMethodDomainValidateParams, _ options: RequestOptions) async throws -> PaymentMethodDomain
@@ -45,7 +45,7 @@ extension PaymentMethodDomainRoutes {
     }
 
     /// Lists the details of existing payment method domains.
-    public func list(_ params: PaymentMethodDomainListParams = .init(), options: RequestOptions = .init()) async throws -> PaymentMethodDomainList {
+    public func list(_ params: PaymentMethodDomainListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<PaymentMethodDomain> {
         try await list(params, options)
     }
 

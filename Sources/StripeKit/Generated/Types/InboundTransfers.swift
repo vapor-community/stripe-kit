@@ -30,17 +30,3 @@ public struct InboundTransfersType: RawRepresentable, Codable, Hashable, Sendabl
 
     public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
 }
-
-public struct InboundTransfersList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InboundTransfers]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

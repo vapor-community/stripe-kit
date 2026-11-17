@@ -16,17 +16,3 @@ public struct GelatoVerificationReportOptions: Codable, Sendable {
         case idNumber = "id_number"
     }
 }
-
-public struct GelatoVerificationReportOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoVerificationReportOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -16,17 +16,3 @@ public struct CustomerBalanceResourceCashBalanceTransactionResourceAppliedToPaym
         case paymentIntent = "payment_intent"
     }
 }
-
-public struct CustomerBalanceResourceCashBalanceTransactionResourceAppliedToPaymentTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerBalanceResourceCashBalanceTransactionResourceAppliedToPaymentTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -17,17 +17,3 @@ public struct PaymentMethodDetailsRevolutPay: Codable, Sendable {
         case transactionId = "transaction_id"
     }
 }
-
-public struct PaymentMethodDetailsRevolutPayList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsRevolutPay]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

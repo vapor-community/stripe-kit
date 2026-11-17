@@ -37,17 +37,3 @@ public struct CreditNoteRefundType: RawRepresentable, Codable, Hashable, Sendabl
     public static var paymentRecordRefund: Self { .init(rawValue: "payment_record_refund") }
     public static var refund: Self { .init(rawValue: "refund") }
 }
-
-public struct CreditNoteRefundList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CreditNoteRefund]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

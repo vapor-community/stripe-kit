@@ -30,17 +30,3 @@ public struct Address: Codable, Sendable {
         case state
     }
 }
-
-public struct AddressList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Address]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -97,16 +97,4 @@ public struct TreasuryFinancialAccountStatus: RawRepresentable, Codable, Hashabl
     public static var `open`: Self { .init(rawValue: "open") }
 }
 
-public struct TreasuryFinancialAccountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryFinancialAccount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TreasuryFinancialAccountList = StripeList<TreasuryFinancialAccount>

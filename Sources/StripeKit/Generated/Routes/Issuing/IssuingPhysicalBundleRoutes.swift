@@ -16,7 +16,7 @@ public struct IssuingPhysicalBundleRoutes: Sendable {
     public var retrieve: @Sendable (_ physicalBundle: String, _ expand: [String]?, _ options: RequestOptions) async throws -> IssuingPhysicalBundle
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: IssuingPhysicalBundleListParams, _ options: RequestOptions) async throws -> IssuingPhysicalBundleList
+    public var list: @Sendable (_ params: IssuingPhysicalBundleListParams, _ options: RequestOptions) async throws -> StripeList<IssuingPhysicalBundle>
 }
 
 extension IssuingPhysicalBundleRoutes {
@@ -27,7 +27,7 @@ extension IssuingPhysicalBundleRoutes {
 
     /// Returns a list of physical bundle objects. The objects are sorted in descending order by creation
     /// date, with the most recently created object appearing first.
-    public func list(_ params: IssuingPhysicalBundleListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingPhysicalBundleList {
+    public func list(_ params: IssuingPhysicalBundleListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<IssuingPhysicalBundle> {
         try await list(params, options)
     }
 }

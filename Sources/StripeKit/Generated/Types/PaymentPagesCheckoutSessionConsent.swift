@@ -43,17 +43,3 @@ public struct PaymentPagesCheckoutSessionConsentTermsOfService: RawRepresentable
 
     public static var accepted: Self { .init(rawValue: "accepted") }
 }
-
-public struct PaymentPagesCheckoutSessionConsentList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentPagesCheckoutSessionConsent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

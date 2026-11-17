@@ -22,7 +22,7 @@ public struct TreasuryFinancialAccountRoutes: Sendable {
     public var update: @Sendable (_ financialAccount: String, _ params: TreasuryFinancialAccountUpdateParams, _ options: RequestOptions) async throws -> TreasuryFinancialAccount
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: TreasuryFinancialAccountListParams, _ options: RequestOptions) async throws -> TreasuryFinancialAccountList
+    public var list: @Sendable (_ params: TreasuryFinancialAccountListParams, _ options: RequestOptions) async throws -> StripeList<TreasuryFinancialAccount>
 
     /// Performs `close(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var close: @Sendable (_ financialAccount: String, _ params: TreasuryFinancialAccountCloseParams, _ options: RequestOptions) async throws -> TreasuryFinancialAccount
@@ -52,7 +52,7 @@ extension TreasuryFinancialAccountRoutes {
     }
 
     /// Returns a list of FinancialAccounts.
-    public func list(_ params: TreasuryFinancialAccountListParams = .init(), options: RequestOptions = .init()) async throws -> TreasuryFinancialAccountList {
+    public func list(_ params: TreasuryFinancialAccountListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<TreasuryFinancialAccount> {
         try await list(params, options)
     }
 

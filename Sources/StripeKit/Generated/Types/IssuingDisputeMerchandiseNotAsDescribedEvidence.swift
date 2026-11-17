@@ -44,17 +44,3 @@ public struct IssuingDisputeMerchandiseNotAsDescribedEvidenceReturnStatus: RawRe
     public static var merchantRejected: Self { .init(rawValue: "merchant_rejected") }
     public static var successful: Self { .init(rawValue: "successful") }
 }
-
-public struct IssuingDisputeMerchandiseNotAsDescribedEvidenceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingDisputeMerchandiseNotAsDescribedEvidence]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

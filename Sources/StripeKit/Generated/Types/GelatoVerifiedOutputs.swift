@@ -72,17 +72,3 @@ public struct GelatoVerifiedOutputsSex: RawRepresentable, Codable, Hashable, Sen
     public static var male: Self { .init(rawValue: "male") }
     public static var unknown: Self { .init(rawValue: "unknown") }
 }
-
-public struct GelatoVerifiedOutputsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoVerifiedOutputs]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

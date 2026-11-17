@@ -129,16 +129,4 @@ public struct TreasuryReceivedCreditStatus: RawRepresentable, Codable, Hashable,
     public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
-public struct TreasuryReceivedCreditList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryReceivedCredit]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TreasuryReceivedCreditList = StripeList<TreasuryReceivedCredit>

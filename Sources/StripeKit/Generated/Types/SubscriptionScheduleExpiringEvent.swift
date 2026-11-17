@@ -12,17 +12,3 @@ public struct SubscriptionScheduleExpiringEvent: Codable, Sendable {
     @Indirect
     public var object: SubscriptionSchedule
 }
-
-public struct SubscriptionScheduleExpiringEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionScheduleExpiringEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

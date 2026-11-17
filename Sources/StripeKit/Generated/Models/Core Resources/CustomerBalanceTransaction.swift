@@ -115,16 +115,4 @@ public struct CustomerBalanceTransactionType: RawRepresentable, Codable, Hashabl
     public static var unspentReceiverCredit: Self { .init(rawValue: "unspent_receiver_credit") }
 }
 
-public struct CustomerBalanceTransactionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomerBalanceTransaction]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias CustomerBalanceTransactionList = StripeList<CustomerBalanceTransaction>

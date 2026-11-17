@@ -160,16 +160,4 @@ public struct PersonPoliticalExposure: RawRepresentable, Codable, Hashable, Send
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PersonList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Person]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias PersonList = StripeList<Person>

@@ -22,17 +22,3 @@ public struct TaxProductRegistrationsResourceCountryOptionsSimplifiedType: RawRe
 
     public static var simplified: Self { .init(rawValue: "simplified") }
 }
-
-public struct TaxProductRegistrationsResourceCountryOptionsSimplifiedList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxProductRegistrationsResourceCountryOptionsSimplified]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

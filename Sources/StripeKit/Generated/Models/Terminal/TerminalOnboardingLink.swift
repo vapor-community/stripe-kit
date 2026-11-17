@@ -48,16 +48,4 @@ public struct TerminalOnboardingLinkObject: RawRepresentable, Codable, Hashable,
     public static var terminalOnboardingLink: Self { .init(rawValue: "terminal.onboarding_link") }
 }
 
-public struct TerminalOnboardingLinkList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalOnboardingLink]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TerminalOnboardingLinkList = StripeList<TerminalOnboardingLink>

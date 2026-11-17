@@ -78,17 +78,3 @@ public struct PaymentMethodIdealBic: RawRepresentable, Codable, Hashable, Sendab
     public static var snsbnl2a: Self { .init(rawValue: "SNSBNL2A") }
     public static var trionl2u: Self { .init(rawValue: "TRIONL2U") }
 }
-
-public struct PaymentMethodIdealList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodIdeal]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

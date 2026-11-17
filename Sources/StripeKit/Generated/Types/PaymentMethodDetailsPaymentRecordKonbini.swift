@@ -12,17 +12,3 @@ public struct PaymentMethodDetailsPaymentRecordKonbini: Codable, Sendable {
     /// completed.
     public var store: PaymentsPrimitivesPaymentRecordsResourcePaymentMethodKonbiniDetailsResourceStore?
 }
-
-public struct PaymentMethodDetailsPaymentRecordKonbiniList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPaymentRecordKonbini]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

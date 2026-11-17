@@ -92,17 +92,3 @@ public struct InsightsResourcesPaymentEvaluationRejectedCardReason: RawRepresent
     public static var reportedStolen: Self { .init(rawValue: "reported_stolen") }
     public static var tryAgainLater: Self { .init(rawValue: "try_again_later") }
 }
-
-public struct InsightsResourcesPaymentEvaluationRejectedCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationRejectedCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

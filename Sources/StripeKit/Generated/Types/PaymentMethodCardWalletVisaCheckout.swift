@@ -28,17 +28,3 @@ public struct PaymentMethodCardWalletVisaCheckout: Codable, Sendable {
         case shippingAddress = "shipping_address"
     }
 }
-
-public struct PaymentMethodCardWalletVisaCheckoutList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodCardWalletVisaCheckout]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

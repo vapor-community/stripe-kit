@@ -13,17 +13,3 @@ public struct MandateSingleUse: Codable, Sendable {
     /// The currency of the payment on a single use mandate.
     public var currency: String
 }
-
-public struct MandateSingleUseList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [MandateSingleUse]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

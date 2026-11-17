@@ -34,17 +34,3 @@ public struct IssuingCardSpendingLimitInterval: RawRepresentable, Codable, Hasha
     public static var weekly: Self { .init(rawValue: "weekly") }
     public static var yearly: Self { .init(rawValue: "yearly") }
 }
-
-public struct IssuingCardSpendingLimitList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardSpendingLimit]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -27,17 +27,3 @@ public struct ThreeDSecureStandaloneResourceFutureUsageType: RawRepresentable, C
     public static var installment: Self { .init(rawValue: "installment") }
     public static var recurring: Self { .init(rawValue: "recurring") }
 }
-
-public struct ThreeDSecureStandaloneResourceFutureUsageList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ThreeDSecureStandaloneResourceFutureUsage]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

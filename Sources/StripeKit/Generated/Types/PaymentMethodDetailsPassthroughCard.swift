@@ -32,17 +32,3 @@ public struct PaymentMethodDetailsPassthroughCard: Codable, Sendable {
         case last4
     }
 }
-
-public struct PaymentMethodDetailsPassthroughCardList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPassthroughCard]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

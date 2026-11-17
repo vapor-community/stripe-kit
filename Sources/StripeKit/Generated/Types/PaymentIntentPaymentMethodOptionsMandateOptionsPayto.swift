@@ -84,17 +84,3 @@ public struct PaymentIntentPaymentMethodOptionsMandateOptionsPaytoPurpose: RawRe
     public static var tax: Self { .init(rawValue: "tax") }
     public static var utility: Self { .init(rawValue: "utility") }
 }
-
-public struct PaymentIntentPaymentMethodOptionsMandateOptionsPaytoList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentIntentPaymentMethodOptionsMandateOptionsPayto]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

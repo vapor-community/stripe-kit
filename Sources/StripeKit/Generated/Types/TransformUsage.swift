@@ -30,17 +30,3 @@ public struct TransformUsageRound: RawRepresentable, Codable, Hashable, Sendable
     public static var down: Self { .init(rawValue: "down") }
     public static var up: Self { .init(rawValue: "up") }
 }
-
-public struct TransformUsageList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TransformUsage]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

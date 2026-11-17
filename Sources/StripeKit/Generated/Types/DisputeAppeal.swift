@@ -10,17 +10,3 @@ import Foundation
 public struct DisputeAppeal: Codable, Sendable {
     public var card: DisputeAppealCard?
 }
-
-public struct DisputeAppealList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [DisputeAppeal]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

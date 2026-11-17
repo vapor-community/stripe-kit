@@ -18,17 +18,3 @@ public struct BillingBillResourceInvoicingLinesCommonCreditedItems: Codable, Sen
         case invoiceLineItems = "invoice_line_items"
     }
 }
-
-public struct BillingBillResourceInvoicingLinesCommonCreditedItemsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingBillResourceInvoicingLinesCommonCreditedItems]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -26,17 +26,3 @@ public struct SubscriptionsResourceBillingSchedulesAppliesToType: RawRepresentab
 
     public static var price: Self { .init(rawValue: "price") }
 }
-
-public struct SubscriptionsResourceBillingSchedulesAppliesToList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionsResourceBillingSchedulesAppliesTo]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

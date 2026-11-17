@@ -11,17 +11,3 @@ public struct BillingMeterResourceBillingMeterEventAdjustmentCancel: Codable, Se
     /// Unique identifier for the event.
     public var identifier: String?
 }
-
-public struct BillingMeterResourceBillingMeterEventAdjustmentCancelList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [BillingMeterResourceBillingMeterEventAdjustmentCancel]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -15,17 +15,3 @@ public struct AccountMonthlyEstimatedRevenue: Codable, Sendable {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
 }
-
-public struct AccountMonthlyEstimatedRevenueList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountMonthlyEstimatedRevenue]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

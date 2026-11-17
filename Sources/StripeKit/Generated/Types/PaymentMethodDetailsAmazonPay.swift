@@ -17,17 +17,3 @@ public struct PaymentMethodDetailsAmazonPay: Codable, Sendable {
         case transactionId = "transaction_id"
     }
 }
-
-public struct PaymentMethodDetailsAmazonPayList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsAmazonPay]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -51,7 +51,7 @@ public struct PaymentLink: Codable, Sendable {
     /// Configuration for creating invoice for payment mode payment links.
     public var invoiceCreation: PaymentLinksResourceInvoiceCreation?
     /// The line items representing what is being sold.
-    public var lineItems: ItemList?
+    public var lineItems: StripeList<Item>?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -206,16 +206,4 @@ public struct PaymentLinkSubmitType: RawRepresentable, Codable, Hashable, Sendab
     public static var subscribe: Self { .init(rawValue: "subscribe") }
 }
 
-public struct PaymentLinkList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLink]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias PaymentLinkList = StripeList<PaymentLink>

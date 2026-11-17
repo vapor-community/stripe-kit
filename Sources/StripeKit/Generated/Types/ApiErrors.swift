@@ -304,17 +304,3 @@ public struct ApiErrorsType: RawRepresentable, Codable, Hashable, Sendable {
     public static var idempotencyError: Self { .init(rawValue: "idempotency_error") }
     public static var invalidRequestError: Self { .init(rawValue: "invalid_request_error") }
 }
-
-public struct ApiErrorsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ApiErrors]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

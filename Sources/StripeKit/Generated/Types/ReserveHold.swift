@@ -137,17 +137,3 @@ public struct ReserveHoldSourceType: RawRepresentable, Codable, Hashable, Sendab
     public static var card: Self { .init(rawValue: "card") }
     public static var fpx: Self { .init(rawValue: "fpx") }
 }
-
-public struct ReserveHoldList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ReserveHold]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

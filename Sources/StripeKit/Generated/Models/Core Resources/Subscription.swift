@@ -92,7 +92,7 @@ public struct Subscription: Codable, Sendable {
     public var id: String
     public var invoiceSettings: SubscriptionsResourceSubscriptionInvoiceSettings
     /// List of subscription items, each with an attached price.
-    public var items: SubscriptionItemList
+    public var items: StripeList<SubscriptionItem>
     /// The most recent invoice this subscription has generated over its lifecycle (for example, when it
     /// cycles or is updated).
     @Expandable<Invoice>
@@ -301,16 +301,4 @@ public struct SubscriptionStatus: RawRepresentable, Codable, Hashable, Sendable 
     public static var unpaid: Self { .init(rawValue: "unpaid") }
 }
 
-public struct SubscriptionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [Subscription]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias SubscriptionList = StripeList<Subscription>

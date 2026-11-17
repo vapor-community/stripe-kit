@@ -20,17 +20,3 @@ public struct IssuingDisputeFraudulentEvidence: Codable, Sendable {
         case explanation
     }
 }
-
-public struct IssuingDisputeFraudulentEvidenceList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingDisputeFraudulentEvidence]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

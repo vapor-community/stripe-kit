@@ -65,17 +65,3 @@ public struct PaymentMethodOptionsAfterpayClearpaySetupFutureUsage: RawRepresent
 
     public static var none: Self { .init(rawValue: "none") }
 }
-
-public struct PaymentMethodOptionsAfterpayClearpayList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodOptionsAfterpayClearpay]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -19,17 +19,3 @@ public struct TerminalOnboardingLinkAppleTermsAndConditions: Codable, Sendable {
         case merchantDisplayName = "merchant_display_name"
     }
 }
-
-public struct TerminalOnboardingLinkAppleTermsAndConditionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalOnboardingLinkAppleTermsAndConditions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

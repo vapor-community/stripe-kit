@@ -46,17 +46,3 @@ public struct InsightsResourcesPaymentEvaluationSignalV2RiskLevel: RawRepresenta
     /// This signal's risk level is unknown.
     public static var unknown: Self { .init(rawValue: "unknown") }
 }
-
-public struct InsightsResourcesPaymentEvaluationSignalV2List: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InsightsResourcesPaymentEvaluationSignalV2]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -15,17 +15,3 @@ public struct GelatoSessionEmailOptions: Codable, Sendable {
         case requireVerification = "require_verification"
     }
 }
-
-public struct GelatoSessionEmailOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [GelatoSessionEmailOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

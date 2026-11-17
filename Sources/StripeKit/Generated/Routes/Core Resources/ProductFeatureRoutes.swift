@@ -19,7 +19,7 @@ public struct ProductFeatureRoutes: Sendable {
     public var retrieve: @Sendable (_ product: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ProductFeature
 
     /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ product: String, _ params: ProductFeatureListParams, _ options: RequestOptions) async throws -> ProductFeatureList
+    public var list: @Sendable (_ product: String, _ params: ProductFeatureListParams, _ options: RequestOptions) async throws -> StripeList<ProductFeature>
 
     /// Performs `delete(_:id:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ product: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedProductFeature
@@ -37,7 +37,7 @@ extension ProductFeatureRoutes {
     }
 
     /// Retrieve a list of features for a product
-    public func list(_ product: String, _ params: ProductFeatureListParams = .init(), options: RequestOptions = .init()) async throws -> ProductFeatureList {
+    public func list(_ product: String, _ params: ProductFeatureListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ProductFeature> {
         try await list(product, params, options)
     }
 

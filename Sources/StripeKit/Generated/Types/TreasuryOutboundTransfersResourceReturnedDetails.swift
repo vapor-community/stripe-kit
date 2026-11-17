@@ -34,17 +34,3 @@ public struct TreasuryOutboundTransfersResourceReturnedDetailsCode: RawRepresent
     public static var noAccount: Self { .init(rawValue: "no_account") }
     public static var other: Self { .init(rawValue: "other") }
 }
-
-public struct TreasuryOutboundTransfersResourceReturnedDetailsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryOutboundTransfersResourceReturnedDetails]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

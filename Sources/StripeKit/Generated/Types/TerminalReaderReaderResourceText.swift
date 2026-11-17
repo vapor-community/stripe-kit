@@ -12,17 +12,3 @@ public struct TerminalReaderReaderResourceText: Codable, Sendable {
     /// The collected text value
     public var value: String?
 }
-
-public struct TerminalReaderReaderResourceTextList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TerminalReaderReaderResourceText]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

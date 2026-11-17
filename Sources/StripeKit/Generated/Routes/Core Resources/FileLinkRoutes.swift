@@ -22,7 +22,7 @@ public struct FileLinkRoutes: Sendable {
     public var update: @Sendable (_ link: String, _ params: FileLinkUpdateParams, _ options: RequestOptions) async throws -> FileLink
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: FileLinkListParams, _ options: RequestOptions) async throws -> FileLinkList
+    public var list: @Sendable (_ params: FileLinkListParams, _ options: RequestOptions) async throws -> StripeList<FileLink>
 }
 
 extension FileLinkRoutes {
@@ -42,7 +42,7 @@ extension FileLinkRoutes {
     }
 
     /// Returns a list of file links.
-    public func list(_ params: FileLinkListParams = .init(), options: RequestOptions = .init()) async throws -> FileLinkList {
+    public func list(_ params: FileLinkListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<FileLink> {
         try await list(params, options)
     }
 }

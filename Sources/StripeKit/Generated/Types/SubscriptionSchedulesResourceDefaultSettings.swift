@@ -88,17 +88,3 @@ public struct SubscriptionSchedulesResourceDefaultSettingsCollectionMethod: RawR
     public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
     public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
-
-public struct SubscriptionSchedulesResourceDefaultSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SubscriptionSchedulesResourceDefaultSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

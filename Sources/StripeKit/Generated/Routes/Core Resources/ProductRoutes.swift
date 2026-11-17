@@ -22,7 +22,7 @@ public struct ProductRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: ProductUpdateParams, _ options: RequestOptions) async throws -> Product
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ProductListParams, _ options: RequestOptions) async throws -> ProductList
+    public var list: @Sendable (_ params: ProductListParams, _ options: RequestOptions) async throws -> StripeList<Product>
 
     /// Performs `search(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var search: @Sendable (_ params: ProductSearchParams, _ options: RequestOptions) async throws -> StripeSearchResult<Product>
@@ -51,7 +51,7 @@ extension ProductRoutes {
 
     /// Returns a list of your products. The products are returned sorted by creation date, with the most
     /// recently created products appearing first.
-    public func list(_ params: ProductListParams = .init(), options: RequestOptions = .init()) async throws -> ProductList {
+    public func list(_ params: ProductListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Product> {
         try await list(params, options)
     }
 

@@ -19,7 +19,7 @@ public struct ThreeDSecureAuthenticationRoutes: Sendable {
     public var retrieve: @Sendable (_ authentication: String, _ expand: [String]?, _ options: RequestOptions) async throws -> ThreeDSecureAuthentication
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ThreeDSecureAuthenticationListParams, _ options: RequestOptions) async throws -> ThreeDSecureAuthenticationList
+    public var list: @Sendable (_ params: ThreeDSecureAuthenticationListParams, _ options: RequestOptions) async throws -> StripeList<ThreeDSecureAuthentication>
 
     /// Performs `cancel(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var cancel: @Sendable (_ authentication: String, _ params: ThreeDSecureAuthenticationCancelParams, _ options: RequestOptions) async throws -> ThreeDSecureAuthentication
@@ -43,7 +43,7 @@ extension ThreeDSecureAuthenticationRoutes {
     }
 
     /// Returns a list of 3D Secure Authentications.
-    public func list(_ params: ThreeDSecureAuthenticationListParams = .init(), options: RequestOptions = .init()) async throws -> ThreeDSecureAuthenticationList {
+    public func list(_ params: ThreeDSecureAuthenticationListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ThreeDSecureAuthentication> {
         try await list(params, options)
     }
 

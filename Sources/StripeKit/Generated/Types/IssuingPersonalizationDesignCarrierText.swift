@@ -24,17 +24,3 @@ public struct IssuingPersonalizationDesignCarrierText: Codable, Sendable {
         case headerTitle = "header_title"
     }
 }
-
-public struct IssuingPersonalizationDesignCarrierTextList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingPersonalizationDesignCarrierText]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

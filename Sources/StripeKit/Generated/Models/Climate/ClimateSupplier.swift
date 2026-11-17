@@ -61,16 +61,4 @@ public struct ClimateSupplierRemovalPathway: RawRepresentable, Codable, Hashable
     public static var marineCarbonRemoval: Self { .init(rawValue: "marine_carbon_removal") }
 }
 
-public struct ClimateSupplierList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ClimateSupplier]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias ClimateSupplierList = StripeList<ClimateSupplier>

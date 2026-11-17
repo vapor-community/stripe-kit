@@ -14,17 +14,3 @@ public struct RadarRadarOptions: Codable, Sendable {
     /// and device details that help Radar make more accurate predictions on your payments.
     public var session: String?
 }
-
-public struct RadarRadarOptionsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [RadarRadarOptions]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -22,7 +22,7 @@ public struct IssuingPersonalizationDesignRoutes: Sendable {
     public var update: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignUpdateParams, _ options: RequestOptions) async throws -> IssuingPersonalizationDesign
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: IssuingPersonalizationDesignListParams, _ options: RequestOptions) async throws -> IssuingPersonalizationDesignList
+    public var list: @Sendable (_ params: IssuingPersonalizationDesignListParams, _ options: RequestOptions) async throws -> StripeList<IssuingPersonalizationDesign>
 
     /// Performs `activate(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var activate: @Sendable (_ personalizationDesign: String, _ params: IssuingPersonalizationDesignActivateParams, _ options: RequestOptions) async throws -> IssuingPersonalizationDesign
@@ -52,7 +52,7 @@ extension IssuingPersonalizationDesignRoutes {
 
     /// Returns a list of personalization design objects. The objects are sorted in descending order by
     /// creation date, with the most recently created object appearing first.
-    public func list(_ params: IssuingPersonalizationDesignListParams = .init(), options: RequestOptions = .init()) async throws -> IssuingPersonalizationDesignList {
+    public func list(_ params: IssuingPersonalizationDesignListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<IssuingPersonalizationDesign> {
         try await list(params, options)
     }
 

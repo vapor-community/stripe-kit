@@ -36,16 +36,4 @@ public struct TaxCodeObject: RawRepresentable, Codable, Hashable, Sendable {
     public static var taxCode: Self { .init(rawValue: "tax_code") }
 }
 
-public struct TaxCodeList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TaxCode]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias TaxCodeList = StripeList<TaxCode>

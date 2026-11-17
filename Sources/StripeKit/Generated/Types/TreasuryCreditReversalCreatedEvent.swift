@@ -12,17 +12,3 @@ public struct TreasuryCreditReversalCreatedEvent: Codable, Sendable {
     @Indirect
     public var object: TreasuryCreditReversal
 }
-
-public struct TreasuryCreditReversalCreatedEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [TreasuryCreditReversalCreatedEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -16,7 +16,7 @@ public struct ReviewRoutes: Sendable {
     public var retrieve: @Sendable (_ review: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Review
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: ReviewListParams, _ options: RequestOptions) async throws -> ReviewList
+    public var list: @Sendable (_ params: ReviewListParams, _ options: RequestOptions) async throws -> StripeList<Review>
 
     /// Performs `approve(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var approve: @Sendable (_ review: String, _ params: ReviewApproveParams, _ options: RequestOptions) async throws -> Review
@@ -30,7 +30,7 @@ extension ReviewRoutes {
 
     /// Returns a list of Review objects that have open set to true. The objects are sorted in descending
     /// order by creation date, with the most recently created object appearing first.
-    public func list(_ params: ReviewListParams = .init(), options: RequestOptions = .init()) async throws -> ReviewList {
+    public func list(_ params: ReviewListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Review> {
         try await list(params, options)
     }
 

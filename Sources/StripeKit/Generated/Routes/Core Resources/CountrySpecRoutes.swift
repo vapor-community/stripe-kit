@@ -16,7 +16,7 @@ public struct CountrySpecRoutes: Sendable {
     public var retrieve: @Sendable (_ country: String, _ expand: [String]?, _ options: RequestOptions) async throws -> CountrySpec
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: CountrySpecListParams, _ options: RequestOptions) async throws -> CountrySpecList
+    public var list: @Sendable (_ params: CountrySpecListParams, _ options: RequestOptions) async throws -> StripeList<CountrySpec>
 }
 
 extension CountrySpecRoutes {
@@ -26,7 +26,7 @@ extension CountrySpecRoutes {
     }
 
     /// Lists all Country Spec objects available in the API.
-    public func list(_ params: CountrySpecListParams = .init(), options: RequestOptions = .init()) async throws -> CountrySpecList {
+    public func list(_ params: CountrySpecListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<CountrySpec> {
         try await list(params, options)
     }
 }

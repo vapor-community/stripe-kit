@@ -35,17 +35,3 @@ public struct InvoiceItemProrationCreditedItemsType: RawRepresentable, Codable, 
     public static var invoiceItem: Self { .init(rawValue: "invoice_item") }
     public static var invoiceLineItems: Self { .init(rawValue: "invoice_line_items") }
 }
-
-public struct InvoiceItemProrationCreditedItemsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [InvoiceItemProrationCreditedItems]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

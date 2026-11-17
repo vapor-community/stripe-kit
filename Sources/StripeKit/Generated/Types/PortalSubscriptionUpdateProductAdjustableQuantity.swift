@@ -15,17 +15,3 @@ public struct PortalSubscriptionUpdateProductAdjustableQuantity: Codable, Sendab
     /// The minimum quantity that can be set for the product.
     public var minimum: Int
 }
-
-public struct PortalSubscriptionUpdateProductAdjustableQuantityList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PortalSubscriptionUpdateProductAdjustableQuantity]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

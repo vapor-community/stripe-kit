@@ -11,17 +11,3 @@ public struct RefundDestinationDetailsCrypto: Codable, Sendable {
     /// The transaction hash of the refund.
     public var reference: String?
 }
-
-public struct RefundDestinationDetailsCryptoList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [RefundDestinationDetailsCrypto]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

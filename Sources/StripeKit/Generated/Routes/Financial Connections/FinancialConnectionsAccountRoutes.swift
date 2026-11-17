@@ -16,13 +16,13 @@ public struct FinancialConnectionsAccountRoutes: Sendable {
     public var retrieve: @Sendable (_ account: String, _ expand: [String]?, _ options: RequestOptions) async throws -> FinancialConnectionsAccount
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: FinancialConnectionsAccountListParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccountList
+    public var list: @Sendable (_ params: FinancialConnectionsAccountListParams, _ options: RequestOptions) async throws -> StripeList<FinancialConnectionsAccount>
 
     /// Performs `disconnect(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var disconnect: @Sendable (_ account: String, _ params: FinancialConnectionsAccountDisconnectParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccount
 
     /// Performs `listOwners(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listOwners: @Sendable (_ account: String, _ params: FinancialConnectionsAccountListOwnersParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccountOwnerList
+    public var listOwners: @Sendable (_ account: String, _ params: FinancialConnectionsAccountListOwnersParams, _ options: RequestOptions) async throws -> StripeList<FinancialConnectionsAccountOwner>
 
     /// Performs `refresh(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var refresh: @Sendable (_ account: String, _ params: FinancialConnectionsAccountRefreshParams, _ options: RequestOptions) async throws -> FinancialConnectionsAccount
@@ -41,7 +41,7 @@ extension FinancialConnectionsAccountRoutes {
     }
 
     /// Returns a list of Financial Connections Account objects.
-    public func list(_ params: FinancialConnectionsAccountListParams = .init(), options: RequestOptions = .init()) async throws -> FinancialConnectionsAccountList {
+    public func list(_ params: FinancialConnectionsAccountListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<FinancialConnectionsAccount> {
         try await list(params, options)
     }
 
@@ -52,7 +52,7 @@ extension FinancialConnectionsAccountRoutes {
     }
 
     /// Lists all owners for a given Account
-    public func listOwners(_ account: String, _ params: FinancialConnectionsAccountListOwnersParams, options: RequestOptions = .init()) async throws -> FinancialConnectionsAccountOwnerList {
+    public func listOwners(_ account: String, _ params: FinancialConnectionsAccountListOwnersParams, options: RequestOptions = .init()) async throws -> StripeList<FinancialConnectionsAccountOwner> {
         try await listOwners(account, params, options)
     }
 

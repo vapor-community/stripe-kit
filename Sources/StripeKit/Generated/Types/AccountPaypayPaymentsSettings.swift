@@ -34,17 +34,3 @@ public struct AccountPaypayPaymentsSettingsGoodsType: RawRepresentable, Codable,
     public static var digitalContent: Self { .init(rawValue: "digital_content") }
     public static var other: Self { .init(rawValue: "other") }
 }
-
-public struct AccountPaypayPaymentsSettingsList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AccountPaypayPaymentsSettings]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

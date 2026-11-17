@@ -40,17 +40,3 @@ public struct MandateUpiAmountType: RawRepresentable, Codable, Hashable, Sendabl
     public static var fixed: Self { .init(rawValue: "fixed") }
     public static var maximum: Self { .init(rawValue: "maximum") }
 }
-
-public struct MandateUpiList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [MandateUpi]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

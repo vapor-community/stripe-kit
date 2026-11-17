@@ -122,16 +122,4 @@ public struct AppsInstallStatus: RawRepresentable, Codable, Hashable, Sendable {
     public static var uninstalling: Self { .init(rawValue: "uninstalling") }
 }
 
-public struct AppsInstallList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [AppsInstall]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias AppsInstallList = StripeList<AppsInstall>

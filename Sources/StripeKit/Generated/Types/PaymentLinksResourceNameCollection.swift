@@ -11,17 +11,3 @@ public struct PaymentLinksResourceNameCollection: Codable, Sendable {
     public var business: PaymentLinksResourceBusinessName?
     public var individual: PaymentLinksResourceIndividualName?
 }
-
-public struct PaymentLinksResourceNameCollectionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentLinksResourceNameCollection]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

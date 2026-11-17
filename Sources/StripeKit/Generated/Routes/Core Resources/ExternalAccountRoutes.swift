@@ -22,7 +22,7 @@ public struct ExternalAccountRoutes: Sendable {
     public var update: @Sendable (_ account: String, _ id: String, _ params: ExternalAccountUpdateParams, _ options: RequestOptions) async throws -> ExternalAccount
 
     /// Performs `list(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ account: String, _ params: ExternalAccountListParams, _ options: RequestOptions) async throws -> ExternalAccountList
+    public var list: @Sendable (_ account: String, _ params: ExternalAccountListParams, _ options: RequestOptions) async throws -> StripeList<ExternalAccount>
 
     /// Performs `delete(_:id:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var delete: @Sendable (_ account: String, _ id: String, _ expand: [String]?, _ options: RequestOptions) async throws -> DeletedExternalAccount
@@ -50,7 +50,7 @@ extension ExternalAccountRoutes {
     }
 
     /// List external accounts for an account.
-    public func list(_ account: String, _ params: ExternalAccountListParams = .init(), options: RequestOptions = .init()) async throws -> ExternalAccountList {
+    public func list(_ account: String, _ params: ExternalAccountListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<ExternalAccount> {
         try await list(account, params, options)
     }
 

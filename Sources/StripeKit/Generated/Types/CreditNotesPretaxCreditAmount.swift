@@ -38,17 +38,3 @@ public struct CreditNotesPretaxCreditAmountType: RawRepresentable, Codable, Hash
     public static var creditBalanceTransaction: Self { .init(rawValue: "credit_balance_transaction") }
     public static var discount: Self { .init(rawValue: "discount") }
 }
-
-public struct CreditNotesPretaxCreditAmountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CreditNotesPretaxCreditAmount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

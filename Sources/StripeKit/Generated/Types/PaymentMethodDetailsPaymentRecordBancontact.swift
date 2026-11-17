@@ -55,17 +55,3 @@ public struct PaymentMethodDetailsPaymentRecordBancontactPreferredLanguage: RawR
     public static var fr: Self { .init(rawValue: "fr") }
     public static var nl: Self { .init(rawValue: "nl") }
 }
-
-public struct PaymentMethodDetailsPaymentRecordBancontactList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PaymentMethodDetailsPaymentRecordBancontact]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -19,17 +19,3 @@ public struct QuotesResourceFromQuote: Codable, Sendable {
         case quote
     }
 }
-
-public struct QuotesResourceFromQuoteList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [QuotesResourceFromQuote]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

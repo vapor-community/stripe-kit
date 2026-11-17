@@ -16,17 +16,3 @@ public struct CustomUnitAmount: Codable, Sendable {
     /// The starting unit amount which can be updated by the customer.
     public var preset: Int?
 }
-
-public struct CustomUnitAmountList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CustomUnitAmount]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

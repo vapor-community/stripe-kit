@@ -123,17 +123,3 @@ public struct IssuingCardShippingType: RawRepresentable, Codable, Hashable, Send
     public static var bulk: Self { .init(rawValue: "bulk") }
     public static var individual: Self { .init(rawValue: "individual") }
 }
-
-public struct IssuingCardShippingList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [IssuingCardShipping]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

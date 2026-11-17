@@ -22,13 +22,13 @@ public struct CreditNoteRoutes: Sendable {
     public var update: @Sendable (_ id: String, _ params: CreditNoteUpdateParams, _ options: RequestOptions) async throws -> CreditNote
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: CreditNoteListParams, _ options: RequestOptions) async throws -> CreditNoteList
+    public var list: @Sendable (_ params: CreditNoteListParams, _ options: RequestOptions) async throws -> StripeList<CreditNote>
 
     /// Performs `preview(_:options:)`. Replace it to stub that route, e.g. in tests.
     public var preview: @Sendable (_ params: CreditNotePreviewParams, _ options: RequestOptions) async throws -> CreditNote
 
     /// Performs `previewLines(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var previewLines: @Sendable (_ params: CreditNotePreviewLinesParams, _ options: RequestOptions) async throws -> CreditNoteLineItemList
+    public var previewLines: @Sendable (_ params: CreditNotePreviewLinesParams, _ options: RequestOptions) async throws -> StripeList<CreditNoteLineItem>
 
     /// Performs `voidCreditNote(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var voidCreditNote: @Sendable (_ id: String, _ params: CreditNoteVoidCreditNoteParams, _ options: RequestOptions) async throws -> CreditNote
@@ -65,7 +65,7 @@ extension CreditNoteRoutes {
     }
 
     /// Returns a list of credit notes.
-    public func list(_ params: CreditNoteListParams = .init(), options: RequestOptions = .init()) async throws -> CreditNoteList {
+    public func list(_ params: CreditNoteListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<CreditNote> {
         try await list(params, options)
     }
 
@@ -76,7 +76,7 @@ extension CreditNoteRoutes {
 
     /// When retrieving a credit note preview, you’ll get a lines property containing the first handful of
     /// those items. This URL you can retrieve the full (paginated) list of line items.
-    public func previewLines(_ params: CreditNotePreviewLinesParams, options: RequestOptions = .init()) async throws -> CreditNoteLineItemList {
+    public func previewLines(_ params: CreditNotePreviewLinesParams, options: RequestOptions = .init()) async throws -> StripeList<CreditNoteLineItem> {
         try await previewLines(params, options)
     }
 

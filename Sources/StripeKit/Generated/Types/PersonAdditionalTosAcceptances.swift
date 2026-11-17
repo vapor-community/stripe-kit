@@ -11,17 +11,3 @@ public struct PersonAdditionalTosAcceptances: Codable, Sendable {
     /// Details on the legal guardian's acceptance of the main Stripe service agreement.
     public var account: PersonAdditionalTosAcceptance?
 }
-
-public struct PersonAdditionalTosAcceptancesList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [PersonAdditionalTosAcceptances]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -101,7 +101,7 @@ public struct CheckoutSession: Codable, Sendable {
     /// Details on the state of invoice creation for the Checkout Session.
     public var invoiceCreation: PaymentPagesCheckoutSessionInvoiceCreation?
     /// The line items purchased by the customer.
-    public var lineItems: ItemList?
+    public var lineItems: StripeList<Item>?
     /// If the object exists in live mode, the value is `true`. If the object exists in test mode, the value
     /// is `false`.
     public var livemode: Bool
@@ -477,16 +477,4 @@ public struct CheckoutSessionUiMode: RawRepresentable, Codable, Hashable, Sendab
     public static var hostedPage: Self { .init(rawValue: "hosted_page") }
 }
 
-public struct CheckoutSessionList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [CheckoutSession]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
+public typealias CheckoutSessionList = StripeList<CheckoutSession>

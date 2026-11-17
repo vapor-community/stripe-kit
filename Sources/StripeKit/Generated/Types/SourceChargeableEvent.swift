@@ -12,17 +12,3 @@ public struct SourceChargeableEvent: Codable, Sendable {
     @Indirect
     public var object: Source
 }
-
-public struct SourceChargeableEventList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SourceChargeableEvent]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

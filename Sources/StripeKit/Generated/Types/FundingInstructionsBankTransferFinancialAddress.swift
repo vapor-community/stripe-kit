@@ -47,17 +47,3 @@ public struct FundingInstructionsBankTransferFinancialAddressType: RawRepresenta
     public static var swift: Self { .init(rawValue: "swift") }
     public static var zengin: Self { .init(rawValue: "zengin") }
 }
-
-public struct FundingInstructionsBankTransferFinancialAddressList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [FundingInstructionsBankTransferFinancialAddress]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

@@ -18,17 +18,3 @@ public struct SourceTypeWechat: Codable, Sendable {
         case statementDescriptor = "statement_descriptor"
     }
 }
-
-public struct SourceTypeWechatList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [SourceTypeWechat]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}

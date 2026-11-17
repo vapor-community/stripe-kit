@@ -22,7 +22,7 @@ public struct QuoteRoutes: Sendable {
     public var update: @Sendable (_ quote: String, _ params: QuoteUpdateParams, _ options: RequestOptions) async throws -> Quote
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: QuoteListParams, _ options: RequestOptions) async throws -> QuoteList
+    public var list: @Sendable (_ params: QuoteListParams, _ options: RequestOptions) async throws -> StripeList<Quote>
 
     /// Performs `accept(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var accept: @Sendable (_ quote: String, _ params: QuoteAcceptParams, _ options: RequestOptions) async throws -> Quote
@@ -34,10 +34,10 @@ public struct QuoteRoutes: Sendable {
     public var finalizeQuote: @Sendable (_ quote: String, _ params: QuoteFinalizeQuoteParams, _ options: RequestOptions) async throws -> Quote
 
     /// Performs `listComputedUpfrontLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listComputedUpfrontLineItems: @Sendable (_ quote: String, _ params: QuoteListComputedUpfrontLineItemsParams, _ options: RequestOptions) async throws -> ItemList
+    public var listComputedUpfrontLineItems: @Sendable (_ quote: String, _ params: QuoteListComputedUpfrontLineItemsParams, _ options: RequestOptions) async throws -> StripeList<Item>
 
     /// Performs `listLineItems(_:_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var listLineItems: @Sendable (_ quote: String, _ params: QuoteListLineItemsParams, _ options: RequestOptions) async throws -> ItemList
+    public var listLineItems: @Sendable (_ quote: String, _ params: QuoteListLineItemsParams, _ options: RequestOptions) async throws -> StripeList<Item>
 
     /// Performs `pdf(_:expand:options:)`. Replace it to stub that route, e.g. in tests.
     public var pdf: @Sendable (_ quote: String, _ expand: [String]?, _ options: RequestOptions) async throws -> Data
@@ -61,7 +61,7 @@ extension QuoteRoutes {
     }
 
     /// Returns a list of your quotes.
-    public func list(_ params: QuoteListParams = .init(), options: RequestOptions = .init()) async throws -> QuoteList {
+    public func list(_ params: QuoteListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Quote> {
         try await list(params, options)
     }
 
@@ -83,13 +83,13 @@ extension QuoteRoutes {
     /// When retrieving a quote, there is an includable computed.upfront.line_items property containing the
     /// first handful of those items. There is also a URL where you can retrieve the full (paginated) list
     /// of upfront line items.
-    public func listComputedUpfrontLineItems(_ quote: String, _ params: QuoteListComputedUpfrontLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> ItemList {
+    public func listComputedUpfrontLineItems(_ quote: String, _ params: QuoteListComputedUpfrontLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Item> {
         try await listComputedUpfrontLineItems(quote, params, options)
     }
 
     /// When retrieving a quote, there is an includable line_items property containing the first handful of
     /// those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-    public func listLineItems(_ quote: String, _ params: QuoteListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> ItemList {
+    public func listLineItems(_ quote: String, _ params: QuoteListLineItemsParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<Item> {
         try await listLineItems(quote, params, options)
     }
 

@@ -16,7 +16,7 @@ public struct InvoiceRenderingTemplateRoutes: Sendable {
     public var retrieve: @Sendable (_ template: String, _ params: InvoiceRenderingTemplateRetrieveParams, _ options: RequestOptions) async throws -> InvoiceRenderingTemplate
 
     /// Performs `list(_:options:)`. Replace it to stub that route, e.g. in tests.
-    public var list: @Sendable (_ params: InvoiceRenderingTemplateListParams, _ options: RequestOptions) async throws -> InvoiceRenderingTemplateList
+    public var list: @Sendable (_ params: InvoiceRenderingTemplateListParams, _ options: RequestOptions) async throws -> StripeList<InvoiceRenderingTemplate>
 
     /// Performs `archive(_:_:options:)`. Replace it to stub that route, e.g. in tests.
     public var archive: @Sendable (_ template: String, _ params: InvoiceRenderingTemplateArchiveParams, _ options: RequestOptions) async throws -> InvoiceRenderingTemplate
@@ -34,7 +34,7 @@ extension InvoiceRenderingTemplateRoutes {
 
     /// List all templates, ordered by creation date, with the most recently created template appearing
     /// first.
-    public func list(_ params: InvoiceRenderingTemplateListParams = .init(), options: RequestOptions = .init()) async throws -> InvoiceRenderingTemplateList {
+    public func list(_ params: InvoiceRenderingTemplateListParams = .init(), options: RequestOptions = .init()) async throws -> StripeList<InvoiceRenderingTemplate> {
         try await list(params, options)
     }
 

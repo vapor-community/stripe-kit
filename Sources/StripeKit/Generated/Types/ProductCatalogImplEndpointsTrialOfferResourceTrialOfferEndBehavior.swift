@@ -24,17 +24,3 @@ public struct ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehavior
     /// The new price to use at the end of the trial period initiated by this offer.
     public static var transition: Self { .init(rawValue: "transition") }
 }
-
-public struct ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehaviorList: Codable, Sendable {
-    public var object: String
-    public var hasMore: Bool?
-    public var url: String?
-    public var data: [ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehavior]?
-
-    public enum CodingKeys: String, CodingKey {
-        case object
-        case hasMore = "has_more"
-        case url
-        case data
-    }
-}
