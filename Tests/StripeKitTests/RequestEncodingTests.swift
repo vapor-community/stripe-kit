@@ -7,7 +7,7 @@ import AsyncHTTPClient
 /// What `StripeAPIHandler` sends for each shape of route, checked without a network call.
 @Suite("Request encoding")
 struct RequestEncodingTests {
-    let handler = StripeAPIHandler(httpClient: .shared, apiKey: "sk_test_123", stripeAccount: "acct_123", idempotencyKey: "key_123")
+    let handler = StripeAPIHandler(httpClient: .shared, apiKey: "sk_test_123", stripeAccount: "acct_123")
 
     @Test("GET params go in the query string, with no body")
     func getParamsInQuery() {
@@ -38,7 +38,8 @@ struct RequestEncodingTests {
         #expect(request.headers["Authorization"] == ["Bearer sk_test_123"])
         #expect(request.headers["Stripe-Version"] == [StripeClient.apiVersion])
         #expect(request.headers["Stripe-Account"] == ["acct_123"])
-        #expect(request.headers["Idempotency-Key"] == ["key_123"])
+        // Idempotency keys are only ever per request
+        #expect(request.headers["Idempotency-Key"].isEmpty)
     }
 
     @Test("Interpolated path values are escaped as a single path segment")
@@ -59,15 +60,11 @@ struct RequestEncodingTests {
         #expect(request.url == "https://api.stripe.com/v1/products/a%2Fb%20c")
     }
 
-    @Test("Per-request options override the client's account and idempotency key")
+    @Test("Per-request options set the idempotency key and override the client's account")
     func requestOptionsOverride() {
-        let request = handler.request(.POST, "/v1/payouts", options: .init(stripeAccount: "acct_other", idempotencyKey: "key_other"))
+        let request = handler.request(.POST, "/v1/payouts", options: .init(stripeAccount: "acct_other", idempotencyKey: "key_1"))
         #expect(request.headers["Stripe-Account"] == ["acct_other"])
-        #expect(request.headers["Idempotency-Key"] == ["key_other"])
-
-        let plain = StripeAPIHandler(httpClient: .shared, apiKey: "sk_test_123")
-        #expect(plain.request(.POST, "/v1/payouts").headers["Idempotency-Key"].isEmpty)
-        #expect(plain.request(.POST, "/v1/payouts", options: .init(idempotencyKey: "k")).headers["Idempotency-Key"] == ["k"])
+        #expect(request.headers["Idempotency-Key"] == ["key_1"])
     }
 
     @Test("A route's own host replaces the API host")

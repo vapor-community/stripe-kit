@@ -14,17 +14,16 @@ import NIOHTTP1
 public struct StripeAPIHandler: Sendable {
     let httpClient: HTTPClient
     let apiKey: String
+    /// The connected account every request is made as, unless its options name another
     let stripeAccount: String?
-    let idempotencyKey: String?
     /// Generated from the spec, so it always matches the models (see `StripeClient.apiVersion`)
     var apiVersion: String { StripeClient.apiVersion }
     let baseURL = "https://api.stripe.com"
 
-    public init(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil, idempotencyKey: String? = nil) {
+    public init(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil) {
         self.httpClient = httpClient
         self.apiKey = apiKey
         self.stripeAccount = stripeAccount
-        self.idempotencyKey = idempotencyKey
     }
 
     // MARK: - Requests
@@ -101,7 +100,8 @@ public struct StripeAPIHandler: Sendable {
     }
 
     /// A request with Stripe's headers, and `params` and `expand` encoded as `send` describes.
-    /// `options` override the handler's own connected account and idempotency key.
+    /// `options` give the request's idempotency key, and can override the handler's connected
+    /// account.
     /// Internal rather than private so tests can check what gets sent.
     func request(
         _ method: HTTPMethod,
@@ -133,8 +133,8 @@ public struct StripeAPIHandler: Sendable {
         if let stripeAccount = options.stripeAccount ?? stripeAccount {
             request.headers.add(name: "Stripe-Account", value: stripeAccount)
         }
-        // Idempotency-Key: safe retries (per request, or the deprecated idempotent(_:))
-        if let idempotencyKey = options.idempotencyKey ?? idempotencyKey {
+        // Idempotency-Key: safe retries, always per request
+        if let idempotencyKey = options.idempotencyKey {
             request.headers.add(name: "Idempotency-Key", value: idempotencyKey)
         }
         if method == .POST {
