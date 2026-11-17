@@ -34,46 +34,52 @@ struct ParamGenerator {
     func generate(resource: StripeResource, operations: [ParamOperation]) -> String? {
         guard !operations.isEmpty else { return nil }
         
-        var w = fileHeader("\(resource.swiftTypeName)+Params.swift")
-
-        // Generate each operation's params, noting which action produced each nested type
-        var topLevel: [[String]] = []
-        var nested: [NestedParamsType] = []
+        // Probe: generate each operation's params once to learn which nested types it has
+        // and their shapes, then pick their names (see `sharedNames`)
+        var probed: [(action: String, type: NestedParamsType)] = []
         for (action, schema, requiredFields) in operations {
-            let (structLines, subStructs) = generateParamStruct(
+            let (_, nested) = generateParamStruct(
                 stem: "\(resource.swiftTypeName)\(action)",
                 schema: schema,
                 requiredFields: requiredFields,
-                depth: 0
+                depth: 0,
+                names: [:]
             )
-            topLevel.append(structLines)
-            nested += subStructs.map { NestedParamsType(action: action, name: $0.name, lines: $0.lines) }
+            probed += nested.map { (action, $0) }
         }
+        let names = sharedNames(resource: resource, nested: probed)
 
-        // Nested types every action defines identically are generated once, named without the
-        // action (see `sharedNames`)
-        let renames = sharedNames(resource: resource, nested: nested)
-        for structLines in topLevel {
-            w.append(Self.renamingTypes(structLines, renames))
+        // Generate for real with those names
+        var w = fileHeader("\(resource.swiftTypeName)+Params.swift")
+        var nestedTypes: [NestedParamsType] = []
+        for (action, schema, requiredFields) in operations {
+            let (structLines, nested) = generateParamStruct(
+                stem: "\(resource.swiftTypeName)\(action)",
+                schema: schema,
+                requiredFields: requiredFields,
+                depth: 0,
+                names: names
+            )
+            w.append(structLines)
             w.line()
+            nestedTypes += nested
         }
 
-        // Emit all nested types (structs, enums, unions). Two operations, or merged copies, can
+        // Emit all nested types (structs, enums, unions). Two operations, or shared copies, can
         // give the same name; emit those once. A name reused for a different shape would be
         // ambiguous Swift, so stop generation instead.
         var emitted: [String: [String]] = [:]
-        for type in nested {
-            let name = renames[type.name] ?? type.name
-            let typeLines = Self.renamingTypes(type.lines, renames)
+        for type in nestedTypes {
+            let name = names[type.name] ?? type.name
             if let existing = emitted[name] {
                 precondition(
-                    Self.withoutDocComments(existing) == Self.withoutDocComments(typeLines),
+                    Self.withoutDocComments(existing) == Self.withoutDocComments(type.lines),
                     "Params type \(name) generated twice with different shapes"
                 )
                 continue
             }
-            emitted[name] = typeLines
-            w.append(typeLines)
+            emitted[name] = type.lines
+            w.append(type.lines)
             w.line()
         }
         return w.text
@@ -81,67 +87,102 @@ struct ParamGenerator {
     
     // MARK: - Shared Nested Types
 
-    /// A nested params type (struct, enum or union) and the action whose params produced it
+    /// A nested params type (struct, enum or union) generated while typing a params struct
     private struct NestedParamsType {
-        let action: String
+        /// Its name before sharing: `{Resource}{Action}{FieldPath}`
         let name: String
         let lines: [String]
+        /// What the spec says about it, minus descriptions (see `shape(of:)`): copies with the
+        /// same shape generate the same Swift, apart from names
+        let shape: String
+        /// The names (before sharing) of the nested types generated inside it
+        let nested: [String]
     }
 
-    /// New names for nested params types that every action of a resource defines identically:
+    /// The nested types generated while typing one params struct's fields, and the final names
+    /// to give them (empty on the probing pass, which collects the types to decide those names)
+    private struct NestedTypes {
+        let names: [String: String]
+        var types: [NestedParamsType] = []
+
+        /// The final name for a type named `name` before sharing
+        func name(_ name: String) -> String {
+            names[name] ?? name
+        }
+    }
+
+    /// Names for nested params types that every action of a resource defines identically:
     /// the resource plus the field path, without the action, as Stripe's SDKs name them
     /// (stripe-go's `PaymentIntentPaymentMethodDataParams`, stripe-dotnet's
     /// `PaymentIntentPaymentMethodDataOptions`). `PaymentIntentCreatePaymentMethodData` and
     /// `PaymentIntentConfirmPaymentMethodData` both become `PaymentIntentPaymentMethodData`.
     ///
     /// A type keeps its action when the actions define it differently (or a nested type of it
-    /// does), or when the shorter name would clash with another type. Doc comments are ignored
-    /// when comparing; the first action's are kept.
-    private func sharedNames(resource: StripeResource, nested: [NestedParamsType]) -> [String: String] {
+    /// keeps its action), or when the shorter name would clash with another type. Descriptions
+    /// aren't compared; the first action's doc comments are kept.
+    private func sharedNames(resource: StripeResource, nested: [(action: String, type: NestedParamsType)]) -> [String: String] {
         let resourceName = resource.swiftTypeName
-        var candidates: [String: String] = [:]  // nested name → name without the action
-        var bodies: [String: [String]] = [:]    // nested name → its lines, without doc comments
-        for type in nested where bodies[type.name] == nil {
-            candidates[type.name] = resourceName + type.name.dropFirst(resourceName.count + type.action.count)
-            bodies[type.name] = Self.withoutDocComments(type.lines)
+        var candidates: [String: String] = [:]          // name → name without the action
+        var types: [String: NestedParamsType] = [:]     // name → the type (first copy)
+        for (action, type) in nested where types[type.name] == nil {
+            candidates[type.name] = resourceName + type.name.dropFirst(resourceName.count + action.count)
+            types[type.name] = type
         }
 
         // A shorter name mustn't clash with a type generated elsewhere, a top-level params
         // struct, or another resource's names
         let longerResourceNames = resourceTypeNames.filter { $0.count > resourceName.count && $0.hasPrefix(resourceName) }
-        var merging = Set(candidates.keys.filter { name in
+        var sharing = Set(candidates.keys.filter { name in
             let candidate = candidates[name]!
             return !reservedTypeNames.contains(candidate)
                 && !candidate.hasSuffix("Params")
                 && !longerResourceNames.contains { candidate.hasPrefix($0) }
         })
 
-        // Keep only names whose copies are identical once their nested types are renamed too,
-        // repeating until nothing changes, since dropping a nested type can split its parent
+        // Copies share a name when they have the same shape and their nested types end up with
+        // the same names. Repeat until nothing changes, since a nested type keeping its action
+        // can split its parent.
         while true {
-            let renames = Dictionary(uniqueKeysWithValues: merging.map { ($0, candidates[$0]!) })
-            var shapes: [String: Set<[String]>] = [:]  // shared name → the shapes merging into it
-            for name in merging {
-                shapes[candidates[name]!, default: []].insert(Self.renamingTypes(bodies[name]!, renames))
+            func finalName(_ name: String) -> String { sharing.contains(name) ? candidates[name]! : name }
+            var signatures: [String: Set<String>] = [:]  // shared name → the copies' signatures
+            for name in sharing {
+                let type = types[name]!
+                let signature = type.shape + "|" + type.nested.map(finalName).joined(separator: ",")
+                signatures[candidates[name]!, default: []].insert(signature)
             }
-            let kept = Set(candidates.keys).subtracting(merging)
-            let invalid = merging.filter { name in
+            let kept = Set(candidates.keys).subtracting(sharing)
+            let invalid = sharing.filter { name in
                 let candidate = candidates[name]!
-                return shapes[candidate]!.count > 1 || kept.contains(candidate)
+                return signatures[candidate]!.count > 1 || kept.contains(candidate)
             }
-            guard !invalid.isEmpty else { return renames }
-            merging.subtract(invalid)
+            guard !invalid.isEmpty else {
+                return Dictionary(uniqueKeysWithValues: sharing.map { ($0, candidates[$0]!) })
+            }
+            sharing.subtract(invalid)
         }
     }
 
-    /// `lines` with every identifier in `renames` replaced
-    private static func renamingTypes(_ lines: [String], _ renames: [String: String]) -> [String] {
-        guard !renames.isEmpty else { return lines }
-        return lines.map { line in
-            line.replacing(/[A-Za-z_][A-Za-z0-9_]*/) { match in
-                renames[String(match.output)] ?? String(match.output)
-            }
+    /// What decides the Swift a params schema generates, apart from names: everything the
+    /// spec says about it except descriptions (which only become doc comments). Titles count
+    /// only on `anyOf` forms, where they name the union's cases, and a union's keyword forms
+    /// drop "" as the union does.
+    private static func shape(of schema: PropertyObject, inUnion: Bool = false) -> String {
+        var parts: [String] = []
+        if let type = schema.type { parts.append("type=\(type)") }
+        if let format = schema.format { parts.append("format=\(format)") }
+        if inUnion, let title = schema.title { parts.append("title=\(title)") }
+        if let ref = schema.ref { parts.append("ref=\(ref)") }
+        if let values = schema.enum {
+            parts.append("enum=\((inUnion ? values.filter { !$0.isEmpty } : values).joined(separator: "\u{1}"))")
         }
+        if let required = schema.required { parts.append("required=\(required.sorted().joined(separator: ","))") }
+        if let properties = schema.properties {
+            parts.append("properties={" + properties.sorted { $0.key < $1.key }.map { "\($0.key):\(shape(of: $0.value))" }.joined(separator: ",") + "}")
+        }
+        if let items = schema.items { parts.append("items=\(shape(of: items))") }
+        if let values = schema.additionalProperties { parts.append("values=\(shape(of: values))") }
+        if let variants = schema.anyOf { parts.append("anyOf=[" + variants.map { shape(of: $0, inUnion: true) }.joined(separator: ",") + "]") }
+        return "{" + parts.joined(separator: ";") + "}"
     }
 
     private static func withoutDocComments(_ lines: [String]) -> [String] {
@@ -158,10 +199,11 @@ struct ParamGenerator {
         stem: String,
         schema: PropertyObject,
         requiredFields: Set<String>,
-        depth: Int
-    ) -> (lines: [String], subStructs: [(name: String, lines: [String])]) {
-        let structName = depth == 0 ? "\(stem)Params" : stem
-        var subStructs: [(name: String, lines: [String])] = []
+        depth: Int,
+        names: [String: String]
+    ) -> (lines: [String], nested: [NestedParamsType]) {
+        var nested = NestedTypes(names: names)
+        let structName = depth == 0 ? "\(stem)Params" : nested.name(stem)
         
         let properties = schema.properties ?? [:]
         let sorted = properties.sorted { $0.key < $1.key }
@@ -180,7 +222,7 @@ struct ParamGenerator {
         let fields = ordered.map { propName, prop in
             (
                 name: escapedSwiftName(snakeToCamel(propName)),
-                type: resolveType(prop, parentStem: stem, propName: propName, depth: depth, subStructs: &subStructs),
+                type: resolveType(prop, parentStem: stem, propName: propName, depth: depth, nested: &nested),
                 isRequired: requiredFields.contains(propName),
                 description: prop.description
             )
@@ -244,7 +286,7 @@ struct ParamGenerator {
                 }
             }
         }
-        return (w.lines, subStructs)
+        return (w.lines, nested.types)
     }
 
     /// `case fieldName = "field_name"` (or `case name` when the names match) for a coding key
@@ -256,20 +298,20 @@ struct ParamGenerator {
     // MARK: - Type Resolution
     
     /// The Swift type for a param schema. Generates the nested types it needs (structs for
-    /// objects, String enums, enums for `anyOf` unions) into `subStructs`, named
-    /// `{parentStem}{PropName}`.
+    /// objects, String enums, enums for `anyOf` unions) into `nested`, named
+    /// `{parentStem}{PropName}` before sharing.
     /// Every place the type is looser than the schema is recorded in `fallbacks`.
     private func resolveType(
         _ prop: PropertyObject,
         parentStem: String,
         propName: String,
         depth: Int,
-        subStructs: inout [(name: String, lines: [String])]
+        nested: inout NestedTypes
     ) -> String {
         let stem = "\(parentStem)\(capitalize(snakeToCamel(propName)))"
         
         if let anyOf = prop.anyOf, !anyOf.isEmpty {
-            return resolveAnyOf(anyOf, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs)
+            return resolveAnyOf(anyOf, parentStem: parentStem, propName: propName, depth: depth, nested: &nested)
         }
         
         if let ref = prop.ref {
@@ -279,8 +321,12 @@ struct ParamGenerator {
         // Enum. A "clear-only" enum whose sole value is "" gets no generated type
         // (generateStringEnum drops ""), so fall through to the base type instead.
         if let enumCases = prop.enum, enumCases.contains(where: { !$0.isEmpty }) {
-            subStructs.append((stem, generateStringEnum(name: stem, cases: enumCases, valueDescriptions: prop.enumDescriptions ?? [:])))
-            return stem
+            let lines = generateStringEnum(name: nested.name(stem), cases: enumCases, valueDescriptions: prop.enumDescriptions ?? [:])
+            // An enum's Swift depends only on its values ("" is dropped; it makes the parent's field
+            // clearable, which the parent's own shape covers)
+            let shape = "enum=" + enumCases.filter { !$0.isEmpty }.joined(separator: "\u{1}")
+            nested.types.append(NestedParamsType(name: stem, lines: lines, shape: shape, nested: []))
+            return nested.name(stem)
         }
         
         // Object with fields → generated struct
@@ -289,15 +335,16 @@ struct ParamGenerator {
                 fallbacks.record(parentStem, propName, "nested deeper than \(maxDepth) → [String: String]")
                 return "[String: String]"
             }
-            let (subLines, nestedSubs) = generateParamStruct(
+            let (lines, inner) = generateParamStruct(
                 stem: stem,
                 schema: prop,
                 requiredFields: Set(prop.required ?? []),
-                depth: depth + 1
+                depth: depth + 1,
+                names: nested.names
             )
-            subStructs.append((stem, subLines))
-            subStructs.append(contentsOf: nestedSubs)
-            return stem
+            nested.types.append(NestedParamsType(name: stem, lines: lines, shape: Self.shape(of: prop), nested: inner.map(\.name)))
+            nested.types += inner
+            return nested.name(stem)
         }
         
         switch prop.type {
@@ -314,11 +361,11 @@ struct ParamGenerator {
                 fallbacks.record(parentStem, propName, "array without items → [String]")
                 return "[String]"
             }
-            return "[\(resolveType(items, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs))]"
+            return "[\(resolveType(items, parentStem: parentStem, propName: propName, depth: depth, nested: &nested))]"
         case "object":
             // A map, e.g. metadata ([String: String]) or currency_options ([String: {Stem}])
             if let values = prop.additionalProperties {
-                return "[String: \(resolveType(values, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs))]"
+                return "[String: \(resolveType(values, parentStem: parentStem, propName: propName, depth: depth, nested: &nested))]"
             }
             // `properties: {}` is a hash the spec defines as empty (e.g. payment_method_data[bizum]),
             // so nothing is lost; only an object with no shape at all is a fallback.
@@ -337,14 +384,14 @@ struct ParamGenerator {
         parentStem: String,
         propName: String,
         depth: Int,
-        subStructs: inout [(name: String, lines: [String])]
+        nested: inout NestedTypes
     ) -> String {
         // Filter out empty-string enum variants (Stripe uses "" to mean "unset")
         let nonEmpty = variants.filter { $0.enum != [""] }
         
         // One real variant: it's that variant's type
         if nonEmpty.count == 1, let single = nonEmpty.first {
-            return resolveType(single, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs)
+            return resolveType(single, parentStem: parentStem, propName: propName, depth: depth, nested: &nested)
         }
         
         // `integer | range_query_specs` (list filters like `created`) → shared StripeRangeQuery
@@ -355,7 +402,7 @@ struct ParamGenerator {
         }
         
         // Several forms → a generated enum with a case per form
-        if let union = generateUnion(nonEmpty, parentStem: parentStem, propName: propName, depth: depth, subStructs: &subStructs) {
+        if let union = generateUnion(nonEmpty, parentStem: parentStem, propName: propName, depth: depth, nested: &nested) {
             return union
         }
         
@@ -416,13 +463,14 @@ struct ParamGenerator {
         parentStem: String,
         propName: String,
         depth: Int,
-        subStructs: inout [(name: String, lines: [String])]
+        nested: inout NestedTypes
     ) -> String? {
         let name = "\(parentStem)\(capitalize(snakeToCamel(propName)))"
         
         var keywords: [String] = []
         var scalar: UnionScalar?
         var objects: [(caseName: String, typeName: String)] = []
+        var inner: [NestedParamsType] = []
         
         for (index, variant) in variants.enumerated() {
             if variant.type == "string", let values = variant.enum {
@@ -433,15 +481,18 @@ struct ParamGenerator {
             } else if let props = variant.properties, !props.isEmpty, depth < maxDepth {
                 let caseName = unionObjectCaseName(variant, index: index)
                 let typeName = "\(name)\(capitalize(caseName))"
-                let (subLines, nestedSubs) = generateParamStruct(
+                let (lines, variantNested) = generateParamStruct(
                     stem: typeName,
                     schema: variant,
                     requiredFields: Set(variant.required ?? []),
-                    depth: depth + 1
+                    depth: depth + 1,
+                    names: nested.names
                 )
-                subStructs.append((typeName, subLines))
-                subStructs.append(contentsOf: nestedSubs)
-                objects.append((caseName, typeName))
+                let variantType = NestedParamsType(name: typeName, lines: lines, shape: Self.shape(of: variant), nested: variantNested.map(\.name))
+                nested.types.append(variantType)
+                nested.types += variantNested
+                inner += [variantType] + variantNested
+                objects.append((caseName, nested.name(typeName)))
             } else {
                 return nil
             }
@@ -454,9 +505,10 @@ struct ParamGenerator {
         var conformances = ["Codable", "Sendable"]
         if let scalar { conformances.append(scalar.literal) }
         
+        let finalName = nested.name(name)
         var w = CodeWriter()
         w.line("/// One of the forms `\(propName)` accepts.")
-        w.block("public enum \(name): \(conformances.joined(separator: ", ")) {") { w in
+        w.block("public enum \(finalName): \(conformances.joined(separator: ", ")) {") { w in
             for keyword in keywordCases {
                 w.line("/// `\(keyword.raw)`")
                 w.line("case \(escapedSwiftName(keyword.name))")
@@ -490,7 +542,7 @@ struct ParamGenerator {
                 for object in objects {
                     w.line("if let value = try? \(object.typeName)(from: decoder) { self = .\(escapedSwiftName(object.caseName))(value); return }")
                 }
-                w.line("throw DecodingError.dataCorruptedError(in: container, debugDescription: \"No form of \(name) matches\")")
+                w.line("throw DecodingError.dataCorruptedError(in: container, debugDescription: \"No form of \(finalName) matches\")")
             }
 
             // Encoding: keywords as their string, the scalar as itself, an object form as its fields
@@ -519,8 +571,9 @@ struct ParamGenerator {
             }
         }
 
-        subStructs.append((name, w.lines))
-        return name
+        let shape = "anyOf=[" + variants.map { Self.shape(of: $0, inUnion: true) }.joined(separator: ",") + "]"
+        nested.types.append(NestedParamsType(name: name, lines: w.lines, shape: shape, nested: inner.map(\.name)))
+        return finalName
     }
     
     // MARK: - Operation Discovery
