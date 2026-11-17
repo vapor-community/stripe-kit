@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - FeeRefund Routes
@@ -40,37 +39,16 @@ extension FeeRefundRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FeeRefundRoutes(
             create: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/application_fees/\(id)/refunds",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FeeRefund
+                try await handler.send(.POST, "/v1/application_fees/\(id)/refunds", params: params)
             },
             retrieve: { fee, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/application_fees/\(fee)/refunds/\(id)" : "/v1/application_fees/\(fee)/refunds/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FeeRefund
+                try await handler.send(.GET, "/v1/application_fees/\(fee)/refunds/\(id)", expand: expand)
             },
             update: { fee, id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/application_fees/\(fee)/refunds/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FeeRefund
+                try await handler.send(.POST, "/v1/application_fees/\(fee)/refunds/\(id)", params: params)
             },
             list: { id, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/application_fees/\(id)/refunds" : "/v1/application_fees/\(id)/refunds?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FeeRefundList
+                try await handler.send(.GET, "/v1/application_fees/\(id)/refunds", params: params)
             }
         )
     }

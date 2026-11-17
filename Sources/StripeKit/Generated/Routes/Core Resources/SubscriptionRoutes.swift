@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Subscription Routes
@@ -101,87 +100,34 @@ extension SubscriptionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SubscriptionRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscriptions",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Subscription
+                try await handler.send(.POST, "/v1/subscriptions", params: params)
             },
             retrieve: { subscriptionExposedId, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/subscriptions/\(subscriptionExposedId)" : "/v1/subscriptions/\(subscriptionExposedId)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Subscription
+                try await handler.send(.GET, "/v1/subscriptions/\(subscriptionExposedId)", expand: expand)
             },
             update: { subscriptionExposedId, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscriptions/\(subscriptionExposedId)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Subscription
+                try await handler.send(.POST, "/v1/subscriptions/\(subscriptionExposedId)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/subscriptions" : "/v1/subscriptions?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SubscriptionList
+                try await handler.send(.GET, "/v1/subscriptions", params: params)
             },
             search: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/subscriptions/search" : "/v1/subscriptions/search?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as StripeSearchResult<Subscription>
+                try await handler.send(.GET, "/v1/subscriptions/search", params: params)
             },
             cancel: { subscriptionExposedId, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/subscriptions/\(subscriptionExposedId)" : "/v1/subscriptions/\(subscriptionExposedId)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as Subscription
+                try await handler.send(.DELETE, "/v1/subscriptions/\(subscriptionExposedId)", expand: expand)
             },
             deleteDiscount: { subscriptionExposedId, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/subscriptions/\(subscriptionExposedId)/discount" : "/v1/subscriptions/\(subscriptionExposedId)/discount?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedDiscount
+                try await handler.send(.DELETE, "/v1/subscriptions/\(subscriptionExposedId)/discount", expand: expand)
             },
             migrate: { subscription, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscriptions/\(subscription)/migrate",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Subscription
+                try await handler.send(.POST, "/v1/subscriptions/\(subscription)/migrate", params: params)
             },
             pause: { subscription, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscriptions/\(subscription)/pause",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Subscription
+                try await handler.send(.POST, "/v1/subscriptions/\(subscription)/pause", params: params)
             },
             resume: { subscription, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscriptions/\(subscription)/resume",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Subscription
+                try await handler.send(.POST, "/v1/subscriptions/\(subscription)/resume", params: params)
             }
         )
     }

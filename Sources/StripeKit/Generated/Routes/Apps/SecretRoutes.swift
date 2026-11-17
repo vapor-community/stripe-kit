@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Secret Routes
@@ -30,36 +29,16 @@ extension SecretRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SecretRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/apps/secrets",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Secret
+                try await handler.send(.POST, "/v1/apps/secrets", params: params)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/apps/secrets" : "/v1/apps/secrets?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SecretList
+                try await handler.send(.GET, "/v1/apps/secrets", params: params)
             },
             deleteWhere: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/apps/secrets/delete",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Secret
+                try await handler.send(.POST, "/v1/apps/secrets/delete", params: params)
             },
             find: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/apps/secrets/find" : "/v1/apps/secrets/find?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Secret
+                try await handler.send(.GET, "/v1/apps/secrets/find", params: params)
             }
         )
     }

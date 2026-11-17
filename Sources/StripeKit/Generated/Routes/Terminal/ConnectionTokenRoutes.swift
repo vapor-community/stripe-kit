@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ConnectionToken Routes
@@ -23,12 +22,7 @@ extension ConnectionTokenRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ConnectionTokenRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/connection_tokens",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ConnectionToken
+                try await handler.send(.POST, "/v1/terminal/connection_tokens", params: params)
             }
         )
     }

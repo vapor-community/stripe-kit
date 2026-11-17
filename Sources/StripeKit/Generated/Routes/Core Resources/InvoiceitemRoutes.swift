@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Invoiceitem Routes
@@ -37,46 +36,19 @@ extension InvoiceitemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InvoiceitemRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoiceitems",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoiceitem
+                try await handler.send(.POST, "/v1/invoiceitems", params: params)
             },
             retrieve: { invoiceitem, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/invoiceitems/\(invoiceitem)" : "/v1/invoiceitems/\(invoiceitem)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Invoiceitem
+                try await handler.send(.GET, "/v1/invoiceitems/\(invoiceitem)", expand: expand)
             },
             update: { invoiceitem, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoiceitems/\(invoiceitem)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoiceitem
+                try await handler.send(.POST, "/v1/invoiceitems/\(invoiceitem)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/invoiceitems" : "/v1/invoiceitems?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as InvoiceitemList
+                try await handler.send(.GET, "/v1/invoiceitems", params: params)
             },
             delete: { invoiceitem, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/invoiceitems/\(invoiceitem)" : "/v1/invoiceitems/\(invoiceitem)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedInvoiceitem
+                try await handler.send(.DELETE, "/v1/invoiceitems/\(invoiceitem)", expand: expand)
             }
         )
     }

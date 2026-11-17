@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - IssuingTransaction Routes
@@ -38,53 +37,22 @@ extension IssuingTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingTransactionRoutes(
             retrieve: { transaction, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/issuing/transactions/\(transaction)" : "/v1/issuing/transactions/\(transaction)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingTransaction
+                try await handler.send(.GET, "/v1/issuing/transactions/\(transaction)", expand: expand)
             },
             update: { transaction, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/transactions/\(transaction)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingTransaction
+                try await handler.send(.POST, "/v1/issuing/transactions/\(transaction)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/issuing/transactions" : "/v1/issuing/transactions?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingTransactionList
+                try await handler.send(.GET, "/v1/issuing/transactions", params: params)
             },
             createForceCapture: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/transactions/create_force_capture",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingTransaction
+                try await handler.send(.POST, "/v1/test_helpers/issuing/transactions/create_force_capture", params: params)
             },
             createUnlinkedRefund: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/transactions/create_unlinked_refund",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingTransaction
+                try await handler.send(.POST, "/v1/test_helpers/issuing/transactions/create_unlinked_refund", params: params)
             },
             refund: { transaction, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/transactions/\(transaction)/refund",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingTransaction
+                try await handler.send(.POST, "/v1/test_helpers/issuing/transactions/\(transaction)/refund", params: params)
             }
         )
     }

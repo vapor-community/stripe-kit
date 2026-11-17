@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - WebhookEndpoint Routes
@@ -39,46 +38,19 @@ extension WebhookEndpointRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         WebhookEndpointRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/webhook_endpoints",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as WebhookEndpoint
+                try await handler.send(.POST, "/v1/webhook_endpoints", params: params)
             },
             retrieve: { webhookEndpoint, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/webhook_endpoints/\(webhookEndpoint)" : "/v1/webhook_endpoints/\(webhookEndpoint)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as WebhookEndpoint
+                try await handler.send(.GET, "/v1/webhook_endpoints/\(webhookEndpoint)", expand: expand)
             },
             update: { webhookEndpoint, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/webhook_endpoints/\(webhookEndpoint)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as WebhookEndpoint
+                try await handler.send(.POST, "/v1/webhook_endpoints/\(webhookEndpoint)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/webhook_endpoints" : "/v1/webhook_endpoints?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as WebhookEndpointList
+                try await handler.send(.GET, "/v1/webhook_endpoints", params: params)
             },
             delete: { webhookEndpoint, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/webhook_endpoints/\(webhookEndpoint)" : "/v1/webhook_endpoints/\(webhookEndpoint)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedWebhookEndpoint
+                try await handler.send(.DELETE, "/v1/webhook_endpoints/\(webhookEndpoint)", expand: expand)
             }
         )
     }

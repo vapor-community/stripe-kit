@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentRecord Routes
@@ -48,77 +47,31 @@ extension PaymentRecordRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentRecordRoutes(
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/payment_records/\(id)" : "/v1/payment_records/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentRecord
+                try await handler.send(.GET, "/v1/payment_records/\(id)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payment_records" : "/v1/payment_records?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentRecordList
+                try await handler.send(.GET, "/v1/payment_records", params: params)
             },
             reportPayment: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_records/report_payment",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentRecord
+                try await handler.send(.POST, "/v1/payment_records/report_payment", params: params)
             },
             reportPaymentAttempt: { id, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_records/\(id)/report_payment_attempt",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentRecord
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt", params: params)
             },
             reportPaymentAttemptCanceled: { id, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_records/\(id)/report_payment_attempt_canceled",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentRecord
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_canceled", params: params)
             },
             reportPaymentAttemptFailed: { id, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_records/\(id)/report_payment_attempt_failed",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentRecord
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_failed", params: params)
             },
             reportPaymentAttemptGuaranteed: { id, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_records/\(id)/report_payment_attempt_guaranteed",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentRecord
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_guaranteed", params: params)
             },
             reportPaymentAttemptInformational: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_records/\(id)/report_payment_attempt_informational",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentRecord
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_payment_attempt_informational", params: params)
             },
             reportRefund: { id, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_records/\(id)/report_refund",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentRecord
+                try await handler.send(.POST, "/v1/payment_records/\(id)/report_refund", params: params)
             }
         )
     }

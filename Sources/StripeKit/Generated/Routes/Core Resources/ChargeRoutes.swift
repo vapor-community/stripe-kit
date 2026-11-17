@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Charge Routes
@@ -45,53 +44,22 @@ extension ChargeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ChargeRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/charges",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Charge
+                try await handler.send(.POST, "/v1/charges", params: params)
             },
             retrieve: { charge, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/charges/\(charge)" : "/v1/charges/\(charge)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Charge
+                try await handler.send(.GET, "/v1/charges/\(charge)", expand: expand)
             },
             update: { charge, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/charges/\(charge)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Charge
+                try await handler.send(.POST, "/v1/charges/\(charge)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/charges" : "/v1/charges?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ChargeList
+                try await handler.send(.GET, "/v1/charges", params: params)
             },
             search: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/charges/search" : "/v1/charges/search?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as StripeSearchResult<Charge>
+                try await handler.send(.GET, "/v1/charges/search", params: params)
             },
             capture: { charge, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/charges/\(charge)/capture",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Charge
+                try await handler.send(.POST, "/v1/charges/\(charge)/capture", params: params)
             }
         )
     }

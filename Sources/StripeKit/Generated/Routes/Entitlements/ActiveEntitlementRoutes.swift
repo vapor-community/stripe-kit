@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ActiveEntitlement Routes
@@ -24,21 +23,10 @@ extension ActiveEntitlementRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ActiveEntitlementRoutes(
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/entitlements/active_entitlements/\(id)" : "/v1/entitlements/active_entitlements/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ActiveEntitlement
+                try await handler.send(.GET, "/v1/entitlements/active_entitlements/\(id)", expand: expand)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/entitlements/active_entitlements" : "/v1/entitlements/active_entitlements?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ActiveEntitlementList
+                try await handler.send(.GET, "/v1/entitlements/active_entitlements", params: params)
             }
         )
     }

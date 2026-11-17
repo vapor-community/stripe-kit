@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Balance Routes
@@ -22,13 +21,7 @@ extension BalanceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BalanceRoutes(
             retrieve: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/balance" : "/v1/balance?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Balance
+                try await handler.send(.GET, "/v1/balance", expand: expand)
             }
         )
     }

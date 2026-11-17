@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - BillingPortalSession Routes
@@ -21,12 +20,7 @@ extension BillingPortalSessionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingPortalSessionRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing_portal/sessions",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as BillingPortalSession
+                try await handler.send(.POST, "/v1/billing_portal/sessions", params: params)
             }
         )
     }

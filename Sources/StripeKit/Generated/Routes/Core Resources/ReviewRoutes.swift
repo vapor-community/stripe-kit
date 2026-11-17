@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Review Routes
@@ -28,29 +27,13 @@ extension ReviewRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ReviewRoutes(
             retrieve: { review, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/reviews/\(review)" : "/v1/reviews/\(review)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Review
+                try await handler.send(.GET, "/v1/reviews/\(review)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/reviews" : "/v1/reviews?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ReviewList
+                try await handler.send(.GET, "/v1/reviews", params: params)
             },
             approve: { review, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/reviews/\(review)/approve",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Review
+                try await handler.send(.POST, "/v1/reviews/\(review)/approve", params: params)
             }
         )
     }

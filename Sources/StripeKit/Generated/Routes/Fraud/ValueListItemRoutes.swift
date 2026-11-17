@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ValueListItem Routes
@@ -31,38 +30,16 @@ extension ValueListItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ValueListItemRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/radar/value_list_items",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ValueListItem
+                try await handler.send(.POST, "/v1/radar/value_list_items", params: params)
             },
             retrieve: { item, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/radar/value_list_items/\(item)" : "/v1/radar/value_list_items/\(item)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ValueListItem
+                try await handler.send(.GET, "/v1/radar/value_list_items/\(item)", expand: expand)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/radar/value_list_items" : "/v1/radar/value_list_items?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ValueListItemList
+                try await handler.send(.GET, "/v1/radar/value_list_items", params: params)
             },
             delete: { item, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/radar/value_list_items/\(item)" : "/v1/radar/value_list_items/\(item)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedValueListItem
+                try await handler.send(.DELETE, "/v1/radar/value_list_items/\(item)", expand: expand)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Meter Routes
@@ -38,53 +37,22 @@ extension MeterRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         MeterRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/meters",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Meter
+                try await handler.send(.POST, "/v1/billing/meters", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/billing/meters/\(id)" : "/v1/billing/meters/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Meter
+                try await handler.send(.GET, "/v1/billing/meters/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/meters/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Meter
+                try await handler.send(.POST, "/v1/billing/meters/\(id)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/billing/meters" : "/v1/billing/meters?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as MeterList
+                try await handler.send(.GET, "/v1/billing/meters", params: params)
             },
             deactivate: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/meters/\(id)/deactivate",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Meter
+                try await handler.send(.POST, "/v1/billing/meters/\(id)/deactivate", params: params)
             },
             reactivate: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/meters/\(id)/reactivate",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Meter
+                try await handler.send(.POST, "/v1/billing/meters/\(id)/reactivate", params: params)
             }
         )
     }

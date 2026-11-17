@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Alert Routes
@@ -36,53 +35,22 @@ extension AlertRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AlertRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/alerts",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Alert
+                try await handler.send(.POST, "/v1/billing/alerts", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/billing/alerts/\(id)" : "/v1/billing/alerts/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Alert
+                try await handler.send(.GET, "/v1/billing/alerts/\(id)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/billing/alerts" : "/v1/billing/alerts?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as AlertList
+                try await handler.send(.GET, "/v1/billing/alerts", params: params)
             },
             activate: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/alerts/\(id)/activate",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Alert
+                try await handler.send(.POST, "/v1/billing/alerts/\(id)/activate", params: params)
             },
             archive: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/alerts/\(id)/archive",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Alert
+                try await handler.send(.POST, "/v1/billing/alerts/\(id)/archive", params: params)
             },
             deactivate: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/alerts/\(id)/deactivate",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Alert
+                try await handler.send(.POST, "/v1/billing/alerts/\(id)/deactivate", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CreditGrant Routes
@@ -36,53 +35,22 @@ extension CreditGrantRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CreditGrantRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/credit_grants",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CreditGrant
+                try await handler.send(.POST, "/v1/billing/credit_grants", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/billing/credit_grants/\(id)" : "/v1/billing/credit_grants/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditGrant
+                try await handler.send(.GET, "/v1/billing/credit_grants/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/credit_grants/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CreditGrant
+                try await handler.send(.POST, "/v1/billing/credit_grants/\(id)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/billing/credit_grants" : "/v1/billing/credit_grants?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditGrantList
+                try await handler.send(.GET, "/v1/billing/credit_grants", params: params)
             },
             expire: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/credit_grants/\(id)/expire",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CreditGrant
+                try await handler.send(.POST, "/v1/billing/credit_grants/\(id)/expire", params: params)
             },
             voidGrant: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/credit_grants/\(id)/void",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CreditGrant
+                try await handler.send(.POST, "/v1/billing/credit_grants/\(id)/void", params: params)
             }
         )
     }

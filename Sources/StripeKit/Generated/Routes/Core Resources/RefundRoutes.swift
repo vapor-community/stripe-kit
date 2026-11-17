@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Refund Routes
@@ -55,70 +54,28 @@ extension RefundRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         RefundRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/refunds",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Refund
+                try await handler.send(.POST, "/v1/refunds", params: params)
             },
             retrieve: { refund, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/refunds/\(refund)" : "/v1/refunds/\(refund)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Refund
+                try await handler.send(.GET, "/v1/refunds/\(refund)", expand: expand)
             },
             update: { refund, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/refunds/\(refund)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Refund
+                try await handler.send(.POST, "/v1/refunds/\(refund)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/refunds" : "/v1/refunds?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as RefundList
+                try await handler.send(.GET, "/v1/refunds", params: params)
             },
             cancel: { refund, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/refunds/\(refund)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Refund
+                try await handler.send(.POST, "/v1/refunds/\(refund)/cancel", params: params)
             },
             expire: { refund, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/refunds/\(refund)/expire",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Refund
+                try await handler.send(.POST, "/v1/test_helpers/refunds/\(refund)/expire", params: params)
             },
             listForCharge: { charge, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/charges/\(charge)/refunds" : "/v1/charges/\(charge)/refunds?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as RefundList
+                try await handler.send(.GET, "/v1/charges/\(charge)/refunds", params: params)
             },
             retrieveForCharge: { charge, refund, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/charges/\(charge)/refunds/\(refund)" : "/v1/charges/\(charge)/refunds/\(refund)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Refund
+                try await handler.send(.GET, "/v1/charges/\(charge)/refunds/\(refund)", expand: expand)
             }
         )
     }

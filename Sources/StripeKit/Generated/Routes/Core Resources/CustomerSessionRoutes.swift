@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CustomerSession Routes
@@ -22,12 +21,7 @@ extension CustomerSessionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CustomerSessionRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customer_sessions",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CustomerSession
+                try await handler.send(.POST, "/v1/customer_sessions", params: params)
             }
         )
     }

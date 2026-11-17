@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - IssuingCard Routes
@@ -48,77 +47,31 @@ extension IssuingCardRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingCardRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/cards",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingCard
+                try await handler.send(.POST, "/v1/issuing/cards", params: params)
             },
             retrieve: { card, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/issuing/cards/\(card)" : "/v1/issuing/cards/\(card)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingCard
+                try await handler.send(.GET, "/v1/issuing/cards/\(card)", expand: expand)
             },
             update: { card, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/cards/\(card)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingCard
+                try await handler.send(.POST, "/v1/issuing/cards/\(card)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/issuing/cards" : "/v1/issuing/cards?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingCardList
+                try await handler.send(.GET, "/v1/issuing/cards", params: params)
             },
             deliverCard: { card, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/deliver",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingCard
+                try await handler.send(.POST, "/v1/test_helpers/issuing/cards/\(card)/shipping/deliver", params: params)
             },
             failCard: { card, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/fail",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingCard
+                try await handler.send(.POST, "/v1/test_helpers/issuing/cards/\(card)/shipping/fail", params: params)
             },
             returnCard: { card, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/return",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingCard
+                try await handler.send(.POST, "/v1/test_helpers/issuing/cards/\(card)/shipping/return", params: params)
             },
             shipCard: { card, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/ship",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingCard
+                try await handler.send(.POST, "/v1/test_helpers/issuing/cards/\(card)/shipping/ship", params: params)
             },
             submitCard: { card, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/cards/\(card)/shipping/submit",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingCard
+                try await handler.send(.POST, "/v1/test_helpers/issuing/cards/\(card)/shipping/submit", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TerminalConfiguration Routes
@@ -33,46 +32,19 @@ extension TerminalConfigurationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TerminalConfigurationRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/configurations",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TerminalConfiguration
+                try await handler.send(.POST, "/v1/terminal/configurations", params: params)
             },
             retrieve: { configuration, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/terminal/configurations/\(configuration)" : "/v1/terminal/configurations/\(configuration)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration>
+                try await handler.send(.GET, "/v1/terminal/configurations/\(configuration)", expand: expand)
             },
             update: { configuration, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/configurations/\(configuration)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ObjectOrDeleted<TerminalConfiguration, DeletedTerminalConfiguration>
+                try await handler.send(.POST, "/v1/terminal/configurations/\(configuration)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/terminal/configurations" : "/v1/terminal/configurations?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TerminalConfigurationList
+                try await handler.send(.GET, "/v1/terminal/configurations", params: params)
             },
             delete: { configuration, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/terminal/configurations/\(configuration)" : "/v1/terminal/configurations/\(configuration)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedTerminalConfiguration
+                try await handler.send(.DELETE, "/v1/terminal/configurations/\(configuration)", expand: expand)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CreditNoteLineItem Routes
@@ -22,12 +21,7 @@ extension CreditNoteLineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CreditNoteLineItemRoutes(
             list: { creditNote, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/credit_notes/\(creditNote)/lines" : "/v1/credit_notes/\(creditNote)/lines?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditNoteLineItemList
+                try await handler.send(.GET, "/v1/credit_notes/\(creditNote)/lines", params: params)
             }
         )
     }

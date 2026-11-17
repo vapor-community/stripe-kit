@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - File Routes
@@ -31,29 +30,13 @@ extension FileRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FileRoutes(
             create: { fileData, fileName, mimeType, purpose in
-                return try await handler.sendMultipart(
-                    fileData: fileData,
-                    fileName: fileName,
-                    mimeType: mimeType,
-                    purpose: purpose
-                ) as File
+                try await handler.sendMultipart("/v1/files", baseURL: "https://files.stripe.com", fileData: fileData, fileName: fileName, mimeType: mimeType, purpose: purpose)
             },
             retrieve: { file, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/files/\(file)" : "/v1/files/\(file)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as File
+                try await handler.send(.GET, "/v1/files/\(file)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/files" : "/v1/files?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FileList
+                try await handler.send(.GET, "/v1/files", params: params)
             }
         )
     }

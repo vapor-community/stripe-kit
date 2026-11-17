@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - FinancialConnectionsAccount Routes
@@ -41,61 +40,25 @@ extension FinancialConnectionsAccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FinancialConnectionsAccountRoutes(
             retrieve: { account, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/financial_connections/accounts/\(account)" : "/v1/financial_connections/accounts/\(account)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FinancialConnectionsAccount
+                try await handler.send(.GET, "/v1/financial_connections/accounts/\(account)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/financial_connections/accounts" : "/v1/financial_connections/accounts?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FinancialConnectionsAccountList
+                try await handler.send(.GET, "/v1/financial_connections/accounts", params: params)
             },
             disconnect: { account, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/financial_connections/accounts/\(account)/disconnect",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FinancialConnectionsAccount
+                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/disconnect", params: params)
             },
             listOwners: { account, params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/financial_connections/accounts/\(account)/owners" : "/v1/financial_connections/accounts/\(account)/owners?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as AccountOwnerList
+                try await handler.send(.GET, "/v1/financial_connections/accounts/\(account)/owners", params: params)
             },
             refresh: { account, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/financial_connections/accounts/\(account)/refresh",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FinancialConnectionsAccount
+                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/refresh", params: params)
             },
             subscribe: { account, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/financial_connections/accounts/\(account)/subscribe",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FinancialConnectionsAccount
+                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/subscribe", params: params)
             },
             unsubscribe: { account, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/financial_connections/accounts/\(account)/unsubscribe",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FinancialConnectionsAccount
+                try await handler.send(.POST, "/v1/financial_connections/accounts/\(account)/unsubscribe", params: params)
             }
         )
     }

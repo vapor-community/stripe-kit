@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Customer Routes
@@ -68,96 +67,37 @@ extension CustomerRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CustomerRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Customer
+                try await handler.send(.POST, "/v1/customers", params: params)
             },
             retrieve: { customer, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)" : "/v1/customers/\(customer)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ObjectOrDeleted<Customer, DeletedCustomer>
+                try await handler.send(.GET, "/v1/customers/\(customer)", expand: expand)
             },
             update: { customer, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Customer
+                try await handler.send(.POST, "/v1/customers/\(customer)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/customers" : "/v1/customers?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CustomerList
+                try await handler.send(.GET, "/v1/customers", params: params)
             },
             search: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/customers/search" : "/v1/customers/search?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as StripeSearchResult<Customer>
+                try await handler.send(.GET, "/v1/customers/search", params: params)
             },
             delete: { customer, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)" : "/v1/customers/\(customer)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedCustomer
+                try await handler.send(.DELETE, "/v1/customers/\(customer)", expand: expand)
             },
             createFundingInstructions: { customer, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)/funding_instructions",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FundingInstructions
+                try await handler.send(.POST, "/v1/customers/\(customer)/funding_instructions", params: params)
             },
             deleteDiscount: { customer, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)/discount" : "/v1/customers/\(customer)/discount?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedDiscount
+                try await handler.send(.DELETE, "/v1/customers/\(customer)/discount", expand: expand)
             },
             fundCashBalance: { customer, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/customers/\(customer)/fund_cash_balance",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CustomerCashBalanceTransaction
+                try await handler.send(.POST, "/v1/test_helpers/customers/\(customer)/fund_cash_balance", params: params)
             },
             listPaymentMethods: { customer, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/customers/\(customer)/payment_methods" : "/v1/customers/\(customer)/payment_methods?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentMethodList
+                try await handler.send(.GET, "/v1/customers/\(customer)/payment_methods", params: params)
             },
             retrievePaymentMethod: { customer, paymentMethod, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)/payment_methods/\(paymentMethod)" : "/v1/customers/\(customer)/payment_methods/\(paymentMethod)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentMethod
+                try await handler.send(.GET, "/v1/customers/\(customer)/payment_methods/\(paymentMethod)", expand: expand)
             }
         )
     }

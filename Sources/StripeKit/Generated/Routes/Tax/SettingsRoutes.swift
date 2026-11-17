@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Settings Routes
@@ -25,21 +24,10 @@ extension SettingsRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SettingsRoutes(
             retrieve: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tax/settings" : "/v1/tax/settings?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Settings
+                try await handler.send(.GET, "/v1/tax/settings", expand: expand)
             },
             update: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax/settings",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Settings
+                try await handler.send(.POST, "/v1/tax/settings", params: params)
             }
         )
     }

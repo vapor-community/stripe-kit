@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ApplePayDomain Routes
@@ -30,38 +29,16 @@ extension ApplePayDomainRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ApplePayDomainRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/apple_pay/domains",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ApplePayDomain
+                try await handler.send(.POST, "/v1/apple_pay/domains", params: params)
             },
             retrieve: { domain, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/apple_pay/domains/\(domain)" : "/v1/apple_pay/domains/\(domain)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ApplePayDomain
+                try await handler.send(.GET, "/v1/apple_pay/domains/\(domain)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/apple_pay/domains" : "/v1/apple_pay/domains?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ApplePayDomainList
+                try await handler.send(.GET, "/v1/apple_pay/domains", params: params)
             },
             delete: { domain, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/apple_pay/domains/\(domain)" : "/v1/apple_pay/domains/\(domain)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedApplePayDomain
+                try await handler.send(.DELETE, "/v1/apple_pay/domains/\(domain)", expand: expand)
             }
         )
     }

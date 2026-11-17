@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Registration Routes
@@ -31,37 +30,16 @@ extension RegistrationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         RegistrationRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax/registrations",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Registration
+                try await handler.send(.POST, "/v1/tax/registrations", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tax/registrations/\(id)" : "/v1/tax/registrations/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Registration
+                try await handler.send(.GET, "/v1/tax/registrations/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax/registrations/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Registration
+                try await handler.send(.POST, "/v1/tax/registrations/\(id)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/tax/registrations" : "/v1/tax/registrations?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as RegistrationList
+                try await handler.send(.GET, "/v1/tax/registrations", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TestClock Routes
@@ -34,46 +33,19 @@ extension TestClockRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TestClockRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/test_clocks",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TestClock
+                try await handler.send(.POST, "/v1/test_helpers/test_clocks", params: params)
             },
             retrieve: { testClock, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/test_helpers/test_clocks/\(testClock)" : "/v1/test_helpers/test_clocks/\(testClock)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TestClock
+                try await handler.send(.GET, "/v1/test_helpers/test_clocks/\(testClock)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/test_helpers/test_clocks" : "/v1/test_helpers/test_clocks?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TestClockList
+                try await handler.send(.GET, "/v1/test_helpers/test_clocks", params: params)
             },
             delete: { testClock, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/test_helpers/test_clocks/\(testClock)" : "/v1/test_helpers/test_clocks/\(testClock)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedTestClock
+                try await handler.send(.DELETE, "/v1/test_helpers/test_clocks/\(testClock)", expand: expand)
             },
             advance: { testClock, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/test_clocks/\(testClock)/advance",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TestClock
+                try await handler.send(.POST, "/v1/test_helpers/test_clocks/\(testClock)/advance", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - EarlyFraudWarning Routes
@@ -25,21 +24,10 @@ extension EarlyFraudWarningRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         EarlyFraudWarningRoutes(
             retrieve: { earlyFraudWarning, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/radar/early_fraud_warnings/\(earlyFraudWarning)" : "/v1/radar/early_fraud_warnings/\(earlyFraudWarning)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as EarlyFraudWarning
+                try await handler.send(.GET, "/v1/radar/early_fraud_warnings/\(earlyFraudWarning)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/radar/early_fraud_warnings" : "/v1/radar/early_fraud_warnings?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as EarlyFraudWarningList
+                try await handler.send(.GET, "/v1/radar/early_fraud_warnings", params: params)
             }
         )
     }

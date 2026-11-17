@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TaxId Routes
@@ -42,72 +41,28 @@ extension TaxIdRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxIdRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax_ids",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TaxId
+                try await handler.send(.POST, "/v1/tax_ids", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tax_ids/\(id)" : "/v1/tax_ids/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TaxId
+                try await handler.send(.GET, "/v1/tax_ids/\(id)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/tax_ids" : "/v1/tax_ids?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TaxIdList
+                try await handler.send(.GET, "/v1/tax_ids", params: params)
             },
             delete: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tax_ids/\(id)" : "/v1/tax_ids/\(id)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedTaxId
+                try await handler.send(.DELETE, "/v1/tax_ids/\(id)", expand: expand)
             },
             createForCustomer: { customer, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)/tax_ids",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TaxId
+                try await handler.send(.POST, "/v1/customers/\(customer)/tax_ids", params: params)
             },
             deleteForCustomer: { customer, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)/tax_ids/\(id)" : "/v1/customers/\(customer)/tax_ids/\(id)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedTaxId
+                try await handler.send(.DELETE, "/v1/customers/\(customer)/tax_ids/\(id)", expand: expand)
             },
             listForCustomer: { customer, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/customers/\(customer)/tax_ids" : "/v1/customers/\(customer)/tax_ids?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TaxIdList
+                try await handler.send(.GET, "/v1/customers/\(customer)/tax_ids", params: params)
             },
             retrieveForCustomer: { customer, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)/tax_ids/\(id)" : "/v1/customers/\(customer)/tax_ids/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TaxId
+                try await handler.send(.GET, "/v1/customers/\(customer)/tax_ids/\(id)", expand: expand)
             }
         )
     }

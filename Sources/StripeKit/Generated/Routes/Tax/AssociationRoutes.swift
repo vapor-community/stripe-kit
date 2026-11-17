@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Association Routes
@@ -21,12 +20,7 @@ extension AssociationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AssociationRoutes(
             find: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/tax/associations/find" : "/v1/tax/associations/find?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Association
+                try await handler.send(.GET, "/v1/tax/associations/find", params: params)
             }
         )
     }

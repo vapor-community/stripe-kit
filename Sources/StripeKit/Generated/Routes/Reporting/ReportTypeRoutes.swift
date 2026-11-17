@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ReportType Routes
@@ -24,22 +23,10 @@ extension ReportTypeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ReportTypeRoutes(
             retrieve: { reportType, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/reporting/report_types/\(reportType)" : "/v1/reporting/report_types/\(reportType)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ReportType
+                try await handler.send(.GET, "/v1/reporting/report_types/\(reportType)", expand: expand)
             },
             list: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/reporting/report_types" : "/v1/reporting/report_types?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ReportTypeList
+                try await handler.send(.GET, "/v1/reporting/report_types", expand: expand)
             }
         )
     }

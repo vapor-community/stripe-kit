@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - SetupAttempt Routes
@@ -21,12 +20,7 @@ extension SetupAttemptRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SetupAttemptRoutes(
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/setup_attempts" : "/v1/setup_attempts?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SetupAttemptList
+                try await handler.send(.GET, "/v1/setup_attempts", params: params)
             }
         )
     }

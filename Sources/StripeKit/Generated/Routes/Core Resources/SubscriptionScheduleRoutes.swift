@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - SubscriptionSchedule Routes
@@ -44,53 +43,22 @@ extension SubscriptionScheduleRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SubscriptionScheduleRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscription_schedules",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SubscriptionSchedule
+                try await handler.send(.POST, "/v1/subscription_schedules", params: params)
             },
             retrieve: { schedule, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/subscription_schedules/\(schedule)" : "/v1/subscription_schedules/\(schedule)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SubscriptionSchedule
+                try await handler.send(.GET, "/v1/subscription_schedules/\(schedule)", expand: expand)
             },
             update: { schedule, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscription_schedules/\(schedule)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SubscriptionSchedule
+                try await handler.send(.POST, "/v1/subscription_schedules/\(schedule)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/subscription_schedules" : "/v1/subscription_schedules?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SubscriptionScheduleList
+                try await handler.send(.GET, "/v1/subscription_schedules", params: params)
             },
             cancel: { schedule, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscription_schedules/\(schedule)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SubscriptionSchedule
+                try await handler.send(.POST, "/v1/subscription_schedules/\(schedule)/cancel", params: params)
             },
             release: { schedule, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscription_schedules/\(schedule)/release",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SubscriptionSchedule
+                try await handler.send(.POST, "/v1/subscription_schedules/\(schedule)/release", params: params)
             }
         )
     }

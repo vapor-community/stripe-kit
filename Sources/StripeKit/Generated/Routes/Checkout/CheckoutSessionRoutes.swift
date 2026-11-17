@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CheckoutSession Routes
@@ -40,53 +39,22 @@ extension CheckoutSessionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CheckoutSessionRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/checkout/sessions",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CheckoutSession
+                try await handler.send(.POST, "/v1/checkout/sessions", params: params)
             },
             retrieve: { session, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/checkout/sessions/\(session)" : "/v1/checkout/sessions/\(session)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CheckoutSession
+                try await handler.send(.GET, "/v1/checkout/sessions/\(session)", expand: expand)
             },
             update: { session, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/checkout/sessions/\(session)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CheckoutSession
+                try await handler.send(.POST, "/v1/checkout/sessions/\(session)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/checkout/sessions" : "/v1/checkout/sessions?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CheckoutSessionList
+                try await handler.send(.GET, "/v1/checkout/sessions", params: params)
             },
             expire: { session, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/checkout/sessions/\(session)/expire",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CheckoutSession
+                try await handler.send(.POST, "/v1/checkout/sessions/\(session)/expire", params: params)
             },
             listLineItems: { session, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/checkout/sessions/\(session)/line_items" : "/v1/checkout/sessions/\(session)/line_items?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ItemList
+                try await handler.send(.GET, "/v1/checkout/sessions/\(session)/line_items", params: params)
             }
         )
     }

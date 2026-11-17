@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Price Routes
@@ -38,45 +37,19 @@ extension PriceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PriceRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/prices",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Price
+                try await handler.send(.POST, "/v1/prices", params: params)
             },
             retrieve: { price, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/prices/\(price)" : "/v1/prices/\(price)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Price
+                try await handler.send(.GET, "/v1/prices/\(price)", expand: expand)
             },
             update: { price, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/prices/\(price)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Price
+                try await handler.send(.POST, "/v1/prices/\(price)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/prices" : "/v1/prices?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PriceList
+                try await handler.send(.GET, "/v1/prices", params: params)
             },
             search: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/prices/search" : "/v1/prices/search?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as StripeSearchResult<Price>
+                try await handler.send(.GET, "/v1/prices/search", params: params)
             }
         )
     }

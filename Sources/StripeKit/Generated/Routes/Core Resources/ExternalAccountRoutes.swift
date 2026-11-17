@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ExternalAccount Routes
@@ -38,46 +37,19 @@ extension ExternalAccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ExternalAccountRoutes(
             create: { account, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts/\(account)/external_accounts",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ExternalAccount
+                try await handler.send(.POST, "/v1/accounts/\(account)/external_accounts", params: params)
             },
             retrieve: { account, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/accounts/\(account)/external_accounts/\(id)" : "/v1/accounts/\(account)/external_accounts/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ExternalAccount
+                try await handler.send(.GET, "/v1/accounts/\(account)/external_accounts/\(id)", expand: expand)
             },
             update: { account, id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts/\(account)/external_accounts/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ExternalAccount
+                try await handler.send(.POST, "/v1/accounts/\(account)/external_accounts/\(id)", params: params)
             },
             list: { account, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/accounts/\(account)/external_accounts" : "/v1/accounts/\(account)/external_accounts?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ExternalAccountList
+                try await handler.send(.GET, "/v1/accounts/\(account)/external_accounts", params: params)
             },
             delete: { account, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/accounts/\(account)/external_accounts/\(id)" : "/v1/accounts/\(account)/external_accounts/\(id)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedExternalAccount
+                try await handler.send(.DELETE, "/v1/accounts/\(account)/external_accounts/\(id)", expand: expand)
             }
         )
     }

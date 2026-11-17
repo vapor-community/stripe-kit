@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TerminalLocation Routes
@@ -35,46 +34,19 @@ extension TerminalLocationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TerminalLocationRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/locations",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TerminalLocation
+                try await handler.send(.POST, "/v1/terminal/locations", params: params)
             },
             retrieve: { location, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/terminal/locations/\(location)" : "/v1/terminal/locations/\(location)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>
+                try await handler.send(.GET, "/v1/terminal/locations/\(location)", expand: expand)
             },
             update: { location, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/locations/\(location)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ObjectOrDeleted<TerminalLocation, DeletedTerminalLocation>
+                try await handler.send(.POST, "/v1/terminal/locations/\(location)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/terminal/locations" : "/v1/terminal/locations?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TerminalLocationList
+                try await handler.send(.GET, "/v1/terminal/locations", params: params)
             },
             delete: { location, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/terminal/locations/\(location)" : "/v1/terminal/locations/\(location)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedTerminalLocation
+                try await handler.send(.DELETE, "/v1/terminal/locations/\(location)", expand: expand)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - SubscriptionItem Routes
@@ -34,46 +33,19 @@ extension SubscriptionItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SubscriptionItemRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscription_items",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SubscriptionItem
+                try await handler.send(.POST, "/v1/subscription_items", params: params)
             },
             retrieve: { item, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/subscription_items/\(item)" : "/v1/subscription_items/\(item)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SubscriptionItem
+                try await handler.send(.GET, "/v1/subscription_items/\(item)", expand: expand)
             },
             update: { item, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/subscription_items/\(item)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SubscriptionItem
+                try await handler.send(.POST, "/v1/subscription_items/\(item)", params: params)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/subscription_items" : "/v1/subscription_items?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SubscriptionItemList
+                try await handler.send(.GET, "/v1/subscription_items", params: params)
             },
             delete: { item, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/subscription_items/\(item)" : "/v1/subscription_items/\(item)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedSubscriptionItem
+                try await handler.send(.DELETE, "/v1/subscription_items/\(item)", expand: expand)
             }
         )
     }

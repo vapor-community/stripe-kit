@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - IssuingAuthorization Routes
@@ -64,101 +63,40 @@ extension IssuingAuthorizationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingAuthorizationRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/authorizations",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations", params: params)
             },
             retrieve: { authorization, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/issuing/authorizations/\(authorization)" : "/v1/issuing/authorizations/\(authorization)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingAuthorization
+                try await handler.send(.GET, "/v1/issuing/authorizations/\(authorization)", expand: expand)
             },
             update: { authorization, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/authorizations/\(authorization)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/issuing/authorizations/\(authorization)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/issuing/authorizations" : "/v1/issuing/authorizations?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingAuthorizationList
+                try await handler.send(.GET, "/v1/issuing/authorizations", params: params)
             },
             approve: { authorization, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/authorizations/\(authorization)/approve",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/issuing/authorizations/\(authorization)/approve", params: params)
             },
             capture: { authorization, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/capture",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/capture", params: params)
             },
             decline: { authorization, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/authorizations/\(authorization)/decline",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/issuing/authorizations/\(authorization)/decline", params: params)
             },
             expire: { authorization, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/expire",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/expire", params: params)
             },
             finalizeAmount: { authorization, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/finalize_amount",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/finalize_amount", params: params)
             },
             increment: { authorization, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/increment",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/increment", params: params)
             },
             respond: { authorization, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/fraud_challenges/respond",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/fraud_challenges/respond", params: params)
             },
             reverse: { authorization, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/authorizations/\(authorization)/reverse",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingAuthorization
+                try await handler.send(.POST, "/v1/test_helpers/issuing/authorizations/\(authorization)/reverse", params: params)
             }
         )
     }

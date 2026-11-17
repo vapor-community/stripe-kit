@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Product Routes
@@ -44,54 +43,22 @@ extension ProductRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ProductRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/products",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Product
+                try await handler.send(.POST, "/v1/products", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/products/\(id)" : "/v1/products/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Product
+                try await handler.send(.GET, "/v1/products/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/products/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Product
+                try await handler.send(.POST, "/v1/products/\(id)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/products" : "/v1/products?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ProductList
+                try await handler.send(.GET, "/v1/products", params: params)
             },
             search: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/products/search" : "/v1/products/search?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as StripeSearchResult<Product>
+                try await handler.send(.GET, "/v1/products/search", params: params)
             },
             delete: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/products/\(id)" : "/v1/products/\(id)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedProduct
+                try await handler.send(.DELETE, "/v1/products/\(id)", expand: expand)
             }
         )
     }

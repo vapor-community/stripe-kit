@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Authentication Routes
@@ -39,45 +38,19 @@ extension AuthenticationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AuthenticationRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/three_d_secure/authentications",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Authentication
+                try await handler.send(.POST, "/v1/three_d_secure/authentications", params: params)
             },
             retrieve: { authentication, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/three_d_secure/authentications/\(authentication)" : "/v1/three_d_secure/authentications/\(authentication)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Authentication
+                try await handler.send(.GET, "/v1/three_d_secure/authentications/\(authentication)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/three_d_secure/authentications" : "/v1/three_d_secure/authentications?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as AuthenticationList
+                try await handler.send(.GET, "/v1/three_d_secure/authentications", params: params)
             },
             cancel: { authentication, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/three_d_secure/authentications/\(authentication)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Authentication
+                try await handler.send(.POST, "/v1/three_d_secure/authentications/\(authentication)/cancel", params: params)
             },
             submit: { authentication, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/three_d_secure/authentications/\(authentication)/submit",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Authentication
+                try await handler.send(.POST, "/v1/three_d_secure/authentications/\(authentication)/submit", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TaxTransaction Routes
@@ -31,37 +30,16 @@ extension TaxTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxTransactionRoutes(
             retrieve: { transaction, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tax/transactions/\(transaction)" : "/v1/tax/transactions/\(transaction)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TaxTransaction
+                try await handler.send(.GET, "/v1/tax/transactions/\(transaction)", expand: expand)
             },
             createFromCalculation: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax/transactions/create_from_calculation",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TaxTransaction
+                try await handler.send(.POST, "/v1/tax/transactions/create_from_calculation", params: params)
             },
             createReversal: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax/transactions/create_reversal",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TaxTransaction
+                try await handler.send(.POST, "/v1/tax/transactions/create_reversal", params: params)
             },
             listLineItems: { transaction, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/tax/transactions/\(transaction)/line_items" : "/v1/tax/transactions/\(transaction)/line_items?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TransactionLineItemList
+                try await handler.send(.GET, "/v1/tax/transactions/\(transaction)/line_items", params: params)
             }
         )
     }

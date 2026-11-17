@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentSource Routes
@@ -36,46 +35,19 @@ extension PaymentSourceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentSourceRoutes(
             create: { customer, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)/sources",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentSource
+                try await handler.send(.POST, "/v1/customers/\(customer)/sources", params: params)
             },
             retrieve: { customer, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)/sources/\(id)" : "/v1/customers/\(customer)/sources/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentSource
+                try await handler.send(.GET, "/v1/customers/\(customer)/sources/\(id)", expand: expand)
             },
             update: { customer, id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)/sources/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentSource
+                try await handler.send(.POST, "/v1/customers/\(customer)/sources/\(id)", params: params)
             },
             list: { customer, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/customers/\(customer)/sources" : "/v1/customers/\(customer)/sources?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentSourceList
+                try await handler.send(.GET, "/v1/customers/\(customer)/sources", params: params)
             },
             delete: { customer, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)/sources/\(id)" : "/v1/customers/\(customer)/sources/\(id)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as ObjectOrDeleted<PaymentSource, DeletedPaymentSource>
+                try await handler.send(.DELETE, "/v1/customers/\(customer)/sources/\(id)", expand: expand)
             }
         )
     }

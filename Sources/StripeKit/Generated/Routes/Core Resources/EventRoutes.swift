@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Event Routes
@@ -27,21 +26,10 @@ extension EventRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         EventRoutes(
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/events/\(id)" : "/v1/events/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Event
+                try await handler.send(.GET, "/v1/events/\(id)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/events" : "/v1/events?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as EventList
+                try await handler.send(.GET, "/v1/events", params: params)
             }
         )
     }

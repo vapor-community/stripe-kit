@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TaxLocation Routes
@@ -33,29 +32,13 @@ extension TaxLocationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxLocationRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax/locations",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TaxLocation
+                try await handler.send(.POST, "/v1/tax/locations", params: params)
             },
             retrieve: { location, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tax/locations/\(location)" : "/v1/tax/locations/\(location)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TaxLocation
+                try await handler.send(.GET, "/v1/tax/locations/\(location)", expand: expand)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/tax/locations" : "/v1/tax/locations?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TaxLocationList
+                try await handler.send(.GET, "/v1/tax/locations", params: params)
             }
         )
     }

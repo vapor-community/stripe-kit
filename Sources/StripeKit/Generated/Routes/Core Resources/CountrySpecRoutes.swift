@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CountrySpec Routes
@@ -24,21 +23,10 @@ extension CountrySpecRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CountrySpecRoutes(
             retrieve: { country, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/country_specs/\(country)" : "/v1/country_specs/\(country)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CountrySpec
+                try await handler.send(.GET, "/v1/country_specs/\(country)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/country_specs" : "/v1/country_specs?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CountrySpecList
+                try await handler.send(.GET, "/v1/country_specs", params: params)
             }
         )
     }

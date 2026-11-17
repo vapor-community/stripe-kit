@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CustomerBalanceTransaction Routes
@@ -31,37 +30,16 @@ extension CustomerBalanceTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CustomerBalanceTransactionRoutes(
             create: { customer, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)/balance_transactions",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CustomerBalanceTransaction
+                try await handler.send(.POST, "/v1/customers/\(customer)/balance_transactions", params: params)
             },
             retrieve: { customer, transaction, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)/balance_transactions/\(transaction)" : "/v1/customers/\(customer)/balance_transactions/\(transaction)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CustomerBalanceTransaction
+                try await handler.send(.GET, "/v1/customers/\(customer)/balance_transactions/\(transaction)", expand: expand)
             },
             update: { customer, transaction, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)/balance_transactions/\(transaction)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CustomerBalanceTransaction
+                try await handler.send(.POST, "/v1/customers/\(customer)/balance_transactions/\(transaction)", params: params)
             },
             list: { customer, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/customers/\(customer)/balance_transactions" : "/v1/customers/\(customer)/balance_transactions?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CustomerBalanceTransactionList
+                try await handler.send(.GET, "/v1/customers/\(customer)/balance_transactions", params: params)
             }
         )
     }

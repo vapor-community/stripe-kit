@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - OutboundPayment Routes
@@ -47,69 +46,28 @@ extension OutboundPaymentRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         OutboundPaymentRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/outbound_payments",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundPayment
+                try await handler.send(.POST, "/v1/treasury/outbound_payments", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/treasury/outbound_payments/\(id)" : "/v1/treasury/outbound_payments/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as OutboundPayment
+                try await handler.send(.GET, "/v1/treasury/outbound_payments/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/outbound_payments/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundPayment
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)", params: params)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/treasury/outbound_payments" : "/v1/treasury/outbound_payments?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as OutboundPaymentList
+                try await handler.send(.GET, "/v1/treasury/outbound_payments", params: params)
             },
             cancel: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/outbound_payments/\(id)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundPayment
+                try await handler.send(.POST, "/v1/treasury/outbound_payments/\(id)/cancel", params: params)
             },
             fail: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/outbound_payments/\(id)/fail",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundPayment
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)/fail", params: params)
             },
             post: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/outbound_payments/\(id)/post",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundPayment
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)/post", params: params)
             },
             returnOutboundPayment: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/outbound_payments/\(id)/return",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundPayment
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_payments/\(id)/return", params: params)
             }
         )
     }

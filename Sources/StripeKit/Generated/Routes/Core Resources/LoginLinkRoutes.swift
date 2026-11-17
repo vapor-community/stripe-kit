@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - LoginLink Routes
@@ -22,12 +21,7 @@ extension LoginLinkRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         LoginLinkRoutes(
             create: { account, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts/\(account)/login_links",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as LoginLink
+                try await handler.send(.POST, "/v1/accounts/\(account)/login_links", params: params)
             }
         )
     }

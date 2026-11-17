@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Supplier Routes
@@ -24,21 +23,10 @@ extension SupplierRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SupplierRoutes(
             retrieve: { supplier, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/climate/suppliers/\(supplier)" : "/v1/climate/suppliers/\(supplier)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Supplier
+                try await handler.send(.GET, "/v1/climate/suppliers/\(supplier)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/climate/suppliers" : "/v1/climate/suppliers?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SupplierList
+                try await handler.send(.GET, "/v1/climate/suppliers", params: params)
             }
         )
     }

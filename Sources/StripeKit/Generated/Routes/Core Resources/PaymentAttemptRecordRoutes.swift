@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentAttemptRecord Routes
@@ -24,21 +23,10 @@ extension PaymentAttemptRecordRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentAttemptRecordRoutes(
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/payment_attempt_records/\(id)" : "/v1/payment_attempt_records/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentAttemptRecord
+                try await handler.send(.GET, "/v1/payment_attempt_records/\(id)", expand: expand)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/payment_attempt_records" : "/v1/payment_attempt_records?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentAttemptRecordList
+                try await handler.send(.GET, "/v1/payment_attempt_records", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Account Routes
@@ -62,71 +61,28 @@ extension AccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         AccountRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Account
+                try await handler.send(.POST, "/v1/accounts", params: params)
             },
             retrieve: { account, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/accounts/\(account)" : "/v1/accounts/\(account)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Account
+                try await handler.send(.GET, "/v1/accounts/\(account)", expand: expand)
             },
             update: { account, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts/\(account)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Account
+                try await handler.send(.POST, "/v1/accounts/\(account)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/accounts" : "/v1/accounts?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as AccountList
+                try await handler.send(.GET, "/v1/accounts", params: params)
             },
             delete: { account, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/accounts/\(account)" : "/v1/accounts/\(account)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedAccount
+                try await handler.send(.DELETE, "/v1/accounts/\(account)", expand: expand)
             },
             reject: { account, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts/\(account)/reject",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Account
+                try await handler.send(.POST, "/v1/accounts/\(account)/reject", params: params)
             },
             retrieveCurrent: { expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/account" : "/v1/account?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Account
+                try await handler.send(.GET, "/v1/account", expand: expand)
             },
             unreject: { account, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts/\(account)/unreject",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Account
+                try await handler.send(.POST, "/v1/accounts/\(account)/unreject", params: params)
             }
         )
     }

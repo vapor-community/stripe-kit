@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentEvaluation Routes
@@ -22,12 +21,7 @@ extension PaymentEvaluationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentEvaluationRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/radar/payment_evaluations",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentEvaluation
+                try await handler.send(.POST, "/v1/radar/payment_evaluations", params: params)
             }
         )
     }

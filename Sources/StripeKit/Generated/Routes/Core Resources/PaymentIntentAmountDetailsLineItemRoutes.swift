@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentIntentAmountDetailsLineItem Routes
@@ -21,12 +20,7 @@ extension PaymentIntentAmountDetailsLineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentIntentAmountDetailsLineItemRoutes(
             list: { intent, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payment_intents/\(intent)/amount_details_line_items" : "/v1/payment_intents/\(intent)/amount_details_line_items?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentIntentAmountDetailsLineItemList
+                try await handler.send(.GET, "/v1/payment_intents/\(intent)/amount_details_line_items", params: params)
             }
         )
     }

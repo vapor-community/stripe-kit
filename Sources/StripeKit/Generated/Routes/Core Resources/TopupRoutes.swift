@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Topup Routes
@@ -35,45 +34,19 @@ extension TopupRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TopupRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/topups",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Topup
+                try await handler.send(.POST, "/v1/topups", params: params)
             },
             retrieve: { topup, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/topups/\(topup)" : "/v1/topups/\(topup)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Topup
+                try await handler.send(.GET, "/v1/topups/\(topup)", expand: expand)
             },
             update: { topup, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/topups/\(topup)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Topup
+                try await handler.send(.POST, "/v1/topups/\(topup)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/topups" : "/v1/topups?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TopupList
+                try await handler.send(.GET, "/v1/topups", params: params)
             },
             cancel: { topup, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/topups/\(topup)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Topup
+                try await handler.send(.POST, "/v1/topups/\(topup)/cancel", params: params)
             }
         )
     }

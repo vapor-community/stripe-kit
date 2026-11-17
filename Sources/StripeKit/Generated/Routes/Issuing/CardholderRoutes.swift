@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Cardholder Routes
@@ -32,37 +31,16 @@ extension CardholderRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CardholderRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/cardholders",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Cardholder
+                try await handler.send(.POST, "/v1/issuing/cardholders", params: params)
             },
             retrieve: { cardholder, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/issuing/cardholders/\(cardholder)" : "/v1/issuing/cardholders/\(cardholder)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Cardholder
+                try await handler.send(.GET, "/v1/issuing/cardholders/\(cardholder)", expand: expand)
             },
             update: { cardholder, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/cardholders/\(cardholder)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Cardholder
+                try await handler.send(.POST, "/v1/issuing/cardholders/\(cardholder)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/issuing/cardholders" : "/v1/issuing/cardholders?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CardholderList
+                try await handler.send(.GET, "/v1/issuing/cardholders", params: params)
             }
         )
     }

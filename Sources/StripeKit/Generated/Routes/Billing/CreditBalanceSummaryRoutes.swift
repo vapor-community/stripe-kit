@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CreditBalanceSummary Routes
@@ -21,12 +20,7 @@ extension CreditBalanceSummaryRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CreditBalanceSummaryRoutes(
             retrieve: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/billing/credit_balance_summary" : "/v1/billing/credit_balance_summary?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditBalanceSummary
+                try await handler.send(.GET, "/v1/billing/credit_balance_summary", params: params)
             }
         )
     }

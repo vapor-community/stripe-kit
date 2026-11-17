@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TransferReversal Routes
@@ -39,37 +38,16 @@ extension TransferReversalRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TransferReversalRoutes(
             create: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/transfers/\(id)/reversals",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TransferReversal
+                try await handler.send(.POST, "/v1/transfers/\(id)/reversals", params: params)
             },
             retrieve: { transfer, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/transfers/\(transfer)/reversals/\(id)" : "/v1/transfers/\(transfer)/reversals/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TransferReversal
+                try await handler.send(.GET, "/v1/transfers/\(transfer)/reversals/\(id)", expand: expand)
             },
             update: { transfer, id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/transfers/\(transfer)/reversals/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TransferReversal
+                try await handler.send(.POST, "/v1/transfers/\(transfer)/reversals/\(id)", params: params)
             },
             list: { id, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/transfers/\(id)/reversals" : "/v1/transfers/\(id)/reversals?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TransferReversalList
+                try await handler.send(.GET, "/v1/transfers/\(id)/reversals", params: params)
             }
         )
     }

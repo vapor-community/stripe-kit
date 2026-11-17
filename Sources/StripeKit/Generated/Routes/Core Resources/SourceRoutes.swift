@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Source Routes
@@ -37,44 +36,19 @@ extension SourceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SourceRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/sources",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Source
+                try await handler.send(.POST, "/v1/sources", params: params)
             },
             retrieve: { source, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/sources/\(source)" : "/v1/sources/\(source)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Source
+                try await handler.send(.GET, "/v1/sources/\(source)", params: params)
             },
             update: { source, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/sources/\(source)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Source
+                try await handler.send(.POST, "/v1/sources/\(source)", params: params)
             },
             sourceTransactions: { source, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/sources/\(source)/source_transactions" : "/v1/sources/\(source)/source_transactions?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SourceTransactionList
+                try await handler.send(.GET, "/v1/sources/\(source)/source_transactions", params: params)
             },
             verify: { source, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/sources/\(source)/verify",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Source
+                try await handler.send(.POST, "/v1/sources/\(source)/verify", params: params)
             }
         )
     }

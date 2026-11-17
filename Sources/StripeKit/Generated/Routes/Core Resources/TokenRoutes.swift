@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Token Routes
@@ -27,21 +26,10 @@ extension TokenRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TokenRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tokens",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Token
+                try await handler.send(.POST, "/v1/tokens", params: params)
             },
             retrieve: { token, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tokens/\(token)" : "/v1/tokens/\(token)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Token
+                try await handler.send(.GET, "/v1/tokens/\(token)", expand: expand)
             }
         )
     }

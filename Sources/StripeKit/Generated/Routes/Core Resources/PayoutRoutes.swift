@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Payout Routes
@@ -49,53 +48,22 @@ extension PayoutRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PayoutRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payouts",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Payout
+                try await handler.send(.POST, "/v1/payouts", params: params)
             },
             retrieve: { payout, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/payouts/\(payout)" : "/v1/payouts/\(payout)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Payout
+                try await handler.send(.GET, "/v1/payouts/\(payout)", expand: expand)
             },
             update: { payout, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payouts/\(payout)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Payout
+                try await handler.send(.POST, "/v1/payouts/\(payout)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payouts" : "/v1/payouts?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PayoutList
+                try await handler.send(.GET, "/v1/payouts", params: params)
             },
             cancel: { payout, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payouts/\(payout)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Payout
+                try await handler.send(.POST, "/v1/payouts/\(payout)/cancel", params: params)
             },
             reverse: { payout, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payouts/\(payout)/reverse",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Payout
+                try await handler.send(.POST, "/v1/payouts/\(payout)/reverse", params: params)
             }
         )
     }

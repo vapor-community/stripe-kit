@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - OutboundTransfer Routes
@@ -47,69 +46,28 @@ extension OutboundTransferRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         OutboundTransferRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/outbound_transfers",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundTransfer
+                try await handler.send(.POST, "/v1/treasury/outbound_transfers", params: params)
             },
             retrieve: { outboundTransfer, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/treasury/outbound_transfers/\(outboundTransfer)" : "/v1/treasury/outbound_transfers/\(outboundTransfer)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as OutboundTransfer
+                try await handler.send(.GET, "/v1/treasury/outbound_transfers/\(outboundTransfer)", expand: expand)
             },
             update: { outboundTransfer, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundTransfer
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)", params: params)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/treasury/outbound_transfers" : "/v1/treasury/outbound_transfers?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as OutboundTransferList
+                try await handler.send(.GET, "/v1/treasury/outbound_transfers", params: params)
             },
             cancel: { outboundTransfer, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/outbound_transfers/\(outboundTransfer)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundTransfer
+                try await handler.send(.POST, "/v1/treasury/outbound_transfers/\(outboundTransfer)/cancel", params: params)
             },
             fail: { outboundTransfer, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/fail",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundTransfer
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/fail", params: params)
             },
             post: { outboundTransfer, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/post",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundTransfer
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/post", params: params)
             },
             returnOutboundTransfer: { outboundTransfer, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/return",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OutboundTransfer
+                try await handler.send(.POST, "/v1/test_helpers/treasury/outbound_transfers/\(outboundTransfer)/return", params: params)
             }
         )
     }

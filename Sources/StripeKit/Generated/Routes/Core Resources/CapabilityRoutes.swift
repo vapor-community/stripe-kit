@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Capability Routes
@@ -29,30 +28,13 @@ extension CapabilityRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CapabilityRoutes(
             retrieve: { account, capability, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/accounts/\(account)/capabilities/\(capability)" : "/v1/accounts/\(account)/capabilities/\(capability)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Capability
+                try await handler.send(.GET, "/v1/accounts/\(account)/capabilities/\(capability)", expand: expand)
             },
             update: { account, capability, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts/\(account)/capabilities/\(capability)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Capability
+                try await handler.send(.POST, "/v1/accounts/\(account)/capabilities/\(capability)", params: params)
             },
             list: { account, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/accounts/\(account)/capabilities" : "/v1/accounts/\(account)/capabilities?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CapabilityList
+                try await handler.send(.GET, "/v1/accounts/\(account)/capabilities", expand: expand)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Coupon Routes
@@ -42,46 +41,19 @@ extension CouponRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CouponRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/coupons",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Coupon
+                try await handler.send(.POST, "/v1/coupons", params: params)
             },
             retrieve: { coupon, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/coupons/\(coupon)" : "/v1/coupons/\(coupon)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Coupon
+                try await handler.send(.GET, "/v1/coupons/\(coupon)", expand: expand)
             },
             update: { coupon, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/coupons/\(coupon)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Coupon
+                try await handler.send(.POST, "/v1/coupons/\(coupon)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/coupons" : "/v1/coupons?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CouponList
+                try await handler.send(.GET, "/v1/coupons", params: params)
             },
             delete: { coupon, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/coupons/\(coupon)" : "/v1/coupons/\(coupon)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedCoupon
+                try await handler.send(.DELETE, "/v1/coupons/\(coupon)", expand: expand)
             }
         )
     }

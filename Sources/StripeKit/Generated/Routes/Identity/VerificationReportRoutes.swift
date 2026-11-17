@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - VerificationReport Routes
@@ -24,21 +23,10 @@ extension VerificationReportRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         VerificationReportRoutes(
             retrieve: { report, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/identity/verification_reports/\(report)" : "/v1/identity/verification_reports/\(report)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as VerificationReport
+                try await handler.send(.GET, "/v1/identity/verification_reports/\(report)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/identity/verification_reports" : "/v1/identity/verification_reports?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as VerificationReportList
+                try await handler.send(.GET, "/v1/identity/verification_reports", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Invoice Routes
@@ -108,134 +107,52 @@ extension InvoiceRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InvoiceRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices", params: params)
             },
             retrieve: { invoice, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/invoices/\(invoice)" : "/v1/invoices/\(invoice)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Invoice
+                try await handler.send(.GET, "/v1/invoices/\(invoice)", expand: expand)
             },
             update: { invoice, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/invoices" : "/v1/invoices?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as InvoiceList
+                try await handler.send(.GET, "/v1/invoices", params: params)
             },
             search: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/invoices/search" : "/v1/invoices/search?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as StripeSearchResult<Invoice>
+                try await handler.send(.GET, "/v1/invoices/search", params: params)
             },
             delete: { invoice, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/invoices/\(invoice)" : "/v1/invoices/\(invoice)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedInvoice
+                try await handler.send(.DELETE, "/v1/invoices/\(invoice)", expand: expand)
             },
             addLines: { invoice, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/add_lines",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/add_lines", params: params)
             },
             attachPayment: { invoice, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/attach_payment",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/attach_payment", params: params)
             },
             createPreview: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/create_preview",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/create_preview", params: params)
             },
             finalizeInvoice: { invoice, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/finalize",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/finalize", params: params)
             },
             markUncollectible: { invoice, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/mark_uncollectible",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/mark_uncollectible", params: params)
             },
             pay: { invoice, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/pay",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/pay", params: params)
             },
             removeLines: { invoice, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/remove_lines",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/remove_lines", params: params)
             },
             sendInvoice: { invoice, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/send",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/send", params: params)
             },
             updateLines: { invoice, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/update_lines",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/update_lines", params: params)
             },
             voidInvoice: { invoice, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/void",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Invoice
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/void", params: params)
             }
         )
     }

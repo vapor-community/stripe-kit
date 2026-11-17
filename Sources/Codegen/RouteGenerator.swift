@@ -27,7 +27,6 @@ struct RouteGenerator {
         lines.append("//")
         lines.append("")
         lines.append("import Foundation")
-        lines.append("import NIO")
         lines.append("import NIOHTTP1")
         lines.append("")
         
@@ -101,122 +100,51 @@ struct RouteGenerator {
     
     private func generateLiveFactory(resource: StripeResource, operations: [RouteOperation]) -> [String] {
         var lines: [String] = []
-        let returnType = resource.swiftTypeName
-        
         lines.append("extension \(resource.swiftTypeName)Routes {")
         lines.append("    static func live(handler: StripeAPIHandler) -> Self {")
         lines.append("        \(resource.swiftTypeName)Routes(")
-        
+
         for (idx, op) in operations.enumerated() {
             let comma = idx < operations.count - 1 ? "," : ""
-            let opReturnType = op.returnType ?? returnType
-            
-            // Build parameter names for the closure
-            var closureParams: [String] = []
-            for param in op.pathParams {
-                closureParams.append(snakeToCamel(param))
-            }
-            if op.isMultipart {
-                closureParams.append(contentsOf: ["fileData", "fileName", "mimeType", "purpose"])
-            } else if op.hasBody || op.hasQueryParams {
-                closureParams.append("params")
-            } else {
-                closureParams.append("expand")
-            }
-            
-            let closureParamStr = closureParams.isEmpty ? "" : closureParams.joined(separator: ", ")
-            
-            lines.append("            \(escapedSwiftName(op.funcName)): { \(closureParamStr) in")
-            
-            // Build path string
+
+            // Path params interpolated into the path
             var apiPath = op.path
             for param in op.pathParams {
                 apiPath = apiPath.replacing("{\(param)}", with: "\\(\(snakeToCamel(param)))")
             }
-            
-            // Build the handler.send call
-            switch op.httpMethod {
-            case "POST":
-                if op.isMultipart {
-                    lines.append("                return try await handler.sendMultipart(")
-                    lines.append("                    fileData: fileData,")
-                    lines.append("                    fileName: fileName,")
-                    lines.append("                    mimeType: mimeType,")
-                    lines.append("                    purpose: purpose")
-                    lines.append("                ) as \(opReturnType)")
-                } else if op.hasBody {
-                    if op.hasRequiredBodyFields {
-                        lines.append("                let body = params.toFormBody()")
-                    } else {
-                        lines.append("                let body = params?.toFormBody() ?? \"\"")
-                    }
-                    lines.append("                return try await handler.send(")
-                    lines.append("                    method: .POST,")
-                    lines.append("                    path: \"\(apiPath)\",")
-                    lines.append("                    body: .bytes(ByteBuffer(string: body))")
-                    lines.append("                ) as \(opReturnType)")
+
+            // The closure's parameters (as in `closureType`) and the handler call they feed
+            var closureParams = op.pathParams.map(snakeToCamel)
+            let call: String
+            if op.isMultipart {
+                closureParams += ["fileData", "fileName", "mimeType", "purpose"]
+                var args = ["\"\(apiPath)\""]
+                if let serverURL = op.serverURL { args.append("baseURL: \"\(serverURL)\"") }
+                args += ["fileData: fileData", "fileName: fileName", "mimeType: mimeType", "purpose: purpose"]
+                call = "handler.sendMultipart(\(args.joined(separator: ", ")))"
+            } else {
+                var args = [".\(op.httpMethod)", "\"\(apiPath)\""]
+                if op.hasBody || op.hasQueryParams {
+                    closureParams.append("params")
+                    args.append("params: params")
                 } else {
-                    // POST without body
-                    lines.append("                var query = \"\"")
-                    lines.append("                if let expand { query = expand.map { \"expand[]=\\($0)\" }.joined(separator: \"&\") }")
-                    lines.append("                let path = query.isEmpty ? \"\(apiPath)\" : \"\(apiPath)?\\(query)\"")
-                    lines.append("                return try await handler.send(")
-                    lines.append("                    method: .POST,")
-                    lines.append("                    path: path")
-                    lines.append("                ) as \(opReturnType)")
+                    closureParams.append("expand")
+                    args.append("expand: expand")
                 }
-                
-            case "GET":
-                if op.hasQueryParams {
-                    // Same bracket encoding as form bodies, sent as the query string
-                    if op.hasRequiredQueryParams {
-                        lines.append("                let query = params.toFormBody()")
-                    } else {
-                        lines.append("                let query = params?.toFormBody() ?? \"\"")
-                    }
-                } else {
-                    lines.append("                var query = \"\"")
-                    lines.append("                if let expand { query = expand.map { \"expand[]=\\($0)\" }.joined(separator: \"&\") }")
+                if op.returnsFile, let serverURL = op.serverURL {
+                    args.append("baseURL: \"\(serverURL)\"")
                 }
-                lines.append("                let path = query.isEmpty ? \"\(apiPath)\" : \"\(apiPath)?\\(query)\"")
-                if op.returnsFile {
-                    // A file (e.g. a PDF), possibly from another host (files.stripe.com)
-                    lines.append("                return try await handler.sendForData(")
-                    lines.append("                    method: .GET,")
-                    if let serverURL = op.serverURL {
-                        lines.append("                    path: path,")
-                        lines.append("                    baseURL: \"\(serverURL)\"")
-                    } else {
-                        lines.append("                    path: path")
-                    }
-                    lines.append("                )")
-                } else {
-                    lines.append("                return try await handler.send(")
-                    lines.append("                    method: .GET,")
-                    lines.append("                    path: path")
-                    lines.append("                ) as \(opReturnType)")
-                }
-                
-            case "DELETE":
-                lines.append("                var query = \"\"")
-                lines.append("                if let expand { query = expand.map { \"expand[]=\\($0)\" }.joined(separator: \"&\") }")
-                lines.append("                let path = query.isEmpty ? \"\(apiPath)\" : \"\(apiPath)?\\(query)\"")
-                lines.append("                return try await handler.send(")
-                lines.append("                    method: .DELETE,")
-                lines.append("                    path: path")
-                lines.append("                ) as \(opReturnType)")
-                
-            default:
-                lines.append("                fatalError(\"Unsupported method: \(op.httpMethod)\")")
+                call = "handler.\(op.returnsFile ? "sendForData" : "send")(\(args.joined(separator: ", ")))"
             }
-            
+
+            lines.append("            \(escapedSwiftName(op.funcName)): { \(closureParams.joined(separator: ", ")) in")
+            lines.append("                try await \(call)")
             lines.append("            }\(comma)")
         }
-        
+
         lines.append("        )")
         lines.append("    }")
         lines.append("}")
-        
         return lines
     }
     

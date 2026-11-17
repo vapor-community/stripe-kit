@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - FinancialAccount Routes
@@ -41,62 +40,25 @@ extension FinancialAccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FinancialAccountRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/financial_accounts",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FinancialAccount
+                try await handler.send(.POST, "/v1/treasury/financial_accounts", params: params)
             },
             retrieve: { financialAccount, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/treasury/financial_accounts/\(financialAccount)" : "/v1/treasury/financial_accounts/\(financialAccount)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FinancialAccount
+                try await handler.send(.GET, "/v1/treasury/financial_accounts/\(financialAccount)", expand: expand)
             },
             update: { financialAccount, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/financial_accounts/\(financialAccount)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FinancialAccount
+                try await handler.send(.POST, "/v1/treasury/financial_accounts/\(financialAccount)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/treasury/financial_accounts" : "/v1/treasury/financial_accounts?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FinancialAccountList
+                try await handler.send(.GET, "/v1/treasury/financial_accounts", params: params)
             },
             close: { financialAccount, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/financial_accounts/\(financialAccount)/close",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FinancialAccount
+                try await handler.send(.POST, "/v1/treasury/financial_accounts/\(financialAccount)/close", params: params)
             },
             retrieveFeatures: { financialAccount, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/treasury/financial_accounts/\(financialAccount)/features" : "/v1/treasury/financial_accounts/\(financialAccount)/features?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FinancialAccountFeatures
+                try await handler.send(.GET, "/v1/treasury/financial_accounts/\(financialAccount)/features", expand: expand)
             },
             updateFeatures: { financialAccount, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/financial_accounts/\(financialAccount)/features",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FinancialAccountFeatures
+                try await handler.send(.POST, "/v1/treasury/financial_accounts/\(financialAccount)/features", params: params)
             }
         )
     }

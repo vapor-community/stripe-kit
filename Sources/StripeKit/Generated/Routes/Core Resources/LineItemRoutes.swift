@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - LineItem Routes
@@ -30,20 +29,10 @@ extension LineItemRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         LineItemRoutes(
             update: { invoice, lineItemId, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoices/\(invoice)/lines/\(lineItemId)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as LineItem
+                try await handler.send(.POST, "/v1/invoices/\(invoice)/lines/\(lineItemId)", params: params)
             },
             list: { invoice, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/invoices/\(invoice)/lines" : "/v1/invoices/\(invoice)/lines?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as LineItemList
+                try await handler.send(.GET, "/v1/invoices/\(invoice)/lines", params: params)
             }
         )
     }

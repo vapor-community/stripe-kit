@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ValueList Routes
@@ -36,46 +35,19 @@ extension ValueListRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ValueListRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/radar/value_lists",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ValueList
+                try await handler.send(.POST, "/v1/radar/value_lists", params: params)
             },
             retrieve: { valueList, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/radar/value_lists/\(valueList)" : "/v1/radar/value_lists/\(valueList)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ValueList
+                try await handler.send(.GET, "/v1/radar/value_lists/\(valueList)", expand: expand)
             },
             update: { valueList, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/radar/value_lists/\(valueList)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ValueList
+                try await handler.send(.POST, "/v1/radar/value_lists/\(valueList)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/radar/value_lists" : "/v1/radar/value_lists?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ValueListList
+                try await handler.send(.GET, "/v1/radar/value_lists", params: params)
             },
             delete: { valueList, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/radar/value_lists/\(valueList)" : "/v1/radar/value_lists/\(valueList)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedValueList
+                try await handler.send(.DELETE, "/v1/radar/value_lists/\(valueList)", expand: expand)
             }
         )
     }

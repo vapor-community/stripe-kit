@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Person Routes
@@ -37,46 +36,19 @@ extension PersonRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PersonRoutes(
             create: { account, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts/\(account)/persons",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Person
+                try await handler.send(.POST, "/v1/accounts/\(account)/persons", params: params)
             },
             retrieve: { account, person, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/accounts/\(account)/persons/\(person)" : "/v1/accounts/\(account)/persons/\(person)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Person
+                try await handler.send(.GET, "/v1/accounts/\(account)/persons/\(person)", expand: expand)
             },
             update: { account, person, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/accounts/\(account)/persons/\(person)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Person
+                try await handler.send(.POST, "/v1/accounts/\(account)/persons/\(person)", params: params)
             },
             list: { account, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/accounts/\(account)/persons" : "/v1/accounts/\(account)/persons?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PersonList
+                try await handler.send(.GET, "/v1/accounts/\(account)/persons", params: params)
             },
             delete: { account, person, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/accounts/\(account)/persons/\(person)" : "/v1/accounts/\(account)/persons/\(person)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedPerson
+                try await handler.send(.DELETE, "/v1/accounts/\(account)/persons/\(person)", expand: expand)
             }
         )
     }

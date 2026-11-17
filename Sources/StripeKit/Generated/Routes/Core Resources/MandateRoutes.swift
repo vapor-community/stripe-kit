@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Mandate Routes
@@ -21,13 +20,7 @@ extension MandateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         MandateRoutes(
             retrieve: { mandate, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/mandates/\(mandate)" : "/v1/mandates/\(mandate)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Mandate
+                try await handler.send(.GET, "/v1/mandates/\(mandate)", expand: expand)
             }
         )
     }

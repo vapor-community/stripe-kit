@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Dispute Routes
@@ -36,37 +35,16 @@ extension DisputeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         DisputeRoutes(
             retrieve: { dispute, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/disputes/\(dispute)" : "/v1/disputes/\(dispute)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Dispute
+                try await handler.send(.GET, "/v1/disputes/\(dispute)", expand: expand)
             },
             update: { dispute, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/disputes/\(dispute)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Dispute
+                try await handler.send(.POST, "/v1/disputes/\(dispute)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/disputes" : "/v1/disputes?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as DisputeList
+                try await handler.send(.GET, "/v1/disputes", params: params)
             },
             close: { dispute, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/disputes/\(dispute)/close",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Dispute
+                try await handler.send(.POST, "/v1/disputes/\(dispute)/close", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PromotionCode Routes
@@ -33,37 +32,16 @@ extension PromotionCodeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PromotionCodeRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/promotion_codes",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PromotionCode
+                try await handler.send(.POST, "/v1/promotion_codes", params: params)
             },
             retrieve: { promotionCode, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/promotion_codes/\(promotionCode)" : "/v1/promotion_codes/\(promotionCode)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PromotionCode
+                try await handler.send(.GET, "/v1/promotion_codes/\(promotionCode)", expand: expand)
             },
             update: { promotionCode, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/promotion_codes/\(promotionCode)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PromotionCode
+                try await handler.send(.POST, "/v1/promotion_codes/\(promotionCode)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/promotion_codes" : "/v1/promotion_codes?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PromotionCodeList
+                try await handler.send(.GET, "/v1/promotion_codes", params: params)
             }
         )
     }

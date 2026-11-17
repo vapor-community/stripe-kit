@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - IssuingToken Routes
@@ -27,29 +26,13 @@ extension IssuingTokenRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingTokenRoutes(
             retrieve: { token, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/issuing/tokens/\(token)" : "/v1/issuing/tokens/\(token)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingToken
+                try await handler.send(.GET, "/v1/issuing/tokens/\(token)", expand: expand)
             },
             update: { token, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/tokens/\(token)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingToken
+                try await handler.send(.POST, "/v1/issuing/tokens/\(token)", params: params)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/issuing/tokens" : "/v1/issuing/tokens?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingTokenList
+                try await handler.send(.GET, "/v1/issuing/tokens", params: params)
             }
         )
     }

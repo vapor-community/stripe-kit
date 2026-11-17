@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ExchangeRate Routes
@@ -27,21 +26,10 @@ extension ExchangeRateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ExchangeRateRoutes(
             retrieve: { rateId, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/exchange_rates/\(rateId)" : "/v1/exchange_rates/\(rateId)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ExchangeRate
+                try await handler.send(.GET, "/v1/exchange_rates/\(rateId)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/exchange_rates" : "/v1/exchange_rates?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ExchangeRateList
+                try await handler.send(.GET, "/v1/exchange_rates", params: params)
             }
         )
     }

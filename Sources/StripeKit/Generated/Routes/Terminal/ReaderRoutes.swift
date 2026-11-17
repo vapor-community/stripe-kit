@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Reader Routes
@@ -70,134 +69,52 @@ extension ReaderRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ReaderRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/terminal/readers", params: params)
             },
             retrieve: { reader, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/terminal/readers/\(reader)" : "/v1/terminal/readers/\(reader)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ObjectOrDeleted<Reader, DeletedReader>
+                try await handler.send(.GET, "/v1/terminal/readers/\(reader)", expand: expand)
             },
             update: { reader, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers/\(reader)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ObjectOrDeleted<Reader, DeletedReader>
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/terminal/readers" : "/v1/terminal/readers?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ReaderList
+                try await handler.send(.GET, "/v1/terminal/readers", params: params)
             },
             delete: { reader, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/terminal/readers/\(reader)" : "/v1/terminal/readers/\(reader)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedReader
+                try await handler.send(.DELETE, "/v1/terminal/readers/\(reader)", expand: expand)
             },
             cancelAction: { reader, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers/\(reader)/cancel_action",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ObjectOrDeleted<Reader, DeletedReader>
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/cancel_action", params: params)
             },
             collectInputs: { reader, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers/\(reader)/collect_inputs",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/collect_inputs", params: params)
             },
             collectPaymentMethod: { reader, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers/\(reader)/collect_payment_method",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/collect_payment_method", params: params)
             },
             confirmPaymentIntent: { reader, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers/\(reader)/confirm_payment_intent",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/confirm_payment_intent", params: params)
             },
             presentPaymentMethod: { reader, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/terminal/readers/\(reader)/present_payment_method",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/test_helpers/terminal/readers/\(reader)/present_payment_method", params: params)
             },
             processPaymentIntent: { reader, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers/\(reader)/process_payment_intent",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/process_payment_intent", params: params)
             },
             processSetupIntent: { reader, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers/\(reader)/process_setup_intent",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/process_setup_intent", params: params)
             },
             refundPayment: { reader, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers/\(reader)/refund_payment",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/refund_payment", params: params)
             },
             setReaderDisplay: { reader, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/readers/\(reader)/set_reader_display",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/terminal/readers/\(reader)/set_reader_display", params: params)
             },
             succeedInputCollection: { reader, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/terminal/readers/\(reader)/succeed_input_collection",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/test_helpers/terminal/readers/\(reader)/succeed_input_collection", params: params)
             },
             timeoutInputCollection: { reader, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/terminal/readers/\(reader)/timeout_input_collection",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Reader
+                try await handler.send(.POST, "/v1/test_helpers/terminal/readers/\(reader)/timeout_input_collection", params: params)
             }
         )
     }

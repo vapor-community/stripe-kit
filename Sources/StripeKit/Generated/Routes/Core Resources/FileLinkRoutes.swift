@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - FileLink Routes
@@ -30,37 +29,16 @@ extension FileLinkRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FileLinkRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/file_links",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FileLink
+                try await handler.send(.POST, "/v1/file_links", params: params)
             },
             retrieve: { link, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/file_links/\(link)" : "/v1/file_links/\(link)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FileLink
+                try await handler.send(.GET, "/v1/file_links/\(link)", expand: expand)
             },
             update: { link, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/file_links/\(link)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FileLink
+                try await handler.send(.POST, "/v1/file_links/\(link)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/file_links" : "/v1/file_links?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FileLinkList
+                try await handler.send(.GET, "/v1/file_links", params: params)
             }
         )
     }

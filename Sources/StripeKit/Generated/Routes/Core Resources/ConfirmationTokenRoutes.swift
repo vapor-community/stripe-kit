@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ConfirmationToken Routes
@@ -24,21 +23,10 @@ extension ConfirmationTokenRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ConfirmationTokenRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/confirmation_tokens",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ConfirmationToken
+                try await handler.send(.POST, "/v1/test_helpers/confirmation_tokens", params: params)
             },
             retrieve: { confirmationToken, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/confirmation_tokens/\(confirmationToken)" : "/v1/confirmation_tokens/\(confirmationToken)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ConfirmationToken
+                try await handler.send(.GET, "/v1/confirmation_tokens/\(confirmationToken)", expand: expand)
             }
         )
     }

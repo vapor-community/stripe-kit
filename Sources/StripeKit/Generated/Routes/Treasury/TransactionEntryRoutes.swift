@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TransactionEntry Routes
@@ -24,21 +23,10 @@ extension TransactionEntryRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TransactionEntryRoutes(
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/treasury/transaction_entries/\(id)" : "/v1/treasury/transaction_entries/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TransactionEntry
+                try await handler.send(.GET, "/v1/treasury/transaction_entries/\(id)", expand: expand)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/treasury/transaction_entries" : "/v1/treasury/transaction_entries?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TransactionEntryList
+                try await handler.send(.GET, "/v1/treasury/transaction_entries", params: params)
             }
         )
     }

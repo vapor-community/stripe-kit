@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - MeterEvent Routes
@@ -21,12 +20,7 @@ extension MeterEventRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         MeterEventRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/meter_events",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as MeterEvent
+                try await handler.send(.POST, "/v1/billing/meter_events", params: params)
             }
         )
     }

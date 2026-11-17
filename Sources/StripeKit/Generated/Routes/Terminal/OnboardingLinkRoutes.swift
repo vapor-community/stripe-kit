@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - OnboardingLink Routes
@@ -22,12 +21,7 @@ extension OnboardingLinkRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         OnboardingLinkRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/terminal/onboarding_links",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as OnboardingLink
+                try await handler.send(.POST, "/v1/terminal/onboarding_links", params: params)
             }
         )
     }

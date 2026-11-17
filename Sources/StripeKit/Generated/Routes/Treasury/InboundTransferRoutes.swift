@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - InboundTransfer Routes
@@ -42,61 +41,25 @@ extension InboundTransferRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InboundTransferRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/inbound_transfers",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as InboundTransfer
+                try await handler.send(.POST, "/v1/treasury/inbound_transfers", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/treasury/inbound_transfers/\(id)" : "/v1/treasury/inbound_transfers/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as InboundTransfer
+                try await handler.send(.GET, "/v1/treasury/inbound_transfers/\(id)", expand: expand)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/treasury/inbound_transfers" : "/v1/treasury/inbound_transfers?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as InboundTransferList
+                try await handler.send(.GET, "/v1/treasury/inbound_transfers", params: params)
             },
             cancel: { inboundTransfer, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/inbound_transfers/\(inboundTransfer)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as InboundTransfer
+                try await handler.send(.POST, "/v1/treasury/inbound_transfers/\(inboundTransfer)/cancel", params: params)
             },
             fail: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/inbound_transfers/\(id)/fail",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as InboundTransfer
+                try await handler.send(.POST, "/v1/test_helpers/treasury/inbound_transfers/\(id)/fail", params: params)
             },
             returnInboundTransfer: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/inbound_transfers/\(id)/return",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as InboundTransfer
+                try await handler.send(.POST, "/v1/test_helpers/treasury/inbound_transfers/\(id)/return", params: params)
             },
             succeed: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/inbound_transfers/\(id)/succeed",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as InboundTransfer
+                try await handler.send(.POST, "/v1/test_helpers/treasury/inbound_transfers/\(id)/succeed", params: params)
             }
         )
     }

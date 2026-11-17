@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - FeedbackOption Routes
@@ -33,45 +32,19 @@ extension FeedbackOptionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FeedbackOptionRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/feedback_options",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FeedbackOption
+                try await handler.send(.POST, "/v1/billing/feedback_options", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/billing/feedback_options/\(id)" : "/v1/billing/feedback_options/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FeedbackOption
+                try await handler.send(.GET, "/v1/billing/feedback_options/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/feedback_options/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FeedbackOption
+                try await handler.send(.POST, "/v1/billing/feedback_options/\(id)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/billing/feedback_options" : "/v1/billing/feedback_options?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FeedbackOptionList
+                try await handler.send(.GET, "/v1/billing/feedback_options", params: params)
             },
             deactivate: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing/feedback_options/\(id)/deactivate",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as FeedbackOption
+                try await handler.send(.POST, "/v1/billing/feedback_options/\(id)/deactivate", params: params)
             }
         )
     }

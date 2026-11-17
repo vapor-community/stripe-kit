@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentMethodConfiguration Routes
@@ -30,37 +29,16 @@ extension PaymentMethodConfigurationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentMethodConfigurationRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_method_configurations",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethodConfiguration
+                try await handler.send(.POST, "/v1/payment_method_configurations", params: params)
             },
             retrieve: { configuration, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/payment_method_configurations/\(configuration)" : "/v1/payment_method_configurations/\(configuration)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentMethodConfiguration
+                try await handler.send(.GET, "/v1/payment_method_configurations/\(configuration)", expand: expand)
             },
             update: { configuration, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_method_configurations/\(configuration)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethodConfiguration
+                try await handler.send(.POST, "/v1/payment_method_configurations/\(configuration)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payment_method_configurations" : "/v1/payment_method_configurations?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentMethodConfigurationList
+                try await handler.send(.GET, "/v1/payment_method_configurations", params: params)
             }
         )
     }

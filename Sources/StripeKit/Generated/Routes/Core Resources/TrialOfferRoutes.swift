@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TrialOffer Routes
@@ -31,37 +30,16 @@ extension TrialOfferRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TrialOfferRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/product_catalog/trial_offers",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TrialOffer
+                try await handler.send(.POST, "/v1/product_catalog/trial_offers", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/product_catalog/trial_offers/\(id)" : "/v1/product_catalog/trial_offers/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TrialOffer
+                try await handler.send(.GET, "/v1/product_catalog/trial_offers/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/product_catalog/trial_offers/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TrialOffer
+                try await handler.send(.POST, "/v1/product_catalog/trial_offers/\(id)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/product_catalog/trial_offers" : "/v1/product_catalog/trial_offers?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TrialOfferList
+                try await handler.send(.GET, "/v1/product_catalog/trial_offers", params: params)
             }
         )
     }

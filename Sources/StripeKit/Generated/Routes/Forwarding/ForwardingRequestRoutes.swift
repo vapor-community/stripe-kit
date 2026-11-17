@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ForwardingRequest Routes
@@ -27,29 +26,13 @@ extension ForwardingRequestRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ForwardingRequestRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/forwarding/requests",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ForwardingRequest
+                try await handler.send(.POST, "/v1/forwarding/requests", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/forwarding/requests/\(id)" : "/v1/forwarding/requests/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ForwardingRequest
+                try await handler.send(.GET, "/v1/forwarding/requests/\(id)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/forwarding/requests" : "/v1/forwarding/requests?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ForwardingRequestList
+                try await handler.send(.GET, "/v1/forwarding/requests", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - TaxRate Routes
@@ -31,37 +30,16 @@ extension TaxRateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TaxRateRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax_rates",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TaxRate
+                try await handler.send(.POST, "/v1/tax_rates", params: params)
             },
             retrieve: { taxRate, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tax_rates/\(taxRate)" : "/v1/tax_rates/\(taxRate)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TaxRate
+                try await handler.send(.GET, "/v1/tax_rates/\(taxRate)", expand: expand)
             },
             update: { taxRate, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax_rates/\(taxRate)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as TaxRate
+                try await handler.send(.POST, "/v1/tax_rates/\(taxRate)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/tax_rates" : "/v1/tax_rates?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TaxRateList
+                try await handler.send(.GET, "/v1/tax_rates", params: params)
             }
         )
     }

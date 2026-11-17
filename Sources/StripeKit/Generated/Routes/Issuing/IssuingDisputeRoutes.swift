@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - IssuingDispute Routes
@@ -39,45 +38,19 @@ extension IssuingDisputeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         IssuingDisputeRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/disputes",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingDispute
+                try await handler.send(.POST, "/v1/issuing/disputes", params: params)
             },
             retrieve: { dispute, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/issuing/disputes/\(dispute)" : "/v1/issuing/disputes/\(dispute)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingDispute
+                try await handler.send(.GET, "/v1/issuing/disputes/\(dispute)", expand: expand)
             },
             update: { dispute, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/disputes/\(dispute)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingDispute
+                try await handler.send(.POST, "/v1/issuing/disputes/\(dispute)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/issuing/disputes" : "/v1/issuing/disputes?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as IssuingDisputeList
+                try await handler.send(.GET, "/v1/issuing/disputes", params: params)
             },
             submit: { dispute, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/disputes/\(dispute)/submit",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as IssuingDispute
+                try await handler.send(.POST, "/v1/issuing/disputes/\(dispute)/submit", params: params)
             }
         )
     }

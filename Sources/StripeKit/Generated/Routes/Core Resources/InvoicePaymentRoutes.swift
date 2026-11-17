@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - InvoicePayment Routes
@@ -25,21 +24,10 @@ extension InvoicePaymentRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InvoicePaymentRoutes(
             retrieve: { invoicePayment, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/invoice_payments/\(invoicePayment)" : "/v1/invoice_payments/\(invoicePayment)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as InvoicePayment
+                try await handler.send(.GET, "/v1/invoice_payments/\(invoicePayment)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/invoice_payments" : "/v1/invoice_payments?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as InvoicePaymentList
+                try await handler.send(.GET, "/v1/invoice_payments", params: params)
             }
         )
     }

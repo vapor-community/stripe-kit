@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentMethodDomain Routes
@@ -38,45 +37,19 @@ extension PaymentMethodDomainRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentMethodDomainRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_method_domains",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethodDomain
+                try await handler.send(.POST, "/v1/payment_method_domains", params: params)
             },
             retrieve: { paymentMethodDomain, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/payment_method_domains/\(paymentMethodDomain)" : "/v1/payment_method_domains/\(paymentMethodDomain)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentMethodDomain
+                try await handler.send(.GET, "/v1/payment_method_domains/\(paymentMethodDomain)", expand: expand)
             },
             update: { paymentMethodDomain, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_method_domains/\(paymentMethodDomain)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethodDomain
+                try await handler.send(.POST, "/v1/payment_method_domains/\(paymentMethodDomain)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payment_method_domains" : "/v1/payment_method_domains?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentMethodDomainList
+                try await handler.send(.GET, "/v1/payment_method_domains", params: params)
             },
             validate: { paymentMethodDomain, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_method_domains/\(paymentMethodDomain)/validate",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethodDomain
+                try await handler.send(.POST, "/v1/payment_method_domains/\(paymentMethodDomain)/validate", params: params)
             }
         )
     }

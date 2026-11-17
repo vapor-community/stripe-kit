@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ClimateProduct Routes
@@ -24,21 +23,10 @@ extension ClimateProductRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ClimateProductRoutes(
             retrieve: { product, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/climate/products/\(product)" : "/v1/climate/products/\(product)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ClimateProduct
+                try await handler.send(.GET, "/v1/climate/products/\(product)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/climate/products" : "/v1/climate/products?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ClimateProductList
+                try await handler.send(.GET, "/v1/climate/products", params: params)
             }
         )
     }

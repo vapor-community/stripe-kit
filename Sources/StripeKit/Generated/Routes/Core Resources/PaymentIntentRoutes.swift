@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentIntent Routes
@@ -98,92 +97,37 @@ extension PaymentIntentRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentIntentRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_intents",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentIntent
+                try await handler.send(.POST, "/v1/payment_intents", params: params)
             },
             retrieve: { intent, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payment_intents/\(intent)" : "/v1/payment_intents/\(intent)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentIntent
+                try await handler.send(.GET, "/v1/payment_intents/\(intent)", params: params)
             },
             update: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_intents/\(intent)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentIntent
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payment_intents" : "/v1/payment_intents?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentIntentList
+                try await handler.send(.GET, "/v1/payment_intents", params: params)
             },
             search: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/payment_intents/search" : "/v1/payment_intents/search?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as StripeSearchResult<PaymentIntent>
+                try await handler.send(.GET, "/v1/payment_intents/search", params: params)
             },
             applyCustomerBalance: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_intents/\(intent)/apply_customer_balance",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentIntent
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/apply_customer_balance", params: params)
             },
             cancel: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_intents/\(intent)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentIntent
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/cancel", params: params)
             },
             capture: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_intents/\(intent)/capture",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentIntent
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/capture", params: params)
             },
             confirm: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_intents/\(intent)/confirm",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentIntent
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/confirm", params: params)
             },
             incrementAuthorization: { intent, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_intents/\(intent)/increment_authorization",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentIntent
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/increment_authorization", params: params)
             },
             verifyMicrodeposits: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_intents/\(intent)/verify_microdeposits",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentIntent
+                try await handler.send(.POST, "/v1/payment_intents/\(intent)/verify_microdeposits", params: params)
             }
         )
     }

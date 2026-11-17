@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CustomerCashBalanceTransaction Routes
@@ -24,21 +23,10 @@ extension CustomerCashBalanceTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CustomerCashBalanceTransactionRoutes(
             retrieve: { customer, transaction, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/customers/\(customer)/cash_balance_transactions/\(transaction)" : "/v1/customers/\(customer)/cash_balance_transactions/\(transaction)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CustomerCashBalanceTransaction
+                try await handler.send(.GET, "/v1/customers/\(customer)/cash_balance_transactions/\(transaction)", expand: expand)
             },
             list: { customer, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/customers/\(customer)/cash_balance_transactions" : "/v1/customers/\(customer)/cash_balance_transactions?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CustomerCashBalanceTransactionList
+                try await handler.send(.GET, "/v1/customers/\(customer)/cash_balance_transactions", params: params)
             }
         )
     }

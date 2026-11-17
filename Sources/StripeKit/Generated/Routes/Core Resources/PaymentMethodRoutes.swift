@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentMethod Routes
@@ -49,53 +48,22 @@ extension PaymentMethodRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentMethodRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_methods",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethod
+                try await handler.send(.POST, "/v1/payment_methods", params: params)
             },
             retrieve: { paymentMethod, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/payment_methods/\(paymentMethod)" : "/v1/payment_methods/\(paymentMethod)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentMethod
+                try await handler.send(.GET, "/v1/payment_methods/\(paymentMethod)", expand: expand)
             },
             update: { paymentMethod, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_methods/\(paymentMethod)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethod
+                try await handler.send(.POST, "/v1/payment_methods/\(paymentMethod)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payment_methods" : "/v1/payment_methods?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentMethodList
+                try await handler.send(.GET, "/v1/payment_methods", params: params)
             },
             attach: { paymentMethod, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_methods/\(paymentMethod)/attach",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethod
+                try await handler.send(.POST, "/v1/payment_methods/\(paymentMethod)/attach", params: params)
             },
             detach: { paymentMethod, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_methods/\(paymentMethod)/detach",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentMethod
+                try await handler.send(.POST, "/v1/payment_methods/\(paymentMethod)/detach", params: params)
             }
         )
     }

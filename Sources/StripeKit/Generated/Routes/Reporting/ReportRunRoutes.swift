@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ReportRun Routes
@@ -28,29 +27,13 @@ extension ReportRunRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ReportRunRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/reporting/report_runs",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ReportRun
+                try await handler.send(.POST, "/v1/reporting/report_runs", params: params)
             },
             retrieve: { reportRun, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/reporting/report_runs/\(reportRun)" : "/v1/reporting/report_runs/\(reportRun)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ReportRun
+                try await handler.send(.GET, "/v1/reporting/report_runs/\(reportRun)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/reporting/report_runs" : "/v1/reporting/report_runs?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ReportRunList
+                try await handler.send(.GET, "/v1/reporting/report_runs", params: params)
             }
         )
     }

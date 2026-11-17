@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Calculation Routes
@@ -27,29 +26,13 @@ extension CalculationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CalculationRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/tax/calculations",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Calculation
+                try await handler.send(.POST, "/v1/tax/calculations", params: params)
             },
             retrieve: { calculation, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/tax/calculations/\(calculation)" : "/v1/tax/calculations/\(calculation)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Calculation
+                try await handler.send(.GET, "/v1/tax/calculations/\(calculation)", expand: expand)
             },
             listLineItems: { calculation, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/tax/calculations/\(calculation)/line_items" : "/v1/tax/calculations/\(calculation)/line_items?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CalculationLineItemList
+                try await handler.send(.GET, "/v1/tax/calculations/\(calculation)/line_items", params: params)
             }
         )
     }

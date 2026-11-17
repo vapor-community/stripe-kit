@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - DebitReversal Routes
@@ -27,29 +26,13 @@ extension DebitReversalRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         DebitReversalRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/treasury/debit_reversals",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as DebitReversal
+                try await handler.send(.POST, "/v1/treasury/debit_reversals", params: params)
             },
             retrieve: { debitReversal, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/treasury/debit_reversals/\(debitReversal)" : "/v1/treasury/debit_reversals/\(debitReversal)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as DebitReversal
+                try await handler.send(.GET, "/v1/treasury/debit_reversals/\(debitReversal)", expand: expand)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/treasury/debit_reversals" : "/v1/treasury/debit_reversals?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as DebitReversalList
+                try await handler.send(.GET, "/v1/treasury/debit_reversals", params: params)
             }
         )
     }

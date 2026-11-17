@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Plan Routes
@@ -36,46 +35,19 @@ extension PlanRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PlanRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/plans",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Plan
+                try await handler.send(.POST, "/v1/plans", params: params)
             },
             retrieve: { plan, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/plans/\(plan)" : "/v1/plans/\(plan)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Plan
+                try await handler.send(.GET, "/v1/plans/\(plan)", expand: expand)
             },
             update: { plan, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/plans/\(plan)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Plan
+                try await handler.send(.POST, "/v1/plans/\(plan)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/plans" : "/v1/plans?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PlanList
+                try await handler.send(.GET, "/v1/plans", params: params)
             },
             delete: { plan, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/plans/\(plan)" : "/v1/plans/\(plan)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedPlan
+                try await handler.send(.DELETE, "/v1/plans/\(plan)", expand: expand)
             }
         )
     }

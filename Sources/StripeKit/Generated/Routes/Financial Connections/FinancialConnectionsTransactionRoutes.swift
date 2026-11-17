@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - FinancialConnectionsTransaction Routes
@@ -24,21 +23,10 @@ extension FinancialConnectionsTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FinancialConnectionsTransactionRoutes(
             retrieve: { transaction, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/financial_connections/transactions/\(transaction)" : "/v1/financial_connections/transactions/\(transaction)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FinancialConnectionsTransaction
+                try await handler.send(.GET, "/v1/financial_connections/transactions/\(transaction)", expand: expand)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/financial_connections/transactions" : "/v1/financial_connections/transactions?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FinancialConnectionsTransactionList
+                try await handler.send(.GET, "/v1/financial_connections/transactions", params: params)
             }
         )
     }

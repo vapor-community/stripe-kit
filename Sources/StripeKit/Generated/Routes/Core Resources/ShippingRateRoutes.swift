@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ShippingRate Routes
@@ -30,37 +29,16 @@ extension ShippingRateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ShippingRateRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/shipping_rates",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ShippingRate
+                try await handler.send(.POST, "/v1/shipping_rates", params: params)
             },
             retrieve: { shippingRateToken, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/shipping_rates/\(shippingRateToken)" : "/v1/shipping_rates/\(shippingRateToken)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ShippingRate
+                try await handler.send(.GET, "/v1/shipping_rates/\(shippingRateToken)", expand: expand)
             },
             update: { shippingRateToken, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/shipping_rates/\(shippingRateToken)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ShippingRate
+                try await handler.send(.POST, "/v1/shipping_rates/\(shippingRateToken)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/shipping_rates" : "/v1/shipping_rates?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ShippingRateList
+                try await handler.send(.GET, "/v1/shipping_rates", params: params)
             }
         )
     }

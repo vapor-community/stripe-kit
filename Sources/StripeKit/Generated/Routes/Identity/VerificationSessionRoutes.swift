@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - VerificationSession Routes
@@ -53,53 +52,22 @@ extension VerificationSessionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         VerificationSessionRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/identity/verification_sessions",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as VerificationSession
+                try await handler.send(.POST, "/v1/identity/verification_sessions", params: params)
             },
             retrieve: { session, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/identity/verification_sessions/\(session)" : "/v1/identity/verification_sessions/\(session)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as VerificationSession
+                try await handler.send(.GET, "/v1/identity/verification_sessions/\(session)", expand: expand)
             },
             update: { session, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/identity/verification_sessions/\(session)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as VerificationSession
+                try await handler.send(.POST, "/v1/identity/verification_sessions/\(session)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/identity/verification_sessions" : "/v1/identity/verification_sessions?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as VerificationSessionList
+                try await handler.send(.GET, "/v1/identity/verification_sessions", params: params)
             },
             cancel: { session, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/identity/verification_sessions/\(session)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as VerificationSession
+                try await handler.send(.POST, "/v1/identity/verification_sessions/\(session)/cancel", params: params)
             },
             redact: { session, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/identity/verification_sessions/\(session)/redact",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as VerificationSession
+                try await handler.send(.POST, "/v1/identity/verification_sessions/\(session)/redact", params: params)
             }
         )
     }

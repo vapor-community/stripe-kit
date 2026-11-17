@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PhysicalBundle Routes
@@ -25,21 +24,10 @@ extension PhysicalBundleRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PhysicalBundleRoutes(
             retrieve: { physicalBundle, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/issuing/physical_bundles/\(physicalBundle)" : "/v1/issuing/physical_bundles/\(physicalBundle)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PhysicalBundle
+                try await handler.send(.GET, "/v1/issuing/physical_bundles/\(physicalBundle)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/issuing/physical_bundles" : "/v1/issuing/physical_bundles?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PhysicalBundleList
+                try await handler.send(.GET, "/v1/issuing/physical_bundles", params: params)
             }
         )
     }

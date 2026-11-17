@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - EphemeralKey Routes
@@ -24,21 +23,10 @@ extension EphemeralKeyRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         EphemeralKeyRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/ephemeral_keys",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as EphemeralKey
+                try await handler.send(.POST, "/v1/ephemeral_keys", params: params)
             },
             delete: { key, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/ephemeral_keys/\(key)" : "/v1/ephemeral_keys/\(key)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as EphemeralKey
+                try await handler.send(.DELETE, "/v1/ephemeral_keys/\(key)", expand: expand)
             }
         )
     }

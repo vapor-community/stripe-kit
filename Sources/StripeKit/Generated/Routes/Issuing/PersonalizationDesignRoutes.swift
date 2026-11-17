@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PersonalizationDesign Routes
@@ -40,61 +39,25 @@ extension PersonalizationDesignRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PersonalizationDesignRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/personalization_designs",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PersonalizationDesign
+                try await handler.send(.POST, "/v1/issuing/personalization_designs", params: params)
             },
             retrieve: { personalizationDesign, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/issuing/personalization_designs/\(personalizationDesign)" : "/v1/issuing/personalization_designs/\(personalizationDesign)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PersonalizationDesign
+                try await handler.send(.GET, "/v1/issuing/personalization_designs/\(personalizationDesign)", expand: expand)
             },
             update: { personalizationDesign, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/issuing/personalization_designs/\(personalizationDesign)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PersonalizationDesign
+                try await handler.send(.POST, "/v1/issuing/personalization_designs/\(personalizationDesign)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/issuing/personalization_designs" : "/v1/issuing/personalization_designs?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PersonalizationDesignList
+                try await handler.send(.GET, "/v1/issuing/personalization_designs", params: params)
             },
             activate: { personalizationDesign, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/activate",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PersonalizationDesign
+                try await handler.send(.POST, "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/activate", params: params)
             },
             deactivate: { personalizationDesign, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/deactivate",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PersonalizationDesign
+                try await handler.send(.POST, "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/deactivate", params: params)
             },
             reject: { personalizationDesign, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/reject",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PersonalizationDesign
+                try await handler.send(.POST, "/v1/test_helpers/issuing/personalization_designs/\(personalizationDesign)/reject", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ProductFeature Routes
@@ -30,38 +29,16 @@ extension ProductFeatureRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ProductFeatureRoutes(
             create: { product, params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/products/\(product)/features",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ProductFeature
+                try await handler.send(.POST, "/v1/products/\(product)/features", params: params)
             },
             retrieve: { product, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/products/\(product)/features/\(id)" : "/v1/products/\(product)/features/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ProductFeature
+                try await handler.send(.GET, "/v1/products/\(product)/features/\(id)", expand: expand)
             },
             list: { product, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/products/\(product)/features" : "/v1/products/\(product)/features?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ProductFeatureList
+                try await handler.send(.GET, "/v1/products/\(product)/features", params: params)
             },
             delete: { product, id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/products/\(product)/features/\(id)" : "/v1/products/\(product)/features/\(id)?\(query)"
-                return try await handler.send(
-                    method: .DELETE,
-                    path: path
-                ) as DeletedProductFeature
+                try await handler.send(.DELETE, "/v1/products/\(product)/features/\(id)", expand: expand)
             }
         )
     }

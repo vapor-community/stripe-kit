@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CreditBalanceTransaction Routes
@@ -24,21 +23,10 @@ extension CreditBalanceTransactionRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CreditBalanceTransactionRoutes(
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/billing/credit_balance_transactions/\(id)" : "/v1/billing/credit_balance_transactions/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditBalanceTransaction
+                try await handler.send(.GET, "/v1/billing/credit_balance_transactions/\(id)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/billing/credit_balance_transactions" : "/v1/billing/credit_balance_transactions?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditBalanceTransactionList
+                try await handler.send(.GET, "/v1/billing/credit_balance_transactions", params: params)
             }
         )
     }

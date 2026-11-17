@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - CreditNote Routes
@@ -54,61 +53,25 @@ extension CreditNoteRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         CreditNoteRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/credit_notes",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CreditNote
+                try await handler.send(.POST, "/v1/credit_notes", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/credit_notes/\(id)" : "/v1/credit_notes/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditNote
+                try await handler.send(.GET, "/v1/credit_notes/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/credit_notes/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CreditNote
+                try await handler.send(.POST, "/v1/credit_notes/\(id)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/credit_notes" : "/v1/credit_notes?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditNoteList
+                try await handler.send(.GET, "/v1/credit_notes", params: params)
             },
             preview: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/credit_notes/preview" : "/v1/credit_notes/preview?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditNote
+                try await handler.send(.GET, "/v1/credit_notes/preview", params: params)
             },
             previewLines: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/credit_notes/preview/lines" : "/v1/credit_notes/preview/lines?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as CreditNoteLineItemList
+                try await handler.send(.GET, "/v1/credit_notes/preview/lines", params: params)
             },
             voidCreditNote: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/credit_notes/\(id)/void",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as CreditNote
+                try await handler.send(.POST, "/v1/credit_notes/\(id)/void", params: params)
             }
         )
     }

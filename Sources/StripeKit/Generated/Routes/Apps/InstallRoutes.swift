@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Install Routes
@@ -52,45 +51,19 @@ extension InstallRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InstallRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/apps/installs",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Install
+                try await handler.send(.POST, "/v1/apps/installs", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/apps/installs/\(id)" : "/v1/apps/installs/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Install
+                try await handler.send(.GET, "/v1/apps/installs/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/apps/installs/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Install
+                try await handler.send(.POST, "/v1/apps/installs/\(id)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/apps/installs" : "/v1/apps/installs?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as InstallList
+                try await handler.send(.GET, "/v1/apps/installs", params: params)
             },
             uninstall: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/apps/installs/\(id)/uninstall",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Install
+                try await handler.send(.POST, "/v1/apps/installs/\(id)/uninstall", params: params)
             }
         )
     }

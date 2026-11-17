@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - BankAccount Routes
@@ -21,12 +20,7 @@ extension BankAccountRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BankAccountRoutes(
             verify: { customer, id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/customers/\(customer)/sources/\(id)/verify",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as BankAccount
+                try await handler.send(.POST, "/v1/customers/\(customer)/sources/\(id)/verify", params: params)
             }
         )
     }

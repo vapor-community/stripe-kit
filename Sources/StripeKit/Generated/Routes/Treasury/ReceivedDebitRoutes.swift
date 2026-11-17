@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ReceivedDebit Routes
@@ -29,29 +28,13 @@ extension ReceivedDebitRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ReceivedDebitRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/test_helpers/treasury/received_debits",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as ReceivedDebit
+                try await handler.send(.POST, "/v1/test_helpers/treasury/received_debits", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/treasury/received_debits/\(id)" : "/v1/treasury/received_debits/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ReceivedDebit
+                try await handler.send(.GET, "/v1/treasury/received_debits/\(id)", expand: expand)
             },
             list: { params in
-                let query = params.toFormBody()
-                let path = query.isEmpty ? "/v1/treasury/received_debits" : "/v1/treasury/received_debits?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ReceivedDebitList
+                try await handler.send(.GET, "/v1/treasury/received_debits", params: params)
             }
         )
     }

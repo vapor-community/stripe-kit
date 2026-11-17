@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - PaymentLink Routes
@@ -35,45 +34,19 @@ extension PaymentLinkRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         PaymentLinkRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_links",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentLink
+                try await handler.send(.POST, "/v1/payment_links", params: params)
             },
             retrieve: { paymentLink, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/payment_links/\(paymentLink)" : "/v1/payment_links/\(paymentLink)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentLink
+                try await handler.send(.GET, "/v1/payment_links/\(paymentLink)", expand: expand)
             },
             update: { paymentLink, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/payment_links/\(paymentLink)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as PaymentLink
+                try await handler.send(.POST, "/v1/payment_links/\(paymentLink)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payment_links" : "/v1/payment_links?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as PaymentLinkList
+                try await handler.send(.GET, "/v1/payment_links", params: params)
             },
             listLineItems: { paymentLink, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/payment_links/\(paymentLink)/line_items" : "/v1/payment_links/\(paymentLink)/line_items?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ItemList
+                try await handler.send(.GET, "/v1/payment_links/\(paymentLink)/line_items", params: params)
             }
         )
     }

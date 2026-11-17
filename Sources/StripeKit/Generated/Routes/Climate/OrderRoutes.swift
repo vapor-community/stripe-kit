@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Order Routes
@@ -38,45 +37,19 @@ extension OrderRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         OrderRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/climate/orders",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Order
+                try await handler.send(.POST, "/v1/climate/orders", params: params)
             },
             retrieve: { order, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/climate/orders/\(order)" : "/v1/climate/orders/\(order)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Order
+                try await handler.send(.GET, "/v1/climate/orders/\(order)", expand: expand)
             },
             update: { order, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/climate/orders/\(order)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Order
+                try await handler.send(.POST, "/v1/climate/orders/\(order)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/climate/orders" : "/v1/climate/orders?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as OrderList
+                try await handler.send(.GET, "/v1/climate/orders", params: params)
             },
             cancel: { order, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/climate/orders/\(order)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Order
+                try await handler.send(.POST, "/v1/climate/orders/\(order)/cancel", params: params)
             }
         )
     }

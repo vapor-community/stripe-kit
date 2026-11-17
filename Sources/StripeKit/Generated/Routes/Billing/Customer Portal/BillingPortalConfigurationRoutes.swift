@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - BillingPortalConfiguration Routes
@@ -30,37 +29,16 @@ extension BillingPortalConfigurationRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         BillingPortalConfigurationRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing_portal/configurations",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as BillingPortalConfiguration
+                try await handler.send(.POST, "/v1/billing_portal/configurations", params: params)
             },
             retrieve: { configuration, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/billing_portal/configurations/\(configuration)" : "/v1/billing_portal/configurations/\(configuration)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as BillingPortalConfiguration
+                try await handler.send(.GET, "/v1/billing_portal/configurations/\(configuration)", expand: expand)
             },
             update: { configuration, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/billing_portal/configurations/\(configuration)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as BillingPortalConfiguration
+                try await handler.send(.POST, "/v1/billing_portal/configurations/\(configuration)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/billing_portal/configurations" : "/v1/billing_portal/configurations?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as BillingPortalConfigurationList
+                try await handler.send(.GET, "/v1/billing_portal/configurations", params: params)
             }
         )
     }

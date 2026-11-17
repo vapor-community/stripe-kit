@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Transfer Routes
@@ -36,37 +35,16 @@ extension TransferRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         TransferRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/transfers",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Transfer
+                try await handler.send(.POST, "/v1/transfers", params: params)
             },
             retrieve: { transfer, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/transfers/\(transfer)" : "/v1/transfers/\(transfer)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Transfer
+                try await handler.send(.GET, "/v1/transfers/\(transfer)", expand: expand)
             },
             update: { transfer, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/transfers/\(transfer)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Transfer
+                try await handler.send(.POST, "/v1/transfers/\(transfer)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/transfers" : "/v1/transfers?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as TransferList
+                try await handler.send(.GET, "/v1/transfers", params: params)
             }
         )
     }

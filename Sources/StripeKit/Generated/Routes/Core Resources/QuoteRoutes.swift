@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Quote Routes
@@ -52,87 +51,34 @@ extension QuoteRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         QuoteRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/quotes",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Quote
+                try await handler.send(.POST, "/v1/quotes", params: params)
             },
             retrieve: { quote, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/quotes/\(quote)" : "/v1/quotes/\(quote)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Quote
+                try await handler.send(.GET, "/v1/quotes/\(quote)", expand: expand)
             },
             update: { quote, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/quotes/\(quote)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Quote
+                try await handler.send(.POST, "/v1/quotes/\(quote)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/quotes" : "/v1/quotes?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as QuoteList
+                try await handler.send(.GET, "/v1/quotes", params: params)
             },
             accept: { quote, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/quotes/\(quote)/accept",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Quote
+                try await handler.send(.POST, "/v1/quotes/\(quote)/accept", params: params)
             },
             cancel: { quote, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/quotes/\(quote)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Quote
+                try await handler.send(.POST, "/v1/quotes/\(quote)/cancel", params: params)
             },
             finalizeQuote: { quote, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/quotes/\(quote)/finalize",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Quote
+                try await handler.send(.POST, "/v1/quotes/\(quote)/finalize", params: params)
             },
             listComputedUpfrontLineItems: { quote, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/quotes/\(quote)/computed_upfront_line_items" : "/v1/quotes/\(quote)/computed_upfront_line_items?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ItemList
+                try await handler.send(.GET, "/v1/quotes/\(quote)/computed_upfront_line_items", params: params)
             },
             listLineItems: { quote, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/quotes/\(quote)/line_items" : "/v1/quotes/\(quote)/line_items?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ItemList
+                try await handler.send(.GET, "/v1/quotes/\(quote)/line_items", params: params)
             },
             pdf: { quote, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/quotes/\(quote)/pdf" : "/v1/quotes/\(quote)/pdf?\(query)"
-                return try await handler.sendForData(
-                    method: .GET,
-                    path: path,
-                    baseURL: "https://files.stripe.com"
-                )
+                try await handler.sendForData(.GET, "/v1/quotes/\(quote)/pdf", expand: expand, baseURL: "https://files.stripe.com")
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ScheduledQueryRun Routes
@@ -24,21 +23,10 @@ extension ScheduledQueryRunRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ScheduledQueryRunRoutes(
             retrieve: { scheduledQueryRun, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/sigma/scheduled_query_runs/\(scheduledQueryRun)" : "/v1/sigma/scheduled_query_runs/\(scheduledQueryRun)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ScheduledQueryRun
+                try await handler.send(.GET, "/v1/sigma/scheduled_query_runs/\(scheduledQueryRun)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/sigma/scheduled_query_runs" : "/v1/sigma/scheduled_query_runs?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ScheduledQueryRunList
+                try await handler.send(.GET, "/v1/sigma/scheduled_query_runs", params: params)
             }
         )
     }

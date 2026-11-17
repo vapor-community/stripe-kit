@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - InvoiceRenderingTemplate Routes
@@ -35,36 +34,16 @@ extension InvoiceRenderingTemplateRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         InvoiceRenderingTemplateRoutes(
             retrieve: { template, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/invoice_rendering_templates/\(template)" : "/v1/invoice_rendering_templates/\(template)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as InvoiceRenderingTemplate
+                try await handler.send(.GET, "/v1/invoice_rendering_templates/\(template)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/invoice_rendering_templates" : "/v1/invoice_rendering_templates?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as InvoiceRenderingTemplateList
+                try await handler.send(.GET, "/v1/invoice_rendering_templates", params: params)
             },
             archive: { template, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoice_rendering_templates/\(template)/archive",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as InvoiceRenderingTemplate
+                try await handler.send(.POST, "/v1/invoice_rendering_templates/\(template)/archive", params: params)
             },
             unarchive: { template, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/invoice_rendering_templates/\(template)/unarchive",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as InvoiceRenderingTemplate
+                try await handler.send(.POST, "/v1/invoice_rendering_templates/\(template)/unarchive", params: params)
             }
         )
     }

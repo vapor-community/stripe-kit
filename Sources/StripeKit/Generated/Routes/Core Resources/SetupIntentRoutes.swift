@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - SetupIntent Routes
@@ -52,60 +51,25 @@ extension SetupIntentRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         SetupIntentRoutes(
             create: { params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/setup_intents",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SetupIntent
+                try await handler.send(.POST, "/v1/setup_intents", params: params)
             },
             retrieve: { intent, params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/setup_intents/\(intent)" : "/v1/setup_intents/\(intent)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SetupIntent
+                try await handler.send(.GET, "/v1/setup_intents/\(intent)", params: params)
             },
             update: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/setup_intents/\(intent)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SetupIntent
+                try await handler.send(.POST, "/v1/setup_intents/\(intent)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/setup_intents" : "/v1/setup_intents?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as SetupIntentList
+                try await handler.send(.GET, "/v1/setup_intents", params: params)
             },
             cancel: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/setup_intents/\(intent)/cancel",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SetupIntent
+                try await handler.send(.POST, "/v1/setup_intents/\(intent)/cancel", params: params)
             },
             confirm: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/setup_intents/\(intent)/confirm",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SetupIntent
+                try await handler.send(.POST, "/v1/setup_intents/\(intent)/confirm", params: params)
             },
             verifyMicrodeposits: { intent, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/setup_intents/\(intent)/verify_microdeposits",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as SetupIntent
+                try await handler.send(.POST, "/v1/setup_intents/\(intent)/verify_microdeposits", params: params)
             }
         )
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - Feature Routes
@@ -30,37 +29,16 @@ extension FeatureRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         FeatureRoutes(
             create: { params in
-                let body = params.toFormBody()
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/entitlements/features",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Feature
+                try await handler.send(.POST, "/v1/entitlements/features", params: params)
             },
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/entitlements/features/\(id)" : "/v1/entitlements/features/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as Feature
+                try await handler.send(.GET, "/v1/entitlements/features/\(id)", expand: expand)
             },
             update: { id, params in
-                let body = params?.toFormBody() ?? ""
-                return try await handler.send(
-                    method: .POST,
-                    path: "/v1/entitlements/features/\(id)",
-                    body: .bytes(ByteBuffer(string: body))
-                ) as Feature
+                try await handler.send(.POST, "/v1/entitlements/features/\(id)", params: params)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/entitlements/features" : "/v1/entitlements/features?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as FeatureList
+                try await handler.send(.GET, "/v1/entitlements/features", params: params)
             }
         )
     }

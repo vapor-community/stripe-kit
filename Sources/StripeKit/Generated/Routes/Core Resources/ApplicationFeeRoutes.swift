@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NIO
 import NIOHTTP1
 
 // MARK: - ApplicationFee Routes
@@ -26,21 +25,10 @@ extension ApplicationFeeRoutes {
     static func live(handler: StripeAPIHandler) -> Self {
         ApplicationFeeRoutes(
             retrieve: { id, expand in
-                var query = ""
-                if let expand { query = expand.map { "expand[]=\($0)" }.joined(separator: "&") }
-                let path = query.isEmpty ? "/v1/application_fees/\(id)" : "/v1/application_fees/\(id)?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ApplicationFee
+                try await handler.send(.GET, "/v1/application_fees/\(id)", expand: expand)
             },
             list: { params in
-                let query = params?.toFormBody() ?? ""
-                let path = query.isEmpty ? "/v1/application_fees" : "/v1/application_fees?\(query)"
-                return try await handler.send(
-                    method: .GET,
-                    path: path
-                ) as ApplicationFeeList
+                try await handler.send(.GET, "/v1/application_fees", params: params)
             }
         )
     }
