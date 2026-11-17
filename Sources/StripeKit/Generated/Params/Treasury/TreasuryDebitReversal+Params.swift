@@ -47,7 +47,7 @@ public struct TreasuryDebitReversalListParams: StripeParams {
     /// Only return DebitReversals for the ReceivedDebit ID.
     public var receivedDebit: String?
     /// Only return DebitReversals for a given resolution.
-    public var resolution: TreasuryDebitReversalListResolution?
+    public var resolution: TreasuryDebitReversalResolution?
     /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
@@ -55,7 +55,7 @@ public struct TreasuryDebitReversalListParams: StripeParams {
     /// Only return DebitReversals for a given status.
     public var status: TreasuryDebitReversalListStatus?
 
-    public init(financialAccount: String, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, receivedDebit: String? = nil, resolution: TreasuryDebitReversalListResolution? = nil, startingAfter: String? = nil, status: TreasuryDebitReversalListStatus? = nil) {
+    public init(financialAccount: String, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, receivedDebit: String? = nil, resolution: TreasuryDebitReversalResolution? = nil, startingAfter: String? = nil, status: TreasuryDebitReversalListStatus? = nil) {
         self.financialAccount = financialAccount
         self.endingBefore = endingBefore
         self.expand = expand
@@ -78,7 +78,7 @@ public struct TreasuryDebitReversalListParams: StripeParams {
     }
 }
 
-public struct TreasuryDebitReversalListResolution: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryDebitReversalResolution: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

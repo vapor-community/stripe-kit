@@ -9,7 +9,7 @@ import Foundation
 
 public struct IssuingCardholderCreateParams: StripeParams {
     /// The cardholder's billing address.
-    public var billing: IssuingCardholderCreateBilling
+    public var billing: IssuingCardholderBilling
     /// The cardholder's name. This will be printed on cards issued to them. The maximum length of this
     /// field is 24 characters. This field cannot contain any special characters or numbers.
     public var name: String
@@ -36,17 +36,17 @@ public struct IssuingCardholderCreateParams: StripeParams {
     /// `es`, `fr`, or `it`. This changes the language of the [3D Secure
     /// flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the
     /// cardholder.
-    public var preferredLocales: [IssuingCardholderCreatePreferredLocales]?
+    public var preferredLocales: [IssuingCardholderPreferredLocales]?
     /// Rules that control spending across this cardholder's cards. Refer to our
     /// [documentation](https://docs.stripe.com/issuing/controls/spending-controls) for more details.
-    public var spendingControls: IssuingCardholderCreateSpendingControls?
+    public var spendingControls: IssuingCardholderSpendingControls?
     /// Specifies whether to permit authorizations on this cardholder's cards. Defaults to `active`.
     public var status: IssuingCardholderCreateStatus?
     /// One of `individual` or `company`. See [Choose a cardholder
     /// type](https://docs.stripe.com/issuing/other/choose-cardholder) for more details.
     public var type: IssuingCardholderCreateType?
 
-    public init(billing: IssuingCardholderCreateBilling, name: String, company: IssuingCardholderCreateCompany? = nil, email: String? = nil, expand: [String]? = nil, individual: IssuingCardholderCreateIndividual? = nil, metadata: [String: String]? = nil, phoneNumber: String? = nil, preferredLocales: [IssuingCardholderCreatePreferredLocales]? = nil, spendingControls: IssuingCardholderCreateSpendingControls? = nil, status: IssuingCardholderCreateStatus? = nil, type: IssuingCardholderCreateType? = nil) {
+    public init(billing: IssuingCardholderBilling, name: String, company: IssuingCardholderCreateCompany? = nil, email: String? = nil, expand: [String]? = nil, individual: IssuingCardholderCreateIndividual? = nil, metadata: [String: String]? = nil, phoneNumber: String? = nil, preferredLocales: [IssuingCardholderPreferredLocales]? = nil, spendingControls: IssuingCardholderSpendingControls? = nil, status: IssuingCardholderCreateStatus? = nil, type: IssuingCardholderCreateType? = nil) {
         self.billing = billing
         self.name = name
         self.company = company
@@ -130,7 +130,7 @@ public struct IssuingCardholderListParams: StripeParams {
 
 public struct IssuingCardholderUpdateParams: StripeParams {
     /// The cardholder's billing address.
-    public var billing: IssuingCardholderUpdateBilling?
+    public var billing: IssuingCardholderBilling?
     /// Additional information about a `company` cardholder.
     public var company: IssuingCardholderUpdateCompany?
     /// The cardholder's email address.
@@ -151,14 +151,14 @@ public struct IssuingCardholderUpdateParams: StripeParams {
     /// `es`, `fr`, or `it`. This changes the language of the [3D Secure
     /// flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the
     /// cardholder.
-    public var preferredLocales: [IssuingCardholderUpdatePreferredLocales]?
+    public var preferredLocales: [IssuingCardholderPreferredLocales]?
     /// Rules that control spending across this cardholder's cards. Refer to our
     /// [documentation](https://docs.stripe.com/issuing/controls/spending-controls) for more details.
-    public var spendingControls: IssuingCardholderUpdateSpendingControls?
+    public var spendingControls: IssuingCardholderSpendingControls?
     /// Specifies whether to permit authorizations on this cardholder's cards.
     public var status: IssuingCardholderUpdateStatus?
 
-    public init(billing: IssuingCardholderUpdateBilling? = nil, company: IssuingCardholderUpdateCompany? = nil, email: String? = nil, expand: [String]? = nil, individual: IssuingCardholderUpdateIndividual? = nil, metadata: [String: String]? = nil, phoneNumber: String? = nil, preferredLocales: [IssuingCardholderUpdatePreferredLocales]? = nil, spendingControls: IssuingCardholderUpdateSpendingControls? = nil, status: IssuingCardholderUpdateStatus? = nil) {
+    public init(billing: IssuingCardholderBilling? = nil, company: IssuingCardholderUpdateCompany? = nil, email: String? = nil, expand: [String]? = nil, individual: IssuingCardholderUpdateIndividual? = nil, metadata: [String: String]? = nil, phoneNumber: String? = nil, preferredLocales: [IssuingCardholderPreferredLocales]? = nil, spendingControls: IssuingCardholderSpendingControls? = nil, status: IssuingCardholderUpdateStatus? = nil) {
         self.billing = billing
         self.company = company
         self.email = email
@@ -186,17 +186,17 @@ public struct IssuingCardholderUpdateParams: StripeParams {
 }
 
 /// The cardholder's billing address.
-public struct IssuingCardholderCreateBilling: StripeParams {
+public struct IssuingCardholderBilling: StripeParams {
     /// The cardholder’s billing address.
-    public var address: IssuingCardholderCreateBillingAddress
+    public var address: IssuingCardholderBillingAddress
 
-    public init(address: IssuingCardholderCreateBillingAddress) {
+    public init(address: IssuingCardholderBillingAddress) {
         self.address = address
     }
 }
 
 /// The cardholder’s billing address.
-public struct IssuingCardholderCreateBillingAddress: StripeParams {
+public struct IssuingCardholderBillingAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -246,7 +246,7 @@ public struct IssuingCardholderCreateCompany: StripeParams {
 /// Additional information about an `individual` cardholder.
 public struct IssuingCardholderCreateIndividual: StripeParams {
     /// Information related to the card_issuing program for this cardholder.
-    public var cardIssuing: IssuingCardholderCreateIndividualCardIssuing?
+    public var cardIssuing: IssuingCardholderIndividualCardIssuing?
     /// The date of birth of this cardholder. Cardholders must be older than 13 years old.
     public var dob: IssuingCardholderCreateIndividualDob?
     /// The first name of this cardholder. Required before activating Cards. This field cannot contain any
@@ -258,9 +258,9 @@ public struct IssuingCardholderCreateIndividual: StripeParams {
     /// letters.
     public var lastName: String?
     /// Government-issued ID document for this cardholder.
-    public var verification: IssuingCardholderCreateIndividualVerification?
+    public var verification: IssuingCardholderIndividualVerification?
 
-    public init(cardIssuing: IssuingCardholderCreateIndividualCardIssuing? = nil, dob: IssuingCardholderCreateIndividualDob? = nil, firstName: String? = nil, lastName: String? = nil, verification: IssuingCardholderCreateIndividualVerification? = nil) {
+    public init(cardIssuing: IssuingCardholderIndividualCardIssuing? = nil, dob: IssuingCardholderCreateIndividualDob? = nil, firstName: String? = nil, lastName: String? = nil, verification: IssuingCardholderIndividualVerification? = nil) {
         self.cardIssuing = cardIssuing
         self.dob = dob
         self.firstName = firstName
@@ -278,13 +278,13 @@ public struct IssuingCardholderCreateIndividual: StripeParams {
 }
 
 /// Information related to the card_issuing program for this cardholder.
-public struct IssuingCardholderCreateIndividualCardIssuing: StripeParams {
+public struct IssuingCardholderIndividualCardIssuing: StripeParams {
     /// Information about cardholder acceptance of Celtic [Authorized User
     /// Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a
     /// Celtic program.
-    public var userTermsAcceptance: IssuingCardholderCreateIndividualCardIssuingUserTermsAcceptance?
+    public var userTermsAcceptance: IssuingCardholderIndividualCardIssuingUserTermsAcceptance?
 
-    public init(userTermsAcceptance: IssuingCardholderCreateIndividualCardIssuingUserTermsAcceptance? = nil) {
+    public init(userTermsAcceptance: IssuingCardholderIndividualCardIssuingUserTermsAcceptance? = nil) {
         self.userTermsAcceptance = userTermsAcceptance
     }
 
@@ -296,7 +296,7 @@ public struct IssuingCardholderCreateIndividualCardIssuing: StripeParams {
 /// Information about cardholder acceptance of Celtic [Authorized User
 /// Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a
 /// Celtic program.
-public struct IssuingCardholderCreateIndividualCardIssuingUserTermsAcceptance: ClearableParams {
+public struct IssuingCardholderIndividualCardIssuingUserTermsAcceptance: ClearableParams {
     /// The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
     public var date: Date?
     /// The IP address from which the cardholder accepted the Authorized User Terms.
@@ -342,17 +342,17 @@ public struct IssuingCardholderCreateIndividualDob: StripeParams {
 }
 
 /// Government-issued ID document for this cardholder.
-public struct IssuingCardholderCreateIndividualVerification: StripeParams {
+public struct IssuingCardholderIndividualVerification: StripeParams {
     /// An identifying document, either a passport or local ID card.
-    public var document: IssuingCardholderCreateIndividualVerificationDocument?
+    public var document: IssuingCardholderIndividualVerificationDocument?
 
-    public init(document: IssuingCardholderCreateIndividualVerificationDocument? = nil) {
+    public init(document: IssuingCardholderIndividualVerificationDocument? = nil) {
         self.document = document
     }
 }
 
 /// An identifying document, either a passport or local ID card.
-public struct IssuingCardholderCreateIndividualVerificationDocument: StripeParams {
+public struct IssuingCardholderIndividualVerificationDocument: StripeParams {
     /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `identity_document`.
     public var back: String?
@@ -366,7 +366,7 @@ public struct IssuingCardholderCreateIndividualVerificationDocument: StripeParam
     }
 }
 
-public struct IssuingCardholderCreatePreferredLocales: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingCardholderPreferredLocales: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -382,16 +382,16 @@ public struct IssuingCardholderCreatePreferredLocales: RawRepresentable, Codable
 
 /// Rules that control spending across this cardholder's cards. Refer to our
 /// [documentation](https://docs.stripe.com/issuing/controls/spending-controls) for more details.
-public struct IssuingCardholderCreateSpendingControls: StripeParams {
+public struct IssuingCardholderSpendingControls: StripeParams {
     /// Array of card presence statuses from which authorizations will be allowed. Possible options are
     /// `present`, `not_present`. All other statuses will be blocked. Cannot be set with
     /// `blocked_card_presences`. Provide an empty value to unset this control.
-    public var allowedCardPresences: [IssuingCardholderCreateSpendingControlsAllowedCardPresences]?
+    public var allowedCardPresences: [IssuingCardholderSpendingControlsAllowedCardPresences]?
     /// Array of strings containing
     /// [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of
     /// authorizations to allow. All other categories will be blocked. Cannot be set with
     /// `blocked_categories`.
-    public var allowedCategories: [IssuingCardholderCreateSpendingControlsAllowedCategories]?
+    public var allowedCategories: [IssuingCardholderSpendingControlsAllowedCategories]?
     /// Array of strings containing representing countries from which authorizations will be allowed.
     /// Authorizations from merchants in all other countries will be declined. Country codes should be ISO
     /// 3166 alpha-2 country codes (e.g. `US`). Cannot be set with `blocked_merchant_countries`. Provide an
@@ -400,22 +400,22 @@ public struct IssuingCardholderCreateSpendingControls: StripeParams {
     /// Array of card presence statuses from which authorizations will be declined. Possible options are
     /// `present`, `not_present`. Cannot be set with `allowed_card_presences`. Provide an empty value to
     /// unset this control.
-    public var blockedCardPresences: [IssuingCardholderCreateSpendingControlsBlockedCardPresences]?
+    public var blockedCardPresences: [IssuingCardholderSpendingControlsBlockedCardPresences]?
     /// Array of strings containing
     /// [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of
     /// authorizations to decline. All other categories will be allowed. Cannot be set with
     /// `allowed_categories`.
-    public var blockedCategories: [IssuingCardholderCreateSpendingControlsBlockedCategories]?
+    public var blockedCategories: [IssuingCardholderSpendingControlsBlockedCategories]?
     /// Array of strings containing representing countries from which authorizations will be declined.
     /// Country codes should be ISO 3166 alpha-2 country codes (e.g. `US`). Cannot be set with
     /// `allowed_merchant_countries`. Provide an empty value to unset this control.
     public var blockedMerchantCountries: [String]?
     /// Limit spending with amount-based rules that apply across this cardholder's cards.
-    public var spendingLimits: [IssuingCardholderCreateSpendingControlsSpendingLimits]?
+    public var spendingLimits: [IssuingCardholderSpendingControlsSpendingLimits]?
     /// Currency of amounts within `spending_limits`. Defaults to your merchant country's currency.
     public var spendingLimitsCurrency: String?
 
-    public init(allowedCardPresences: [IssuingCardholderCreateSpendingControlsAllowedCardPresences]? = nil, allowedCategories: [IssuingCardholderCreateSpendingControlsAllowedCategories]? = nil, allowedMerchantCountries: [String]? = nil, blockedCardPresences: [IssuingCardholderCreateSpendingControlsBlockedCardPresences]? = nil, blockedCategories: [IssuingCardholderCreateSpendingControlsBlockedCategories]? = nil, blockedMerchantCountries: [String]? = nil, spendingLimits: [IssuingCardholderCreateSpendingControlsSpendingLimits]? = nil, spendingLimitsCurrency: String? = nil) {
+    public init(allowedCardPresences: [IssuingCardholderSpendingControlsAllowedCardPresences]? = nil, allowedCategories: [IssuingCardholderSpendingControlsAllowedCategories]? = nil, allowedMerchantCountries: [String]? = nil, blockedCardPresences: [IssuingCardholderSpendingControlsBlockedCardPresences]? = nil, blockedCategories: [IssuingCardholderSpendingControlsBlockedCategories]? = nil, blockedMerchantCountries: [String]? = nil, spendingLimits: [IssuingCardholderSpendingControlsSpendingLimits]? = nil, spendingLimitsCurrency: String? = nil) {
         self.allowedCardPresences = allowedCardPresences
         self.allowedCategories = allowedCategories
         self.allowedMerchantCountries = allowedMerchantCountries
@@ -438,7 +438,7 @@ public struct IssuingCardholderCreateSpendingControls: StripeParams {
     }
 }
 
-public struct IssuingCardholderCreateSpendingControlsAllowedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingCardholderSpendingControlsAllowedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -449,7 +449,7 @@ public struct IssuingCardholderCreateSpendingControlsAllowedCardPresences: RawRe
     public static var present: Self { .init(rawValue: "present") }
 }
 
-public struct IssuingCardholderCreateSpendingControlsAllowedCategories: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingCardholderSpendingControlsAllowedCategories: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -753,7 +753,7 @@ public struct IssuingCardholderCreateSpendingControlsAllowedCategories: RawRepre
     public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
-public struct IssuingCardholderCreateSpendingControlsBlockedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingCardholderSpendingControlsBlockedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -764,7 +764,7 @@ public struct IssuingCardholderCreateSpendingControlsBlockedCardPresences: RawRe
     public static var present: Self { .init(rawValue: "present") }
 }
 
-public struct IssuingCardholderCreateSpendingControlsBlockedCategories: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingCardholderSpendingControlsBlockedCategories: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1068,24 +1068,24 @@ public struct IssuingCardholderCreateSpendingControlsBlockedCategories: RawRepre
     public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
-public struct IssuingCardholderCreateSpendingControlsSpendingLimits: StripeParams {
+public struct IssuingCardholderSpendingControlsSpendingLimits: StripeParams {
     /// Maximum amount allowed to spend per interval.
     public var amount: Int
     /// Interval (or event) to which the amount applies.
-    public var interval: IssuingCardholderCreateSpendingControlsSpendingLimitsInterval
+    public var interval: IssuingCardholderSpendingControlsSpendingLimitsInterval
     /// Array of strings containing
     /// [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) this
     /// limit applies to. Omitting this field will apply the limit to all categories.
-    public var categories: [IssuingCardholderCreateSpendingControlsSpendingLimitsCategories]?
+    public var categories: [IssuingCardholderSpendingControlsSpendingLimitsCategories]?
 
-    public init(amount: Int, interval: IssuingCardholderCreateSpendingControlsSpendingLimitsInterval, categories: [IssuingCardholderCreateSpendingControlsSpendingLimitsCategories]? = nil) {
+    public init(amount: Int, interval: IssuingCardholderSpendingControlsSpendingLimitsInterval, categories: [IssuingCardholderSpendingControlsSpendingLimitsCategories]? = nil) {
         self.amount = amount
         self.interval = interval
         self.categories = categories
     }
 }
 
-public struct IssuingCardholderCreateSpendingControlsSpendingLimitsInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingCardholderSpendingControlsSpendingLimitsInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1100,7 +1100,7 @@ public struct IssuingCardholderCreateSpendingControlsSpendingLimitsInterval: Raw
     public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
-public struct IssuingCardholderCreateSpendingControlsSpendingLimitsCategories: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingCardholderSpendingControlsSpendingLimitsCategories: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1449,50 +1449,6 @@ public struct IssuingCardholderListType: RawRepresentable, Codable, Hashable, Se
     public static var individual: Self { .init(rawValue: "individual") }
 }
 
-/// The cardholder's billing address.
-public struct IssuingCardholderUpdateBilling: StripeParams {
-    /// The cardholder’s billing address.
-    public var address: IssuingCardholderUpdateBillingAddress
-
-    public init(address: IssuingCardholderUpdateBillingAddress) {
-        self.address = address
-    }
-}
-
-/// The cardholder’s billing address.
-public struct IssuingCardholderUpdateBillingAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String
-    /// ZIP or postal code.
-    public var postalCode: String
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String, country: String, line1: String, postalCode: String, line2: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.postalCode = postalCode
-        self.line2 = line2
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
 /// Additional information about a `company` cardholder.
 public struct IssuingCardholderUpdateCompany: StripeParams {
     /// The entity's business ID number.
@@ -1510,7 +1466,7 @@ public struct IssuingCardholderUpdateCompany: StripeParams {
 /// Additional information about an `individual` cardholder.
 public struct IssuingCardholderUpdateIndividual: StripeParams {
     /// Information related to the card_issuing program for this cardholder.
-    public var cardIssuing: IssuingCardholderUpdateIndividualCardIssuing?
+    public var cardIssuing: IssuingCardholderIndividualCardIssuing?
     /// The date of birth of this cardholder. Cardholders must be older than 13 years old.
     public var dob: IssuingCardholderUpdateIndividualDob?
     /// The first name of this cardholder. Required before activating Cards. This field cannot contain any
@@ -1522,9 +1478,9 @@ public struct IssuingCardholderUpdateIndividual: StripeParams {
     /// letters.
     public var lastName: String?
     /// Government-issued ID document for this cardholder.
-    public var verification: IssuingCardholderUpdateIndividualVerification?
+    public var verification: IssuingCardholderIndividualVerification?
 
-    public init(cardIssuing: IssuingCardholderUpdateIndividualCardIssuing? = nil, dob: IssuingCardholderUpdateIndividualDob? = nil, firstName: String? = nil, lastName: String? = nil, verification: IssuingCardholderUpdateIndividualVerification? = nil) {
+    public init(cardIssuing: IssuingCardholderIndividualCardIssuing? = nil, dob: IssuingCardholderUpdateIndividualDob? = nil, firstName: String? = nil, lastName: String? = nil, verification: IssuingCardholderIndividualVerification? = nil) {
         self.cardIssuing = cardIssuing
         self.dob = dob
         self.firstName = firstName
@@ -1538,54 +1494,6 @@ public struct IssuingCardholderUpdateIndividual: StripeParams {
         case firstName = "first_name"
         case lastName = "last_name"
         case verification
-    }
-}
-
-/// Information related to the card_issuing program for this cardholder.
-public struct IssuingCardholderUpdateIndividualCardIssuing: StripeParams {
-    /// Information about cardholder acceptance of Celtic [Authorized User
-    /// Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a
-    /// Celtic program.
-    public var userTermsAcceptance: IssuingCardholderUpdateIndividualCardIssuingUserTermsAcceptance?
-
-    public init(userTermsAcceptance: IssuingCardholderUpdateIndividualCardIssuingUserTermsAcceptance? = nil) {
-        self.userTermsAcceptance = userTermsAcceptance
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case userTermsAcceptance = "user_terms_acceptance"
-    }
-}
-
-/// Information about cardholder acceptance of Celtic [Authorized User
-/// Terms](https://docs.stripe.com/issuing/compliance-us#issuing-terms). Required for cards backed by a
-/// Celtic program.
-public struct IssuingCardholderUpdateIndividualCardIssuingUserTermsAcceptance: ClearableParams {
-    /// The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
-    public var date: Date?
-    /// The IP address from which the cardholder accepted the Authorized User Terms.
-    public var ip: String?
-    /// The user agent of the browser from which the cardholder accepted the Authorized User Terms.
-    public var userAgent: String?
-    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
-        self.date = date
-        self.ip = ip
-        self.userAgent = userAgent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case date
-        case ip
-        case userAgent = "user_agent"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case userAgent = "user_agent"
     }
 }
 
@@ -1603,1069 +1511,6 @@ public struct IssuingCardholderUpdateIndividualDob: StripeParams {
         self.month = month
         self.year = year
     }
-}
-
-/// Government-issued ID document for this cardholder.
-public struct IssuingCardholderUpdateIndividualVerification: StripeParams {
-    /// An identifying document, either a passport or local ID card.
-    public var document: IssuingCardholderUpdateIndividualVerificationDocument?
-
-    public init(document: IssuingCardholderUpdateIndividualVerificationDocument? = nil) {
-        self.document = document
-    }
-}
-
-/// An identifying document, either a passport or local ID card.
-public struct IssuingCardholderUpdateIndividualVerificationDocument: StripeParams {
-    /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`.
-    public var back: String?
-    /// The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`.
-    public var front: String?
-
-    public init(back: String? = nil, front: String? = nil) {
-        self.back = back
-        self.front = front
-    }
-}
-
-public struct IssuingCardholderUpdatePreferredLocales: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var de: Self { .init(rawValue: "de") }
-    public static var en: Self { .init(rawValue: "en") }
-    public static var es: Self { .init(rawValue: "es") }
-    public static var fr: Self { .init(rawValue: "fr") }
-    public static var it: Self { .init(rawValue: "it") }
-}
-
-/// Rules that control spending across this cardholder's cards. Refer to our
-/// [documentation](https://docs.stripe.com/issuing/controls/spending-controls) for more details.
-public struct IssuingCardholderUpdateSpendingControls: StripeParams {
-    /// Array of card presence statuses from which authorizations will be allowed. Possible options are
-    /// `present`, `not_present`. All other statuses will be blocked. Cannot be set with
-    /// `blocked_card_presences`. Provide an empty value to unset this control.
-    public var allowedCardPresences: [IssuingCardholderUpdateSpendingControlsAllowedCardPresences]?
-    /// Array of strings containing
-    /// [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of
-    /// authorizations to allow. All other categories will be blocked. Cannot be set with
-    /// `blocked_categories`.
-    public var allowedCategories: [IssuingCardholderUpdateSpendingControlsAllowedCategories]?
-    /// Array of strings containing representing countries from which authorizations will be allowed.
-    /// Authorizations from merchants in all other countries will be declined. Country codes should be ISO
-    /// 3166 alpha-2 country codes (e.g. `US`). Cannot be set with `blocked_merchant_countries`. Provide an
-    /// empty value to unset this control.
-    public var allowedMerchantCountries: [String]?
-    /// Array of card presence statuses from which authorizations will be declined. Possible options are
-    /// `present`, `not_present`. Cannot be set with `allowed_card_presences`. Provide an empty value to
-    /// unset this control.
-    public var blockedCardPresences: [IssuingCardholderUpdateSpendingControlsBlockedCardPresences]?
-    /// Array of strings containing
-    /// [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of
-    /// authorizations to decline. All other categories will be allowed. Cannot be set with
-    /// `allowed_categories`.
-    public var blockedCategories: [IssuingCardholderUpdateSpendingControlsBlockedCategories]?
-    /// Array of strings containing representing countries from which authorizations will be declined.
-    /// Country codes should be ISO 3166 alpha-2 country codes (e.g. `US`). Cannot be set with
-    /// `allowed_merchant_countries`. Provide an empty value to unset this control.
-    public var blockedMerchantCountries: [String]?
-    /// Limit spending with amount-based rules that apply across this cardholder's cards.
-    public var spendingLimits: [IssuingCardholderUpdateSpendingControlsSpendingLimits]?
-    /// Currency of amounts within `spending_limits`. Defaults to your merchant country's currency.
-    public var spendingLimitsCurrency: String?
-
-    public init(allowedCardPresences: [IssuingCardholderUpdateSpendingControlsAllowedCardPresences]? = nil, allowedCategories: [IssuingCardholderUpdateSpendingControlsAllowedCategories]? = nil, allowedMerchantCountries: [String]? = nil, blockedCardPresences: [IssuingCardholderUpdateSpendingControlsBlockedCardPresences]? = nil, blockedCategories: [IssuingCardholderUpdateSpendingControlsBlockedCategories]? = nil, blockedMerchantCountries: [String]? = nil, spendingLimits: [IssuingCardholderUpdateSpendingControlsSpendingLimits]? = nil, spendingLimitsCurrency: String? = nil) {
-        self.allowedCardPresences = allowedCardPresences
-        self.allowedCategories = allowedCategories
-        self.allowedMerchantCountries = allowedMerchantCountries
-        self.blockedCardPresences = blockedCardPresences
-        self.blockedCategories = blockedCategories
-        self.blockedMerchantCountries = blockedMerchantCountries
-        self.spendingLimits = spendingLimits
-        self.spendingLimitsCurrency = spendingLimitsCurrency
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case allowedCardPresences = "allowed_card_presences"
-        case allowedCategories = "allowed_categories"
-        case allowedMerchantCountries = "allowed_merchant_countries"
-        case blockedCardPresences = "blocked_card_presences"
-        case blockedCategories = "blocked_categories"
-        case blockedMerchantCountries = "blocked_merchant_countries"
-        case spendingLimits = "spending_limits"
-        case spendingLimitsCurrency = "spending_limits_currency"
-    }
-}
-
-public struct IssuingCardholderUpdateSpendingControlsAllowedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var notPresent: Self { .init(rawValue: "not_present") }
-    public static var present: Self { .init(rawValue: "present") }
-}
-
-public struct IssuingCardholderUpdateSpendingControlsAllowedCategories: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
-    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
-    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
-    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
-    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
-    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
-    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
-    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
-    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
-    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
-    public static var aquariums: Self { .init(rawValue: "aquariums") }
-    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
-    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
-    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
-    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
-    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
-    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
-    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
-    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
-    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
-    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
-    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
-    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
-    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
-    public static var bakeries: Self { .init(rawValue: "bakeries") }
-    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
-    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
-    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
-    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
-    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
-    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
-    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
-    public static var bookStores: Self { .init(rawValue: "book_stores") }
-    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
-    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
-    public static var busLines: Self { .init(rawValue: "bus_lines") }
-    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
-    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
-    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
-    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
-    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
-    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
-    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
-    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
-    public static var carWashes: Self { .init(rawValue: "car_washes") }
-    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
-    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
-    public static var caterers: Self { .init(rawValue: "caterers") }
-    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
-    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
-    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
-    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
-    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
-    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
-    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
-    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
-    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
-    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
-    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
-    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
-    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
-    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
-    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
-    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
-    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
-    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
-    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
-    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
-    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
-    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
-    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
-    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
-    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
-    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
-    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
-    public static var courierServices: Self { .init(rawValue: "courier_services") }
-    public static var courtCosts: Self { .init(rawValue: "court_costs") }
-    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
-    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
-    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
-    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
-    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
-    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
-    public static var departmentStores: Self { .init(rawValue: "department_stores") }
-    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
-    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
-    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
-    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
-    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
-    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
-    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
-    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
-    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
-    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
-    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
-    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
-    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
-    public static var discountStores: Self { .init(rawValue: "discount_stores") }
-    public static var doctors: Self { .init(rawValue: "doctors") }
-    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
-    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
-    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
-    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
-    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
-    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
-    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
-    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
-    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
-    public static var educationalServices: Self { .init(rawValue: "educational_services") }
-    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
-    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
-    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
-    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
-    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
-    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
-    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
-    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
-    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
-    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
-    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
-    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
-    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
-    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
-    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
-    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
-    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
-    public static var florists: Self { .init(rawValue: "florists") }
-    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
-    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
-    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
-    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
-    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
-    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
-    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
-    public static var generalServices: Self { .init(rawValue: "general_services") }
-    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
-    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
-    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
-    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
-    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
-    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
-    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
-    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
-    public static var governmentServices: Self { .init(rawValue: "government_services") }
-    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
-    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
-    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
-    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
-    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
-    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
-    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
-    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
-    public static var hospitals: Self { .init(rawValue: "hospitals") }
-    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
-    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
-    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
-    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
-    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
-    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
-    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
-    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
-    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
-    public static var laundries: Self { .init(rawValue: "laundries") }
-    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
-    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
-    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
-    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
-    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
-    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
-    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
-    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
-    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
-    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
-    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
-    public static var medicalServices: Self { .init(rawValue: "medical_services") }
-    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
-    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
-    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
-    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
-    public static var miscellaneous: Self { .init(rawValue: "miscellaneous") }
-    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
-    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
-    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
-    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
-    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
-    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
-    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
-    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
-    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
-    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
-    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
-    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
-    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
-    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
-    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
-    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
-    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
-    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
-    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
-    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
-    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
-    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
-    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
-    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
-    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
-    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
-    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
-    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
-    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
-    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
-    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
-    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
-    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
-    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
-    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
-    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
-    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
-    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
-    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
-    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
-    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
-    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
-    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
-    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
-    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
-    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
-    public static var professionalServices: Self { .init(rawValue: "professional_services") }
-    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
-    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
-    public static var railroads: Self { .init(rawValue: "railroads") }
-    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
-    public static var recordStores: Self { .init(rawValue: "record_stores") }
-    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
-    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
-    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
-    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
-    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
-    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
-    public static var serviceStations: Self { .init(rawValue: "service_stations") }
-    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
-    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
-    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
-    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
-    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
-    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
-    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
-    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
-    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
-    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
-    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
-    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
-    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
-    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
-    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
-    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
-    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
-    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
-    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
-    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
-    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
-    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
-    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
-    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
-    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
-    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
-    public static var timeshares: Self { .init(rawValue: "timeshares") }
-    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
-    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
-    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
-    public static var towingServices: Self { .init(rawValue: "towing_services") }
-    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
-    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
-    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
-    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
-    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
-    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
-    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
-    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
-    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
-    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
-    public static var utilities: Self { .init(rawValue: "utilities") }
-    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
-    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
-    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
-    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
-    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
-    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
-    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
-    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
-    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
-    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
-    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
-    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
-    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
-    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
-}
-
-public struct IssuingCardholderUpdateSpendingControlsBlockedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var notPresent: Self { .init(rawValue: "not_present") }
-    public static var present: Self { .init(rawValue: "present") }
-}
-
-public struct IssuingCardholderUpdateSpendingControlsBlockedCategories: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
-    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
-    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
-    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
-    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
-    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
-    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
-    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
-    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
-    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
-    public static var aquariums: Self { .init(rawValue: "aquariums") }
-    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
-    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
-    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
-    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
-    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
-    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
-    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
-    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
-    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
-    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
-    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
-    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
-    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
-    public static var bakeries: Self { .init(rawValue: "bakeries") }
-    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
-    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
-    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
-    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
-    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
-    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
-    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
-    public static var bookStores: Self { .init(rawValue: "book_stores") }
-    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
-    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
-    public static var busLines: Self { .init(rawValue: "bus_lines") }
-    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
-    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
-    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
-    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
-    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
-    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
-    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
-    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
-    public static var carWashes: Self { .init(rawValue: "car_washes") }
-    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
-    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
-    public static var caterers: Self { .init(rawValue: "caterers") }
-    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
-    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
-    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
-    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
-    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
-    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
-    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
-    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
-    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
-    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
-    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
-    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
-    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
-    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
-    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
-    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
-    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
-    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
-    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
-    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
-    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
-    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
-    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
-    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
-    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
-    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
-    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
-    public static var courierServices: Self { .init(rawValue: "courier_services") }
-    public static var courtCosts: Self { .init(rawValue: "court_costs") }
-    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
-    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
-    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
-    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
-    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
-    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
-    public static var departmentStores: Self { .init(rawValue: "department_stores") }
-    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
-    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
-    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
-    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
-    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
-    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
-    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
-    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
-    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
-    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
-    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
-    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
-    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
-    public static var discountStores: Self { .init(rawValue: "discount_stores") }
-    public static var doctors: Self { .init(rawValue: "doctors") }
-    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
-    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
-    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
-    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
-    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
-    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
-    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
-    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
-    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
-    public static var educationalServices: Self { .init(rawValue: "educational_services") }
-    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
-    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
-    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
-    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
-    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
-    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
-    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
-    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
-    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
-    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
-    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
-    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
-    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
-    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
-    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
-    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
-    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
-    public static var florists: Self { .init(rawValue: "florists") }
-    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
-    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
-    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
-    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
-    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
-    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
-    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
-    public static var generalServices: Self { .init(rawValue: "general_services") }
-    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
-    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
-    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
-    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
-    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
-    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
-    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
-    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
-    public static var governmentServices: Self { .init(rawValue: "government_services") }
-    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
-    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
-    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
-    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
-    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
-    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
-    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
-    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
-    public static var hospitals: Self { .init(rawValue: "hospitals") }
-    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
-    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
-    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
-    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
-    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
-    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
-    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
-    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
-    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
-    public static var laundries: Self { .init(rawValue: "laundries") }
-    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
-    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
-    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
-    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
-    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
-    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
-    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
-    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
-    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
-    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
-    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
-    public static var medicalServices: Self { .init(rawValue: "medical_services") }
-    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
-    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
-    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
-    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
-    public static var miscellaneous: Self { .init(rawValue: "miscellaneous") }
-    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
-    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
-    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
-    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
-    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
-    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
-    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
-    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
-    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
-    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
-    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
-    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
-    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
-    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
-    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
-    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
-    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
-    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
-    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
-    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
-    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
-    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
-    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
-    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
-    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
-    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
-    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
-    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
-    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
-    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
-    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
-    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
-    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
-    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
-    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
-    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
-    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
-    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
-    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
-    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
-    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
-    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
-    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
-    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
-    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
-    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
-    public static var professionalServices: Self { .init(rawValue: "professional_services") }
-    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
-    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
-    public static var railroads: Self { .init(rawValue: "railroads") }
-    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
-    public static var recordStores: Self { .init(rawValue: "record_stores") }
-    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
-    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
-    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
-    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
-    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
-    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
-    public static var serviceStations: Self { .init(rawValue: "service_stations") }
-    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
-    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
-    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
-    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
-    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
-    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
-    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
-    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
-    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
-    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
-    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
-    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
-    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
-    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
-    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
-    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
-    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
-    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
-    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
-    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
-    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
-    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
-    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
-    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
-    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
-    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
-    public static var timeshares: Self { .init(rawValue: "timeshares") }
-    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
-    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
-    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
-    public static var towingServices: Self { .init(rawValue: "towing_services") }
-    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
-    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
-    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
-    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
-    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
-    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
-    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
-    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
-    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
-    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
-    public static var utilities: Self { .init(rawValue: "utilities") }
-    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
-    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
-    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
-    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
-    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
-    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
-    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
-    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
-    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
-    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
-    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
-    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
-    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
-    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
-}
-
-public struct IssuingCardholderUpdateSpendingControlsSpendingLimits: StripeParams {
-    /// Maximum amount allowed to spend per interval.
-    public var amount: Int
-    /// Interval (or event) to which the amount applies.
-    public var interval: IssuingCardholderUpdateSpendingControlsSpendingLimitsInterval
-    /// Array of strings containing
-    /// [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) this
-    /// limit applies to. Omitting this field will apply the limit to all categories.
-    public var categories: [IssuingCardholderUpdateSpendingControlsSpendingLimitsCategories]?
-
-    public init(amount: Int, interval: IssuingCardholderUpdateSpendingControlsSpendingLimitsInterval, categories: [IssuingCardholderUpdateSpendingControlsSpendingLimitsCategories]? = nil) {
-        self.amount = amount
-        self.interval = interval
-        self.categories = categories
-    }
-}
-
-public struct IssuingCardholderUpdateSpendingControlsSpendingLimitsInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var allTime: Self { .init(rawValue: "all_time") }
-    public static var daily: Self { .init(rawValue: "daily") }
-    public static var monthly: Self { .init(rawValue: "monthly") }
-    public static var perAuthorization: Self { .init(rawValue: "per_authorization") }
-    public static var weekly: Self { .init(rawValue: "weekly") }
-    public static var yearly: Self { .init(rawValue: "yearly") }
-}
-
-public struct IssuingCardholderUpdateSpendingControlsSpendingLimitsCategories: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
-    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
-    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
-    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
-    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
-    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
-    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
-    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
-    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
-    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
-    public static var aquariums: Self { .init(rawValue: "aquariums") }
-    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
-    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
-    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
-    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
-    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
-    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
-    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
-    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
-    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
-    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
-    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
-    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
-    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
-    public static var bakeries: Self { .init(rawValue: "bakeries") }
-    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
-    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
-    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
-    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
-    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
-    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
-    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
-    public static var bookStores: Self { .init(rawValue: "book_stores") }
-    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
-    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
-    public static var busLines: Self { .init(rawValue: "bus_lines") }
-    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
-    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
-    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
-    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
-    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
-    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
-    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
-    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
-    public static var carWashes: Self { .init(rawValue: "car_washes") }
-    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
-    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
-    public static var caterers: Self { .init(rawValue: "caterers") }
-    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
-    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
-    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
-    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
-    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
-    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
-    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
-    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
-    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
-    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
-    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
-    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
-    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
-    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
-    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
-    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
-    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
-    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
-    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
-    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
-    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
-    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
-    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
-    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
-    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
-    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
-    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
-    public static var courierServices: Self { .init(rawValue: "courier_services") }
-    public static var courtCosts: Self { .init(rawValue: "court_costs") }
-    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
-    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
-    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
-    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
-    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
-    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
-    public static var departmentStores: Self { .init(rawValue: "department_stores") }
-    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
-    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
-    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
-    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
-    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
-    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
-    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
-    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
-    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
-    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
-    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
-    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
-    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
-    public static var discountStores: Self { .init(rawValue: "discount_stores") }
-    public static var doctors: Self { .init(rawValue: "doctors") }
-    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
-    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
-    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
-    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
-    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
-    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
-    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
-    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
-    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
-    public static var educationalServices: Self { .init(rawValue: "educational_services") }
-    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
-    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
-    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
-    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
-    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
-    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
-    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
-    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
-    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
-    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
-    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
-    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
-    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
-    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
-    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
-    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
-    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
-    public static var florists: Self { .init(rawValue: "florists") }
-    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
-    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
-    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
-    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
-    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
-    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
-    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
-    public static var generalServices: Self { .init(rawValue: "general_services") }
-    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
-    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
-    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
-    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
-    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
-    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
-    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
-    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
-    public static var governmentServices: Self { .init(rawValue: "government_services") }
-    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
-    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
-    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
-    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
-    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
-    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
-    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
-    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
-    public static var hospitals: Self { .init(rawValue: "hospitals") }
-    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
-    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
-    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
-    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
-    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
-    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
-    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
-    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
-    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
-    public static var laundries: Self { .init(rawValue: "laundries") }
-    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
-    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
-    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
-    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
-    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
-    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
-    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
-    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
-    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
-    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
-    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
-    public static var medicalServices: Self { .init(rawValue: "medical_services") }
-    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
-    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
-    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
-    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
-    public static var miscellaneous: Self { .init(rawValue: "miscellaneous") }
-    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
-    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
-    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
-    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
-    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
-    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
-    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
-    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
-    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
-    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
-    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
-    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
-    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
-    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
-    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
-    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
-    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
-    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
-    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
-    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
-    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
-    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
-    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
-    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
-    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
-    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
-    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
-    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
-    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
-    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
-    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
-    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
-    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
-    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
-    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
-    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
-    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
-    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
-    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
-    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
-    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
-    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
-    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
-    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
-    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
-    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
-    public static var professionalServices: Self { .init(rawValue: "professional_services") }
-    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
-    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
-    public static var railroads: Self { .init(rawValue: "railroads") }
-    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
-    public static var recordStores: Self { .init(rawValue: "record_stores") }
-    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
-    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
-    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
-    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
-    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
-    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
-    public static var serviceStations: Self { .init(rawValue: "service_stations") }
-    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
-    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
-    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
-    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
-    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
-    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
-    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
-    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
-    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
-    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
-    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
-    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
-    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
-    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
-    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
-    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
-    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
-    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
-    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
-    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
-    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
-    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
-    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
-    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
-    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
-    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
-    public static var timeshares: Self { .init(rawValue: "timeshares") }
-    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
-    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
-    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
-    public static var towingServices: Self { .init(rawValue: "towing_services") }
-    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
-    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
-    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
-    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
-    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
-    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
-    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
-    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
-    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
-    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
-    public static var utilities: Self { .init(rawValue: "utilities") }
-    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
-    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
-    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
-    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
-    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
-    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
-    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
-    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
-    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
-    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
-    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
-    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
-    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
-    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
 public struct IssuingCardholderUpdateStatus: RawRepresentable, Codable, Hashable, Sendable {

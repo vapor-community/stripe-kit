@@ -9,25 +9,25 @@ import Foundation
 
 public struct FinancialConnectionsSessionCreateParams: StripeParams {
     /// The account holder to link accounts for.
-    public var accountHolder: FinancialConnectionsSessionCreateAccountHolder
+    public var accountHolder: FinancialConnectionsSessionAccountHolder
     /// List of data features that you would like to request access to. Possible values are `balances`,
     /// `transactions`, `ownership`, and `payment_method`.
-    public var permissions: [FinancialConnectionsSessionCreatePermissions]
+    public var permissions: [FinancialConnectionsSessionPermissions]
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Filters to restrict the kinds of accounts to collect.
-    public var filters: FinancialConnectionsSessionCreateFilters?
+    public var filters: FinancialConnectionsSessionFilters?
     /// Settings for configuring Session-specific limits.
-    public var limits: FinancialConnectionsSessionCreateLimits?
+    public var limits: FinancialConnectionsSessionLimits?
     /// Customize manual entry behavior
-    public var manualEntry: FinancialConnectionsSessionCreateManualEntry?
+    public var manualEntry: FinancialConnectionsSessionManualEntry?
     /// List of data features that you would like to retrieve upon account creation.
-    public var prefetch: [FinancialConnectionsSessionCreatePrefetch]?
+    public var prefetch: [FinancialConnectionsSessionPrefetch]?
     /// For webview integrations only. Upon completing OAuth login in the native browser, the user will be
     /// redirected to this URL to return to your app.
     public var returnUrl: String?
 
-    public init(accountHolder: FinancialConnectionsSessionCreateAccountHolder, permissions: [FinancialConnectionsSessionCreatePermissions], expand: [String]? = nil, filters: FinancialConnectionsSessionCreateFilters? = nil, limits: FinancialConnectionsSessionCreateLimits? = nil, manualEntry: FinancialConnectionsSessionCreateManualEntry? = nil, prefetch: [FinancialConnectionsSessionCreatePrefetch]? = nil, returnUrl: String? = nil) {
+    public init(accountHolder: FinancialConnectionsSessionAccountHolder, permissions: [FinancialConnectionsSessionPermissions], expand: [String]? = nil, filters: FinancialConnectionsSessionFilters? = nil, limits: FinancialConnectionsSessionLimits? = nil, manualEntry: FinancialConnectionsSessionManualEntry? = nil, prefetch: [FinancialConnectionsSessionPrefetch]? = nil, returnUrl: String? = nil) {
         self.accountHolder = accountHolder
         self.permissions = permissions
         self.expand = expand
@@ -51,9 +51,9 @@ public struct FinancialConnectionsSessionCreateParams: StripeParams {
 }
 
 /// The account holder to link accounts for.
-public struct FinancialConnectionsSessionCreateAccountHolder: StripeParams {
+public struct FinancialConnectionsSessionAccountHolder: StripeParams {
     /// Type of account holder to collect accounts for.
-    public var type: FinancialConnectionsSessionCreateAccountHolderType
+    public var type: FinancialConnectionsSessionAccountHolderType
     /// The ID of the Stripe account whose accounts you will retrieve. Only available when `type` is
     /// `account`.
     public var account: String?
@@ -64,7 +64,7 @@ public struct FinancialConnectionsSessionCreateAccountHolder: StripeParams {
     /// `type` is `customer`.
     public var customerAccount: String?
 
-    public init(type: FinancialConnectionsSessionCreateAccountHolderType, account: String? = nil, customer: String? = nil, customerAccount: String? = nil) {
+    public init(type: FinancialConnectionsSessionAccountHolderType, account: String? = nil, customer: String? = nil, customerAccount: String? = nil) {
         self.type = type
         self.account = account
         self.customer = customer
@@ -79,7 +79,7 @@ public struct FinancialConnectionsSessionCreateAccountHolder: StripeParams {
     }
 }
 
-public struct FinancialConnectionsSessionCreateAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+public struct FinancialConnectionsSessionAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -90,7 +90,7 @@ public struct FinancialConnectionsSessionCreateAccountHolderType: RawRepresentab
     public static var customer: Self { .init(rawValue: "customer") }
 }
 
-public struct FinancialConnectionsSessionCreatePermissions: RawRepresentable, Codable, Hashable, Sendable {
+public struct FinancialConnectionsSessionPermissions: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -104,17 +104,17 @@ public struct FinancialConnectionsSessionCreatePermissions: RawRepresentable, Co
 }
 
 /// Filters to restrict the kinds of accounts to collect.
-public struct FinancialConnectionsSessionCreateFilters: StripeParams {
+public struct FinancialConnectionsSessionFilters: StripeParams {
     /// Restricts the Session to subcategories of accounts that can be linked. Valid subcategories are:
     /// `checking`, `savings`, `mortgage`, `line_of_credit`, `credit_card`.
-    public var accountSubcategories: [FinancialConnectionsSessionCreateFiltersAccountSubcategories]?
+    public var accountSubcategories: [FinancialConnectionsSessionFiltersAccountSubcategories]?
     /// Country from which to collect accounts.
     public var country: String?
     /// Whether the session should require payment method support and successful account number retrieval
     /// before completion.
-    public var requirePaymentMethodSupport: FinancialConnectionsSessionCreateFiltersRequirePaymentMethodSupport?
+    public var requirePaymentMethodSupport: FinancialConnectionsSessionFiltersRequirePaymentMethodSupport?
 
-    public init(accountSubcategories: [FinancialConnectionsSessionCreateFiltersAccountSubcategories]? = nil, country: String? = nil, requirePaymentMethodSupport: FinancialConnectionsSessionCreateFiltersRequirePaymentMethodSupport? = nil) {
+    public init(accountSubcategories: [FinancialConnectionsSessionFiltersAccountSubcategories]? = nil, country: String? = nil, requirePaymentMethodSupport: FinancialConnectionsSessionFiltersRequirePaymentMethodSupport? = nil) {
         self.accountSubcategories = accountSubcategories
         self.country = country
         self.requirePaymentMethodSupport = requirePaymentMethodSupport
@@ -127,7 +127,7 @@ public struct FinancialConnectionsSessionCreateFilters: StripeParams {
     }
 }
 
-public struct FinancialConnectionsSessionCreateFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
+public struct FinancialConnectionsSessionFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -141,7 +141,7 @@ public struct FinancialConnectionsSessionCreateFiltersAccountSubcategories: RawR
     public static var savings: Self { .init(rawValue: "savings") }
 }
 
-public struct FinancialConnectionsSessionCreateFiltersRequirePaymentMethodSupport: RawRepresentable, Codable, Hashable, Sendable {
+public struct FinancialConnectionsSessionFiltersRequirePaymentMethodSupport: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -159,7 +159,7 @@ public struct FinancialConnectionsSessionCreateFiltersRequirePaymentMethodSuppor
 }
 
 /// Settings for configuring Session-specific limits.
-public struct FinancialConnectionsSessionCreateLimits: ClearableParams {
+public struct FinancialConnectionsSessionLimits: ClearableParams {
     /// The number of accounts that can be linked in this Session. Pass an empty value to allow any number
     /// of accounts.
     public var accounts: Int
@@ -182,16 +182,16 @@ public struct FinancialConnectionsSessionCreateLimits: ClearableParams {
 }
 
 /// Customize manual entry behavior
-public struct FinancialConnectionsSessionCreateManualEntry: StripeParams {
+public struct FinancialConnectionsSessionManualEntry: StripeParams {
     /// How manual entry should be handled.
-    public var mode: FinancialConnectionsSessionCreateManualEntryMode?
+    public var mode: FinancialConnectionsSessionManualEntryMode?
 
-    public init(mode: FinancialConnectionsSessionCreateManualEntryMode? = nil) {
+    public init(mode: FinancialConnectionsSessionManualEntryMode? = nil) {
         self.mode = mode
     }
 }
 
-public struct FinancialConnectionsSessionCreateManualEntryMode: RawRepresentable, Codable, Hashable, Sendable {
+public struct FinancialConnectionsSessionManualEntryMode: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -202,7 +202,7 @@ public struct FinancialConnectionsSessionCreateManualEntryMode: RawRepresentable
     public static var disabled: Self { .init(rawValue: "disabled") }
 }
 
-public struct FinancialConnectionsSessionCreatePrefetch: RawRepresentable, Codable, Hashable, Sendable {
+public struct FinancialConnectionsSessionPrefetch: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

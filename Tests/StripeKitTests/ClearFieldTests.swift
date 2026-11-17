@@ -16,7 +16,7 @@ struct ClearFieldTests {
 
     @Test("A nested field is cleared under its parent's key")
     func clearsNestedFields() {
-        var settings = CustomerUpdateInvoiceSettings(footer: "Thanks!")
+        var settings = CustomerInvoiceSettings(footer: "Thanks!")
         settings.clear(.customFields)
         settings.clear(.renderingOptions)
         let params = CustomerUpdateParams(invoiceSettings: settings)

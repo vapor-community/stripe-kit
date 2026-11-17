@@ -50,7 +50,7 @@ public struct LineItemUpdateParams: ClearableParams {
     public var discountable: Bool?
     /// The coupons, promotion codes & existing discounts which apply to the line item. Item discounts are
     /// applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
-    public var discounts: [LineItemUpdateDiscounts]?
+    public var discounts: [LineItemDiscounts]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -67,11 +67,11 @@ public struct LineItemUpdateParams: ClearableParams {
     /// recognize and defer revenue. See the [Revenue Recognition
     /// documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing)
     /// for details.
-    public var period: LineItemUpdatePeriod?
+    public var period: LineItemPeriod?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-    public var priceData: LineItemUpdatePriceData?
+    public var priceData: LineItemPriceData?
     /// The pricing information for the invoice item.
-    public var pricing: LineItemUpdatePricing?
+    public var pricing: LineItemPricing?
     /// Non-negative integer. The quantity of units for the line item. Use `quantity_decimal` instead to
     /// provide decimal precision. This field will be deprecated in favor of `quantity_decimal` in a future
     /// version.
@@ -85,14 +85,14 @@ public struct LineItemUpdateParams: ClearableParams {
     /// [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or
     /// uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove
     /// previously defined tax amounts.
-    public var taxAmounts: [LineItemUpdateTaxAmounts]?
+    public var taxAmounts: [LineItemTaxAmounts]?
     /// The tax rates which apply to the line item. When set, the `default_tax_rates` on the invoice do not
     /// apply to this line item. Pass an empty string to remove previously-defined tax rates.
     public var taxRates: [String]?
     /// Fields to send empty, which clears them: `params.clear(.discounts)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amount: Int? = nil, description: String? = nil, discountable: Bool? = nil, discounts: [LineItemUpdateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, period: LineItemUpdatePeriod? = nil, priceData: LineItemUpdatePriceData? = nil, pricing: LineItemUpdatePricing? = nil, quantity: Int? = nil, quantityDecimal: String? = nil, taxAmounts: [LineItemUpdateTaxAmounts]? = nil, taxRates: [String]? = nil) {
+    public init(amount: Int? = nil, description: String? = nil, discountable: Bool? = nil, discounts: [LineItemDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, period: LineItemPeriod? = nil, priceData: LineItemPriceData? = nil, pricing: LineItemPricing? = nil, quantity: Int? = nil, quantityDecimal: String? = nil, taxAmounts: [LineItemTaxAmounts]? = nil, taxRates: [String]? = nil) {
         self.amount = amount
         self.description = description
         self.discountable = discountable
@@ -134,7 +134,7 @@ public struct LineItemUpdateParams: ClearableParams {
     }
 }
 
-public struct LineItemUpdateDiscounts: StripeParams {
+public struct LineItemDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
     /// ID of an existing discount on the object (or one of its ancestors) to reuse.
@@ -161,7 +161,7 @@ public struct LineItemUpdateDiscounts: StripeParams {
 /// recognize and defer revenue. See the [Revenue Recognition
 /// documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing)
 /// for details.
-public struct LineItemUpdatePeriod: StripeParams {
+public struct LineItemPeriod: StripeParams {
     /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
     public var end: Date
     /// The start of the period. This value is inclusive.
@@ -174,7 +174,7 @@ public struct LineItemUpdatePeriod: StripeParams {
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-public struct LineItemUpdatePriceData: StripeParams {
+public struct LineItemPriceData: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -184,13 +184,13 @@ public struct LineItemUpdatePriceData: StripeParams {
     public var product: String?
     /// Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of
     /// `product` or `product_data` is required.
-    public var productData: LineItemUpdatePriceDataProductData?
+    public var productData: LineItemPriceDataProductData?
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: LineItemUpdatePriceDataTaxBehavior?
+    public var taxBehavior: LineItemPriceDataTaxBehavior?
     /// A non-negative integer in cents (or local equivalent) representing how much to charge. One of
     /// `unit_amount` or `unit_amount_decimal` is required.
     public var unitAmount: Int?
@@ -198,7 +198,7 @@ public struct LineItemUpdatePriceData: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, product: String? = nil, productData: LineItemUpdatePriceDataProductData? = nil, taxBehavior: LineItemUpdatePriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, product: String? = nil, productData: LineItemPriceDataProductData? = nil, taxBehavior: LineItemPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.product = product
         self.productData = productData
@@ -219,7 +219,7 @@ public struct LineItemUpdatePriceData: StripeParams {
 
 /// Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of
 /// `product` or `product_data` is required.
-public struct LineItemUpdatePriceDataProductData: StripeParams {
+public struct LineItemPriceDataProductData: StripeParams {
     /// The product's name, meant to be displayable to the customer.
     public var name: String
     /// The product's description, meant to be displayable to the customer. Use this field to optionally
@@ -236,12 +236,12 @@ public struct LineItemUpdatePriceDataProductData: StripeParams {
     public var taxCode: String?
     /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
     /// location.
-    public var taxDetails: LineItemUpdatePriceDataProductDataTaxDetails?
+    public var taxDetails: LineItemPriceDataProductDataTaxDetails?
     /// A label that represents units of this product. When set, this will be included in customers'
     /// receipts, invoices, Checkout, and the customer portal.
     public var unitLabel: String?
 
-    public init(name: String, description: String? = nil, images: [String]? = nil, metadata: [String: String]? = nil, taxCode: String? = nil, taxDetails: LineItemUpdatePriceDataProductDataTaxDetails? = nil, unitLabel: String? = nil) {
+    public init(name: String, description: String? = nil, images: [String]? = nil, metadata: [String: String]? = nil, taxCode: String? = nil, taxDetails: LineItemPriceDataProductDataTaxDetails? = nil, unitLabel: String? = nil) {
         self.name = name
         self.description = description
         self.images = images
@@ -264,7 +264,7 @@ public struct LineItemUpdatePriceDataProductData: StripeParams {
 
 /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
 /// location.
-public struct LineItemUpdatePriceDataProductDataTaxDetails: ClearableParams {
+public struct LineItemPriceDataProductDataTaxDetails: ClearableParams {
     /// A tax location ID. Depending on the [tax
     /// code](/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not
     /// supported.
@@ -291,7 +291,7 @@ public struct LineItemUpdatePriceDataProductDataTaxDetails: ClearableParams {
     }
 }
 
-public struct LineItemUpdatePriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct LineItemPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -304,7 +304,7 @@ public struct LineItemUpdatePriceDataTaxBehavior: RawRepresentable, Codable, Has
 }
 
 /// The pricing information for the invoice item.
-public struct LineItemUpdatePricing: StripeParams {
+public struct LineItemPricing: StripeParams {
     /// The ID of the price object.
     public var price: String?
 
@@ -313,7 +313,7 @@ public struct LineItemUpdatePricing: StripeParams {
     }
 }
 
-public struct LineItemUpdateTaxAmounts: StripeParams {
+public struct LineItemTaxAmounts: StripeParams {
     /// The amount, in cents (or local equivalent), of the tax.
     public var amount: Int
     /// Data to find or create a TaxRate object. Stripe automatically creates or reuses a TaxRate object for
@@ -321,13 +321,13 @@ public struct LineItemUpdateTaxAmounts: StripeParams {
     /// TaxRate object. TaxRate objects created automatically by Stripe are immediately archived, do not
     /// appear in the line item’s `tax_rates`, and cannot be directly added to invoices, payments, or line
     /// items.
-    public var taxRateData: LineItemUpdateTaxAmountsTaxRateData
+    public var taxRateData: LineItemTaxAmountsTaxRateData
     /// The amount on which tax is calculated, in cents (or local equivalent).
     public var taxableAmount: Int
     /// The reasoning behind this tax, for example, if the product is tax exempt.
-    public var taxabilityReason: LineItemUpdateTaxAmountsTaxabilityReason?
+    public var taxabilityReason: LineItemTaxAmountsTaxabilityReason?
 
-    public init(amount: Int, taxRateData: LineItemUpdateTaxAmountsTaxRateData, taxableAmount: Int, taxabilityReason: LineItemUpdateTaxAmountsTaxabilityReason? = nil) {
+    public init(amount: Int, taxRateData: LineItemTaxAmountsTaxRateData, taxableAmount: Int, taxabilityReason: LineItemTaxAmountsTaxabilityReason? = nil) {
         self.amount = amount
         self.taxRateData = taxRateData
         self.taxableAmount = taxableAmount
@@ -347,7 +347,7 @@ public struct LineItemUpdateTaxAmounts: StripeParams {
 /// TaxRate object. TaxRate objects created automatically by Stripe are immediately archived, do not
 /// appear in the line item’s `tax_rates`, and cannot be directly added to invoices, payments, or line
 /// items.
-public struct LineItemUpdateTaxAmountsTaxRateData: StripeParams {
+public struct LineItemTaxAmountsTaxRateData: StripeParams {
     /// The display name of the tax rate, which will be shown to users.
     public var displayName: String
     /// This specifies if the tax rate is inclusive or exclusive.
@@ -365,14 +365,14 @@ public struct LineItemUpdateTaxAmountsTaxRateData: StripeParams {
     /// appears on your customer’s invoice.
     public var jurisdiction: String?
     /// The level of the jurisdiction that imposes this tax rate.
-    public var jurisdictionLevel: LineItemUpdateTaxAmountsTaxRateDataJurisdictionLevel?
+    public var jurisdictionLevel: LineItemTaxAmountsTaxRateDataJurisdictionLevel?
     /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix.
     /// For example, "NY" for New York, United States.
     public var state: String?
     /// The high-level tax type, such as `vat` or `sales_tax`.
-    public var taxType: LineItemUpdateTaxAmountsTaxRateDataTaxType?
+    public var taxType: LineItemTaxAmountsTaxRateDataTaxType?
 
-    public init(displayName: String, inclusive: Bool, percentage: Double, country: String? = nil, description: String? = nil, jurisdiction: String? = nil, jurisdictionLevel: LineItemUpdateTaxAmountsTaxRateDataJurisdictionLevel? = nil, state: String? = nil, taxType: LineItemUpdateTaxAmountsTaxRateDataTaxType? = nil) {
+    public init(displayName: String, inclusive: Bool, percentage: Double, country: String? = nil, description: String? = nil, jurisdiction: String? = nil, jurisdictionLevel: LineItemTaxAmountsTaxRateDataJurisdictionLevel? = nil, state: String? = nil, taxType: LineItemTaxAmountsTaxRateDataTaxType? = nil) {
         self.displayName = displayName
         self.inclusive = inclusive
         self.percentage = percentage
@@ -397,7 +397,7 @@ public struct LineItemUpdateTaxAmountsTaxRateData: StripeParams {
     }
 }
 
-public struct LineItemUpdateTaxAmountsTaxRateDataJurisdictionLevel: RawRepresentable, Codable, Hashable, Sendable {
+public struct LineItemTaxAmountsTaxRateDataJurisdictionLevel: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -412,7 +412,7 @@ public struct LineItemUpdateTaxAmountsTaxRateDataJurisdictionLevel: RawRepresent
     public static var state: Self { .init(rawValue: "state") }
 }
 
-public struct LineItemUpdateTaxAmountsTaxRateDataTaxType: RawRepresentable, Codable, Hashable, Sendable {
+public struct LineItemTaxAmountsTaxRateDataTaxType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -477,7 +477,7 @@ public struct LineItemUpdateTaxAmountsTaxRateDataTaxType: RawRepresentable, Coda
     public static var vat: Self { .init(rawValue: "vat") }
 }
 
-public struct LineItemUpdateTaxAmountsTaxabilityReason: RawRepresentable, Codable, Hashable, Sendable {
+public struct LineItemTaxAmountsTaxabilityReason: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

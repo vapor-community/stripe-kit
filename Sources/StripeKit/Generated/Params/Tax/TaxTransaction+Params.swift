@@ -46,7 +46,7 @@ public struct TaxTransactionCreateFromCalculationParams: StripeParams {
 public struct TaxTransactionCreateReversalParams: StripeParams {
     /// If `partial`, the provided line item or shipping cost amounts are reversed. If `full`, the original
     /// transaction is fully reversed.
-    public var mode: TaxTransactionCreateReversalMode
+    public var mode: TaxTransactionMode
     /// The ID of the Transaction to partially or fully reverse.
     public var originalTransaction: String
     /// A custom identifier for this reversal, such as `myOrder_123-refund_1`, which must be unique across
@@ -67,9 +67,9 @@ public struct TaxTransactionCreateReversalParams: StripeParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
     /// The shipping cost to reverse.
-    public var shippingCost: TaxTransactionCreateReversalShippingCost?
+    public var shippingCost: TaxTransactionShippingCost?
 
-    public init(mode: TaxTransactionCreateReversalMode, originalTransaction: String, reference: String, expand: [String]? = nil, flatAmount: Int? = nil, lineItems: [TaxTransactionCreateReversalLineItems]? = nil, metadata: [String: String]? = nil, shippingCost: TaxTransactionCreateReversalShippingCost? = nil) {
+    public init(mode: TaxTransactionMode, originalTransaction: String, reference: String, expand: [String]? = nil, flatAmount: Int? = nil, lineItems: [TaxTransactionCreateReversalLineItems]? = nil, metadata: [String: String]? = nil, shippingCost: TaxTransactionShippingCost? = nil) {
         self.mode = mode
         self.originalTransaction = originalTransaction
         self.reference = reference
@@ -123,7 +123,7 @@ public struct TaxTransactionListLineItemsParams: StripeParams {
     }
 }
 
-public struct TaxTransactionCreateReversalMode: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxTransactionMode: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -172,7 +172,7 @@ public struct TaxTransactionCreateReversalLineItems: StripeParams {
 }
 
 /// The shipping cost to reverse.
-public struct TaxTransactionCreateReversalShippingCost: StripeParams {
+public struct TaxTransactionShippingCost: StripeParams {
     /// The amount to reverse, in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#minor-units) in negative.
     public var amount: Int

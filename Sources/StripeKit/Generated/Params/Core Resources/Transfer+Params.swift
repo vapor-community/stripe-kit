@@ -32,13 +32,13 @@ public struct TransferCreateParams: StripeParams {
     public var sourceTransaction: String?
     /// The source balance to use for this transfer. One of `bank_account`, `card`, or `fpx`. For most
     /// users, this will default to `card`.
-    public var sourceType: TransferCreateSourceType?
+    public var sourceType: TransferSourceType?
     /// A string that identifies this transaction as part of a group. See the [Connect
     /// documentation](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-options) for
     /// details.
     public var transferGroup: String?
 
-    public init(currency: String, destination: String, amount: Int? = nil, description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, sourceTransaction: String? = nil, sourceType: TransferCreateSourceType? = nil, transferGroup: String? = nil) {
+    public init(currency: String, destination: String, amount: Int? = nil, description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, sourceTransaction: String? = nil, sourceType: TransferSourceType? = nil, transferGroup: String? = nil) {
         self.currency = currency
         self.destination = destination
         self.amount = amount
@@ -138,7 +138,7 @@ public struct TransferUpdateParams: ClearableParams {
     }
 }
 
-public struct TransferCreateSourceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TransferSourceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

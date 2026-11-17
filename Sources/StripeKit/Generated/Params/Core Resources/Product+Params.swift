@@ -14,7 +14,7 @@ public struct ProductCreateParams: StripeParams {
     public var active: Bool?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object. This Price will be
     /// set as the default price for this product.
-    public var defaultPriceData: ProductCreateDefaultPriceData?
+    public var defaultPriceData: ProductDefaultPriceData?
     /// The product's description, meant to be displayable to the customer. Use this field to optionally
     /// store a long form explanation of the product being sold for your own rendering purposes.
     public var description: String?
@@ -27,14 +27,14 @@ public struct ProductCreateParams: StripeParams {
     public var images: [String]?
     /// A list of up to 15 marketing features for this product. These are displayed in [pricing
     /// tables](https://docs.stripe.com/payments/checkout/pricing-table).
-    public var marketingFeatures: [ProductCreateMarketingFeatures]?
+    public var marketingFeatures: [ProductMarketingFeatures]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
     /// The dimensions of this product for shipping purposes.
-    public var packageDimensions: ProductCreatePackageDimensions?
+    public var packageDimensions: ProductPackageDimensions?
     /// Whether this product is shipped (i.e., physical goods).
     public var shippable: Bool?
     /// An arbitrary string to be displayed on your customer's credit card or bank statement. While most
@@ -47,7 +47,7 @@ public struct ProductCreateParams: StripeParams {
     public var taxCode: String?
     /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
     /// location.
-    public var taxDetails: ProductCreateTaxDetails?
+    public var taxDetails: ProductTaxDetails?
     /// The type of the product. Defaults to `service` if not explicitly specified, enabling use of this
     /// product with Subscriptions and Plans. Set this parameter to `good` to use this product with Orders
     /// and SKUs. On API versions before `2018-02-05`, this field defaults to `good` for compatibility
@@ -59,7 +59,7 @@ public struct ProductCreateParams: StripeParams {
     /// A URL of a publicly-accessible webpage for this product.
     public var url: String?
 
-    public init(name: String, active: Bool? = nil, defaultPriceData: ProductCreateDefaultPriceData? = nil, description: String? = nil, expand: [String]? = nil, id: String? = nil, images: [String]? = nil, marketingFeatures: [ProductCreateMarketingFeatures]? = nil, metadata: [String: String]? = nil, packageDimensions: ProductCreatePackageDimensions? = nil, shippable: Bool? = nil, statementDescriptor: String? = nil, taxCode: String? = nil, taxDetails: ProductCreateTaxDetails? = nil, type: ProductCreateType? = nil, unitLabel: String? = nil, url: String? = nil) {
+    public init(name: String, active: Bool? = nil, defaultPriceData: ProductDefaultPriceData? = nil, description: String? = nil, expand: [String]? = nil, id: String? = nil, images: [String]? = nil, marketingFeatures: [ProductMarketingFeatures]? = nil, metadata: [String: String]? = nil, packageDimensions: ProductPackageDimensions? = nil, shippable: Bool? = nil, statementDescriptor: String? = nil, taxCode: String? = nil, taxDetails: ProductTaxDetails? = nil, type: ProductCreateType? = nil, unitLabel: String? = nil, url: String? = nil) {
         self.name = name
         self.active = active
         self.defaultPriceData = defaultPriceData
@@ -195,7 +195,7 @@ public struct ProductUpdateParams: ClearableParams {
     public var images: [String]?
     /// A list of up to 15 marketing features for this product. These are displayed in [pricing
     /// tables](https://docs.stripe.com/payments/checkout/pricing-table).
-    public var marketingFeatures: [ProductUpdateMarketingFeatures]?
+    public var marketingFeatures: [ProductMarketingFeatures]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -204,7 +204,7 @@ public struct ProductUpdateParams: ClearableParams {
     /// The product's name, meant to be displayable to the customer.
     public var name: String?
     /// The dimensions of this product for shipping purposes.
-    public var packageDimensions: ProductUpdatePackageDimensions?
+    public var packageDimensions: ProductPackageDimensions?
     /// Whether this product is shipped (i.e., physical goods).
     public var shippable: Bool?
     /// An arbitrary string to be displayed on your customer's credit card or bank statement. While most
@@ -218,7 +218,7 @@ public struct ProductUpdateParams: ClearableParams {
     public var taxCode: String?
     /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
     /// location.
-    public var taxDetails: ProductUpdateTaxDetails?
+    public var taxDetails: ProductTaxDetails?
     /// A label that represents units of this product. When set, this will be included in customers'
     /// receipts, invoices, Checkout, and the customer portal. May only be set if `type=service`.
     public var unitLabel: String?
@@ -227,7 +227,7 @@ public struct ProductUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.description)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(active: Bool? = nil, defaultPrice: String? = nil, description: String? = nil, expand: [String]? = nil, images: [String]? = nil, marketingFeatures: [ProductUpdateMarketingFeatures]? = nil, metadata: [String: String]? = nil, name: String? = nil, packageDimensions: ProductUpdatePackageDimensions? = nil, shippable: Bool? = nil, statementDescriptor: String? = nil, taxCode: String? = nil, taxDetails: ProductUpdateTaxDetails? = nil, unitLabel: String? = nil, url: String? = nil) {
+    public init(active: Bool? = nil, defaultPrice: String? = nil, description: String? = nil, expand: [String]? = nil, images: [String]? = nil, marketingFeatures: [ProductMarketingFeatures]? = nil, metadata: [String: String]? = nil, name: String? = nil, packageDimensions: ProductPackageDimensions? = nil, shippable: Bool? = nil, statementDescriptor: String? = nil, taxCode: String? = nil, taxDetails: ProductTaxDetails? = nil, unitLabel: String? = nil, url: String? = nil) {
         self.active = active
         self.defaultPrice = defaultPrice
         self.description = description
@@ -280,30 +280,30 @@ public struct ProductUpdateParams: ClearableParams {
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object. This Price will be
 /// set as the default price for this product.
-public struct ProductCreateDefaultPriceData: StripeParams {
+public struct ProductDefaultPriceData: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// Prices defined in each available currency option. Each key must be a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: ProductCreateDefaultPriceDataCurrencyOptions]?
+    public var currencyOptions: [String: ProductDefaultPriceDataCurrencyOptions]?
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
     /// Sessions and Payment Links.
-    public var customUnitAmount: ProductCreateDefaultPriceDataCustomUnitAmount?
+    public var customUnitAmount: ProductDefaultPriceDataCustomUnitAmount?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
     /// The recurring components of a price such as `interval` and `interval_count`.
-    public var recurring: ProductCreateDefaultPriceDataRecurring?
+    public var recurring: ProductDefaultPriceDataRecurring?
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: ProductCreateDefaultPriceDataTaxBehavior?
+    public var taxBehavior: ProductDefaultPriceDataTaxBehavior?
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
     /// charge. One of `unit_amount`, `unit_amount_decimal`, or `custom_unit_amount` is required.
     public var unitAmount: Int?
@@ -311,7 +311,7 @@ public struct ProductCreateDefaultPriceData: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, currencyOptions: [String: ProductCreateDefaultPriceDataCurrencyOptions]? = nil, customUnitAmount: ProductCreateDefaultPriceDataCustomUnitAmount? = nil, metadata: [String: String]? = nil, recurring: ProductCreateDefaultPriceDataRecurring? = nil, taxBehavior: ProductCreateDefaultPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, currencyOptions: [String: ProductDefaultPriceDataCurrencyOptions]? = nil, customUnitAmount: ProductDefaultPriceDataCustomUnitAmount? = nil, metadata: [String: String]? = nil, recurring: ProductDefaultPriceDataRecurring? = nil, taxBehavior: ProductDefaultPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.currencyOptions = currencyOptions
         self.customUnitAmount = customUnitAmount
@@ -334,19 +334,19 @@ public struct ProductCreateDefaultPriceData: StripeParams {
     }
 }
 
-public struct ProductCreateDefaultPriceDataCurrencyOptions: StripeParams {
+public struct ProductDefaultPriceDataCurrencyOptions: StripeParams {
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
     /// Sessions and Payment Links.
-    public var customUnitAmount: ProductCreateDefaultPriceDataCurrencyOptionsCustomUnitAmount?
+    public var customUnitAmount: ProductDefaultPriceDataCurrencyOptionsCustomUnitAmount?
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: ProductCreateDefaultPriceDataCurrencyOptionsTaxBehavior?
+    public var taxBehavior: ProductDefaultPriceDataCurrencyOptionsTaxBehavior?
     /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
     /// `tiered`. See also the documentation for `billing_scheme`.
-    public var tiers: [ProductCreateDefaultPriceDataCurrencyOptionsTiers]?
+    public var tiers: [ProductDefaultPriceDataCurrencyOptionsTiers]?
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
     /// charge.
     public var unitAmount: Int?
@@ -354,7 +354,7 @@ public struct ProductCreateDefaultPriceDataCurrencyOptions: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(customUnitAmount: ProductCreateDefaultPriceDataCurrencyOptionsCustomUnitAmount? = nil, taxBehavior: ProductCreateDefaultPriceDataCurrencyOptionsTaxBehavior? = nil, tiers: [ProductCreateDefaultPriceDataCurrencyOptionsTiers]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(customUnitAmount: ProductDefaultPriceDataCurrencyOptionsCustomUnitAmount? = nil, taxBehavior: ProductDefaultPriceDataCurrencyOptionsTaxBehavior? = nil, tiers: [ProductDefaultPriceDataCurrencyOptionsTiers]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.customUnitAmount = customUnitAmount
         self.taxBehavior = taxBehavior
         self.tiers = tiers
@@ -373,7 +373,7 @@ public struct ProductCreateDefaultPriceDataCurrencyOptions: StripeParams {
 
 /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
 /// Sessions and Payment Links.
-public struct ProductCreateDefaultPriceDataCurrencyOptionsCustomUnitAmount: StripeParams {
+public struct ProductDefaultPriceDataCurrencyOptionsCustomUnitAmount: StripeParams {
     /// Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
     public var enabled: Bool
     /// The maximum unit amount the customer can specify for this item.
@@ -392,7 +392,7 @@ public struct ProductCreateDefaultPriceDataCurrencyOptionsCustomUnitAmount: Stri
     }
 }
 
-public struct ProductCreateDefaultPriceDataCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct ProductDefaultPriceDataCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -404,10 +404,10 @@ public struct ProductCreateDefaultPriceDataCurrencyOptionsTaxBehavior: RawRepres
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct ProductCreateDefaultPriceDataCurrencyOptionsTiers: StripeParams {
+public struct ProductDefaultPriceDataCurrencyOptionsTiers: StripeParams {
     /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
     /// tier adding one. Use `inf` to define a fallback tier.
-    public var upTo: ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo
+    public var upTo: ProductDefaultPriceDataCurrencyOptionsTiersUpTo
     /// The flat billing amount for an entire tier, regardless of the number of units in the tier.
     public var flatAmount: Int?
     /// Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the
@@ -419,7 +419,7 @@ public struct ProductCreateDefaultPriceDataCurrencyOptionsTiers: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(upTo: ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(upTo: ProductDefaultPriceDataCurrencyOptionsTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.upTo = upTo
         self.flatAmount = flatAmount
         self.flatAmountDecimal = flatAmountDecimal
@@ -437,7 +437,7 @@ public struct ProductCreateDefaultPriceDataCurrencyOptionsTiers: StripeParams {
 }
 
 /// One of the forms `up_to` accepts.
-public enum ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum ProductDefaultPriceDataCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `inf`
     case inf
     case value(Int)
@@ -453,7 +453,7 @@ public enum ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo: Codable, Send
             }
         }
         if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of ProductDefaultPriceDataCurrencyOptionsTiersUpTo matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -470,7 +470,7 @@ public enum ProductCreateDefaultPriceDataCurrencyOptionsTiersUpTo: Codable, Send
 
 /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
 /// Sessions and Payment Links.
-public struct ProductCreateDefaultPriceDataCustomUnitAmount: StripeParams {
+public struct ProductDefaultPriceDataCustomUnitAmount: StripeParams {
     /// Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
     public var enabled: Bool
     /// The maximum unit amount the customer can specify for this item.
@@ -490,15 +490,15 @@ public struct ProductCreateDefaultPriceDataCustomUnitAmount: StripeParams {
 }
 
 /// The recurring components of a price such as `interval` and `interval_count`.
-public struct ProductCreateDefaultPriceDataRecurring: StripeParams {
+public struct ProductDefaultPriceDataRecurring: StripeParams {
     /// Specifies billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: ProductCreateDefaultPriceDataRecurringInterval
+    public var interval: ProductDefaultPriceDataRecurringInterval
     /// The number of intervals between subscription billings. For example, `interval=month` and
     /// `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36
     /// months, or 156 weeks).
     public var intervalCount: Int?
 
-    public init(interval: ProductCreateDefaultPriceDataRecurringInterval, intervalCount: Int? = nil) {
+    public init(interval: ProductDefaultPriceDataRecurringInterval, intervalCount: Int? = nil) {
         self.interval = interval
         self.intervalCount = intervalCount
     }
@@ -509,7 +509,7 @@ public struct ProductCreateDefaultPriceDataRecurring: StripeParams {
     }
 }
 
-public struct ProductCreateDefaultPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct ProductDefaultPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -522,7 +522,7 @@ public struct ProductCreateDefaultPriceDataRecurringInterval: RawRepresentable, 
     public static var year: Self { .init(rawValue: "year") }
 }
 
-public struct ProductCreateDefaultPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct ProductDefaultPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -534,7 +534,7 @@ public struct ProductCreateDefaultPriceDataTaxBehavior: RawRepresentable, Codabl
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct ProductCreateMarketingFeatures: StripeParams {
+public struct ProductMarketingFeatures: StripeParams {
     /// The marketing feature name. Up to 80 characters long.
     public var name: String
 
@@ -544,7 +544,7 @@ public struct ProductCreateMarketingFeatures: StripeParams {
 }
 
 /// The dimensions of this product for shipping purposes.
-public struct ProductCreatePackageDimensions: StripeParams {
+public struct ProductPackageDimensions: StripeParams {
     /// Height, in inches. Maximum precision is 2 decimal places.
     public var height: Double
     /// Length, in inches. Maximum precision is 2 decimal places.
@@ -564,7 +564,7 @@ public struct ProductCreatePackageDimensions: StripeParams {
 
 /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
 /// location.
-public struct ProductCreateTaxDetails: ClearableParams {
+public struct ProductTaxDetails: ClearableParams {
     /// A tax location ID. Depending on the [tax
     /// code](/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not
     /// supported.
@@ -611,58 +611,4 @@ public struct ProductListType: RawRepresentable, Codable, Hashable, Sendable {
 
     public static var good: Self { .init(rawValue: "good") }
     public static var service: Self { .init(rawValue: "service") }
-}
-
-public struct ProductUpdateMarketingFeatures: StripeParams {
-    /// The marketing feature name. Up to 80 characters long.
-    public var name: String
-
-    public init(name: String) {
-        self.name = name
-    }
-}
-
-public struct ProductUpdatePackageDimensions: StripeParams {
-    /// Height, in inches. Maximum precision is 2 decimal places.
-    public var height: Double
-    /// Length, in inches. Maximum precision is 2 decimal places.
-    public var length: Double
-    /// Weight, in ounces. Maximum precision is 2 decimal places.
-    public var weight: Double
-    /// Width, in inches. Maximum precision is 2 decimal places.
-    public var width: Double
-
-    public init(height: Double, length: Double, weight: Double, width: Double) {
-        self.height = height
-        self.length = length
-        self.weight = weight
-        self.width = width
-    }
-}
-
-public struct ProductUpdateTaxDetails: ClearableParams {
-    /// A tax location ID. Depending on the [tax
-    /// code](/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not
-    /// supported.
-    public var performanceLocation: String?
-    /// A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
-    public var taxCode: String?
-    /// Fields to send empty, which clears them: `params.clear(.taxCode)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(performanceLocation: String? = nil, taxCode: String? = nil) {
-        self.performanceLocation = performanceLocation
-        self.taxCode = taxCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case performanceLocation = "performance_location"
-        case taxCode = "tax_code"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case taxCode = "tax_code"
-    }
 }

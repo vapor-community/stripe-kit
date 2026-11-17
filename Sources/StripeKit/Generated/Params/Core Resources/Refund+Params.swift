@@ -36,7 +36,7 @@ public struct RefundCreateParams: ClearableParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
     /// Origin of the refund
-    public var origin: RefundCreateOrigin?
+    public var origin: RefundOrigin?
     /// The identifier of the PaymentIntent to refund.
     public var paymentIntent: String?
     /// String indicating the reason for the refund. If set, possible values are `duplicate`, `fraudulent`,
@@ -57,7 +57,7 @@ public struct RefundCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amount: Int? = nil, charge: String? = nil, currency: String? = nil, customer: String? = nil, expand: [String]? = nil, instructionsEmail: String? = nil, metadata: [String: String]? = nil, origin: RefundCreateOrigin? = nil, paymentIntent: String? = nil, reason: RefundCreateReason? = nil, refundApplicationFee: Bool? = nil, reverseTransfer: Bool? = nil) {
+    public init(amount: Int? = nil, charge: String? = nil, currency: String? = nil, customer: String? = nil, expand: [String]? = nil, instructionsEmail: String? = nil, metadata: [String: String]? = nil, origin: RefundOrigin? = nil, paymentIntent: String? = nil, reason: RefundCreateReason? = nil, refundApplicationFee: Bool? = nil, reverseTransfer: Bool? = nil) {
         self.amount = amount
         self.charge = charge
         self.currency = currency
@@ -205,7 +205,7 @@ public struct RefundUpdateParams: ClearableParams {
     }
 }
 
-public struct RefundCreateOrigin: RawRepresentable, Codable, Hashable, Sendable {
+public struct RefundOrigin: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

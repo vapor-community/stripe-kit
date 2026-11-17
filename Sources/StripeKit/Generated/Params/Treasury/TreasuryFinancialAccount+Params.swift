@@ -12,9 +12,9 @@ public struct TreasuryFinancialAccountCloseParams: StripeParams {
     public var expand: [String]?
     /// A different bank account where funds can be deposited/debited in order to get the closing FA's
     /// balance to $0
-    public var forwardingSettings: TreasuryFinancialAccountCloseForwardingSettings?
+    public var forwardingSettings: TreasuryFinancialAccountForwardingSettings?
 
-    public init(expand: [String]? = nil, forwardingSettings: TreasuryFinancialAccountCloseForwardingSettings? = nil) {
+    public init(expand: [String]? = nil, forwardingSettings: TreasuryFinancialAccountForwardingSettings? = nil) {
         self.expand = expand
         self.forwardingSettings = forwardingSettings
     }
@@ -41,11 +41,11 @@ public struct TreasuryFinancialAccountCreateParams: ClearableParams {
     /// The nickname for the FinancialAccount.
     public var nickname: String?
     /// The set of functionalities that the platform can restrict on the FinancialAccount.
-    public var platformRestrictions: TreasuryFinancialAccountCreatePlatformRestrictions?
+    public var platformRestrictions: TreasuryFinancialAccountPlatformRestrictions?
     /// Fields to send empty, which clears them: `params.clear(.nickname)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(supportedCurrencies: [String], expand: [String]? = nil, features: TreasuryFinancialAccountCreateFeatures? = nil, metadata: [String: String]? = nil, nickname: String? = nil, platformRestrictions: TreasuryFinancialAccountCreatePlatformRestrictions? = nil) {
+    public init(supportedCurrencies: [String], expand: [String]? = nil, features: TreasuryFinancialAccountCreateFeatures? = nil, metadata: [String: String]? = nil, nickname: String? = nil, platformRestrictions: TreasuryFinancialAccountPlatformRestrictions? = nil) {
         self.supportedCurrencies = supportedCurrencies
         self.expand = expand
         self.features = features
@@ -112,7 +112,7 @@ public struct TreasuryFinancialAccountUpdateParams: ClearableParams {
     public var features: TreasuryFinancialAccountUpdateFeatures?
     /// A different bank account where funds can be deposited/debited in order to get the closing FA's
     /// balance to $0
-    public var forwardingSettings: TreasuryFinancialAccountUpdateForwardingSettings?
+    public var forwardingSettings: TreasuryFinancialAccountForwardingSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -121,11 +121,11 @@ public struct TreasuryFinancialAccountUpdateParams: ClearableParams {
     /// The nickname for the FinancialAccount.
     public var nickname: String?
     /// The set of functionalities that the platform can restrict on the FinancialAccount.
-    public var platformRestrictions: TreasuryFinancialAccountUpdatePlatformRestrictions?
+    public var platformRestrictions: TreasuryFinancialAccountPlatformRestrictions?
     /// Fields to send empty, which clears them: `params.clear(.nickname)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(expand: [String]? = nil, features: TreasuryFinancialAccountUpdateFeatures? = nil, forwardingSettings: TreasuryFinancialAccountUpdateForwardingSettings? = nil, metadata: [String: String]? = nil, nickname: String? = nil, platformRestrictions: TreasuryFinancialAccountUpdatePlatformRestrictions? = nil) {
+    public init(expand: [String]? = nil, features: TreasuryFinancialAccountUpdateFeatures? = nil, forwardingSettings: TreasuryFinancialAccountForwardingSettings? = nil, metadata: [String: String]? = nil, nickname: String? = nil, platformRestrictions: TreasuryFinancialAccountPlatformRestrictions? = nil) {
         self.expand = expand
         self.features = features
         self.forwardingSettings = forwardingSettings
@@ -199,15 +199,15 @@ public struct TreasuryFinancialAccountUpdateFeaturesParams: StripeParams {
 
 /// A different bank account where funds can be deposited/debited in order to get the closing FA's
 /// balance to $0
-public struct TreasuryFinancialAccountCloseForwardingSettings: StripeParams {
+public struct TreasuryFinancialAccountForwardingSettings: StripeParams {
     /// The type of the bank account provided. This can be either "financial_account" or "payment_method"
-    public var type: TreasuryFinancialAccountCloseForwardingSettingsType
+    public var type: TreasuryFinancialAccountForwardingSettingsType
     /// The financial_account id
     public var financialAccount: String?
     /// The payment_method or bank account id. This needs to be a verified bank account.
     public var paymentMethod: String?
 
-    public init(type: TreasuryFinancialAccountCloseForwardingSettingsType, financialAccount: String? = nil, paymentMethod: String? = nil) {
+    public init(type: TreasuryFinancialAccountForwardingSettingsType, financialAccount: String? = nil, paymentMethod: String? = nil) {
         self.type = type
         self.financialAccount = financialAccount
         self.paymentMethod = paymentMethod
@@ -220,7 +220,7 @@ public struct TreasuryFinancialAccountCloseForwardingSettings: StripeParams {
     }
 }
 
-public struct TreasuryFinancialAccountCloseForwardingSettingsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryFinancialAccountForwardingSettingsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -429,13 +429,13 @@ public struct TreasuryFinancialAccountCreateFeaturesOutboundTransfersUsDomesticW
 }
 
 /// The set of functionalities that the platform can restrict on the FinancialAccount.
-public struct TreasuryFinancialAccountCreatePlatformRestrictions: StripeParams {
+public struct TreasuryFinancialAccountPlatformRestrictions: StripeParams {
     /// Restricts all inbound money movement.
-    public var inboundFlows: TreasuryFinancialAccountCreatePlatformRestrictionsInboundFlows?
+    public var inboundFlows: TreasuryFinancialAccountPlatformRestrictionsInboundFlows?
     /// Restricts all outbound money movement.
-    public var outboundFlows: TreasuryFinancialAccountCreatePlatformRestrictionsOutboundFlows?
+    public var outboundFlows: TreasuryFinancialAccountPlatformRestrictionsOutboundFlows?
 
-    public init(inboundFlows: TreasuryFinancialAccountCreatePlatformRestrictionsInboundFlows? = nil, outboundFlows: TreasuryFinancialAccountCreatePlatformRestrictionsOutboundFlows? = nil) {
+    public init(inboundFlows: TreasuryFinancialAccountPlatformRestrictionsInboundFlows? = nil, outboundFlows: TreasuryFinancialAccountPlatformRestrictionsOutboundFlows? = nil) {
         self.inboundFlows = inboundFlows
         self.outboundFlows = outboundFlows
     }
@@ -446,7 +446,7 @@ public struct TreasuryFinancialAccountCreatePlatformRestrictions: StripeParams {
     }
 }
 
-public struct TreasuryFinancialAccountCreatePlatformRestrictionsInboundFlows: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryFinancialAccountPlatformRestrictionsInboundFlows: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -457,7 +457,7 @@ public struct TreasuryFinancialAccountCreatePlatformRestrictionsInboundFlows: Ra
     public static var unrestricted: Self { .init(rawValue: "unrestricted") }
 }
 
-public struct TreasuryFinancialAccountCreatePlatformRestrictionsOutboundFlows: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryFinancialAccountPlatformRestrictionsOutboundFlows: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -674,78 +674,4 @@ public struct TreasuryFinancialAccountUpdateFeaturesOutboundTransfersUsDomesticW
     public init(requested: Bool) {
         self.requested = requested
     }
-}
-
-/// A different bank account where funds can be deposited/debited in order to get the closing FA's
-/// balance to $0
-public struct TreasuryFinancialAccountUpdateForwardingSettings: StripeParams {
-    /// The type of the bank account provided. This can be either "financial_account" or "payment_method"
-    public var type: TreasuryFinancialAccountUpdateForwardingSettingsType
-    /// The financial_account id
-    public var financialAccount: String?
-    /// The payment_method or bank account id. This needs to be a verified bank account.
-    public var paymentMethod: String?
-
-    public init(type: TreasuryFinancialAccountUpdateForwardingSettingsType, financialAccount: String? = nil, paymentMethod: String? = nil) {
-        self.type = type
-        self.financialAccount = financialAccount
-        self.paymentMethod = paymentMethod
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case financialAccount = "financial_account"
-        case paymentMethod = "payment_method"
-        case type
-    }
-}
-
-public struct TreasuryFinancialAccountUpdateForwardingSettingsType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var financialAccount: Self { .init(rawValue: "financial_account") }
-    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
-}
-
-/// The set of functionalities that the platform can restrict on the FinancialAccount.
-public struct TreasuryFinancialAccountUpdatePlatformRestrictions: StripeParams {
-    /// Restricts all inbound money movement.
-    public var inboundFlows: TreasuryFinancialAccountUpdatePlatformRestrictionsInboundFlows?
-    /// Restricts all outbound money movement.
-    public var outboundFlows: TreasuryFinancialAccountUpdatePlatformRestrictionsOutboundFlows?
-
-    public init(inboundFlows: TreasuryFinancialAccountUpdatePlatformRestrictionsInboundFlows? = nil, outboundFlows: TreasuryFinancialAccountUpdatePlatformRestrictionsOutboundFlows? = nil) {
-        self.inboundFlows = inboundFlows
-        self.outboundFlows = outboundFlows
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case inboundFlows = "inbound_flows"
-        case outboundFlows = "outbound_flows"
-    }
-}
-
-public struct TreasuryFinancialAccountUpdatePlatformRestrictionsInboundFlows: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var restricted: Self { .init(rawValue: "restricted") }
-    public static var unrestricted: Self { .init(rawValue: "unrestricted") }
-}
-
-public struct TreasuryFinancialAccountUpdatePlatformRestrictionsOutboundFlows: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var restricted: Self { .init(rawValue: "restricted") }
-    public static var unrestricted: Self { .init(rawValue: "unrestricted") }
 }

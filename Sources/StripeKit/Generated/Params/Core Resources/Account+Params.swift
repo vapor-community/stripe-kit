@@ -30,10 +30,10 @@ public struct AccountCreateParams: ClearableParams {
     /// property can only be updated for accounts where
     /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
     /// is `application`, which includes Custom accounts.
-    public var company: AccountCreateCompany?
+    public var company: AccountCompany?
     /// Configures the account's Dashboard access, loss liability, requirements collection, and Stripe fee
     /// responsibility.
-    public var controller: AccountCreateController?
+    public var controller: AccountController?
     /// The country in which the account holder resides, or in which the business is legally established.
     /// This should be an ISO 3166-1 alpha-2 country code. For example, if you are in the United States and
     /// the business for which you're creating an account is legally represented in Canada, you would use
@@ -68,13 +68,13 @@ public struct AccountCreateParams: ClearableParams {
     /// is `application`, which includes Custom accounts.
     public var externalAccount: String?
     /// A hash of account group type to tokens. These are account groups this account should be added to.
-    public var groups: AccountCreateGroups?
+    public var groups: AccountGroups?
     /// Information about the person represented by the account. This field is null unless `business_type`
     /// is set to `individual`. Once you create an [Account Link](/api/account_links) or [Account
     /// Session](/api/account_sessions), this property can only be updated for accounts where
     /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
     /// is `application`, which includes Custom accounts.
-    public var individual: AccountCreateIndividual?
+    public var individual: AccountIndividual?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -96,7 +96,7 @@ public struct AccountCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(accountToken: String? = nil, businessProfile: AccountCreateBusinessProfile? = nil, businessType: AccountCreateBusinessType? = nil, capabilities: AccountCreateCapabilities? = nil, company: AccountCreateCompany? = nil, controller: AccountCreateController? = nil, country: String? = nil, defaultCurrency: String? = nil, documents: AccountCreateDocuments? = nil, email: String? = nil, expand: [String]? = nil, externalAccount: String? = nil, groups: AccountCreateGroups? = nil, individual: AccountCreateIndividual? = nil, metadata: [String: String]? = nil, settings: AccountCreateSettings? = nil, tosAcceptance: AccountCreateTosAcceptance? = nil, type: AccountCreateType? = nil) {
+    public init(accountToken: String? = nil, businessProfile: AccountCreateBusinessProfile? = nil, businessType: AccountCreateBusinessType? = nil, capabilities: AccountCreateCapabilities? = nil, company: AccountCompany? = nil, controller: AccountController? = nil, country: String? = nil, defaultCurrency: String? = nil, documents: AccountCreateDocuments? = nil, email: String? = nil, expand: [String]? = nil, externalAccount: String? = nil, groups: AccountGroups? = nil, individual: AccountIndividual? = nil, metadata: [String: String]? = nil, settings: AccountCreateSettings? = nil, tosAcceptance: AccountCreateTosAcceptance? = nil, type: AccountCreateType? = nil) {
         self.accountToken = accountToken
         self.businessProfile = businessProfile
         self.businessType = businessType
@@ -184,14 +184,14 @@ public struct AccountRejectParams: StripeParams {
     /// The reason for rejecting the account. Can be `fraud_payment_method_casher`,
     /// `fraud_payment_method_tester`, `fraud_no_intent_to_fulfill`, `fraud_other`, `credit`,
     /// `terms_of_service`, or `other`.
-    public var reason: AccountRejectReason
+    public var reason: AccountReason
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Whether to pause payouts on the account as part of the rejection. Defaults to `pause`. Use `none` to
     /// leave payouts enabled.
-    public var payoutsAction: AccountRejectPayoutsAction?
+    public var payoutsAction: AccountPayoutsAction?
 
-    public init(reason: AccountRejectReason, expand: [String]? = nil, payoutsAction: AccountRejectPayoutsAction? = nil) {
+    public init(reason: AccountReason, expand: [String]? = nil, payoutsAction: AccountPayoutsAction? = nil) {
         self.reason = reason
         self.expand = expand
         self.payoutsAction = payoutsAction
@@ -236,7 +236,7 @@ public struct AccountUpdateParams: ClearableParams {
     /// property can only be updated for accounts where
     /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
     /// is `application`, which includes Custom accounts.
-    public var company: AccountUpdateCompany?
+    public var company: AccountCompany?
     /// Three-letter ISO currency code representing the default currency for the account. This must be a
     /// currency that [Stripe supports in the account's country](https://docs.stripe.com/payouts).
     public var defaultCurrency: String?
@@ -264,13 +264,13 @@ public struct AccountUpdateParams: ClearableParams {
     /// is `application`, which includes Custom accounts.
     public var externalAccount: String?
     /// A hash of account group type to tokens. These are account groups this account should be added to.
-    public var groups: AccountUpdateGroups?
+    public var groups: AccountGroups?
     /// Information about the person represented by the account. This field is null unless `business_type`
     /// is set to `individual`. Once you create an [Account Link](/api/account_links) or [Account
     /// Session](/api/account_sessions), this property can only be updated for accounts where
     /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
     /// is `application`, which includes Custom accounts.
-    public var individual: AccountUpdateIndividual?
+    public var individual: AccountIndividual?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -288,7 +288,7 @@ public struct AccountUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(accountToken: String? = nil, businessProfile: AccountUpdateBusinessProfile? = nil, businessType: AccountUpdateBusinessType? = nil, capabilities: AccountUpdateCapabilities? = nil, company: AccountUpdateCompany? = nil, defaultCurrency: String? = nil, documents: AccountUpdateDocuments? = nil, email: String? = nil, expand: [String]? = nil, externalAccount: String? = nil, groups: AccountUpdateGroups? = nil, individual: AccountUpdateIndividual? = nil, metadata: [String: String]? = nil, settings: AccountUpdateSettings? = nil, tosAcceptance: AccountUpdateTosAcceptance? = nil) {
+    public init(accountToken: String? = nil, businessProfile: AccountUpdateBusinessProfile? = nil, businessType: AccountUpdateBusinessType? = nil, capabilities: AccountUpdateCapabilities? = nil, company: AccountCompany? = nil, defaultCurrency: String? = nil, documents: AccountUpdateDocuments? = nil, email: String? = nil, expand: [String]? = nil, externalAccount: String? = nil, groups: AccountGroups? = nil, individual: AccountIndividual? = nil, metadata: [String: String]? = nil, settings: AccountUpdateSettings? = nil, tosAcceptance: AccountUpdateTosAcceptance? = nil) {
         self.accountToken = accountToken
         self.businessProfile = businessProfile
         self.businessType = businessType
@@ -334,7 +334,7 @@ public struct AccountUpdateParams: ClearableParams {
 /// Business information about the account.
 public struct AccountCreateBusinessProfile: ClearableParams {
     /// The applicant's gross annual revenue for its preceding fiscal year.
-    public var annualRevenue: AccountCreateBusinessProfileAnnualRevenue?
+    public var annualRevenue: AccountBusinessProfileAnnualRevenue?
     /// An estimated upper bound of employees, contractors, vendors, etc. currently working for the
     /// business.
     public var estimatedWorkerCount: Int?
@@ -342,9 +342,9 @@ public struct AccountCreateBusinessProfile: ClearableParams {
     /// businesses based on the goods or services they provide.
     public var mcc: String?
     /// Whether the business is a minority-owned, women-owned, and/or LGBTQI+ -owned business.
-    public var minorityOwnedBusinessDesignation: [AccountCreateBusinessProfileMinorityOwnedBusinessDesignation]?
+    public var minorityOwnedBusinessDesignation: [AccountBusinessProfileMinorityOwnedBusinessDesignation]?
     /// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
-    public var monthlyEstimatedRevenue: AccountCreateBusinessProfileMonthlyEstimatedRevenue?
+    public var monthlyEstimatedRevenue: AccountBusinessProfileMonthlyEstimatedRevenue?
     /// The customer-facing business name.
     public var name: String?
     /// Internal-only description of the product sold by, or service provided by, the business. Used by
@@ -354,7 +354,7 @@ public struct AccountCreateBusinessProfile: ClearableParams {
     /// Act. Used by the Checkout product and for Japanese payment methods.
     public var specifiedCommercialTransactionsActUrl: String?
     /// A publicly available mailing address for sending support issues to.
-    public var supportAddress: AccountCreateBusinessProfileSupportAddress?
+    public var supportAddress: AccountBusinessProfileSupportAddress?
     /// A publicly available email address for sending support issues to.
     public var supportEmail: String?
     /// A publicly available phone number to call with support issues.
@@ -366,7 +366,7 @@ public struct AccountCreateBusinessProfile: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.specifiedCommercialTransactionsActUrl)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(annualRevenue: AccountCreateBusinessProfileAnnualRevenue? = nil, estimatedWorkerCount: Int? = nil, mcc: String? = nil, minorityOwnedBusinessDesignation: [AccountCreateBusinessProfileMinorityOwnedBusinessDesignation]? = nil, monthlyEstimatedRevenue: AccountCreateBusinessProfileMonthlyEstimatedRevenue? = nil, name: String? = nil, productDescription: String? = nil, specifiedCommercialTransactionsActUrl: String? = nil, supportAddress: AccountCreateBusinessProfileSupportAddress? = nil, supportEmail: String? = nil, supportPhone: String? = nil, supportUrl: String? = nil, url: String? = nil) {
+    public init(annualRevenue: AccountBusinessProfileAnnualRevenue? = nil, estimatedWorkerCount: Int? = nil, mcc: String? = nil, minorityOwnedBusinessDesignation: [AccountBusinessProfileMinorityOwnedBusinessDesignation]? = nil, monthlyEstimatedRevenue: AccountBusinessProfileMonthlyEstimatedRevenue? = nil, name: String? = nil, productDescription: String? = nil, specifiedCommercialTransactionsActUrl: String? = nil, supportAddress: AccountBusinessProfileSupportAddress? = nil, supportEmail: String? = nil, supportPhone: String? = nil, supportUrl: String? = nil, url: String? = nil) {
         self.annualRevenue = annualRevenue
         self.estimatedWorkerCount = estimatedWorkerCount
         self.mcc = mcc
@@ -407,7 +407,7 @@ public struct AccountCreateBusinessProfile: ClearableParams {
 }
 
 /// The applicant's gross annual revenue for its preceding fiscal year.
-public struct AccountCreateBusinessProfileAnnualRevenue: StripeParams {
+public struct AccountBusinessProfileAnnualRevenue: StripeParams {
     /// A non-negative integer representing the amount in the [smallest currency
     /// unit](/currencies#zero-decimal).
     public var amount: Int
@@ -431,7 +431,7 @@ public struct AccountCreateBusinessProfileAnnualRevenue: StripeParams {
     }
 }
 
-public struct AccountCreateBusinessProfileMinorityOwnedBusinessDesignation: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountBusinessProfileMinorityOwnedBusinessDesignation: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -446,7 +446,7 @@ public struct AccountCreateBusinessProfileMinorityOwnedBusinessDesignation: RawR
 }
 
 /// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
-public struct AccountCreateBusinessProfileMonthlyEstimatedRevenue: StripeParams {
+public struct AccountBusinessProfileMonthlyEstimatedRevenue: StripeParams {
     /// A non-negative integer representing how much to charge in the [smallest currency
     /// unit](/currencies#zero-decimal).
     public var amount: Int
@@ -461,7 +461,7 @@ public struct AccountCreateBusinessProfileMonthlyEstimatedRevenue: StripeParams 
 }
 
 /// A publicly available mailing address for sending support issues to.
-public struct AccountCreateBusinessProfileSupportAddress: StripeParams {
+public struct AccountBusinessProfileSupportAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1647,15 +1647,15 @@ public struct AccountCreateCapabilitiesZipPayments: StripeParams {
 /// property can only be updated for accounts where
 /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
 /// is `application`, which includes Custom accounts.
-public struct AccountCreateCompany: ClearableParams {
+public struct AccountCompany: ClearableParams {
     /// The company's primary address.
-    public var address: AccountCreateCompanyAddress?
+    public var address: AccountCompanyAddress?
     /// The Kana variation of the company's primary address (Japan only).
-    public var addressKana: AccountCreateCompanyAddressKana?
+    public var addressKana: AccountCompanyAddressKana?
     /// The Kanji variation of the company's primary address (Japan only).
-    public var addressKanji: AccountCreateCompanyAddressKanji?
+    public var addressKanji: AccountCompanyAddressKanji?
     /// The location where the business is administered.
-    public var administrativeAddress: AccountCreateCompanyAdministrativeAddress?
+    public var administrativeAddress: AccountCompanyAdministrativeAddress?
     /// Whether the company's directors have been provided. Set this Boolean to `true` after creating all
     /// the company's directors with [the Persons API](/api/persons) for accounts with a
     /// `relationship.director` requirement. This value is not automatically set to `true` after creating
@@ -1663,7 +1663,7 @@ public struct AccountCreateCompany: ClearableParams {
     public var directorsProvided: Bool?
     /// This hash is used to attest that the directors information provided to Stripe is both current and
     /// correct.
-    public var directorshipDeclaration: AccountCreateCompanyDirectorshipDeclaration?
+    public var directorshipDeclaration: AccountCompanyDirectorshipDeclaration?
     /// Whether the company's executives have been provided. Set this Boolean to `true` after creating all
     /// the company's executives with [the Persons API](/api/persons) for accounts with a
     /// `relationship.executive` requirement.
@@ -1684,32 +1684,32 @@ public struct AccountCreateCompany: ClearableParams {
     public var ownersProvided: Bool?
     /// This hash is used to attest that the beneficial owner information provided to Stripe is both current
     /// and correct.
-    public var ownershipDeclaration: AccountCreateCompanyOwnershipDeclaration?
+    public var ownershipDeclaration: AccountCompanyOwnershipDeclaration?
     /// This value is used to determine if a business is exempt from providing ultimate beneficial owners.
     /// See [this support
     /// article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and
     /// [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api)
     /// for more details.
-    public var ownershipExemptionReason: AccountCreateCompanyOwnershipExemptionReason?
+    public var ownershipExemptionReason: AccountCompanyOwnershipExemptionReason?
     /// The company's phone number (used for verification).
     public var phone: String?
     /// A location where the business has a meaningful physical operating presence.
-    public var physicalAddress: AccountCreateCompanyPhysicalAddress?
+    public var physicalAddress: AccountCompanyPhysicalAddress?
     /// The primary location where the business conducts operations.
-    public var principalPlaceOfBusiness: AccountCreateCompanyPrincipalPlaceOfBusiness?
+    public var principalPlaceOfBusiness: AccountCompanyPrincipalPlaceOfBusiness?
     /// When the business was incorporated or registered.
-    public var registrationDate: AccountCreateCompanyRegistrationDate?
+    public var registrationDate: AccountCompanyRegistrationDate?
     /// The identification number given to a company when it is registered or incorporated, if distinct from
     /// the identification number used for filing taxes. (Examples are the CIN for companies and LLP IN for
     /// partnerships in India, and the Company Registration Number in Hong Kong).
     public var registrationNumber: String?
     /// This hash is used to attest that the representative is authorized to act as the representative of
     /// their legal entity.
-    public var representativeDeclaration: AccountCreateCompanyRepresentativeDeclaration?
+    public var representativeDeclaration: AccountCompanyRepresentativeDeclaration?
     /// The category identifying the legal structure of the company or legal entity. See [Business
     /// structure](/connect/identity-verification#business-structure) for more details. Pass an empty string
     /// to unset this value.
-    public var structure: AccountCreateCompanyStructure?
+    public var structure: AccountCompanyStructure?
     /// The business ID number of the company, as appropriate for the company’s country. (Examples are an
     /// Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
     /// Changing this value requires that the account re-accept the [terms of
@@ -1720,11 +1720,11 @@ public struct AccountCreateCompany: ClearableParams {
     /// The VAT number of the company.
     public var vatId: String?
     /// Information on the verification state of the company.
-    public var verification: AccountCreateCompanyVerification?
+    public var verification: AccountCompanyVerification?
     /// Fields to send empty, which clears them: `params.clear(.ownershipExemptionReason)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: AccountCreateCompanyAddress? = nil, addressKana: AccountCreateCompanyAddressKana? = nil, addressKanji: AccountCreateCompanyAddressKanji? = nil, administrativeAddress: AccountCreateCompanyAdministrativeAddress? = nil, directorsProvided: Bool? = nil, directorshipDeclaration: AccountCreateCompanyDirectorshipDeclaration? = nil, executivesProvided: Bool? = nil, exportLicenseId: String? = nil, exportPurposeCode: String? = nil, name: String? = nil, nameKana: String? = nil, nameKanji: String? = nil, ownersProvided: Bool? = nil, ownershipDeclaration: AccountCreateCompanyOwnershipDeclaration? = nil, ownershipExemptionReason: AccountCreateCompanyOwnershipExemptionReason? = nil, phone: String? = nil, physicalAddress: AccountCreateCompanyPhysicalAddress? = nil, principalPlaceOfBusiness: AccountCreateCompanyPrincipalPlaceOfBusiness? = nil, registrationDate: AccountCreateCompanyRegistrationDate? = nil, registrationNumber: String? = nil, representativeDeclaration: AccountCreateCompanyRepresentativeDeclaration? = nil, structure: AccountCreateCompanyStructure? = nil, taxId: String? = nil, taxIdRegistrar: String? = nil, vatId: String? = nil, verification: AccountCreateCompanyVerification? = nil) {
+    public init(address: AccountCompanyAddress? = nil, addressKana: AccountCompanyAddressKana? = nil, addressKanji: AccountCompanyAddressKanji? = nil, administrativeAddress: AccountCompanyAdministrativeAddress? = nil, directorsProvided: Bool? = nil, directorshipDeclaration: AccountCompanyDirectorshipDeclaration? = nil, executivesProvided: Bool? = nil, exportLicenseId: String? = nil, exportPurposeCode: String? = nil, name: String? = nil, nameKana: String? = nil, nameKanji: String? = nil, ownersProvided: Bool? = nil, ownershipDeclaration: AccountCompanyOwnershipDeclaration? = nil, ownershipExemptionReason: AccountCompanyOwnershipExemptionReason? = nil, phone: String? = nil, physicalAddress: AccountCompanyPhysicalAddress? = nil, principalPlaceOfBusiness: AccountCompanyPrincipalPlaceOfBusiness? = nil, registrationDate: AccountCompanyRegistrationDate? = nil, registrationNumber: String? = nil, representativeDeclaration: AccountCompanyRepresentativeDeclaration? = nil, structure: AccountCompanyStructure? = nil, taxId: String? = nil, taxIdRegistrar: String? = nil, vatId: String? = nil, verification: AccountCompanyVerification? = nil) {
         self.address = address
         self.addressKana = addressKana
         self.addressKanji = addressKanji
@@ -1792,7 +1792,7 @@ public struct AccountCreateCompany: ClearableParams {
 }
 
 /// The company's primary address.
-public struct AccountCreateCompanyAddress: StripeParams {
+public struct AccountCompanyAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1826,7 +1826,7 @@ public struct AccountCreateCompanyAddress: StripeParams {
 }
 
 /// The Kana variation of the company's primary address (Japan only).
-public struct AccountCreateCompanyAddressKana: StripeParams {
+public struct AccountCompanyAddressKana: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1864,7 +1864,7 @@ public struct AccountCreateCompanyAddressKana: StripeParams {
 }
 
 /// The Kanji variation of the company's primary address (Japan only).
-public struct AccountCreateCompanyAddressKanji: StripeParams {
+public struct AccountCompanyAddressKanji: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1902,7 +1902,7 @@ public struct AccountCreateCompanyAddressKanji: StripeParams {
 }
 
 /// The location where the business is administered.
-public struct AccountCreateCompanyAdministrativeAddress: StripeParams {
+public struct AccountCompanyAdministrativeAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1937,7 +1937,7 @@ public struct AccountCreateCompanyAdministrativeAddress: StripeParams {
 
 /// This hash is used to attest that the directors information provided to Stripe is both current and
 /// correct.
-public struct AccountCreateCompanyDirectorshipDeclaration: StripeParams {
+public struct AccountCompanyDirectorshipDeclaration: StripeParams {
     /// The Unix timestamp marking when the directorship declaration attestation was made.
     public var date: Date?
     /// The IP address from which the directorship declaration attestation was made.
@@ -1960,7 +1960,7 @@ public struct AccountCreateCompanyDirectorshipDeclaration: StripeParams {
 
 /// This hash is used to attest that the beneficial owner information provided to Stripe is both current
 /// and correct.
-public struct AccountCreateCompanyOwnershipDeclaration: StripeParams {
+public struct AccountCompanyOwnershipDeclaration: StripeParams {
     /// The Unix timestamp marking when the beneficial owner attestation was made.
     public var date: Date?
     /// The IP address from which the beneficial owner attestation was made.
@@ -1981,7 +1981,7 @@ public struct AccountCreateCompanyOwnershipDeclaration: StripeParams {
     }
 }
 
-public struct AccountCreateCompanyOwnershipExemptionReason: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountCompanyOwnershipExemptionReason: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1993,7 +1993,7 @@ public struct AccountCreateCompanyOwnershipExemptionReason: RawRepresentable, Co
 }
 
 /// A location where the business has a meaningful physical operating presence.
-public struct AccountCreateCompanyPhysicalAddress: StripeParams {
+public struct AccountCompanyPhysicalAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -2027,7 +2027,7 @@ public struct AccountCreateCompanyPhysicalAddress: StripeParams {
 }
 
 /// The primary location where the business conducts operations.
-public struct AccountCreateCompanyPrincipalPlaceOfBusiness: StripeParams {
+public struct AccountCompanyPrincipalPlaceOfBusiness: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -2060,7 +2060,7 @@ public struct AccountCreateCompanyPrincipalPlaceOfBusiness: StripeParams {
     }
 }
 
-public struct AccountCreateCompanyRegistrationDate: StripeParams {
+public struct AccountCompanyRegistrationDate: StripeParams {
     /// The day of registration, between 1 and 31.
     public var day: Int
     /// The month of registration, between 1 and 12.
@@ -2077,7 +2077,7 @@ public struct AccountCreateCompanyRegistrationDate: StripeParams {
 
 /// This hash is used to attest that the representative is authorized to act as the representative of
 /// their legal entity.
-public struct AccountCreateCompanyRepresentativeDeclaration: StripeParams {
+public struct AccountCompanyRepresentativeDeclaration: StripeParams {
     /// The Unix timestamp marking when the representative declaration attestation was made.
     public var date: Date?
     /// The IP address from which the representative declaration attestation was made.
@@ -2098,7 +2098,7 @@ public struct AccountCreateCompanyRepresentativeDeclaration: StripeParams {
     }
 }
 
-public struct AccountCreateCompanyStructure: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountCompanyStructure: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2131,17 +2131,17 @@ public struct AccountCreateCompanyStructure: RawRepresentable, Codable, Hashable
 }
 
 /// Information on the verification state of the company.
-public struct AccountCreateCompanyVerification: StripeParams {
+public struct AccountCompanyVerification: StripeParams {
     /// A document verifying the business.
-    public var document: AccountCreateCompanyVerificationDocument?
+    public var document: AccountCompanyVerificationDocument?
 
-    public init(document: AccountCreateCompanyVerificationDocument? = nil) {
+    public init(document: AccountCompanyVerificationDocument? = nil) {
         self.document = document
     }
 }
 
 /// A document verifying the business.
-public struct AccountCreateCompanyVerificationDocument: StripeParams {
+public struct AccountCompanyVerificationDocument: StripeParams {
     /// The back of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller
     /// than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -2159,19 +2159,19 @@ public struct AccountCreateCompanyVerificationDocument: StripeParams {
 
 /// Configures the account's Dashboard access, loss liability, requirements collection, and Stripe fee
 /// responsibility.
-public struct AccountCreateController: StripeParams {
+public struct AccountController: StripeParams {
     /// A hash of configuration for who pays Stripe fees for product usage on this account.
-    public var fees: AccountCreateControllerFees?
+    public var fees: AccountControllerFees?
     /// A hash of configuration for products that have negative balance liability, and whether Stripe or a
     /// Connect application is responsible for them.
-    public var losses: AccountCreateControllerLosses?
+    public var losses: AccountControllerLosses?
     /// A value indicating responsibility for collecting updated information when requirements on the
     /// account are due or change. Defaults to `stripe`.
-    public var requirementCollection: AccountCreateControllerRequirementCollection?
+    public var requirementCollection: AccountControllerRequirementCollection?
     /// A hash of configuration for Stripe-hosted dashboards.
-    public var stripeDashboard: AccountCreateControllerStripeDashboard?
+    public var stripeDashboard: AccountControllerStripeDashboard?
 
-    public init(fees: AccountCreateControllerFees? = nil, losses: AccountCreateControllerLosses? = nil, requirementCollection: AccountCreateControllerRequirementCollection? = nil, stripeDashboard: AccountCreateControllerStripeDashboard? = nil) {
+    public init(fees: AccountControllerFees? = nil, losses: AccountControllerLosses? = nil, requirementCollection: AccountControllerRequirementCollection? = nil, stripeDashboard: AccountControllerStripeDashboard? = nil) {
         self.fees = fees
         self.losses = losses
         self.requirementCollection = requirementCollection
@@ -2187,21 +2187,21 @@ public struct AccountCreateController: StripeParams {
 }
 
 /// A hash of configuration for who pays Stripe fees for product usage on this account.
-public struct AccountCreateControllerFees: StripeParams {
+public struct AccountControllerFees: StripeParams {
     /// Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products.
     /// Setting `controller.losses.payments=application` requires `controller.fees.payer=application`. For
     /// destination charges and separate charges and transfers, Stripe bills the platform regardless of this
     /// setting. Defaults to `account`. Learn more about [fee behavior on connected
     /// accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application
     /// fees and pricing considerations.
-    public var payer: AccountCreateControllerFeesPayer?
+    public var payer: AccountControllerFeesPayer?
 
-    public init(payer: AccountCreateControllerFeesPayer? = nil) {
+    public init(payer: AccountControllerFeesPayer? = nil) {
         self.payer = payer
     }
 }
 
-public struct AccountCreateControllerFeesPayer: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountControllerFeesPayer: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2214,19 +2214,19 @@ public struct AccountCreateControllerFeesPayer: RawRepresentable, Codable, Hasha
 
 /// A hash of configuration for products that have negative balance liability, and whether Stripe or a
 /// Connect application is responsible for them.
-public struct AccountCreateControllerLosses: StripeParams {
+public struct AccountControllerLosses: StripeParams {
     /// Controls who is responsible for payment-related negative balances on this account. The platform
     /// remains liable for negative balances on its own account. To use Stripe negative balance liability,
     /// your integration must meet [Managed Risk
     /// requirements](https://docs.stripe.com/connect/risk-management/managed-risk). Defaults to `stripe`.
-    public var payments: AccountCreateControllerLossesPayments?
+    public var payments: AccountControllerLossesPayments?
 
-    public init(payments: AccountCreateControllerLossesPayments? = nil) {
+    public init(payments: AccountControllerLossesPayments? = nil) {
         self.payments = payments
     }
 }
 
-public struct AccountCreateControllerLossesPayments: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountControllerLossesPayments: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2237,7 +2237,7 @@ public struct AccountCreateControllerLossesPayments: RawRepresentable, Codable, 
     public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
-public struct AccountCreateControllerRequirementCollection: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountControllerRequirementCollection: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2249,17 +2249,17 @@ public struct AccountCreateControllerRequirementCollection: RawRepresentable, Co
 }
 
 /// A hash of configuration for Stripe-hosted dashboards.
-public struct AccountCreateControllerStripeDashboard: StripeParams {
+public struct AccountControllerStripeDashboard: StripeParams {
     /// Whether this account should have access to the full Stripe Dashboard (`full`), to the Express
     /// Dashboard (`express`), or to no Stripe-hosted dashboard (`none`). Defaults to `full`.
-    public var type: AccountCreateControllerStripeDashboardType?
+    public var type: AccountControllerStripeDashboardType?
 
-    public init(type: AccountCreateControllerStripeDashboardType? = nil) {
+    public init(type: AccountControllerStripeDashboardType? = nil) {
         self.type = type
     }
 }
 
-public struct AccountCreateControllerStripeDashboardType: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountControllerStripeDashboardType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2277,28 +2277,28 @@ public struct AccountCreateDocuments: StripeParams {
     /// verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement.
     /// Must be a document associated with the account’s primary active bank account that displays the last
     /// 4 digits of the account number, either a statement or a check.
-    public var bankAccountOwnershipVerification: AccountCreateDocumentsBankAccountOwnershipVerification?
+    public var bankAccountOwnershipVerification: AccountDocumentsBankAccountOwnershipVerification?
     /// One or more documents that demonstrate proof of a company's license to operate.
-    public var companyLicense: AccountCreateDocumentsCompanyLicense?
+    public var companyLicense: AccountDocumentsCompanyLicense?
     /// One or more documents showing the company's governing document (for example, a memorandum of
     /// association, constitution, or articles of association).
-    public var companyMemorandumOfAssociation: AccountCreateDocumentsCompanyMemorandumOfAssociation?
+    public var companyMemorandumOfAssociation: AccountDocumentsCompanyMemorandumOfAssociation?
     /// (Certain countries only) One or more documents showing the ministerial decree legalizing the
     /// company's establishment.
-    public var companyMinisterialDecree: AccountCreateDocumentsCompanyMinisterialDecree?
+    public var companyMinisterialDecree: AccountDocumentsCompanyMinisterialDecree?
     /// One or more documents that demonstrate proof of a company's registration with the appropriate local
     /// authorities.
-    public var companyRegistrationVerification: AccountCreateDocumentsCompanyRegistrationVerification?
+    public var companyRegistrationVerification: AccountDocumentsCompanyRegistrationVerification?
     /// One or more documents that demonstrate proof of a company's tax ID.
-    public var companyTaxIdVerification: AccountCreateDocumentsCompanyTaxIdVerification?
+    public var companyTaxIdVerification: AccountDocumentsCompanyTaxIdVerification?
     /// One or more documents that demonstrate proof of address.
-    public var proofOfAddress: AccountCreateDocumentsProofOfAddress?
+    public var proofOfAddress: AccountDocumentsProofOfAddress?
     /// One or more documents that demonstrate proof of business presence.
-    public var proofOfBusinessPresence: AccountCreateDocumentsProofOfBusinessPresence?
+    public var proofOfBusinessPresence: AccountDocumentsProofOfBusinessPresence?
     /// One or more documents that demonstrate proof of ultimate beneficial ownership.
-    public var proofOfUltimateBeneficialOwnership: AccountCreateDocumentsProofOfUltimateBeneficialOwnership?
+    public var proofOfUltimateBeneficialOwnership: AccountDocumentsProofOfUltimateBeneficialOwnership?
 
-    public init(bankAccountOwnershipVerification: AccountCreateDocumentsBankAccountOwnershipVerification? = nil, companyLicense: AccountCreateDocumentsCompanyLicense? = nil, companyMemorandumOfAssociation: AccountCreateDocumentsCompanyMemorandumOfAssociation? = nil, companyMinisterialDecree: AccountCreateDocumentsCompanyMinisterialDecree? = nil, companyRegistrationVerification: AccountCreateDocumentsCompanyRegistrationVerification? = nil, companyTaxIdVerification: AccountCreateDocumentsCompanyTaxIdVerification? = nil, proofOfAddress: AccountCreateDocumentsProofOfAddress? = nil, proofOfBusinessPresence: AccountCreateDocumentsProofOfBusinessPresence? = nil, proofOfUltimateBeneficialOwnership: AccountCreateDocumentsProofOfUltimateBeneficialOwnership? = nil) {
+    public init(bankAccountOwnershipVerification: AccountDocumentsBankAccountOwnershipVerification? = nil, companyLicense: AccountDocumentsCompanyLicense? = nil, companyMemorandumOfAssociation: AccountDocumentsCompanyMemorandumOfAssociation? = nil, companyMinisterialDecree: AccountDocumentsCompanyMinisterialDecree? = nil, companyRegistrationVerification: AccountDocumentsCompanyRegistrationVerification? = nil, companyTaxIdVerification: AccountDocumentsCompanyTaxIdVerification? = nil, proofOfAddress: AccountDocumentsProofOfAddress? = nil, proofOfBusinessPresence: AccountDocumentsProofOfBusinessPresence? = nil, proofOfUltimateBeneficialOwnership: AccountDocumentsProofOfUltimateBeneficialOwnership? = nil) {
         self.bankAccountOwnershipVerification = bankAccountOwnershipVerification
         self.companyLicense = companyLicense
         self.companyMemorandumOfAssociation = companyMemorandumOfAssociation
@@ -2327,7 +2327,7 @@ public struct AccountCreateDocuments: StripeParams {
 /// verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement.
 /// Must be a document associated with the account’s primary active bank account that displays the last
 /// 4 digits of the account number, either a statement or a check.
-public struct AccountCreateDocumentsBankAccountOwnershipVerification: StripeParams {
+public struct AccountDocumentsBankAccountOwnershipVerification: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -2338,7 +2338,7 @@ public struct AccountCreateDocumentsBankAccountOwnershipVerification: StripePara
 }
 
 /// One or more documents that demonstrate proof of a company's license to operate.
-public struct AccountCreateDocumentsCompanyLicense: StripeParams {
+public struct AccountDocumentsCompanyLicense: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -2350,7 +2350,7 @@ public struct AccountCreateDocumentsCompanyLicense: StripeParams {
 
 /// One or more documents showing the company's governing document (for example, a memorandum of
 /// association, constitution, or articles of association).
-public struct AccountCreateDocumentsCompanyMemorandumOfAssociation: StripeParams {
+public struct AccountDocumentsCompanyMemorandumOfAssociation: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -2362,7 +2362,7 @@ public struct AccountCreateDocumentsCompanyMemorandumOfAssociation: StripeParams
 
 /// (Certain countries only) One or more documents showing the ministerial decree legalizing the
 /// company's establishment.
-public struct AccountCreateDocumentsCompanyMinisterialDecree: StripeParams {
+public struct AccountDocumentsCompanyMinisterialDecree: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -2374,7 +2374,7 @@ public struct AccountCreateDocumentsCompanyMinisterialDecree: StripeParams {
 
 /// One or more documents that demonstrate proof of a company's registration with the appropriate local
 /// authorities.
-public struct AccountCreateDocumentsCompanyRegistrationVerification: StripeParams {
+public struct AccountDocumentsCompanyRegistrationVerification: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -2385,7 +2385,7 @@ public struct AccountCreateDocumentsCompanyRegistrationVerification: StripeParam
 }
 
 /// One or more documents that demonstrate proof of a company's tax ID.
-public struct AccountCreateDocumentsCompanyTaxIdVerification: StripeParams {
+public struct AccountDocumentsCompanyTaxIdVerification: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -2396,7 +2396,7 @@ public struct AccountCreateDocumentsCompanyTaxIdVerification: StripeParams {
 }
 
 /// One or more documents that demonstrate proof of address.
-public struct AccountCreateDocumentsProofOfAddress: StripeParams {
+public struct AccountDocumentsProofOfAddress: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -2407,7 +2407,7 @@ public struct AccountCreateDocumentsProofOfAddress: StripeParams {
 }
 
 /// One or more documents that demonstrate proof of business presence.
-public struct AccountCreateDocumentsProofOfBusinessPresence: StripeParams {
+public struct AccountDocumentsProofOfBusinessPresence: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -2418,21 +2418,21 @@ public struct AccountCreateDocumentsProofOfBusinessPresence: StripeParams {
 }
 
 /// One or more documents that demonstrate proof of ultimate beneficial ownership.
-public struct AccountCreateDocumentsProofOfUltimateBeneficialOwnership: StripeParams {
+public struct AccountDocumentsProofOfUltimateBeneficialOwnership: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
     /// Information regarding the person signing the document if applicable.
-    public var signer: AccountCreateDocumentsProofOfUltimateBeneficialOwnershipSigner?
+    public var signer: AccountDocumentsProofOfUltimateBeneficialOwnershipSigner?
 
-    public init(files: [String]? = nil, signer: AccountCreateDocumentsProofOfUltimateBeneficialOwnershipSigner? = nil) {
+    public init(files: [String]? = nil, signer: AccountDocumentsProofOfUltimateBeneficialOwnershipSigner? = nil) {
         self.files = files
         self.signer = signer
     }
 }
 
 /// Information regarding the person signing the document if applicable.
-public struct AccountCreateDocumentsProofOfUltimateBeneficialOwnershipSigner: StripeParams {
+public struct AccountDocumentsProofOfUltimateBeneficialOwnershipSigner: StripeParams {
     /// The token of the person signing the document, if applicable.
     public var person: String?
 
@@ -2442,7 +2442,7 @@ public struct AccountCreateDocumentsProofOfUltimateBeneficialOwnershipSigner: St
 }
 
 /// A hash of account group type to tokens. These are account groups this account should be added to.
-public struct AccountCreateGroups: ClearableParams {
+public struct AccountGroups: ClearableParams {
     /// The group the account is in to determine their payments pricing, and null if the account is on
     /// customized pricing. [See the Platform pricing tool
     /// documentation](https://docs.stripe.com/connect/platform-pricing-tools) for details.
@@ -2470,15 +2470,15 @@ public struct AccountCreateGroups: ClearableParams {
 /// Session](/api/account_sessions), this property can only be updated for accounts where
 /// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
 /// is `application`, which includes Custom accounts.
-public struct AccountCreateIndividual: ClearableParams {
+public struct AccountIndividual: ClearableParams {
     /// The individual's primary address.
-    public var address: AccountCreateIndividualAddress?
+    public var address: AccountIndividualAddress?
     /// The Kana variation of the individual's primary address (Japan only).
-    public var addressKana: AccountCreateIndividualAddressKana?
+    public var addressKana: AccountIndividualAddressKana?
     /// The Kanji variation of the individual's primary address (Japan only).
-    public var addressKanji: AccountCreateIndividualAddressKanji?
+    public var addressKanji: AccountIndividualAddressKanji?
     /// The individual's date of birth.
-    public var dob: AccountCreateIndividualDob?
+    public var dob: AccountIndividualDob?
     /// The individual's email address.
     public var email: String?
     /// The individual's first name.
@@ -2519,19 +2519,19 @@ public struct AccountCreateIndividual: ClearableParams {
     /// Indicates if the person or any of their representatives, family members, or other closely related
     /// persons, declares that they hold or have held an important public job or function, in any
     /// jurisdiction.
-    public var politicalExposure: AccountCreateIndividualPoliticalExposure?
+    public var politicalExposure: AccountIndividualPoliticalExposure?
     /// The individual's registered address.
-    public var registeredAddress: AccountCreateIndividualRegisteredAddress?
+    public var registeredAddress: AccountIndividualRegisteredAddress?
     /// Describes the person’s relationship to the account.
-    public var relationship: AccountCreateIndividualRelationship?
+    public var relationship: AccountIndividualRelationship?
     /// The last four digits of the individual's Social Security Number (U.S. only).
     public var ssnLast4: String?
     /// The individual's verification document information.
-    public var verification: AccountCreateIndividualVerification?
+    public var verification: AccountIndividualVerification?
     /// Fields to send empty, which clears them: `params.clear(.dob)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: AccountCreateIndividualAddress? = nil, addressKana: AccountCreateIndividualAddressKana? = nil, addressKanji: AccountCreateIndividualAddressKanji? = nil, dob: AccountCreateIndividualDob? = nil, email: String? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, phone: String? = nil, politicalExposure: AccountCreateIndividualPoliticalExposure? = nil, registeredAddress: AccountCreateIndividualRegisteredAddress? = nil, relationship: AccountCreateIndividualRelationship? = nil, ssnLast4: String? = nil, verification: AccountCreateIndividualVerification? = nil) {
+    public init(address: AccountIndividualAddress? = nil, addressKana: AccountIndividualAddressKana? = nil, addressKanji: AccountIndividualAddressKanji? = nil, dob: AccountIndividualDob? = nil, email: String? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, phone: String? = nil, politicalExposure: AccountIndividualPoliticalExposure? = nil, registeredAddress: AccountIndividualRegisteredAddress? = nil, relationship: AccountIndividualRelationship? = nil, ssnLast4: String? = nil, verification: AccountIndividualVerification? = nil) {
         self.address = address
         self.addressKana = addressKana
         self.addressKanji = addressKanji
@@ -2593,7 +2593,7 @@ public struct AccountCreateIndividual: ClearableParams {
 }
 
 /// The individual's primary address.
-public struct AccountCreateIndividualAddress: StripeParams {
+public struct AccountIndividualAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -2627,7 +2627,7 @@ public struct AccountCreateIndividualAddress: StripeParams {
 }
 
 /// The Kana variation of the individual's primary address (Japan only).
-public struct AccountCreateIndividualAddressKana: StripeParams {
+public struct AccountIndividualAddressKana: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -2665,7 +2665,7 @@ public struct AccountCreateIndividualAddressKana: StripeParams {
 }
 
 /// The Kanji variation of the individual's primary address (Japan only).
-public struct AccountCreateIndividualAddressKanji: StripeParams {
+public struct AccountIndividualAddressKanji: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -2702,7 +2702,7 @@ public struct AccountCreateIndividualAddressKanji: StripeParams {
     }
 }
 
-public struct AccountCreateIndividualDob: StripeParams {
+public struct AccountIndividualDob: StripeParams {
     /// The day of birth, between 1 and 31.
     public var day: Int
     /// The month of birth, between 1 and 12.
@@ -2717,7 +2717,7 @@ public struct AccountCreateIndividualDob: StripeParams {
     }
 }
 
-public struct AccountCreateIndividualPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountIndividualPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2729,7 +2729,7 @@ public struct AccountCreateIndividualPoliticalExposure: RawRepresentable, Codabl
 }
 
 /// The individual's registered address.
-public struct AccountCreateIndividualRegisteredAddress: StripeParams {
+public struct AccountIndividualRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -2763,7 +2763,7 @@ public struct AccountCreateIndividualRegisteredAddress: StripeParams {
 }
 
 /// Describes the person’s relationship to the account.
-public struct AccountCreateIndividualRelationship: ClearableParams {
+public struct AccountIndividualRelationship: ClearableParams {
     /// Whether the person is a director of the account's legal entity. Directors are typically members of
     /// the governing board of the company, or responsible for ensuring the company meets its regulatory
     /// obligations.
@@ -2803,14 +2803,14 @@ public struct AccountCreateIndividualRelationship: ClearableParams {
 }
 
 /// The individual's verification document information.
-public struct AccountCreateIndividualVerification: StripeParams {
+public struct AccountIndividualVerification: StripeParams {
     /// A document showing address, either a passport, local ID card, or utility bill from a well-known
     /// utility company.
-    public var additionalDocument: AccountCreateIndividualVerificationAdditionalDocument?
+    public var additionalDocument: AccountIndividualVerificationAdditionalDocument?
     /// An identifying document, either a passport or local ID card.
-    public var document: AccountCreateIndividualVerificationDocument?
+    public var document: AccountIndividualVerificationDocument?
 
-    public init(additionalDocument: AccountCreateIndividualVerificationAdditionalDocument? = nil, document: AccountCreateIndividualVerificationDocument? = nil) {
+    public init(additionalDocument: AccountIndividualVerificationAdditionalDocument? = nil, document: AccountIndividualVerificationDocument? = nil) {
         self.additionalDocument = additionalDocument
         self.document = document
     }
@@ -2823,7 +2823,7 @@ public struct AccountCreateIndividualVerification: StripeParams {
 
 /// A document showing address, either a passport, local ID card, or utility bill from a well-known
 /// utility company.
-public struct AccountCreateIndividualVerificationAdditionalDocument: StripeParams {
+public struct AccountIndividualVerificationAdditionalDocument: StripeParams {
     /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
     /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -2840,7 +2840,7 @@ public struct AccountCreateIndividualVerificationAdditionalDocument: StripeParam
 }
 
 /// An identifying document, either a passport or local ID card.
-public struct AccountCreateIndividualVerificationDocument: StripeParams {
+public struct AccountIndividualVerificationDocument: StripeParams {
     /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
     /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -2859,28 +2859,28 @@ public struct AccountCreateIndividualVerificationDocument: StripeParams {
 /// Options for customizing how the account functions within Stripe.
 public struct AccountCreateSettings: StripeParams {
     /// Settings specific to Bacs Direct Debit.
-    public var bacsDebitPayments: AccountCreateSettingsBacsDebitPayments?
+    public var bacsDebitPayments: AccountSettingsBacsDebitPayments?
     /// Settings used to apply the account's branding to email receipts, invoices, Checkout, and other
     /// products.
-    public var branding: AccountCreateSettingsBranding?
+    public var branding: AccountSettingsBranding?
     /// Settings specific to the account's use of the Card Issuing product.
-    public var cardIssuing: AccountCreateSettingsCardIssuing?
+    public var cardIssuing: AccountSettingsCardIssuing?
     /// Settings specific to card charging on the account.
-    public var cardPayments: AccountCreateSettingsCardPayments?
+    public var cardPayments: AccountSettingsCardPayments?
     /// Settings specific to the account’s use of Invoices.
     public var invoices: AccountCreateSettingsInvoices?
     /// Settings that apply across payment methods for charging on the account.
-    public var payments: AccountCreateSettingsPayments?
+    public var payments: AccountSettingsPayments?
     /// Settings specific to the account's payouts.
-    public var payouts: AccountCreateSettingsPayouts?
+    public var payouts: AccountSettingsPayouts?
     /// Settings specific to the PayPay payments method.
-    public var paypayPayments: AccountCreateSettingsPaypayPayments?
+    public var paypayPayments: AccountSettingsPaypayPayments?
     /// Settings specific to SEPA Direct Debit payments.
-    public var sepaDebitPayments: AccountCreateSettingsSepaDebitPayments?
+    public var sepaDebitPayments: AccountSettingsSepaDebitPayments?
     /// Settings specific to the account's Treasury FinancialAccounts.
-    public var treasury: AccountCreateSettingsTreasury?
+    public var treasury: AccountSettingsTreasury?
 
-    public init(bacsDebitPayments: AccountCreateSettingsBacsDebitPayments? = nil, branding: AccountCreateSettingsBranding? = nil, cardIssuing: AccountCreateSettingsCardIssuing? = nil, cardPayments: AccountCreateSettingsCardPayments? = nil, invoices: AccountCreateSettingsInvoices? = nil, payments: AccountCreateSettingsPayments? = nil, payouts: AccountCreateSettingsPayouts? = nil, paypayPayments: AccountCreateSettingsPaypayPayments? = nil, sepaDebitPayments: AccountCreateSettingsSepaDebitPayments? = nil, treasury: AccountCreateSettingsTreasury? = nil) {
+    public init(bacsDebitPayments: AccountSettingsBacsDebitPayments? = nil, branding: AccountSettingsBranding? = nil, cardIssuing: AccountSettingsCardIssuing? = nil, cardPayments: AccountSettingsCardPayments? = nil, invoices: AccountCreateSettingsInvoices? = nil, payments: AccountSettingsPayments? = nil, payouts: AccountSettingsPayouts? = nil, paypayPayments: AccountSettingsPaypayPayments? = nil, sepaDebitPayments: AccountSettingsSepaDebitPayments? = nil, treasury: AccountSettingsTreasury? = nil) {
         self.bacsDebitPayments = bacsDebitPayments
         self.branding = branding
         self.cardIssuing = cardIssuing
@@ -2908,7 +2908,7 @@ public struct AccountCreateSettings: StripeParams {
 }
 
 /// Settings specific to Bacs Direct Debit.
-public struct AccountCreateSettingsBacsDebitPayments: StripeParams {
+public struct AccountSettingsBacsDebitPayments: StripeParams {
     /// The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this
     /// name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name
     /// of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right
@@ -2928,7 +2928,7 @@ public struct AccountCreateSettingsBacsDebitPayments: StripeParams {
 
 /// Settings used to apply the account's branding to email receipts, invoices, Checkout, and other
 /// products.
-public struct AccountCreateSettingsBranding: StripeParams {
+public struct AccountSettingsBranding: StripeParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be
     /// square and at least 128px x 128px.
     public var icon: String?
@@ -2957,12 +2957,12 @@ public struct AccountCreateSettingsBranding: StripeParams {
 }
 
 /// Settings specific to the account's use of the Card Issuing product.
-public struct AccountCreateSettingsCardIssuing: StripeParams {
+public struct AccountSettingsCardIssuing: StripeParams {
     /// Details on the account's acceptance of the [Stripe Issuing Terms and
     /// Disclosures](/issuing/connect/tos_acceptance).
-    public var tosAcceptance: AccountCreateSettingsCardIssuingTosAcceptance?
+    public var tosAcceptance: AccountSettingsCardIssuingTosAcceptance?
 
-    public init(tosAcceptance: AccountCreateSettingsCardIssuingTosAcceptance? = nil) {
+    public init(tosAcceptance: AccountSettingsCardIssuingTosAcceptance? = nil) {
         self.tosAcceptance = tosAcceptance
     }
 
@@ -2973,7 +2973,7 @@ public struct AccountCreateSettingsCardIssuing: StripeParams {
 
 /// Details on the account's acceptance of the [Stripe Issuing Terms and
 /// Disclosures](/issuing/connect/tos_acceptance).
-public struct AccountCreateSettingsCardIssuingTosAcceptance: ClearableParams {
+public struct AccountSettingsCardIssuingTosAcceptance: ClearableParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
     public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
@@ -3003,10 +3003,10 @@ public struct AccountCreateSettingsCardIssuingTosAcceptance: ClearableParams {
 }
 
 /// Settings specific to card charging on the account.
-public struct AccountCreateSettingsCardPayments: ClearableParams {
+public struct AccountSettingsCardPayments: ClearableParams {
     /// Automatically declines certain charge types regardless of whether the card issuer accepted or
     /// declined the charge.
-    public var declineOn: AccountCreateSettingsCardPaymentsDeclineOn?
+    public var declineOn: AccountSettingsCardPaymentsDeclineOn?
     /// The default text that appears on credit card statements when a charge is made. This field prefixes
     /// any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful
     /// for maximizing descriptor space for the dynamic portion.
@@ -3024,7 +3024,7 @@ public struct AccountCreateSettingsCardPayments: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.statementDescriptorPrefixKana)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(declineOn: AccountCreateSettingsCardPaymentsDeclineOn? = nil, statementDescriptorPrefix: String? = nil, statementDescriptorPrefixKana: String? = nil, statementDescriptorPrefixKanji: String? = nil) {
+    public init(declineOn: AccountSettingsCardPaymentsDeclineOn? = nil, statementDescriptorPrefix: String? = nil, statementDescriptorPrefixKana: String? = nil, statementDescriptorPrefixKanji: String? = nil) {
         self.declineOn = declineOn
         self.statementDescriptorPrefix = statementDescriptorPrefix
         self.statementDescriptorPrefixKana = statementDescriptorPrefixKana
@@ -3048,7 +3048,7 @@ public struct AccountCreateSettingsCardPayments: ClearableParams {
 
 /// Automatically declines certain charge types regardless of whether the card issuer accepted or
 /// declined the charge.
-public struct AccountCreateSettingsCardPaymentsDeclineOn: StripeParams {
+public struct AccountSettingsCardPaymentsDeclineOn: StripeParams {
     /// Whether Stripe automatically declines charges with an incorrect ZIP or postal code. This setting
     /// only applies when a ZIP or postal code is provided and they fail bank verification.
     public var avsFailure: Bool?
@@ -3072,9 +3072,9 @@ public struct AccountCreateSettingsInvoices: StripeParams {
     /// Whether to save the payment method after a payment is completed for a one-time invoice or a
     /// subscription invoice when the customer already has a default payment method on the hosted invoice
     /// page.
-    public var hostedPaymentMethodSave: AccountCreateSettingsInvoicesHostedPaymentMethodSave?
+    public var hostedPaymentMethodSave: AccountSettingsInvoicesHostedPaymentMethodSave?
 
-    public init(hostedPaymentMethodSave: AccountCreateSettingsInvoicesHostedPaymentMethodSave? = nil) {
+    public init(hostedPaymentMethodSave: AccountSettingsInvoicesHostedPaymentMethodSave? = nil) {
         self.hostedPaymentMethodSave = hostedPaymentMethodSave
     }
 
@@ -3083,7 +3083,7 @@ public struct AccountCreateSettingsInvoices: StripeParams {
     }
 }
 
-public struct AccountCreateSettingsInvoicesHostedPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountSettingsInvoicesHostedPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3096,7 +3096,7 @@ public struct AccountCreateSettingsInvoicesHostedPaymentMethodSave: RawRepresent
 }
 
 /// Settings that apply across payment methods for charging on the account.
-public struct AccountCreateSettingsPayments: StripeParams {
+public struct AccountSettingsPayments: StripeParams {
     /// The default text that appears on statements for non-card charges outside of Japan. For card charges,
     /// if you don't set a `statement_descriptor_prefix`, this text is also used as the statement descriptor
     /// prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement
@@ -3128,19 +3128,19 @@ public struct AccountCreateSettingsPayments: StripeParams {
 }
 
 /// Settings specific to the account's payouts.
-public struct AccountCreateSettingsPayouts: StripeParams {
+public struct AccountSettingsPayouts: StripeParams {
     /// A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank
     /// account. For details, see [Understanding Connect Account Balances](/connect/account-balances).
     public var debitNegativeBalances: Bool?
     /// Details on when funds from charges are available, and when they are paid out to an external account.
     /// For details, see our [Setting Bank and Debit Card
     /// Payouts](/connect/bank-transfers#payout-information) documentation.
-    public var schedule: AccountCreateSettingsPayoutsSchedule?
+    public var schedule: AccountSettingsPayoutsSchedule?
     /// The text that appears on the bank account statement for payouts. If not set, this defaults to the
     /// platform's bank descriptor as set in the Dashboard.
     public var statementDescriptor: String?
 
-    public init(debitNegativeBalances: Bool? = nil, schedule: AccountCreateSettingsPayoutsSchedule? = nil, statementDescriptor: String? = nil) {
+    public init(debitNegativeBalances: Bool? = nil, schedule: AccountSettingsPayoutsSchedule? = nil, statementDescriptor: String? = nil) {
         self.debitNegativeBalances = debitNegativeBalances
         self.schedule = schedule
         self.statementDescriptor = statementDescriptor
@@ -3156,15 +3156,15 @@ public struct AccountCreateSettingsPayouts: StripeParams {
 /// Details on when funds from charges are available, and when they are paid out to an external account.
 /// For details, see our [Setting Bank and Debit Card
 /// Payouts](/connect/bank-transfers#payout-information) documentation.
-public struct AccountCreateSettingsPayoutsSchedule: StripeParams {
+public struct AccountSettingsPayoutsSchedule: StripeParams {
     /// The number of days charge funds are held before being paid out. May also be set to `minimum`,
     /// representing the lowest available value for the account country. Default is `minimum`. The
     /// `delay_days` parameter remains at the last configured value if `interval` is `manual`. [Learn more
     /// about controlling payout delay days](/connect/manage-payout-schedule).
-    public var delayDays: AccountCreateSettingsPayoutsScheduleDelayDays?
+    public var delayDays: AccountSettingsPayoutsScheduleDelayDays?
     /// How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`.
     /// Default is `daily`.
-    public var interval: AccountCreateSettingsPayoutsScheduleInterval?
+    public var interval: AccountSettingsPayoutsScheduleInterval?
     /// The day of the month when available funds are paid out, specified as a number between 1--31. Payouts
     /// nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a
     /// shorter month. Required and applicable only if `interval` is `monthly`.
@@ -3176,12 +3176,12 @@ public struct AccountCreateSettingsPayoutsSchedule: StripeParams {
     public var monthlyPayoutDays: [Int]?
     /// The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc.
     /// Required and applicable only if `interval` is `weekly`.
-    public var weeklyAnchor: AccountCreateSettingsPayoutsScheduleWeeklyAnchor?
+    public var weeklyAnchor: AccountSettingsPayoutsScheduleWeeklyAnchor?
     /// The days of the week when available funds are paid out, specified as an array, e.g., [`monday`,
     /// `tuesday`]. Required and applicable only if `interval` is `weekly`.
-    public var weeklyPayoutDays: [AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays]?
+    public var weeklyPayoutDays: [AccountSettingsPayoutsScheduleWeeklyPayoutDays]?
 
-    public init(delayDays: AccountCreateSettingsPayoutsScheduleDelayDays? = nil, interval: AccountCreateSettingsPayoutsScheduleInterval? = nil, monthlyAnchor: Int? = nil, monthlyPayoutDays: [Int]? = nil, weeklyAnchor: AccountCreateSettingsPayoutsScheduleWeeklyAnchor? = nil, weeklyPayoutDays: [AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays]? = nil) {
+    public init(delayDays: AccountSettingsPayoutsScheduleDelayDays? = nil, interval: AccountSettingsPayoutsScheduleInterval? = nil, monthlyAnchor: Int? = nil, monthlyPayoutDays: [Int]? = nil, weeklyAnchor: AccountSettingsPayoutsScheduleWeeklyAnchor? = nil, weeklyPayoutDays: [AccountSettingsPayoutsScheduleWeeklyPayoutDays]? = nil) {
         self.delayDays = delayDays
         self.interval = interval
         self.monthlyAnchor = monthlyAnchor
@@ -3201,7 +3201,7 @@ public struct AccountCreateSettingsPayoutsSchedule: StripeParams {
 }
 
 /// One of the forms `delay_days` accepts.
-public enum AccountCreateSettingsPayoutsScheduleDelayDays: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum AccountSettingsPayoutsScheduleDelayDays: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `minimum`
     case minimum
     case value(Int)
@@ -3217,7 +3217,7 @@ public enum AccountCreateSettingsPayoutsScheduleDelayDays: Codable, Sendable, Ex
             }
         }
         if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of AccountCreateSettingsPayoutsScheduleDelayDays matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of AccountSettingsPayoutsScheduleDelayDays matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -3232,7 +3232,7 @@ public enum AccountCreateSettingsPayoutsScheduleDelayDays: Codable, Sendable, Ex
     }
 }
 
-public struct AccountCreateSettingsPayoutsScheduleInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountSettingsPayoutsScheduleInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3245,7 +3245,7 @@ public struct AccountCreateSettingsPayoutsScheduleInterval: RawRepresentable, Co
     public static var weekly: Self { .init(rawValue: "weekly") }
 }
 
-public struct AccountCreateSettingsPayoutsScheduleWeeklyAnchor: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountSettingsPayoutsScheduleWeeklyAnchor: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3261,7 +3261,7 @@ public struct AccountCreateSettingsPayoutsScheduleWeeklyAnchor: RawRepresentable
     public static var wednesday: Self { .init(rawValue: "wednesday") }
 }
 
-public struct AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountSettingsPayoutsScheduleWeeklyPayoutDays: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3276,16 +3276,16 @@ public struct AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays: RawRepresent
 }
 
 /// Settings specific to the PayPay payments method.
-public struct AccountCreateSettingsPaypayPayments: StripeParams {
+public struct AccountSettingsPaypayPayments: StripeParams {
     /// Additional files that are required to support the onboarding process of your business.
     public var additionalFiles: [String]?
     /// The type of goods your business sells. Use `digital_content` if you sell digital content. Use
     /// `other` for all other types of goods or services.
-    public var goodsType: AccountCreateSettingsPaypayPaymentsGoodsType?
+    public var goodsType: AccountSettingsPaypayPaymentsGoodsType?
     /// Details regarding your business's website.
-    public var site: AccountCreateSettingsPaypayPaymentsSite?
+    public var site: AccountSettingsPaypayPaymentsSite?
 
-    public init(additionalFiles: [String]? = nil, goodsType: AccountCreateSettingsPaypayPaymentsGoodsType? = nil, site: AccountCreateSettingsPaypayPaymentsSite? = nil) {
+    public init(additionalFiles: [String]? = nil, goodsType: AccountSettingsPaypayPaymentsGoodsType? = nil, site: AccountSettingsPaypayPaymentsSite? = nil) {
         self.additionalFiles = additionalFiles
         self.goodsType = goodsType
         self.site = site
@@ -3298,7 +3298,7 @@ public struct AccountCreateSettingsPaypayPayments: StripeParams {
     }
 }
 
-public struct AccountCreateSettingsPaypayPaymentsGoodsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountSettingsPaypayPaymentsGoodsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3310,17 +3310,17 @@ public struct AccountCreateSettingsPaypayPaymentsGoodsType: RawRepresentable, Co
 }
 
 /// Details regarding your business's website.
-public struct AccountCreateSettingsPaypayPaymentsSite: StripeParams {
+public struct AccountSettingsPaypayPaymentsSite: StripeParams {
     /// Additional information about your business's website.
     public var accessible: [String: String]?
     /// Additional information about your business's website.
-    public var inDevelopment: AccountCreateSettingsPaypayPaymentsSiteInDevelopment?
+    public var inDevelopment: AccountSettingsPaypayPaymentsSiteInDevelopment?
     /// Additional information about your business's website.
-    public var restricted: AccountCreateSettingsPaypayPaymentsSiteRestricted?
+    public var restricted: AccountSettingsPaypayPaymentsSiteRestricted?
     /// The status of your business's website.
-    public var type: AccountCreateSettingsPaypayPaymentsSiteType?
+    public var type: AccountSettingsPaypayPaymentsSiteType?
 
-    public init(accessible: [String: String]? = nil, inDevelopment: AccountCreateSettingsPaypayPaymentsSiteInDevelopment? = nil, restricted: AccountCreateSettingsPaypayPaymentsSiteRestricted? = nil, type: AccountCreateSettingsPaypayPaymentsSiteType? = nil) {
+    public init(accessible: [String: String]? = nil, inDevelopment: AccountSettingsPaypayPaymentsSiteInDevelopment? = nil, restricted: AccountSettingsPaypayPaymentsSiteRestricted? = nil, type: AccountSettingsPaypayPaymentsSiteType? = nil) {
         self.accessible = accessible
         self.inDevelopment = inDevelopment
         self.restricted = restricted
@@ -3336,7 +3336,7 @@ public struct AccountCreateSettingsPaypayPaymentsSite: StripeParams {
 }
 
 /// Additional information about your business's website.
-public struct AccountCreateSettingsPaypayPaymentsSiteInDevelopment: StripeParams {
+public struct AccountSettingsPaypayPaymentsSiteInDevelopment: StripeParams {
     /// The password needed to access your business's website.
     public var password: String
     /// The username needed to access your business's website.
@@ -3349,7 +3349,7 @@ public struct AccountCreateSettingsPaypayPaymentsSiteInDevelopment: StripeParams
 }
 
 /// Additional information about your business's website.
-public struct AccountCreateSettingsPaypayPaymentsSiteRestricted: StripeParams {
+public struct AccountSettingsPaypayPaymentsSiteRestricted: StripeParams {
     /// The file explaining the payment flow for your business.
     public var paymentFlowFile: String?
 
@@ -3362,7 +3362,7 @@ public struct AccountCreateSettingsPaypayPaymentsSiteRestricted: StripeParams {
     }
 }
 
-public struct AccountCreateSettingsPaypayPaymentsSiteType: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountSettingsPaypayPaymentsSiteType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3375,7 +3375,7 @@ public struct AccountCreateSettingsPaypayPaymentsSiteType: RawRepresentable, Cod
 }
 
 /// Settings specific to SEPA Direct Debit payments.
-public struct AccountCreateSettingsSepaDebitPayments: StripeParams {
+public struct AccountSettingsSepaDebitPayments: StripeParams {
     /// The business creditor id for european payments.
     public var creditorId: String?
 
@@ -3389,11 +3389,11 @@ public struct AccountCreateSettingsSepaDebitPayments: StripeParams {
 }
 
 /// Settings specific to the account's Treasury FinancialAccounts.
-public struct AccountCreateSettingsTreasury: StripeParams {
+public struct AccountSettingsTreasury: StripeParams {
     /// Details on the account's acceptance of the Stripe Treasury Services Agreement.
-    public var tosAcceptance: AccountCreateSettingsTreasuryTosAcceptance?
+    public var tosAcceptance: AccountSettingsTreasuryTosAcceptance?
 
-    public init(tosAcceptance: AccountCreateSettingsTreasuryTosAcceptance? = nil) {
+    public init(tosAcceptance: AccountSettingsTreasuryTosAcceptance? = nil) {
         self.tosAcceptance = tosAcceptance
     }
 
@@ -3403,7 +3403,7 @@ public struct AccountCreateSettingsTreasury: StripeParams {
 }
 
 /// Details on the account's acceptance of the Stripe Treasury Services Agreement.
-public struct AccountCreateSettingsTreasuryTosAcceptance: ClearableParams {
+public struct AccountSettingsTreasuryTosAcceptance: ClearableParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
     public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
@@ -3476,7 +3476,7 @@ public struct AccountCreateType: RawRepresentable, Codable, Hashable, Sendable {
     public static var standard: Self { .init(rawValue: "standard") }
 }
 
-public struct AccountRejectReason: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountReason: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3492,7 +3492,7 @@ public struct AccountRejectReason: RawRepresentable, Codable, Hashable, Sendable
     public static var termsOfService: Self { .init(rawValue: "terms_of_service") }
 }
 
-public struct AccountRejectPayoutsAction: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountPayoutsAction: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3506,7 +3506,7 @@ public struct AccountRejectPayoutsAction: RawRepresentable, Codable, Hashable, S
 /// Business information about the account.
 public struct AccountUpdateBusinessProfile: ClearableParams {
     /// The applicant's gross annual revenue for its preceding fiscal year.
-    public var annualRevenue: AccountUpdateBusinessProfileAnnualRevenue?
+    public var annualRevenue: AccountBusinessProfileAnnualRevenue?
     /// An estimated upper bound of employees, contractors, vendors, etc. currently working for the
     /// business.
     public var estimatedWorkerCount: Int?
@@ -3514,9 +3514,9 @@ public struct AccountUpdateBusinessProfile: ClearableParams {
     /// businesses based on the goods or services they provide.
     public var mcc: String?
     /// Whether the business is a minority-owned, women-owned, and/or LGBTQI+ -owned business.
-    public var minorityOwnedBusinessDesignation: [AccountUpdateBusinessProfileMinorityOwnedBusinessDesignation]?
+    public var minorityOwnedBusinessDesignation: [AccountBusinessProfileMinorityOwnedBusinessDesignation]?
     /// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
-    public var monthlyEstimatedRevenue: AccountUpdateBusinessProfileMonthlyEstimatedRevenue?
+    public var monthlyEstimatedRevenue: AccountBusinessProfileMonthlyEstimatedRevenue?
     /// The customer-facing business name.
     public var name: String?
     /// Internal-only description of the product sold by, or service provided by, the business. Used by
@@ -3526,7 +3526,7 @@ public struct AccountUpdateBusinessProfile: ClearableParams {
     /// Act. Only used for accounts in Japan.
     public var specifiedCommercialTransactionsActUrl: String?
     /// A publicly available mailing address for sending support issues to.
-    public var supportAddress: AccountUpdateBusinessProfileSupportAddress?
+    public var supportAddress: AccountBusinessProfileSupportAddress?
     /// A publicly available email address for sending support issues to.
     public var supportEmail: String?
     /// A publicly available phone number to call with support issues.
@@ -3538,7 +3538,7 @@ public struct AccountUpdateBusinessProfile: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.specifiedCommercialTransactionsActUrl)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(annualRevenue: AccountUpdateBusinessProfileAnnualRevenue? = nil, estimatedWorkerCount: Int? = nil, mcc: String? = nil, minorityOwnedBusinessDesignation: [AccountUpdateBusinessProfileMinorityOwnedBusinessDesignation]? = nil, monthlyEstimatedRevenue: AccountUpdateBusinessProfileMonthlyEstimatedRevenue? = nil, name: String? = nil, productDescription: String? = nil, specifiedCommercialTransactionsActUrl: String? = nil, supportAddress: AccountUpdateBusinessProfileSupportAddress? = nil, supportEmail: String? = nil, supportPhone: String? = nil, supportUrl: String? = nil, url: String? = nil) {
+    public init(annualRevenue: AccountBusinessProfileAnnualRevenue? = nil, estimatedWorkerCount: Int? = nil, mcc: String? = nil, minorityOwnedBusinessDesignation: [AccountBusinessProfileMinorityOwnedBusinessDesignation]? = nil, monthlyEstimatedRevenue: AccountBusinessProfileMonthlyEstimatedRevenue? = nil, name: String? = nil, productDescription: String? = nil, specifiedCommercialTransactionsActUrl: String? = nil, supportAddress: AccountBusinessProfileSupportAddress? = nil, supportEmail: String? = nil, supportPhone: String? = nil, supportUrl: String? = nil, url: String? = nil) {
         self.annualRevenue = annualRevenue
         self.estimatedWorkerCount = estimatedWorkerCount
         self.mcc = mcc
@@ -3575,94 +3575,6 @@ public struct AccountUpdateBusinessProfile: ClearableParams {
     public enum ClearableField: String, StripeClearableField {
         case specifiedCommercialTransactionsActUrl = "specified_commercial_transactions_act_url"
         case supportUrl = "support_url"
-    }
-}
-
-/// The applicant's gross annual revenue for its preceding fiscal year.
-public struct AccountUpdateBusinessProfileAnnualRevenue: StripeParams {
-    /// A non-negative integer representing the amount in the [smallest currency
-    /// unit](/currencies#zero-decimal).
-    public var amount: Int
-    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-    /// Must be a [supported currency](https://stripe.com/docs/currencies).
-    public var currency: String
-    /// The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of
-    /// December, 2023.
-    public var fiscalYearEnd: String
-
-    public init(amount: Int, currency: String, fiscalYearEnd: String) {
-        self.amount = amount
-        self.currency = currency
-        self.fiscalYearEnd = fiscalYearEnd
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case currency
-        case fiscalYearEnd = "fiscal_year_end"
-    }
-}
-
-public struct AccountUpdateBusinessProfileMinorityOwnedBusinessDesignation: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var lgbtqiOwnedBusiness: Self { .init(rawValue: "lgbtqi_owned_business") }
-    public static var minorityOwnedBusiness: Self { .init(rawValue: "minority_owned_business") }
-    public static var noneOfTheseApply: Self { .init(rawValue: "none_of_these_apply") }
-    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
-    public static var womenOwnedBusiness: Self { .init(rawValue: "women_owned_business") }
-}
-
-/// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
-public struct AccountUpdateBusinessProfileMonthlyEstimatedRevenue: StripeParams {
-    /// A non-negative integer representing how much to charge in the [smallest currency
-    /// unit](/currencies#zero-decimal).
-    public var amount: Int
-    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-    /// Must be a [supported currency](https://stripe.com/docs/currencies).
-    public var currency: String
-
-    public init(amount: Int, currency: String) {
-        self.amount = amount
-        self.currency = currency
-    }
-}
-
-/// A publicly available mailing address for sending support issues to.
-public struct AccountUpdateBusinessProfileSupportAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
     }
 }
 
@@ -4814,551 +4726,37 @@ public struct AccountUpdateCapabilitiesZipPayments: StripeParams {
     }
 }
 
-/// Information about the company or business. This field is available for any `business_type`. Once you
-/// create an [Account Link](/api/account_links) or [Account Session](/api/account_sessions), this
-/// property can only be updated for accounts where
-/// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
-/// is `application`, which includes Custom accounts.
-public struct AccountUpdateCompany: ClearableParams {
-    /// The company's primary address.
-    public var address: AccountUpdateCompanyAddress?
-    /// The Kana variation of the company's primary address (Japan only).
-    public var addressKana: AccountUpdateCompanyAddressKana?
-    /// The Kanji variation of the company's primary address (Japan only).
-    public var addressKanji: AccountUpdateCompanyAddressKanji?
-    /// The location where the business is administered.
-    public var administrativeAddress: AccountUpdateCompanyAdministrativeAddress?
-    /// Whether the company's directors have been provided. Set this Boolean to `true` after creating all
-    /// the company's directors with [the Persons API](/api/persons) for accounts with a
-    /// `relationship.director` requirement. This value is not automatically set to `true` after creating
-    /// directors, so it needs to be updated to indicate all directors have been provided.
-    public var directorsProvided: Bool?
-    /// This hash is used to attest that the directors information provided to Stripe is both current and
-    /// correct.
-    public var directorshipDeclaration: AccountUpdateCompanyDirectorshipDeclaration?
-    /// Whether the company's executives have been provided. Set this Boolean to `true` after creating all
-    /// the company's executives with [the Persons API](/api/persons) for accounts with a
-    /// `relationship.executive` requirement.
-    public var executivesProvided: Bool?
-    /// The export license ID number of the company, also referred as Import Export Code (India only).
-    public var exportLicenseId: String?
-    /// The purpose code to use for export transactions (India only).
-    public var exportPurposeCode: String?
-    /// The company's legal name.
-    public var name: String?
-    /// The Kana variation of the company's legal name (Japan only).
-    public var nameKana: String?
-    /// The Kanji variation of the company's legal name (Japan only).
-    public var nameKanji: String?
-    /// Whether the company's owners have been provided. Set this Boolean to `true` after creating all the
-    /// company's owners with [the Persons API](/api/persons) for accounts with a `relationship.owner`
-    /// requirement.
-    public var ownersProvided: Bool?
-    /// This hash is used to attest that the beneficial owner information provided to Stripe is both current
-    /// and correct.
-    public var ownershipDeclaration: AccountUpdateCompanyOwnershipDeclaration?
-    /// This value is used to determine if a business is exempt from providing ultimate beneficial owners.
-    /// See [this support
-    /// article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and
-    /// [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api)
-    /// for more details.
-    public var ownershipExemptionReason: AccountUpdateCompanyOwnershipExemptionReason?
-    /// The company's phone number (used for verification).
-    public var phone: String?
-    /// A location where the business has a meaningful physical operating presence.
-    public var physicalAddress: AccountUpdateCompanyPhysicalAddress?
-    /// The primary location where the business conducts operations.
-    public var principalPlaceOfBusiness: AccountUpdateCompanyPrincipalPlaceOfBusiness?
-    public var registrationDate: AccountUpdateCompanyRegistrationDate?
-    /// The identification number given to a company when it is registered or incorporated, if distinct from
-    /// the identification number used for filing taxes. (Examples are the CIN for companies and LLP IN for
-    /// partnerships in India, and the Company Registration Number in Hong Kong).
-    public var registrationNumber: String?
-    /// This hash is used to attest that the representative is authorized to act as the representative of
-    /// their legal entity.
-    public var representativeDeclaration: AccountUpdateCompanyRepresentativeDeclaration?
-    /// The category identifying the legal structure of the company or legal entity. See [Business
-    /// structure](/connect/identity-verification#business-structure) for more details. Pass an empty string
-    /// to unset this value.
-    public var structure: AccountUpdateCompanyStructure?
-    /// The business ID number of the company, as appropriate for the company’s country. (Examples are an
-    /// Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
-    /// Changing this value requires that the account re-accept the [terms of
-    /// service](/api/accounts/object#account_object-tos_acceptance).
-    public var taxId: String?
-    /// The jurisdiction in which the `tax_id` is registered (Germany-based companies only).
-    public var taxIdRegistrar: String?
-    /// The VAT number of the company.
-    public var vatId: String?
-    /// Information on the verification state of the company.
-    public var verification: AccountUpdateCompanyVerification?
-    /// Fields to send empty, which clears them: `params.clear(.ownershipExemptionReason)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(address: AccountUpdateCompanyAddress? = nil, addressKana: AccountUpdateCompanyAddressKana? = nil, addressKanji: AccountUpdateCompanyAddressKanji? = nil, administrativeAddress: AccountUpdateCompanyAdministrativeAddress? = nil, directorsProvided: Bool? = nil, directorshipDeclaration: AccountUpdateCompanyDirectorshipDeclaration? = nil, executivesProvided: Bool? = nil, exportLicenseId: String? = nil, exportPurposeCode: String? = nil, name: String? = nil, nameKana: String? = nil, nameKanji: String? = nil, ownersProvided: Bool? = nil, ownershipDeclaration: AccountUpdateCompanyOwnershipDeclaration? = nil, ownershipExemptionReason: AccountUpdateCompanyOwnershipExemptionReason? = nil, phone: String? = nil, physicalAddress: AccountUpdateCompanyPhysicalAddress? = nil, principalPlaceOfBusiness: AccountUpdateCompanyPrincipalPlaceOfBusiness? = nil, registrationDate: AccountUpdateCompanyRegistrationDate? = nil, registrationNumber: String? = nil, representativeDeclaration: AccountUpdateCompanyRepresentativeDeclaration? = nil, structure: AccountUpdateCompanyStructure? = nil, taxId: String? = nil, taxIdRegistrar: String? = nil, vatId: String? = nil, verification: AccountUpdateCompanyVerification? = nil) {
-        self.address = address
-        self.addressKana = addressKana
-        self.addressKanji = addressKanji
-        self.administrativeAddress = administrativeAddress
-        self.directorsProvided = directorsProvided
-        self.directorshipDeclaration = directorshipDeclaration
-        self.executivesProvided = executivesProvided
-        self.exportLicenseId = exportLicenseId
-        self.exportPurposeCode = exportPurposeCode
-        self.name = name
-        self.nameKana = nameKana
-        self.nameKanji = nameKanji
-        self.ownersProvided = ownersProvided
-        self.ownershipDeclaration = ownershipDeclaration
-        self.ownershipExemptionReason = ownershipExemptionReason
-        self.phone = phone
-        self.physicalAddress = physicalAddress
-        self.principalPlaceOfBusiness = principalPlaceOfBusiness
-        self.registrationDate = registrationDate
-        self.registrationNumber = registrationNumber
-        self.representativeDeclaration = representativeDeclaration
-        self.structure = structure
-        self.taxId = taxId
-        self.taxIdRegistrar = taxIdRegistrar
-        self.vatId = vatId
-        self.verification = verification
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case address
-        case addressKana = "address_kana"
-        case addressKanji = "address_kanji"
-        case administrativeAddress = "administrative_address"
-        case directorsProvided = "directors_provided"
-        case directorshipDeclaration = "directorship_declaration"
-        case executivesProvided = "executives_provided"
-        case exportLicenseId = "export_license_id"
-        case exportPurposeCode = "export_purpose_code"
-        case name
-        case nameKana = "name_kana"
-        case nameKanji = "name_kanji"
-        case ownersProvided = "owners_provided"
-        case ownershipDeclaration = "ownership_declaration"
-        case ownershipExemptionReason = "ownership_exemption_reason"
-        case phone
-        case physicalAddress = "physical_address"
-        case principalPlaceOfBusiness = "principal_place_of_business"
-        case registrationDate = "registration_date"
-        case registrationNumber = "registration_number"
-        case representativeDeclaration = "representative_declaration"
-        case structure
-        case taxId = "tax_id"
-        case taxIdRegistrar = "tax_id_registrar"
-        case vatId = "vat_id"
-        case verification
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case ownershipExemptionReason = "ownership_exemption_reason"
-        case registrationDate = "registration_date"
-        case structure
-    }
-}
-
-/// The company's primary address.
-public struct AccountUpdateCompanyAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// The Kana variation of the company's primary address (Japan only).
-public struct AccountUpdateCompanyAddressKana: StripeParams {
-    /// City or ward.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Block or building number.
-    public var line1: String?
-    /// Building details.
-    public var line2: String?
-    /// Postal code.
-    public var postalCode: String?
-    /// Prefecture.
-    public var state: String?
-    /// Town or cho-me.
-    public var town: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil, town: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-        self.town = town
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-        case town
-    }
-}
-
-/// The Kanji variation of the company's primary address (Japan only).
-public struct AccountUpdateCompanyAddressKanji: StripeParams {
-    /// City or ward.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Block or building number.
-    public var line1: String?
-    /// Building details.
-    public var line2: String?
-    /// Postal code.
-    public var postalCode: String?
-    /// Prefecture.
-    public var state: String?
-    /// Town or cho-me.
-    public var town: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil, town: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-        self.town = town
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-        case town
-    }
-}
-
-/// The location where the business is administered.
-public struct AccountUpdateCompanyAdministrativeAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// This hash is used to attest that the directors information provided to Stripe is both current and
-/// correct.
-public struct AccountUpdateCompanyDirectorshipDeclaration: StripeParams {
-    /// The Unix timestamp marking when the directorship declaration attestation was made.
-    public var date: Date?
-    /// The IP address from which the directorship declaration attestation was made.
-    public var ip: String?
-    /// The user agent of the browser from which the directorship declaration attestation was made.
-    public var userAgent: String?
-
-    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
-        self.date = date
-        self.ip = ip
-        self.userAgent = userAgent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case date
-        case ip
-        case userAgent = "user_agent"
-    }
-}
-
-/// This hash is used to attest that the beneficial owner information provided to Stripe is both current
-/// and correct.
-public struct AccountUpdateCompanyOwnershipDeclaration: StripeParams {
-    /// The Unix timestamp marking when the beneficial owner attestation was made.
-    public var date: Date?
-    /// The IP address from which the beneficial owner attestation was made.
-    public var ip: String?
-    /// The user agent of the browser from which the beneficial owner attestation was made.
-    public var userAgent: String?
-
-    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
-        self.date = date
-        self.ip = ip
-        self.userAgent = userAgent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case date
-        case ip
-        case userAgent = "user_agent"
-    }
-}
-
-public struct AccountUpdateCompanyOwnershipExemptionReason: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var qualifiedEntityExceedsOwnershipThreshold: Self { .init(rawValue: "qualified_entity_exceeds_ownership_threshold") }
-    public static var qualifiesAsFinancialInstitution: Self { .init(rawValue: "qualifies_as_financial_institution") }
-}
-
-/// A location where the business has a meaningful physical operating presence.
-public struct AccountUpdateCompanyPhysicalAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// The primary location where the business conducts operations.
-public struct AccountUpdateCompanyPrincipalPlaceOfBusiness: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-public struct AccountUpdateCompanyRegistrationDate: StripeParams {
-    /// The day of registration, between 1 and 31.
-    public var day: Int
-    /// The month of registration, between 1 and 12.
-    public var month: Int
-    /// The four-digit year of registration.
-    public var year: Int
-
-    public init(day: Int, month: Int, year: Int) {
-        self.day = day
-        self.month = month
-        self.year = year
-    }
-}
-
-/// This hash is used to attest that the representative is authorized to act as the representative of
-/// their legal entity.
-public struct AccountUpdateCompanyRepresentativeDeclaration: StripeParams {
-    /// The Unix timestamp marking when the representative declaration attestation was made.
-    public var date: Date?
-    /// The IP address from which the representative declaration attestation was made.
-    public var ip: String?
-    /// The user agent of the browser from which the representative declaration attestation was made.
-    public var userAgent: String?
-
-    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
-        self.date = date
-        self.ip = ip
-        self.userAgent = userAgent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case date
-        case ip
-        case userAgent = "user_agent"
-    }
-}
-
-public struct AccountUpdateCompanyStructure: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var freeZoneEstablishment: Self { .init(rawValue: "free_zone_establishment") }
-    public static var freeZoneLlc: Self { .init(rawValue: "free_zone_llc") }
-    public static var governmentInstrumentality: Self { .init(rawValue: "government_instrumentality") }
-    public static var governmentalUnit: Self { .init(rawValue: "governmental_unit") }
-    public static var incorporatedNonProfit: Self { .init(rawValue: "incorporated_non_profit") }
-    public static var incorporatedPartnership: Self { .init(rawValue: "incorporated_partnership") }
-    public static var limitedLiabilityPartnership: Self { .init(rawValue: "limited_liability_partnership") }
-    public static var llc: Self { .init(rawValue: "llc") }
-    public static var multiMemberLlc: Self { .init(rawValue: "multi_member_llc") }
-    public static var privateCompany: Self { .init(rawValue: "private_company") }
-    public static var privateCorporation: Self { .init(rawValue: "private_corporation") }
-    public static var privatePartnership: Self { .init(rawValue: "private_partnership") }
-    public static var publicCompany: Self { .init(rawValue: "public_company") }
-    public static var publicCorporation: Self { .init(rawValue: "public_corporation") }
-    public static var publicPartnership: Self { .init(rawValue: "public_partnership") }
-    public static var registeredCharity: Self { .init(rawValue: "registered_charity") }
-    public static var singleMemberLlc: Self { .init(rawValue: "single_member_llc") }
-    public static var soleEstablishment: Self { .init(rawValue: "sole_establishment") }
-    public static var soleProprietorship: Self { .init(rawValue: "sole_proprietorship") }
-    public static var taxExemptGovernmentInstrumentality: Self { .init(rawValue: "tax_exempt_government_instrumentality") }
-    public static var unincorporatedAssociation: Self { .init(rawValue: "unincorporated_association") }
-    public static var unincorporatedNonProfit: Self { .init(rawValue: "unincorporated_non_profit") }
-    public static var unincorporatedPartnership: Self { .init(rawValue: "unincorporated_partnership") }
-}
-
-/// Information on the verification state of the company.
-public struct AccountUpdateCompanyVerification: StripeParams {
-    /// A document verifying the business.
-    public var document: AccountUpdateCompanyVerificationDocument?
-
-    public init(document: AccountUpdateCompanyVerificationDocument? = nil) {
-        self.document = document
-    }
-}
-
-/// A document verifying the business.
-public struct AccountUpdateCompanyVerificationDocument: StripeParams {
-    /// The back of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller
-    /// than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var back: String?
-    /// The front of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller
-    /// than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var front: String?
-
-    public init(back: String? = nil, front: String? = nil) {
-        self.back = back
-        self.front = front
-    }
-}
-
 /// Documents that may be submitted to satisfy various informational requests.
 public struct AccountUpdateDocuments: StripeParams {
     /// One or more documents that support the [Bank account ownership
     /// verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement.
     /// Must be a document associated with the account’s primary active bank account that displays the last
     /// 4 digits of the account number, either a statement or a check.
-    public var bankAccountOwnershipVerification: AccountUpdateDocumentsBankAccountOwnershipVerification?
+    public var bankAccountOwnershipVerification: AccountDocumentsBankAccountOwnershipVerification?
     /// One or more documents that demonstrate proof of a company's license to operate.
-    public var companyLicense: AccountUpdateDocumentsCompanyLicense?
+    public var companyLicense: AccountDocumentsCompanyLicense?
     /// One or more documents showing the company's governing document (for example, a memorandum of
     /// association, constitution, or articles of association).
-    public var companyMemorandumOfAssociation: AccountUpdateDocumentsCompanyMemorandumOfAssociation?
+    public var companyMemorandumOfAssociation: AccountDocumentsCompanyMemorandumOfAssociation?
     /// (Certain countries only) One or more documents showing the ministerial decree legalizing the
     /// company's establishment.
-    public var companyMinisterialDecree: AccountUpdateDocumentsCompanyMinisterialDecree?
+    public var companyMinisterialDecree: AccountDocumentsCompanyMinisterialDecree?
     /// One or more documents that demonstrate proof of a company's registration with the appropriate local
     /// authorities.
-    public var companyRegistrationVerification: AccountUpdateDocumentsCompanyRegistrationVerification?
+    public var companyRegistrationVerification: AccountDocumentsCompanyRegistrationVerification?
     /// One or more documents that demonstrate proof of a company's tax ID.
-    public var companyTaxIdVerification: AccountUpdateDocumentsCompanyTaxIdVerification?
+    public var companyTaxIdVerification: AccountDocumentsCompanyTaxIdVerification?
     /// One or more documents that demonstrate proof of address.
-    public var proofOfAddress: AccountUpdateDocumentsProofOfAddress?
+    public var proofOfAddress: AccountDocumentsProofOfAddress?
     /// One or more documents that demonstrate proof of business presence.
-    public var proofOfBusinessPresence: AccountUpdateDocumentsProofOfBusinessPresence?
+    public var proofOfBusinessPresence: AccountDocumentsProofOfBusinessPresence?
     /// One or more documents showing the company’s proof of registration with the national business
     /// registry.
-    public var proofOfRegistration: AccountUpdateDocumentsProofOfRegistration?
+    public var proofOfRegistration: AccountDocumentsProofOfRegistration?
     /// One or more documents that demonstrate proof of ultimate beneficial ownership.
-    public var proofOfUltimateBeneficialOwnership: AccountUpdateDocumentsProofOfUltimateBeneficialOwnership?
+    public var proofOfUltimateBeneficialOwnership: AccountDocumentsProofOfUltimateBeneficialOwnership?
 
-    public init(bankAccountOwnershipVerification: AccountUpdateDocumentsBankAccountOwnershipVerification? = nil, companyLicense: AccountUpdateDocumentsCompanyLicense? = nil, companyMemorandumOfAssociation: AccountUpdateDocumentsCompanyMemorandumOfAssociation? = nil, companyMinisterialDecree: AccountUpdateDocumentsCompanyMinisterialDecree? = nil, companyRegistrationVerification: AccountUpdateDocumentsCompanyRegistrationVerification? = nil, companyTaxIdVerification: AccountUpdateDocumentsCompanyTaxIdVerification? = nil, proofOfAddress: AccountUpdateDocumentsProofOfAddress? = nil, proofOfBusinessPresence: AccountUpdateDocumentsProofOfBusinessPresence? = nil, proofOfRegistration: AccountUpdateDocumentsProofOfRegistration? = nil, proofOfUltimateBeneficialOwnership: AccountUpdateDocumentsProofOfUltimateBeneficialOwnership? = nil) {
+    public init(bankAccountOwnershipVerification: AccountDocumentsBankAccountOwnershipVerification? = nil, companyLicense: AccountDocumentsCompanyLicense? = nil, companyMemorandumOfAssociation: AccountDocumentsCompanyMemorandumOfAssociation? = nil, companyMinisterialDecree: AccountDocumentsCompanyMinisterialDecree? = nil, companyRegistrationVerification: AccountDocumentsCompanyRegistrationVerification? = nil, companyTaxIdVerification: AccountDocumentsCompanyTaxIdVerification? = nil, proofOfAddress: AccountDocumentsProofOfAddress? = nil, proofOfBusinessPresence: AccountDocumentsProofOfBusinessPresence? = nil, proofOfRegistration: AccountDocumentsProofOfRegistration? = nil, proofOfUltimateBeneficialOwnership: AccountDocumentsProofOfUltimateBeneficialOwnership? = nil) {
         self.bankAccountOwnershipVerification = bankAccountOwnershipVerification
         self.companyLicense = companyLicense
         self.companyMemorandumOfAssociation = companyMemorandumOfAssociation
@@ -5385,589 +4783,56 @@ public struct AccountUpdateDocuments: StripeParams {
     }
 }
 
-/// One or more documents that support the [Bank account ownership
-/// verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement.
-/// Must be a document associated with the account’s primary active bank account that displays the last
-/// 4 digits of the account number, either a statement or a check.
-public struct AccountUpdateDocumentsBankAccountOwnershipVerification: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
-/// One or more documents that demonstrate proof of a company's license to operate.
-public struct AccountUpdateDocumentsCompanyLicense: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
-/// One or more documents showing the company's governing document (for example, a memorandum of
-/// association, constitution, or articles of association).
-public struct AccountUpdateDocumentsCompanyMemorandumOfAssociation: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
-/// (Certain countries only) One or more documents showing the ministerial decree legalizing the
-/// company's establishment.
-public struct AccountUpdateDocumentsCompanyMinisterialDecree: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
-/// One or more documents that demonstrate proof of a company's registration with the appropriate local
-/// authorities.
-public struct AccountUpdateDocumentsCompanyRegistrationVerification: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
-/// One or more documents that demonstrate proof of a company's tax ID.
-public struct AccountUpdateDocumentsCompanyTaxIdVerification: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
-/// One or more documents that demonstrate proof of address.
-public struct AccountUpdateDocumentsProofOfAddress: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
-/// One or more documents that demonstrate proof of business presence.
-public struct AccountUpdateDocumentsProofOfBusinessPresence: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
 /// One or more documents showing the company’s proof of registration with the national business
 /// registry.
-public struct AccountUpdateDocumentsProofOfRegistration: StripeParams {
+public struct AccountDocumentsProofOfRegistration: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
     /// Information regarding the person signing the document if applicable.
-    public var signer: AccountUpdateDocumentsProofOfRegistrationSigner?
+    public var signer: AccountDocumentsProofOfRegistrationSigner?
 
-    public init(files: [String]? = nil, signer: AccountUpdateDocumentsProofOfRegistrationSigner? = nil) {
+    public init(files: [String]? = nil, signer: AccountDocumentsProofOfRegistrationSigner? = nil) {
         self.files = files
         self.signer = signer
     }
 }
 
 /// Information regarding the person signing the document if applicable.
-public struct AccountUpdateDocumentsProofOfRegistrationSigner: StripeParams {
+public struct AccountDocumentsProofOfRegistrationSigner: StripeParams {
     /// The token of the person signing the document, if applicable.
     public var person: String?
 
     public init(person: String? = nil) {
         self.person = person
-    }
-}
-
-/// One or more documents that demonstrate proof of ultimate beneficial ownership.
-public struct AccountUpdateDocumentsProofOfUltimateBeneficialOwnership: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-    /// Information regarding the person signing the document if applicable.
-    public var signer: AccountUpdateDocumentsProofOfUltimateBeneficialOwnershipSigner?
-
-    public init(files: [String]? = nil, signer: AccountUpdateDocumentsProofOfUltimateBeneficialOwnershipSigner? = nil) {
-        self.files = files
-        self.signer = signer
-    }
-}
-
-/// Information regarding the person signing the document if applicable.
-public struct AccountUpdateDocumentsProofOfUltimateBeneficialOwnershipSigner: StripeParams {
-    /// The token of the person signing the document, if applicable.
-    public var person: String?
-
-    public init(person: String? = nil) {
-        self.person = person
-    }
-}
-
-/// A hash of account group type to tokens. These are account groups this account should be added to.
-public struct AccountUpdateGroups: ClearableParams {
-    /// The group the account is in to determine their payments pricing, and null if the account is on
-    /// customized pricing. [See the Platform pricing tool
-    /// documentation](https://docs.stripe.com/connect/platform-pricing-tools) for details.
-    public var paymentsPricing: String?
-    /// Fields to send empty, which clears them: `params.clear(.paymentsPricing)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(paymentsPricing: String? = nil) {
-        self.paymentsPricing = paymentsPricing
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case paymentsPricing = "payments_pricing"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case paymentsPricing = "payments_pricing"
-    }
-}
-
-/// Information about the person represented by the account. This field is null unless `business_type`
-/// is set to `individual`. Once you create an [Account Link](/api/account_links) or [Account
-/// Session](/api/account_sessions), this property can only be updated for accounts where
-/// [controller.requirement_collection](/api/accounts/object#account_object-controller-requirement_collection)
-/// is `application`, which includes Custom accounts.
-public struct AccountUpdateIndividual: ClearableParams {
-    /// The individual's primary address.
-    public var address: AccountUpdateIndividualAddress?
-    /// The Kana variation of the individual's primary address (Japan only).
-    public var addressKana: AccountUpdateIndividualAddressKana?
-    /// The Kanji variation of the individual's primary address (Japan only).
-    public var addressKanji: AccountUpdateIndividualAddressKanji?
-    /// The individual's date of birth.
-    public var dob: AccountUpdateIndividualDob?
-    /// The individual's email address.
-    public var email: String?
-    /// The individual's first name.
-    public var firstName: String?
-    /// The Kana variation of the individual's first name (Japan only).
-    public var firstNameKana: String?
-    /// The Kanji variation of the individual's first name (Japan only).
-    public var firstNameKanji: String?
-    /// A list of alternate names or aliases that the individual is known by.
-    public var fullNameAliases: [String]?
-    /// The individual's gender
-    public var gender: String?
-    /// The government-issued ID number of the individual, as appropriate for the representative's country.
-    /// (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead
-    /// of the number itself, you can also provide a [PII token created with
-    /// Stripe.js](/js/tokens/create_token?type=pii).
-    public var idNumber: String?
-    /// The government-issued secondary ID number of the individual, as appropriate for the representative's
-    /// country, will be used for enhanced verification checks. In Thailand, this would be the laser code
-    /// found on the back of an ID card. Instead of the number itself, you can also provide a [PII token
-    /// created with Stripe.js](/js/tokens/create_token?type=pii).
-    public var idNumberSecondary: String?
-    /// The individual's last name.
-    public var lastName: String?
-    /// The Kana variation of the individual's last name (Japan only).
-    public var lastNameKana: String?
-    /// The Kanji variation of the individual's last name (Japan only).
-    public var lastNameKanji: String?
-    /// The individual's maiden name.
-    public var maidenName: String?
-    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
-    /// This can be useful for storing additional information about the object in a structured format.
-    /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
-    /// empty value to `metadata`.
-    public var metadata: [String: String]?
-    /// The individual's phone number.
-    public var phone: String?
-    /// Indicates if the person or any of their representatives, family members, or other closely related
-    /// persons, declares that they hold or have held an important public job or function, in any
-    /// jurisdiction.
-    public var politicalExposure: AccountUpdateIndividualPoliticalExposure?
-    /// The individual's registered address.
-    public var registeredAddress: AccountUpdateIndividualRegisteredAddress?
-    /// Describes the person’s relationship to the account.
-    public var relationship: AccountUpdateIndividualRelationship?
-    /// The last four digits of the individual's Social Security Number (U.S. only).
-    public var ssnLast4: String?
-    /// The individual's verification document information.
-    public var verification: AccountUpdateIndividualVerification?
-    /// Fields to send empty, which clears them: `params.clear(.dob)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(address: AccountUpdateIndividualAddress? = nil, addressKana: AccountUpdateIndividualAddressKana? = nil, addressKanji: AccountUpdateIndividualAddressKanji? = nil, dob: AccountUpdateIndividualDob? = nil, email: String? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, phone: String? = nil, politicalExposure: AccountUpdateIndividualPoliticalExposure? = nil, registeredAddress: AccountUpdateIndividualRegisteredAddress? = nil, relationship: AccountUpdateIndividualRelationship? = nil, ssnLast4: String? = nil, verification: AccountUpdateIndividualVerification? = nil) {
-        self.address = address
-        self.addressKana = addressKana
-        self.addressKanji = addressKanji
-        self.dob = dob
-        self.email = email
-        self.firstName = firstName
-        self.firstNameKana = firstNameKana
-        self.firstNameKanji = firstNameKanji
-        self.fullNameAliases = fullNameAliases
-        self.gender = gender
-        self.idNumber = idNumber
-        self.idNumberSecondary = idNumberSecondary
-        self.lastName = lastName
-        self.lastNameKana = lastNameKana
-        self.lastNameKanji = lastNameKanji
-        self.maidenName = maidenName
-        self.metadata = metadata
-        self.phone = phone
-        self.politicalExposure = politicalExposure
-        self.registeredAddress = registeredAddress
-        self.relationship = relationship
-        self.ssnLast4 = ssnLast4
-        self.verification = verification
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case address
-        case addressKana = "address_kana"
-        case addressKanji = "address_kanji"
-        case dob
-        case email
-        case firstName = "first_name"
-        case firstNameKana = "first_name_kana"
-        case firstNameKanji = "first_name_kanji"
-        case fullNameAliases = "full_name_aliases"
-        case gender
-        case idNumber = "id_number"
-        case idNumberSecondary = "id_number_secondary"
-        case lastName = "last_name"
-        case lastNameKana = "last_name_kana"
-        case lastNameKanji = "last_name_kanji"
-        case maidenName = "maiden_name"
-        case metadata
-        case phone
-        case politicalExposure = "political_exposure"
-        case registeredAddress = "registered_address"
-        case relationship
-        case ssnLast4 = "ssn_last_4"
-        case verification
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case dob
-        case fullNameAliases = "full_name_aliases"
-        case metadata
-    }
-}
-
-/// The individual's primary address.
-public struct AccountUpdateIndividualAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// The Kana variation of the individual's primary address (Japan only).
-public struct AccountUpdateIndividualAddressKana: StripeParams {
-    /// City or ward.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Block or building number.
-    public var line1: String?
-    /// Building details.
-    public var line2: String?
-    /// Postal code.
-    public var postalCode: String?
-    /// Prefecture.
-    public var state: String?
-    /// Town or cho-me.
-    public var town: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil, town: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-        self.town = town
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-        case town
-    }
-}
-
-/// The Kanji variation of the individual's primary address (Japan only).
-public struct AccountUpdateIndividualAddressKanji: StripeParams {
-    /// City or ward.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Block or building number.
-    public var line1: String?
-    /// Building details.
-    public var line2: String?
-    /// Postal code.
-    public var postalCode: String?
-    /// Prefecture.
-    public var state: String?
-    /// Town or cho-me.
-    public var town: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil, town: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-        self.town = town
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-        case town
-    }
-}
-
-public struct AccountUpdateIndividualDob: StripeParams {
-    /// The day of birth, between 1 and 31.
-    public var day: Int
-    /// The month of birth, between 1 and 12.
-    public var month: Int
-    /// The four-digit year of birth.
-    public var year: Int
-
-    public init(day: Int, month: Int, year: Int) {
-        self.day = day
-        self.month = month
-        self.year = year
-    }
-}
-
-public struct AccountUpdateIndividualPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var existing: Self { .init(rawValue: "existing") }
-    public static var none: Self { .init(rawValue: "none") }
-}
-
-/// The individual's registered address.
-public struct AccountUpdateIndividualRegisteredAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// Describes the person’s relationship to the account.
-public struct AccountUpdateIndividualRelationship: ClearableParams {
-    /// Whether the person is a director of the account's legal entity. Directors are typically members of
-    /// the governing board of the company, or responsible for ensuring the company meets its regulatory
-    /// obligations.
-    public var director: Bool?
-    /// Whether the person has significant responsibility to control, manage, or direct the organization.
-    public var executive: Bool?
-    /// Whether the person is an owner of the account’s legal entity.
-    public var owner: Bool?
-    /// The percent owned by the person of the account's legal entity.
-    public var percentOwnership: Double?
-    /// The person's title (e.g., CEO, Support Engineer).
-    public var title: String?
-    /// Fields to send empty, which clears them: `params.clear(.percentOwnership)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percentOwnership: Double? = nil, title: String? = nil) {
-        self.director = director
-        self.executive = executive
-        self.owner = owner
-        self.percentOwnership = percentOwnership
-        self.title = title
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case director
-        case executive
-        case owner
-        case percentOwnership = "percent_ownership"
-        case title
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case percentOwnership = "percent_ownership"
-    }
-}
-
-/// The individual's verification document information.
-public struct AccountUpdateIndividualVerification: StripeParams {
-    /// A document showing address, either a passport, local ID card, or utility bill from a well-known
-    /// utility company.
-    public var additionalDocument: AccountUpdateIndividualVerificationAdditionalDocument?
-    /// An identifying document, either a passport or local ID card.
-    public var document: AccountUpdateIndividualVerificationDocument?
-
-    public init(additionalDocument: AccountUpdateIndividualVerificationAdditionalDocument? = nil, document: AccountUpdateIndividualVerificationDocument? = nil) {
-        self.additionalDocument = additionalDocument
-        self.document = document
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case additionalDocument = "additional_document"
-        case document
-    }
-}
-
-/// A document showing address, either a passport, local ID card, or utility bill from a well-known
-/// utility company.
-public struct AccountUpdateIndividualVerificationAdditionalDocument: StripeParams {
-    /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
-    /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var back: String?
-    /// The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
-    /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var front: String?
-
-    public init(back: String? = nil, front: String? = nil) {
-        self.back = back
-        self.front = front
-    }
-}
-
-/// An identifying document, either a passport or local ID card.
-public struct AccountUpdateIndividualVerificationDocument: StripeParams {
-    /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
-    /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var back: String?
-    /// The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
-    /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var front: String?
-
-    public init(back: String? = nil, front: String? = nil) {
-        self.back = back
-        self.front = front
     }
 }
 
 /// Options for customizing how the account functions within Stripe.
 public struct AccountUpdateSettings: StripeParams {
     /// Settings specific to Bacs Direct Debit payments.
-    public var bacsDebitPayments: AccountUpdateSettingsBacsDebitPayments?
+    public var bacsDebitPayments: AccountSettingsBacsDebitPayments?
     /// Settings used to apply the account's branding to email receipts, invoices, Checkout, and other
     /// products.
-    public var branding: AccountUpdateSettingsBranding?
+    public var branding: AccountSettingsBranding?
     /// Settings specific to the account's use of the Card Issuing product.
-    public var cardIssuing: AccountUpdateSettingsCardIssuing?
+    public var cardIssuing: AccountSettingsCardIssuing?
     /// Settings specific to card charging on the account.
-    public var cardPayments: AccountUpdateSettingsCardPayments?
+    public var cardPayments: AccountSettingsCardPayments?
     /// Settings specific to the account's use of Invoices.
     public var invoices: AccountUpdateSettingsInvoices?
     /// Settings that apply across payment methods for charging on the account.
-    public var payments: AccountUpdateSettingsPayments?
+    public var payments: AccountSettingsPayments?
     /// Settings specific to the account's payouts.
-    public var payouts: AccountUpdateSettingsPayouts?
+    public var payouts: AccountSettingsPayouts?
     /// Settings specific to the PayPay payments method.
-    public var paypayPayments: AccountUpdateSettingsPaypayPayments?
+    public var paypayPayments: AccountSettingsPaypayPayments?
     /// Settings specific to SEPA Direct Debit payments.
-    public var sepaDebitPayments: AccountUpdateSettingsSepaDebitPayments?
+    public var sepaDebitPayments: AccountSettingsSepaDebitPayments?
     /// Settings specific to the account's Treasury FinancialAccounts.
-    public var treasury: AccountUpdateSettingsTreasury?
+    public var treasury: AccountSettingsTreasury?
 
-    public init(bacsDebitPayments: AccountUpdateSettingsBacsDebitPayments? = nil, branding: AccountUpdateSettingsBranding? = nil, cardIssuing: AccountUpdateSettingsCardIssuing? = nil, cardPayments: AccountUpdateSettingsCardPayments? = nil, invoices: AccountUpdateSettingsInvoices? = nil, payments: AccountUpdateSettingsPayments? = nil, payouts: AccountUpdateSettingsPayouts? = nil, paypayPayments: AccountUpdateSettingsPaypayPayments? = nil, sepaDebitPayments: AccountUpdateSettingsSepaDebitPayments? = nil, treasury: AccountUpdateSettingsTreasury? = nil) {
+    public init(bacsDebitPayments: AccountSettingsBacsDebitPayments? = nil, branding: AccountSettingsBranding? = nil, cardIssuing: AccountSettingsCardIssuing? = nil, cardPayments: AccountSettingsCardPayments? = nil, invoices: AccountUpdateSettingsInvoices? = nil, payments: AccountSettingsPayments? = nil, payouts: AccountSettingsPayouts? = nil, paypayPayments: AccountSettingsPaypayPayments? = nil, sepaDebitPayments: AccountSettingsSepaDebitPayments? = nil, treasury: AccountSettingsTreasury? = nil) {
         self.bacsDebitPayments = bacsDebitPayments
         self.branding = branding
         self.cardIssuing = cardIssuing
@@ -5994,166 +4859,6 @@ public struct AccountUpdateSettings: StripeParams {
     }
 }
 
-/// Settings specific to Bacs Direct Debit payments.
-public struct AccountUpdateSettingsBacsDebitPayments: StripeParams {
-    /// The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this
-    /// name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name
-    /// of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right
-    /// after creation. Custom branding incurs an additional monthly fee for the platform. If you don't set
-    /// the display name before requesting Bacs capability, it's automatically set as "Stripe" and the
-    /// account is onboarded to Stripe branding, which is free.
-    public var displayName: String?
-
-    public init(displayName: String? = nil) {
-        self.displayName = displayName
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayName = "display_name"
-    }
-}
-
-/// Settings used to apply the account's branding to email receipts, invoices, Checkout, and other
-/// products.
-public struct AccountUpdateSettingsBranding: StripeParams {
-    /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be
-    /// square and at least 128px x 128px.
-    public var icon: String?
-    /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) A logo for the account that will
-    /// be used in Checkout instead of the icon and without the account's name next to it if provided. Must
-    /// be at least 128px x 128px.
-    public var logo: String?
-    /// A CSS hex color value representing the primary branding color for this account.
-    public var primaryColor: String?
-    /// A CSS hex color value representing the secondary branding color for this account.
-    public var secondaryColor: String?
-
-    public init(icon: String? = nil, logo: String? = nil, primaryColor: String? = nil, secondaryColor: String? = nil) {
-        self.icon = icon
-        self.logo = logo
-        self.primaryColor = primaryColor
-        self.secondaryColor = secondaryColor
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case icon
-        case logo
-        case primaryColor = "primary_color"
-        case secondaryColor = "secondary_color"
-    }
-}
-
-/// Settings specific to the account's use of the Card Issuing product.
-public struct AccountUpdateSettingsCardIssuing: StripeParams {
-    /// Details on the account's acceptance of the [Stripe Issuing Terms and
-    /// Disclosures](/issuing/connect/tos_acceptance).
-    public var tosAcceptance: AccountUpdateSettingsCardIssuingTosAcceptance?
-
-    public init(tosAcceptance: AccountUpdateSettingsCardIssuingTosAcceptance? = nil) {
-        self.tosAcceptance = tosAcceptance
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case tosAcceptance = "tos_acceptance"
-    }
-}
-
-/// Details on the account's acceptance of the [Stripe Issuing Terms and
-/// Disclosures](/issuing/connect/tos_acceptance).
-public struct AccountUpdateSettingsCardIssuingTosAcceptance: ClearableParams {
-    /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Date?
-    /// The IP address from which the account representative accepted the service agreement.
-    public var ip: String?
-    /// The user agent of the browser from which the account representative accepted the service agreement.
-    public var userAgent: String?
-    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
-        self.date = date
-        self.ip = ip
-        self.userAgent = userAgent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case date
-        case ip
-        case userAgent = "user_agent"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case userAgent = "user_agent"
-    }
-}
-
-/// Settings specific to card charging on the account.
-public struct AccountUpdateSettingsCardPayments: ClearableParams {
-    /// Automatically declines certain charge types regardless of whether the card issuer accepted or
-    /// declined the charge.
-    public var declineOn: AccountUpdateSettingsCardPaymentsDeclineOn?
-    /// The default text that appears on credit card statements when a charge is made. This field prefixes
-    /// any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful
-    /// for maximizing descriptor space for the dynamic portion.
-    public var statementDescriptorPrefix: String?
-    /// The Kana variation of the default text that appears on credit card statements when a charge is made
-    /// (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the
-    /// charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic
-    /// portion.
-    public var statementDescriptorPrefixKana: String?
-    /// The Kanji variation of the default text that appears on credit card statements when a charge is made
-    /// (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the
-    /// charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the
-    /// dynamic portion.
-    public var statementDescriptorPrefixKanji: String?
-    /// Fields to send empty, which clears them: `params.clear(.statementDescriptorPrefixKana)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(declineOn: AccountUpdateSettingsCardPaymentsDeclineOn? = nil, statementDescriptorPrefix: String? = nil, statementDescriptorPrefixKana: String? = nil, statementDescriptorPrefixKanji: String? = nil) {
-        self.declineOn = declineOn
-        self.statementDescriptorPrefix = statementDescriptorPrefix
-        self.statementDescriptorPrefixKana = statementDescriptorPrefixKana
-        self.statementDescriptorPrefixKanji = statementDescriptorPrefixKanji
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case declineOn = "decline_on"
-        case statementDescriptorPrefix = "statement_descriptor_prefix"
-        case statementDescriptorPrefixKana = "statement_descriptor_prefix_kana"
-        case statementDescriptorPrefixKanji = "statement_descriptor_prefix_kanji"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case statementDescriptorPrefixKana = "statement_descriptor_prefix_kana"
-        case statementDescriptorPrefixKanji = "statement_descriptor_prefix_kanji"
-    }
-}
-
-/// Automatically declines certain charge types regardless of whether the card issuer accepted or
-/// declined the charge.
-public struct AccountUpdateSettingsCardPaymentsDeclineOn: StripeParams {
-    /// Whether Stripe automatically declines charges with an incorrect ZIP or postal code. This setting
-    /// only applies when a ZIP or postal code is provided and they fail bank verification.
-    public var avsFailure: Bool?
-    /// Whether Stripe automatically declines charges with an incorrect CVC. This setting only applies when
-    /// a CVC is provided and it fails bank verification.
-    public var cvcFailure: Bool?
-
-    public init(avsFailure: Bool? = nil, cvcFailure: Bool? = nil) {
-        self.avsFailure = avsFailure
-        self.cvcFailure = cvcFailure
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case avsFailure = "avs_failure"
-        case cvcFailure = "cvc_failure"
-    }
-}
-
 /// Settings specific to the account's use of Invoices.
 public struct AccountUpdateSettingsInvoices: ClearableParams {
     /// The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added
@@ -6162,11 +4867,11 @@ public struct AccountUpdateSettingsInvoices: ClearableParams {
     /// Whether to save the payment method after a payment is completed for a one-time invoice or a
     /// subscription invoice when the customer already has a default payment method on the hosted invoice
     /// page.
-    public var hostedPaymentMethodSave: AccountUpdateSettingsInvoicesHostedPaymentMethodSave?
+    public var hostedPaymentMethodSave: AccountSettingsInvoicesHostedPaymentMethodSave?
     /// Fields to send empty, which clears them: `params.clear(.defaultAccountTaxIds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(defaultAccountTaxIds: [String]? = nil, hostedPaymentMethodSave: AccountUpdateSettingsInvoicesHostedPaymentMethodSave? = nil) {
+    public init(defaultAccountTaxIds: [String]? = nil, hostedPaymentMethodSave: AccountSettingsInvoicesHostedPaymentMethodSave? = nil) {
         self.defaultAccountTaxIds = defaultAccountTaxIds
         self.hostedPaymentMethodSave = hostedPaymentMethodSave
     }
@@ -6180,355 +4885,6 @@ public struct AccountUpdateSettingsInvoices: ClearableParams {
     /// The fields Stripe lets you clear by sending them empty
     public enum ClearableField: String, StripeClearableField {
         case defaultAccountTaxIds = "default_account_tax_ids"
-    }
-}
-
-public struct AccountUpdateSettingsInvoicesHostedPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var always: Self { .init(rawValue: "always") }
-    public static var never: Self { .init(rawValue: "never") }
-    public static var offer: Self { .init(rawValue: "offer") }
-}
-
-/// Settings that apply across payment methods for charging on the account.
-public struct AccountUpdateSettingsPayments: StripeParams {
-    /// The default text that appears on statements for non-card charges outside of Japan. For card charges,
-    /// if you don't set a `statement_descriptor_prefix`, this text is also used as the statement descriptor
-    /// prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement
-    /// descriptor to exceed 22 characters, we truncate the `statement_descriptor` text to limit the full
-    /// descriptor to 22 characters. For more information about statement descriptors and their
-    /// requirements, see the [account settings
-    /// documentation](https://docs.stripe.com/get-started/account/statement-descriptors).
-    public var statementDescriptor: String?
-    /// The Kana variation of `statement_descriptor` used for charges in Japan. Japanese statement
-    /// descriptors have [special
-    /// requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
-    public var statementDescriptorKana: String?
-    /// The Kanji variation of `statement_descriptor` used for charges in Japan. Japanese statement
-    /// descriptors have [special
-    /// requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
-    public var statementDescriptorKanji: String?
-
-    public init(statementDescriptor: String? = nil, statementDescriptorKana: String? = nil, statementDescriptorKanji: String? = nil) {
-        self.statementDescriptor = statementDescriptor
-        self.statementDescriptorKana = statementDescriptorKana
-        self.statementDescriptorKanji = statementDescriptorKanji
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case statementDescriptor = "statement_descriptor"
-        case statementDescriptorKana = "statement_descriptor_kana"
-        case statementDescriptorKanji = "statement_descriptor_kanji"
-    }
-}
-
-/// Settings specific to the account's payouts.
-public struct AccountUpdateSettingsPayouts: StripeParams {
-    /// A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank
-    /// account. For details, see [Understanding Connect Account Balances](/connect/account-balances).
-    public var debitNegativeBalances: Bool?
-    /// Details on when funds from charges are available, and when they are paid out to an external account.
-    /// For details, see our [Setting Bank and Debit Card
-    /// Payouts](/connect/bank-transfers#payout-information) documentation.
-    public var schedule: AccountUpdateSettingsPayoutsSchedule?
-    /// The text that appears on the bank account statement for payouts. If not set, this defaults to the
-    /// platform's bank descriptor as set in the Dashboard.
-    public var statementDescriptor: String?
-
-    public init(debitNegativeBalances: Bool? = nil, schedule: AccountUpdateSettingsPayoutsSchedule? = nil, statementDescriptor: String? = nil) {
-        self.debitNegativeBalances = debitNegativeBalances
-        self.schedule = schedule
-        self.statementDescriptor = statementDescriptor
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case debitNegativeBalances = "debit_negative_balances"
-        case schedule
-        case statementDescriptor = "statement_descriptor"
-    }
-}
-
-/// Details on when funds from charges are available, and when they are paid out to an external account.
-/// For details, see our [Setting Bank and Debit Card
-/// Payouts](/connect/bank-transfers#payout-information) documentation.
-public struct AccountUpdateSettingsPayoutsSchedule: StripeParams {
-    /// The number of days charge funds are held before being paid out. May also be set to `minimum`,
-    /// representing the lowest available value for the account country. Default is `minimum`. The
-    /// `delay_days` parameter remains at the last configured value if `interval` is `manual`. [Learn more
-    /// about controlling payout delay days](/connect/manage-payout-schedule).
-    public var delayDays: AccountUpdateSettingsPayoutsScheduleDelayDays?
-    /// How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`.
-    /// Default is `daily`.
-    public var interval: AccountUpdateSettingsPayoutsScheduleInterval?
-    /// The day of the month when available funds are paid out, specified as a number between 1--31. Payouts
-    /// nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a
-    /// shorter month. Required and applicable only if `interval` is `monthly`.
-    public var monthlyAnchor: Int?
-    /// The days of the month when available funds are paid out, specified as an array of numbers between
-    /// 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the
-    /// last day of a shorter month. Required and applicable only if `interval` is `monthly` and
-    /// `monthly_anchor` is not set.
-    public var monthlyPayoutDays: [Int]?
-    /// The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc.
-    /// Required and applicable only if `interval` is `weekly`.
-    public var weeklyAnchor: AccountUpdateSettingsPayoutsScheduleWeeklyAnchor?
-    /// The days of the week when available funds are paid out, specified as an array, e.g., [`monday`,
-    /// `tuesday`]. Required and applicable only if `interval` is `weekly`.
-    public var weeklyPayoutDays: [AccountUpdateSettingsPayoutsScheduleWeeklyPayoutDays]?
-
-    public init(delayDays: AccountUpdateSettingsPayoutsScheduleDelayDays? = nil, interval: AccountUpdateSettingsPayoutsScheduleInterval? = nil, monthlyAnchor: Int? = nil, monthlyPayoutDays: [Int]? = nil, weeklyAnchor: AccountUpdateSettingsPayoutsScheduleWeeklyAnchor? = nil, weeklyPayoutDays: [AccountUpdateSettingsPayoutsScheduleWeeklyPayoutDays]? = nil) {
-        self.delayDays = delayDays
-        self.interval = interval
-        self.monthlyAnchor = monthlyAnchor
-        self.monthlyPayoutDays = monthlyPayoutDays
-        self.weeklyAnchor = weeklyAnchor
-        self.weeklyPayoutDays = weeklyPayoutDays
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case delayDays = "delay_days"
-        case interval
-        case monthlyAnchor = "monthly_anchor"
-        case monthlyPayoutDays = "monthly_payout_days"
-        case weeklyAnchor = "weekly_anchor"
-        case weeklyPayoutDays = "weekly_payout_days"
-    }
-}
-
-/// One of the forms `delay_days` accepts.
-public enum AccountUpdateSettingsPayoutsScheduleDelayDays: Codable, Sendable, ExpressibleByIntegerLiteral {
-    /// `minimum`
-    case minimum
-    case value(Int)
-
-    public init(integerLiteral value: Int) { self = .value(value) }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "minimum": self = .minimum; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of AccountUpdateSettingsPayoutsScheduleDelayDays matches")
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        switch self {
-        case .minimum:
-            var container = encoder.singleValueContainer()
-            try container.encode("minimum")
-        case .value(let value):
-            var container = encoder.singleValueContainer()
-            try container.encode(value)
-        }
-    }
-}
-
-public struct AccountUpdateSettingsPayoutsScheduleInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var daily: Self { .init(rawValue: "daily") }
-    public static var manual: Self { .init(rawValue: "manual") }
-    public static var monthly: Self { .init(rawValue: "monthly") }
-    public static var weekly: Self { .init(rawValue: "weekly") }
-}
-
-public struct AccountUpdateSettingsPayoutsScheduleWeeklyAnchor: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var friday: Self { .init(rawValue: "friday") }
-    public static var monday: Self { .init(rawValue: "monday") }
-    public static var saturday: Self { .init(rawValue: "saturday") }
-    public static var sunday: Self { .init(rawValue: "sunday") }
-    public static var thursday: Self { .init(rawValue: "thursday") }
-    public static var tuesday: Self { .init(rawValue: "tuesday") }
-    public static var wednesday: Self { .init(rawValue: "wednesday") }
-}
-
-public struct AccountUpdateSettingsPayoutsScheduleWeeklyPayoutDays: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var friday: Self { .init(rawValue: "friday") }
-    public static var monday: Self { .init(rawValue: "monday") }
-    public static var thursday: Self { .init(rawValue: "thursday") }
-    public static var tuesday: Self { .init(rawValue: "tuesday") }
-    public static var wednesday: Self { .init(rawValue: "wednesday") }
-}
-
-/// Settings specific to the PayPay payments method.
-public struct AccountUpdateSettingsPaypayPayments: StripeParams {
-    /// Additional files that are required to support the onboarding process of your business.
-    public var additionalFiles: [String]?
-    /// The type of goods your business sells. Use `digital_content` if you sell digital content. Use
-    /// `other` for all other types of goods or services.
-    public var goodsType: AccountUpdateSettingsPaypayPaymentsGoodsType?
-    /// Details regarding your business's website.
-    public var site: AccountUpdateSettingsPaypayPaymentsSite?
-
-    public init(additionalFiles: [String]? = nil, goodsType: AccountUpdateSettingsPaypayPaymentsGoodsType? = nil, site: AccountUpdateSettingsPaypayPaymentsSite? = nil) {
-        self.additionalFiles = additionalFiles
-        self.goodsType = goodsType
-        self.site = site
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case additionalFiles = "additional_files"
-        case goodsType = "goods_type"
-        case site
-    }
-}
-
-public struct AccountUpdateSettingsPaypayPaymentsGoodsType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var digitalContent: Self { .init(rawValue: "digital_content") }
-    public static var other: Self { .init(rawValue: "other") }
-}
-
-/// Details regarding your business's website.
-public struct AccountUpdateSettingsPaypayPaymentsSite: StripeParams {
-    /// Additional information about your business's website.
-    public var accessible: [String: String]?
-    /// Additional information about your business's website.
-    public var inDevelopment: AccountUpdateSettingsPaypayPaymentsSiteInDevelopment?
-    /// Additional information about your business's website.
-    public var restricted: AccountUpdateSettingsPaypayPaymentsSiteRestricted?
-    /// The status of your business's website.
-    public var type: AccountUpdateSettingsPaypayPaymentsSiteType?
-
-    public init(accessible: [String: String]? = nil, inDevelopment: AccountUpdateSettingsPaypayPaymentsSiteInDevelopment? = nil, restricted: AccountUpdateSettingsPaypayPaymentsSiteRestricted? = nil, type: AccountUpdateSettingsPaypayPaymentsSiteType? = nil) {
-        self.accessible = accessible
-        self.inDevelopment = inDevelopment
-        self.restricted = restricted
-        self.type = type
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accessible
-        case inDevelopment = "in_development"
-        case restricted
-        case type
-    }
-}
-
-/// Additional information about your business's website.
-public struct AccountUpdateSettingsPaypayPaymentsSiteInDevelopment: StripeParams {
-    /// The password needed to access your business's website.
-    public var password: String
-    /// The username needed to access your business's website.
-    public var username: String?
-
-    public init(password: String, username: String? = nil) {
-        self.password = password
-        self.username = username
-    }
-}
-
-/// Additional information about your business's website.
-public struct AccountUpdateSettingsPaypayPaymentsSiteRestricted: StripeParams {
-    /// The file explaining the payment flow for your business.
-    public var paymentFlowFile: String?
-
-    public init(paymentFlowFile: String? = nil) {
-        self.paymentFlowFile = paymentFlowFile
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case paymentFlowFile = "payment_flow_file"
-    }
-}
-
-public struct AccountUpdateSettingsPaypayPaymentsSiteType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var accessible: Self { .init(rawValue: "accessible") }
-    public static var inDevelopment: Self { .init(rawValue: "in_development") }
-    public static var restricted: Self { .init(rawValue: "restricted") }
-}
-
-/// Settings specific to SEPA Direct Debit payments.
-public struct AccountUpdateSettingsSepaDebitPayments: StripeParams {
-    /// The business creditor id for european payments.
-    public var creditorId: String?
-
-    public init(creditorId: String? = nil) {
-        self.creditorId = creditorId
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case creditorId = "creditor_id"
-    }
-}
-
-/// Settings specific to the account's Treasury FinancialAccounts.
-public struct AccountUpdateSettingsTreasury: StripeParams {
-    /// Details on the account's acceptance of the Stripe Treasury Services Agreement.
-    public var tosAcceptance: AccountUpdateSettingsTreasuryTosAcceptance?
-
-    public init(tosAcceptance: AccountUpdateSettingsTreasuryTosAcceptance? = nil) {
-        self.tosAcceptance = tosAcceptance
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case tosAcceptance = "tos_acceptance"
-    }
-}
-
-/// Details on the account's acceptance of the Stripe Treasury Services Agreement.
-public struct AccountUpdateSettingsTreasuryTosAcceptance: ClearableParams {
-    /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Date?
-    /// The IP address from which the account representative accepted the service agreement.
-    public var ip: String?
-    /// The user agent of the browser from which the account representative accepted the service agreement.
-    public var userAgent: String?
-    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
-        self.date = date
-        self.ip = ip
-        self.userAgent = userAgent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case date
-        case ip
-        case userAgent = "user_agent"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case userAgent = "user_agent"
     }
 }
 

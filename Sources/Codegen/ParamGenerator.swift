@@ -17,6 +17,12 @@ struct ParamGenerator {
     let parser: SpecParser
     /// Records every place a param falls back to a looser type than the spec describes
     var fallbacks = ParamFallbacks()
+    /// Every resource's Swift type name, so a shared nested name never starts with another
+    /// resource's (`Customer` + `BalanceTransaction…` vs the `CustomerBalanceTransaction` resource)
+    var resourceTypeNames: Set<String> = []
+    /// Type names generated outside params (models, inline types, their enums), which shared
+    /// nested names must not take
+    var reservedTypeNames: Set<String> = []
     
     /// Maximum nesting depth for typed sub-structs
     private let maxDepth = 20
@@ -41,41 +47,119 @@ struct ParamGenerator {
         lines.append("import Foundation")
         lines.append("")
         
-        // Collect all sub-structs generated during param generation
-        var allSubStructs: [(name: String, lines: [String])] = []
-        
+        // Generate each operation's params, noting which action produced each nested type
+        var topLevel: [[String]] = []
+        var nested: [NestedParamsType] = []
         for (action, schema, requiredFields) in operations {
-            let stem = "\(resource.swiftTypeName)\(action)"
             let (structLines, subStructs) = generateParamStruct(
-                stem: stem,
+                stem: "\(resource.swiftTypeName)\(action)",
                 schema: schema,
                 requiredFields: requiredFields,
                 depth: 0
             )
-            lines.append(contentsOf: structLines)
-            lines.append("")
-            allSubStructs.append(contentsOf: subStructs)
+            topLevel.append(structLines)
+            nested += subStructs.map { NestedParamsType(action: action, name: $0.name, lines: $0.lines) }
         }
-        
-        // Emit all nested types (structs, enums, unions). Two operations can reach the same
-        // nested params under the same name (POST /v1/treasury/financial_accounts/{id} `features`
-        // and the `updateFeatures` route both give FinancialAccountUpdateFeatures…); emit those
-        // once. A name reused for a different shape would be ambiguous Swift, so stop
-        // generation instead.
+
+        // Nested types every action defines identically are generated once, named without the
+        // action (see `sharedNames`)
+        let renames = sharedNames(resource: resource, nested: nested)
+        for structLines in topLevel {
+            lines.append(contentsOf: Self.renamingTypes(structLines, renames))
+            lines.append("")
+        }
+
+        // Emit all nested types (structs, enums, unions). Two operations, or merged copies, can
+        // give the same name; emit those once. A name reused for a different shape would be
+        // ambiguous Swift, so stop generation instead.
         var emitted: [String: [String]] = [:]
-        for (name, subLines) in allSubStructs {
+        for type in nested {
+            let name = renames[type.name] ?? type.name
+            let typeLines = Self.renamingTypes(type.lines, renames)
             if let existing = emitted[name] {
-                precondition(existing == subLines, "Params type \(name) generated twice with different shapes")
+                precondition(
+                    Self.withoutDocComments(existing) == Self.withoutDocComments(typeLines),
+                    "Params type \(name) generated twice with different shapes"
+                )
                 continue
             }
-            emitted[name] = subLines
-            lines.append(contentsOf: subLines)
+            emitted[name] = typeLines
+            lines.append(contentsOf: typeLines)
             lines.append("")
         }
         
         return lines.joined(separator: "\n")
     }
     
+    // MARK: - Shared Nested Types
+
+    /// A nested params type (struct, enum or union) and the action whose params produced it
+    private struct NestedParamsType {
+        let action: String
+        let name: String
+        let lines: [String]
+    }
+
+    /// New names for nested params types that every action of a resource defines identically:
+    /// the resource plus the field path, without the action, as Stripe's SDKs name them
+    /// (stripe-go's `PaymentIntentPaymentMethodDataParams`, stripe-dotnet's
+    /// `PaymentIntentPaymentMethodDataOptions`). `PaymentIntentCreatePaymentMethodData` and
+    /// `PaymentIntentConfirmPaymentMethodData` both become `PaymentIntentPaymentMethodData`.
+    ///
+    /// A type keeps its action when the actions define it differently (or a nested type of it
+    /// does), or when the shorter name would clash with another type. Doc comments are ignored
+    /// when comparing; the first action's are kept.
+    private func sharedNames(resource: StripeResource, nested: [NestedParamsType]) -> [String: String] {
+        let resourceName = resource.swiftTypeName
+        var candidates: [String: String] = [:]  // nested name → name without the action
+        var bodies: [String: [String]] = [:]    // nested name → its lines, without doc comments
+        for type in nested where bodies[type.name] == nil {
+            candidates[type.name] = resourceName + type.name.dropFirst(resourceName.count + type.action.count)
+            bodies[type.name] = Self.withoutDocComments(type.lines)
+        }
+
+        // A shorter name mustn't clash with a type generated elsewhere, a top-level params
+        // struct, or another resource's names
+        let longerResourceNames = resourceTypeNames.filter { $0.count > resourceName.count && $0.hasPrefix(resourceName) }
+        var merging = Set(candidates.keys.filter { name in
+            let candidate = candidates[name]!
+            return !reservedTypeNames.contains(candidate)
+                && !candidate.hasSuffix("Params")
+                && !longerResourceNames.contains { candidate.hasPrefix($0) }
+        })
+
+        // Keep only names whose copies are identical once their nested types are renamed too,
+        // repeating until nothing changes, since dropping a nested type can split its parent
+        while true {
+            let renames = Dictionary(uniqueKeysWithValues: merging.map { ($0, candidates[$0]!) })
+            var shapes: [String: Set<[String]>] = [:]  // shared name → the shapes merging into it
+            for name in merging {
+                shapes[candidates[name]!, default: []].insert(Self.renamingTypes(bodies[name]!, renames))
+            }
+            let kept = Set(candidates.keys).subtracting(merging)
+            let invalid = merging.filter { name in
+                let candidate = candidates[name]!
+                return shapes[candidate]!.count > 1 || kept.contains(candidate)
+            }
+            guard !invalid.isEmpty else { return renames }
+            merging.subtract(invalid)
+        }
+    }
+
+    /// `lines` with every identifier in `renames` replaced
+    private static func renamingTypes(_ lines: [String], _ renames: [String: String]) -> [String] {
+        guard !renames.isEmpty else { return lines }
+        return lines.map { line in
+            line.replacing(/[A-Za-z_][A-Za-z0-9_]*/) { match in
+                renames[String(match.output)] ?? String(match.output)
+            }
+        }
+    }
+
+    private static func withoutDocComments(_ lines: [String]) -> [String] {
+        lines.filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("///") }
+    }
+
     // MARK: - Struct Generation
     
     /// Generate a single param struct from an inline schema.

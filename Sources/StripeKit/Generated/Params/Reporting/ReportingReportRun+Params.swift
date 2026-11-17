@@ -16,9 +16,9 @@ public struct ReportingReportRunCreateParams: StripeParams {
     /// Parameters specifying how the report should be run. Different Report Types have different required
     /// and optional parameters, listed in the [API Access to
     /// Reports](https://docs.stripe.com/reporting/statements/api) documentation.
-    public var parameters: ReportingReportRunCreateParameters?
+    public var parameters: ReportingReportRunParameters?
 
-    public init(reportType: String, expand: [String]? = nil, parameters: ReportingReportRunCreateParameters? = nil) {
+    public init(reportType: String, expand: [String]? = nil, parameters: ReportingReportRunParameters? = nil) {
         self.reportType = reportType
         self.expand = expand
         self.parameters = parameters
@@ -69,7 +69,7 @@ public struct ReportingReportRunListParams: StripeParams {
 /// Parameters specifying how the report should be run. Different Report Types have different required
 /// and optional parameters, listed in the [API Access to
 /// Reports](https://docs.stripe.com/reporting/statements/api) documentation.
-public struct ReportingReportRunCreateParameters: StripeParams {
+public struct ReportingReportRunParameters: StripeParams {
     /// The set of report columns to include in the report output. If omitted, the Report Type is run with
     /// its default column set.
     public var columns: [String]?
@@ -84,13 +84,13 @@ public struct ReportingReportRunCreateParameters: StripeParams {
     /// Payout ID by which to filter the report run.
     public var payout: String?
     /// Category of balance transactions to be included in the report run.
-    public var reportingCategory: ReportingReportRunCreateParametersReportingCategory?
+    public var reportingCategory: ReportingReportRunParametersReportingCategory?
     /// Defaults to `Etc/UTC`. The output timezone for all timestamps in the report. A list of possible time
     /// zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones). Has no
     /// effect on `interval_start` or `interval_end`.
-    public var timezone: ReportingReportRunCreateParametersTimezone?
+    public var timezone: ReportingReportRunParametersTimezone?
 
-    public init(columns: [String]? = nil, connectedAccount: String? = nil, currency: String? = nil, intervalEnd: Date? = nil, intervalStart: Date? = nil, payout: String? = nil, reportingCategory: ReportingReportRunCreateParametersReportingCategory? = nil, timezone: ReportingReportRunCreateParametersTimezone? = nil) {
+    public init(columns: [String]? = nil, connectedAccount: String? = nil, currency: String? = nil, intervalEnd: Date? = nil, intervalStart: Date? = nil, payout: String? = nil, reportingCategory: ReportingReportRunParametersReportingCategory? = nil, timezone: ReportingReportRunParametersTimezone? = nil) {
         self.columns = columns
         self.connectedAccount = connectedAccount
         self.currency = currency
@@ -113,7 +113,7 @@ public struct ReportingReportRunCreateParameters: StripeParams {
     }
 }
 
-public struct ReportingReportRunCreateParametersReportingCategory: RawRepresentable, Codable, Hashable, Sendable {
+public struct ReportingReportRunParametersReportingCategory: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -159,7 +159,7 @@ public struct ReportingReportRunCreateParametersReportingCategory: RawRepresenta
     public static var unreconciledCustomerFunds: Self { .init(rawValue: "unreconciled_customer_funds") }
 }
 
-public struct ReportingReportRunCreateParametersTimezone: RawRepresentable, Codable, Hashable, Sendable {
+public struct ReportingReportRunParametersTimezone: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

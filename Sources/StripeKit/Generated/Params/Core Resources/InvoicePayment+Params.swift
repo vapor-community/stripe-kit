@@ -23,15 +23,15 @@ public struct InvoicePaymentListParams: StripeParams {
     /// is 10.
     public var limit: Int?
     /// The payment details of the invoice payments to return.
-    public var payment: InvoicePaymentListPayment?
+    public var payment: InvoicePaymentPayment?
     /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
     /// The status of the invoice payments to return.
-    public var status: InvoicePaymentListStatus?
+    public var status: InvoicePaymentStatus?
 
-    public init(created: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, invoice: String? = nil, limit: Int? = nil, payment: InvoicePaymentListPayment? = nil, startingAfter: String? = nil, status: InvoicePaymentListStatus? = nil) {
+    public init(created: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, invoice: String? = nil, limit: Int? = nil, payment: InvoicePaymentPayment? = nil, startingAfter: String? = nil, status: InvoicePaymentStatus? = nil) {
         self.created = created
         self.endingBefore = endingBefore
         self.expand = expand
@@ -55,15 +55,15 @@ public struct InvoicePaymentListParams: StripeParams {
 }
 
 /// The payment details of the invoice payments to return.
-public struct InvoicePaymentListPayment: StripeParams {
+public struct InvoicePaymentPayment: StripeParams {
     /// Only return invoice payments associated by this payment type.
-    public var type: InvoicePaymentListPaymentType
+    public var type: InvoicePaymentPaymentType
     /// Only return invoice payments associated by this payment intent ID.
     public var paymentIntent: String?
     /// Only return invoice payments associated by this payment record ID.
     public var paymentRecord: String?
 
-    public init(type: InvoicePaymentListPaymentType, paymentIntent: String? = nil, paymentRecord: String? = nil) {
+    public init(type: InvoicePaymentPaymentType, paymentIntent: String? = nil, paymentRecord: String? = nil) {
         self.type = type
         self.paymentIntent = paymentIntent
         self.paymentRecord = paymentRecord
@@ -76,7 +76,7 @@ public struct InvoicePaymentListPayment: StripeParams {
     }
 }
 
-public struct InvoicePaymentListPaymentType: RawRepresentable, Codable, Hashable, Sendable {
+public struct InvoicePaymentPaymentType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -87,7 +87,7 @@ public struct InvoicePaymentListPaymentType: RawRepresentable, Codable, Hashable
     public static var paymentRecord: Self { .init(rawValue: "payment_record") }
 }
 
-public struct InvoicePaymentListStatus: RawRepresentable, Codable, Hashable, Sendable {
+public struct InvoicePaymentStatus: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

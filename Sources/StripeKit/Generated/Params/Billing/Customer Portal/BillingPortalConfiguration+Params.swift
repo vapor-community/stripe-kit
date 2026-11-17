@@ -21,7 +21,7 @@ public struct BillingPortalConfigurationCreateParams: ClearableParams {
     public var expand: [String]?
     /// The hosted login page for this configuration. Learn more about the portal login page in our
     /// [integration docs](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal#share).
-    public var loginPage: BillingPortalConfigurationCreateLoginPage?
+    public var loginPage: BillingPortalConfigurationLoginPage?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -32,7 +32,7 @@ public struct BillingPortalConfigurationCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.defaultReturnUrl)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(features: BillingPortalConfigurationCreateFeatures, businessProfile: BillingPortalConfigurationCreateBusinessProfile? = nil, defaultReturnUrl: String? = nil, expand: [String]? = nil, loginPage: BillingPortalConfigurationCreateLoginPage? = nil, metadata: [String: String]? = nil, name: String? = nil) {
+    public init(features: BillingPortalConfigurationCreateFeatures, businessProfile: BillingPortalConfigurationCreateBusinessProfile? = nil, defaultReturnUrl: String? = nil, expand: [String]? = nil, loginPage: BillingPortalConfigurationLoginPage? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.features = features
         self.businessProfile = businessProfile
         self.defaultReturnUrl = defaultReturnUrl
@@ -117,7 +117,7 @@ public struct BillingPortalConfigurationUpdateParams: ClearableParams {
     public var features: BillingPortalConfigurationUpdateFeatures?
     /// The hosted login page for this configuration. Learn more about the portal login page in our
     /// [integration docs](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal#share).
-    public var loginPage: BillingPortalConfigurationUpdateLoginPage?
+    public var loginPage: BillingPortalConfigurationLoginPage?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -128,7 +128,7 @@ public struct BillingPortalConfigurationUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.defaultReturnUrl)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(active: Bool? = nil, businessProfile: BillingPortalConfigurationUpdateBusinessProfile? = nil, defaultReturnUrl: String? = nil, expand: [String]? = nil, features: BillingPortalConfigurationUpdateFeatures? = nil, loginPage: BillingPortalConfigurationUpdateLoginPage? = nil, metadata: [String: String]? = nil, name: String? = nil) {
+    public init(active: Bool? = nil, businessProfile: BillingPortalConfigurationUpdateBusinessProfile? = nil, defaultReturnUrl: String? = nil, expand: [String]? = nil, features: BillingPortalConfigurationUpdateFeatures? = nil, loginPage: BillingPortalConfigurationLoginPage? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.active = active
         self.businessProfile = businessProfile
         self.defaultReturnUrl = defaultReturnUrl
@@ -164,17 +164,17 @@ public struct BillingPortalConfigurationCreateFeatures: StripeParams {
     /// Information about updating the customer details in the portal.
     public var customerUpdate: BillingPortalConfigurationCreateFeaturesCustomerUpdate?
     /// Information about showing the billing history in the portal.
-    public var invoiceHistory: BillingPortalConfigurationCreateFeaturesInvoiceHistory?
+    public var invoiceHistory: BillingPortalConfigurationFeaturesInvoiceHistory?
     /// Information about updating payment methods in the portal.
-    public var paymentMethodUpdate: BillingPortalConfigurationCreateFeaturesPaymentMethodUpdate?
+    public var paymentMethodUpdate: BillingPortalConfigurationFeaturesPaymentMethodUpdate?
     /// Information about canceling subscriptions in the portal.
     public var subscriptionCancel: BillingPortalConfigurationCreateFeaturesSubscriptionCancel?
     /// Information about pausing subscriptions in the portal.
-    public var subscriptionPause: BillingPortalConfigurationCreateFeaturesSubscriptionPause?
+    public var subscriptionPause: BillingPortalConfigurationFeaturesSubscriptionPause?
     /// Information about updating subscriptions in the portal.
     public var subscriptionUpdate: BillingPortalConfigurationCreateFeaturesSubscriptionUpdate?
 
-    public init(customerUpdate: BillingPortalConfigurationCreateFeaturesCustomerUpdate? = nil, invoiceHistory: BillingPortalConfigurationCreateFeaturesInvoiceHistory? = nil, paymentMethodUpdate: BillingPortalConfigurationCreateFeaturesPaymentMethodUpdate? = nil, subscriptionCancel: BillingPortalConfigurationCreateFeaturesSubscriptionCancel? = nil, subscriptionPause: BillingPortalConfigurationCreateFeaturesSubscriptionPause? = nil, subscriptionUpdate: BillingPortalConfigurationCreateFeaturesSubscriptionUpdate? = nil) {
+    public init(customerUpdate: BillingPortalConfigurationCreateFeaturesCustomerUpdate? = nil, invoiceHistory: BillingPortalConfigurationFeaturesInvoiceHistory? = nil, paymentMethodUpdate: BillingPortalConfigurationFeaturesPaymentMethodUpdate? = nil, subscriptionCancel: BillingPortalConfigurationCreateFeaturesSubscriptionCancel? = nil, subscriptionPause: BillingPortalConfigurationFeaturesSubscriptionPause? = nil, subscriptionUpdate: BillingPortalConfigurationCreateFeaturesSubscriptionUpdate? = nil) {
         self.customerUpdate = customerUpdate
         self.invoiceHistory = invoiceHistory
         self.paymentMethodUpdate = paymentMethodUpdate
@@ -198,11 +198,11 @@ public struct BillingPortalConfigurationCreateFeaturesCustomerUpdate: ClearableP
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// The types of customer updates that are supported. When empty, customers are not updateable.
-    public var allowedUpdates: [BillingPortalConfigurationCreateFeaturesCustomerUpdateAllowedUpdates]?
+    public var allowedUpdates: [BillingPortalConfigurationFeaturesCustomerUpdateAllowedUpdates]?
     /// Fields to send empty, which clears them: `params.clear(.allowedUpdates)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(enabled: Bool, allowedUpdates: [BillingPortalConfigurationCreateFeaturesCustomerUpdateAllowedUpdates]? = nil) {
+    public init(enabled: Bool, allowedUpdates: [BillingPortalConfigurationFeaturesCustomerUpdateAllowedUpdates]? = nil) {
         self.enabled = enabled
         self.allowedUpdates = allowedUpdates
     }
@@ -219,7 +219,7 @@ public struct BillingPortalConfigurationCreateFeaturesCustomerUpdate: ClearableP
     }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesCustomerUpdateAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesCustomerUpdateAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -235,7 +235,7 @@ public struct BillingPortalConfigurationCreateFeaturesCustomerUpdateAllowedUpdat
 }
 
 /// Information about showing the billing history in the portal.
-public struct BillingPortalConfigurationCreateFeaturesInvoiceHistory: StripeParams {
+public struct BillingPortalConfigurationFeaturesInvoiceHistory: StripeParams {
     /// Whether the feature is enabled.
     public var enabled: Bool
 
@@ -245,7 +245,7 @@ public struct BillingPortalConfigurationCreateFeaturesInvoiceHistory: StripePara
 }
 
 /// Information about updating payment methods in the portal.
-public struct BillingPortalConfigurationCreateFeaturesPaymentMethodUpdate: ClearableParams {
+public struct BillingPortalConfigurationFeaturesPaymentMethodUpdate: ClearableParams {
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// The [Payment Method Configuration](/api/payment_method_configurations) to use for this portal
@@ -281,14 +281,14 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancel: Stripe
     /// the customer
     public var cancellationReason: BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReason?
     /// Whether to cancel subscriptions immediately or at the end of the billing period.
-    public var mode: BillingPortalConfigurationCreateFeaturesSubscriptionCancelMode?
+    public var mode: BillingPortalConfigurationFeaturesSubscriptionCancelMode?
     /// Whether to create prorations when canceling subscriptions. Possible values are `none` and
     /// `create_prorations`, which is only compatible with `mode=immediately`. Passing `always_invoice` will
     /// result in an error. No prorations are generated when canceling a subscription at the end of its
     /// natural billing period.
-    public var prorationBehavior: BillingPortalConfigurationCreateFeaturesSubscriptionCancelProrationBehavior?
+    public var prorationBehavior: BillingPortalConfigurationFeaturesSubscriptionCancelProrationBehavior?
 
-    public init(enabled: Bool, cancellationReason: BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReason? = nil, mode: BillingPortalConfigurationCreateFeaturesSubscriptionCancelMode? = nil, prorationBehavior: BillingPortalConfigurationCreateFeaturesSubscriptionCancelProrationBehavior? = nil) {
+    public init(enabled: Bool, cancellationReason: BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReason? = nil, mode: BillingPortalConfigurationFeaturesSubscriptionCancelMode? = nil, prorationBehavior: BillingPortalConfigurationFeaturesSubscriptionCancelProrationBehavior? = nil) {
         self.enabled = enabled
         self.cancellationReason = cancellationReason
         self.mode = mode
@@ -309,13 +309,13 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancella
     /// Whether the feature is enabled.
     public var enabled: Bool
     /// Which cancellation reasons will be given as options to the customer.
-    public var options: [BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReasonOptions]
+    public var options: [BillingPortalConfigurationFeaturesSubscriptionCancelCancellationReasonOptions]
     /// The IDs of custom feedback options to use for this cancellation reason.
     public var feedbackOptions: [String]?
     /// Fields to send empty, which clears them: `params.clear(.feedbackOptions)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(enabled: Bool, options: [BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReasonOptions], feedbackOptions: [String]? = nil) {
+    public init(enabled: Bool, options: [BillingPortalConfigurationFeaturesSubscriptionCancelCancellationReasonOptions], feedbackOptions: [String]? = nil) {
         self.enabled = enabled
         self.options = options
         self.feedbackOptions = feedbackOptions
@@ -335,7 +335,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancella
     }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReasonOptions: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionCancelCancellationReasonOptions: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -352,7 +352,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancella
     public static var unused: Self { .init(rawValue: "unused") }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelMode: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionCancelMode: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -363,7 +363,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelMode: Ra
     public static var immediately: Self { .init(rawValue: "immediately") }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionCancelProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -376,15 +376,15 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelProratio
 }
 
 /// Information about pausing subscriptions in the portal.
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionPause: StripeParams {
+public struct BillingPortalConfigurationFeaturesSubscriptionPause: StripeParams {
     /// Controls how long a subscription can be paused. Defaults to `interval_options` with a single
     /// one-month option.
-    public var duration: BillingPortalConfigurationCreateFeaturesSubscriptionPauseDuration?
+    public var duration: BillingPortalConfigurationFeaturesSubscriptionPauseDuration?
     /// Whether the feature is enabled. Customers can only pause subscriptions in the [redesigned customer
     /// portal](/customer-management).
     public var enabled: Bool?
 
-    public init(duration: BillingPortalConfigurationCreateFeaturesSubscriptionPauseDuration? = nil, enabled: Bool? = nil) {
+    public init(duration: BillingPortalConfigurationFeaturesSubscriptionPauseDuration? = nil, enabled: Bool? = nil) {
         self.duration = duration
         self.enabled = enabled
     }
@@ -392,15 +392,15 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPause: StripeP
 
 /// Controls how long a subscription can be paused. Defaults to `interval_options` with a single
 /// one-month option.
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDuration: ClearableParams {
+public struct BillingPortalConfigurationFeaturesSubscriptionPauseDuration: ClearableParams {
     /// Whether subscriptions can be paused indefinitely or for a preset duration.
-    public var type: BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationType
+    public var type: BillingPortalConfigurationFeaturesSubscriptionPauseDurationType
     /// The preset pause durations customers can choose from. Required when `type` is `interval_options`.
-    public var intervalOptions: [BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptions]?
+    public var intervalOptions: [BillingPortalConfigurationFeaturesSubscriptionPauseDurationIntervalOptions]?
     /// Fields to send empty, which clears them: `params.clear(.intervalOptions)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(type: BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationType, intervalOptions: [BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptions]? = nil) {
+    public init(type: BillingPortalConfigurationFeaturesSubscriptionPauseDurationType, intervalOptions: [BillingPortalConfigurationFeaturesSubscriptionPauseDurationIntervalOptions]? = nil) {
         self.type = type
         self.intervalOptions = intervalOptions
     }
@@ -417,7 +417,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDuration:
     }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionPauseDurationType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -430,13 +430,13 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationT
     public static var intervalOptions: Self { .init(rawValue: "interval_options") }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptions: StripeParams {
+public struct BillingPortalConfigurationFeaturesSubscriptionPauseDurationIntervalOptions: StripeParams {
     /// Specifies the pause duration unit. Either `day`, `week`, `month`, or `year`.
-    public var interval: BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptionsInterval
+    public var interval: BillingPortalConfigurationFeaturesSubscriptionPauseDurationIntervalOptionsInterval
     /// The number of intervals in the pause duration. Defaults to 1. The maximum duration is three years.
     public var intervalCount: Int?
 
-    public init(interval: BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptionsInterval, intervalCount: Int? = nil) {
+    public init(interval: BillingPortalConfigurationFeaturesSubscriptionPauseDurationIntervalOptionsInterval, intervalCount: Int? = nil) {
         self.interval = interval
         self.intervalCount = intervalCount
     }
@@ -447,7 +447,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationI
     }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionPauseDurationIntervalOptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -468,23 +468,23 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdate: Cleara
     /// `now` or `unchanged`, and the default value is `unchanged`. Setting the value to `now` resets the
     /// subscription's billing cycle anchor to the current time (in UTC). For more information, see the
     /// billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
-    public var billingCycleAnchor: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateBillingCycleAnchor?
+    public var billingCycleAnchor: BillingPortalConfigurationFeaturesSubscriptionUpdateBillingCycleAnchor?
     /// The types of subscription updates that are supported. When empty, subscriptions are not updateable.
-    public var defaultAllowedUpdates: [BillingPortalConfigurationCreateFeaturesSubscriptionUpdateDefaultAllowedUpdates]?
+    public var defaultAllowedUpdates: [BillingPortalConfigurationFeaturesSubscriptionUpdateDefaultAllowedUpdates]?
     /// The list of up to 10 products that support subscription updates.
-    public var products: [BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts]?
+    public var products: [BillingPortalConfigurationFeaturesSubscriptionUpdateProducts]?
     /// Determines how to handle prorations resulting from subscription updates. Valid values are `none`,
     /// `create_prorations`, and `always_invoice`.
-    public var prorationBehavior: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProrationBehavior?
+    public var prorationBehavior: BillingPortalConfigurationFeaturesSubscriptionUpdateProrationBehavior?
     /// Setting to control when an update should be scheduled at the end of the period instead of applying
     /// immediately.
     public var scheduleAtPeriodEnd: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEnd?
     /// The behavior when updating a subscription that is trialing.
-    public var trialUpdateBehavior: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateTrialUpdateBehavior?
+    public var trialUpdateBehavior: BillingPortalConfigurationFeaturesSubscriptionUpdateTrialUpdateBehavior?
     /// Fields to send empty, which clears them: `params.clear(.defaultAllowedUpdates)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(enabled: Bool, billingCycleAnchor: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateBillingCycleAnchor? = nil, defaultAllowedUpdates: [BillingPortalConfigurationCreateFeaturesSubscriptionUpdateDefaultAllowedUpdates]? = nil, products: [BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts]? = nil, prorationBehavior: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProrationBehavior? = nil, scheduleAtPeriodEnd: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEnd? = nil, trialUpdateBehavior: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateTrialUpdateBehavior? = nil) {
+    public init(enabled: Bool, billingCycleAnchor: BillingPortalConfigurationFeaturesSubscriptionUpdateBillingCycleAnchor? = nil, defaultAllowedUpdates: [BillingPortalConfigurationFeaturesSubscriptionUpdateDefaultAllowedUpdates]? = nil, products: [BillingPortalConfigurationFeaturesSubscriptionUpdateProducts]? = nil, prorationBehavior: BillingPortalConfigurationFeaturesSubscriptionUpdateProrationBehavior? = nil, scheduleAtPeriodEnd: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEnd? = nil, trialUpdateBehavior: BillingPortalConfigurationFeaturesSubscriptionUpdateTrialUpdateBehavior? = nil) {
         self.enabled = enabled
         self.billingCycleAnchor = billingCycleAnchor
         self.defaultAllowedUpdates = defaultAllowedUpdates
@@ -512,7 +512,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdate: Cleara
     }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionUpdateBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -525,7 +525,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateBillingC
     public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateDefaultAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionUpdateDefaultAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -537,15 +537,15 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateDefaultA
     public static var quantity: Self { .init(rawValue: "quantity") }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts: StripeParams {
+public struct BillingPortalConfigurationFeaturesSubscriptionUpdateProducts: StripeParams {
     /// The list of price IDs for the product that a subscription can be updated to.
     public var prices: [String]
     /// The product id.
     public var product: String
     /// Control whether the quantity of the product can be adjusted.
-    public var adjustableQuantity: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProductsAdjustableQuantity?
+    public var adjustableQuantity: BillingPortalConfigurationFeaturesSubscriptionUpdateProductsAdjustableQuantity?
 
-    public init(prices: [String], product: String, adjustableQuantity: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProductsAdjustableQuantity? = nil) {
+    public init(prices: [String], product: String, adjustableQuantity: BillingPortalConfigurationFeaturesSubscriptionUpdateProductsAdjustableQuantity? = nil) {
         self.prices = prices
         self.product = product
         self.adjustableQuantity = adjustableQuantity
@@ -559,7 +559,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts
 }
 
 /// Control whether the quantity of the product can be adjusted.
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProductsAdjustableQuantity: StripeParams {
+public struct BillingPortalConfigurationFeaturesSubscriptionUpdateProductsAdjustableQuantity: StripeParams {
     /// Set to true if the quantity can be adjusted to any non-negative integer.
     public var enabled: Bool
     /// The maximum quantity that can be set for the product.
@@ -574,7 +574,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts
     }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -591,23 +591,23 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProratio
 public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEnd: StripeParams {
     /// List of conditions. When any condition is true, the update will be scheduled at the end of the
     /// current period.
-    public var conditions: [BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]?
+    public var conditions: [BillingPortalConfigurationFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]?
 
-    public init(conditions: [BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]? = nil) {
+    public init(conditions: [BillingPortalConfigurationFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]? = nil) {
         self.conditions = conditions
     }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions: StripeParams {
+public struct BillingPortalConfigurationFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions: StripeParams {
     /// The type of condition.
-    public var type: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType
+    public var type: BillingPortalConfigurationFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType
 
-    public init(type: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType) {
+    public init(type: BillingPortalConfigurationFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType) {
         self.type = type
     }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -618,7 +618,7 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateSchedule
     public static var shorteningInterval: Self { .init(rawValue: "shortening_interval") }
 }
 
-public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateTrialUpdateBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalConfigurationFeaturesSubscriptionUpdateTrialUpdateBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -661,7 +661,7 @@ public struct BillingPortalConfigurationCreateBusinessProfile: ClearableParams {
 
 /// The hosted login page for this configuration. Learn more about the portal login page in our
 /// [integration docs](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal#share).
-public struct BillingPortalConfigurationCreateLoginPage: StripeParams {
+public struct BillingPortalConfigurationLoginPage: StripeParams {
     /// Set to `true` to generate a shareable URL
     /// [`login_page.url`](https://docs.stripe.com/api/customer_portal/configuration#portal_configuration_object-login_page-url)
     /// that will take your customers to a hosted login page for the customer portal.
@@ -709,17 +709,17 @@ public struct BillingPortalConfigurationUpdateFeatures: StripeParams {
     /// Information about updating the customer details in the portal.
     public var customerUpdate: BillingPortalConfigurationUpdateFeaturesCustomerUpdate?
     /// Information about showing the billing history in the portal.
-    public var invoiceHistory: BillingPortalConfigurationUpdateFeaturesInvoiceHistory?
+    public var invoiceHistory: BillingPortalConfigurationFeaturesInvoiceHistory?
     /// Information about updating payment methods in the portal.
-    public var paymentMethodUpdate: BillingPortalConfigurationUpdateFeaturesPaymentMethodUpdate?
+    public var paymentMethodUpdate: BillingPortalConfigurationFeaturesPaymentMethodUpdate?
     /// Information about canceling subscriptions in the portal.
     public var subscriptionCancel: BillingPortalConfigurationUpdateFeaturesSubscriptionCancel?
     /// Information about pausing subscriptions in the portal.
-    public var subscriptionPause: BillingPortalConfigurationUpdateFeaturesSubscriptionPause?
+    public var subscriptionPause: BillingPortalConfigurationFeaturesSubscriptionPause?
     /// Information about updating subscriptions in the portal.
     public var subscriptionUpdate: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate?
 
-    public init(customerUpdate: BillingPortalConfigurationUpdateFeaturesCustomerUpdate? = nil, invoiceHistory: BillingPortalConfigurationUpdateFeaturesInvoiceHistory? = nil, paymentMethodUpdate: BillingPortalConfigurationUpdateFeaturesPaymentMethodUpdate? = nil, subscriptionCancel: BillingPortalConfigurationUpdateFeaturesSubscriptionCancel? = nil, subscriptionPause: BillingPortalConfigurationUpdateFeaturesSubscriptionPause? = nil, subscriptionUpdate: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate? = nil) {
+    public init(customerUpdate: BillingPortalConfigurationUpdateFeaturesCustomerUpdate? = nil, invoiceHistory: BillingPortalConfigurationFeaturesInvoiceHistory? = nil, paymentMethodUpdate: BillingPortalConfigurationFeaturesPaymentMethodUpdate? = nil, subscriptionCancel: BillingPortalConfigurationUpdateFeaturesSubscriptionCancel? = nil, subscriptionPause: BillingPortalConfigurationFeaturesSubscriptionPause? = nil, subscriptionUpdate: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate? = nil) {
         self.customerUpdate = customerUpdate
         self.invoiceHistory = invoiceHistory
         self.paymentMethodUpdate = paymentMethodUpdate
@@ -741,13 +741,13 @@ public struct BillingPortalConfigurationUpdateFeatures: StripeParams {
 /// Information about updating the customer details in the portal.
 public struct BillingPortalConfigurationUpdateFeaturesCustomerUpdate: ClearableParams {
     /// The types of customer updates that are supported. When empty, customers are not updateable.
-    public var allowedUpdates: [BillingPortalConfigurationUpdateFeaturesCustomerUpdateAllowedUpdates]?
+    public var allowedUpdates: [BillingPortalConfigurationFeaturesCustomerUpdateAllowedUpdates]?
     /// Whether the feature is enabled.
     public var enabled: Bool?
     /// Fields to send empty, which clears them: `params.clear(.allowedUpdates)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(allowedUpdates: [BillingPortalConfigurationUpdateFeaturesCustomerUpdateAllowedUpdates]? = nil, enabled: Bool? = nil) {
+    public init(allowedUpdates: [BillingPortalConfigurationFeaturesCustomerUpdateAllowedUpdates]? = nil, enabled: Bool? = nil) {
         self.allowedUpdates = allowedUpdates
         self.enabled = enabled
     }
@@ -764,60 +764,6 @@ public struct BillingPortalConfigurationUpdateFeaturesCustomerUpdate: ClearableP
     }
 }
 
-public struct BillingPortalConfigurationUpdateFeaturesCustomerUpdateAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var address: Self { .init(rawValue: "address") }
-    public static var email: Self { .init(rawValue: "email") }
-    public static var name: Self { .init(rawValue: "name") }
-    public static var phone: Self { .init(rawValue: "phone") }
-    public static var shipping: Self { .init(rawValue: "shipping") }
-    public static var taxId: Self { .init(rawValue: "tax_id") }
-}
-
-/// Information about showing the billing history in the portal.
-public struct BillingPortalConfigurationUpdateFeaturesInvoiceHistory: StripeParams {
-    /// Whether the feature is enabled.
-    public var enabled: Bool
-
-    public init(enabled: Bool) {
-        self.enabled = enabled
-    }
-}
-
-/// Information about updating payment methods in the portal.
-public struct BillingPortalConfigurationUpdateFeaturesPaymentMethodUpdate: ClearableParams {
-    /// Whether the feature is enabled.
-    public var enabled: Bool
-    /// The [Payment Method Configuration](/api/payment_method_configurations) to use for this portal
-    /// session. When specified, customers will be able to update their payment method to one of the options
-    /// specified by the payment method configuration. If not set or set to an empty string, the default
-    /// payment method configuration is used.
-    public var paymentMethodConfiguration: String?
-    /// Fields to send empty, which clears them: `params.clear(.paymentMethodConfiguration)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(enabled: Bool, paymentMethodConfiguration: String? = nil) {
-        self.enabled = enabled
-        self.paymentMethodConfiguration = paymentMethodConfiguration
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case enabled
-        case paymentMethodConfiguration = "payment_method_configuration"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case paymentMethodConfiguration = "payment_method_configuration"
-    }
-}
-
 /// Information about canceling subscriptions in the portal.
 public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancel: StripeParams {
     /// Whether the cancellation reasons will be collected in the portal and which options are exposed to
@@ -826,14 +772,14 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancel: Stripe
     /// Whether the feature is enabled.
     public var enabled: Bool?
     /// Whether to cancel subscriptions immediately or at the end of the billing period.
-    public var mode: BillingPortalConfigurationUpdateFeaturesSubscriptionCancelMode?
+    public var mode: BillingPortalConfigurationFeaturesSubscriptionCancelMode?
     /// Whether to create prorations when canceling subscriptions. Possible values are `none` and
     /// `create_prorations`, which is only compatible with `mode=immediately`. Passing `always_invoice` will
     /// result in an error. No prorations are generated when canceling a subscription at the end of its
     /// natural billing period.
-    public var prorationBehavior: BillingPortalConfigurationUpdateFeaturesSubscriptionCancelProrationBehavior?
+    public var prorationBehavior: BillingPortalConfigurationFeaturesSubscriptionCancelProrationBehavior?
 
-    public init(cancellationReason: BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReason? = nil, enabled: Bool? = nil, mode: BillingPortalConfigurationUpdateFeaturesSubscriptionCancelMode? = nil, prorationBehavior: BillingPortalConfigurationUpdateFeaturesSubscriptionCancelProrationBehavior? = nil) {
+    public init(cancellationReason: BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReason? = nil, enabled: Bool? = nil, mode: BillingPortalConfigurationFeaturesSubscriptionCancelMode? = nil, prorationBehavior: BillingPortalConfigurationFeaturesSubscriptionCancelProrationBehavior? = nil) {
         self.cancellationReason = cancellationReason
         self.enabled = enabled
         self.mode = mode
@@ -856,11 +802,11 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancella
     /// The IDs of custom feedback options to use for this cancellation reason.
     public var feedbackOptions: [String]?
     /// Which cancellation reasons will be given as options to the customer.
-    public var options: [BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReasonOptions]?
+    public var options: [BillingPortalConfigurationFeaturesSubscriptionCancelCancellationReasonOptions]?
     /// Fields to send empty, which clears them: `params.clear(.feedbackOptions)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(enabled: Bool, feedbackOptions: [String]? = nil, options: [BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReasonOptions]? = nil) {
+    public init(enabled: Bool, feedbackOptions: [String]? = nil, options: [BillingPortalConfigurationFeaturesSubscriptionCancelCancellationReasonOptions]? = nil) {
         self.enabled = enabled
         self.feedbackOptions = feedbackOptions
         self.options = options
@@ -880,156 +826,31 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancella
     }
 }
 
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReasonOptions: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var customerService: Self { .init(rawValue: "customer_service") }
-    public static var lowQuality: Self { .init(rawValue: "low_quality") }
-    public static var missingFeatures: Self { .init(rawValue: "missing_features") }
-    public static var other: Self { .init(rawValue: "other") }
-    public static var switchedService: Self { .init(rawValue: "switched_service") }
-    public static var tooComplex: Self { .init(rawValue: "too_complex") }
-    public static var tooExpensive: Self { .init(rawValue: "too_expensive") }
-    public static var unused: Self { .init(rawValue: "unused") }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelMode: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var atPeriodEnd: Self { .init(rawValue: "at_period_end") }
-    public static var immediately: Self { .init(rawValue: "immediately") }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
-    public static var createProrations: Self { .init(rawValue: "create_prorations") }
-    public static var none: Self { .init(rawValue: "none") }
-}
-
-/// Information about pausing subscriptions in the portal.
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPause: StripeParams {
-    /// Controls how long a subscription can be paused. Defaults to `interval_options` with a single
-    /// one-month option.
-    public var duration: BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDuration?
-    /// Whether the feature is enabled. Customers can only pause subscriptions in the [redesigned customer
-    /// portal](/customer-management).
-    public var enabled: Bool?
-
-    public init(duration: BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDuration? = nil, enabled: Bool? = nil) {
-        self.duration = duration
-        self.enabled = enabled
-    }
-}
-
-/// Controls how long a subscription can be paused. Defaults to `interval_options` with a single
-/// one-month option.
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDuration: ClearableParams {
-    /// Whether subscriptions can be paused indefinitely or for a preset duration.
-    public var type: BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationType
-    /// The preset pause durations customers can choose from. Required when `type` is `interval_options`.
-    public var intervalOptions: [BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptions]?
-    /// Fields to send empty, which clears them: `params.clear(.intervalOptions)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(type: BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationType, intervalOptions: [BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptions]? = nil) {
-        self.type = type
-        self.intervalOptions = intervalOptions
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case intervalOptions = "interval_options"
-        case type
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case intervalOptions = "interval_options"
-    }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    /// Allow subscriptions to be paused indefinitely.
-    public static var indefinite: Self { .init(rawValue: "indefinite") }
-    /// Require customers to choose from configured pause duration options.
-    public static var intervalOptions: Self { .init(rawValue: "interval_options") }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptions: StripeParams {
-    /// Specifies the pause duration unit. Either `day`, `week`, `month`, or `year`.
-    public var interval: BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptionsInterval
-    /// The number of intervals in the pause duration. Defaults to 1. The maximum duration is three years.
-    public var intervalCount: Int?
-
-    public init(interval: BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptionsInterval, intervalCount: Int? = nil) {
-        self.interval = interval
-        self.intervalCount = intervalCount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case interval
-        case intervalCount = "interval_count"
-    }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
 /// Information about updating subscriptions in the portal.
 public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate: ClearableParams {
     /// Determines the value to use for the billing cycle anchor on subscription updates. Valid values are
     /// `now` or `unchanged`, and the default value is `unchanged`. Setting the value to `now` resets the
     /// subscription's billing cycle anchor to the current time (in UTC). For more information, see the
     /// billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
-    public var billingCycleAnchor: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateBillingCycleAnchor?
+    public var billingCycleAnchor: BillingPortalConfigurationFeaturesSubscriptionUpdateBillingCycleAnchor?
     /// The types of subscription updates that are supported. When empty, subscriptions are not updateable.
-    public var defaultAllowedUpdates: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateDefaultAllowedUpdates]?
+    public var defaultAllowedUpdates: [BillingPortalConfigurationFeaturesSubscriptionUpdateDefaultAllowedUpdates]?
     /// Whether the feature is enabled.
     public var enabled: Bool?
     /// The list of up to 10 products that support subscription updates.
-    public var products: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProducts]?
+    public var products: [BillingPortalConfigurationFeaturesSubscriptionUpdateProducts]?
     /// Determines how to handle prorations resulting from subscription updates. Valid values are `none`,
     /// `create_prorations`, and `always_invoice`.
-    public var prorationBehavior: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProrationBehavior?
+    public var prorationBehavior: BillingPortalConfigurationFeaturesSubscriptionUpdateProrationBehavior?
     /// Setting to control when an update should be scheduled at the end of the period instead of applying
     /// immediately.
     public var scheduleAtPeriodEnd: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEnd?
     /// The behavior when updating a subscription that is trialing.
-    public var trialUpdateBehavior: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateTrialUpdateBehavior?
+    public var trialUpdateBehavior: BillingPortalConfigurationFeaturesSubscriptionUpdateTrialUpdateBehavior?
     /// Fields to send empty, which clears them: `params.clear(.defaultAllowedUpdates)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(billingCycleAnchor: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateBillingCycleAnchor? = nil, defaultAllowedUpdates: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateDefaultAllowedUpdates]? = nil, enabled: Bool? = nil, products: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProducts]? = nil, prorationBehavior: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProrationBehavior? = nil, scheduleAtPeriodEnd: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEnd? = nil, trialUpdateBehavior: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateTrialUpdateBehavior? = nil) {
+    public init(billingCycleAnchor: BillingPortalConfigurationFeaturesSubscriptionUpdateBillingCycleAnchor? = nil, defaultAllowedUpdates: [BillingPortalConfigurationFeaturesSubscriptionUpdateDefaultAllowedUpdates]? = nil, enabled: Bool? = nil, products: [BillingPortalConfigurationFeaturesSubscriptionUpdateProducts]? = nil, prorationBehavior: BillingPortalConfigurationFeaturesSubscriptionUpdateProrationBehavior? = nil, scheduleAtPeriodEnd: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEnd? = nil, trialUpdateBehavior: BillingPortalConfigurationFeaturesSubscriptionUpdateTrialUpdateBehavior? = nil) {
         self.billingCycleAnchor = billingCycleAnchor
         self.defaultAllowedUpdates = defaultAllowedUpdates
         self.enabled = enabled
@@ -1057,90 +878,16 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate: Cleara
     }
 }
 
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    /// Resets the subscription's billing cycle anchor to the current time.
-    public static var now: Self { .init(rawValue: "now") }
-    /// Keeps the subscription's billing cycle anchor unchanged.
-    public static var unchanged: Self { .init(rawValue: "unchanged") }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateDefaultAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var price: Self { .init(rawValue: "price") }
-    public static var promotionCode: Self { .init(rawValue: "promotion_code") }
-    public static var quantity: Self { .init(rawValue: "quantity") }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProducts: StripeParams {
-    /// The list of price IDs for the product that a subscription can be updated to.
-    public var prices: [String]
-    /// The product id.
-    public var product: String
-    /// Control whether the quantity of the product can be adjusted.
-    public var adjustableQuantity: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProductsAdjustableQuantity?
-
-    public init(prices: [String], product: String, adjustableQuantity: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProductsAdjustableQuantity? = nil) {
-        self.prices = prices
-        self.product = product
-        self.adjustableQuantity = adjustableQuantity
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case adjustableQuantity = "adjustable_quantity"
-        case prices
-        case product
-    }
-}
-
-/// Control whether the quantity of the product can be adjusted.
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProductsAdjustableQuantity: StripeParams {
-    /// Set to true if the quantity can be adjusted to any non-negative integer.
-    public var enabled: Bool
-    /// The maximum quantity that can be set for the product.
-    public var maximum: Int?
-    /// The minimum quantity that can be set for the product.
-    public var minimum: Int?
-
-    public init(enabled: Bool, maximum: Int? = nil, minimum: Int? = nil) {
-        self.enabled = enabled
-        self.maximum = maximum
-        self.minimum = minimum
-    }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
-    public static var createProrations: Self { .init(rawValue: "create_prorations") }
-    public static var none: Self { .init(rawValue: "none") }
-}
-
 /// Setting to control when an update should be scheduled at the end of the period instead of applying
 /// immediately.
 public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEnd: ClearableParams {
     /// List of conditions. When any condition is true, the update will be scheduled at the end of the
     /// current period.
-    public var conditions: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]?
+    public var conditions: [BillingPortalConfigurationFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]?
     /// Fields to send empty, which clears them: `params.clear(.conditions)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(conditions: [BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]? = nil) {
+    public init(conditions: [BillingPortalConfigurationFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions]? = nil) {
         self.conditions = conditions
     }
 
@@ -1152,50 +899,5 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateSchedule
     /// The fields Stripe lets you clear by sending them empty
     public enum ClearableField: String, StripeClearableField {
         case conditions
-    }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditions: StripeParams {
-    /// The type of condition.
-    public var type: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType
-
-    public init(type: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType) {
-        self.type = type
-    }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var decreasingItemAmount: Self { .init(rawValue: "decreasing_item_amount") }
-    public static var shorteningInterval: Self { .init(rawValue: "shortening_interval") }
-}
-
-public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateTrialUpdateBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var continueTrial: Self { .init(rawValue: "continue_trial") }
-    public static var endTrial: Self { .init(rawValue: "end_trial") }
-}
-
-/// The hosted login page for this configuration. Learn more about the portal login page in our
-/// [integration docs](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal#share).
-public struct BillingPortalConfigurationUpdateLoginPage: StripeParams {
-    /// Set to `true` to generate a shareable URL
-    /// [`login_page.url`](https://docs.stripe.com/api/customer_portal/configuration#portal_configuration_object-login_page-url)
-    /// that will take your customers to a hosted login page for the customer portal. Set to `false` to
-    /// deactivate the `login_page.url`.
-    public var enabled: Bool
-
-    public init(enabled: Bool) {
-        self.enabled = enabled
     }
 }

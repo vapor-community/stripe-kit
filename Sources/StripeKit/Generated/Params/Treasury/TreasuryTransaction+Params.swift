@@ -24,7 +24,7 @@ public struct TreasuryTransactionListParams: StripeParams {
     public var limit: Int?
     /// The results are in reverse chronological order by `created` or `posted_at`. The default is
     /// `created`.
-    public var orderBy: TreasuryTransactionListOrderBy?
+    public var orderBy: TreasuryTransactionOrderBy?
     /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
@@ -33,9 +33,9 @@ public struct TreasuryTransactionListParams: StripeParams {
     public var status: TreasuryTransactionListStatus?
     /// A filter for the `status_transitions.posted_at` timestamp. When using this filter, `status=posted`
     /// and `order_by=posted_at` must also be specified.
-    public var statusTransitions: TreasuryTransactionListStatusTransitions?
+    public var statusTransitions: TreasuryTransactionStatusTransitions?
 
-    public init(financialAccount: String, created: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, orderBy: TreasuryTransactionListOrderBy? = nil, startingAfter: String? = nil, status: TreasuryTransactionListStatus? = nil, statusTransitions: TreasuryTransactionListStatusTransitions? = nil) {
+    public init(financialAccount: String, created: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, orderBy: TreasuryTransactionOrderBy? = nil, startingAfter: String? = nil, status: TreasuryTransactionListStatus? = nil, statusTransitions: TreasuryTransactionStatusTransitions? = nil) {
         self.financialAccount = financialAccount
         self.created = created
         self.endingBefore = endingBefore
@@ -60,7 +60,7 @@ public struct TreasuryTransactionListParams: StripeParams {
     }
 }
 
-public struct TreasuryTransactionListOrderBy: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryTransactionOrderBy: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -85,7 +85,7 @@ public struct TreasuryTransactionListStatus: RawRepresentable, Codable, Hashable
 
 /// A filter for the `status_transitions.posted_at` timestamp. When using this filter, `status=posted`
 /// and `order_by=posted_at` must also be specified.
-public struct TreasuryTransactionListStatusTransitions: StripeParams {
+public struct TreasuryTransactionStatusTransitions: StripeParams {
     /// Returns Transactions with `posted_at` within the specified range.
     public var postedAt: StripeRangeQuery?
 

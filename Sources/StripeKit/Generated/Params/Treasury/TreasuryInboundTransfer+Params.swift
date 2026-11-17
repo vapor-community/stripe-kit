@@ -66,9 +66,9 @@ public struct TreasuryInboundTransferFailParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Details about a failed InboundTransfer.
-    public var failureDetails: TreasuryInboundTransferFailFailureDetails?
+    public var failureDetails: TreasuryInboundTransferFailureDetails?
 
-    public init(expand: [String]? = nil, failureDetails: TreasuryInboundTransferFailFailureDetails? = nil) {
+    public init(expand: [String]? = nil, failureDetails: TreasuryInboundTransferFailureDetails? = nil) {
         self.expand = expand
         self.failureDetails = failureDetails
     }
@@ -138,16 +138,16 @@ public struct TreasuryInboundTransferSucceedParams: StripeParams {
 }
 
 /// Details about a failed InboundTransfer.
-public struct TreasuryInboundTransferFailFailureDetails: StripeParams {
+public struct TreasuryInboundTransferFailureDetails: StripeParams {
     /// Reason for the failure.
-    public var code: TreasuryInboundTransferFailFailureDetailsCode?
+    public var code: TreasuryInboundTransferFailureDetailsCode?
 
-    public init(code: TreasuryInboundTransferFailFailureDetailsCode? = nil) {
+    public init(code: TreasuryInboundTransferFailureDetailsCode? = nil) {
         self.code = code
     }
 }
 
-public struct TreasuryInboundTransferFailFailureDetailsCode: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryInboundTransferFailureDetailsCode: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

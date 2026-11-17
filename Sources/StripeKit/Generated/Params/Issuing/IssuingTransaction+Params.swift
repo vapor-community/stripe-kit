@@ -22,11 +22,11 @@ public struct IssuingTransactionCreateForceCaptureParams: StripeParams {
     public var expand: [String]?
     /// Details about the seller (grocery store, e-commerce website, etc.) where the card authorization
     /// happened.
-    public var merchantData: IssuingTransactionCreateForceCaptureMerchantData?
+    public var merchantData: IssuingTransactionMerchantData?
     /// Additional purchase information that is optionally provided by the merchant.
     public var purchaseDetails: IssuingTransactionCreateForceCapturePurchaseDetails?
 
-    public init(amount: Int, card: String, currency: String? = nil, expand: [String]? = nil, merchantData: IssuingTransactionCreateForceCaptureMerchantData? = nil, purchaseDetails: IssuingTransactionCreateForceCapturePurchaseDetails? = nil) {
+    public init(amount: Int, card: String, currency: String? = nil, expand: [String]? = nil, merchantData: IssuingTransactionMerchantData? = nil, purchaseDetails: IssuingTransactionCreateForceCapturePurchaseDetails? = nil) {
         self.amount = amount
         self.card = card
         self.currency = currency
@@ -60,11 +60,11 @@ public struct IssuingTransactionCreateUnlinkedRefundParams: StripeParams {
     public var expand: [String]?
     /// Details about the seller (grocery store, e-commerce website, etc.) where the card authorization
     /// happened.
-    public var merchantData: IssuingTransactionCreateUnlinkedRefundMerchantData?
+    public var merchantData: IssuingTransactionMerchantData?
     /// Additional purchase information that is optionally provided by the merchant.
     public var purchaseDetails: IssuingTransactionCreateUnlinkedRefundPurchaseDetails?
 
-    public init(amount: Int, card: String, currency: String? = nil, expand: [String]? = nil, merchantData: IssuingTransactionCreateUnlinkedRefundMerchantData? = nil, purchaseDetails: IssuingTransactionCreateUnlinkedRefundPurchaseDetails? = nil) {
+    public init(amount: Int, card: String, currency: String? = nil, expand: [String]? = nil, merchantData: IssuingTransactionMerchantData? = nil, purchaseDetails: IssuingTransactionCreateUnlinkedRefundPurchaseDetails? = nil) {
         self.amount = amount
         self.card = card
         self.currency = currency
@@ -179,10 +179,10 @@ public struct IssuingTransactionUpdateParams: ClearableParams {
 
 /// Details about the seller (grocery store, e-commerce website, etc.) where the card authorization
 /// happened.
-public struct IssuingTransactionCreateForceCaptureMerchantData: StripeParams {
+public struct IssuingTransactionMerchantData: StripeParams {
     /// A categorization of the seller's type of business. See our [merchant categories
     /// guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
-    public var category: IssuingTransactionCreateForceCaptureMerchantDataCategory?
+    public var category: IssuingTransactionMerchantDataCategory?
     /// City where the seller is located
     public var city: String?
     /// Country where the seller is located
@@ -201,7 +201,7 @@ public struct IssuingTransactionCreateForceCaptureMerchantData: StripeParams {
     /// URL provided by the merchant on a 3DS request
     public var url: String?
 
-    public init(category: IssuingTransactionCreateForceCaptureMerchantDataCategory? = nil, city: String? = nil, country: String? = nil, name: String? = nil, networkId: String? = nil, postalCode: String? = nil, state: String? = nil, terminalId: String? = nil, url: String? = nil) {
+    public init(category: IssuingTransactionMerchantDataCategory? = nil, city: String? = nil, country: String? = nil, name: String? = nil, networkId: String? = nil, postalCode: String? = nil, state: String? = nil, terminalId: String? = nil, url: String? = nil) {
         self.category = category
         self.city = city
         self.country = country
@@ -226,7 +226,7 @@ public struct IssuingTransactionCreateForceCaptureMerchantData: StripeParams {
     }
 }
 
-public struct IssuingTransactionCreateForceCaptureMerchantDataCategory: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingTransactionMerchantDataCategory: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -532,19 +532,19 @@ public struct IssuingTransactionCreateForceCaptureMerchantDataCategory: RawRepre
 /// Additional purchase information that is optionally provided by the merchant.
 public struct IssuingTransactionCreateForceCapturePurchaseDetails: StripeParams {
     /// Fleet-specific information for transactions using Fleet cards.
-    public var fleet: IssuingTransactionCreateForceCapturePurchaseDetailsFleet?
+    public var fleet: IssuingTransactionPurchaseDetailsFleet?
     /// Information about the flight that was purchased with this transaction.
-    public var flight: IssuingTransactionCreateForceCapturePurchaseDetailsFlight?
+    public var flight: IssuingTransactionPurchaseDetailsFlight?
     /// Information about fuel that was purchased with this transaction.
-    public var fuel: IssuingTransactionCreateForceCapturePurchaseDetailsFuel?
+    public var fuel: IssuingTransactionPurchaseDetailsFuel?
     /// Information about lodging that was purchased with this transaction.
-    public var lodging: IssuingTransactionCreateForceCapturePurchaseDetailsLodging?
+    public var lodging: IssuingTransactionPurchaseDetailsLodging?
     /// The line items in the purchase.
-    public var receipt: [IssuingTransactionCreateForceCapturePurchaseDetailsReceipt]?
+    public var receipt: [IssuingTransactionPurchaseDetailsReceipt]?
     /// A merchant-specific order number.
     public var reference: String?
 
-    public init(fleet: IssuingTransactionCreateForceCapturePurchaseDetailsFleet? = nil, flight: IssuingTransactionCreateForceCapturePurchaseDetailsFlight? = nil, fuel: IssuingTransactionCreateForceCapturePurchaseDetailsFuel? = nil, lodging: IssuingTransactionCreateForceCapturePurchaseDetailsLodging? = nil, receipt: [IssuingTransactionCreateForceCapturePurchaseDetailsReceipt]? = nil, reference: String? = nil) {
+    public init(fleet: IssuingTransactionPurchaseDetailsFleet? = nil, flight: IssuingTransactionPurchaseDetailsFlight? = nil, fuel: IssuingTransactionPurchaseDetailsFuel? = nil, lodging: IssuingTransactionPurchaseDetailsLodging? = nil, receipt: [IssuingTransactionPurchaseDetailsReceipt]? = nil, reference: String? = nil) {
         self.fleet = fleet
         self.flight = flight
         self.fuel = fuel
@@ -555,20 +555,20 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetails: StripeParams 
 }
 
 /// Fleet-specific information for transactions using Fleet cards.
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleet: StripeParams {
+public struct IssuingTransactionPurchaseDetailsFleet: StripeParams {
     /// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
     /// on the configuration of your physical fleet cards. Typical points of sale support only numeric
     /// entry.
-    public var cardholderPromptData: IssuingTransactionCreateForceCapturePurchaseDetailsFleetCardholderPromptData?
+    public var cardholderPromptData: IssuingTransactionPurchaseDetailsFleetCardholderPromptData?
     /// The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
-    public var purchaseType: IssuingTransactionCreateForceCapturePurchaseDetailsFleetPurchaseType?
+    public var purchaseType: IssuingTransactionPurchaseDetailsFleetPurchaseType?
     /// More information about the total amount. This information is not guaranteed to be accurate as some
     /// merchants may provide unreliable data.
-    public var reportedBreakdown: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdown?
+    public var reportedBreakdown: IssuingTransactionPurchaseDetailsFleetReportedBreakdown?
     /// The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
-    public var serviceType: IssuingTransactionCreateForceCapturePurchaseDetailsFleetServiceType?
+    public var serviceType: IssuingTransactionPurchaseDetailsFleetServiceType?
 
-    public init(cardholderPromptData: IssuingTransactionCreateForceCapturePurchaseDetailsFleetCardholderPromptData? = nil, purchaseType: IssuingTransactionCreateForceCapturePurchaseDetailsFleetPurchaseType? = nil, reportedBreakdown: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdown? = nil, serviceType: IssuingTransactionCreateForceCapturePurchaseDetailsFleetServiceType? = nil) {
+    public init(cardholderPromptData: IssuingTransactionPurchaseDetailsFleetCardholderPromptData? = nil, purchaseType: IssuingTransactionPurchaseDetailsFleetPurchaseType? = nil, reportedBreakdown: IssuingTransactionPurchaseDetailsFleetReportedBreakdown? = nil, serviceType: IssuingTransactionPurchaseDetailsFleetServiceType? = nil) {
         self.cardholderPromptData = cardholderPromptData
         self.purchaseType = purchaseType
         self.reportedBreakdown = reportedBreakdown
@@ -586,7 +586,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleet: StripePa
 /// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
 /// on the configuration of your physical fleet cards. Typical points of sale support only numeric
 /// entry.
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetCardholderPromptData: StripeParams {
+public struct IssuingTransactionPurchaseDetailsFleetCardholderPromptData: StripeParams {
     /// Driver ID.
     public var driverId: String?
     /// Odometer reading.
@@ -616,7 +616,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetCardholder
     }
 }
 
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetPurchaseType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingTransactionPurchaseDetailsFleetPurchaseType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -630,15 +630,15 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetPurchaseTy
 
 /// More information about the total amount. This information is not guaranteed to be accurate as some
 /// merchants may provide unreliable data.
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdown: StripeParams {
+public struct IssuingTransactionPurchaseDetailsFleetReportedBreakdown: StripeParams {
     /// Breakdown of fuel portion of the purchase.
-    public var fuel: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownFuel?
+    public var fuel: IssuingTransactionPurchaseDetailsFleetReportedBreakdownFuel?
     /// Breakdown of non-fuel portion of the purchase.
-    public var nonFuel: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownNonFuel?
+    public var nonFuel: IssuingTransactionPurchaseDetailsFleetReportedBreakdownNonFuel?
     /// Information about tax included in this transaction.
-    public var tax: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownTax?
+    public var tax: IssuingTransactionPurchaseDetailsFleetReportedBreakdownTax?
 
-    public init(fuel: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownFuel? = nil, nonFuel: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownNonFuel? = nil, tax: IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownTax? = nil) {
+    public init(fuel: IssuingTransactionPurchaseDetailsFleetReportedBreakdownFuel? = nil, nonFuel: IssuingTransactionPurchaseDetailsFleetReportedBreakdownNonFuel? = nil, tax: IssuingTransactionPurchaseDetailsFleetReportedBreakdownTax? = nil) {
         self.fuel = fuel
         self.nonFuel = nonFuel
         self.tax = tax
@@ -652,7 +652,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBr
 }
 
 /// Breakdown of fuel portion of the purchase.
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownFuel: StripeParams {
+public struct IssuingTransactionPurchaseDetailsFleetReportedBreakdownFuel: StripeParams {
     /// Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
     public var grossAmountDecimal: String?
 
@@ -666,7 +666,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBr
 }
 
 /// Breakdown of non-fuel portion of the purchase.
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownNonFuel: StripeParams {
+public struct IssuingTransactionPurchaseDetailsFleetReportedBreakdownNonFuel: StripeParams {
     /// Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
     public var grossAmountDecimal: String?
 
@@ -680,7 +680,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBr
 }
 
 /// Information about tax included in this transaction.
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBreakdownTax: StripeParams {
+public struct IssuingTransactionPurchaseDetailsFleetReportedBreakdownTax: StripeParams {
     /// Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by
     /// merchant or not subject to tax.
     public var localAmountDecimal: String?
@@ -699,7 +699,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetReportedBr
     }
 }
 
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetServiceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingTransactionPurchaseDetailsFleetServiceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -712,7 +712,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFleetServiceTyp
 }
 
 /// Information about the flight that was purchased with this transaction.
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFlight: StripeParams {
+public struct IssuingTransactionPurchaseDetailsFlight: StripeParams {
     /// The time that the flight departed.
     public var departureAt: Date?
     /// The name of the passenger.
@@ -720,11 +720,11 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFlight: StripeP
     /// Whether the ticket is refundable.
     public var refundable: Bool?
     /// The legs of the trip.
-    public var segments: [IssuingTransactionCreateForceCapturePurchaseDetailsFlightSegments]?
+    public var segments: [IssuingTransactionPurchaseDetailsFlightSegments]?
     /// The travel agency that issued the ticket.
     public var travelAgency: String?
 
-    public init(departureAt: Date? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionCreateForceCapturePurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
+    public init(departureAt: Date? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionPurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
         self.departureAt = departureAt
         self.passengerName = passengerName
         self.refundable = refundable
@@ -741,7 +741,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFlight: StripeP
     }
 }
 
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFlightSegments: StripeParams {
+public struct IssuingTransactionPurchaseDetailsFlightSegments: StripeParams {
     /// The three-letter IATA airport code of the flight's destination.
     public var arrivalAirportCode: String?
     /// The airline carrier code.
@@ -775,7 +775,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFlightSegments:
 }
 
 /// Information about fuel that was purchased with this transaction.
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFuel: StripeParams {
+public struct IssuingTransactionPurchaseDetailsFuel: StripeParams {
     /// [Conexxus Payment System Product
     /// Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel
     /// product purchased.
@@ -785,15 +785,15 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFuel: StripePar
     public var quantityDecimal: String?
     /// The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`,
     /// `unleaded_super`, or `other`.
-    public var type: IssuingTransactionCreateForceCapturePurchaseDetailsFuelType?
+    public var type: IssuingTransactionPurchaseDetailsFuelType?
     /// The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`,
     /// `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
-    public var unit: IssuingTransactionCreateForceCapturePurchaseDetailsFuelUnit?
+    public var unit: IssuingTransactionPurchaseDetailsFuelUnit?
     /// The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal
     /// places.
     public var unitCostDecimal: String?
 
-    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingTransactionCreateForceCapturePurchaseDetailsFuelType? = nil, unit: IssuingTransactionCreateForceCapturePurchaseDetailsFuelUnit? = nil, unitCostDecimal: String? = nil) {
+    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingTransactionPurchaseDetailsFuelType? = nil, unit: IssuingTransactionPurchaseDetailsFuelUnit? = nil, unitCostDecimal: String? = nil) {
         self.industryProductCode = industryProductCode
         self.quantityDecimal = quantityDecimal
         self.type = type
@@ -810,7 +810,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFuel: StripePar
     }
 }
 
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFuelType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingTransactionPurchaseDetailsFuelType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -824,7 +824,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFuelType: RawRe
     public static var unleadedSuper: Self { .init(rawValue: "unleaded_super") }
 }
 
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsFuelUnit: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingTransactionPurchaseDetailsFuelUnit: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -842,7 +842,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsFuelUnit: RawRe
 }
 
 /// Information about lodging that was purchased with this transaction.
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsLodging: StripeParams {
+public struct IssuingTransactionPurchaseDetailsLodging: StripeParams {
     /// The time of checking into the lodging.
     public var checkInAt: Date?
     /// The number of nights stayed at the lodging.
@@ -859,7 +859,7 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsLodging: Stripe
     }
 }
 
-public struct IssuingTransactionCreateForceCapturePurchaseDetailsReceipt: StripeParams {
+public struct IssuingTransactionPurchaseDetailsReceipt: StripeParams {
     public var description: String?
     public var quantity: String?
     public var total: Int?
@@ -878,708 +878,30 @@ public struct IssuingTransactionCreateForceCapturePurchaseDetailsReceipt: Stripe
         case total
         case unitCost = "unit_cost"
     }
-}
-
-/// Details about the seller (grocery store, e-commerce website, etc.) where the card authorization
-/// happened.
-public struct IssuingTransactionCreateUnlinkedRefundMerchantData: StripeParams {
-    /// A categorization of the seller's type of business. See our [merchant categories
-    /// guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
-    public var category: IssuingTransactionCreateUnlinkedRefundMerchantDataCategory?
-    /// City where the seller is located
-    public var city: String?
-    /// Country where the seller is located
-    public var country: String?
-    /// Name of the seller
-    public var name: String?
-    /// Identifier assigned to the seller by the card network. Different card networks may assign different
-    /// network_id fields to the same merchant.
-    public var networkId: String?
-    /// Postal code where the seller is located
-    public var postalCode: String?
-    /// State where the seller is located
-    public var state: String?
-    /// An ID assigned by the seller to the location of the sale.
-    public var terminalId: String?
-    /// URL provided by the merchant on a 3DS request
-    public var url: String?
-
-    public init(category: IssuingTransactionCreateUnlinkedRefundMerchantDataCategory? = nil, city: String? = nil, country: String? = nil, name: String? = nil, networkId: String? = nil, postalCode: String? = nil, state: String? = nil, terminalId: String? = nil, url: String? = nil) {
-        self.category = category
-        self.city = city
-        self.country = country
-        self.name = name
-        self.networkId = networkId
-        self.postalCode = postalCode
-        self.state = state
-        self.terminalId = terminalId
-        self.url = url
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case category
-        case city
-        case country
-        case name
-        case networkId = "network_id"
-        case postalCode = "postal_code"
-        case state
-        case terminalId = "terminal_id"
-        case url
-    }
-}
-
-public struct IssuingTransactionCreateUnlinkedRefundMerchantDataCategory: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
-    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
-    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
-    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
-    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
-    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
-    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
-    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
-    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
-    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
-    public static var aquariums: Self { .init(rawValue: "aquariums") }
-    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
-    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
-    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
-    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
-    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
-    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
-    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
-    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
-    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
-    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
-    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
-    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
-    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
-    public static var bakeries: Self { .init(rawValue: "bakeries") }
-    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
-    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
-    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
-    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
-    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
-    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
-    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
-    public static var bookStores: Self { .init(rawValue: "book_stores") }
-    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
-    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
-    public static var busLines: Self { .init(rawValue: "bus_lines") }
-    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
-    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
-    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
-    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
-    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
-    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
-    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
-    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
-    public static var carWashes: Self { .init(rawValue: "car_washes") }
-    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
-    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
-    public static var caterers: Self { .init(rawValue: "caterers") }
-    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
-    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
-    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
-    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
-    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
-    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
-    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
-    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
-    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
-    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
-    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
-    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
-    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
-    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
-    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
-    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
-    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
-    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
-    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
-    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
-    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
-    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
-    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
-    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
-    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
-    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
-    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
-    public static var courierServices: Self { .init(rawValue: "courier_services") }
-    public static var courtCosts: Self { .init(rawValue: "court_costs") }
-    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
-    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
-    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
-    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
-    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
-    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
-    public static var departmentStores: Self { .init(rawValue: "department_stores") }
-    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
-    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
-    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
-    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
-    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
-    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
-    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
-    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
-    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
-    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
-    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
-    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
-    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
-    public static var discountStores: Self { .init(rawValue: "discount_stores") }
-    public static var doctors: Self { .init(rawValue: "doctors") }
-    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
-    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
-    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
-    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
-    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
-    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
-    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
-    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
-    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
-    public static var educationalServices: Self { .init(rawValue: "educational_services") }
-    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
-    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
-    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
-    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
-    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
-    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
-    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
-    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
-    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
-    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
-    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
-    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
-    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
-    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
-    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
-    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
-    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
-    public static var florists: Self { .init(rawValue: "florists") }
-    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
-    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
-    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
-    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
-    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
-    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
-    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
-    public static var generalServices: Self { .init(rawValue: "general_services") }
-    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
-    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
-    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
-    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
-    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
-    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
-    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
-    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
-    public static var governmentServices: Self { .init(rawValue: "government_services") }
-    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
-    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
-    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
-    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
-    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
-    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
-    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
-    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
-    public static var hospitals: Self { .init(rawValue: "hospitals") }
-    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
-    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
-    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
-    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
-    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
-    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
-    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
-    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
-    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
-    public static var laundries: Self { .init(rawValue: "laundries") }
-    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
-    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
-    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
-    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
-    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
-    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
-    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
-    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
-    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
-    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
-    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
-    public static var medicalServices: Self { .init(rawValue: "medical_services") }
-    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
-    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
-    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
-    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
-    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
-    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
-    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
-    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
-    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
-    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
-    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
-    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
-    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
-    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
-    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
-    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
-    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
-    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
-    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
-    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
-    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
-    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
-    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
-    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
-    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
-    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
-    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
-    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
-    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
-    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
-    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
-    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
-    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
-    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
-    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
-    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
-    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
-    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
-    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
-    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
-    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
-    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
-    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
-    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
-    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
-    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
-    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
-    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
-    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
-    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
-    public static var professionalServices: Self { .init(rawValue: "professional_services") }
-    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
-    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
-    public static var railroads: Self { .init(rawValue: "railroads") }
-    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
-    public static var recordStores: Self { .init(rawValue: "record_stores") }
-    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
-    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
-    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
-    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
-    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
-    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
-    public static var serviceStations: Self { .init(rawValue: "service_stations") }
-    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
-    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
-    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
-    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
-    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
-    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
-    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
-    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
-    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
-    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
-    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
-    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
-    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
-    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
-    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
-    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
-    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
-    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
-    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
-    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
-    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
-    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
-    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
-    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
-    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
-    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
-    public static var timeshares: Self { .init(rawValue: "timeshares") }
-    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
-    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
-    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
-    public static var towingServices: Self { .init(rawValue: "towing_services") }
-    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
-    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
-    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
-    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
-    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
-    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
-    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
-    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
-    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
-    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
-    public static var utilities: Self { .init(rawValue: "utilities") }
-    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
-    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
-    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
-    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
-    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
-    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
-    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
-    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
-    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
-    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
-    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
-    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
-    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
-    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
 /// Additional purchase information that is optionally provided by the merchant.
 public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetails: StripeParams {
     /// Fleet-specific information for transactions using Fleet cards.
-    public var fleet: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleet?
+    public var fleet: IssuingTransactionPurchaseDetailsFleet?
     /// Information about the flight that was purchased with this transaction.
-    public var flight: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlight?
+    public var flight: IssuingTransactionPurchaseDetailsFlight?
     /// Information about fuel that was purchased with this transaction.
-    public var fuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuel?
+    public var fuel: IssuingTransactionPurchaseDetailsFuel?
     /// Information about lodging that was purchased with this transaction.
-    public var lodging: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsLodging?
+    public var lodging: IssuingTransactionPurchaseDetailsLodging?
     /// The line items in the purchase.
-    public var receipt: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsReceipt]?
+    public var receipt: [IssuingTransactionPurchaseDetailsReceipt]?
     /// A merchant-specific order number.
     public var reference: String?
 
-    public init(fleet: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleet? = nil, flight: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlight? = nil, fuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuel? = nil, lodging: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsLodging? = nil, receipt: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsReceipt]? = nil, reference: String? = nil) {
+    public init(fleet: IssuingTransactionPurchaseDetailsFleet? = nil, flight: IssuingTransactionPurchaseDetailsFlight? = nil, fuel: IssuingTransactionPurchaseDetailsFuel? = nil, lodging: IssuingTransactionPurchaseDetailsLodging? = nil, receipt: [IssuingTransactionPurchaseDetailsReceipt]? = nil, reference: String? = nil) {
         self.fleet = fleet
         self.flight = flight
         self.fuel = fuel
         self.lodging = lodging
         self.receipt = receipt
         self.reference = reference
-    }
-}
-
-/// Fleet-specific information for transactions using Fleet cards.
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleet: StripeParams {
-    /// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
-    /// on the configuration of your physical fleet cards. Typical points of sale support only numeric
-    /// entry.
-    public var cardholderPromptData: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetCardholderPromptData?
-    /// The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
-    public var purchaseType: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetPurchaseType?
-    /// More information about the total amount. This information is not guaranteed to be accurate as some
-    /// merchants may provide unreliable data.
-    public var reportedBreakdown: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdown?
-    /// The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
-    public var serviceType: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetServiceType?
-
-    public init(cardholderPromptData: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetCardholderPromptData? = nil, purchaseType: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetPurchaseType? = nil, reportedBreakdown: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdown? = nil, serviceType: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetServiceType? = nil) {
-        self.cardholderPromptData = cardholderPromptData
-        self.purchaseType = purchaseType
-        self.reportedBreakdown = reportedBreakdown
-        self.serviceType = serviceType
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case cardholderPromptData = "cardholder_prompt_data"
-        case purchaseType = "purchase_type"
-        case reportedBreakdown = "reported_breakdown"
-        case serviceType = "service_type"
-    }
-}
-
-/// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
-/// on the configuration of your physical fleet cards. Typical points of sale support only numeric
-/// entry.
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetCardholderPromptData: StripeParams {
-    /// Driver ID.
-    public var driverId: String?
-    /// Odometer reading.
-    public var odometer: Int?
-    /// An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the
-    /// cardholder, but the merchant or card network did not specify the prompt type.
-    public var unspecifiedId: String?
-    /// User ID.
-    public var userId: String?
-    /// Vehicle number.
-    public var vehicleNumber: String?
-
-    public init(driverId: String? = nil, odometer: Int? = nil, unspecifiedId: String? = nil, userId: String? = nil, vehicleNumber: String? = nil) {
-        self.driverId = driverId
-        self.odometer = odometer
-        self.unspecifiedId = unspecifiedId
-        self.userId = userId
-        self.vehicleNumber = vehicleNumber
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case driverId = "driver_id"
-        case odometer
-        case unspecifiedId = "unspecified_id"
-        case userId = "user_id"
-        case vehicleNumber = "vehicle_number"
-    }
-}
-
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetPurchaseType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fuelAndNonFuelPurchase: Self { .init(rawValue: "fuel_and_non_fuel_purchase") }
-    public static var fuelPurchase: Self { .init(rawValue: "fuel_purchase") }
-    public static var nonFuelPurchase: Self { .init(rawValue: "non_fuel_purchase") }
-}
-
-/// More information about the total amount. This information is not guaranteed to be accurate as some
-/// merchants may provide unreliable data.
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdown: StripeParams {
-    /// Breakdown of fuel portion of the purchase.
-    public var fuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownFuel?
-    /// Breakdown of non-fuel portion of the purchase.
-    public var nonFuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownNonFuel?
-    /// Information about tax included in this transaction.
-    public var tax: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownTax?
-
-    public init(fuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownFuel? = nil, nonFuel: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownNonFuel? = nil, tax: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownTax? = nil) {
-        self.fuel = fuel
-        self.nonFuel = nonFuel
-        self.tax = tax
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fuel
-        case nonFuel = "non_fuel"
-        case tax
-    }
-}
-
-/// Breakdown of fuel portion of the purchase.
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownFuel: StripeParams {
-    /// Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
-    public var grossAmountDecimal: String?
-
-    public init(grossAmountDecimal: String? = nil) {
-        self.grossAmountDecimal = grossAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case grossAmountDecimal = "gross_amount_decimal"
-    }
-}
-
-/// Breakdown of non-fuel portion of the purchase.
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownNonFuel: StripeParams {
-    /// Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
-    public var grossAmountDecimal: String?
-
-    public init(grossAmountDecimal: String? = nil) {
-        self.grossAmountDecimal = grossAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case grossAmountDecimal = "gross_amount_decimal"
-    }
-}
-
-/// Information about tax included in this transaction.
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetReportedBreakdownTax: StripeParams {
-    /// Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by
-    /// merchant or not subject to tax.
-    public var localAmountDecimal: String?
-    /// Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by
-    /// merchant or not subject to tax.
-    public var nationalAmountDecimal: String?
-
-    public init(localAmountDecimal: String? = nil, nationalAmountDecimal: String? = nil) {
-        self.localAmountDecimal = localAmountDecimal
-        self.nationalAmountDecimal = nationalAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case localAmountDecimal = "local_amount_decimal"
-        case nationalAmountDecimal = "national_amount_decimal"
-    }
-}
-
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFleetServiceType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fullService: Self { .init(rawValue: "full_service") }
-    public static var nonFuelTransaction: Self { .init(rawValue: "non_fuel_transaction") }
-    public static var selfService: Self { .init(rawValue: "self_service") }
-}
-
-/// Information about the flight that was purchased with this transaction.
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlight: StripeParams {
-    /// The time that the flight departed.
-    public var departureAt: Date?
-    /// The name of the passenger.
-    public var passengerName: String?
-    /// Whether the ticket is refundable.
-    public var refundable: Bool?
-    /// The legs of the trip.
-    public var segments: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlightSegments]?
-    /// The travel agency that issued the ticket.
-    public var travelAgency: String?
-
-    public init(departureAt: Date? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
-        self.departureAt = departureAt
-        self.passengerName = passengerName
-        self.refundable = refundable
-        self.segments = segments
-        self.travelAgency = travelAgency
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case departureAt = "departure_at"
-        case passengerName = "passenger_name"
-        case refundable
-        case segments
-        case travelAgency = "travel_agency"
-    }
-}
-
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFlightSegments: StripeParams {
-    /// The three-letter IATA airport code of the flight's destination.
-    public var arrivalAirportCode: String?
-    /// The airline carrier code.
-    public var carrier: String?
-    /// The three-letter IATA airport code that the flight departed from.
-    public var departureAirportCode: String?
-    /// The flight number.
-    public var flightNumber: String?
-    /// The flight's service class.
-    public var serviceClass: String?
-    /// Whether a stopover is allowed on this flight.
-    public var stopoverAllowed: Bool?
-
-    public init(arrivalAirportCode: String? = nil, carrier: String? = nil, departureAirportCode: String? = nil, flightNumber: String? = nil, serviceClass: String? = nil, stopoverAllowed: Bool? = nil) {
-        self.arrivalAirportCode = arrivalAirportCode
-        self.carrier = carrier
-        self.departureAirportCode = departureAirportCode
-        self.flightNumber = flightNumber
-        self.serviceClass = serviceClass
-        self.stopoverAllowed = stopoverAllowed
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case arrivalAirportCode = "arrival_airport_code"
-        case carrier
-        case departureAirportCode = "departure_airport_code"
-        case flightNumber = "flight_number"
-        case serviceClass = "service_class"
-        case stopoverAllowed = "stopover_allowed"
-    }
-}
-
-/// Information about fuel that was purchased with this transaction.
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuel: StripeParams {
-    /// [Conexxus Payment System Product
-    /// Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel
-    /// product purchased.
-    public var industryProductCode: String?
-    /// The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12
-    /// decimal places.
-    public var quantityDecimal: String?
-    /// The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`,
-    /// `unleaded_super`, or `other`.
-    public var type: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelType?
-    /// The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`,
-    /// `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
-    public var unit: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelUnit?
-    /// The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal
-    /// places.
-    public var unitCostDecimal: String?
-
-    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelType? = nil, unit: IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelUnit? = nil, unitCostDecimal: String? = nil) {
-        self.industryProductCode = industryProductCode
-        self.quantityDecimal = quantityDecimal
-        self.type = type
-        self.unit = unit
-        self.unitCostDecimal = unitCostDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case industryProductCode = "industry_product_code"
-        case quantityDecimal = "quantity_decimal"
-        case type
-        case unit
-        case unitCostDecimal = "unit_cost_decimal"
-    }
-}
-
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var diesel: Self { .init(rawValue: "diesel") }
-    public static var other: Self { .init(rawValue: "other") }
-    public static var unleadedPlus: Self { .init(rawValue: "unleaded_plus") }
-    public static var unleadedRegular: Self { .init(rawValue: "unleaded_regular") }
-    public static var unleadedSuper: Self { .init(rawValue: "unleaded_super") }
-}
-
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsFuelUnit: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var chargingMinute: Self { .init(rawValue: "charging_minute") }
-    public static var imperialGallon: Self { .init(rawValue: "imperial_gallon") }
-    public static var kilogram: Self { .init(rawValue: "kilogram") }
-    public static var kilowattHour: Self { .init(rawValue: "kilowatt_hour") }
-    public static var liter: Self { .init(rawValue: "liter") }
-    public static var other: Self { .init(rawValue: "other") }
-    public static var pound: Self { .init(rawValue: "pound") }
-    public static var usGallon: Self { .init(rawValue: "us_gallon") }
-}
-
-/// Information about lodging that was purchased with this transaction.
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsLodging: StripeParams {
-    /// The time of checking into the lodging.
-    public var checkInAt: Date?
-    /// The number of nights stayed at the lodging.
-    public var nights: Int?
-
-    public init(checkInAt: Date? = nil, nights: Int? = nil) {
-        self.checkInAt = checkInAt
-        self.nights = nights
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case checkInAt = "check_in_at"
-        case nights
-    }
-}
-
-public struct IssuingTransactionCreateUnlinkedRefundPurchaseDetailsReceipt: StripeParams {
-    public var description: String?
-    public var quantity: String?
-    public var total: Int?
-    public var unitCost: Int?
-
-    public init(description: String? = nil, quantity: String? = nil, total: Int? = nil, unitCost: Int? = nil) {
-        self.description = description
-        self.quantity = quantity
-        self.total = total
-        self.unitCost = unitCost
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case description
-        case quantity
-        case total
-        case unitCost = "unit_cost"
     }
 }
 

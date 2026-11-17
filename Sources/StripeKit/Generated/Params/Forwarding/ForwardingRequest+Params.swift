@@ -12,7 +12,7 @@ public struct ForwardingRequestCreateParams: StripeParams {
     /// PaymentMethods is allowed.
     public var paymentMethod: String
     /// The field kinds to be replaced in the forwarded request.
-    public var replacements: [ForwardingRequestCreateReplacements]
+    public var replacements: [ForwardingRequestReplacements]
     /// The destination URL for the forwarded request. Must be supported by the config.
     public var url: String
     /// Specifies which fields in the response should be expanded.
@@ -23,9 +23,9 @@ public struct ForwardingRequestCreateParams: StripeParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
     /// The request body and headers to be sent to the destination endpoint.
-    public var request: ForwardingRequestCreateRequest?
+    public var request: ForwardingRequestRequest?
 
-    public init(paymentMethod: String, replacements: [ForwardingRequestCreateReplacements], url: String, expand: [String]? = nil, metadata: [String: String]? = nil, request: ForwardingRequestCreateRequest? = nil) {
+    public init(paymentMethod: String, replacements: [ForwardingRequestReplacements], url: String, expand: [String]? = nil, metadata: [String: String]? = nil, request: ForwardingRequestRequest? = nil) {
         self.paymentMethod = paymentMethod
         self.replacements = replacements
         self.url = url
@@ -48,7 +48,7 @@ public struct ForwardingRequestCreateParams: StripeParams {
 public struct ForwardingRequestListParams: StripeParams {
     /// Similar to other List endpoints, filters results based on created timestamp. You can pass gt, gte,
     /// lt, and lte timestamp values.
-    public var created: ForwardingRequestListCreated?
+    public var created: ForwardingRequestCreated?
     /// A pagination cursor to fetch the previous page of the list. The value must be a ForwardingRequest
     /// ID.
     public var endingBefore: String?
@@ -60,7 +60,7 @@ public struct ForwardingRequestListParams: StripeParams {
     /// A pagination cursor to fetch the next page of the list. The value must be a ForwardingRequest ID.
     public var startingAfter: String?
 
-    public init(created: ForwardingRequestListCreated? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
+    public init(created: ForwardingRequestCreated? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
         self.created = created
         self.endingBefore = endingBefore
         self.expand = expand
@@ -77,7 +77,7 @@ public struct ForwardingRequestListParams: StripeParams {
     }
 }
 
-public struct ForwardingRequestCreateReplacements: RawRepresentable, Codable, Hashable, Sendable {
+public struct ForwardingRequestReplacements: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -92,20 +92,20 @@ public struct ForwardingRequestCreateReplacements: RawRepresentable, Codable, Ha
 }
 
 /// The request body and headers to be sent to the destination endpoint.
-public struct ForwardingRequestCreateRequest: StripeParams {
+public struct ForwardingRequestRequest: StripeParams {
     /// The body payload to send to the destination endpoint.
     public var body: String?
     /// The headers to include in the forwarded request. Can be omitted if no additional headers (excluding
     /// Stripe-generated ones such as the Content-Type header) should be included.
-    public var headers: [ForwardingRequestCreateRequestHeaders]?
+    public var headers: [ForwardingRequestRequestHeaders]?
 
-    public init(body: String? = nil, headers: [ForwardingRequestCreateRequestHeaders]? = nil) {
+    public init(body: String? = nil, headers: [ForwardingRequestRequestHeaders]? = nil) {
         self.body = body
         self.headers = headers
     }
 }
 
-public struct ForwardingRequestCreateRequestHeaders: StripeParams {
+public struct ForwardingRequestRequestHeaders: StripeParams {
     /// The header name.
     public var name: String
     /// The header value.
@@ -119,7 +119,7 @@ public struct ForwardingRequestCreateRequestHeaders: StripeParams {
 
 /// Similar to other List endpoints, filters results based on created timestamp. You can pass gt, gte,
 /// lt, and lte timestamp values.
-public struct ForwardingRequestListCreated: StripeParams {
+public struct ForwardingRequestCreated: StripeParams {
     /// Return results where the `created` field is greater than this value.
     public var gt: Int?
     /// Return results where the `created` field is greater than or equal to this value.

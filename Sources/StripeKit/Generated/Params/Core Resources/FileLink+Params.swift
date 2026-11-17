@@ -95,7 +95,7 @@ public struct FileLinkUpdateParams: ClearableParams {
     public var expand: [String]?
     /// A future timestamp after which the link will no longer be usable, or `now` to expire the link
     /// immediately.
-    public var expiresAt: FileLinkUpdateExpiresAt?
+    public var expiresAt: FileLinkExpiresAt?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -104,7 +104,7 @@ public struct FileLinkUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.expiresAt)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(expand: [String]? = nil, expiresAt: FileLinkUpdateExpiresAt? = nil, metadata: [String: String]? = nil) {
+    public init(expand: [String]? = nil, expiresAt: FileLinkExpiresAt? = nil, metadata: [String: String]? = nil) {
         self.expand = expand
         self.expiresAt = expiresAt
         self.metadata = metadata
@@ -125,7 +125,7 @@ public struct FileLinkUpdateParams: ClearableParams {
 }
 
 /// One of the forms `expires_at` accepts.
-public enum FileLinkUpdateExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum FileLinkExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
@@ -141,7 +141,7 @@ public enum FileLinkUpdateExpiresAt: Codable, Sendable, ExpressibleByIntegerLite
             }
         }
         if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of FileLinkUpdateExpiresAt matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of FileLinkExpiresAt matches")
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -9,7 +9,7 @@ import Foundation
 
 public struct BillingPortalSessionCreateParams: StripeParams {
     /// Behavior after the portal session expires.
-    public var afterExpiration: BillingPortalSessionCreateAfterExpiration?
+    public var afterExpiration: BillingPortalSessionAfterExpiration?
     /// The ID of an existing [configuration](https://docs.stripe.com/api/customer_portal/configurations) to
     /// use for this session, describing its functionality and features. If not specified, the session uses
     /// the default configuration.
@@ -23,7 +23,7 @@ public struct BillingPortalSessionCreateParams: StripeParams {
     /// Information about a specific flow for the customer to go through. See the
     /// [docs](https://docs.stripe.com/customer-management/portal-deep-links) to learn more about using
     /// customer portal deep links and flows.
-    public var flowData: BillingPortalSessionCreateFlowData?
+    public var flowData: BillingPortalSessionFlowData?
     /// The IETF language tag of the locale customer portal is displayed in. If blank or auto, the
     /// customer’s `preferred_locales` or browser’s locale is used.
     public var locale: BillingPortalSessionCreateLocale?
@@ -37,7 +37,7 @@ public struct BillingPortalSessionCreateParams: StripeParams {
     /// website.
     public var returnUrl: String?
 
-    public init(afterExpiration: BillingPortalSessionCreateAfterExpiration? = nil, configuration: String? = nil, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil, flowData: BillingPortalSessionCreateFlowData? = nil, locale: BillingPortalSessionCreateLocale? = nil, onBehalfOf: String? = nil, returnUrl: String? = nil) {
+    public init(afterExpiration: BillingPortalSessionAfterExpiration? = nil, configuration: String? = nil, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil, flowData: BillingPortalSessionFlowData? = nil, locale: BillingPortalSessionCreateLocale? = nil, onBehalfOf: String? = nil, returnUrl: String? = nil) {
         self.afterExpiration = afterExpiration
         self.configuration = configuration
         self.customer = customer
@@ -63,13 +63,13 @@ public struct BillingPortalSessionCreateParams: StripeParams {
 }
 
 /// Behavior after the portal session expires.
-public struct BillingPortalSessionCreateAfterExpiration: StripeParams {
+public struct BillingPortalSessionAfterExpiration: StripeParams {
     /// The behavior to apply when the session expires.
-    public var type: BillingPortalSessionCreateAfterExpirationType
+    public var type: BillingPortalSessionAfterExpirationType
     /// Configuration for authenticating the customer after the session expires.
-    public var customerLogin: BillingPortalSessionCreateAfterExpirationCustomerLogin?
+    public var customerLogin: BillingPortalSessionAfterExpirationCustomerLogin?
 
-    public init(type: BillingPortalSessionCreateAfterExpirationType, customerLogin: BillingPortalSessionCreateAfterExpirationCustomerLogin? = nil) {
+    public init(type: BillingPortalSessionAfterExpirationType, customerLogin: BillingPortalSessionAfterExpirationCustomerLogin? = nil) {
         self.type = type
         self.customerLogin = customerLogin
     }
@@ -80,7 +80,7 @@ public struct BillingPortalSessionCreateAfterExpiration: StripeParams {
     }
 }
 
-public struct BillingPortalSessionCreateAfterExpirationType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalSessionAfterExpirationType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -92,7 +92,7 @@ public struct BillingPortalSessionCreateAfterExpirationType: RawRepresentable, C
 }
 
 /// Configuration for authenticating the customer after the session expires.
-public struct BillingPortalSessionCreateAfterExpirationCustomerLogin: StripeParams {
+public struct BillingPortalSessionAfterExpirationCustomerLogin: StripeParams {
     /// The Unix timestamp after which the customer can no longer recover this session. Leave unset to allow
     /// recovery without a deadline.
     public var expiresAt: Date?
@@ -109,21 +109,21 @@ public struct BillingPortalSessionCreateAfterExpirationCustomerLogin: StripePara
 /// Information about a specific flow for the customer to go through. See the
 /// [docs](https://docs.stripe.com/customer-management/portal-deep-links) to learn more about using
 /// customer portal deep links and flows.
-public struct BillingPortalSessionCreateFlowData: StripeParams {
+public struct BillingPortalSessionFlowData: StripeParams {
     /// Type of flow that the customer will go through.
-    public var type: BillingPortalSessionCreateFlowDataType
+    public var type: BillingPortalSessionFlowDataType
     /// Behavior after the flow is completed.
-    public var afterCompletion: BillingPortalSessionCreateFlowDataAfterCompletion?
+    public var afterCompletion: BillingPortalSessionFlowDataAfterCompletion?
     /// Configuration when `flow_data.type=subscription_cancel`.
-    public var subscriptionCancel: BillingPortalSessionCreateFlowDataSubscriptionCancel?
+    public var subscriptionCancel: BillingPortalSessionFlowDataSubscriptionCancel?
     /// Configuration when `flow_data.type=subscription_pause`.
-    public var subscriptionPause: BillingPortalSessionCreateFlowDataSubscriptionPause?
+    public var subscriptionPause: BillingPortalSessionFlowDataSubscriptionPause?
     /// Configuration when `flow_data.type=subscription_update`.
-    public var subscriptionUpdate: BillingPortalSessionCreateFlowDataSubscriptionUpdate?
+    public var subscriptionUpdate: BillingPortalSessionFlowDataSubscriptionUpdate?
     /// Configuration when `flow_data.type=subscription_update_confirm`.
-    public var subscriptionUpdateConfirm: BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirm?
+    public var subscriptionUpdateConfirm: BillingPortalSessionFlowDataSubscriptionUpdateConfirm?
 
-    public init(type: BillingPortalSessionCreateFlowDataType, afterCompletion: BillingPortalSessionCreateFlowDataAfterCompletion? = nil, subscriptionCancel: BillingPortalSessionCreateFlowDataSubscriptionCancel? = nil, subscriptionPause: BillingPortalSessionCreateFlowDataSubscriptionPause? = nil, subscriptionUpdate: BillingPortalSessionCreateFlowDataSubscriptionUpdate? = nil, subscriptionUpdateConfirm: BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirm? = nil) {
+    public init(type: BillingPortalSessionFlowDataType, afterCompletion: BillingPortalSessionFlowDataAfterCompletion? = nil, subscriptionCancel: BillingPortalSessionFlowDataSubscriptionCancel? = nil, subscriptionPause: BillingPortalSessionFlowDataSubscriptionPause? = nil, subscriptionUpdate: BillingPortalSessionFlowDataSubscriptionUpdate? = nil, subscriptionUpdateConfirm: BillingPortalSessionFlowDataSubscriptionUpdateConfirm? = nil) {
         self.type = type
         self.afterCompletion = afterCompletion
         self.subscriptionCancel = subscriptionCancel
@@ -142,7 +142,7 @@ public struct BillingPortalSessionCreateFlowData: StripeParams {
     }
 }
 
-public struct BillingPortalSessionCreateFlowDataType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalSessionFlowDataType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -158,15 +158,15 @@ public struct BillingPortalSessionCreateFlowDataType: RawRepresentable, Codable,
 }
 
 /// Behavior after the flow is completed.
-public struct BillingPortalSessionCreateFlowDataAfterCompletion: StripeParams {
+public struct BillingPortalSessionFlowDataAfterCompletion: StripeParams {
     /// The specified behavior after the flow is completed.
-    public var type: BillingPortalSessionCreateFlowDataAfterCompletionType
+    public var type: BillingPortalSessionFlowDataAfterCompletionType
     /// Configuration when `after_completion.type=hosted_confirmation`.
-    public var hostedConfirmation: BillingPortalSessionCreateFlowDataAfterCompletionHostedConfirmation?
+    public var hostedConfirmation: BillingPortalSessionFlowDataAfterCompletionHostedConfirmation?
     /// Configuration when `after_completion.type=redirect`.
-    public var redirect: BillingPortalSessionCreateFlowDataAfterCompletionRedirect?
+    public var redirect: BillingPortalSessionFlowDataAfterCompletionRedirect?
 
-    public init(type: BillingPortalSessionCreateFlowDataAfterCompletionType, hostedConfirmation: BillingPortalSessionCreateFlowDataAfterCompletionHostedConfirmation? = nil, redirect: BillingPortalSessionCreateFlowDataAfterCompletionRedirect? = nil) {
+    public init(type: BillingPortalSessionFlowDataAfterCompletionType, hostedConfirmation: BillingPortalSessionFlowDataAfterCompletionHostedConfirmation? = nil, redirect: BillingPortalSessionFlowDataAfterCompletionRedirect? = nil) {
         self.type = type
         self.hostedConfirmation = hostedConfirmation
         self.redirect = redirect
@@ -179,7 +179,7 @@ public struct BillingPortalSessionCreateFlowDataAfterCompletion: StripeParams {
     }
 }
 
-public struct BillingPortalSessionCreateFlowDataAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalSessionFlowDataAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -192,7 +192,7 @@ public struct BillingPortalSessionCreateFlowDataAfterCompletionType: RawRepresen
 }
 
 /// Configuration when `after_completion.type=hosted_confirmation`.
-public struct BillingPortalSessionCreateFlowDataAfterCompletionHostedConfirmation: StripeParams {
+public struct BillingPortalSessionFlowDataAfterCompletionHostedConfirmation: StripeParams {
     /// A custom message to display to the customer after the flow is completed.
     public var customMessage: String?
 
@@ -206,7 +206,7 @@ public struct BillingPortalSessionCreateFlowDataAfterCompletionHostedConfirmatio
 }
 
 /// Configuration when `after_completion.type=redirect`.
-public struct BillingPortalSessionCreateFlowDataAfterCompletionRedirect: StripeParams {
+public struct BillingPortalSessionFlowDataAfterCompletionRedirect: StripeParams {
     /// The URL the customer will be redirected to after the flow is completed.
     public var returnUrl: String
 
@@ -220,26 +220,26 @@ public struct BillingPortalSessionCreateFlowDataAfterCompletionRedirect: StripeP
 }
 
 /// Configuration when `flow_data.type=subscription_cancel`.
-public struct BillingPortalSessionCreateFlowDataSubscriptionCancel: StripeParams {
+public struct BillingPortalSessionFlowDataSubscriptionCancel: StripeParams {
     /// The ID of the subscription to be canceled.
     public var subscription: String
     /// Specify a retention strategy to be used in the cancellation flow.
-    public var retention: BillingPortalSessionCreateFlowDataSubscriptionCancelRetention?
+    public var retention: BillingPortalSessionFlowDataSubscriptionCancelRetention?
 
-    public init(subscription: String, retention: BillingPortalSessionCreateFlowDataSubscriptionCancelRetention? = nil) {
+    public init(subscription: String, retention: BillingPortalSessionFlowDataSubscriptionCancelRetention? = nil) {
         self.subscription = subscription
         self.retention = retention
     }
 }
 
 /// Specify a retention strategy to be used in the cancellation flow.
-public struct BillingPortalSessionCreateFlowDataSubscriptionCancelRetention: StripeParams {
+public struct BillingPortalSessionFlowDataSubscriptionCancelRetention: StripeParams {
     /// Configuration when `retention.type=coupon_offer`.
-    public var couponOffer: BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionCouponOffer
+    public var couponOffer: BillingPortalSessionFlowDataSubscriptionCancelRetentionCouponOffer
     /// Type of retention strategy to use with the customer.
-    public var type: BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionType
+    public var type: BillingPortalSessionFlowDataSubscriptionCancelRetentionType
 
-    public init(couponOffer: BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionCouponOffer, type: BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionType) {
+    public init(couponOffer: BillingPortalSessionFlowDataSubscriptionCancelRetentionCouponOffer, type: BillingPortalSessionFlowDataSubscriptionCancelRetentionType) {
         self.couponOffer = couponOffer
         self.type = type
     }
@@ -251,7 +251,7 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionCancelRetention: Str
 }
 
 /// Configuration when `retention.type=coupon_offer`.
-public struct BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionCouponOffer: StripeParams {
+public struct BillingPortalSessionFlowDataSubscriptionCancelRetentionCouponOffer: StripeParams {
     /// The ID of the coupon to be offered.
     public var coupon: String
 
@@ -260,7 +260,7 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionCoupo
     }
 }
 
-public struct BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingPortalSessionFlowDataSubscriptionCancelRetentionType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -271,7 +271,7 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionType:
 }
 
 /// Configuration when `flow_data.type=subscription_pause`.
-public struct BillingPortalSessionCreateFlowDataSubscriptionPause: StripeParams {
+public struct BillingPortalSessionFlowDataSubscriptionPause: StripeParams {
     /// The ID of the subscription to be paused.
     public var subscription: String
 
@@ -281,7 +281,7 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionPause: StripeParams 
 }
 
 /// Configuration when `flow_data.type=subscription_update`.
-public struct BillingPortalSessionCreateFlowDataSubscriptionUpdate: StripeParams {
+public struct BillingPortalSessionFlowDataSubscriptionUpdate: StripeParams {
     /// The ID of the subscription to be updated.
     public var subscription: String
 
@@ -291,24 +291,24 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionUpdate: StripeParams
 }
 
 /// Configuration when `flow_data.type=subscription_update_confirm`.
-public struct BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirm: StripeParams {
+public struct BillingPortalSessionFlowDataSubscriptionUpdateConfirm: StripeParams {
     /// The [subscription item](https://docs.stripe.com/api/subscription_items) to be updated through this
     /// flow. Currently, only up to one may be specified and subscriptions with multiple items are not
     /// updatable.
-    public var items: [BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirmItems]
+    public var items: [BillingPortalSessionFlowDataSubscriptionUpdateConfirmItems]
     /// The ID of the subscription to be updated.
     public var subscription: String
     /// The coupon or promotion code to apply to this subscription update.
-    public var discounts: [BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirmDiscounts]?
+    public var discounts: [BillingPortalSessionFlowDataSubscriptionUpdateConfirmDiscounts]?
 
-    public init(items: [BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirmItems], subscription: String, discounts: [BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirmDiscounts]? = nil) {
+    public init(items: [BillingPortalSessionFlowDataSubscriptionUpdateConfirmItems], subscription: String, discounts: [BillingPortalSessionFlowDataSubscriptionUpdateConfirmDiscounts]? = nil) {
         self.items = items
         self.subscription = subscription
         self.discounts = discounts
     }
 }
 
-public struct BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirmItems: StripeParams {
+public struct BillingPortalSessionFlowDataSubscriptionUpdateConfirmItems: StripeParams {
     /// The ID of the [subscription
     /// item](https://docs.stripe.com/api/subscriptions/object#subscription_object-items-data-id) to be
     /// updated.
@@ -328,7 +328,7 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirmItems: 
     }
 }
 
-public struct BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirmDiscounts: StripeParams {
+public struct BillingPortalSessionFlowDataSubscriptionUpdateConfirmDiscounts: StripeParams {
     /// The ID of the coupon to apply to this subscription update.
     public var coupon: String?
     /// The ID of a promotion code to apply to this subscription update.

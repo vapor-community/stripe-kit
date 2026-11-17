@@ -10,7 +10,7 @@ import Foundation
 public struct CustomerCreateParams: ClearableParams {
     /// The customer's address. Learn about [country-specific requirements for calculating
     /// tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
-    public var address: CustomerCreateAddress?
+    public var address: CustomerAddress?
     /// An integer amount in cents (or local equivalent) that represents the customer's current balance,
     /// which affect the customer's future invoices. A negative amount represents a credit that decreases
     /// the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -18,7 +18,7 @@ public struct CustomerCreateParams: ClearableParams {
     /// The customer's business name. This may be up to *150 characters*.
     public var businessName: String?
     /// Balance information and default balance settings for this customer.
-    public var cashBalance: CustomerCreateCashBalance?
+    public var cashBalance: CustomerCashBalance?
     /// An arbitrary string that you can attach to a customer object. It is displayed alongside the customer
     /// in the dashboard.
     public var description: String?
@@ -33,7 +33,7 @@ public struct CustomerCreateParams: ClearableParams {
     /// or numbers.
     public var invoicePrefix: String?
     /// Default invoice settings for this customer.
-    public var invoiceSettings: CustomerCreateInvoiceSettings?
+    public var invoiceSettings: CustomerInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -49,21 +49,21 @@ public struct CustomerCreateParams: ClearableParams {
     /// Customer's preferred languages, ordered by preference.
     public var preferredLocales: [String]?
     /// The customer's shipping information. Appears on invoices emailed to this customer.
-    public var shipping: CustomerCreateShipping?
+    public var shipping: CustomerShipping?
     public var source: String?
     /// Tax details about the customer.
     public var tax: CustomerCreateTax?
     /// The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
     public var taxExempt: CustomerCreateTaxExempt?
     /// The customer's tax IDs.
-    public var taxIdData: [CustomerCreateTaxIdData]?
+    public var taxIdData: [CustomerTaxIdData]?
     /// ID of the test clock to attach to the customer.
     public var testClock: String?
     public var validate: Bool?
     /// Fields to send empty, which clears them: `params.clear(.address)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: CustomerCreateAddress? = nil, balance: Int? = nil, businessName: String? = nil, cashBalance: CustomerCreateCashBalance? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, individualName: String? = nil, invoicePrefix: String? = nil, invoiceSettings: CustomerCreateInvoiceSettings? = nil, metadata: [String: String]? = nil, name: String? = nil, nextInvoiceSequence: Int? = nil, paymentMethod: String? = nil, phone: String? = nil, preferredLocales: [String]? = nil, shipping: CustomerCreateShipping? = nil, source: String? = nil, tax: CustomerCreateTax? = nil, taxExempt: CustomerCreateTaxExempt? = nil, taxIdData: [CustomerCreateTaxIdData]? = nil, testClock: String? = nil, validate: Bool? = nil) {
+    public init(address: CustomerAddress? = nil, balance: Int? = nil, businessName: String? = nil, cashBalance: CustomerCashBalance? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, individualName: String? = nil, invoicePrefix: String? = nil, invoiceSettings: CustomerInvoiceSettings? = nil, metadata: [String: String]? = nil, name: String? = nil, nextInvoiceSequence: Int? = nil, paymentMethod: String? = nil, phone: String? = nil, preferredLocales: [String]? = nil, shipping: CustomerShipping? = nil, source: String? = nil, tax: CustomerCreateTax? = nil, taxExempt: CustomerCreateTaxExempt? = nil, taxIdData: [CustomerTaxIdData]? = nil, testClock: String? = nil, validate: Bool? = nil) {
         self.address = address
         self.balance = balance
         self.businessName = businessName
@@ -129,16 +129,16 @@ public struct CustomerCreateParams: ClearableParams {
 
 public struct CustomerCreateFundingInstructionsParams: StripeParams {
     /// Additional parameters for `bank_transfer` funding types
-    public var bankTransfer: CustomerCreateFundingInstructionsBankTransfer
+    public var bankTransfer: CustomerBankTransfer
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// The `funding_type` to get the instructions for.
-    public var fundingType: CustomerCreateFundingInstructionsFundingType
+    public var fundingType: CustomerFundingType
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(bankTransfer: CustomerCreateFundingInstructionsBankTransfer, currency: String, fundingType: CustomerCreateFundingInstructionsFundingType, expand: [String]? = nil) {
+    public init(bankTransfer: CustomerBankTransfer, currency: String, fundingType: CustomerFundingType, expand: [String]? = nil) {
         self.bankTransfer = bankTransfer
         self.currency = currency
         self.fundingType = fundingType
@@ -227,7 +227,7 @@ public struct CustomerListPaymentMethodsParams: StripeParams {
     /// This field indicates whether this payment method can be shown again to its customer in a checkout
     /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
     /// method can be shown as a saved payment method in a checkout flow.
-    public var allowRedisplay: CustomerListPaymentMethodsAllowRedisplay?
+    public var allowRedisplay: CustomerAllowRedisplay?
     /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
     /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
     /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -244,9 +244,9 @@ public struct CustomerListPaymentMethodsParams: StripeParams {
     /// An optional filter on the list, based on the object `type` field. Without the filter, the list
     /// includes all current and future payment method types. If your integration expects only one type of
     /// payment method in the response, make sure to provide a type value in the request.
-    public var type: CustomerListPaymentMethodsType?
+    public var type: CustomerType?
 
-    public init(allowRedisplay: CustomerListPaymentMethodsAllowRedisplay? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, type: CustomerListPaymentMethodsType? = nil) {
+    public init(allowRedisplay: CustomerAllowRedisplay? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, type: CustomerType? = nil) {
         self.allowRedisplay = allowRedisplay
         self.endingBefore = endingBefore
         self.expand = expand
@@ -291,7 +291,7 @@ public struct CustomerSearchParams: StripeParams {
 public struct CustomerUpdateParams: ClearableParams {
     /// The customer's address. Learn about [country-specific requirements for calculating
     /// tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
-    public var address: CustomerUpdateAddress?
+    public var address: CustomerAddress?
     /// An integer amount in cents (or local equivalent) that represents the customer's current balance,
     /// which affect the customer's future invoices. A negative amount represents a credit that decreases
     /// the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -299,7 +299,7 @@ public struct CustomerUpdateParams: ClearableParams {
     /// The customer's business name. This may be up to *150 characters*.
     public var businessName: String?
     /// Balance information and default balance settings for this customer.
-    public var cashBalance: CustomerUpdateCashBalance?
+    public var cashBalance: CustomerCashBalance?
     /// If you are using payment methods created via the PaymentMethods API, see the
     /// [invoice_settings.default_payment_method](https://docs.stripe.com/api/customers/update#update_customer-invoice_settings-default_payment_method)
     /// parameter. Provide the ID of a payment source already attached to this customer to make it this
@@ -320,7 +320,7 @@ public struct CustomerUpdateParams: ClearableParams {
     /// or numbers.
     public var invoicePrefix: String?
     /// Default invoice settings for this customer.
-    public var invoiceSettings: CustomerUpdateInvoiceSettings?
+    public var invoiceSettings: CustomerInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -335,7 +335,7 @@ public struct CustomerUpdateParams: ClearableParams {
     /// Customer's preferred languages, ordered by preference.
     public var preferredLocales: [String]?
     /// The customer's shipping information. Appears on invoices emailed to this customer.
-    public var shipping: CustomerUpdateShipping?
+    public var shipping: CustomerShipping?
     public var source: String?
     /// Tax details about the customer.
     public var tax: CustomerUpdateTax?
@@ -345,7 +345,7 @@ public struct CustomerUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.address)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: CustomerUpdateAddress? = nil, balance: Int? = nil, businessName: String? = nil, cashBalance: CustomerUpdateCashBalance? = nil, defaultSource: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, individualName: String? = nil, invoicePrefix: String? = nil, invoiceSettings: CustomerUpdateInvoiceSettings? = nil, metadata: [String: String]? = nil, name: String? = nil, nextInvoiceSequence: Int? = nil, phone: String? = nil, preferredLocales: [String]? = nil, shipping: CustomerUpdateShipping? = nil, source: String? = nil, tax: CustomerUpdateTax? = nil, taxExempt: CustomerUpdateTaxExempt? = nil, validate: Bool? = nil) {
+    public init(address: CustomerAddress? = nil, balance: Int? = nil, businessName: String? = nil, cashBalance: CustomerCashBalance? = nil, defaultSource: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, individualName: String? = nil, invoicePrefix: String? = nil, invoiceSettings: CustomerInvoiceSettings? = nil, metadata: [String: String]? = nil, name: String? = nil, nextInvoiceSequence: Int? = nil, phone: String? = nil, preferredLocales: [String]? = nil, shipping: CustomerShipping? = nil, source: String? = nil, tax: CustomerUpdateTax? = nil, taxExempt: CustomerUpdateTaxExempt? = nil, validate: Bool? = nil) {
         self.address = address
         self.balance = balance
         self.businessName = businessName
@@ -405,7 +405,7 @@ public struct CustomerUpdateParams: ClearableParams {
     }
 }
 
-public struct CustomerCreateAddress: StripeParams {
+public struct CustomerAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// A freeform text field for the country. However, in order to activate some tax features, the format
@@ -441,26 +441,26 @@ public struct CustomerCreateAddress: StripeParams {
 }
 
 /// Balance information and default balance settings for this customer.
-public struct CustomerCreateCashBalance: StripeParams {
+public struct CustomerCashBalance: StripeParams {
     /// Settings controlling the behavior of the customer's cash balance, such as reconciliation of funds
     /// received.
-    public var settings: CustomerCreateCashBalanceSettings?
+    public var settings: CustomerCashBalanceSettings?
 
-    public init(settings: CustomerCreateCashBalanceSettings? = nil) {
+    public init(settings: CustomerCashBalanceSettings? = nil) {
         self.settings = settings
     }
 }
 
 /// Settings controlling the behavior of the customer's cash balance, such as reconciliation of funds
 /// received.
-public struct CustomerCreateCashBalanceSettings: StripeParams {
+public struct CustomerCashBalanceSettings: StripeParams {
     /// Controls how funds transferred by the customer are applied to payment intents and invoices. Valid
     /// options are `automatic`, `manual`, or `merchant_default`. For more information about these
     /// reconciliation modes, see
     /// [Reconciliation](https://docs.stripe.com/payments/customer-balance/reconciliation).
-    public var reconciliationMode: CustomerCreateCashBalanceSettingsReconciliationMode?
+    public var reconciliationMode: CustomerCashBalanceSettingsReconciliationMode?
 
-    public init(reconciliationMode: CustomerCreateCashBalanceSettingsReconciliationMode? = nil) {
+    public init(reconciliationMode: CustomerCashBalanceSettingsReconciliationMode? = nil) {
         self.reconciliationMode = reconciliationMode
     }
 
@@ -469,7 +469,7 @@ public struct CustomerCreateCashBalanceSettings: StripeParams {
     }
 }
 
-public struct CustomerCreateCashBalanceSettingsReconciliationMode: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerCashBalanceSettingsReconciliationMode: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -482,21 +482,21 @@ public struct CustomerCreateCashBalanceSettingsReconciliationMode: RawRepresenta
 }
 
 /// Default invoice settings for this customer.
-public struct CustomerCreateInvoiceSettings: ClearableParams {
+public struct CustomerInvoiceSettings: ClearableParams {
     /// The list of up to 4 default custom fields to be displayed on invoices for this customer. When
     /// updating, pass an empty string to remove previously-defined fields.
-    public var customFields: [CustomerCreateInvoiceSettingsCustomFields]?
+    public var customFields: [CustomerInvoiceSettingsCustomFields]?
     /// ID of a payment method that's attached to the customer, to be used as the customer's default payment
     /// method for subscriptions and invoices.
     public var defaultPaymentMethod: String?
     /// Default footer to be displayed on invoices for this customer.
     public var footer: String?
     /// Default options for invoice PDF rendering for this customer.
-    public var renderingOptions: CustomerCreateInvoiceSettingsRenderingOptions?
+    public var renderingOptions: CustomerInvoiceSettingsRenderingOptions?
     /// Fields to send empty, which clears them: `params.clear(.customFields)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(customFields: [CustomerCreateInvoiceSettingsCustomFields]? = nil, defaultPaymentMethod: String? = nil, footer: String? = nil, renderingOptions: CustomerCreateInvoiceSettingsRenderingOptions? = nil) {
+    public init(customFields: [CustomerInvoiceSettingsCustomFields]? = nil, defaultPaymentMethod: String? = nil, footer: String? = nil, renderingOptions: CustomerInvoiceSettingsRenderingOptions? = nil) {
         self.customFields = customFields
         self.defaultPaymentMethod = defaultPaymentMethod
         self.footer = footer
@@ -518,7 +518,7 @@ public struct CustomerCreateInvoiceSettings: ClearableParams {
     }
 }
 
-public struct CustomerCreateInvoiceSettingsCustomFields: StripeParams {
+public struct CustomerInvoiceSettingsCustomFields: StripeParams {
     /// The name of the custom field. This may be up to 40 characters.
     public var name: String
     /// The value of the custom field. This may be up to 140 characters.
@@ -530,18 +530,18 @@ public struct CustomerCreateInvoiceSettingsCustomFields: StripeParams {
     }
 }
 
-public struct CustomerCreateInvoiceSettingsRenderingOptions: ClearableParams {
+public struct CustomerInvoiceSettingsRenderingOptions: ClearableParams {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
     /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
     /// exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and
     /// exclusive alike) from invoice PDF amounts.
-    public var amountTaxDisplay: CustomerCreateInvoiceSettingsRenderingOptionsAmountTaxDisplay?
+    public var amountTaxDisplay: CustomerInvoiceSettingsRenderingOptionsAmountTaxDisplay?
     /// ID of the invoice rendering template to use for future invoices.
     public var template: String?
     /// Fields to send empty, which clears them: `params.clear(.amountTaxDisplay)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amountTaxDisplay: CustomerCreateInvoiceSettingsRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
+    public init(amountTaxDisplay: CustomerInvoiceSettingsRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
         self.amountTaxDisplay = amountTaxDisplay
         self.template = template
     }
@@ -558,7 +558,7 @@ public struct CustomerCreateInvoiceSettingsRenderingOptions: ClearableParams {
     }
 }
 
-public struct CustomerCreateInvoiceSettingsRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerInvoiceSettingsRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -569,15 +569,15 @@ public struct CustomerCreateInvoiceSettingsRenderingOptionsAmountTaxDisplay: Raw
     public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
 }
 
-public struct CustomerCreateShipping: StripeParams {
+public struct CustomerShipping: StripeParams {
     /// Customer shipping address.
-    public var address: CustomerCreateShippingAddress
+    public var address: CustomerShippingAddress
     /// Customer name.
     public var name: String
     /// Customer phone (including extension).
     public var phone: String?
 
-    public init(address: CustomerCreateShippingAddress, name: String, phone: String? = nil) {
+    public init(address: CustomerShippingAddress, name: String, phone: String? = nil) {
         self.address = address
         self.name = name
         self.phone = phone
@@ -585,7 +585,7 @@ public struct CustomerCreateShipping: StripeParams {
 }
 
 /// Customer shipping address.
-public struct CustomerCreateShippingAddress: StripeParams {
+public struct CustomerShippingAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// A freeform text field for the country. However, in order to activate some tax features, the format
@@ -672,7 +672,7 @@ public struct CustomerCreateTaxExempt: RawRepresentable, Codable, Hashable, Send
     public static var reverse: Self { .init(rawValue: "reverse") }
 }
 
-public struct CustomerCreateTaxIdData: StripeParams {
+public struct CustomerTaxIdData: StripeParams {
     /// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`,
     /// `au_acn`, `au_arn`, `au_wpn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`,
     /// `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `bw_vat`, `by_tin`, `ca_bn`,
@@ -688,17 +688,17 @@ public struct CustomerCreateTaxIdData: StripeParams {
     /// `sm_coe`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tt_bir`, `tt_vat`,
     /// `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`,
     /// `za_vat`, `zm_tin`, or `zw_tin`
-    public var type: CustomerCreateTaxIdDataType
+    public var type: CustomerTaxIdDataType
     /// Value of the tax ID.
     public var value: String
 
-    public init(type: CustomerCreateTaxIdDataType, value: String) {
+    public init(type: CustomerTaxIdDataType, value: String) {
         self.type = type
         self.value = value
     }
 }
 
-public struct CustomerCreateTaxIdDataType: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerTaxIdDataType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -843,17 +843,17 @@ public struct CustomerCreateTaxIdDataType: RawRepresentable, Codable, Hashable, 
 }
 
 /// Additional parameters for `bank_transfer` funding types
-public struct CustomerCreateFundingInstructionsBankTransfer: StripeParams {
+public struct CustomerBankTransfer: StripeParams {
     /// The type of the `bank_transfer`
-    public var type: CustomerCreateFundingInstructionsBankTransferType
+    public var type: CustomerBankTransferType
     /// Configuration for eu_bank_transfer funding type.
-    public var euBankTransfer: CustomerCreateFundingInstructionsBankTransferEuBankTransfer?
+    public var euBankTransfer: CustomerBankTransferEuBankTransfer?
     /// List of address types that should be returned in the financial_addresses response. If not specified,
     /// all valid types will be returned. Permitted values include: `sort_code`, `zengin`, `iban`, or
     /// `spei`.
-    public var requestedAddressTypes: [CustomerCreateFundingInstructionsBankTransferRequestedAddressTypes]?
+    public var requestedAddressTypes: [CustomerBankTransferRequestedAddressTypes]?
 
-    public init(type: CustomerCreateFundingInstructionsBankTransferType, euBankTransfer: CustomerCreateFundingInstructionsBankTransferEuBankTransfer? = nil, requestedAddressTypes: [CustomerCreateFundingInstructionsBankTransferRequestedAddressTypes]? = nil) {
+    public init(type: CustomerBankTransferType, euBankTransfer: CustomerBankTransferEuBankTransfer? = nil, requestedAddressTypes: [CustomerBankTransferRequestedAddressTypes]? = nil) {
         self.type = type
         self.euBankTransfer = euBankTransfer
         self.requestedAddressTypes = requestedAddressTypes
@@ -866,7 +866,7 @@ public struct CustomerCreateFundingInstructionsBankTransfer: StripeParams {
     }
 }
 
-public struct CustomerCreateFundingInstructionsBankTransferType: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerBankTransferType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -881,7 +881,7 @@ public struct CustomerCreateFundingInstructionsBankTransferType: RawRepresentabl
 }
 
 /// Configuration for eu_bank_transfer funding type.
-public struct CustomerCreateFundingInstructionsBankTransferEuBankTransfer: StripeParams {
+public struct CustomerBankTransferEuBankTransfer: StripeParams {
     /// The desired country code of the bank account information. Permitted values include: `DE`, `FR`,
     /// `IE`, or `NL`.
     public var country: String
@@ -891,7 +891,7 @@ public struct CustomerCreateFundingInstructionsBankTransferEuBankTransfer: Strip
     }
 }
 
-public struct CustomerCreateFundingInstructionsBankTransferRequestedAddressTypes: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerBankTransferRequestedAddressTypes: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -904,7 +904,7 @@ public struct CustomerCreateFundingInstructionsBankTransferRequestedAddressTypes
     public static var zengin: Self { .init(rawValue: "zengin") }
 }
 
-public struct CustomerCreateFundingInstructionsFundingType: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerFundingType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -914,7 +914,7 @@ public struct CustomerCreateFundingInstructionsFundingType: RawRepresentable, Co
     public static var bankTransfer: Self { .init(rawValue: "bank_transfer") }
 }
 
-public struct CustomerListPaymentMethodsAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -926,7 +926,7 @@ public struct CustomerListPaymentMethodsAllowRedisplay: RawRepresentable, Codabl
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct CustomerListPaymentMethodsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -990,221 +990,6 @@ public struct CustomerListPaymentMethodsType: RawRepresentable, Codable, Hashabl
     public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
     public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
     public static var zip: Self { .init(rawValue: "zip") }
-}
-
-public struct CustomerUpdateAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// A freeform text field for the country. However, in order to activate some tax features, the format
-    /// should be a two-letter country code ([ISO 3166-1
-    /// alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// Balance information and default balance settings for this customer.
-public struct CustomerUpdateCashBalance: StripeParams {
-    /// Settings controlling the behavior of the customer's cash balance, such as reconciliation of funds
-    /// received.
-    public var settings: CustomerUpdateCashBalanceSettings?
-
-    public init(settings: CustomerUpdateCashBalanceSettings? = nil) {
-        self.settings = settings
-    }
-}
-
-/// Settings controlling the behavior of the customer's cash balance, such as reconciliation of funds
-/// received.
-public struct CustomerUpdateCashBalanceSettings: StripeParams {
-    /// Controls how funds transferred by the customer are applied to payment intents and invoices. Valid
-    /// options are `automatic`, `manual`, or `merchant_default`. For more information about these
-    /// reconciliation modes, see
-    /// [Reconciliation](https://docs.stripe.com/payments/customer-balance/reconciliation).
-    public var reconciliationMode: CustomerUpdateCashBalanceSettingsReconciliationMode?
-
-    public init(reconciliationMode: CustomerUpdateCashBalanceSettingsReconciliationMode? = nil) {
-        self.reconciliationMode = reconciliationMode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case reconciliationMode = "reconciliation_mode"
-    }
-}
-
-public struct CustomerUpdateCashBalanceSettingsReconciliationMode: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var automatic: Self { .init(rawValue: "automatic") }
-    public static var manual: Self { .init(rawValue: "manual") }
-    public static var merchantDefault: Self { .init(rawValue: "merchant_default") }
-}
-
-/// Default invoice settings for this customer.
-public struct CustomerUpdateInvoiceSettings: ClearableParams {
-    /// The list of up to 4 default custom fields to be displayed on invoices for this customer. When
-    /// updating, pass an empty string to remove previously-defined fields.
-    public var customFields: [CustomerUpdateInvoiceSettingsCustomFields]?
-    /// ID of a payment method that's attached to the customer, to be used as the customer's default payment
-    /// method for subscriptions and invoices.
-    public var defaultPaymentMethod: String?
-    /// Default footer to be displayed on invoices for this customer.
-    public var footer: String?
-    /// Default options for invoice PDF rendering for this customer.
-    public var renderingOptions: CustomerUpdateInvoiceSettingsRenderingOptions?
-    /// Fields to send empty, which clears them: `params.clear(.customFields)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(customFields: [CustomerUpdateInvoiceSettingsCustomFields]? = nil, defaultPaymentMethod: String? = nil, footer: String? = nil, renderingOptions: CustomerUpdateInvoiceSettingsRenderingOptions? = nil) {
-        self.customFields = customFields
-        self.defaultPaymentMethod = defaultPaymentMethod
-        self.footer = footer
-        self.renderingOptions = renderingOptions
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case customFields = "custom_fields"
-        case defaultPaymentMethod = "default_payment_method"
-        case footer
-        case renderingOptions = "rendering_options"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case customFields = "custom_fields"
-        case renderingOptions = "rendering_options"
-    }
-}
-
-public struct CustomerUpdateInvoiceSettingsCustomFields: StripeParams {
-    /// The name of the custom field. This may be up to 40 characters.
-    public var name: String
-    /// The value of the custom field. This may be up to 140 characters.
-    public var value: String
-
-    public init(name: String, value: String) {
-        self.name = name
-        self.value = value
-    }
-}
-
-public struct CustomerUpdateInvoiceSettingsRenderingOptions: ClearableParams {
-    /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
-    /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
-    /// exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and
-    /// exclusive alike) from invoice PDF amounts.
-    public var amountTaxDisplay: CustomerUpdateInvoiceSettingsRenderingOptionsAmountTaxDisplay?
-    /// ID of the invoice rendering template to use for future invoices.
-    public var template: String?
-    /// Fields to send empty, which clears them: `params.clear(.amountTaxDisplay)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(amountTaxDisplay: CustomerUpdateInvoiceSettingsRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
-        self.amountTaxDisplay = amountTaxDisplay
-        self.template = template
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amountTaxDisplay = "amount_tax_display"
-        case template
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case amountTaxDisplay = "amount_tax_display"
-    }
-}
-
-public struct CustomerUpdateInvoiceSettingsRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var excludeTax: Self { .init(rawValue: "exclude_tax") }
-    public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
-}
-
-public struct CustomerUpdateShipping: StripeParams {
-    /// Customer shipping address.
-    public var address: CustomerUpdateShippingAddress
-    /// Customer name.
-    public var name: String
-    /// Customer phone (including extension).
-    public var phone: String?
-
-    public init(address: CustomerUpdateShippingAddress, name: String, phone: String? = nil) {
-        self.address = address
-        self.name = name
-        self.phone = phone
-    }
-}
-
-/// Customer shipping address.
-public struct CustomerUpdateShippingAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// A freeform text field for the country. However, in order to activate some tax features, the format
-    /// should be a two-letter country code ([ISO 3166-1
-    /// alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
 }
 
 /// Tax details about the customer.

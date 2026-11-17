@@ -110,7 +110,7 @@ public struct DisputeUpdateEvidence: ClearableParams {
     /// detailed recorded activity. Has a maximum character count of 20,000.
     public var accessActivityLog: String?
     /// Evidence to submit when appealing a dispute.
-    public var appeal: DisputeUpdateEvidenceAppeal?
+    public var appeal: DisputeEvidenceAppeal?
     /// The billing address provided by the customer.
     public var billingAddress: String?
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Your subscription cancellation
@@ -147,7 +147,7 @@ public struct DisputeUpdateEvidence: ClearableParams {
     /// The Stripe ID for the prior charge which appears to be a duplicate of the disputed charge.
     public var duplicateChargeId: String?
     /// Additional evidence for qualifying evidence programs.
-    public var enhancedEvidence: DisputeUpdateEvidenceEnhancedEvidence?
+    public var enhancedEvidence: DisputeEvidenceEnhancedEvidence?
     /// A description of the product or service that was sold. Has a maximum character count of 20,000.
     public var productDescription: String?
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any receipt or message sent to
@@ -194,7 +194,7 @@ public struct DisputeUpdateEvidence: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.appeal)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(accessActivityLog: String? = nil, appeal: DisputeUpdateEvidenceAppeal? = nil, billingAddress: String? = nil, cancellationPolicy: String? = nil, cancellationPolicyDisclosure: String? = nil, cancellationRebuttal: String? = nil, customerCommunication: String? = nil, customerEmailAddress: String? = nil, customerName: String? = nil, customerPurchaseIp: String? = nil, customerSignature: String? = nil, duplicateChargeDocumentation: String? = nil, duplicateChargeExplanation: String? = nil, duplicateChargeId: String? = nil, enhancedEvidence: DisputeUpdateEvidenceEnhancedEvidence? = nil, productDescription: String? = nil, receipt: String? = nil, refundPolicy: String? = nil, refundPolicyDisclosure: String? = nil, refundRefusalExplanation: String? = nil, serviceDate: String? = nil, serviceDocumentation: String? = nil, shippingAddress: String? = nil, shippingCarrier: String? = nil, shippingDate: String? = nil, shippingDocumentation: String? = nil, shippingTrackingNumber: String? = nil, uncategorizedFile: String? = nil, uncategorizedText: String? = nil) {
+    public init(accessActivityLog: String? = nil, appeal: DisputeEvidenceAppeal? = nil, billingAddress: String? = nil, cancellationPolicy: String? = nil, cancellationPolicyDisclosure: String? = nil, cancellationRebuttal: String? = nil, customerCommunication: String? = nil, customerEmailAddress: String? = nil, customerName: String? = nil, customerPurchaseIp: String? = nil, customerSignature: String? = nil, duplicateChargeDocumentation: String? = nil, duplicateChargeExplanation: String? = nil, duplicateChargeId: String? = nil, enhancedEvidence: DisputeEvidenceEnhancedEvidence? = nil, productDescription: String? = nil, receipt: String? = nil, refundPolicy: String? = nil, refundPolicyDisclosure: String? = nil, refundRefusalExplanation: String? = nil, serviceDate: String? = nil, serviceDocumentation: String? = nil, shippingAddress: String? = nil, shippingCarrier: String? = nil, shippingDate: String? = nil, shippingDocumentation: String? = nil, shippingTrackingNumber: String? = nil, uncategorizedFile: String? = nil, uncategorizedText: String? = nil) {
         self.accessActivityLog = accessActivityLog
         self.appeal = appeal
         self.billingAddress = billingAddress
@@ -266,13 +266,13 @@ public struct DisputeUpdateEvidence: ClearableParams {
     }
 }
 
-public struct DisputeUpdateEvidenceAppeal: ClearableParams {
+public struct DisputeEvidenceAppeal: ClearableParams {
     /// Evidence for a card dispute appeal.
-    public var card: DisputeUpdateEvidenceAppealCard?
+    public var card: DisputeEvidenceAppealCard?
     /// Fields to send empty, which clears them: `params.clear(.card)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(card: DisputeUpdateEvidenceAppealCard? = nil) {
+    public init(card: DisputeEvidenceAppealCard? = nil) {
         self.card = card
     }
 
@@ -287,7 +287,7 @@ public struct DisputeUpdateEvidenceAppeal: ClearableParams {
     }
 }
 
-public struct DisputeUpdateEvidenceAppealCard: ClearableParams {
+public struct DisputeEvidenceAppealCard: ClearableParams {
     /// An explanation of the reason for filing the appeal.
     public var reasonForFiling: String?
     /// One or more document IDs returned by a [file upload](https://docs.stripe.com/api#create_file) with a
@@ -314,15 +314,15 @@ public struct DisputeUpdateEvidenceAppealCard: ClearableParams {
     }
 }
 
-public struct DisputeUpdateEvidenceEnhancedEvidence: StripeParams {
+public struct DisputeEvidenceEnhancedEvidence: StripeParams {
     /// Evidence provided for Mastercard compliance evidence submission.
-    public var mastercardCompliance: DisputeUpdateEvidenceEnhancedEvidenceMastercardCompliance?
+    public var mastercardCompliance: DisputeEvidenceEnhancedEvidenceMastercardCompliance?
     /// Evidence provided for Visa Compelling Evidence 3.0 evidence submission.
-    public var visaCompellingEvidence3: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3?
+    public var visaCompellingEvidence3: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3?
     /// Evidence provided for Visa compliance evidence submission.
-    public var visaCompliance: DisputeUpdateEvidenceEnhancedEvidenceVisaCompliance?
+    public var visaCompliance: DisputeEvidenceEnhancedEvidenceVisaCompliance?
 
-    public init(mastercardCompliance: DisputeUpdateEvidenceEnhancedEvidenceMastercardCompliance? = nil, visaCompellingEvidence3: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3? = nil, visaCompliance: DisputeUpdateEvidenceEnhancedEvidenceVisaCompliance? = nil) {
+    public init(mastercardCompliance: DisputeEvidenceEnhancedEvidenceMastercardCompliance? = nil, visaCompellingEvidence3: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3? = nil, visaCompliance: DisputeEvidenceEnhancedEvidenceVisaCompliance? = nil) {
         self.mastercardCompliance = mastercardCompliance
         self.visaCompellingEvidence3 = visaCompellingEvidence3
         self.visaCompliance = visaCompliance
@@ -336,7 +336,7 @@ public struct DisputeUpdateEvidenceEnhancedEvidence: StripeParams {
 }
 
 /// Evidence provided for Mastercard compliance evidence submission.
-public struct DisputeUpdateEvidenceEnhancedEvidenceMastercardCompliance: StripeParams {
+public struct DisputeEvidenceEnhancedEvidenceMastercardCompliance: StripeParams {
     /// A field acknowledging the fee incurred when countering a Mastercard compliance dispute. If this
     /// field is set to true, evidence can be submitted for the compliance dispute.
     public var feeAcknowledged: Bool?
@@ -351,14 +351,14 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceMastercardCompliance: StripeP
 }
 
 /// Evidence provided for Visa Compelling Evidence 3.0 evidence submission.
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3: StripeParams {
+public struct DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3: StripeParams {
     /// Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.
-    public var disputedTransaction: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransaction?
+    public var disputedTransaction: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransaction?
     /// List of exactly two prior undisputed transaction objects for Visa Compelling Evidence 3.0 evidence
     /// submission.
-    public var priorUndisputedTransactions: [DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactions]?
+    public var priorUndisputedTransactions: [DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactions]?
 
-    public init(disputedTransaction: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransaction? = nil, priorUndisputedTransactions: [DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactions]? = nil) {
+    public init(disputedTransaction: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransaction? = nil, priorUndisputedTransactions: [DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactions]? = nil) {
         self.disputedTransaction = disputedTransaction
         self.priorUndisputedTransactions = priorUndisputedTransactions
     }
@@ -370,7 +370,7 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3: Stri
 }
 
 /// Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransaction: ClearableParams {
+public struct DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransaction: ClearableParams {
     /// User Account ID used to log into business platform. Must be recognizable by the user.
     public var customerAccountId: String?
     /// Unique identifier of the cardholder’s device derived from a combination of at least two hardware and
@@ -384,16 +384,16 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
     /// The IP address that the customer used when making the purchase.
     public var customerPurchaseIp: String?
     /// Categorization of disputed payment.
-    public var merchandiseOrServices: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices?
+    public var merchandiseOrServices: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices?
     /// A description of the product or service that was sold.
     public var productDescription: String?
     /// The address to which a physical product was shipped. All fields are required for Visa Compelling
     /// Evidence 3.0 evidence submission.
-    public var shippingAddress: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress?
+    public var shippingAddress: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress?
     /// Fields to send empty, which clears them: `params.clear(.customerAccountId)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(customerAccountId: String? = nil, customerDeviceFingerprint: String? = nil, customerDeviceId: String? = nil, customerEmailAddress: String? = nil, customerPurchaseIp: String? = nil, merchandiseOrServices: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices? = nil, productDescription: String? = nil, shippingAddress: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress? = nil) {
+    public init(customerAccountId: String? = nil, customerDeviceFingerprint: String? = nil, customerDeviceId: String? = nil, customerEmailAddress: String? = nil, customerPurchaseIp: String? = nil, merchandiseOrServices: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices? = nil, productDescription: String? = nil, shippingAddress: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress? = nil) {
         self.customerAccountId = customerAccountId
         self.customerDeviceFingerprint = customerDeviceFingerprint
         self.customerDeviceId = customerDeviceId
@@ -427,7 +427,7 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
     }
 }
 
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices: RawRepresentable, Codable, Hashable, Sendable {
+public struct DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -440,7 +440,7 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
 
 /// The address to which a physical product was shipped. All fields are required for Visa Compelling
 /// Evidence 3.0 evidence submission.
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress: ClearableParams {
+public struct DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress: ClearableParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -486,7 +486,7 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
     }
 }
 
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactions: ClearableParams {
+public struct DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactions: ClearableParams {
     /// Stripe charge ID for the Visa Compelling Evidence 3.0 eligible prior charge.
     public var charge: String
     /// User Account ID used to log into business platform. Must be recognizable by the user.
@@ -505,11 +505,11 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorU
     public var productDescription: String?
     /// The address to which a physical product was shipped. All fields are required for Visa Compelling
     /// Evidence 3.0 evidence submission.
-    public var shippingAddress: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress?
+    public var shippingAddress: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress?
     /// Fields to send empty, which clears them: `params.clear(.customerAccountId)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(charge: String, customerAccountId: String? = nil, customerDeviceFingerprint: String? = nil, customerDeviceId: String? = nil, customerEmailAddress: String? = nil, customerPurchaseIp: String? = nil, productDescription: String? = nil, shippingAddress: DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress? = nil) {
+    public init(charge: String, customerAccountId: String? = nil, customerDeviceFingerprint: String? = nil, customerDeviceId: String? = nil, customerEmailAddress: String? = nil, customerPurchaseIp: String? = nil, productDescription: String? = nil, shippingAddress: DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress? = nil) {
         self.charge = charge
         self.customerAccountId = customerAccountId
         self.customerDeviceFingerprint = customerDeviceFingerprint
@@ -545,7 +545,7 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorU
 
 /// The address to which a physical product was shipped. All fields are required for Visa Compelling
 /// Evidence 3.0 evidence submission.
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress: ClearableParams {
+public struct DisputeEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorUndisputedTransactionsShippingAddress: ClearableParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -592,7 +592,7 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3PriorU
 }
 
 /// Evidence provided for Visa compliance evidence submission.
-public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompliance: StripeParams {
+public struct DisputeEvidenceEnhancedEvidenceVisaCompliance: StripeParams {
     /// A field acknowledging the fee incurred when countering a Visa compliance dispute. If this field is
     /// set to true, evidence can be submitted for the compliance dispute. Stripe collects a 500 USD (or
     /// local equivalent) amount to cover the network costs associated with resolving compliance disputes.

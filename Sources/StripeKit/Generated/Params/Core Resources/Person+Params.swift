@@ -11,15 +11,15 @@ public struct PersonCreateParams: ClearableParams {
     /// Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
     public var additionalTosAcceptances: PersonCreateAdditionalTosAcceptances?
     /// The person's address.
-    public var address: PersonCreateAddress?
+    public var address: PersonAddress?
     /// The Kana variation of the person's address (Japan only).
-    public var addressKana: PersonCreateAddressKana?
+    public var addressKana: PersonAddressKana?
     /// The Kanji variation of the person's address (Japan only).
-    public var addressKanji: PersonCreateAddressKanji?
+    public var addressKanji: PersonAddressKanji?
     /// The person's date of birth.
-    public var dob: PersonCreateDob?
+    public var dob: PersonDob?
     /// Documents that may be submitted to satisfy various informational requests.
-    public var documents: PersonCreateDocuments?
+    public var documents: PersonDocuments?
     /// The person's email address.
     public var email: String?
     /// Specifies which fields in the response should be expanded.
@@ -73,7 +73,7 @@ public struct PersonCreateParams: ClearableParams {
     /// jurisdiction.
     public var politicalExposure: PersonCreatePoliticalExposure?
     /// The person's registered address.
-    public var registeredAddress: PersonCreateRegisteredAddress?
+    public var registeredAddress: PersonRegisteredAddress?
     /// The relationship that this person has with the account's legal entity.
     public var relationship: PersonCreateRelationship?
     /// The last four digits of the person's Social Security number (U.S. only). Changing this value for the
@@ -83,11 +83,11 @@ public struct PersonCreateParams: ClearableParams {
     /// Demographic data related to the person.
     public var usCfpbData: PersonCreateUsCfpbData?
     /// The person's verification status.
-    public var verification: PersonCreateVerification?
+    public var verification: PersonVerification?
     /// Fields to send empty, which clears them: `params.clear(.dob)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(additionalTosAcceptances: PersonCreateAdditionalTosAcceptances? = nil, address: PersonCreateAddress? = nil, addressKana: PersonCreateAddressKana? = nil, addressKanji: PersonCreateAddressKanji? = nil, dob: PersonCreateDob? = nil, documents: PersonCreateDocuments? = nil, email: String? = nil, expand: [String]? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, nationality: String? = nil, personToken: String? = nil, phone: String? = nil, politicalExposure: PersonCreatePoliticalExposure? = nil, registeredAddress: PersonCreateRegisteredAddress? = nil, relationship: PersonCreateRelationship? = nil, ssnLast4: String? = nil, usCfpbData: PersonCreateUsCfpbData? = nil, verification: PersonCreateVerification? = nil) {
+    public init(additionalTosAcceptances: PersonCreateAdditionalTosAcceptances? = nil, address: PersonAddress? = nil, addressKana: PersonAddressKana? = nil, addressKanji: PersonAddressKanji? = nil, dob: PersonDob? = nil, documents: PersonDocuments? = nil, email: String? = nil, expand: [String]? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, nationality: String? = nil, personToken: String? = nil, phone: String? = nil, politicalExposure: PersonCreatePoliticalExposure? = nil, registeredAddress: PersonRegisteredAddress? = nil, relationship: PersonCreateRelationship? = nil, ssnLast4: String? = nil, usCfpbData: PersonCreateUsCfpbData? = nil, verification: PersonVerification? = nil) {
         self.additionalTosAcceptances = additionalTosAcceptances
         self.address = address
         self.addressKana = addressKana
@@ -199,15 +199,15 @@ public struct PersonUpdateParams: ClearableParams {
     /// Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
     public var additionalTosAcceptances: PersonUpdateAdditionalTosAcceptances?
     /// The person's address.
-    public var address: PersonUpdateAddress?
+    public var address: PersonAddress?
     /// The Kana variation of the person's address (Japan only).
-    public var addressKana: PersonUpdateAddressKana?
+    public var addressKana: PersonAddressKana?
     /// The Kanji variation of the person's address (Japan only).
-    public var addressKanji: PersonUpdateAddressKanji?
+    public var addressKanji: PersonAddressKanji?
     /// The person's date of birth.
-    public var dob: PersonUpdateDob?
+    public var dob: PersonDob?
     /// Documents that may be submitted to satisfy various informational requests.
-    public var documents: PersonUpdateDocuments?
+    public var documents: PersonDocuments?
     /// The person's email address.
     public var email: String?
     /// Specifies which fields in the response should be expanded.
@@ -261,7 +261,7 @@ public struct PersonUpdateParams: ClearableParams {
     /// jurisdiction.
     public var politicalExposure: PersonUpdatePoliticalExposure?
     /// The person's registered address.
-    public var registeredAddress: PersonUpdateRegisteredAddress?
+    public var registeredAddress: PersonRegisteredAddress?
     /// The relationship that this person has with the account's legal entity.
     public var relationship: PersonUpdateRelationship?
     /// The last four digits of the person's Social Security number (U.S. only). Changing this value for the
@@ -271,11 +271,11 @@ public struct PersonUpdateParams: ClearableParams {
     /// Demographic data related to the person.
     public var usCfpbData: PersonUpdateUsCfpbData?
     /// The person's verification status.
-    public var verification: PersonUpdateVerification?
+    public var verification: PersonVerification?
     /// Fields to send empty, which clears them: `params.clear(.dob)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(additionalTosAcceptances: PersonUpdateAdditionalTosAcceptances? = nil, address: PersonUpdateAddress? = nil, addressKana: PersonUpdateAddressKana? = nil, addressKanji: PersonUpdateAddressKanji? = nil, dob: PersonUpdateDob? = nil, documents: PersonUpdateDocuments? = nil, email: String? = nil, expand: [String]? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, nationality: String? = nil, personToken: String? = nil, phone: String? = nil, politicalExposure: PersonUpdatePoliticalExposure? = nil, registeredAddress: PersonUpdateRegisteredAddress? = nil, relationship: PersonUpdateRelationship? = nil, ssnLast4: String? = nil, usCfpbData: PersonUpdateUsCfpbData? = nil, verification: PersonUpdateVerification? = nil) {
+    public init(additionalTosAcceptances: PersonUpdateAdditionalTosAcceptances? = nil, address: PersonAddress? = nil, addressKana: PersonAddressKana? = nil, addressKanji: PersonAddressKanji? = nil, dob: PersonDob? = nil, documents: PersonDocuments? = nil, email: String? = nil, expand: [String]? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, nationality: String? = nil, personToken: String? = nil, phone: String? = nil, politicalExposure: PersonUpdatePoliticalExposure? = nil, registeredAddress: PersonRegisteredAddress? = nil, relationship: PersonUpdateRelationship? = nil, ssnLast4: String? = nil, usCfpbData: PersonUpdateUsCfpbData? = nil, verification: PersonVerification? = nil) {
         self.additionalTosAcceptances = additionalTosAcceptances
         self.address = address
         self.addressKana = addressKana
@@ -351,15 +351,15 @@ public struct PersonUpdateParams: ClearableParams {
 /// Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
 public struct PersonCreateAdditionalTosAcceptances: StripeParams {
     /// Details on the legal guardian's acceptance of the main Stripe service agreement.
-    public var account: PersonCreateAdditionalTosAcceptancesAccount?
+    public var account: PersonAdditionalTosAcceptancesAccount?
 
-    public init(account: PersonCreateAdditionalTosAcceptancesAccount? = nil) {
+    public init(account: PersonAdditionalTosAcceptancesAccount? = nil) {
         self.account = account
     }
 }
 
 /// Details on the legal guardian's acceptance of the main Stripe service agreement.
-public struct PersonCreateAdditionalTosAcceptancesAccount: ClearableParams {
+public struct PersonAdditionalTosAcceptancesAccount: ClearableParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
     public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
@@ -389,7 +389,7 @@ public struct PersonCreateAdditionalTosAcceptancesAccount: ClearableParams {
 }
 
 /// The person's address.
-public struct PersonCreateAddress: StripeParams {
+public struct PersonAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -423,7 +423,7 @@ public struct PersonCreateAddress: StripeParams {
 }
 
 /// The Kana variation of the person's address (Japan only).
-public struct PersonCreateAddressKana: StripeParams {
+public struct PersonAddressKana: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -461,7 +461,7 @@ public struct PersonCreateAddressKana: StripeParams {
 }
 
 /// The Kanji variation of the person's address (Japan only).
-public struct PersonCreateAddressKanji: StripeParams {
+public struct PersonAddressKanji: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -498,7 +498,7 @@ public struct PersonCreateAddressKanji: StripeParams {
     }
 }
 
-public struct PersonCreateDob: StripeParams {
+public struct PersonDob: StripeParams {
     /// The day of birth, between 1 and 31.
     public var day: Int
     /// The month of birth, between 1 and 12.
@@ -514,17 +514,17 @@ public struct PersonCreateDob: StripeParams {
 }
 
 /// Documents that may be submitted to satisfy various informational requests.
-public struct PersonCreateDocuments: StripeParams {
+public struct PersonDocuments: StripeParams {
     /// One or more documents that demonstrate proof that this person is authorized to represent the
     /// company.
-    public var companyAuthorization: PersonCreateDocumentsCompanyAuthorization?
+    public var companyAuthorization: PersonDocumentsCompanyAuthorization?
     /// One or more documents showing the person's passport page with photo and personal data.
-    public var passport: PersonCreateDocumentsPassport?
+    public var passport: PersonDocumentsPassport?
     /// One or more documents showing the person's visa required for living in the country where they are
     /// residing.
-    public var visa: PersonCreateDocumentsVisa?
+    public var visa: PersonDocumentsVisa?
 
-    public init(companyAuthorization: PersonCreateDocumentsCompanyAuthorization? = nil, passport: PersonCreateDocumentsPassport? = nil, visa: PersonCreateDocumentsVisa? = nil) {
+    public init(companyAuthorization: PersonDocumentsCompanyAuthorization? = nil, passport: PersonDocumentsPassport? = nil, visa: PersonDocumentsVisa? = nil) {
         self.companyAuthorization = companyAuthorization
         self.passport = passport
         self.visa = visa
@@ -539,7 +539,7 @@ public struct PersonCreateDocuments: StripeParams {
 
 /// One or more documents that demonstrate proof that this person is authorized to represent the
 /// company.
-public struct PersonCreateDocumentsCompanyAuthorization: StripeParams {
+public struct PersonDocumentsCompanyAuthorization: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -550,7 +550,7 @@ public struct PersonCreateDocumentsCompanyAuthorization: StripeParams {
 }
 
 /// One or more documents showing the person's passport page with photo and personal data.
-public struct PersonCreateDocumentsPassport: StripeParams {
+public struct PersonDocumentsPassport: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -562,7 +562,7 @@ public struct PersonCreateDocumentsPassport: StripeParams {
 
 /// One or more documents showing the person's visa required for living in the country where they are
 /// residing.
-public struct PersonCreateDocumentsVisa: StripeParams {
+public struct PersonDocumentsVisa: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -584,7 +584,7 @@ public struct PersonCreatePoliticalExposure: RawRepresentable, Codable, Hashable
 }
 
 /// The person's registered address.
-public struct PersonCreateRegisteredAddress: StripeParams {
+public struct PersonRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -675,13 +675,13 @@ public struct PersonCreateRelationship: ClearableParams {
 /// Demographic data related to the person.
 public struct PersonCreateUsCfpbData: StripeParams {
     /// The persons ethnicity details
-    public var ethnicityDetails: PersonCreateUsCfpbDataEthnicityDetails?
+    public var ethnicityDetails: PersonUsCfpbDataEthnicityDetails?
     /// The persons race details
-    public var raceDetails: PersonCreateUsCfpbDataRaceDetails?
+    public var raceDetails: PersonUsCfpbDataRaceDetails?
     /// The persons self-identified gender
     public var selfIdentifiedGender: String?
 
-    public init(ethnicityDetails: PersonCreateUsCfpbDataEthnicityDetails? = nil, raceDetails: PersonCreateUsCfpbDataRaceDetails? = nil, selfIdentifiedGender: String? = nil) {
+    public init(ethnicityDetails: PersonUsCfpbDataEthnicityDetails? = nil, raceDetails: PersonUsCfpbDataRaceDetails? = nil, selfIdentifiedGender: String? = nil) {
         self.ethnicityDetails = ethnicityDetails
         self.raceDetails = raceDetails
         self.selfIdentifiedGender = selfIdentifiedGender
@@ -695,13 +695,13 @@ public struct PersonCreateUsCfpbData: StripeParams {
 }
 
 /// The persons ethnicity details
-public struct PersonCreateUsCfpbDataEthnicityDetails: StripeParams {
+public struct PersonUsCfpbDataEthnicityDetails: StripeParams {
     /// The persons ethnicity
-    public var ethnicity: [PersonCreateUsCfpbDataEthnicityDetailsEthnicity]?
+    public var ethnicity: [PersonUsCfpbDataEthnicityDetailsEthnicity]?
     /// Please specify your origin, when other is selected.
     public var ethnicityOther: String?
 
-    public init(ethnicity: [PersonCreateUsCfpbDataEthnicityDetailsEthnicity]? = nil, ethnicityOther: String? = nil) {
+    public init(ethnicity: [PersonUsCfpbDataEthnicityDetailsEthnicity]? = nil, ethnicityOther: String? = nil) {
         self.ethnicity = ethnicity
         self.ethnicityOther = ethnicityOther
     }
@@ -712,7 +712,7 @@ public struct PersonCreateUsCfpbDataEthnicityDetails: StripeParams {
     }
 }
 
-public struct PersonCreateUsCfpbDataEthnicityDetailsEthnicity: RawRepresentable, Codable, Hashable, Sendable {
+public struct PersonUsCfpbDataEthnicityDetailsEthnicity: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -729,13 +729,13 @@ public struct PersonCreateUsCfpbDataEthnicityDetailsEthnicity: RawRepresentable,
 }
 
 /// The persons race details
-public struct PersonCreateUsCfpbDataRaceDetails: StripeParams {
+public struct PersonUsCfpbDataRaceDetails: StripeParams {
     /// The persons race.
-    public var race: [PersonCreateUsCfpbDataRaceDetailsRace]?
+    public var race: [PersonUsCfpbDataRaceDetailsRace]?
     /// Please specify your race, when other is selected.
     public var raceOther: String?
 
-    public init(race: [PersonCreateUsCfpbDataRaceDetailsRace]? = nil, raceOther: String? = nil) {
+    public init(race: [PersonUsCfpbDataRaceDetailsRace]? = nil, raceOther: String? = nil) {
         self.race = race
         self.raceOther = raceOther
     }
@@ -746,7 +746,7 @@ public struct PersonCreateUsCfpbDataRaceDetails: StripeParams {
     }
 }
 
-public struct PersonCreateUsCfpbDataRaceDetailsRace: RawRepresentable, Codable, Hashable, Sendable {
+public struct PersonUsCfpbDataRaceDetailsRace: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -780,14 +780,14 @@ public struct PersonCreateUsCfpbDataRaceDetailsRace: RawRepresentable, Codable, 
 }
 
 /// The person's verification status.
-public struct PersonCreateVerification: StripeParams {
+public struct PersonVerification: StripeParams {
     /// A document showing address, either a passport, local ID card, or utility bill from a well-known
     /// utility company.
-    public var additionalDocument: PersonCreateVerificationAdditionalDocument?
+    public var additionalDocument: PersonVerificationAdditionalDocument?
     /// An identifying document, either a passport or local ID card.
-    public var document: PersonCreateVerificationDocument?
+    public var document: PersonVerificationDocument?
 
-    public init(additionalDocument: PersonCreateVerificationAdditionalDocument? = nil, document: PersonCreateVerificationDocument? = nil) {
+    public init(additionalDocument: PersonVerificationAdditionalDocument? = nil, document: PersonVerificationDocument? = nil) {
         self.additionalDocument = additionalDocument
         self.document = document
     }
@@ -800,7 +800,7 @@ public struct PersonCreateVerification: StripeParams {
 
 /// A document showing address, either a passport, local ID card, or utility bill from a well-known
 /// utility company.
-public struct PersonCreateVerificationAdditionalDocument: StripeParams {
+public struct PersonVerificationAdditionalDocument: StripeParams {
     /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
     /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -817,7 +817,7 @@ public struct PersonCreateVerificationAdditionalDocument: StripeParams {
 }
 
 /// An identifying document, either a passport or local ID card.
-public struct PersonCreateVerificationDocument: StripeParams {
+public struct PersonVerificationDocument: StripeParams {
     /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
     /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -876,224 +876,10 @@ public struct PersonListRelationship: StripeParams {
 /// Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
 public struct PersonUpdateAdditionalTosAcceptances: StripeParams {
     /// Details on the legal guardian's acceptance of the main Stripe service agreement.
-    public var account: PersonUpdateAdditionalTosAcceptancesAccount?
+    public var account: PersonAdditionalTosAcceptancesAccount?
 
-    public init(account: PersonUpdateAdditionalTosAcceptancesAccount? = nil) {
+    public init(account: PersonAdditionalTosAcceptancesAccount? = nil) {
         self.account = account
-    }
-}
-
-/// Details on the legal guardian's acceptance of the main Stripe service agreement.
-public struct PersonUpdateAdditionalTosAcceptancesAccount: ClearableParams {
-    /// The Unix timestamp marking when the account representative accepted the service agreement.
-    public var date: Date?
-    /// The IP address from which the account representative accepted the service agreement.
-    public var ip: String?
-    /// The user agent of the browser from which the account representative accepted the service agreement.
-    public var userAgent: String?
-    /// Fields to send empty, which clears them: `params.clear(.userAgent)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
-        self.date = date
-        self.ip = ip
-        self.userAgent = userAgent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case date
-        case ip
-        case userAgent = "user_agent"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case userAgent = "user_agent"
-    }
-}
-
-/// The person's address.
-public struct PersonUpdateAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// The Kana variation of the person's address (Japan only).
-public struct PersonUpdateAddressKana: StripeParams {
-    /// City or ward.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Block or building number.
-    public var line1: String?
-    /// Building details.
-    public var line2: String?
-    /// Postal code.
-    public var postalCode: String?
-    /// Prefecture.
-    public var state: String?
-    /// Town or cho-me.
-    public var town: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil, town: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-        self.town = town
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-        case town
-    }
-}
-
-/// The Kanji variation of the person's address (Japan only).
-public struct PersonUpdateAddressKanji: StripeParams {
-    /// City or ward.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Block or building number.
-    public var line1: String?
-    /// Building details.
-    public var line2: String?
-    /// Postal code.
-    public var postalCode: String?
-    /// Prefecture.
-    public var state: String?
-    /// Town or cho-me.
-    public var town: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil, town: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-        self.town = town
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-        case town
-    }
-}
-
-public struct PersonUpdateDob: StripeParams {
-    /// The day of birth, between 1 and 31.
-    public var day: Int
-    /// The month of birth, between 1 and 12.
-    public var month: Int
-    /// The four-digit year of birth.
-    public var year: Int
-
-    public init(day: Int, month: Int, year: Int) {
-        self.day = day
-        self.month = month
-        self.year = year
-    }
-}
-
-/// Documents that may be submitted to satisfy various informational requests.
-public struct PersonUpdateDocuments: StripeParams {
-    /// One or more documents that demonstrate proof that this person is authorized to represent the
-    /// company.
-    public var companyAuthorization: PersonUpdateDocumentsCompanyAuthorization?
-    /// One or more documents showing the person's passport page with photo and personal data.
-    public var passport: PersonUpdateDocumentsPassport?
-    /// One or more documents showing the person's visa required for living in the country where they are
-    /// residing.
-    public var visa: PersonUpdateDocumentsVisa?
-
-    public init(companyAuthorization: PersonUpdateDocumentsCompanyAuthorization? = nil, passport: PersonUpdateDocumentsPassport? = nil, visa: PersonUpdateDocumentsVisa? = nil) {
-        self.companyAuthorization = companyAuthorization
-        self.passport = passport
-        self.visa = visa
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case companyAuthorization = "company_authorization"
-        case passport
-        case visa
-    }
-}
-
-/// One or more documents that demonstrate proof that this person is authorized to represent the
-/// company.
-public struct PersonUpdateDocumentsCompanyAuthorization: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
-/// One or more documents showing the person's passport page with photo and personal data.
-public struct PersonUpdateDocumentsPassport: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
-    }
-}
-
-/// One or more documents showing the person's visa required for living in the country where they are
-/// residing.
-public struct PersonUpdateDocumentsVisa: StripeParams {
-    /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `account_requirement`.
-    public var files: [String]?
-
-    public init(files: [String]? = nil) {
-        self.files = files
     }
 }
 
@@ -1106,40 +892,6 @@ public struct PersonUpdatePoliticalExposure: RawRepresentable, Codable, Hashable
 
     public static var existing: Self { .init(rawValue: "existing") }
     public static var none: Self { .init(rawValue: "none") }
-}
-
-/// The person's registered address.
-public struct PersonUpdateRegisteredAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
 }
 
 /// The relationship that this person has with the account's legal entity.
@@ -1200,13 +952,13 @@ public struct PersonUpdateRelationship: ClearableParams {
 /// Demographic data related to the person.
 public struct PersonUpdateUsCfpbData: StripeParams {
     /// The persons ethnicity details
-    public var ethnicityDetails: PersonUpdateUsCfpbDataEthnicityDetails?
+    public var ethnicityDetails: PersonUsCfpbDataEthnicityDetails?
     /// The persons race details
-    public var raceDetails: PersonUpdateUsCfpbDataRaceDetails?
+    public var raceDetails: PersonUsCfpbDataRaceDetails?
     /// The persons self-identified gender
     public var selfIdentifiedGender: String?
 
-    public init(ethnicityDetails: PersonUpdateUsCfpbDataEthnicityDetails? = nil, raceDetails: PersonUpdateUsCfpbDataRaceDetails? = nil, selfIdentifiedGender: String? = nil) {
+    public init(ethnicityDetails: PersonUsCfpbDataEthnicityDetails? = nil, raceDetails: PersonUsCfpbDataRaceDetails? = nil, selfIdentifiedGender: String? = nil) {
         self.ethnicityDetails = ethnicityDetails
         self.raceDetails = raceDetails
         self.selfIdentifiedGender = selfIdentifiedGender
@@ -1216,144 +968,5 @@ public struct PersonUpdateUsCfpbData: StripeParams {
         case ethnicityDetails = "ethnicity_details"
         case raceDetails = "race_details"
         case selfIdentifiedGender = "self_identified_gender"
-    }
-}
-
-/// The persons ethnicity details
-public struct PersonUpdateUsCfpbDataEthnicityDetails: StripeParams {
-    /// The persons ethnicity
-    public var ethnicity: [PersonUpdateUsCfpbDataEthnicityDetailsEthnicity]?
-    /// Please specify your origin, when other is selected.
-    public var ethnicityOther: String?
-
-    public init(ethnicity: [PersonUpdateUsCfpbDataEthnicityDetailsEthnicity]? = nil, ethnicityOther: String? = nil) {
-        self.ethnicity = ethnicity
-        self.ethnicityOther = ethnicityOther
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case ethnicity
-        case ethnicityOther = "ethnicity_other"
-    }
-}
-
-public struct PersonUpdateUsCfpbDataEthnicityDetailsEthnicity: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var cuban: Self { .init(rawValue: "cuban") }
-    public static var hispanicOrLatino: Self { .init(rawValue: "hispanic_or_latino") }
-    public static var mexican: Self { .init(rawValue: "mexican") }
-    public static var notHispanicOrLatino: Self { .init(rawValue: "not_hispanic_or_latino") }
-    public static var otherHispanicOrLatino: Self { .init(rawValue: "other_hispanic_or_latino") }
-    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
-    public static var puertoRican: Self { .init(rawValue: "puerto_rican") }
-}
-
-/// The persons race details
-public struct PersonUpdateUsCfpbDataRaceDetails: StripeParams {
-    /// The persons race.
-    public var race: [PersonUpdateUsCfpbDataRaceDetailsRace]?
-    /// Please specify your race, when other is selected.
-    public var raceOther: String?
-
-    public init(race: [PersonUpdateUsCfpbDataRaceDetailsRace]? = nil, raceOther: String? = nil) {
-        self.race = race
-        self.raceOther = raceOther
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case race
-        case raceOther = "race_other"
-    }
-}
-
-public struct PersonUpdateUsCfpbDataRaceDetailsRace: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var africanAmerican: Self { .init(rawValue: "african_american") }
-    public static var americanIndianOrAlaskaNative: Self { .init(rawValue: "american_indian_or_alaska_native") }
-    public static var asian: Self { .init(rawValue: "asian") }
-    public static var asianIndian: Self { .init(rawValue: "asian_indian") }
-    public static var blackOrAfricanAmerican: Self { .init(rawValue: "black_or_african_american") }
-    public static var chinese: Self { .init(rawValue: "chinese") }
-    public static var ethiopian: Self { .init(rawValue: "ethiopian") }
-    public static var filipino: Self { .init(rawValue: "filipino") }
-    public static var guamanianOrChamorro: Self { .init(rawValue: "guamanian_or_chamorro") }
-    public static var haitian: Self { .init(rawValue: "haitian") }
-    public static var jamaican: Self { .init(rawValue: "jamaican") }
-    public static var japanese: Self { .init(rawValue: "japanese") }
-    public static var korean: Self { .init(rawValue: "korean") }
-    public static var nativeHawaiian: Self { .init(rawValue: "native_hawaiian") }
-    public static var nativeHawaiianOrOtherPacificIslander: Self { .init(rawValue: "native_hawaiian_or_other_pacific_islander") }
-    public static var nigerian: Self { .init(rawValue: "nigerian") }
-    public static var otherAsian: Self { .init(rawValue: "other_asian") }
-    public static var otherBlackOrAfricanAmerican: Self { .init(rawValue: "other_black_or_african_american") }
-    public static var otherPacificIslander: Self { .init(rawValue: "other_pacific_islander") }
-    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
-    public static var samoan: Self { .init(rawValue: "samoan") }
-    public static var somali: Self { .init(rawValue: "somali") }
-    public static var vietnamese: Self { .init(rawValue: "vietnamese") }
-    public static var white: Self { .init(rawValue: "white") }
-}
-
-/// The person's verification status.
-public struct PersonUpdateVerification: StripeParams {
-    /// A document showing address, either a passport, local ID card, or utility bill from a well-known
-    /// utility company.
-    public var additionalDocument: PersonUpdateVerificationAdditionalDocument?
-    /// An identifying document, either a passport or local ID card.
-    public var document: PersonUpdateVerificationDocument?
-
-    public init(additionalDocument: PersonUpdateVerificationAdditionalDocument? = nil, document: PersonUpdateVerificationDocument? = nil) {
-        self.additionalDocument = additionalDocument
-        self.document = document
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case additionalDocument = "additional_document"
-        case document
-    }
-}
-
-/// A document showing address, either a passport, local ID card, or utility bill from a well-known
-/// utility company.
-public struct PersonUpdateVerificationAdditionalDocument: StripeParams {
-    /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
-    /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var back: String?
-    /// The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
-    /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var front: String?
-
-    public init(back: String? = nil, front: String? = nil) {
-        self.back = back
-        self.front = front
-    }
-}
-
-/// An identifying document, either a passport or local ID card.
-public struct PersonUpdateVerificationDocument: StripeParams {
-    /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
-    /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var back: String?
-    /// The front of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
-    /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
-    /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
-    public var front: String?
-
-    public init(back: String? = nil, front: String? = nil) {
-        self.back = back
-        self.front = front
     }
 }

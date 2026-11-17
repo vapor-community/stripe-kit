@@ -37,13 +37,13 @@ public struct PayoutCreateParams: StripeParams {
     /// The method used to send this payout, which is `standard` or `instant`. We support `instant` for
     /// payouts to debit cards and bank accounts in certain countries. Learn more about [bank support for
     /// Instant Payouts](https://stripe.com/docs/payouts/instant-payouts-banks).
-    public var method: PayoutCreateMethod?
+    public var method: PayoutMethod?
     /// The ID of a v2 FinancialAccount to send funds to.
     public var payoutMethod: String?
     /// The balance type of your Stripe balance to draw this payout from. Balances for different payment
     /// sources are kept separately. You can find the amounts with the Balances API. One of `bank_account`,
     /// `card`, or `fpx`.
-    public var sourceType: PayoutCreateSourceType?
+    public var sourceType: PayoutSourceType?
     /// A string that displays on the recipient's bank or card statement (up to 22 characters). A
     /// `statement_descriptor` that's longer than 22 characters return an error. Most banks truncate this
     /// information and display it inconsistently. Some banks might not display it at all. For US ACH
@@ -51,7 +51,7 @@ public struct PayoutCreateParams: StripeParams {
     /// characters. Stripe truncates descriptors longer than 10 characters for US ACH payouts.
     public var statementDescriptor: String?
 
-    public init(amount: Int, currency: String, description: String? = nil, destination: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, method: PayoutCreateMethod? = nil, payoutMethod: String? = nil, sourceType: PayoutCreateSourceType? = nil, statementDescriptor: String? = nil) {
+    public init(amount: Int, currency: String, description: String? = nil, destination: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, method: PayoutMethod? = nil, payoutMethod: String? = nil, sourceType: PayoutSourceType? = nil, statementDescriptor: String? = nil) {
         self.amount = amount
         self.currency = currency
         self.description = description
@@ -168,7 +168,7 @@ public struct PayoutUpdateParams: ClearableParams {
     }
 }
 
-public struct PayoutCreateMethod: RawRepresentable, Codable, Hashable, Sendable {
+public struct PayoutMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -179,7 +179,7 @@ public struct PayoutCreateMethod: RawRepresentable, Codable, Hashable, Sendable 
     public static var standard: Self { .init(rawValue: "standard") }
 }
 
-public struct PayoutCreateSourceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PayoutSourceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

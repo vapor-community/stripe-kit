@@ -24,9 +24,9 @@ public struct TreasuryReceivedDebitCreateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Initiating payment method details for the object.
-    public var initiatingPaymentMethodDetails: TreasuryReceivedDebitCreateInitiatingPaymentMethodDetails?
+    public var initiatingPaymentMethodDetails: TreasuryReceivedDebitInitiatingPaymentMethodDetails?
 
-    public init(amount: Int, currency: String, financialAccount: String, network: TreasuryReceivedDebitCreateNetwork, description: String? = nil, expand: [String]? = nil, initiatingPaymentMethodDetails: TreasuryReceivedDebitCreateInitiatingPaymentMethodDetails? = nil) {
+    public init(amount: Int, currency: String, financialAccount: String, network: TreasuryReceivedDebitCreateNetwork, description: String? = nil, expand: [String]? = nil, initiatingPaymentMethodDetails: TreasuryReceivedDebitInitiatingPaymentMethodDetails? = nil) {
         self.amount = amount
         self.currency = currency
         self.financialAccount = financialAccount
@@ -97,13 +97,13 @@ public struct TreasuryReceivedDebitCreateNetwork: RawRepresentable, Codable, Has
 }
 
 /// Initiating payment method details for the object.
-public struct TreasuryReceivedDebitCreateInitiatingPaymentMethodDetails: StripeParams {
+public struct TreasuryReceivedDebitInitiatingPaymentMethodDetails: StripeParams {
     /// The source type.
-    public var type: TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsType
+    public var type: TreasuryReceivedDebitInitiatingPaymentMethodDetailsType
     /// Optional fields for `us_bank_account`.
-    public var usBankAccount: TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsUsBankAccount?
+    public var usBankAccount: TreasuryReceivedDebitInitiatingPaymentMethodDetailsUsBankAccount?
 
-    public init(type: TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsType, usBankAccount: TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsUsBankAccount? = nil) {
+    public init(type: TreasuryReceivedDebitInitiatingPaymentMethodDetailsType, usBankAccount: TreasuryReceivedDebitInitiatingPaymentMethodDetailsUsBankAccount? = nil) {
         self.type = type
         self.usBankAccount = usBankAccount
     }
@@ -114,7 +114,7 @@ public struct TreasuryReceivedDebitCreateInitiatingPaymentMethodDetails: StripeP
     }
 }
 
-public struct TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryReceivedDebitInitiatingPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -125,7 +125,7 @@ public struct TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsType: Raw
 }
 
 /// Optional fields for `us_bank_account`.
-public struct TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsUsBankAccount: StripeParams {
+public struct TreasuryReceivedDebitInitiatingPaymentMethodDetailsUsBankAccount: StripeParams {
     /// The bank account holder's name.
     public var accountHolderName: String?
     /// The bank account number.

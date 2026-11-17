@@ -21,12 +21,12 @@ public struct CreditNoteCreateParams: StripeParams {
     public var effectiveAt: Date?
     /// Type of email to send to the customer, one of `credit_note` or `none` and the default is
     /// `credit_note`.
-    public var emailType: CreditNoteCreateEmailType?
+    public var emailType: CreditNoteEmailType?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be
     /// provided.
-    public var lines: [CreditNoteCreateLines]?
+    public var lines: [CreditNoteLines]?
     /// The credit note's memo appears on the credit note PDF.
     public var memo: String?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -44,12 +44,12 @@ public struct CreditNoteCreateParams: StripeParams {
     /// refund will be created for the charge associated with the invoice.
     public var refundAmount: Int?
     /// Refunds to link to this credit note.
-    public var refunds: [CreditNoteCreateRefunds]?
+    public var refunds: [CreditNoteRefunds]?
     /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
     /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
-    public var shippingCost: CreditNoteCreateShippingCost?
+    public var shippingCost: CreditNoteShippingCost?
 
-    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Date? = nil, emailType: CreditNoteCreateEmailType? = nil, expand: [String]? = nil, lines: [CreditNoteCreateLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNoteCreateReason? = nil, refundAmount: Int? = nil, refunds: [CreditNoteCreateRefunds]? = nil, shippingCost: CreditNoteCreateShippingCost? = nil) {
+    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Date? = nil, emailType: CreditNoteEmailType? = nil, expand: [String]? = nil, lines: [CreditNoteLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNoteCreateReason? = nil, refundAmount: Int? = nil, refunds: [CreditNoteRefunds]? = nil, shippingCost: CreditNoteShippingCost? = nil) {
         self.invoice = invoice
         self.amount = amount
         self.creditAmount = creditAmount
@@ -146,12 +146,12 @@ public struct CreditNotePreviewParams: StripeParams {
     public var effectiveAt: Date?
     /// Type of email to send to the customer, one of `credit_note` or `none` and the default is
     /// `credit_note`.
-    public var emailType: CreditNotePreviewEmailType?
+    public var emailType: CreditNoteEmailType?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be
     /// provided.
-    public var lines: [CreditNotePreviewLines]?
+    public var lines: [CreditNoteLines]?
     /// The credit note's memo appears on the credit note PDF.
     public var memo: String?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -169,12 +169,12 @@ public struct CreditNotePreviewParams: StripeParams {
     /// refund will be created for the charge associated with the invoice.
     public var refundAmount: Int?
     /// Refunds to link to this credit note.
-    public var refunds: [CreditNotePreviewRefunds]?
+    public var refunds: [CreditNoteRefunds]?
     /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
     /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
-    public var shippingCost: CreditNotePreviewShippingCost?
+    public var shippingCost: CreditNoteShippingCost?
 
-    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Date? = nil, emailType: CreditNotePreviewEmailType? = nil, expand: [String]? = nil, lines: [CreditNotePreviewLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNotePreviewReason? = nil, refundAmount: Int? = nil, refunds: [CreditNotePreviewRefunds]? = nil, shippingCost: CreditNotePreviewShippingCost? = nil) {
+    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Date? = nil, emailType: CreditNoteEmailType? = nil, expand: [String]? = nil, lines: [CreditNoteLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNotePreviewReason? = nil, refundAmount: Int? = nil, refunds: [CreditNoteRefunds]? = nil, shippingCost: CreditNoteShippingCost? = nil) {
         self.invoice = invoice
         self.amount = amount
         self.creditAmount = creditAmount
@@ -224,7 +224,7 @@ public struct CreditNotePreviewLinesParams: StripeParams {
     public var effectiveAt: Date?
     /// Type of email to send to the customer, one of `credit_note` or `none` and the default is
     /// `credit_note`.
-    public var emailType: CreditNotePreviewLinesEmailType?
+    public var emailType: CreditNoteEmailType?
     /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
     /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
     /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -236,7 +236,7 @@ public struct CreditNotePreviewLinesParams: StripeParams {
     public var limit: Int?
     /// Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be
     /// provided.
-    public var lines: [CreditNotePreviewLinesLines]?
+    public var lines: [CreditNoteLines]?
     /// The credit note's memo appears on the credit note PDF.
     public var memo: String?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -254,16 +254,16 @@ public struct CreditNotePreviewLinesParams: StripeParams {
     /// refund will be created for the charge associated with the invoice.
     public var refundAmount: Int?
     /// Refunds to link to this credit note.
-    public var refunds: [CreditNotePreviewLinesRefunds]?
+    public var refunds: [CreditNoteRefunds]?
     /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
     /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
-    public var shippingCost: CreditNotePreviewLinesShippingCost?
+    public var shippingCost: CreditNoteShippingCost?
     /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
 
-    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Date? = nil, emailType: CreditNotePreviewLinesEmailType? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, lines: [CreditNotePreviewLinesLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNotePreviewLinesReason? = nil, refundAmount: Int? = nil, refunds: [CreditNotePreviewLinesRefunds]? = nil, shippingCost: CreditNotePreviewLinesShippingCost? = nil, startingAfter: String? = nil) {
+    public init(invoice: String, amount: Int? = nil, creditAmount: Int? = nil, effectiveAt: Date? = nil, emailType: CreditNoteEmailType? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, lines: [CreditNoteLines]? = nil, memo: String? = nil, metadata: [String: String]? = nil, outOfBandAmount: Int? = nil, reason: CreditNotePreviewLinesReason? = nil, refundAmount: Int? = nil, refunds: [CreditNoteRefunds]? = nil, shippingCost: CreditNoteShippingCost? = nil, startingAfter: String? = nil) {
         self.invoice = invoice
         self.amount = amount
         self.creditAmount = creditAmount
@@ -331,7 +331,7 @@ public struct CreditNoteVoidCreditNoteParams: StripeParams {
     }
 }
 
-public struct CreditNoteCreateEmailType: RawRepresentable, Codable, Hashable, Sendable {
+public struct CreditNoteEmailType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -342,10 +342,10 @@ public struct CreditNoteCreateEmailType: RawRepresentable, Codable, Hashable, Se
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct CreditNoteCreateLines: ClearableParams {
+public struct CreditNoteLines: ClearableParams {
     /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
     /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
-    public var type: CreditNoteCreateLinesType
+    public var type: CreditNoteLinesType
     /// The line item amount to credit. Only valid when `type` is `invoice_line_item`. If invoice is set up
     /// with `automatic_tax[enabled]=true`, this amount is tax exclusive
     public var amount: Int?
@@ -362,7 +362,7 @@ public struct CreditNoteCreateLines: ClearableParams {
     public var quantity: Int?
     /// A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or
     /// if invoice is set up with `automatic_tax[enabled]=true`.
-    public var taxAmounts: [CreditNoteCreateLinesTaxAmounts]?
+    public var taxAmounts: [CreditNoteLinesTaxAmounts]?
     /// The tax rates which apply to the credit note line item. Only valid when the `type` is
     /// `custom_line_item` and `tax_amounts` is not used.
     public var taxRates: [String]?
@@ -376,7 +376,7 @@ public struct CreditNoteCreateLines: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.taxAmounts)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(type: CreditNoteCreateLinesType, amount: Int? = nil, description: String? = nil, invoiceLineItem: String? = nil, metadata: [String: String]? = nil, quantity: Int? = nil, taxAmounts: [CreditNoteCreateLinesTaxAmounts]? = nil, taxRates: [String]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(type: CreditNoteLinesType, amount: Int? = nil, description: String? = nil, invoiceLineItem: String? = nil, metadata: [String: String]? = nil, quantity: Int? = nil, taxAmounts: [CreditNoteLinesTaxAmounts]? = nil, taxRates: [String]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.type = type
         self.amount = amount
         self.description = description
@@ -410,7 +410,7 @@ public struct CreditNoteCreateLines: ClearableParams {
     }
 }
 
-public struct CreditNoteCreateLinesType: RawRepresentable, Codable, Hashable, Sendable {
+public struct CreditNoteLinesType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -421,7 +421,7 @@ public struct CreditNoteCreateLinesType: RawRepresentable, Codable, Hashable, Se
     public static var invoiceLineItem: Self { .init(rawValue: "invoice_line_item") }
 }
 
-public struct CreditNoteCreateLinesTaxAmounts: StripeParams {
+public struct CreditNoteLinesTaxAmounts: StripeParams {
     /// The amount, in cents (or local equivalent), of the tax.
     public var amount: Int
     /// The id of the tax rate for this tax amount. The tax rate must have been automatically created by
@@ -456,19 +456,19 @@ public struct CreditNoteCreateReason: RawRepresentable, Codable, Hashable, Senda
     public static var productUnsatisfactory: Self { .init(rawValue: "product_unsatisfactory") }
 }
 
-public struct CreditNoteCreateRefunds: StripeParams {
+public struct CreditNoteRefunds: StripeParams {
     /// Amount of the refund that applies to this credit note, in cents (or local equivalent). Defaults to
     /// the entire refund amount.
     public var amountRefunded: Int?
     /// The PaymentRecord refund details to link to this credit note. Required when `type` is
     /// `payment_record_refund`.
-    public var paymentRecordRefund: CreditNoteCreateRefundsPaymentRecordRefund?
+    public var paymentRecordRefund: CreditNoteRefundsPaymentRecordRefund?
     /// ID of an existing refund to link this credit note to. Required when `type` is `refund`.
     public var refund: String?
     /// Type of the refund, one of `refund` or `payment_record_refund`. Defaults to `refund`.
-    public var type: CreditNoteCreateRefundsType?
+    public var type: CreditNoteRefundsType?
 
-    public init(amountRefunded: Int? = nil, paymentRecordRefund: CreditNoteCreateRefundsPaymentRecordRefund? = nil, refund: String? = nil, type: CreditNoteCreateRefundsType? = nil) {
+    public init(amountRefunded: Int? = nil, paymentRecordRefund: CreditNoteRefundsPaymentRecordRefund? = nil, refund: String? = nil, type: CreditNoteRefundsType? = nil) {
         self.amountRefunded = amountRefunded
         self.paymentRecordRefund = paymentRecordRefund
         self.refund = refund
@@ -485,7 +485,7 @@ public struct CreditNoteCreateRefunds: StripeParams {
 
 /// The PaymentRecord refund details to link to this credit note. Required when `type` is
 /// `payment_record_refund`.
-public struct CreditNoteCreateRefundsPaymentRecordRefund: StripeParams {
+public struct CreditNoteRefundsPaymentRecordRefund: StripeParams {
     /// The ID of the PaymentRecord with the refund to link to this credit note.
     public var paymentRecord: String
     /// The PaymentRecord refund group to link to this credit note. For refunds processed off-Stripe, this
@@ -504,7 +504,7 @@ public struct CreditNoteCreateRefundsPaymentRecordRefund: StripeParams {
     }
 }
 
-public struct CreditNoteCreateRefundsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct CreditNoteRefundsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -517,7 +517,7 @@ public struct CreditNoteCreateRefundsType: RawRepresentable, Codable, Hashable, 
 
 /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
 /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
-public struct CreditNoteCreateShippingCost: StripeParams {
+public struct CreditNoteShippingCost: StripeParams {
     /// The ID of the shipping rate to use for this order.
     public var shippingRate: String?
 
@@ -527,118 +527,6 @@ public struct CreditNoteCreateShippingCost: StripeParams {
 
     public enum CodingKeys: String, CodingKey {
         case shippingRate = "shipping_rate"
-    }
-}
-
-public struct CreditNotePreviewEmailType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var creditNote: Self { .init(rawValue: "credit_note") }
-    public static var none: Self { .init(rawValue: "none") }
-}
-
-public struct CreditNotePreviewLines: ClearableParams {
-    /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
-    /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
-    public var type: CreditNotePreviewLinesType
-    /// The line item amount to credit. Only valid when `type` is `invoice_line_item`. If invoice is set up
-    /// with `automatic_tax[enabled]=true`, this amount is tax exclusive
-    public var amount: Int?
-    /// The description of the credit note line item. Only valid when the `type` is `custom_line_item`.
-    public var description: String?
-    /// The invoice line item to credit. Only valid when the `type` is `invoice_line_item`.
-    public var invoiceLineItem: String?
-    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
-    /// This can be useful for storing additional information about the object in a structured format.
-    /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
-    /// empty value to `metadata`.
-    public var metadata: [String: String]?
-    /// The line item quantity to credit.
-    public var quantity: Int?
-    /// A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or
-    /// if invoice is set up with `automatic_tax[enabled]=true`.
-    public var taxAmounts: [CreditNotePreviewLinesTaxAmounts]?
-    /// The tax rates which apply to the credit note line item. Only valid when the `type` is
-    /// `custom_line_item` and `tax_amounts` is not used.
-    public var taxRates: [String]?
-    /// The integer unit amount in cents (or local equivalent) of the credit note line item. This
-    /// `unit_amount` will be multiplied by the quantity to get the full amount to credit for this line
-    /// item. Only valid when `type` is `custom_line_item`.
-    public var unitAmount: Int?
-    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
-    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    public var unitAmountDecimal: String?
-    /// Fields to send empty, which clears them: `params.clear(.taxAmounts)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(type: CreditNotePreviewLinesType, amount: Int? = nil, description: String? = nil, invoiceLineItem: String? = nil, metadata: [String: String]? = nil, quantity: Int? = nil, taxAmounts: [CreditNotePreviewLinesTaxAmounts]? = nil, taxRates: [String]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
-        self.type = type
-        self.amount = amount
-        self.description = description
-        self.invoiceLineItem = invoiceLineItem
-        self.metadata = metadata
-        self.quantity = quantity
-        self.taxAmounts = taxAmounts
-        self.taxRates = taxRates
-        self.unitAmount = unitAmount
-        self.unitAmountDecimal = unitAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case description
-        case invoiceLineItem = "invoice_line_item"
-        case metadata
-        case quantity
-        case taxAmounts = "tax_amounts"
-        case taxRates = "tax_rates"
-        case type
-        case unitAmount = "unit_amount"
-        case unitAmountDecimal = "unit_amount_decimal"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case taxAmounts = "tax_amounts"
-        case taxRates = "tax_rates"
-    }
-}
-
-public struct CreditNotePreviewLinesType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var customLineItem: Self { .init(rawValue: "custom_line_item") }
-    public static var invoiceLineItem: Self { .init(rawValue: "invoice_line_item") }
-}
-
-public struct CreditNotePreviewLinesTaxAmounts: StripeParams {
-    /// The amount, in cents (or local equivalent), of the tax.
-    public var amount: Int
-    /// The id of the tax rate for this tax amount. The tax rate must have been automatically created by
-    /// Stripe.
-    public var taxRate: String
-    /// The amount on which tax is calculated, in cents (or local equivalent).
-    public var taxableAmount: Int
-
-    public init(amount: Int, taxRate: String, taxableAmount: Int) {
-        self.amount = amount
-        self.taxRate = taxRate
-        self.taxableAmount = taxableAmount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case taxRate = "tax_rate"
-        case taxableAmount = "taxable_amount"
     }
 }
 
@@ -655,192 +543,6 @@ public struct CreditNotePreviewReason: RawRepresentable, Codable, Hashable, Send
     public static var productUnsatisfactory: Self { .init(rawValue: "product_unsatisfactory") }
 }
 
-public struct CreditNotePreviewRefunds: StripeParams {
-    /// Amount of the refund that applies to this credit note, in cents (or local equivalent). Defaults to
-    /// the entire refund amount.
-    public var amountRefunded: Int?
-    /// The PaymentRecord refund details to link to this credit note. Required when `type` is
-    /// `payment_record_refund`.
-    public var paymentRecordRefund: CreditNotePreviewRefundsPaymentRecordRefund?
-    /// ID of an existing refund to link this credit note to. Required when `type` is `refund`.
-    public var refund: String?
-    /// Type of the refund, one of `refund` or `payment_record_refund`. Defaults to `refund`.
-    public var type: CreditNotePreviewRefundsType?
-
-    public init(amountRefunded: Int? = nil, paymentRecordRefund: CreditNotePreviewRefundsPaymentRecordRefund? = nil, refund: String? = nil, type: CreditNotePreviewRefundsType? = nil) {
-        self.amountRefunded = amountRefunded
-        self.paymentRecordRefund = paymentRecordRefund
-        self.refund = refund
-        self.type = type
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amountRefunded = "amount_refunded"
-        case paymentRecordRefund = "payment_record_refund"
-        case refund
-        case type
-    }
-}
-
-/// The PaymentRecord refund details to link to this credit note. Required when `type` is
-/// `payment_record_refund`.
-public struct CreditNotePreviewRefundsPaymentRecordRefund: StripeParams {
-    /// The ID of the PaymentRecord with the refund to link to this credit note.
-    public var paymentRecord: String
-    /// The PaymentRecord refund group to link to this credit note. For refunds processed off-Stripe, this
-    /// will correspond to the `processor_details.custom.refund_reference` field provided when reporting the
-    /// refund on the PaymentRecord.
-    public var refundGroup: String
-
-    public init(paymentRecord: String, refundGroup: String) {
-        self.paymentRecord = paymentRecord
-        self.refundGroup = refundGroup
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case paymentRecord = "payment_record"
-        case refundGroup = "refund_group"
-    }
-}
-
-public struct CreditNotePreviewRefundsType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var paymentRecordRefund: Self { .init(rawValue: "payment_record_refund") }
-    public static var refund: Self { .init(rawValue: "refund") }
-}
-
-/// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
-/// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
-public struct CreditNotePreviewShippingCost: StripeParams {
-    /// The ID of the shipping rate to use for this order.
-    public var shippingRate: String?
-
-    public init(shippingRate: String? = nil) {
-        self.shippingRate = shippingRate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case shippingRate = "shipping_rate"
-    }
-}
-
-public struct CreditNotePreviewLinesEmailType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var creditNote: Self { .init(rawValue: "credit_note") }
-    public static var none: Self { .init(rawValue: "none") }
-}
-
-public struct CreditNotePreviewLinesLines: ClearableParams {
-    /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
-    /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
-    public var type: CreditNotePreviewLinesLinesType
-    /// The line item amount to credit. Only valid when `type` is `invoice_line_item`. If invoice is set up
-    /// with `automatic_tax[enabled]=true`, this amount is tax exclusive
-    public var amount: Int?
-    /// The description of the credit note line item. Only valid when the `type` is `custom_line_item`.
-    public var description: String?
-    /// The invoice line item to credit. Only valid when the `type` is `invoice_line_item`.
-    public var invoiceLineItem: String?
-    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
-    /// This can be useful for storing additional information about the object in a structured format.
-    /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
-    /// empty value to `metadata`.
-    public var metadata: [String: String]?
-    /// The line item quantity to credit.
-    public var quantity: Int?
-    /// A list of up to 20 tax amounts for the credit note line item. Not valid when `tax_rates` is used or
-    /// if invoice is set up with `automatic_tax[enabled]=true`.
-    public var taxAmounts: [CreditNotePreviewLinesLinesTaxAmounts]?
-    /// The tax rates which apply to the credit note line item. Only valid when the `type` is
-    /// `custom_line_item` and `tax_amounts` is not used.
-    public var taxRates: [String]?
-    /// The integer unit amount in cents (or local equivalent) of the credit note line item. This
-    /// `unit_amount` will be multiplied by the quantity to get the full amount to credit for this line
-    /// item. Only valid when `type` is `custom_line_item`.
-    public var unitAmount: Int?
-    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
-    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    public var unitAmountDecimal: String?
-    /// Fields to send empty, which clears them: `params.clear(.taxAmounts)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(type: CreditNotePreviewLinesLinesType, amount: Int? = nil, description: String? = nil, invoiceLineItem: String? = nil, metadata: [String: String]? = nil, quantity: Int? = nil, taxAmounts: [CreditNotePreviewLinesLinesTaxAmounts]? = nil, taxRates: [String]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
-        self.type = type
-        self.amount = amount
-        self.description = description
-        self.invoiceLineItem = invoiceLineItem
-        self.metadata = metadata
-        self.quantity = quantity
-        self.taxAmounts = taxAmounts
-        self.taxRates = taxRates
-        self.unitAmount = unitAmount
-        self.unitAmountDecimal = unitAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case description
-        case invoiceLineItem = "invoice_line_item"
-        case metadata
-        case quantity
-        case taxAmounts = "tax_amounts"
-        case taxRates = "tax_rates"
-        case type
-        case unitAmount = "unit_amount"
-        case unitAmountDecimal = "unit_amount_decimal"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case taxAmounts = "tax_amounts"
-        case taxRates = "tax_rates"
-    }
-}
-
-public struct CreditNotePreviewLinesLinesType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var customLineItem: Self { .init(rawValue: "custom_line_item") }
-    public static var invoiceLineItem: Self { .init(rawValue: "invoice_line_item") }
-}
-
-public struct CreditNotePreviewLinesLinesTaxAmounts: StripeParams {
-    /// The amount, in cents (or local equivalent), of the tax.
-    public var amount: Int
-    /// The id of the tax rate for this tax amount. The tax rate must have been automatically created by
-    /// Stripe.
-    public var taxRate: String
-    /// The amount on which tax is calculated, in cents (or local equivalent).
-    public var taxableAmount: Int
-
-    public init(amount: Int, taxRate: String, taxableAmount: Int) {
-        self.amount = amount
-        self.taxRate = taxRate
-        self.taxableAmount = taxableAmount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case taxRate = "tax_rate"
-        case taxableAmount = "taxable_amount"
-    }
-}
-
 public struct CreditNotePreviewLinesReason: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
@@ -852,78 +554,4 @@ public struct CreditNotePreviewLinesReason: RawRepresentable, Codable, Hashable,
     public static var fraudulent: Self { .init(rawValue: "fraudulent") }
     public static var orderChange: Self { .init(rawValue: "order_change") }
     public static var productUnsatisfactory: Self { .init(rawValue: "product_unsatisfactory") }
-}
-
-public struct CreditNotePreviewLinesRefunds: StripeParams {
-    /// Amount of the refund that applies to this credit note, in cents (or local equivalent). Defaults to
-    /// the entire refund amount.
-    public var amountRefunded: Int?
-    /// The PaymentRecord refund details to link to this credit note. Required when `type` is
-    /// `payment_record_refund`.
-    public var paymentRecordRefund: CreditNotePreviewLinesRefundsPaymentRecordRefund?
-    /// ID of an existing refund to link this credit note to. Required when `type` is `refund`.
-    public var refund: String?
-    /// Type of the refund, one of `refund` or `payment_record_refund`. Defaults to `refund`.
-    public var type: CreditNotePreviewLinesRefundsType?
-
-    public init(amountRefunded: Int? = nil, paymentRecordRefund: CreditNotePreviewLinesRefundsPaymentRecordRefund? = nil, refund: String? = nil, type: CreditNotePreviewLinesRefundsType? = nil) {
-        self.amountRefunded = amountRefunded
-        self.paymentRecordRefund = paymentRecordRefund
-        self.refund = refund
-        self.type = type
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amountRefunded = "amount_refunded"
-        case paymentRecordRefund = "payment_record_refund"
-        case refund
-        case type
-    }
-}
-
-/// The PaymentRecord refund details to link to this credit note. Required when `type` is
-/// `payment_record_refund`.
-public struct CreditNotePreviewLinesRefundsPaymentRecordRefund: StripeParams {
-    /// The ID of the PaymentRecord with the refund to link to this credit note.
-    public var paymentRecord: String
-    /// The PaymentRecord refund group to link to this credit note. For refunds processed off-Stripe, this
-    /// will correspond to the `processor_details.custom.refund_reference` field provided when reporting the
-    /// refund on the PaymentRecord.
-    public var refundGroup: String
-
-    public init(paymentRecord: String, refundGroup: String) {
-        self.paymentRecord = paymentRecord
-        self.refundGroup = refundGroup
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case paymentRecord = "payment_record"
-        case refundGroup = "refund_group"
-    }
-}
-
-public struct CreditNotePreviewLinesRefundsType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var paymentRecordRefund: Self { .init(rawValue: "payment_record_refund") }
-    public static var refund: Self { .init(rawValue: "refund") }
-}
-
-/// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
-/// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
-public struct CreditNotePreviewLinesShippingCost: StripeParams {
-    /// The ID of the shipping rate to use for this order.
-    public var shippingRate: String?
-
-    public init(shippingRate: String? = nil) {
-        self.shippingRate = shippingRate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case shippingRate = "shipping_rate"
-    }
 }

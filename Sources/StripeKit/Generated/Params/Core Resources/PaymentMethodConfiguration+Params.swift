@@ -10,88 +10,88 @@ import Foundation
 public struct PaymentMethodConfigurationCreateParams: StripeParams {
     /// Canadian pre-authorized debit payments, check this
     /// [page](https://docs.stripe.com/payments/acss-debit) for more details like country availability.
-    public var acssDebit: PaymentMethodConfigurationCreateAcssDebit?
+    public var acssDebit: PaymentMethodConfigurationAcssDebit?
     /// [Affirm](https://www.affirm.com/) gives your customers a way to split purchases over a series of
     /// payments. Depending on the purchase, they can pay with four interest-free payments (Split Pay) or
     /// pay over a longer term (Installments), which might include interest. Check this
     /// [page](https://docs.stripe.com/payments/affirm) for more details like country availability.
-    public var affirm: PaymentMethodConfigurationCreateAffirm?
+    public var affirm: PaymentMethodConfigurationAffirm?
     /// Afterpay gives your customers a way to pay for purchases in installments, check this
     /// [page](https://docs.stripe.com/payments/afterpay-clearpay) for more details like country
     /// availability. Afterpay is particularly popular among businesses selling fashion, beauty, and sports
     /// products.
-    public var afterpayClearpay: PaymentMethodConfigurationCreateAfterpayClearpay?
+    public var afterpayClearpay: PaymentMethodConfigurationAfterpayClearpay?
     /// Alipay is a digital wallet in China that has more than a billion active users worldwide. Alipay
     /// users can pay on the web or on a mobile device using login credentials or their Alipay app. Alipay
     /// has a low dispute rate and reduces fraud by authenticating payments using the customer's login
     /// credentials. Check this [page](https://docs.stripe.com/payments/alipay) for more details.
-    public var alipay: PaymentMethodConfigurationCreateAlipay?
+    public var alipay: PaymentMethodConfigurationAlipay?
     /// Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4
     /// installments.
-    public var alma: PaymentMethodConfigurationCreateAlma?
+    public var alma: PaymentMethodConfigurationAlma?
     /// Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
-    public var amazonPay: PaymentMethodConfigurationCreateAmazonPay?
+    public var amazonPay: PaymentMethodConfigurationAmazonPay?
     /// Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in
     /// iOS 9 and later, and on the web in Safari starting with iOS 10 or macOS Sierra. There are no
     /// additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the
     /// same as other card transactions. Check this [page](https://docs.stripe.com/apple-pay) for more
     /// details.
-    public var applePay: PaymentMethodConfigurationCreateApplePay?
+    public var applePay: PaymentMethodConfigurationApplePay?
     /// Apple Pay Later, a payment method for customers to buy now and pay later, gives your customers a way
     /// to split purchases into four installments across six weeks.
-    public var applePayLater: PaymentMethodConfigurationCreateApplePayLater?
+    public var applePayLater: PaymentMethodConfigurationApplePayLater?
     /// Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments
     /// from customers with an Australian bank account. Check this
     /// [page](https://docs.stripe.com/payments/au-becs-debit) for more details.
-    public var auBecsDebit: PaymentMethodConfigurationCreateAuBecsDebit?
+    public var auBecsDebit: PaymentMethodConfigurationAuBecsDebit?
     /// Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account,
     /// check this [page](https://docs.stripe.com/payments/payment-methods/bacs-debit) for more details.
-    public var bacsDebit: PaymentMethodConfigurationCreateBacsDebit?
+    public var bacsDebit: PaymentMethodConfigurationBacsDebit?
     /// Bancontact is the most popular online payment method in Belgium, with over 15 million cards in
     /// circulation. [Customers](https://docs.stripe.com/api/customers) use a Bancontact card or mobile app
     /// linked to a Belgian bank account to make online payments that are secure, guaranteed, and confirmed
     /// immediately. Check this [page](https://docs.stripe.com/payments/bancontact) for more details.
-    public var bancontact: PaymentMethodConfigurationCreateBancontact?
+    public var bancontact: PaymentMethodConfigurationBancontact?
     /// Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
     /// offers businesses Pay by Invoice where they offer payment terms ranging from 7-120 days. Customers
     /// are redirected from your website or app, authorize the payment with Billie, then return to your
     /// website or app. You get [immediate notification](/payments/payment-methods#payment-notification) of
     /// whether the payment succeeded or failed.
-    public var billie: PaymentMethodConfigurationCreateBillie?
+    public var billie: PaymentMethodConfigurationBillie?
     /// To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking
     /// app, they can enable Bizum and link their mobile number to their IBAN.
-    public var bizum: PaymentMethodConfigurationCreateBizum?
+    public var bizum: PaymentMethodConfigurationBizum?
     /// BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
     /// requires customers to authenticate their payments. When customers want to pay online using BLIK,
     /// they request a six-digit code from their banking application and enter it into the payment
     /// collection form. Check this [page](https://docs.stripe.com/payments/blik) for more details.
-    public var blik: PaymentMethodConfigurationCreateBlik?
+    public var blik: PaymentMethodConfigurationBlik?
     /// Boleto is an official (regulated by the Central Bank of Brazil) payment method in Brazil. Check this
     /// [page](https://docs.stripe.com/payments/boleto) for more details.
-    public var boleto: PaymentMethodConfigurationCreateBoleto?
+    public var boleto: PaymentMethodConfigurationBoleto?
     /// Cards are a popular way for consumers and businesses to pay online or in person. Stripe supports
     /// global and local card networks.
-    public var card: PaymentMethodConfigurationCreateCard?
+    public var card: PaymentMethodConfigurationCard?
     /// Cartes Bancaires is France's local card network. More than 95% of these cards are co-branded with
     /// either Visa or Mastercard, meaning you can process these cards over either Cartes Bancaires or the
     /// Visa or Mastercard networks. Check this [page](https://docs.stripe.com/payments/cartes-bancaires)
     /// for more details.
-    public var cartesBancaires: PaymentMethodConfigurationCreateCartesBancaires?
+    public var cartesBancaires: PaymentMethodConfigurationCartesBancaires?
     /// Cash App is a popular consumer app in the US that allows customers to bank, invest, send, and
     /// receive money using their digital wallet. Check this
     /// [page](https://docs.stripe.com/payments/cash-app-pay) for more details.
-    public var cashapp: PaymentMethodConfigurationCreateCashapp?
+    public var cashapp: PaymentMethodConfigurationCashapp?
     /// [Stablecoin payments](https://docs.stripe.com/payments/stablecoin-payments) enable customers to pay
     /// in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
-    public var crypto: PaymentMethodConfigurationCreateCrypto?
+    public var crypto: PaymentMethodConfigurationCrypto?
     /// Uses a customer’s [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment.
     /// The cash balance can be funded via a bank transfer. Check this
     /// [page](https://docs.stripe.com/payments/bank-transfers) for more details.
-    public var customerBalance: PaymentMethodConfigurationCreateCustomerBalance?
+    public var customerBalance: PaymentMethodConfigurationCustomerBalance?
     /// EPS is an Austria-based payment method that allows customers to complete transactions online using
     /// their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of
     /// Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
-    public var eps: PaymentMethodConfigurationCreateEps?
+    public var eps: PaymentMethodConfigurationEps?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Financial Process Exchange (FPX) is a Malaysia-based payment method that allows customers to
@@ -100,189 +100,189 @@ public struct PaymentMethodConfigurationCreateParams: StripeParams {
     /// Group, which owns and operates FPX. It is one of the most popular online payment methods in
     /// Malaysia, with nearly 90 million transactions in 2018 according to BNM. Check this
     /// [page](https://docs.stripe.com/payments/fpx) for more details.
-    public var fpx: PaymentMethodConfigurationCreateFpx?
+    public var fpx: PaymentMethodConfigurationFpx?
     /// Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by
     /// employers for their employees to purchase prepared food and beverages on working days. Check this
     /// [page](https://docs.stripe.com/payments/meal-vouchers/fr-meal-vouchers) for more details.
-    public var frMealVoucherConecs: PaymentMethodConfigurationCreateFrMealVoucherConecs?
+    public var frMealVoucherConecs: PaymentMethodConfigurationFrMealVoucherConecs?
     /// giropay is a German payment method based on online banking, introduced in 2006. It allows customers
     /// to complete transactions online using their online banking environment, with funds debited from
     /// their bank account. Depending on their bank, customers confirm payments on giropay using a second
     /// factor of authentication or a PIN. giropay accounts for 10% of online checkouts in Germany. Check
     /// this [page](https://docs.stripe.com/payments/giropay) for more details.
-    public var giropay: PaymentMethodConfigurationCreateGiropay?
+    public var giropay: PaymentMethodConfigurationGiropay?
     /// Google Pay allows customers to make payments in your app or website using any credit or debit card
     /// saved to their Google Account, including those from Google Play, YouTube, Chrome, or an Android
     /// device. Use the Google Pay API to request any credit or debit card stored in your customer's Google
     /// account. Check this [page](https://docs.stripe.com/google-pay) for more details.
-    public var googlePay: PaymentMethodConfigurationCreateGooglePay?
+    public var googlePay: PaymentMethodConfigurationGooglePay?
     /// GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/).
     /// GrabPay is a digital wallet - customers maintain a balance in their wallets that they pay out with.
     /// Check this [page](https://docs.stripe.com/payments/grabpay) for more details.
-    public var grabpay: PaymentMethodConfigurationCreateGrabpay?
+    public var grabpay: PaymentMethodConfigurationGrabpay?
     /// iDEAL is a Netherlands-based payment method that allows customers to complete transactions online
     /// using their bank credentials. All major Dutch banks are members of Currence, the scheme that
     /// operates iDEAL, making it the most popular online payment method in the Netherlands with a share of
     /// online transactions close to 55%. Check this [page](https://docs.stripe.com/payments/ideal) for more
     /// details.
-    public var ideal: PaymentMethodConfigurationCreateIdeal?
+    public var ideal: PaymentMethodConfigurationIdeal?
     /// JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses
     /// approved by JCB, and available to all businesses in Australia, Canada, Hong Kong, Japan, New
     /// Zealand, Singapore, Switzerland, United Kingdom, United States, and all countries in the European
     /// Economic Area except Iceland. Check this
     /// [page](https://support.stripe.com/questions/accepting-japan-credit-bureau-%28jcb%29-payments) for
     /// more details.
-    public var jcb: PaymentMethodConfigurationCreateJcb?
+    public var jcb: PaymentMethodConfigurationJcb?
     /// Kakao Pay is a popular local wallet available in South Korea.
-    public var kakaoPay: PaymentMethodConfigurationCreateKakaoPay?
+    public var kakaoPay: PaymentMethodConfigurationKakaoPay?
     /// Klarna gives customers a range of [payment
     /// options](https://docs.stripe.com/payments/klarna#payment-options) during checkout. Available payment
     /// options vary depending on the customer's billing address and the transaction amount. These payment
     /// options make it convenient for customers to purchase items in all price ranges. Check this
     /// [page](https://docs.stripe.com/payments/klarna) for more details.
-    public var klarna: PaymentMethodConfigurationCreateKlarna?
+    public var klarna: PaymentMethodConfigurationKlarna?
     /// Konbini allows customers in Japan to pay for bills and online purchases at convenience stores with
     /// cash. Check this [page](https://docs.stripe.com/payments/konbini) for more details.
-    public var konbini: PaymentMethodConfigurationCreateKonbini?
+    public var konbini: PaymentMethodConfigurationKonbini?
     /// Korean cards let users pay using locally issued cards from South Korea.
-    public var krCard: PaymentMethodConfigurationCreateKrCard?
+    public var krCard: PaymentMethodConfigurationKrCard?
     /// [Link](https://docs.stripe.com/payments/link) is a payment method network. With Link, users save
     /// their payment details once, then reuse that information to pay with one click for any business on
     /// the network.
-    public var link: PaymentMethodConfigurationCreateLink?
+    public var link: PaymentMethodConfigurationLink?
     /// MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout,
     /// customers approve the payment directly in their MB WAY app. Check this
     /// [page](https://docs.stripe.com/payments/mb-way) for more details.
-    public var mbWay: PaymentMethodConfigurationCreateMbWay?
+    public var mbWay: PaymentMethodConfigurationMbWay?
     /// MobilePay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet
     /// payment method used in Denmark and Finland. It allows customers to [authenticate and
     /// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the
     /// MobilePay app. Check this [page](https://docs.stripe.com/payments/mobilepay) for more details.
-    public var mobilepay: PaymentMethodConfigurationCreateMobilepay?
+    public var mobilepay: PaymentMethodConfigurationMobilepay?
     /// Stripe users in Europe and the United States can accept Multibanco payments from customers in
     /// Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating
     /// payments using any supported method.
-    public var multibanco: PaymentMethodConfigurationCreateMultibanco?
+    public var multibanco: PaymentMethodConfigurationMultibanco?
     /// Configuration name.
     public var name: String?
     /// Naver Pay is a popular local wallet available in South Korea.
-    public var naverPay: PaymentMethodConfigurationCreateNaverPay?
+    public var naverPay: PaymentMethodConfigurationNaverPay?
     /// Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments
     /// from customers with a New Zeland bank account. Check this
     /// [page](https://docs.stripe.com/payments/nz-bank-account) for more details.
-    public var nzBankAccount: PaymentMethodConfigurationCreateNzBankAccount?
+    public var nzBankAccount: PaymentMethodConfigurationNzBankAccount?
     /// OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and
     /// represents nearly 20% of online transactions in Mexico. OXXO allows customers to pay bills and
     /// online purchases in-store with cash. Check this [page](https://docs.stripe.com/payments/oxxo) for
     /// more details.
-    public var oxxo: PaymentMethodConfigurationCreateOxxo?
+    public var oxxo: PaymentMethodConfigurationOxxo?
     /// Przelewy24 is a Poland-based payment method aggregator that allows customers to complete
     /// transactions online using bank transfers and other methods. Bank transfers account for 30% of online
     /// payments in Poland and Przelewy24 provides a way for customers to pay with over 165 banks. Check
     /// this [page](https://docs.stripe.com/payments/p24) for more details.
-    public var p24: PaymentMethodConfigurationCreateP24?
+    public var p24: PaymentMethodConfigurationP24?
     /// Configuration's parent configuration. Specify to create a child configuration.
     public var parent: String?
     /// Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their
     /// bank to authorize a bank transfer for a given amount. This removes a lot of the error risks inherent
     /// in waiting for the customer to initiate a transfer themselves, and is less expensive than card
     /// payments.
-    public var payByBank: PaymentMethodConfigurationCreatePayByBank?
+    public var payByBank: PaymentMethodConfigurationPayByBank?
     /// PAYCO is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
     /// available in South Korea.
-    public var payco: PaymentMethodConfigurationCreatePayco?
+    public var payco: PaymentMethodConfigurationPayco?
     /// PayNow is a Singapore-based payment method that allows customers to make a payment using their
     /// preferred app from participating banks and participating non-bank financial institutions. Check this
     /// [page](https://docs.stripe.com/payments/paynow) for more details.
-    public var paynow: PaymentMethodConfigurationCreatePaynow?
+    public var paynow: PaymentMethodConfigurationPaynow?
     /// PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay
     /// using their PayPal account. Check this [page](https://docs.stripe.com/payments/paypal) for more
     /// details.
-    public var paypal: PaymentMethodConfigurationCreatePaypal?
+    public var paypal: PaymentMethodConfigurationPaypal?
     /// Customers can pay with PayPay online or using the PayPay app.
-    public var paypay: PaymentMethodConfigurationCreatePaypay?
+    public var paypay: PaymentMethodConfigurationPaypay?
     /// PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables
     /// customers in Australia to pay by providing their bank account details. Customers must accept a
     /// mandate authorizing you to debit their account. Check this
     /// [page](https://docs.stripe.com/payments/payto) for more details.
-    public var payto: PaymentMethodConfigurationCreatePayto?
+    public var payto: PaymentMethodConfigurationPayto?
     /// Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve
     /// payments by scanning a QR code in their preferred banking app. Check this
     /// [page](https://docs.stripe.com/payments/pix) for more details.
-    public var pix: PaymentMethodConfigurationCreatePix?
+    public var pix: PaymentMethodConfigurationPix?
     /// PromptPay is a Thailand-based payment method that allows customers to make a payment using their
     /// preferred app from participating banks. Check this
     /// [page](https://docs.stripe.com/payments/promptpay) for more details.
-    public var promptpay: PaymentMethodConfigurationCreatePromptpay?
+    public var promptpay: PaymentMethodConfigurationPromptpay?
     /// Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut
     /// Pay uses the customer’s stored balance or cards to fund the payment, and offers the option for
     /// non-Revolut customers to save their details after their first purchase.
-    public var revolutPay: PaymentMethodConfigurationCreateRevolutPay?
+    public var revolutPay: PaymentMethodConfigurationRevolutPay?
     /// Samsung Pay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
     /// available in South Korea.
-    public var samsungPay: PaymentMethodConfigurationCreateSamsungPay?
+    public var samsungPay: PaymentMethodConfigurationSamsungPay?
     /// Satispay is a [single-use](/payments/payment-methods#usage) payment method where customers are
     /// required to [authenticate](/payments/payment-methods#customer-actions) their payment. Customers pay
     /// by being redirected from your website or app, authorizing the payment with Satispay, then returning
     /// to your website or app. You get [immediate
     /// notification](/payments/payment-methods#payment-notification) of whether the payment succeeded or
     /// failed.
-    public var satispay: PaymentMethodConfigurationCreateSatispay?
+    public var satispay: PaymentMethodConfigurationSatispay?
     /// Scalapay is a [single-use](/payments/payment-methods#usage) payment method that lets customers pay
     /// in 3 or 4 installments. Customers are redirected from your website or app, authorize the payment
     /// with Scalapay, then return to your website or app. You get [immediate
     /// notification](/payments/payment-methods#payment-notification) of whether the payment succeeded or
     /// failed.
-    public var scalapay: PaymentMethodConfigurationCreateScalapay?
+    public var scalapay: PaymentMethodConfigurationScalapay?
     /// The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is
     /// an initiative of the European Union to simplify payments within and across member countries. SEPA
     /// established and enforced banking standards to allow for the direct debiting of every EUR-denominated
     /// bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit)
     /// for more details.
-    public var sepaDebit: PaymentMethodConfigurationCreateSepaDebit?
+    public var sepaDebit: PaymentMethodConfigurationSepaDebit?
     /// SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
     /// offers customers payment terms ranging from 7-120 days. Customers are redirected from your website
     /// or app, authorize the payment with SeQura, then return to your website or app. You get [immediate
     /// notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the
     /// payment succeeded or failed.
-    public var sequra: PaymentMethodConfigurationCreateSequra?
+    public var sequra: PaymentMethodConfigurationSequra?
     /// Stripe users in Europe and the United States can use the [Payment Intents
     /// API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating
     /// payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from
     /// customers. Check this [page](https://docs.stripe.com/payments/sofort) for more details.
-    public var sofort: PaymentMethodConfigurationCreateSofort?
+    public var sofort: PaymentMethodConfigurationSofort?
     /// Sunbit is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method
     /// where customers choose to pay in 3, 6, or 12 installments. Customers are redirected from your
     /// website or app, authorize the payment with Sunbit, then return to your website or app. You get
     /// [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of
     /// whether the payment succeeded or failed.
-    public var sunbit: PaymentMethodConfigurationCreateSunbit?
+    public var sunbit: PaymentMethodConfigurationSunbit?
     /// Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden.
     /// It allows customers to [authenticate and
     /// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Swish
     /// mobile app and the Swedish BankID mobile app. Check this
     /// [page](https://docs.stripe.com/payments/swish) for more details.
-    public var swish: PaymentMethodConfigurationCreateSwish?
+    public var swish: PaymentMethodConfigurationSwish?
     /// Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile
     /// phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
-    public var twint: PaymentMethodConfigurationCreateTwint?
+    public var twint: PaymentMethodConfigurationTwint?
     /// Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it
     /// launched in 2016.
-    public var upi: PaymentMethodConfigurationCreateUpi?
+    public var upi: PaymentMethodConfigurationUpi?
     /// Stripe users in the United States can accept ACH direct debit payments from customers with a US bank
     /// account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this
     /// [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
-    public var usBankAccount: PaymentMethodConfigurationCreateUsBankAccount?
+    public var usBankAccount: PaymentMethodConfigurationUsBankAccount?
     /// WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users.
     /// Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and
     /// websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and
     /// food/nutrition. Check this [page](https://docs.stripe.com/payments/wechat-pay) for more details.
-    public var wechatPay: PaymentMethodConfigurationCreateWechatPay?
+    public var wechatPay: PaymentMethodConfigurationWechatPay?
     /// Zip gives your customers a way to split purchases over a series of payments. Check this
     /// [page](https://docs.stripe.com/payments/zip) for more details like country availability.
-    public var zip: PaymentMethodConfigurationCreateZip?
+    public var zip: PaymentMethodConfigurationZip?
 
-    public init(acssDebit: PaymentMethodConfigurationCreateAcssDebit? = nil, affirm: PaymentMethodConfigurationCreateAffirm? = nil, afterpayClearpay: PaymentMethodConfigurationCreateAfterpayClearpay? = nil, alipay: PaymentMethodConfigurationCreateAlipay? = nil, alma: PaymentMethodConfigurationCreateAlma? = nil, amazonPay: PaymentMethodConfigurationCreateAmazonPay? = nil, applePay: PaymentMethodConfigurationCreateApplePay? = nil, applePayLater: PaymentMethodConfigurationCreateApplePayLater? = nil, auBecsDebit: PaymentMethodConfigurationCreateAuBecsDebit? = nil, bacsDebit: PaymentMethodConfigurationCreateBacsDebit? = nil, bancontact: PaymentMethodConfigurationCreateBancontact? = nil, billie: PaymentMethodConfigurationCreateBillie? = nil, bizum: PaymentMethodConfigurationCreateBizum? = nil, blik: PaymentMethodConfigurationCreateBlik? = nil, boleto: PaymentMethodConfigurationCreateBoleto? = nil, card: PaymentMethodConfigurationCreateCard? = nil, cartesBancaires: PaymentMethodConfigurationCreateCartesBancaires? = nil, cashapp: PaymentMethodConfigurationCreateCashapp? = nil, crypto: PaymentMethodConfigurationCreateCrypto? = nil, customerBalance: PaymentMethodConfigurationCreateCustomerBalance? = nil, eps: PaymentMethodConfigurationCreateEps? = nil, expand: [String]? = nil, fpx: PaymentMethodConfigurationCreateFpx? = nil, frMealVoucherConecs: PaymentMethodConfigurationCreateFrMealVoucherConecs? = nil, giropay: PaymentMethodConfigurationCreateGiropay? = nil, googlePay: PaymentMethodConfigurationCreateGooglePay? = nil, grabpay: PaymentMethodConfigurationCreateGrabpay? = nil, ideal: PaymentMethodConfigurationCreateIdeal? = nil, jcb: PaymentMethodConfigurationCreateJcb? = nil, kakaoPay: PaymentMethodConfigurationCreateKakaoPay? = nil, klarna: PaymentMethodConfigurationCreateKlarna? = nil, konbini: PaymentMethodConfigurationCreateKonbini? = nil, krCard: PaymentMethodConfigurationCreateKrCard? = nil, link: PaymentMethodConfigurationCreateLink? = nil, mbWay: PaymentMethodConfigurationCreateMbWay? = nil, mobilepay: PaymentMethodConfigurationCreateMobilepay? = nil, multibanco: PaymentMethodConfigurationCreateMultibanco? = nil, name: String? = nil, naverPay: PaymentMethodConfigurationCreateNaverPay? = nil, nzBankAccount: PaymentMethodConfigurationCreateNzBankAccount? = nil, oxxo: PaymentMethodConfigurationCreateOxxo? = nil, p24: PaymentMethodConfigurationCreateP24? = nil, parent: String? = nil, payByBank: PaymentMethodConfigurationCreatePayByBank? = nil, payco: PaymentMethodConfigurationCreatePayco? = nil, paynow: PaymentMethodConfigurationCreatePaynow? = nil, paypal: PaymentMethodConfigurationCreatePaypal? = nil, paypay: PaymentMethodConfigurationCreatePaypay? = nil, payto: PaymentMethodConfigurationCreatePayto? = nil, pix: PaymentMethodConfigurationCreatePix? = nil, promptpay: PaymentMethodConfigurationCreatePromptpay? = nil, revolutPay: PaymentMethodConfigurationCreateRevolutPay? = nil, samsungPay: PaymentMethodConfigurationCreateSamsungPay? = nil, satispay: PaymentMethodConfigurationCreateSatispay? = nil, scalapay: PaymentMethodConfigurationCreateScalapay? = nil, sepaDebit: PaymentMethodConfigurationCreateSepaDebit? = nil, sequra: PaymentMethodConfigurationCreateSequra? = nil, sofort: PaymentMethodConfigurationCreateSofort? = nil, sunbit: PaymentMethodConfigurationCreateSunbit? = nil, swish: PaymentMethodConfigurationCreateSwish? = nil, twint: PaymentMethodConfigurationCreateTwint? = nil, upi: PaymentMethodConfigurationCreateUpi? = nil, usBankAccount: PaymentMethodConfigurationCreateUsBankAccount? = nil, wechatPay: PaymentMethodConfigurationCreateWechatPay? = nil, zip: PaymentMethodConfigurationCreateZip? = nil) {
+    public init(acssDebit: PaymentMethodConfigurationAcssDebit? = nil, affirm: PaymentMethodConfigurationAffirm? = nil, afterpayClearpay: PaymentMethodConfigurationAfterpayClearpay? = nil, alipay: PaymentMethodConfigurationAlipay? = nil, alma: PaymentMethodConfigurationAlma? = nil, amazonPay: PaymentMethodConfigurationAmazonPay? = nil, applePay: PaymentMethodConfigurationApplePay? = nil, applePayLater: PaymentMethodConfigurationApplePayLater? = nil, auBecsDebit: PaymentMethodConfigurationAuBecsDebit? = nil, bacsDebit: PaymentMethodConfigurationBacsDebit? = nil, bancontact: PaymentMethodConfigurationBancontact? = nil, billie: PaymentMethodConfigurationBillie? = nil, bizum: PaymentMethodConfigurationBizum? = nil, blik: PaymentMethodConfigurationBlik? = nil, boleto: PaymentMethodConfigurationBoleto? = nil, card: PaymentMethodConfigurationCard? = nil, cartesBancaires: PaymentMethodConfigurationCartesBancaires? = nil, cashapp: PaymentMethodConfigurationCashapp? = nil, crypto: PaymentMethodConfigurationCrypto? = nil, customerBalance: PaymentMethodConfigurationCustomerBalance? = nil, eps: PaymentMethodConfigurationEps? = nil, expand: [String]? = nil, fpx: PaymentMethodConfigurationFpx? = nil, frMealVoucherConecs: PaymentMethodConfigurationFrMealVoucherConecs? = nil, giropay: PaymentMethodConfigurationGiropay? = nil, googlePay: PaymentMethodConfigurationGooglePay? = nil, grabpay: PaymentMethodConfigurationGrabpay? = nil, ideal: PaymentMethodConfigurationIdeal? = nil, jcb: PaymentMethodConfigurationJcb? = nil, kakaoPay: PaymentMethodConfigurationKakaoPay? = nil, klarna: PaymentMethodConfigurationKlarna? = nil, konbini: PaymentMethodConfigurationKonbini? = nil, krCard: PaymentMethodConfigurationKrCard? = nil, link: PaymentMethodConfigurationLink? = nil, mbWay: PaymentMethodConfigurationMbWay? = nil, mobilepay: PaymentMethodConfigurationMobilepay? = nil, multibanco: PaymentMethodConfigurationMultibanco? = nil, name: String? = nil, naverPay: PaymentMethodConfigurationNaverPay? = nil, nzBankAccount: PaymentMethodConfigurationNzBankAccount? = nil, oxxo: PaymentMethodConfigurationOxxo? = nil, p24: PaymentMethodConfigurationP24? = nil, parent: String? = nil, payByBank: PaymentMethodConfigurationPayByBank? = nil, payco: PaymentMethodConfigurationPayco? = nil, paynow: PaymentMethodConfigurationPaynow? = nil, paypal: PaymentMethodConfigurationPaypal? = nil, paypay: PaymentMethodConfigurationPaypay? = nil, payto: PaymentMethodConfigurationPayto? = nil, pix: PaymentMethodConfigurationPix? = nil, promptpay: PaymentMethodConfigurationPromptpay? = nil, revolutPay: PaymentMethodConfigurationRevolutPay? = nil, samsungPay: PaymentMethodConfigurationSamsungPay? = nil, satispay: PaymentMethodConfigurationSatispay? = nil, scalapay: PaymentMethodConfigurationScalapay? = nil, sepaDebit: PaymentMethodConfigurationSepaDebit? = nil, sequra: PaymentMethodConfigurationSequra? = nil, sofort: PaymentMethodConfigurationSofort? = nil, sunbit: PaymentMethodConfigurationSunbit? = nil, swish: PaymentMethodConfigurationSwish? = nil, twint: PaymentMethodConfigurationTwint? = nil, upi: PaymentMethodConfigurationUpi? = nil, usBankAccount: PaymentMethodConfigurationUsBankAccount? = nil, wechatPay: PaymentMethodConfigurationWechatPay? = nil, zip: PaymentMethodConfigurationZip? = nil) {
         self.acssDebit = acssDebit
         self.affirm = affirm
         self.afterpayClearpay = afterpayClearpay
@@ -469,90 +469,90 @@ public struct PaymentMethodConfigurationListParams: ClearableParams {
 public struct PaymentMethodConfigurationUpdateParams: StripeParams {
     /// Canadian pre-authorized debit payments, check this
     /// [page](https://docs.stripe.com/payments/acss-debit) for more details like country availability.
-    public var acssDebit: PaymentMethodConfigurationUpdateAcssDebit?
+    public var acssDebit: PaymentMethodConfigurationAcssDebit?
     /// Whether the configuration can be used for new payments.
     public var active: Bool?
     /// [Affirm](https://www.affirm.com/) gives your customers a way to split purchases over a series of
     /// payments. Depending on the purchase, they can pay with four interest-free payments (Split Pay) or
     /// pay over a longer term (Installments), which might include interest. Check this
     /// [page](https://docs.stripe.com/payments/affirm) for more details like country availability.
-    public var affirm: PaymentMethodConfigurationUpdateAffirm?
+    public var affirm: PaymentMethodConfigurationAffirm?
     /// Afterpay gives your customers a way to pay for purchases in installments, check this
     /// [page](https://docs.stripe.com/payments/afterpay-clearpay) for more details like country
     /// availability. Afterpay is particularly popular among businesses selling fashion, beauty, and sports
     /// products.
-    public var afterpayClearpay: PaymentMethodConfigurationUpdateAfterpayClearpay?
+    public var afterpayClearpay: PaymentMethodConfigurationAfterpayClearpay?
     /// Alipay is a digital wallet in China that has more than a billion active users worldwide. Alipay
     /// users can pay on the web or on a mobile device using login credentials or their Alipay app. Alipay
     /// has a low dispute rate and reduces fraud by authenticating payments using the customer's login
     /// credentials. Check this [page](https://docs.stripe.com/payments/alipay) for more details.
-    public var alipay: PaymentMethodConfigurationUpdateAlipay?
+    public var alipay: PaymentMethodConfigurationAlipay?
     /// Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4
     /// installments.
-    public var alma: PaymentMethodConfigurationUpdateAlma?
+    public var alma: PaymentMethodConfigurationAlma?
     /// Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
-    public var amazonPay: PaymentMethodConfigurationUpdateAmazonPay?
+    public var amazonPay: PaymentMethodConfigurationAmazonPay?
     /// Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in
     /// iOS 9 and later, and on the web in Safari starting with iOS 10 or macOS Sierra. There are no
     /// additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the
     /// same as other card transactions. Check this [page](https://docs.stripe.com/apple-pay) for more
     /// details.
-    public var applePay: PaymentMethodConfigurationUpdateApplePay?
+    public var applePay: PaymentMethodConfigurationApplePay?
     /// Apple Pay Later, a payment method for customers to buy now and pay later, gives your customers a way
     /// to split purchases into four installments across six weeks.
-    public var applePayLater: PaymentMethodConfigurationUpdateApplePayLater?
+    public var applePayLater: PaymentMethodConfigurationApplePayLater?
     /// Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments
     /// from customers with an Australian bank account. Check this
     /// [page](https://docs.stripe.com/payments/au-becs-debit) for more details.
-    public var auBecsDebit: PaymentMethodConfigurationUpdateAuBecsDebit?
+    public var auBecsDebit: PaymentMethodConfigurationAuBecsDebit?
     /// Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account,
     /// check this [page](https://docs.stripe.com/payments/payment-methods/bacs-debit) for more details.
-    public var bacsDebit: PaymentMethodConfigurationUpdateBacsDebit?
+    public var bacsDebit: PaymentMethodConfigurationBacsDebit?
     /// Bancontact is the most popular online payment method in Belgium, with over 15 million cards in
     /// circulation. [Customers](https://docs.stripe.com/api/customers) use a Bancontact card or mobile app
     /// linked to a Belgian bank account to make online payments that are secure, guaranteed, and confirmed
     /// immediately. Check this [page](https://docs.stripe.com/payments/bancontact) for more details.
-    public var bancontact: PaymentMethodConfigurationUpdateBancontact?
+    public var bancontact: PaymentMethodConfigurationBancontact?
     /// Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
     /// offers businesses Pay by Invoice where they offer payment terms ranging from 7-120 days. Customers
     /// are redirected from your website or app, authorize the payment with Billie, then return to your
     /// website or app. You get [immediate notification](/payments/payment-methods#payment-notification) of
     /// whether the payment succeeded or failed.
-    public var billie: PaymentMethodConfigurationUpdateBillie?
+    public var billie: PaymentMethodConfigurationBillie?
     /// To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking
     /// app, they can enable Bizum and link their mobile number to their IBAN.
-    public var bizum: PaymentMethodConfigurationUpdateBizum?
+    public var bizum: PaymentMethodConfigurationBizum?
     /// BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
     /// requires customers to authenticate their payments. When customers want to pay online using BLIK,
     /// they request a six-digit code from their banking application and enter it into the payment
     /// collection form. Check this [page](https://docs.stripe.com/payments/blik) for more details.
-    public var blik: PaymentMethodConfigurationUpdateBlik?
+    public var blik: PaymentMethodConfigurationBlik?
     /// Boleto is an official (regulated by the Central Bank of Brazil) payment method in Brazil. Check this
     /// [page](https://docs.stripe.com/payments/boleto) for more details.
-    public var boleto: PaymentMethodConfigurationUpdateBoleto?
+    public var boleto: PaymentMethodConfigurationBoleto?
     /// Cards are a popular way for consumers and businesses to pay online or in person. Stripe supports
     /// global and local card networks.
-    public var card: PaymentMethodConfigurationUpdateCard?
+    public var card: PaymentMethodConfigurationCard?
     /// Cartes Bancaires is France's local card network. More than 95% of these cards are co-branded with
     /// either Visa or Mastercard, meaning you can process these cards over either Cartes Bancaires or the
     /// Visa or Mastercard networks. Check this [page](https://docs.stripe.com/payments/cartes-bancaires)
     /// for more details.
-    public var cartesBancaires: PaymentMethodConfigurationUpdateCartesBancaires?
+    public var cartesBancaires: PaymentMethodConfigurationCartesBancaires?
     /// Cash App is a popular consumer app in the US that allows customers to bank, invest, send, and
     /// receive money using their digital wallet. Check this
     /// [page](https://docs.stripe.com/payments/cash-app-pay) for more details.
-    public var cashapp: PaymentMethodConfigurationUpdateCashapp?
+    public var cashapp: PaymentMethodConfigurationCashapp?
     /// [Stablecoin payments](https://docs.stripe.com/payments/stablecoin-payments) enable customers to pay
     /// in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
-    public var crypto: PaymentMethodConfigurationUpdateCrypto?
+    public var crypto: PaymentMethodConfigurationCrypto?
     /// Uses a customer’s [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment.
     /// The cash balance can be funded via a bank transfer. Check this
     /// [page](https://docs.stripe.com/payments/bank-transfers) for more details.
-    public var customerBalance: PaymentMethodConfigurationUpdateCustomerBalance?
+    public var customerBalance: PaymentMethodConfigurationCustomerBalance?
     /// EPS is an Austria-based payment method that allows customers to complete transactions online using
     /// their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of
     /// Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
-    public var eps: PaymentMethodConfigurationUpdateEps?
+    public var eps: PaymentMethodConfigurationEps?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Financial Process Exchange (FPX) is a Malaysia-based payment method that allows customers to
@@ -561,187 +561,187 @@ public struct PaymentMethodConfigurationUpdateParams: StripeParams {
     /// Group, which owns and operates FPX. It is one of the most popular online payment methods in
     /// Malaysia, with nearly 90 million transactions in 2018 according to BNM. Check this
     /// [page](https://docs.stripe.com/payments/fpx) for more details.
-    public var fpx: PaymentMethodConfigurationUpdateFpx?
+    public var fpx: PaymentMethodConfigurationFpx?
     /// Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by
     /// employers for their employees to purchase prepared food and beverages on working days. Check this
     /// [page](https://docs.stripe.com/payments/meal-vouchers/fr-meal-vouchers) for more details.
-    public var frMealVoucherConecs: PaymentMethodConfigurationUpdateFrMealVoucherConecs?
+    public var frMealVoucherConecs: PaymentMethodConfigurationFrMealVoucherConecs?
     /// giropay is a German payment method based on online banking, introduced in 2006. It allows customers
     /// to complete transactions online using their online banking environment, with funds debited from
     /// their bank account. Depending on their bank, customers confirm payments on giropay using a second
     /// factor of authentication or a PIN. giropay accounts for 10% of online checkouts in Germany. Check
     /// this [page](https://docs.stripe.com/payments/giropay) for more details.
-    public var giropay: PaymentMethodConfigurationUpdateGiropay?
+    public var giropay: PaymentMethodConfigurationGiropay?
     /// Google Pay allows customers to make payments in your app or website using any credit or debit card
     /// saved to their Google Account, including those from Google Play, YouTube, Chrome, or an Android
     /// device. Use the Google Pay API to request any credit or debit card stored in your customer's Google
     /// account. Check this [page](https://docs.stripe.com/google-pay) for more details.
-    public var googlePay: PaymentMethodConfigurationUpdateGooglePay?
+    public var googlePay: PaymentMethodConfigurationGooglePay?
     /// GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/).
     /// GrabPay is a digital wallet - customers maintain a balance in their wallets that they pay out with.
     /// Check this [page](https://docs.stripe.com/payments/grabpay) for more details.
-    public var grabpay: PaymentMethodConfigurationUpdateGrabpay?
+    public var grabpay: PaymentMethodConfigurationGrabpay?
     /// iDEAL is a Netherlands-based payment method that allows customers to complete transactions online
     /// using their bank credentials. All major Dutch banks are members of Currence, the scheme that
     /// operates iDEAL, making it the most popular online payment method in the Netherlands with a share of
     /// online transactions close to 55%. Check this [page](https://docs.stripe.com/payments/ideal) for more
     /// details.
-    public var ideal: PaymentMethodConfigurationUpdateIdeal?
+    public var ideal: PaymentMethodConfigurationIdeal?
     /// JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses
     /// approved by JCB, and available to all businesses in Australia, Canada, Hong Kong, Japan, New
     /// Zealand, Singapore, Switzerland, United Kingdom, United States, and all countries in the European
     /// Economic Area except Iceland. Check this
     /// [page](https://support.stripe.com/questions/accepting-japan-credit-bureau-%28jcb%29-payments) for
     /// more details.
-    public var jcb: PaymentMethodConfigurationUpdateJcb?
+    public var jcb: PaymentMethodConfigurationJcb?
     /// Kakao Pay is a popular local wallet available in South Korea.
-    public var kakaoPay: PaymentMethodConfigurationUpdateKakaoPay?
+    public var kakaoPay: PaymentMethodConfigurationKakaoPay?
     /// Klarna gives customers a range of [payment
     /// options](https://docs.stripe.com/payments/klarna#payment-options) during checkout. Available payment
     /// options vary depending on the customer's billing address and the transaction amount. These payment
     /// options make it convenient for customers to purchase items in all price ranges. Check this
     /// [page](https://docs.stripe.com/payments/klarna) for more details.
-    public var klarna: PaymentMethodConfigurationUpdateKlarna?
+    public var klarna: PaymentMethodConfigurationKlarna?
     /// Konbini allows customers in Japan to pay for bills and online purchases at convenience stores with
     /// cash. Check this [page](https://docs.stripe.com/payments/konbini) for more details.
-    public var konbini: PaymentMethodConfigurationUpdateKonbini?
+    public var konbini: PaymentMethodConfigurationKonbini?
     /// Korean cards let users pay using locally issued cards from South Korea.
-    public var krCard: PaymentMethodConfigurationUpdateKrCard?
+    public var krCard: PaymentMethodConfigurationKrCard?
     /// [Link](https://docs.stripe.com/payments/link) is a payment method network. With Link, users save
     /// their payment details once, then reuse that information to pay with one click for any business on
     /// the network.
-    public var link: PaymentMethodConfigurationUpdateLink?
+    public var link: PaymentMethodConfigurationLink?
     /// MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout,
     /// customers approve the payment directly in their MB WAY app. Check this
     /// [page](https://docs.stripe.com/payments/mb-way) for more details.
-    public var mbWay: PaymentMethodConfigurationUpdateMbWay?
+    public var mbWay: PaymentMethodConfigurationMbWay?
     /// MobilePay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet
     /// payment method used in Denmark and Finland. It allows customers to [authenticate and
     /// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the
     /// MobilePay app. Check this [page](https://docs.stripe.com/payments/mobilepay) for more details.
-    public var mobilepay: PaymentMethodConfigurationUpdateMobilepay?
+    public var mobilepay: PaymentMethodConfigurationMobilepay?
     /// Stripe users in Europe and the United States can accept Multibanco payments from customers in
     /// Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating
     /// payments using any supported method.
-    public var multibanco: PaymentMethodConfigurationUpdateMultibanco?
+    public var multibanco: PaymentMethodConfigurationMultibanco?
     /// Configuration name.
     public var name: String?
     /// Naver Pay is a popular local wallet available in South Korea.
-    public var naverPay: PaymentMethodConfigurationUpdateNaverPay?
+    public var naverPay: PaymentMethodConfigurationNaverPay?
     /// Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments
     /// from customers with a New Zeland bank account. Check this
     /// [page](https://docs.stripe.com/payments/nz-bank-account) for more details.
-    public var nzBankAccount: PaymentMethodConfigurationUpdateNzBankAccount?
+    public var nzBankAccount: PaymentMethodConfigurationNzBankAccount?
     /// OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and
     /// represents nearly 20% of online transactions in Mexico. OXXO allows customers to pay bills and
     /// online purchases in-store with cash. Check this [page](https://docs.stripe.com/payments/oxxo) for
     /// more details.
-    public var oxxo: PaymentMethodConfigurationUpdateOxxo?
+    public var oxxo: PaymentMethodConfigurationOxxo?
     /// Przelewy24 is a Poland-based payment method aggregator that allows customers to complete
     /// transactions online using bank transfers and other methods. Bank transfers account for 30% of online
     /// payments in Poland and Przelewy24 provides a way for customers to pay with over 165 banks. Check
     /// this [page](https://docs.stripe.com/payments/p24) for more details.
-    public var p24: PaymentMethodConfigurationUpdateP24?
+    public var p24: PaymentMethodConfigurationP24?
     /// Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their
     /// bank to authorize a bank transfer for a given amount. This removes a lot of the error risks inherent
     /// in waiting for the customer to initiate a transfer themselves, and is less expensive than card
     /// payments.
-    public var payByBank: PaymentMethodConfigurationUpdatePayByBank?
+    public var payByBank: PaymentMethodConfigurationPayByBank?
     /// PAYCO is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
     /// available in South Korea.
-    public var payco: PaymentMethodConfigurationUpdatePayco?
+    public var payco: PaymentMethodConfigurationPayco?
     /// PayNow is a Singapore-based payment method that allows customers to make a payment using their
     /// preferred app from participating banks and participating non-bank financial institutions. Check this
     /// [page](https://docs.stripe.com/payments/paynow) for more details.
-    public var paynow: PaymentMethodConfigurationUpdatePaynow?
+    public var paynow: PaymentMethodConfigurationPaynow?
     /// PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay
     /// using their PayPal account. Check this [page](https://docs.stripe.com/payments/paypal) for more
     /// details.
-    public var paypal: PaymentMethodConfigurationUpdatePaypal?
+    public var paypal: PaymentMethodConfigurationPaypal?
     /// Customers can pay with PayPay online or using the PayPay app.
-    public var paypay: PaymentMethodConfigurationUpdatePaypay?
+    public var paypay: PaymentMethodConfigurationPaypay?
     /// PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables
     /// customers in Australia to pay by providing their bank account details. Customers must accept a
     /// mandate authorizing you to debit their account. Check this
     /// [page](https://docs.stripe.com/payments/payto) for more details.
-    public var payto: PaymentMethodConfigurationUpdatePayto?
+    public var payto: PaymentMethodConfigurationPayto?
     /// Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve
     /// payments by scanning a QR code in their preferred banking app. Check this
     /// [page](https://docs.stripe.com/payments/pix) for more details.
-    public var pix: PaymentMethodConfigurationUpdatePix?
+    public var pix: PaymentMethodConfigurationPix?
     /// PromptPay is a Thailand-based payment method that allows customers to make a payment using their
     /// preferred app from participating banks. Check this
     /// [page](https://docs.stripe.com/payments/promptpay) for more details.
-    public var promptpay: PaymentMethodConfigurationUpdatePromptpay?
+    public var promptpay: PaymentMethodConfigurationPromptpay?
     /// Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut
     /// Pay uses the customer’s stored balance or cards to fund the payment, and offers the option for
     /// non-Revolut customers to save their details after their first purchase.
-    public var revolutPay: PaymentMethodConfigurationUpdateRevolutPay?
+    public var revolutPay: PaymentMethodConfigurationRevolutPay?
     /// Samsung Pay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
     /// available in South Korea.
-    public var samsungPay: PaymentMethodConfigurationUpdateSamsungPay?
+    public var samsungPay: PaymentMethodConfigurationSamsungPay?
     /// Satispay is a [single-use](/payments/payment-methods#usage) payment method where customers are
     /// required to [authenticate](/payments/payment-methods#customer-actions) their payment. Customers pay
     /// by being redirected from your website or app, authorizing the payment with Satispay, then returning
     /// to your website or app. You get [immediate
     /// notification](/payments/payment-methods#payment-notification) of whether the payment succeeded or
     /// failed.
-    public var satispay: PaymentMethodConfigurationUpdateSatispay?
+    public var satispay: PaymentMethodConfigurationSatispay?
     /// Scalapay is a [single-use](/payments/payment-methods#usage) payment method that lets customers pay
     /// in 3 or 4 installments. Customers are redirected from your website or app, authorize the payment
     /// with Scalapay, then return to your website or app. You get [immediate
     /// notification](/payments/payment-methods#payment-notification) of whether the payment succeeded or
     /// failed.
-    public var scalapay: PaymentMethodConfigurationUpdateScalapay?
+    public var scalapay: PaymentMethodConfigurationScalapay?
     /// The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is
     /// an initiative of the European Union to simplify payments within and across member countries. SEPA
     /// established and enforced banking standards to allow for the direct debiting of every EUR-denominated
     /// bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit)
     /// for more details.
-    public var sepaDebit: PaymentMethodConfigurationUpdateSepaDebit?
+    public var sepaDebit: PaymentMethodConfigurationSepaDebit?
     /// SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
     /// offers customers payment terms ranging from 7-120 days. Customers are redirected from your website
     /// or app, authorize the payment with SeQura, then return to your website or app. You get [immediate
     /// notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the
     /// payment succeeded or failed.
-    public var sequra: PaymentMethodConfigurationUpdateSequra?
+    public var sequra: PaymentMethodConfigurationSequra?
     /// Stripe users in Europe and the United States can use the [Payment Intents
     /// API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating
     /// payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from
     /// customers. Check this [page](https://docs.stripe.com/payments/sofort) for more details.
-    public var sofort: PaymentMethodConfigurationUpdateSofort?
+    public var sofort: PaymentMethodConfigurationSofort?
     /// Sunbit is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method
     /// where customers choose to pay in 3, 6, or 12 installments. Customers are redirected from your
     /// website or app, authorize the payment with Sunbit, then return to your website or app. You get
     /// [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of
     /// whether the payment succeeded or failed.
-    public var sunbit: PaymentMethodConfigurationUpdateSunbit?
+    public var sunbit: PaymentMethodConfigurationSunbit?
     /// Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden.
     /// It allows customers to [authenticate and
     /// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Swish
     /// mobile app and the Swedish BankID mobile app. Check this
     /// [page](https://docs.stripe.com/payments/swish) for more details.
-    public var swish: PaymentMethodConfigurationUpdateSwish?
+    public var swish: PaymentMethodConfigurationSwish?
     /// Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile
     /// phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
-    public var twint: PaymentMethodConfigurationUpdateTwint?
+    public var twint: PaymentMethodConfigurationTwint?
     /// Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it
     /// launched in 2016.
-    public var upi: PaymentMethodConfigurationUpdateUpi?
+    public var upi: PaymentMethodConfigurationUpi?
     /// Stripe users in the United States can accept ACH direct debit payments from customers with a US bank
     /// account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this
     /// [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
-    public var usBankAccount: PaymentMethodConfigurationUpdateUsBankAccount?
+    public var usBankAccount: PaymentMethodConfigurationUsBankAccount?
     /// WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users.
     /// Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and
     /// websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and
     /// food/nutrition. Check this [page](https://docs.stripe.com/payments/wechat-pay) for more details.
-    public var wechatPay: PaymentMethodConfigurationUpdateWechatPay?
+    public var wechatPay: PaymentMethodConfigurationWechatPay?
     /// Zip gives your customers a way to split purchases over a series of payments. Check this
     /// [page](https://docs.stripe.com/payments/zip) for more details like country availability.
-    public var zip: PaymentMethodConfigurationUpdateZip?
+    public var zip: PaymentMethodConfigurationZip?
 
-    public init(acssDebit: PaymentMethodConfigurationUpdateAcssDebit? = nil, active: Bool? = nil, affirm: PaymentMethodConfigurationUpdateAffirm? = nil, afterpayClearpay: PaymentMethodConfigurationUpdateAfterpayClearpay? = nil, alipay: PaymentMethodConfigurationUpdateAlipay? = nil, alma: PaymentMethodConfigurationUpdateAlma? = nil, amazonPay: PaymentMethodConfigurationUpdateAmazonPay? = nil, applePay: PaymentMethodConfigurationUpdateApplePay? = nil, applePayLater: PaymentMethodConfigurationUpdateApplePayLater? = nil, auBecsDebit: PaymentMethodConfigurationUpdateAuBecsDebit? = nil, bacsDebit: PaymentMethodConfigurationUpdateBacsDebit? = nil, bancontact: PaymentMethodConfigurationUpdateBancontact? = nil, billie: PaymentMethodConfigurationUpdateBillie? = nil, bizum: PaymentMethodConfigurationUpdateBizum? = nil, blik: PaymentMethodConfigurationUpdateBlik? = nil, boleto: PaymentMethodConfigurationUpdateBoleto? = nil, card: PaymentMethodConfigurationUpdateCard? = nil, cartesBancaires: PaymentMethodConfigurationUpdateCartesBancaires? = nil, cashapp: PaymentMethodConfigurationUpdateCashapp? = nil, crypto: PaymentMethodConfigurationUpdateCrypto? = nil, customerBalance: PaymentMethodConfigurationUpdateCustomerBalance? = nil, eps: PaymentMethodConfigurationUpdateEps? = nil, expand: [String]? = nil, fpx: PaymentMethodConfigurationUpdateFpx? = nil, frMealVoucherConecs: PaymentMethodConfigurationUpdateFrMealVoucherConecs? = nil, giropay: PaymentMethodConfigurationUpdateGiropay? = nil, googlePay: PaymentMethodConfigurationUpdateGooglePay? = nil, grabpay: PaymentMethodConfigurationUpdateGrabpay? = nil, ideal: PaymentMethodConfigurationUpdateIdeal? = nil, jcb: PaymentMethodConfigurationUpdateJcb? = nil, kakaoPay: PaymentMethodConfigurationUpdateKakaoPay? = nil, klarna: PaymentMethodConfigurationUpdateKlarna? = nil, konbini: PaymentMethodConfigurationUpdateKonbini? = nil, krCard: PaymentMethodConfigurationUpdateKrCard? = nil, link: PaymentMethodConfigurationUpdateLink? = nil, mbWay: PaymentMethodConfigurationUpdateMbWay? = nil, mobilepay: PaymentMethodConfigurationUpdateMobilepay? = nil, multibanco: PaymentMethodConfigurationUpdateMultibanco? = nil, name: String? = nil, naverPay: PaymentMethodConfigurationUpdateNaverPay? = nil, nzBankAccount: PaymentMethodConfigurationUpdateNzBankAccount? = nil, oxxo: PaymentMethodConfigurationUpdateOxxo? = nil, p24: PaymentMethodConfigurationUpdateP24? = nil, payByBank: PaymentMethodConfigurationUpdatePayByBank? = nil, payco: PaymentMethodConfigurationUpdatePayco? = nil, paynow: PaymentMethodConfigurationUpdatePaynow? = nil, paypal: PaymentMethodConfigurationUpdatePaypal? = nil, paypay: PaymentMethodConfigurationUpdatePaypay? = nil, payto: PaymentMethodConfigurationUpdatePayto? = nil, pix: PaymentMethodConfigurationUpdatePix? = nil, promptpay: PaymentMethodConfigurationUpdatePromptpay? = nil, revolutPay: PaymentMethodConfigurationUpdateRevolutPay? = nil, samsungPay: PaymentMethodConfigurationUpdateSamsungPay? = nil, satispay: PaymentMethodConfigurationUpdateSatispay? = nil, scalapay: PaymentMethodConfigurationUpdateScalapay? = nil, sepaDebit: PaymentMethodConfigurationUpdateSepaDebit? = nil, sequra: PaymentMethodConfigurationUpdateSequra? = nil, sofort: PaymentMethodConfigurationUpdateSofort? = nil, sunbit: PaymentMethodConfigurationUpdateSunbit? = nil, swish: PaymentMethodConfigurationUpdateSwish? = nil, twint: PaymentMethodConfigurationUpdateTwint? = nil, upi: PaymentMethodConfigurationUpdateUpi? = nil, usBankAccount: PaymentMethodConfigurationUpdateUsBankAccount? = nil, wechatPay: PaymentMethodConfigurationUpdateWechatPay? = nil, zip: PaymentMethodConfigurationUpdateZip? = nil) {
+    public init(acssDebit: PaymentMethodConfigurationAcssDebit? = nil, active: Bool? = nil, affirm: PaymentMethodConfigurationAffirm? = nil, afterpayClearpay: PaymentMethodConfigurationAfterpayClearpay? = nil, alipay: PaymentMethodConfigurationAlipay? = nil, alma: PaymentMethodConfigurationAlma? = nil, amazonPay: PaymentMethodConfigurationAmazonPay? = nil, applePay: PaymentMethodConfigurationApplePay? = nil, applePayLater: PaymentMethodConfigurationApplePayLater? = nil, auBecsDebit: PaymentMethodConfigurationAuBecsDebit? = nil, bacsDebit: PaymentMethodConfigurationBacsDebit? = nil, bancontact: PaymentMethodConfigurationBancontact? = nil, billie: PaymentMethodConfigurationBillie? = nil, bizum: PaymentMethodConfigurationBizum? = nil, blik: PaymentMethodConfigurationBlik? = nil, boleto: PaymentMethodConfigurationBoleto? = nil, card: PaymentMethodConfigurationCard? = nil, cartesBancaires: PaymentMethodConfigurationCartesBancaires? = nil, cashapp: PaymentMethodConfigurationCashapp? = nil, crypto: PaymentMethodConfigurationCrypto? = nil, customerBalance: PaymentMethodConfigurationCustomerBalance? = nil, eps: PaymentMethodConfigurationEps? = nil, expand: [String]? = nil, fpx: PaymentMethodConfigurationFpx? = nil, frMealVoucherConecs: PaymentMethodConfigurationFrMealVoucherConecs? = nil, giropay: PaymentMethodConfigurationGiropay? = nil, googlePay: PaymentMethodConfigurationGooglePay? = nil, grabpay: PaymentMethodConfigurationGrabpay? = nil, ideal: PaymentMethodConfigurationIdeal? = nil, jcb: PaymentMethodConfigurationJcb? = nil, kakaoPay: PaymentMethodConfigurationKakaoPay? = nil, klarna: PaymentMethodConfigurationKlarna? = nil, konbini: PaymentMethodConfigurationKonbini? = nil, krCard: PaymentMethodConfigurationKrCard? = nil, link: PaymentMethodConfigurationLink? = nil, mbWay: PaymentMethodConfigurationMbWay? = nil, mobilepay: PaymentMethodConfigurationMobilepay? = nil, multibanco: PaymentMethodConfigurationMultibanco? = nil, name: String? = nil, naverPay: PaymentMethodConfigurationNaverPay? = nil, nzBankAccount: PaymentMethodConfigurationNzBankAccount? = nil, oxxo: PaymentMethodConfigurationOxxo? = nil, p24: PaymentMethodConfigurationP24? = nil, payByBank: PaymentMethodConfigurationPayByBank? = nil, payco: PaymentMethodConfigurationPayco? = nil, paynow: PaymentMethodConfigurationPaynow? = nil, paypal: PaymentMethodConfigurationPaypal? = nil, paypay: PaymentMethodConfigurationPaypay? = nil, payto: PaymentMethodConfigurationPayto? = nil, pix: PaymentMethodConfigurationPix? = nil, promptpay: PaymentMethodConfigurationPromptpay? = nil, revolutPay: PaymentMethodConfigurationRevolutPay? = nil, samsungPay: PaymentMethodConfigurationSamsungPay? = nil, satispay: PaymentMethodConfigurationSatispay? = nil, scalapay: PaymentMethodConfigurationScalapay? = nil, sepaDebit: PaymentMethodConfigurationSepaDebit? = nil, sequra: PaymentMethodConfigurationSequra? = nil, sofort: PaymentMethodConfigurationSofort? = nil, sunbit: PaymentMethodConfigurationSunbit? = nil, swish: PaymentMethodConfigurationSwish? = nil, twint: PaymentMethodConfigurationTwint? = nil, upi: PaymentMethodConfigurationUpi? = nil, usBankAccount: PaymentMethodConfigurationUsBankAccount? = nil, wechatPay: PaymentMethodConfigurationWechatPay? = nil, zip: PaymentMethodConfigurationZip? = nil) {
         self.acssDebit = acssDebit
         self.active = active
         self.affirm = affirm
@@ -880,11 +880,11 @@ public struct PaymentMethodConfigurationUpdateParams: StripeParams {
 
 /// Canadian pre-authorized debit payments, check this
 /// [page](https://docs.stripe.com/payments/acss-debit) for more details like country availability.
-public struct PaymentMethodConfigurationCreateAcssDebit: StripeParams {
+public struct PaymentMethodConfigurationAcssDebit: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateAcssDebitDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationAcssDebitDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateAcssDebitDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationAcssDebitDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -894,16 +894,16 @@ public struct PaymentMethodConfigurationCreateAcssDebit: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateAcssDebitDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationAcssDebitDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateAcssDebitDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationAcssDebitDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateAcssDebitDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationAcssDebitDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateAcssDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationAcssDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -919,11 +919,11 @@ public struct PaymentMethodConfigurationCreateAcssDebitDisplayPreferencePreferen
 /// payments. Depending on the purchase, they can pay with four interest-free payments (Split Pay) or
 /// pay over a longer term (Installments), which might include interest. Check this
 /// [page](https://docs.stripe.com/payments/affirm) for more details like country availability.
-public struct PaymentMethodConfigurationCreateAffirm: StripeParams {
+public struct PaymentMethodConfigurationAffirm: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateAffirmDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationAffirmDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateAffirmDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationAffirmDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -933,16 +933,16 @@ public struct PaymentMethodConfigurationCreateAffirm: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateAffirmDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationAffirmDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateAffirmDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationAffirmDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateAffirmDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationAffirmDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateAffirmDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationAffirmDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -958,11 +958,11 @@ public struct PaymentMethodConfigurationCreateAffirmDisplayPreferencePreference:
 /// [page](https://docs.stripe.com/payments/afterpay-clearpay) for more details like country
 /// availability. Afterpay is particularly popular among businesses selling fashion, beauty, and sports
 /// products.
-public struct PaymentMethodConfigurationCreateAfterpayClearpay: StripeParams {
+public struct PaymentMethodConfigurationAfterpayClearpay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationAfterpayClearpayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationAfterpayClearpayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -972,16 +972,16 @@ public struct PaymentMethodConfigurationCreateAfterpayClearpay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationAfterpayClearpayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationAfterpayClearpayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationAfterpayClearpayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationAfterpayClearpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -997,11 +997,11 @@ public struct PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreferenceP
 /// users can pay on the web or on a mobile device using login credentials or their Alipay app. Alipay
 /// has a low dispute rate and reduces fraud by authenticating payments using the customer's login
 /// credentials. Check this [page](https://docs.stripe.com/payments/alipay) for more details.
-public struct PaymentMethodConfigurationCreateAlipay: StripeParams {
+public struct PaymentMethodConfigurationAlipay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateAlipayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationAlipayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateAlipayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationAlipayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1011,16 +1011,16 @@ public struct PaymentMethodConfigurationCreateAlipay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateAlipayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationAlipayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateAlipayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationAlipayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateAlipayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationAlipayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateAlipayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationAlipayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1034,11 +1034,11 @@ public struct PaymentMethodConfigurationCreateAlipayDisplayPreferencePreference:
 
 /// Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4
 /// installments.
-public struct PaymentMethodConfigurationCreateAlma: StripeParams {
+public struct PaymentMethodConfigurationAlma: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateAlmaDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationAlmaDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateAlmaDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationAlmaDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1048,16 +1048,16 @@ public struct PaymentMethodConfigurationCreateAlma: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateAlmaDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationAlmaDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateAlmaDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationAlmaDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateAlmaDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationAlmaDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateAlmaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationAlmaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1070,11 +1070,11 @@ public struct PaymentMethodConfigurationCreateAlmaDisplayPreferencePreference: R
 }
 
 /// Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
-public struct PaymentMethodConfigurationCreateAmazonPay: StripeParams {
+public struct PaymentMethodConfigurationAmazonPay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateAmazonPayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationAmazonPayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateAmazonPayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationAmazonPayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1084,16 +1084,16 @@ public struct PaymentMethodConfigurationCreateAmazonPay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateAmazonPayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationAmazonPayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateAmazonPayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationAmazonPayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateAmazonPayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationAmazonPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateAmazonPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationAmazonPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1110,11 +1110,11 @@ public struct PaymentMethodConfigurationCreateAmazonPayDisplayPreferencePreferen
 /// additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the
 /// same as other card transactions. Check this [page](https://docs.stripe.com/apple-pay) for more
 /// details.
-public struct PaymentMethodConfigurationCreateApplePay: StripeParams {
+public struct PaymentMethodConfigurationApplePay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateApplePayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationApplePayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateApplePayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationApplePayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1124,16 +1124,16 @@ public struct PaymentMethodConfigurationCreateApplePay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateApplePayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationApplePayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateApplePayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationApplePayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateApplePayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationApplePayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateApplePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationApplePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1147,11 +1147,11 @@ public struct PaymentMethodConfigurationCreateApplePayDisplayPreferencePreferenc
 
 /// Apple Pay Later, a payment method for customers to buy now and pay later, gives your customers a way
 /// to split purchases into four installments across six weeks.
-public struct PaymentMethodConfigurationCreateApplePayLater: StripeParams {
+public struct PaymentMethodConfigurationApplePayLater: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateApplePayLaterDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationApplePayLaterDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateApplePayLaterDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationApplePayLaterDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1161,16 +1161,16 @@ public struct PaymentMethodConfigurationCreateApplePayLater: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateApplePayLaterDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationApplePayLaterDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateApplePayLaterDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationApplePayLaterDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateApplePayLaterDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationApplePayLaterDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateApplePayLaterDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationApplePayLaterDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1185,11 +1185,11 @@ public struct PaymentMethodConfigurationCreateApplePayLaterDisplayPreferencePref
 /// Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments
 /// from customers with an Australian bank account. Check this
 /// [page](https://docs.stripe.com/payments/au-becs-debit) for more details.
-public struct PaymentMethodConfigurationCreateAuBecsDebit: StripeParams {
+public struct PaymentMethodConfigurationAuBecsDebit: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateAuBecsDebitDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationAuBecsDebitDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateAuBecsDebitDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationAuBecsDebitDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1199,16 +1199,16 @@ public struct PaymentMethodConfigurationCreateAuBecsDebit: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateAuBecsDebitDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationAuBecsDebitDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateAuBecsDebitDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationAuBecsDebitDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateAuBecsDebitDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationAuBecsDebitDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateAuBecsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationAuBecsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1222,11 +1222,11 @@ public struct PaymentMethodConfigurationCreateAuBecsDebitDisplayPreferencePrefer
 
 /// Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account,
 /// check this [page](https://docs.stripe.com/payments/payment-methods/bacs-debit) for more details.
-public struct PaymentMethodConfigurationCreateBacsDebit: StripeParams {
+public struct PaymentMethodConfigurationBacsDebit: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateBacsDebitDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationBacsDebitDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateBacsDebitDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationBacsDebitDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1236,16 +1236,16 @@ public struct PaymentMethodConfigurationCreateBacsDebit: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateBacsDebitDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationBacsDebitDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateBacsDebitDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationBacsDebitDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateBacsDebitDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationBacsDebitDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateBacsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationBacsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1261,11 +1261,11 @@ public struct PaymentMethodConfigurationCreateBacsDebitDisplayPreferencePreferen
 /// circulation. [Customers](https://docs.stripe.com/api/customers) use a Bancontact card or mobile app
 /// linked to a Belgian bank account to make online payments that are secure, guaranteed, and confirmed
 /// immediately. Check this [page](https://docs.stripe.com/payments/bancontact) for more details.
-public struct PaymentMethodConfigurationCreateBancontact: StripeParams {
+public struct PaymentMethodConfigurationBancontact: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateBancontactDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationBancontactDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateBancontactDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationBancontactDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1275,16 +1275,16 @@ public struct PaymentMethodConfigurationCreateBancontact: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateBancontactDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationBancontactDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateBancontactDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationBancontactDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateBancontactDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationBancontactDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateBancontactDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationBancontactDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1301,11 +1301,11 @@ public struct PaymentMethodConfigurationCreateBancontactDisplayPreferencePrefere
 /// are redirected from your website or app, authorize the payment with Billie, then return to your
 /// website or app. You get [immediate notification](/payments/payment-methods#payment-notification) of
 /// whether the payment succeeded or failed.
-public struct PaymentMethodConfigurationCreateBillie: StripeParams {
+public struct PaymentMethodConfigurationBillie: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateBillieDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationBillieDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateBillieDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationBillieDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1315,16 +1315,16 @@ public struct PaymentMethodConfigurationCreateBillie: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateBillieDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationBillieDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateBillieDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationBillieDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateBillieDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationBillieDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateBillieDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationBillieDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1338,11 +1338,11 @@ public struct PaymentMethodConfigurationCreateBillieDisplayPreferencePreference:
 
 /// To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking
 /// app, they can enable Bizum and link their mobile number to their IBAN.
-public struct PaymentMethodConfigurationCreateBizum: StripeParams {
+public struct PaymentMethodConfigurationBizum: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateBizumDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationBizumDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateBizumDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationBizumDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1352,16 +1352,16 @@ public struct PaymentMethodConfigurationCreateBizum: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateBizumDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationBizumDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateBizumDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationBizumDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateBizumDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationBizumDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateBizumDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationBizumDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1377,11 +1377,11 @@ public struct PaymentMethodConfigurationCreateBizumDisplayPreferencePreference: 
 /// requires customers to authenticate their payments. When customers want to pay online using BLIK,
 /// they request a six-digit code from their banking application and enter it into the payment
 /// collection form. Check this [page](https://docs.stripe.com/payments/blik) for more details.
-public struct PaymentMethodConfigurationCreateBlik: StripeParams {
+public struct PaymentMethodConfigurationBlik: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateBlikDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationBlikDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateBlikDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationBlikDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1391,16 +1391,16 @@ public struct PaymentMethodConfigurationCreateBlik: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateBlikDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationBlikDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateBlikDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationBlikDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateBlikDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationBlikDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateBlikDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationBlikDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1414,11 +1414,11 @@ public struct PaymentMethodConfigurationCreateBlikDisplayPreferencePreference: R
 
 /// Boleto is an official (regulated by the Central Bank of Brazil) payment method in Brazil. Check this
 /// [page](https://docs.stripe.com/payments/boleto) for more details.
-public struct PaymentMethodConfigurationCreateBoleto: StripeParams {
+public struct PaymentMethodConfigurationBoleto: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateBoletoDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationBoletoDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateBoletoDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationBoletoDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1428,16 +1428,16 @@ public struct PaymentMethodConfigurationCreateBoleto: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateBoletoDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationBoletoDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateBoletoDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationBoletoDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateBoletoDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationBoletoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateBoletoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationBoletoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1451,11 +1451,11 @@ public struct PaymentMethodConfigurationCreateBoletoDisplayPreferencePreference:
 
 /// Cards are a popular way for consumers and businesses to pay online or in person. Stripe supports
 /// global and local card networks.
-public struct PaymentMethodConfigurationCreateCard: StripeParams {
+public struct PaymentMethodConfigurationCard: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateCardDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationCardDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateCardDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationCardDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1465,16 +1465,16 @@ public struct PaymentMethodConfigurationCreateCard: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateCardDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationCardDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateCardDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationCardDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateCardDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationCardDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1490,11 +1490,11 @@ public struct PaymentMethodConfigurationCreateCardDisplayPreferencePreference: R
 /// either Visa or Mastercard, meaning you can process these cards over either Cartes Bancaires or the
 /// Visa or Mastercard networks. Check this [page](https://docs.stripe.com/payments/cartes-bancaires)
 /// for more details.
-public struct PaymentMethodConfigurationCreateCartesBancaires: StripeParams {
+public struct PaymentMethodConfigurationCartesBancaires: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateCartesBancairesDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationCartesBancairesDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateCartesBancairesDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationCartesBancairesDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1504,16 +1504,16 @@ public struct PaymentMethodConfigurationCreateCartesBancaires: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateCartesBancairesDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationCartesBancairesDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateCartesBancairesDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationCartesBancairesDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateCartesBancairesDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationCartesBancairesDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateCartesBancairesDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationCartesBancairesDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1528,11 +1528,11 @@ public struct PaymentMethodConfigurationCreateCartesBancairesDisplayPreferencePr
 /// Cash App is a popular consumer app in the US that allows customers to bank, invest, send, and
 /// receive money using their digital wallet. Check this
 /// [page](https://docs.stripe.com/payments/cash-app-pay) for more details.
-public struct PaymentMethodConfigurationCreateCashapp: StripeParams {
+public struct PaymentMethodConfigurationCashapp: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateCashappDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationCashappDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateCashappDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationCashappDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1542,16 +1542,16 @@ public struct PaymentMethodConfigurationCreateCashapp: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateCashappDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationCashappDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateCashappDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationCashappDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateCashappDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationCashappDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateCashappDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationCashappDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1565,11 +1565,11 @@ public struct PaymentMethodConfigurationCreateCashappDisplayPreferencePreference
 
 /// [Stablecoin payments](https://docs.stripe.com/payments/stablecoin-payments) enable customers to pay
 /// in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
-public struct PaymentMethodConfigurationCreateCrypto: StripeParams {
+public struct PaymentMethodConfigurationCrypto: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateCryptoDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationCryptoDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateCryptoDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationCryptoDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1579,16 +1579,16 @@ public struct PaymentMethodConfigurationCreateCrypto: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateCryptoDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationCryptoDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateCryptoDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationCryptoDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateCryptoDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationCryptoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateCryptoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationCryptoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1603,11 +1603,11 @@ public struct PaymentMethodConfigurationCreateCryptoDisplayPreferencePreference:
 /// Uses a customer’s [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment.
 /// The cash balance can be funded via a bank transfer. Check this
 /// [page](https://docs.stripe.com/payments/bank-transfers) for more details.
-public struct PaymentMethodConfigurationCreateCustomerBalance: StripeParams {
+public struct PaymentMethodConfigurationCustomerBalance: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateCustomerBalanceDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationCustomerBalanceDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateCustomerBalanceDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationCustomerBalanceDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1617,16 +1617,16 @@ public struct PaymentMethodConfigurationCreateCustomerBalance: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateCustomerBalanceDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationCustomerBalanceDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateCustomerBalanceDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationCustomerBalanceDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateCustomerBalanceDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationCustomerBalanceDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateCustomerBalanceDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationCustomerBalanceDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1641,11 +1641,11 @@ public struct PaymentMethodConfigurationCreateCustomerBalanceDisplayPreferencePr
 /// EPS is an Austria-based payment method that allows customers to complete transactions online using
 /// their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of
 /// Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
-public struct PaymentMethodConfigurationCreateEps: StripeParams {
+public struct PaymentMethodConfigurationEps: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateEpsDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationEpsDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateEpsDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationEpsDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1655,16 +1655,16 @@ public struct PaymentMethodConfigurationCreateEps: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateEpsDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationEpsDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateEpsDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationEpsDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateEpsDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationEpsDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateEpsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationEpsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1682,11 +1682,11 @@ public struct PaymentMethodConfigurationCreateEpsDisplayPreferencePreference: Ra
 /// Group, which owns and operates FPX. It is one of the most popular online payment methods in
 /// Malaysia, with nearly 90 million transactions in 2018 according to BNM. Check this
 /// [page](https://docs.stripe.com/payments/fpx) for more details.
-public struct PaymentMethodConfigurationCreateFpx: StripeParams {
+public struct PaymentMethodConfigurationFpx: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateFpxDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationFpxDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateFpxDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationFpxDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1696,16 +1696,16 @@ public struct PaymentMethodConfigurationCreateFpx: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateFpxDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationFpxDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateFpxDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationFpxDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateFpxDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationFpxDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateFpxDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationFpxDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1720,11 +1720,11 @@ public struct PaymentMethodConfigurationCreateFpxDisplayPreferencePreference: Ra
 /// Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by
 /// employers for their employees to purchase prepared food and beverages on working days. Check this
 /// [page](https://docs.stripe.com/payments/meal-vouchers/fr-meal-vouchers) for more details.
-public struct PaymentMethodConfigurationCreateFrMealVoucherConecs: StripeParams {
+public struct PaymentMethodConfigurationFrMealVoucherConecs: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationFrMealVoucherConecsDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationFrMealVoucherConecsDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1734,16 +1734,16 @@ public struct PaymentMethodConfigurationCreateFrMealVoucherConecs: StripeParams 
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationFrMealVoucherConecsDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationFrMealVoucherConecsDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationFrMealVoucherConecsDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationFrMealVoucherConecsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1760,11 +1760,11 @@ public struct PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferen
 /// their bank account. Depending on their bank, customers confirm payments on giropay using a second
 /// factor of authentication or a PIN. giropay accounts for 10% of online checkouts in Germany. Check
 /// this [page](https://docs.stripe.com/payments/giropay) for more details.
-public struct PaymentMethodConfigurationCreateGiropay: StripeParams {
+public struct PaymentMethodConfigurationGiropay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateGiropayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationGiropayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateGiropayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationGiropayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1774,16 +1774,16 @@ public struct PaymentMethodConfigurationCreateGiropay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateGiropayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationGiropayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateGiropayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationGiropayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateGiropayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationGiropayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateGiropayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationGiropayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1799,11 +1799,11 @@ public struct PaymentMethodConfigurationCreateGiropayDisplayPreferencePreference
 /// saved to their Google Account, including those from Google Play, YouTube, Chrome, or an Android
 /// device. Use the Google Pay API to request any credit or debit card stored in your customer's Google
 /// account. Check this [page](https://docs.stripe.com/google-pay) for more details.
-public struct PaymentMethodConfigurationCreateGooglePay: StripeParams {
+public struct PaymentMethodConfigurationGooglePay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateGooglePayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationGooglePayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateGooglePayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationGooglePayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1813,16 +1813,16 @@ public struct PaymentMethodConfigurationCreateGooglePay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateGooglePayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationGooglePayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateGooglePayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationGooglePayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateGooglePayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationGooglePayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateGooglePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationGooglePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1837,11 +1837,11 @@ public struct PaymentMethodConfigurationCreateGooglePayDisplayPreferencePreferen
 /// GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/).
 /// GrabPay is a digital wallet - customers maintain a balance in their wallets that they pay out with.
 /// Check this [page](https://docs.stripe.com/payments/grabpay) for more details.
-public struct PaymentMethodConfigurationCreateGrabpay: StripeParams {
+public struct PaymentMethodConfigurationGrabpay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateGrabpayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationGrabpayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateGrabpayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationGrabpayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1851,16 +1851,16 @@ public struct PaymentMethodConfigurationCreateGrabpay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateGrabpayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationGrabpayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateGrabpayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationGrabpayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateGrabpayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationGrabpayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateGrabpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationGrabpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1877,11 +1877,11 @@ public struct PaymentMethodConfigurationCreateGrabpayDisplayPreferencePreference
 /// operates iDEAL, making it the most popular online payment method in the Netherlands with a share of
 /// online transactions close to 55%. Check this [page](https://docs.stripe.com/payments/ideal) for more
 /// details.
-public struct PaymentMethodConfigurationCreateIdeal: StripeParams {
+public struct PaymentMethodConfigurationIdeal: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateIdealDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationIdealDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateIdealDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationIdealDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1891,16 +1891,16 @@ public struct PaymentMethodConfigurationCreateIdeal: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateIdealDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationIdealDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateIdealDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationIdealDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateIdealDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationIdealDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateIdealDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationIdealDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1918,11 +1918,11 @@ public struct PaymentMethodConfigurationCreateIdealDisplayPreferencePreference: 
 /// Economic Area except Iceland. Check this
 /// [page](https://support.stripe.com/questions/accepting-japan-credit-bureau-%28jcb%29-payments) for
 /// more details.
-public struct PaymentMethodConfigurationCreateJcb: StripeParams {
+public struct PaymentMethodConfigurationJcb: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateJcbDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationJcbDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateJcbDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationJcbDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1932,16 +1932,16 @@ public struct PaymentMethodConfigurationCreateJcb: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateJcbDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationJcbDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateJcbDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationJcbDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateJcbDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationJcbDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateJcbDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationJcbDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1954,11 +1954,11 @@ public struct PaymentMethodConfigurationCreateJcbDisplayPreferencePreference: Ra
 }
 
 /// Kakao Pay is a popular local wallet available in South Korea.
-public struct PaymentMethodConfigurationCreateKakaoPay: StripeParams {
+public struct PaymentMethodConfigurationKakaoPay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateKakaoPayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationKakaoPayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateKakaoPayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationKakaoPayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -1968,16 +1968,16 @@ public struct PaymentMethodConfigurationCreateKakaoPay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateKakaoPayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationKakaoPayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateKakaoPayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationKakaoPayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateKakaoPayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationKakaoPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateKakaoPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationKakaoPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1994,11 +1994,11 @@ public struct PaymentMethodConfigurationCreateKakaoPayDisplayPreferencePreferenc
 /// options vary depending on the customer's billing address and the transaction amount. These payment
 /// options make it convenient for customers to purchase items in all price ranges. Check this
 /// [page](https://docs.stripe.com/payments/klarna) for more details.
-public struct PaymentMethodConfigurationCreateKlarna: StripeParams {
+public struct PaymentMethodConfigurationKlarna: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateKlarnaDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationKlarnaDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateKlarnaDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationKlarnaDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2008,16 +2008,16 @@ public struct PaymentMethodConfigurationCreateKlarna: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateKlarnaDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationKlarnaDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateKlarnaDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationKlarnaDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateKlarnaDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationKlarnaDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateKlarnaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationKlarnaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2031,11 +2031,11 @@ public struct PaymentMethodConfigurationCreateKlarnaDisplayPreferencePreference:
 
 /// Konbini allows customers in Japan to pay for bills and online purchases at convenience stores with
 /// cash. Check this [page](https://docs.stripe.com/payments/konbini) for more details.
-public struct PaymentMethodConfigurationCreateKonbini: StripeParams {
+public struct PaymentMethodConfigurationKonbini: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateKonbiniDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationKonbiniDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateKonbiniDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationKonbiniDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2045,16 +2045,16 @@ public struct PaymentMethodConfigurationCreateKonbini: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateKonbiniDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationKonbiniDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateKonbiniDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationKonbiniDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateKonbiniDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationKonbiniDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateKonbiniDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationKonbiniDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2067,11 +2067,11 @@ public struct PaymentMethodConfigurationCreateKonbiniDisplayPreferencePreference
 }
 
 /// Korean cards let users pay using locally issued cards from South Korea.
-public struct PaymentMethodConfigurationCreateKrCard: StripeParams {
+public struct PaymentMethodConfigurationKrCard: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateKrCardDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationKrCardDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateKrCardDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationKrCardDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2081,16 +2081,16 @@ public struct PaymentMethodConfigurationCreateKrCard: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateKrCardDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationKrCardDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateKrCardDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationKrCardDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateKrCardDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationKrCardDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateKrCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationKrCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2105,11 +2105,11 @@ public struct PaymentMethodConfigurationCreateKrCardDisplayPreferencePreference:
 /// [Link](https://docs.stripe.com/payments/link) is a payment method network. With Link, users save
 /// their payment details once, then reuse that information to pay with one click for any business on
 /// the network.
-public struct PaymentMethodConfigurationCreateLink: StripeParams {
+public struct PaymentMethodConfigurationLink: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateLinkDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationLinkDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateLinkDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationLinkDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2119,16 +2119,16 @@ public struct PaymentMethodConfigurationCreateLink: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateLinkDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationLinkDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateLinkDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationLinkDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateLinkDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationLinkDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateLinkDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationLinkDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2143,11 +2143,11 @@ public struct PaymentMethodConfigurationCreateLinkDisplayPreferencePreference: R
 /// MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout,
 /// customers approve the payment directly in their MB WAY app. Check this
 /// [page](https://docs.stripe.com/payments/mb-way) for more details.
-public struct PaymentMethodConfigurationCreateMbWay: StripeParams {
+public struct PaymentMethodConfigurationMbWay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateMbWayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationMbWayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateMbWayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationMbWayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2157,16 +2157,16 @@ public struct PaymentMethodConfigurationCreateMbWay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateMbWayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationMbWayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateMbWayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationMbWayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateMbWayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationMbWayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateMbWayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationMbWayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2182,11 +2182,11 @@ public struct PaymentMethodConfigurationCreateMbWayDisplayPreferencePreference: 
 /// payment method used in Denmark and Finland. It allows customers to [authenticate and
 /// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the
 /// MobilePay app. Check this [page](https://docs.stripe.com/payments/mobilepay) for more details.
-public struct PaymentMethodConfigurationCreateMobilepay: StripeParams {
+public struct PaymentMethodConfigurationMobilepay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateMobilepayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationMobilepayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateMobilepayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationMobilepayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2196,16 +2196,16 @@ public struct PaymentMethodConfigurationCreateMobilepay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateMobilepayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationMobilepayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateMobilepayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationMobilepayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateMobilepayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationMobilepayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateMobilepayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationMobilepayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2220,11 +2220,11 @@ public struct PaymentMethodConfigurationCreateMobilepayDisplayPreferencePreferen
 /// Stripe users in Europe and the United States can accept Multibanco payments from customers in
 /// Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating
 /// payments using any supported method.
-public struct PaymentMethodConfigurationCreateMultibanco: StripeParams {
+public struct PaymentMethodConfigurationMultibanco: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateMultibancoDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationMultibancoDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateMultibancoDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationMultibancoDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2234,16 +2234,16 @@ public struct PaymentMethodConfigurationCreateMultibanco: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateMultibancoDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationMultibancoDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateMultibancoDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationMultibancoDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateMultibancoDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationMultibancoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateMultibancoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationMultibancoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2256,11 +2256,11 @@ public struct PaymentMethodConfigurationCreateMultibancoDisplayPreferencePrefere
 }
 
 /// Naver Pay is a popular local wallet available in South Korea.
-public struct PaymentMethodConfigurationCreateNaverPay: StripeParams {
+public struct PaymentMethodConfigurationNaverPay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateNaverPayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationNaverPayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateNaverPayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationNaverPayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2270,16 +2270,16 @@ public struct PaymentMethodConfigurationCreateNaverPay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateNaverPayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationNaverPayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateNaverPayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationNaverPayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateNaverPayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationNaverPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateNaverPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationNaverPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2294,11 +2294,11 @@ public struct PaymentMethodConfigurationCreateNaverPayDisplayPreferencePreferenc
 /// Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments
 /// from customers with a New Zeland bank account. Check this
 /// [page](https://docs.stripe.com/payments/nz-bank-account) for more details.
-public struct PaymentMethodConfigurationCreateNzBankAccount: StripeParams {
+public struct PaymentMethodConfigurationNzBankAccount: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateNzBankAccountDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationNzBankAccountDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateNzBankAccountDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationNzBankAccountDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2308,16 +2308,16 @@ public struct PaymentMethodConfigurationCreateNzBankAccount: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateNzBankAccountDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationNzBankAccountDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateNzBankAccountDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationNzBankAccountDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateNzBankAccountDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationNzBankAccountDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateNzBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationNzBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2333,11 +2333,11 @@ public struct PaymentMethodConfigurationCreateNzBankAccountDisplayPreferencePref
 /// represents nearly 20% of online transactions in Mexico. OXXO allows customers to pay bills and
 /// online purchases in-store with cash. Check this [page](https://docs.stripe.com/payments/oxxo) for
 /// more details.
-public struct PaymentMethodConfigurationCreateOxxo: StripeParams {
+public struct PaymentMethodConfigurationOxxo: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateOxxoDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationOxxoDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateOxxoDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationOxxoDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2347,16 +2347,16 @@ public struct PaymentMethodConfigurationCreateOxxo: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateOxxoDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationOxxoDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateOxxoDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationOxxoDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateOxxoDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationOxxoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateOxxoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationOxxoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2372,11 +2372,11 @@ public struct PaymentMethodConfigurationCreateOxxoDisplayPreferencePreference: R
 /// transactions online using bank transfers and other methods. Bank transfers account for 30% of online
 /// payments in Poland and Przelewy24 provides a way for customers to pay with over 165 banks. Check
 /// this [page](https://docs.stripe.com/payments/p24) for more details.
-public struct PaymentMethodConfigurationCreateP24: StripeParams {
+public struct PaymentMethodConfigurationP24: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateP24DisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationP24DisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateP24DisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationP24DisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2386,16 +2386,16 @@ public struct PaymentMethodConfigurationCreateP24: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateP24DisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationP24DisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateP24DisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationP24DisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateP24DisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationP24DisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateP24DisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationP24DisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2411,11 +2411,11 @@ public struct PaymentMethodConfigurationCreateP24DisplayPreferencePreference: Ra
 /// bank to authorize a bank transfer for a given amount. This removes a lot of the error risks inherent
 /// in waiting for the customer to initiate a transfer themselves, and is less expensive than card
 /// payments.
-public struct PaymentMethodConfigurationCreatePayByBank: StripeParams {
+public struct PaymentMethodConfigurationPayByBank: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreatePayByBankDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationPayByBankDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreatePayByBankDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationPayByBankDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2425,16 +2425,16 @@ public struct PaymentMethodConfigurationCreatePayByBank: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreatePayByBankDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationPayByBankDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreatePayByBankDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationPayByBankDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreatePayByBankDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationPayByBankDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreatePayByBankDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationPayByBankDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2448,11 +2448,11 @@ public struct PaymentMethodConfigurationCreatePayByBankDisplayPreferencePreferen
 
 /// PAYCO is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
 /// available in South Korea.
-public struct PaymentMethodConfigurationCreatePayco: StripeParams {
+public struct PaymentMethodConfigurationPayco: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreatePaycoDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationPaycoDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreatePaycoDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationPaycoDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2462,16 +2462,16 @@ public struct PaymentMethodConfigurationCreatePayco: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreatePaycoDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationPaycoDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreatePaycoDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationPaycoDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreatePaycoDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationPaycoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreatePaycoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationPaycoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2486,11 +2486,11 @@ public struct PaymentMethodConfigurationCreatePaycoDisplayPreferencePreference: 
 /// PayNow is a Singapore-based payment method that allows customers to make a payment using their
 /// preferred app from participating banks and participating non-bank financial institutions. Check this
 /// [page](https://docs.stripe.com/payments/paynow) for more details.
-public struct PaymentMethodConfigurationCreatePaynow: StripeParams {
+public struct PaymentMethodConfigurationPaynow: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreatePaynowDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationPaynowDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreatePaynowDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationPaynowDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2500,16 +2500,16 @@ public struct PaymentMethodConfigurationCreatePaynow: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreatePaynowDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationPaynowDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreatePaynowDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationPaynowDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreatePaynowDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationPaynowDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreatePaynowDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationPaynowDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2524,11 +2524,11 @@ public struct PaymentMethodConfigurationCreatePaynowDisplayPreferencePreference:
 /// PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay
 /// using their PayPal account. Check this [page](https://docs.stripe.com/payments/paypal) for more
 /// details.
-public struct PaymentMethodConfigurationCreatePaypal: StripeParams {
+public struct PaymentMethodConfigurationPaypal: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreatePaypalDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationPaypalDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreatePaypalDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationPaypalDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2538,16 +2538,16 @@ public struct PaymentMethodConfigurationCreatePaypal: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreatePaypalDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationPaypalDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreatePaypalDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationPaypalDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreatePaypalDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationPaypalDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreatePaypalDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationPaypalDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2560,11 +2560,11 @@ public struct PaymentMethodConfigurationCreatePaypalDisplayPreferencePreference:
 }
 
 /// Customers can pay with PayPay online or using the PayPay app.
-public struct PaymentMethodConfigurationCreatePaypay: StripeParams {
+public struct PaymentMethodConfigurationPaypay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreatePaypayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationPaypayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreatePaypayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationPaypayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2574,16 +2574,16 @@ public struct PaymentMethodConfigurationCreatePaypay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreatePaypayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationPaypayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreatePaypayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationPaypayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreatePaypayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationPaypayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreatePaypayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationPaypayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2599,11 +2599,11 @@ public struct PaymentMethodConfigurationCreatePaypayDisplayPreferencePreference:
 /// customers in Australia to pay by providing their bank account details. Customers must accept a
 /// mandate authorizing you to debit their account. Check this
 /// [page](https://docs.stripe.com/payments/payto) for more details.
-public struct PaymentMethodConfigurationCreatePayto: StripeParams {
+public struct PaymentMethodConfigurationPayto: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreatePaytoDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationPaytoDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreatePaytoDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationPaytoDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2613,16 +2613,16 @@ public struct PaymentMethodConfigurationCreatePayto: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreatePaytoDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationPaytoDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreatePaytoDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationPaytoDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreatePaytoDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationPaytoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreatePaytoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationPaytoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2637,11 +2637,11 @@ public struct PaymentMethodConfigurationCreatePaytoDisplayPreferencePreference: 
 /// Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve
 /// payments by scanning a QR code in their preferred banking app. Check this
 /// [page](https://docs.stripe.com/payments/pix) for more details.
-public struct PaymentMethodConfigurationCreatePix: StripeParams {
+public struct PaymentMethodConfigurationPix: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreatePixDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationPixDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreatePixDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationPixDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2651,16 +2651,16 @@ public struct PaymentMethodConfigurationCreatePix: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreatePixDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationPixDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreatePixDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationPixDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreatePixDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationPixDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreatePixDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationPixDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2675,11 +2675,11 @@ public struct PaymentMethodConfigurationCreatePixDisplayPreferencePreference: Ra
 /// PromptPay is a Thailand-based payment method that allows customers to make a payment using their
 /// preferred app from participating banks. Check this
 /// [page](https://docs.stripe.com/payments/promptpay) for more details.
-public struct PaymentMethodConfigurationCreatePromptpay: StripeParams {
+public struct PaymentMethodConfigurationPromptpay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreatePromptpayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationPromptpayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreatePromptpayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationPromptpayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2689,16 +2689,16 @@ public struct PaymentMethodConfigurationCreatePromptpay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreatePromptpayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationPromptpayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreatePromptpayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationPromptpayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreatePromptpayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationPromptpayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreatePromptpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationPromptpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2713,11 +2713,11 @@ public struct PaymentMethodConfigurationCreatePromptpayDisplayPreferencePreferen
 /// Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut
 /// Pay uses the customer’s stored balance or cards to fund the payment, and offers the option for
 /// non-Revolut customers to save their details after their first purchase.
-public struct PaymentMethodConfigurationCreateRevolutPay: StripeParams {
+public struct PaymentMethodConfigurationRevolutPay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateRevolutPayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationRevolutPayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateRevolutPayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationRevolutPayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2727,16 +2727,16 @@ public struct PaymentMethodConfigurationCreateRevolutPay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateRevolutPayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationRevolutPayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateRevolutPayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationRevolutPayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateRevolutPayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationRevolutPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateRevolutPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationRevolutPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2750,11 +2750,11 @@ public struct PaymentMethodConfigurationCreateRevolutPayDisplayPreferencePrefere
 
 /// Samsung Pay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
 /// available in South Korea.
-public struct PaymentMethodConfigurationCreateSamsungPay: StripeParams {
+public struct PaymentMethodConfigurationSamsungPay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateSamsungPayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationSamsungPayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateSamsungPayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationSamsungPayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2764,16 +2764,16 @@ public struct PaymentMethodConfigurationCreateSamsungPay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateSamsungPayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationSamsungPayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateSamsungPayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationSamsungPayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateSamsungPayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationSamsungPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateSamsungPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationSamsungPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2791,11 +2791,11 @@ public struct PaymentMethodConfigurationCreateSamsungPayDisplayPreferencePrefere
 /// to your website or app. You get [immediate
 /// notification](/payments/payment-methods#payment-notification) of whether the payment succeeded or
 /// failed.
-public struct PaymentMethodConfigurationCreateSatispay: StripeParams {
+public struct PaymentMethodConfigurationSatispay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateSatispayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationSatispayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateSatispayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationSatispayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2805,16 +2805,16 @@ public struct PaymentMethodConfigurationCreateSatispay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateSatispayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationSatispayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateSatispayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationSatispayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateSatispayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationSatispayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateSatispayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationSatispayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2831,11 +2831,11 @@ public struct PaymentMethodConfigurationCreateSatispayDisplayPreferencePreferenc
 /// with Scalapay, then return to your website or app. You get [immediate
 /// notification](/payments/payment-methods#payment-notification) of whether the payment succeeded or
 /// failed.
-public struct PaymentMethodConfigurationCreateScalapay: StripeParams {
+public struct PaymentMethodConfigurationScalapay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateScalapayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationScalapayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateScalapayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationScalapayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2845,16 +2845,16 @@ public struct PaymentMethodConfigurationCreateScalapay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateScalapayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationScalapayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateScalapayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationScalapayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateScalapayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationScalapayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateScalapayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationScalapayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2871,11 +2871,11 @@ public struct PaymentMethodConfigurationCreateScalapayDisplayPreferencePreferenc
 /// established and enforced banking standards to allow for the direct debiting of every EUR-denominated
 /// bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit)
 /// for more details.
-public struct PaymentMethodConfigurationCreateSepaDebit: StripeParams {
+public struct PaymentMethodConfigurationSepaDebit: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateSepaDebitDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationSepaDebitDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateSepaDebitDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationSepaDebitDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2885,16 +2885,16 @@ public struct PaymentMethodConfigurationCreateSepaDebit: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateSepaDebitDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationSepaDebitDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateSepaDebitDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationSepaDebitDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateSepaDebitDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationSepaDebitDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateSepaDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationSepaDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2911,11 +2911,11 @@ public struct PaymentMethodConfigurationCreateSepaDebitDisplayPreferencePreferen
 /// or app, authorize the payment with SeQura, then return to your website or app. You get [immediate
 /// notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the
 /// payment succeeded or failed.
-public struct PaymentMethodConfigurationCreateSequra: StripeParams {
+public struct PaymentMethodConfigurationSequra: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateSequraDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationSequraDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateSequraDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationSequraDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2925,16 +2925,16 @@ public struct PaymentMethodConfigurationCreateSequra: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateSequraDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationSequraDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateSequraDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationSequraDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateSequraDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationSequraDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateSequraDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationSequraDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2950,11 +2950,11 @@ public struct PaymentMethodConfigurationCreateSequraDisplayPreferencePreference:
 /// API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating
 /// payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from
 /// customers. Check this [page](https://docs.stripe.com/payments/sofort) for more details.
-public struct PaymentMethodConfigurationCreateSofort: StripeParams {
+public struct PaymentMethodConfigurationSofort: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateSofortDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationSofortDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateSofortDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationSofortDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -2964,16 +2964,16 @@ public struct PaymentMethodConfigurationCreateSofort: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateSofortDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationSofortDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateSofortDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationSofortDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateSofortDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationSofortDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateSofortDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationSofortDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2990,11 +2990,11 @@ public struct PaymentMethodConfigurationCreateSofortDisplayPreferencePreference:
 /// website or app, authorize the payment with Sunbit, then return to your website or app. You get
 /// [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of
 /// whether the payment succeeded or failed.
-public struct PaymentMethodConfigurationCreateSunbit: StripeParams {
+public struct PaymentMethodConfigurationSunbit: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateSunbitDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationSunbitDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateSunbitDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationSunbitDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -3004,16 +3004,16 @@ public struct PaymentMethodConfigurationCreateSunbit: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateSunbitDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationSunbitDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateSunbitDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationSunbitDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateSunbitDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationSunbitDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateSunbitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationSunbitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3030,11 +3030,11 @@ public struct PaymentMethodConfigurationCreateSunbitDisplayPreferencePreference:
 /// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Swish
 /// mobile app and the Swedish BankID mobile app. Check this
 /// [page](https://docs.stripe.com/payments/swish) for more details.
-public struct PaymentMethodConfigurationCreateSwish: StripeParams {
+public struct PaymentMethodConfigurationSwish: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateSwishDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationSwishDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateSwishDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationSwishDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -3044,16 +3044,16 @@ public struct PaymentMethodConfigurationCreateSwish: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateSwishDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationSwishDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateSwishDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationSwishDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateSwishDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationSwishDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateSwishDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationSwishDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3067,11 +3067,11 @@ public struct PaymentMethodConfigurationCreateSwishDisplayPreferencePreference: 
 
 /// Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile
 /// phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
-public struct PaymentMethodConfigurationCreateTwint: StripeParams {
+public struct PaymentMethodConfigurationTwint: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateTwintDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationTwintDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateTwintDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationTwintDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -3081,16 +3081,16 @@ public struct PaymentMethodConfigurationCreateTwint: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateTwintDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationTwintDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateTwintDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationTwintDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateTwintDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationTwintDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateTwintDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationTwintDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3104,11 +3104,11 @@ public struct PaymentMethodConfigurationCreateTwintDisplayPreferencePreference: 
 
 /// Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it
 /// launched in 2016.
-public struct PaymentMethodConfigurationCreateUpi: StripeParams {
+public struct PaymentMethodConfigurationUpi: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateUpiDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationUpiDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateUpiDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationUpiDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -3118,16 +3118,16 @@ public struct PaymentMethodConfigurationCreateUpi: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateUpiDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationUpiDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateUpiDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationUpiDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateUpiDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationUpiDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateUpiDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationUpiDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3142,11 +3142,11 @@ public struct PaymentMethodConfigurationCreateUpiDisplayPreferencePreference: Ra
 /// Stripe users in the United States can accept ACH direct debit payments from customers with a US bank
 /// account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this
 /// [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
-public struct PaymentMethodConfigurationCreateUsBankAccount: StripeParams {
+public struct PaymentMethodConfigurationUsBankAccount: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateUsBankAccountDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationUsBankAccountDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateUsBankAccountDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationUsBankAccountDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -3156,16 +3156,16 @@ public struct PaymentMethodConfigurationCreateUsBankAccount: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateUsBankAccountDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationUsBankAccountDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateUsBankAccountDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationUsBankAccountDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateUsBankAccountDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationUsBankAccountDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateUsBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationUsBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3181,11 +3181,11 @@ public struct PaymentMethodConfigurationCreateUsBankAccountDisplayPreferencePref
 /// Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and
 /// websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and
 /// food/nutrition. Check this [page](https://docs.stripe.com/payments/wechat-pay) for more details.
-public struct PaymentMethodConfigurationCreateWechatPay: StripeParams {
+public struct PaymentMethodConfigurationWechatPay: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateWechatPayDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationWechatPayDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateWechatPayDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationWechatPayDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -3195,16 +3195,16 @@ public struct PaymentMethodConfigurationCreateWechatPay: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateWechatPayDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationWechatPayDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateWechatPayDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationWechatPayDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateWechatPayDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationWechatPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateWechatPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationWechatPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3218,11 +3218,11 @@ public struct PaymentMethodConfigurationCreateWechatPayDisplayPreferencePreferen
 
 /// Zip gives your customers a way to split purchases over a series of payments. Check this
 /// [page](https://docs.stripe.com/payments/zip) for more details like country availability.
-public struct PaymentMethodConfigurationCreateZip: StripeParams {
+public struct PaymentMethodConfigurationZip: StripeParams {
     /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationCreateZipDisplayPreference?
+    public var displayPreference: PaymentMethodConfigurationZipDisplayPreference?
 
-    public init(displayPreference: PaymentMethodConfigurationCreateZipDisplayPreference? = nil) {
+    public init(displayPreference: PaymentMethodConfigurationZipDisplayPreference? = nil) {
         self.displayPreference = displayPreference
     }
 
@@ -3232,2391 +3232,16 @@ public struct PaymentMethodConfigurationCreateZip: StripeParams {
 }
 
 /// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationCreateZipDisplayPreference: StripeParams {
+public struct PaymentMethodConfigurationZipDisplayPreference: StripeParams {
     /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationCreateZipDisplayPreferencePreference?
+    public var preference: PaymentMethodConfigurationZipDisplayPreferencePreference?
 
-    public init(preference: PaymentMethodConfigurationCreateZipDisplayPreferencePreference? = nil) {
+    public init(preference: PaymentMethodConfigurationZipDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
 }
 
-public struct PaymentMethodConfigurationCreateZipDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Canadian pre-authorized debit payments, check this
-/// [page](https://docs.stripe.com/payments/acss-debit) for more details like country availability.
-public struct PaymentMethodConfigurationUpdateAcssDebit: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateAcssDebitDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateAcssDebitDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateAcssDebitDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateAcssDebitDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateAcssDebitDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateAcssDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// [Affirm](https://www.affirm.com/) gives your customers a way to split purchases over a series of
-/// payments. Depending on the purchase, they can pay with four interest-free payments (Split Pay) or
-/// pay over a longer term (Installments), which might include interest. Check this
-/// [page](https://docs.stripe.com/payments/affirm) for more details like country availability.
-public struct PaymentMethodConfigurationUpdateAffirm: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateAffirmDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateAffirmDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateAffirmDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateAffirmDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateAffirmDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateAffirmDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Afterpay gives your customers a way to pay for purchases in installments, check this
-/// [page](https://docs.stripe.com/payments/afterpay-clearpay) for more details like country
-/// availability. Afterpay is particularly popular among businesses selling fashion, beauty, and sports
-/// products.
-public struct PaymentMethodConfigurationUpdateAfterpayClearpay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Alipay is a digital wallet in China that has more than a billion active users worldwide. Alipay
-/// users can pay on the web or on a mobile device using login credentials or their Alipay app. Alipay
-/// has a low dispute rate and reduces fraud by authenticating payments using the customer's login
-/// credentials. Check this [page](https://docs.stripe.com/payments/alipay) for more details.
-public struct PaymentMethodConfigurationUpdateAlipay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateAlipayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateAlipayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateAlipayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateAlipayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateAlipayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateAlipayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4
-/// installments.
-public struct PaymentMethodConfigurationUpdateAlma: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateAlmaDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateAlmaDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateAlmaDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateAlmaDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateAlmaDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateAlmaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
-public struct PaymentMethodConfigurationUpdateAmazonPay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateAmazonPayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateAmazonPayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateAmazonPayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateAmazonPayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateAmazonPayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateAmazonPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in
-/// iOS 9 and later, and on the web in Safari starting with iOS 10 or macOS Sierra. There are no
-/// additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the
-/// same as other card transactions. Check this [page](https://docs.stripe.com/apple-pay) for more
-/// details.
-public struct PaymentMethodConfigurationUpdateApplePay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateApplePayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateApplePayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateApplePayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateApplePayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateApplePayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateApplePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Apple Pay Later, a payment method for customers to buy now and pay later, gives your customers a way
-/// to split purchases into four installments across six weeks.
-public struct PaymentMethodConfigurationUpdateApplePayLater: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateApplePayLaterDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateApplePayLaterDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateApplePayLaterDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateApplePayLaterDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateApplePayLaterDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateApplePayLaterDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments
-/// from customers with an Australian bank account. Check this
-/// [page](https://docs.stripe.com/payments/au-becs-debit) for more details.
-public struct PaymentMethodConfigurationUpdateAuBecsDebit: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account,
-/// check this [page](https://docs.stripe.com/payments/payment-methods/bacs-debit) for more details.
-public struct PaymentMethodConfigurationUpdateBacsDebit: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateBacsDebitDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateBacsDebitDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateBacsDebitDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateBacsDebitDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateBacsDebitDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateBacsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Bancontact is the most popular online payment method in Belgium, with over 15 million cards in
-/// circulation. [Customers](https://docs.stripe.com/api/customers) use a Bancontact card or mobile app
-/// linked to a Belgian bank account to make online payments that are secure, guaranteed, and confirmed
-/// immediately. Check this [page](https://docs.stripe.com/payments/bancontact) for more details.
-public struct PaymentMethodConfigurationUpdateBancontact: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateBancontactDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateBancontactDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateBancontactDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateBancontactDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateBancontactDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateBancontactDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
-/// offers businesses Pay by Invoice where they offer payment terms ranging from 7-120 days. Customers
-/// are redirected from your website or app, authorize the payment with Billie, then return to your
-/// website or app. You get [immediate notification](/payments/payment-methods#payment-notification) of
-/// whether the payment succeeded or failed.
-public struct PaymentMethodConfigurationUpdateBillie: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateBillieDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateBillieDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateBillieDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateBillieDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateBillieDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateBillieDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking
-/// app, they can enable Bizum and link their mobile number to their IBAN.
-public struct PaymentMethodConfigurationUpdateBizum: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateBizumDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateBizumDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateBizumDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateBizumDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateBizumDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateBizumDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
-/// requires customers to authenticate their payments. When customers want to pay online using BLIK,
-/// they request a six-digit code from their banking application and enter it into the payment
-/// collection form. Check this [page](https://docs.stripe.com/payments/blik) for more details.
-public struct PaymentMethodConfigurationUpdateBlik: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateBlikDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateBlikDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateBlikDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateBlikDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateBlikDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateBlikDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Boleto is an official (regulated by the Central Bank of Brazil) payment method in Brazil. Check this
-/// [page](https://docs.stripe.com/payments/boleto) for more details.
-public struct PaymentMethodConfigurationUpdateBoleto: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateBoletoDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateBoletoDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateBoletoDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateBoletoDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateBoletoDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateBoletoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Cards are a popular way for consumers and businesses to pay online or in person. Stripe supports
-/// global and local card networks.
-public struct PaymentMethodConfigurationUpdateCard: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateCardDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateCardDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateCardDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateCardDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateCardDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Cartes Bancaires is France's local card network. More than 95% of these cards are co-branded with
-/// either Visa or Mastercard, meaning you can process these cards over either Cartes Bancaires or the
-/// Visa or Mastercard networks. Check this [page](https://docs.stripe.com/payments/cartes-bancaires)
-/// for more details.
-public struct PaymentMethodConfigurationUpdateCartesBancaires: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateCartesBancairesDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateCartesBancairesDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateCartesBancairesDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateCartesBancairesDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateCartesBancairesDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateCartesBancairesDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Cash App is a popular consumer app in the US that allows customers to bank, invest, send, and
-/// receive money using their digital wallet. Check this
-/// [page](https://docs.stripe.com/payments/cash-app-pay) for more details.
-public struct PaymentMethodConfigurationUpdateCashapp: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateCashappDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateCashappDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateCashappDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateCashappDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateCashappDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateCashappDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// [Stablecoin payments](https://docs.stripe.com/payments/stablecoin-payments) enable customers to pay
-/// in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
-public struct PaymentMethodConfigurationUpdateCrypto: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateCryptoDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateCryptoDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateCryptoDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateCryptoDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateCryptoDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateCryptoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Uses a customer’s [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment.
-/// The cash balance can be funded via a bank transfer. Check this
-/// [page](https://docs.stripe.com/payments/bank-transfers) for more details.
-public struct PaymentMethodConfigurationUpdateCustomerBalance: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// EPS is an Austria-based payment method that allows customers to complete transactions online using
-/// their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of
-/// Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
-public struct PaymentMethodConfigurationUpdateEps: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateEpsDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateEpsDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateEpsDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateEpsDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateEpsDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateEpsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Financial Process Exchange (FPX) is a Malaysia-based payment method that allows customers to
-/// complete transactions online using their bank credentials. Bank Negara Malaysia (BNM), the Central
-/// Bank of Malaysia, and eleven other major Malaysian financial institutions are members of the PayNet
-/// Group, which owns and operates FPX. It is one of the most popular online payment methods in
-/// Malaysia, with nearly 90 million transactions in 2018 according to BNM. Check this
-/// [page](https://docs.stripe.com/payments/fpx) for more details.
-public struct PaymentMethodConfigurationUpdateFpx: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateFpxDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateFpxDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateFpxDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateFpxDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateFpxDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateFpxDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by
-/// employers for their employees to purchase prepared food and beverages on working days. Check this
-/// [page](https://docs.stripe.com/payments/meal-vouchers/fr-meal-vouchers) for more details.
-public struct PaymentMethodConfigurationUpdateFrMealVoucherConecs: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// giropay is a German payment method based on online banking, introduced in 2006. It allows customers
-/// to complete transactions online using their online banking environment, with funds debited from
-/// their bank account. Depending on their bank, customers confirm payments on giropay using a second
-/// factor of authentication or a PIN. giropay accounts for 10% of online checkouts in Germany. Check
-/// this [page](https://docs.stripe.com/payments/giropay) for more details.
-public struct PaymentMethodConfigurationUpdateGiropay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateGiropayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateGiropayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateGiropayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateGiropayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateGiropayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateGiropayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Google Pay allows customers to make payments in your app or website using any credit or debit card
-/// saved to their Google Account, including those from Google Play, YouTube, Chrome, or an Android
-/// device. Use the Google Pay API to request any credit or debit card stored in your customer's Google
-/// account. Check this [page](https://docs.stripe.com/google-pay) for more details.
-public struct PaymentMethodConfigurationUpdateGooglePay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateGooglePayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateGooglePayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateGooglePayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateGooglePayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateGooglePayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateGooglePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/).
-/// GrabPay is a digital wallet - customers maintain a balance in their wallets that they pay out with.
-/// Check this [page](https://docs.stripe.com/payments/grabpay) for more details.
-public struct PaymentMethodConfigurationUpdateGrabpay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateGrabpayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateGrabpayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateGrabpayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateGrabpayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateGrabpayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateGrabpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// iDEAL is a Netherlands-based payment method that allows customers to complete transactions online
-/// using their bank credentials. All major Dutch banks are members of Currence, the scheme that
-/// operates iDEAL, making it the most popular online payment method in the Netherlands with a share of
-/// online transactions close to 55%. Check this [page](https://docs.stripe.com/payments/ideal) for more
-/// details.
-public struct PaymentMethodConfigurationUpdateIdeal: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateIdealDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateIdealDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateIdealDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateIdealDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateIdealDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateIdealDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses
-/// approved by JCB, and available to all businesses in Australia, Canada, Hong Kong, Japan, New
-/// Zealand, Singapore, Switzerland, United Kingdom, United States, and all countries in the European
-/// Economic Area except Iceland. Check this
-/// [page](https://support.stripe.com/questions/accepting-japan-credit-bureau-%28jcb%29-payments) for
-/// more details.
-public struct PaymentMethodConfigurationUpdateJcb: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateJcbDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateJcbDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateJcbDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateJcbDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateJcbDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateJcbDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Kakao Pay is a popular local wallet available in South Korea.
-public struct PaymentMethodConfigurationUpdateKakaoPay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateKakaoPayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateKakaoPayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateKakaoPayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateKakaoPayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateKakaoPayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateKakaoPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Klarna gives customers a range of [payment
-/// options](https://docs.stripe.com/payments/klarna#payment-options) during checkout. Available payment
-/// options vary depending on the customer's billing address and the transaction amount. These payment
-/// options make it convenient for customers to purchase items in all price ranges. Check this
-/// [page](https://docs.stripe.com/payments/klarna) for more details.
-public struct PaymentMethodConfigurationUpdateKlarna: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateKlarnaDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateKlarnaDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateKlarnaDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateKlarnaDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateKlarnaDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateKlarnaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Konbini allows customers in Japan to pay for bills and online purchases at convenience stores with
-/// cash. Check this [page](https://docs.stripe.com/payments/konbini) for more details.
-public struct PaymentMethodConfigurationUpdateKonbini: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateKonbiniDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateKonbiniDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateKonbiniDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateKonbiniDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateKonbiniDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateKonbiniDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Korean cards let users pay using locally issued cards from South Korea.
-public struct PaymentMethodConfigurationUpdateKrCard: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateKrCardDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateKrCardDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateKrCardDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateKrCardDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateKrCardDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateKrCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// [Link](https://docs.stripe.com/payments/link) is a payment method network. With Link, users save
-/// their payment details once, then reuse that information to pay with one click for any business on
-/// the network.
-public struct PaymentMethodConfigurationUpdateLink: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateLinkDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateLinkDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateLinkDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateLinkDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateLinkDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateLinkDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout,
-/// customers approve the payment directly in their MB WAY app. Check this
-/// [page](https://docs.stripe.com/payments/mb-way) for more details.
-public struct PaymentMethodConfigurationUpdateMbWay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateMbWayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateMbWayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateMbWayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateMbWayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateMbWayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateMbWayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// MobilePay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet
-/// payment method used in Denmark and Finland. It allows customers to [authenticate and
-/// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the
-/// MobilePay app. Check this [page](https://docs.stripe.com/payments/mobilepay) for more details.
-public struct PaymentMethodConfigurationUpdateMobilepay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateMobilepayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateMobilepayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateMobilepayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateMobilepayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateMobilepayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateMobilepayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Stripe users in Europe and the United States can accept Multibanco payments from customers in
-/// Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating
-/// payments using any supported method.
-public struct PaymentMethodConfigurationUpdateMultibanco: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateMultibancoDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateMultibancoDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateMultibancoDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateMultibancoDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateMultibancoDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateMultibancoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Naver Pay is a popular local wallet available in South Korea.
-public struct PaymentMethodConfigurationUpdateNaverPay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateNaverPayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateNaverPayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateNaverPayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateNaverPayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateNaverPayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateNaverPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments
-/// from customers with a New Zeland bank account. Check this
-/// [page](https://docs.stripe.com/payments/nz-bank-account) for more details.
-public struct PaymentMethodConfigurationUpdateNzBankAccount: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateNzBankAccountDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateNzBankAccountDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateNzBankAccountDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateNzBankAccountDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateNzBankAccountDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateNzBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and
-/// represents nearly 20% of online transactions in Mexico. OXXO allows customers to pay bills and
-/// online purchases in-store with cash. Check this [page](https://docs.stripe.com/payments/oxxo) for
-/// more details.
-public struct PaymentMethodConfigurationUpdateOxxo: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateOxxoDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateOxxoDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateOxxoDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateOxxoDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateOxxoDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateOxxoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Przelewy24 is a Poland-based payment method aggregator that allows customers to complete
-/// transactions online using bank transfers and other methods. Bank transfers account for 30% of online
-/// payments in Poland and Przelewy24 provides a way for customers to pay with over 165 banks. Check
-/// this [page](https://docs.stripe.com/payments/p24) for more details.
-public struct PaymentMethodConfigurationUpdateP24: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateP24DisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateP24DisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateP24DisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateP24DisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateP24DisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateP24DisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their
-/// bank to authorize a bank transfer for a given amount. This removes a lot of the error risks inherent
-/// in waiting for the customer to initiate a transfer themselves, and is less expensive than card
-/// payments.
-public struct PaymentMethodConfigurationUpdatePayByBank: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdatePayByBankDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdatePayByBankDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdatePayByBankDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdatePayByBankDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdatePayByBankDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdatePayByBankDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// PAYCO is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
-/// available in South Korea.
-public struct PaymentMethodConfigurationUpdatePayco: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdatePaycoDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdatePaycoDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdatePaycoDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdatePaycoDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdatePaycoDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdatePaycoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// PayNow is a Singapore-based payment method that allows customers to make a payment using their
-/// preferred app from participating banks and participating non-bank financial institutions. Check this
-/// [page](https://docs.stripe.com/payments/paynow) for more details.
-public struct PaymentMethodConfigurationUpdatePaynow: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdatePaynowDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdatePaynowDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdatePaynowDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdatePaynowDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdatePaynowDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdatePaynowDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay
-/// using their PayPal account. Check this [page](https://docs.stripe.com/payments/paypal) for more
-/// details.
-public struct PaymentMethodConfigurationUpdatePaypal: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdatePaypalDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdatePaypalDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdatePaypalDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdatePaypalDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdatePaypalDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdatePaypalDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Customers can pay with PayPay online or using the PayPay app.
-public struct PaymentMethodConfigurationUpdatePaypay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdatePaypayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdatePaypayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdatePaypayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdatePaypayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdatePaypayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdatePaypayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables
-/// customers in Australia to pay by providing their bank account details. Customers must accept a
-/// mandate authorizing you to debit their account. Check this
-/// [page](https://docs.stripe.com/payments/payto) for more details.
-public struct PaymentMethodConfigurationUpdatePayto: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdatePaytoDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdatePaytoDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdatePaytoDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdatePaytoDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdatePaytoDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdatePaytoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve
-/// payments by scanning a QR code in their preferred banking app. Check this
-/// [page](https://docs.stripe.com/payments/pix) for more details.
-public struct PaymentMethodConfigurationUpdatePix: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdatePixDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdatePixDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdatePixDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdatePixDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdatePixDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdatePixDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// PromptPay is a Thailand-based payment method that allows customers to make a payment using their
-/// preferred app from participating banks. Check this
-/// [page](https://docs.stripe.com/payments/promptpay) for more details.
-public struct PaymentMethodConfigurationUpdatePromptpay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdatePromptpayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdatePromptpayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdatePromptpayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdatePromptpayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdatePromptpayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdatePromptpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut
-/// Pay uses the customer’s stored balance or cards to fund the payment, and offers the option for
-/// non-Revolut customers to save their details after their first purchase.
-public struct PaymentMethodConfigurationUpdateRevolutPay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateRevolutPayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateRevolutPayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateRevolutPayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateRevolutPayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateRevolutPayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateRevolutPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Samsung Pay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
-/// available in South Korea.
-public struct PaymentMethodConfigurationUpdateSamsungPay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateSamsungPayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateSamsungPayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateSamsungPayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateSamsungPayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateSamsungPayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateSamsungPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Satispay is a [single-use](/payments/payment-methods#usage) payment method where customers are
-/// required to [authenticate](/payments/payment-methods#customer-actions) their payment. Customers pay
-/// by being redirected from your website or app, authorizing the payment with Satispay, then returning
-/// to your website or app. You get [immediate
-/// notification](/payments/payment-methods#payment-notification) of whether the payment succeeded or
-/// failed.
-public struct PaymentMethodConfigurationUpdateSatispay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateSatispayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateSatispayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateSatispayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateSatispayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateSatispayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateSatispayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Scalapay is a [single-use](/payments/payment-methods#usage) payment method that lets customers pay
-/// in 3 or 4 installments. Customers are redirected from your website or app, authorize the payment
-/// with Scalapay, then return to your website or app. You get [immediate
-/// notification](/payments/payment-methods#payment-notification) of whether the payment succeeded or
-/// failed.
-public struct PaymentMethodConfigurationUpdateScalapay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateScalapayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateScalapayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateScalapayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateScalapayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateScalapayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateScalapayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is
-/// an initiative of the European Union to simplify payments within and across member countries. SEPA
-/// established and enforced banking standards to allow for the direct debiting of every EUR-denominated
-/// bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit)
-/// for more details.
-public struct PaymentMethodConfigurationUpdateSepaDebit: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateSepaDebitDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateSepaDebitDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateSepaDebitDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateSepaDebitDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateSepaDebitDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateSepaDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
-/// offers customers payment terms ranging from 7-120 days. Customers are redirected from your website
-/// or app, authorize the payment with SeQura, then return to your website or app. You get [immediate
-/// notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the
-/// payment succeeded or failed.
-public struct PaymentMethodConfigurationUpdateSequra: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateSequraDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateSequraDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateSequraDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateSequraDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateSequraDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateSequraDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Stripe users in Europe and the United States can use the [Payment Intents
-/// API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating
-/// payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from
-/// customers. Check this [page](https://docs.stripe.com/payments/sofort) for more details.
-public struct PaymentMethodConfigurationUpdateSofort: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateSofortDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateSofortDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateSofortDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateSofortDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateSofortDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateSofortDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Sunbit is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method
-/// where customers choose to pay in 3, 6, or 12 installments. Customers are redirected from your
-/// website or app, authorize the payment with Sunbit, then return to your website or app. You get
-/// [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of
-/// whether the payment succeeded or failed.
-public struct PaymentMethodConfigurationUpdateSunbit: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateSunbitDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateSunbitDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateSunbitDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateSunbitDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateSunbitDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateSunbitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden.
-/// It allows customers to [authenticate and
-/// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Swish
-/// mobile app and the Swedish BankID mobile app. Check this
-/// [page](https://docs.stripe.com/payments/swish) for more details.
-public struct PaymentMethodConfigurationUpdateSwish: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateSwishDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateSwishDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateSwishDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateSwishDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateSwishDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateSwishDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile
-/// phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
-public struct PaymentMethodConfigurationUpdateTwint: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateTwintDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateTwintDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateTwintDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateTwintDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateTwintDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateTwintDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it
-/// launched in 2016.
-public struct PaymentMethodConfigurationUpdateUpi: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateUpiDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateUpiDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateUpiDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateUpiDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateUpiDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateUpiDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Stripe users in the United States can accept ACH direct debit payments from customers with a US bank
-/// account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this
-/// [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
-public struct PaymentMethodConfigurationUpdateUsBankAccount: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateUsBankAccountDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateUsBankAccountDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateUsBankAccountDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateUsBankAccountDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateUsBankAccountDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateUsBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users.
-/// Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and
-/// websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and
-/// food/nutrition. Check this [page](https://docs.stripe.com/payments/wechat-pay) for more details.
-public struct PaymentMethodConfigurationUpdateWechatPay: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateWechatPayDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateWechatPayDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateWechatPayDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateWechatPayDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateWechatPayDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateWechatPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var off: Self { .init(rawValue: "off") }
-    public static var on: Self { .init(rawValue: "on") }
-}
-
-/// Zip gives your customers a way to split purchases over a series of payments. Check this
-/// [page](https://docs.stripe.com/payments/zip) for more details like country availability.
-public struct PaymentMethodConfigurationUpdateZip: StripeParams {
-    /// Whether or not the payment method should be displayed.
-    public var displayPreference: PaymentMethodConfigurationUpdateZipDisplayPreference?
-
-    public init(displayPreference: PaymentMethodConfigurationUpdateZipDisplayPreference? = nil) {
-        self.displayPreference = displayPreference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case displayPreference = "display_preference"
-    }
-}
-
-/// Whether or not the payment method should be displayed.
-public struct PaymentMethodConfigurationUpdateZipDisplayPreference: StripeParams {
-    /// The account's preference for whether or not to display this payment method.
-    public var preference: PaymentMethodConfigurationUpdateZipDisplayPreferencePreference?
-
-    public init(preference: PaymentMethodConfigurationUpdateZipDisplayPreferencePreference? = nil) {
-        self.preference = preference
-    }
-}
-
-public struct PaymentMethodConfigurationUpdateZipDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodConfigurationZipDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

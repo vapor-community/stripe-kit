@@ -46,17 +46,17 @@ public struct PlanCreateParams: ClearableParams {
     public var meter: String?
     /// A brief description of the plan, hidden from customers.
     public var nickname: String?
-    public var product: PlanCreateProduct?
+    public var product: PlanProduct?
     /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
     /// `tiered`. See also the documentation for `billing_scheme`.
-    public var tiers: [PlanCreateTiers]?
+    public var tiers: [PlanTiers]?
     /// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the
     /// maximum quantity within a period determines the per unit price, in `graduated` tiering pricing can
     /// successively change as the quantity grows.
     public var tiersMode: PlanCreateTiersMode?
     /// Apply a transformation to the reported usage or set quantity before computing the billed price.
     /// Cannot be combined with `tiers`.
-    public var transformUsage: PlanCreateTransformUsage?
+    public var transformUsage: PlanTransformUsage?
     /// Default number of trial days when subscribing a customer to this plan using
     /// [`trial_from_plan=true`](https://docs.stripe.com/api#create_subscription-trial_from_plan).
     public var trialPeriodDays: Int?
@@ -67,7 +67,7 @@ public struct PlanCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(currency: String, interval: PlanCreateInterval, active: Bool? = nil, amount: Int? = nil, amountDecimal: String? = nil, billingScheme: PlanCreateBillingScheme? = nil, expand: [String]? = nil, id: String? = nil, intervalCount: Int? = nil, metadata: [String: String]? = nil, meter: String? = nil, nickname: String? = nil, product: PlanCreateProduct? = nil, tiers: [PlanCreateTiers]? = nil, tiersMode: PlanCreateTiersMode? = nil, transformUsage: PlanCreateTransformUsage? = nil, trialPeriodDays: Int? = nil, usageType: PlanCreateUsageType? = nil) {
+    public init(currency: String, interval: PlanCreateInterval, active: Bool? = nil, amount: Int? = nil, amountDecimal: String? = nil, billingScheme: PlanCreateBillingScheme? = nil, expand: [String]? = nil, id: String? = nil, intervalCount: Int? = nil, metadata: [String: String]? = nil, meter: String? = nil, nickname: String? = nil, product: PlanProduct? = nil, tiers: [PlanTiers]? = nil, tiersMode: PlanCreateTiersMode? = nil, transformUsage: PlanTransformUsage? = nil, trialPeriodDays: Int? = nil, usageType: PlanCreateUsageType? = nil) {
         self.currency = currency
         self.interval = interval
         self.active = active
@@ -233,7 +233,7 @@ public struct PlanCreateBillingScheme: RawRepresentable, Codable, Hashable, Send
 /// The product whose pricing the created plan will represent. This can either be the ID of an existing
 /// product, or a dictionary containing fields used to create a [service
 /// product](https://docs.stripe.com/api#product_object-type).
-public struct PlanCreateProductInlineProduct: StripeParams {
+public struct PlanProductInlineProduct: StripeParams {
     /// The product's name, meant to be displayable to the customer.
     public var name: String
     /// Whether the product is currently available for purchase. Defaults to `true`.
@@ -256,12 +256,12 @@ public struct PlanCreateProductInlineProduct: StripeParams {
     public var taxCode: String?
     /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
     /// location.
-    public var taxDetails: PlanCreateProductInlineProductTaxDetails?
+    public var taxDetails: PlanProductInlineProductTaxDetails?
     /// A label that represents units of this product. When set, this will be included in customers'
     /// receipts, invoices, Checkout, and the customer portal.
     public var unitLabel: String?
 
-    public init(name: String, active: Bool? = nil, id: String? = nil, metadata: [String: String]? = nil, statementDescriptor: String? = nil, taxCode: String? = nil, taxDetails: PlanCreateProductInlineProductTaxDetails? = nil, unitLabel: String? = nil) {
+    public init(name: String, active: Bool? = nil, id: String? = nil, metadata: [String: String]? = nil, statementDescriptor: String? = nil, taxCode: String? = nil, taxDetails: PlanProductInlineProductTaxDetails? = nil, unitLabel: String? = nil) {
         self.name = name
         self.active = active
         self.id = id
@@ -286,7 +286,7 @@ public struct PlanCreateProductInlineProduct: StripeParams {
 
 /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
 /// location.
-public struct PlanCreateProductInlineProductTaxDetails: ClearableParams {
+public struct PlanProductInlineProductTaxDetails: ClearableParams {
     /// A tax location ID. Depending on the [tax
     /// code](/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not
     /// supported.
@@ -314,8 +314,8 @@ public struct PlanCreateProductInlineProductTaxDetails: ClearableParams {
 }
 
 /// One of the forms `product` accepts.
-public enum PlanCreateProduct: Codable, Sendable, ExpressibleByStringLiteral {
-    case inlineProduct(PlanCreateProductInlineProduct)
+public enum PlanProduct: Codable, Sendable, ExpressibleByStringLiteral {
+    case inlineProduct(PlanProductInlineProduct)
     case value(String)
 
     public init(stringLiteral value: String) { self = .value(value) }
@@ -323,8 +323,8 @@ public enum PlanCreateProduct: Codable, Sendable, ExpressibleByStringLiteral {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(String.self) { self = .value(value); return }
-        if let value = try? PlanCreateProductInlineProduct(from: decoder) { self = .inlineProduct(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PlanCreateProduct matches")
+        if let value = try? PlanProductInlineProduct(from: decoder) { self = .inlineProduct(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PlanProduct matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -338,10 +338,10 @@ public enum PlanCreateProduct: Codable, Sendable, ExpressibleByStringLiteral {
     }
 }
 
-public struct PlanCreateTiers: StripeParams {
+public struct PlanTiers: StripeParams {
     /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
     /// tier adding one. Use `inf` to define a fallback tier.
-    public var upTo: PlanCreateTiersUpTo
+    public var upTo: PlanTiersUpTo
     /// The flat billing amount for an entire tier, regardless of the number of units in the tier.
     public var flatAmount: Int?
     /// Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the
@@ -353,7 +353,7 @@ public struct PlanCreateTiers: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(upTo: PlanCreateTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(upTo: PlanTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.upTo = upTo
         self.flatAmount = flatAmount
         self.flatAmountDecimal = flatAmountDecimal
@@ -371,7 +371,7 @@ public struct PlanCreateTiers: StripeParams {
 }
 
 /// One of the forms `up_to` accepts.
-public enum PlanCreateTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum PlanTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `inf`
     case inf
     case value(Int)
@@ -387,7 +387,7 @@ public enum PlanCreateTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral 
             }
         }
         if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PlanCreateTiersUpTo matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PlanTiersUpTo matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -415,13 +415,13 @@ public struct PlanCreateTiersMode: RawRepresentable, Codable, Hashable, Sendable
 
 /// Apply a transformation to the reported usage or set quantity before computing the billed price.
 /// Cannot be combined with `tiers`.
-public struct PlanCreateTransformUsage: StripeParams {
+public struct PlanTransformUsage: StripeParams {
     /// Divide usage by this number.
     public var divideBy: Int
     /// After division, either round the result `up` or `down`.
-    public var round: PlanCreateTransformUsageRound
+    public var round: PlanTransformUsageRound
 
-    public init(divideBy: Int, round: PlanCreateTransformUsageRound) {
+    public init(divideBy: Int, round: PlanTransformUsageRound) {
         self.divideBy = divideBy
         self.round = round
     }
@@ -432,7 +432,7 @@ public struct PlanCreateTransformUsage: StripeParams {
     }
 }
 
-public struct PlanCreateTransformUsageRound: RawRepresentable, Codable, Hashable, Sendable {
+public struct PlanTransformUsageRound: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

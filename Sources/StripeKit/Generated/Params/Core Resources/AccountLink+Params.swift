@@ -17,12 +17,12 @@ public struct AccountLinkCreateParams: StripeParams {
     /// components](/connect/get-started-connect-embedded-components), you can include components that allow
     /// your connected accounts to update their own information. For an account without Stripe-hosted
     /// Dashboard access where Stripe is liable for negative balances, you must use embedded components.
-    public var type: AccountLinkCreateType
+    public var type: AccountLinkType
     /// The collect parameter is deprecated. Use `collection_options` instead.
-    public var collect: AccountLinkCreateCollect?
+    public var collect: AccountLinkCollect?
     /// Specifies the requirements that Stripe collects from connected accounts in the Connect Onboarding
     /// flow.
-    public var collectionOptions: AccountLinkCreateCollectionOptions?
+    public var collectionOptions: AccountLinkCollectionOptions?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The URL the user will be redirected to if the account link is expired, has been previously-visited,
@@ -34,7 +34,7 @@ public struct AccountLinkCreateParams: StripeParams {
     /// The URL that the user will be redirected to upon leaving or completing the linked flow.
     public var returnUrl: String?
 
-    public init(account: String, type: AccountLinkCreateType, collect: AccountLinkCreateCollect? = nil, collectionOptions: AccountLinkCreateCollectionOptions? = nil, expand: [String]? = nil, refreshUrl: String? = nil, returnUrl: String? = nil) {
+    public init(account: String, type: AccountLinkType, collect: AccountLinkCollect? = nil, collectionOptions: AccountLinkCollectionOptions? = nil, expand: [String]? = nil, refreshUrl: String? = nil, returnUrl: String? = nil) {
         self.account = account
         self.type = type
         self.collect = collect
@@ -55,7 +55,7 @@ public struct AccountLinkCreateParams: StripeParams {
     }
 }
 
-public struct AccountLinkCreateType: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountLinkType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -66,7 +66,7 @@ public struct AccountLinkCreateType: RawRepresentable, Codable, Hashable, Sendab
     public static var accountUpdate: Self { .init(rawValue: "account_update") }
 }
 
-public struct AccountLinkCreateCollect: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountLinkCollect: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -79,16 +79,16 @@ public struct AccountLinkCreateCollect: RawRepresentable, Codable, Hashable, Sen
 
 /// Specifies the requirements that Stripe collects from connected accounts in the Connect Onboarding
 /// flow.
-public struct AccountLinkCreateCollectionOptions: StripeParams {
+public struct AccountLinkCollectionOptions: StripeParams {
     /// Specifies whether the platform collects only currently_due requirements (`currently_due`) or both
     /// currently_due and eventually_due requirements (`eventually_due`). If you don't specify
     /// `collection_options`, the default value is `currently_due`.
-    public var fields: AccountLinkCreateCollectionOptionsFields?
+    public var fields: AccountLinkCollectionOptionsFields?
     /// Specifies whether the platform collects future_requirements in addition to requirements in Connect
     /// Onboarding. The default value is `omit`.
-    public var futureRequirements: AccountLinkCreateCollectionOptionsFutureRequirements?
+    public var futureRequirements: AccountLinkCollectionOptionsFutureRequirements?
 
-    public init(fields: AccountLinkCreateCollectionOptionsFields? = nil, futureRequirements: AccountLinkCreateCollectionOptionsFutureRequirements? = nil) {
+    public init(fields: AccountLinkCollectionOptionsFields? = nil, futureRequirements: AccountLinkCollectionOptionsFutureRequirements? = nil) {
         self.fields = fields
         self.futureRequirements = futureRequirements
     }
@@ -99,7 +99,7 @@ public struct AccountLinkCreateCollectionOptions: StripeParams {
     }
 }
 
-public struct AccountLinkCreateCollectionOptionsFields: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountLinkCollectionOptionsFields: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -110,7 +110,7 @@ public struct AccountLinkCreateCollectionOptionsFields: RawRepresentable, Codabl
     public static var eventuallyDue: Self { .init(rawValue: "eventually_due") }
 }
 
-public struct AccountLinkCreateCollectionOptionsFutureRequirements: RawRepresentable, Codable, Hashable, Sendable {
+public struct AccountLinkCollectionOptionsFutureRequirements: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

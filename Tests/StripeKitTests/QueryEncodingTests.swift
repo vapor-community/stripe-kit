@@ -121,7 +121,7 @@ class StripeParamsTests: XCTestCase {
 
     func testCodingKeysDecideWireNames() throws {
         // camelCase → snake_case conversion alone would give `ssn_last4`.
-        let params = TokenCreateAccountIndividual(ssnLast4: "1234")
+        let params = TokenAccountIndividual(ssnLast4: "1234")
         XCTAssertEqual(params.toFormBody(), "ssn_last_4=1234")
     }
 

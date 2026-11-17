@@ -9,45 +9,45 @@ import Foundation
 
 public struct TerminalConfigurationCreateParams: ClearableParams {
     /// An object containing device type specific settings for BBPOS WisePad 3 readers.
-    public var bbposWisepad3: TerminalConfigurationCreateBbposWisepad3?
+    public var bbposWisepad3: TerminalConfigurationBbposWisepad3?
     /// An object containing device type specific settings for BBPOS WisePOS E readers.
-    public var bbposWiseposE: TerminalConfigurationCreateBbposWiseposE?
+    public var bbposWiseposE: TerminalConfigurationBbposWiseposE?
     /// Configuration for cellular connectivity.
-    public var cellular: TerminalConfigurationCreateCellular?
+    public var cellular: TerminalConfigurationCellular?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Name of the configuration
     public var name: String?
     /// Configurations for collecting transactions offline.
-    public var offline: TerminalConfigurationCreateOffline?
+    public var offline: TerminalConfigurationOffline?
     /// Configurations for reader security settings.
-    public var readerSecurity: TerminalConfigurationCreateReaderSecurity?
+    public var readerSecurity: TerminalConfigurationReaderSecurity?
     /// Reboot time settings for readers. that support customized reboot time configuration.
-    public var rebootWindow: TerminalConfigurationCreateRebootWindow?
+    public var rebootWindow: TerminalConfigurationRebootWindow?
     /// An object containing device type specific settings for Stripe S700 readers.
-    public var stripeS700: TerminalConfigurationCreateStripeS700?
+    public var stripeS700: TerminalConfigurationStripeS700?
     /// An object containing device type specific settings for Stripe S710 readers.
-    public var stripeS710: TerminalConfigurationCreateStripeS710?
+    public var stripeS710: TerminalConfigurationStripeS710?
     /// An object containing device type specific settings for Stripe T600 readers.
-    public var stripeT600: TerminalConfigurationCreateStripeT600?
+    public var stripeT600: TerminalConfigurationStripeT600?
     /// Tipping configurations for readers that support on-reader tips.
-    public var tipping: TerminalConfigurationCreateTipping?
+    public var tipping: TerminalConfigurationTipping?
     /// An object containing device type specific settings for Verifone M425 readers.
-    public var verifoneM425: TerminalConfigurationCreateVerifoneM425?
+    public var verifoneM425: TerminalConfigurationVerifoneM425?
     /// An object containing device type specific settings for Verifone P400 readers.
-    public var verifoneP400: TerminalConfigurationCreateVerifoneP400?
+    public var verifoneP400: TerminalConfigurationVerifoneP400?
     /// An object containing device type specific settings for Verifone P630 readers.
-    public var verifoneP630: TerminalConfigurationCreateVerifoneP630?
+    public var verifoneP630: TerminalConfigurationVerifoneP630?
     /// An object containing device type specific settings for Verifone UX700 readers.
-    public var verifoneUx700: TerminalConfigurationCreateVerifoneUx700?
+    public var verifoneUx700: TerminalConfigurationVerifoneUx700?
     /// An object containing device type specific settings for Verifone V660p readers.
-    public var verifoneV660P: TerminalConfigurationCreateVerifoneV660P?
+    public var verifoneV660P: TerminalConfigurationVerifoneV660P?
     /// Configurations for connecting to a WiFi network.
-    public var wifi: TerminalConfigurationCreateWifi?
+    public var wifi: TerminalConfigurationWifi?
     /// Fields to send empty, which clears them: `params.clear(.cellular)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(bbposWisepad3: TerminalConfigurationCreateBbposWisepad3? = nil, bbposWiseposE: TerminalConfigurationCreateBbposWiseposE? = nil, cellular: TerminalConfigurationCreateCellular? = nil, expand: [String]? = nil, name: String? = nil, offline: TerminalConfigurationCreateOffline? = nil, readerSecurity: TerminalConfigurationCreateReaderSecurity? = nil, rebootWindow: TerminalConfigurationCreateRebootWindow? = nil, stripeS700: TerminalConfigurationCreateStripeS700? = nil, stripeS710: TerminalConfigurationCreateStripeS710? = nil, stripeT600: TerminalConfigurationCreateStripeT600? = nil, tipping: TerminalConfigurationCreateTipping? = nil, verifoneM425: TerminalConfigurationCreateVerifoneM425? = nil, verifoneP400: TerminalConfigurationCreateVerifoneP400? = nil, verifoneP630: TerminalConfigurationCreateVerifoneP630? = nil, verifoneUx700: TerminalConfigurationCreateVerifoneUx700? = nil, verifoneV660P: TerminalConfigurationCreateVerifoneV660P? = nil, wifi: TerminalConfigurationCreateWifi? = nil) {
+    public init(bbposWisepad3: TerminalConfigurationBbposWisepad3? = nil, bbposWiseposE: TerminalConfigurationBbposWiseposE? = nil, cellular: TerminalConfigurationCellular? = nil, expand: [String]? = nil, name: String? = nil, offline: TerminalConfigurationOffline? = nil, readerSecurity: TerminalConfigurationReaderSecurity? = nil, rebootWindow: TerminalConfigurationRebootWindow? = nil, stripeS700: TerminalConfigurationStripeS700? = nil, stripeS710: TerminalConfigurationStripeS710? = nil, stripeT600: TerminalConfigurationStripeT600? = nil, tipping: TerminalConfigurationTipping? = nil, verifoneM425: TerminalConfigurationVerifoneM425? = nil, verifoneP400: TerminalConfigurationVerifoneP400? = nil, verifoneP630: TerminalConfigurationVerifoneP630? = nil, verifoneUx700: TerminalConfigurationVerifoneUx700? = nil, verifoneV660P: TerminalConfigurationVerifoneV660P? = nil, wifi: TerminalConfigurationWifi? = nil) {
         self.bbposWisepad3 = bbposWisepad3
         self.bbposWiseposE = bbposWiseposE
         self.cellular = cellular
@@ -137,45 +137,45 @@ public struct TerminalConfigurationListParams: StripeParams {
 
 public struct TerminalConfigurationUpdateParams: ClearableParams {
     /// An object containing device type specific settings for BBPOS WisePad 3 readers.
-    public var bbposWisepad3: TerminalConfigurationUpdateBbposWisepad3?
+    public var bbposWisepad3: TerminalConfigurationBbposWisepad3?
     /// An object containing device type specific settings for BBPOS WisePOS E readers.
-    public var bbposWiseposE: TerminalConfigurationUpdateBbposWiseposE?
+    public var bbposWiseposE: TerminalConfigurationBbposWiseposE?
     /// Configuration for cellular connectivity.
-    public var cellular: TerminalConfigurationUpdateCellular?
+    public var cellular: TerminalConfigurationCellular?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Name of the configuration
     public var name: String?
     /// Configurations for collecting transactions offline.
-    public var offline: TerminalConfigurationUpdateOffline?
+    public var offline: TerminalConfigurationOffline?
     /// Configurations for reader security settings.
-    public var readerSecurity: TerminalConfigurationUpdateReaderSecurity?
+    public var readerSecurity: TerminalConfigurationReaderSecurity?
     /// Reboot time settings for readers. that support customized reboot time configuration.
-    public var rebootWindow: TerminalConfigurationUpdateRebootWindow?
+    public var rebootWindow: TerminalConfigurationRebootWindow?
     /// An object containing device type specific settings for Stripe S700 readers.
-    public var stripeS700: TerminalConfigurationUpdateStripeS700?
+    public var stripeS700: TerminalConfigurationStripeS700?
     /// An object containing device type specific settings for Stripe S710 readers.
-    public var stripeS710: TerminalConfigurationUpdateStripeS710?
+    public var stripeS710: TerminalConfigurationStripeS710?
     /// An object containing device type specific settings for Stripe T600 readers.
-    public var stripeT600: TerminalConfigurationUpdateStripeT600?
+    public var stripeT600: TerminalConfigurationStripeT600?
     /// Tipping configurations for readers that support on-reader tips.
-    public var tipping: TerminalConfigurationUpdateTipping?
+    public var tipping: TerminalConfigurationTipping?
     /// An object containing device type specific settings for Verifone M425 readers.
-    public var verifoneM425: TerminalConfigurationUpdateVerifoneM425?
+    public var verifoneM425: TerminalConfigurationVerifoneM425?
     /// An object containing device type specific settings for Verifone P400 readers.
-    public var verifoneP400: TerminalConfigurationUpdateVerifoneP400?
+    public var verifoneP400: TerminalConfigurationVerifoneP400?
     /// An object containing device type specific settings for Verifone P630 readers.
-    public var verifoneP630: TerminalConfigurationUpdateVerifoneP630?
+    public var verifoneP630: TerminalConfigurationVerifoneP630?
     /// An object containing device type specific settings for Verifone UX700 readers.
-    public var verifoneUx700: TerminalConfigurationUpdateVerifoneUx700?
+    public var verifoneUx700: TerminalConfigurationVerifoneUx700?
     /// An object containing device type specific settings for Verifone V660p readers.
-    public var verifoneV660P: TerminalConfigurationUpdateVerifoneV660P?
+    public var verifoneV660P: TerminalConfigurationVerifoneV660P?
     /// Configurations for connecting to a WiFi network.
-    public var wifi: TerminalConfigurationUpdateWifi?
+    public var wifi: TerminalConfigurationWifi?
     /// Fields to send empty, which clears them: `params.clear(.bbposWisepad3)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(bbposWisepad3: TerminalConfigurationUpdateBbposWisepad3? = nil, bbposWiseposE: TerminalConfigurationUpdateBbposWiseposE? = nil, cellular: TerminalConfigurationUpdateCellular? = nil, expand: [String]? = nil, name: String? = nil, offline: TerminalConfigurationUpdateOffline? = nil, readerSecurity: TerminalConfigurationUpdateReaderSecurity? = nil, rebootWindow: TerminalConfigurationUpdateRebootWindow? = nil, stripeS700: TerminalConfigurationUpdateStripeS700? = nil, stripeS710: TerminalConfigurationUpdateStripeS710? = nil, stripeT600: TerminalConfigurationUpdateStripeT600? = nil, tipping: TerminalConfigurationUpdateTipping? = nil, verifoneM425: TerminalConfigurationUpdateVerifoneM425? = nil, verifoneP400: TerminalConfigurationUpdateVerifoneP400? = nil, verifoneP630: TerminalConfigurationUpdateVerifoneP630? = nil, verifoneUx700: TerminalConfigurationUpdateVerifoneUx700? = nil, verifoneV660P: TerminalConfigurationUpdateVerifoneV660P? = nil, wifi: TerminalConfigurationUpdateWifi? = nil) {
+    public init(bbposWisepad3: TerminalConfigurationBbposWisepad3? = nil, bbposWiseposE: TerminalConfigurationBbposWiseposE? = nil, cellular: TerminalConfigurationCellular? = nil, expand: [String]? = nil, name: String? = nil, offline: TerminalConfigurationOffline? = nil, readerSecurity: TerminalConfigurationReaderSecurity? = nil, rebootWindow: TerminalConfigurationRebootWindow? = nil, stripeS700: TerminalConfigurationStripeS700? = nil, stripeS710: TerminalConfigurationStripeS710? = nil, stripeT600: TerminalConfigurationStripeT600? = nil, tipping: TerminalConfigurationTipping? = nil, verifoneM425: TerminalConfigurationVerifoneM425? = nil, verifoneP400: TerminalConfigurationVerifoneP400? = nil, verifoneP630: TerminalConfigurationVerifoneP630? = nil, verifoneUx700: TerminalConfigurationVerifoneUx700? = nil, verifoneV660P: TerminalConfigurationVerifoneV660P? = nil, wifi: TerminalConfigurationWifi? = nil) {
         self.bbposWisepad3 = bbposWisepad3
         self.bbposWiseposE = bbposWiseposE
         self.cellular = cellular
@@ -240,7 +240,7 @@ public struct TerminalConfigurationUpdateParams: ClearableParams {
 }
 
 /// An object containing device type specific settings for BBPOS WisePad 3 readers.
-public struct TerminalConfigurationCreateBbposWisepad3: ClearableParams {
+public struct TerminalConfigurationBbposWisepad3: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -262,7 +262,7 @@ public struct TerminalConfigurationCreateBbposWisepad3: ClearableParams {
 }
 
 /// An object containing device type specific settings for BBPOS WisePOS E readers.
-public struct TerminalConfigurationCreateBbposWiseposE: ClearableParams {
+public struct TerminalConfigurationBbposWiseposE: ClearableParams {
     /// A File ID representing an image to display on the reader
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -283,7 +283,7 @@ public struct TerminalConfigurationCreateBbposWiseposE: ClearableParams {
     }
 }
 
-public struct TerminalConfigurationCreateCellular: StripeParams {
+public struct TerminalConfigurationCellular: StripeParams {
     /// Determines whether to allow the reader to connect to a cellular network.
     public var enabled: Bool
 
@@ -292,7 +292,7 @@ public struct TerminalConfigurationCreateCellular: StripeParams {
     }
 }
 
-public struct TerminalConfigurationCreateOffline: StripeParams {
+public struct TerminalConfigurationOffline: StripeParams {
     /// Determines whether to allow transactions to be collected while reader is offline.
     public var enabled: Bool
 
@@ -301,7 +301,7 @@ public struct TerminalConfigurationCreateOffline: StripeParams {
     }
 }
 
-public struct TerminalConfigurationCreateReaderSecurity: ClearableParams {
+public struct TerminalConfigurationReaderSecurity: ClearableParams {
     /// Passcode used to access a reader's admin menu.
     public var adminMenuPasscode: String?
     /// Fields to send empty, which clears them: `params.clear(.adminMenuPasscode)`.
@@ -323,7 +323,7 @@ public struct TerminalConfigurationCreateReaderSecurity: ClearableParams {
 }
 
 /// Reboot time settings for readers. that support customized reboot time configuration.
-public struct TerminalConfigurationCreateRebootWindow: StripeParams {
+public struct TerminalConfigurationRebootWindow: StripeParams {
     /// Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be
     /// different than the start_hour.
     public var endHour: Int
@@ -342,7 +342,7 @@ public struct TerminalConfigurationCreateRebootWindow: StripeParams {
 }
 
 /// An object containing device type specific settings for Stripe S700 readers.
-public struct TerminalConfigurationCreateStripeS700: ClearableParams {
+public struct TerminalConfigurationStripeS700: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -364,7 +364,7 @@ public struct TerminalConfigurationCreateStripeS700: ClearableParams {
 }
 
 /// An object containing device type specific settings for Stripe S710 readers.
-public struct TerminalConfigurationCreateStripeS710: ClearableParams {
+public struct TerminalConfigurationStripeS710: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -386,7 +386,7 @@ public struct TerminalConfigurationCreateStripeS710: ClearableParams {
 }
 
 /// An object containing device type specific settings for Stripe T600 readers.
-public struct TerminalConfigurationCreateStripeT600: ClearableParams {
+public struct TerminalConfigurationStripeT600: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -407,51 +407,51 @@ public struct TerminalConfigurationCreateStripeT600: ClearableParams {
     }
 }
 
-public struct TerminalConfigurationCreateTipping: StripeParams {
+public struct TerminalConfigurationTipping: StripeParams {
     /// Tipping configuration for AED
-    public var aed: TerminalConfigurationCreateTippingAed?
+    public var aed: TerminalConfigurationTippingAed?
     /// Tipping configuration for AUD
-    public var aud: TerminalConfigurationCreateTippingAud?
+    public var aud: TerminalConfigurationTippingAud?
     /// Tipping configuration for CAD
-    public var cad: TerminalConfigurationCreateTippingCad?
+    public var cad: TerminalConfigurationTippingCad?
     /// Tipping configuration for CHF
-    public var chf: TerminalConfigurationCreateTippingChf?
+    public var chf: TerminalConfigurationTippingChf?
     /// Tipping configuration for CZK
-    public var czk: TerminalConfigurationCreateTippingCzk?
+    public var czk: TerminalConfigurationTippingCzk?
     /// Tipping configuration for DKK
-    public var dkk: TerminalConfigurationCreateTippingDkk?
+    public var dkk: TerminalConfigurationTippingDkk?
     /// Tipping configuration for EUR
-    public var eur: TerminalConfigurationCreateTippingEur?
+    public var eur: TerminalConfigurationTippingEur?
     /// Tipping configuration for GBP
-    public var gbp: TerminalConfigurationCreateTippingGbp?
+    public var gbp: TerminalConfigurationTippingGbp?
     /// Tipping configuration for GIP
-    public var gip: TerminalConfigurationCreateTippingGip?
+    public var gip: TerminalConfigurationTippingGip?
     /// Tipping configuration for HKD
-    public var hkd: TerminalConfigurationCreateTippingHkd?
+    public var hkd: TerminalConfigurationTippingHkd?
     /// Tipping configuration for HUF
-    public var huf: TerminalConfigurationCreateTippingHuf?
+    public var huf: TerminalConfigurationTippingHuf?
     /// Tipping configuration for JPY
-    public var jpy: TerminalConfigurationCreateTippingJpy?
+    public var jpy: TerminalConfigurationTippingJpy?
     /// Tipping configuration for MXN
-    public var mxn: TerminalConfigurationCreateTippingMxn?
+    public var mxn: TerminalConfigurationTippingMxn?
     /// Tipping configuration for MYR
-    public var myr: TerminalConfigurationCreateTippingMyr?
+    public var myr: TerminalConfigurationTippingMyr?
     /// Tipping configuration for NOK
-    public var nok: TerminalConfigurationCreateTippingNok?
+    public var nok: TerminalConfigurationTippingNok?
     /// Tipping configuration for NZD
-    public var nzd: TerminalConfigurationCreateTippingNzd?
+    public var nzd: TerminalConfigurationTippingNzd?
     /// Tipping configuration for PLN
-    public var pln: TerminalConfigurationCreateTippingPln?
+    public var pln: TerminalConfigurationTippingPln?
     /// Tipping configuration for RON
-    public var ron: TerminalConfigurationCreateTippingRon?
+    public var ron: TerminalConfigurationTippingRon?
     /// Tipping configuration for SEK
-    public var sek: TerminalConfigurationCreateTippingSek?
+    public var sek: TerminalConfigurationTippingSek?
     /// Tipping configuration for SGD
-    public var sgd: TerminalConfigurationCreateTippingSgd?
+    public var sgd: TerminalConfigurationTippingSgd?
     /// Tipping configuration for USD
-    public var usd: TerminalConfigurationCreateTippingUsd?
+    public var usd: TerminalConfigurationTippingUsd?
 
-    public init(aed: TerminalConfigurationCreateTippingAed? = nil, aud: TerminalConfigurationCreateTippingAud? = nil, cad: TerminalConfigurationCreateTippingCad? = nil, chf: TerminalConfigurationCreateTippingChf? = nil, czk: TerminalConfigurationCreateTippingCzk? = nil, dkk: TerminalConfigurationCreateTippingDkk? = nil, eur: TerminalConfigurationCreateTippingEur? = nil, gbp: TerminalConfigurationCreateTippingGbp? = nil, gip: TerminalConfigurationCreateTippingGip? = nil, hkd: TerminalConfigurationCreateTippingHkd? = nil, huf: TerminalConfigurationCreateTippingHuf? = nil, jpy: TerminalConfigurationCreateTippingJpy? = nil, mxn: TerminalConfigurationCreateTippingMxn? = nil, myr: TerminalConfigurationCreateTippingMyr? = nil, nok: TerminalConfigurationCreateTippingNok? = nil, nzd: TerminalConfigurationCreateTippingNzd? = nil, pln: TerminalConfigurationCreateTippingPln? = nil, ron: TerminalConfigurationCreateTippingRon? = nil, sek: TerminalConfigurationCreateTippingSek? = nil, sgd: TerminalConfigurationCreateTippingSgd? = nil, usd: TerminalConfigurationCreateTippingUsd? = nil) {
+    public init(aed: TerminalConfigurationTippingAed? = nil, aud: TerminalConfigurationTippingAud? = nil, cad: TerminalConfigurationTippingCad? = nil, chf: TerminalConfigurationTippingChf? = nil, czk: TerminalConfigurationTippingCzk? = nil, dkk: TerminalConfigurationTippingDkk? = nil, eur: TerminalConfigurationTippingEur? = nil, gbp: TerminalConfigurationTippingGbp? = nil, gip: TerminalConfigurationTippingGip? = nil, hkd: TerminalConfigurationTippingHkd? = nil, huf: TerminalConfigurationTippingHuf? = nil, jpy: TerminalConfigurationTippingJpy? = nil, mxn: TerminalConfigurationTippingMxn? = nil, myr: TerminalConfigurationTippingMyr? = nil, nok: TerminalConfigurationTippingNok? = nil, nzd: TerminalConfigurationTippingNzd? = nil, pln: TerminalConfigurationTippingPln? = nil, ron: TerminalConfigurationTippingRon? = nil, sek: TerminalConfigurationTippingSek? = nil, sgd: TerminalConfigurationTippingSgd? = nil, usd: TerminalConfigurationTippingUsd? = nil) {
         self.aed = aed
         self.aud = aud
         self.cad = cad
@@ -477,7 +477,7 @@ public struct TerminalConfigurationCreateTipping: StripeParams {
 }
 
 /// Tipping configuration for AED
-public struct TerminalConfigurationCreateTippingAed: StripeParams {
+public struct TerminalConfigurationTippingAed: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -499,7 +499,7 @@ public struct TerminalConfigurationCreateTippingAed: StripeParams {
 }
 
 /// Tipping configuration for AUD
-public struct TerminalConfigurationCreateTippingAud: StripeParams {
+public struct TerminalConfigurationTippingAud: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -521,7 +521,7 @@ public struct TerminalConfigurationCreateTippingAud: StripeParams {
 }
 
 /// Tipping configuration for CAD
-public struct TerminalConfigurationCreateTippingCad: StripeParams {
+public struct TerminalConfigurationTippingCad: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -543,7 +543,7 @@ public struct TerminalConfigurationCreateTippingCad: StripeParams {
 }
 
 /// Tipping configuration for CHF
-public struct TerminalConfigurationCreateTippingChf: StripeParams {
+public struct TerminalConfigurationTippingChf: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -565,7 +565,7 @@ public struct TerminalConfigurationCreateTippingChf: StripeParams {
 }
 
 /// Tipping configuration for CZK
-public struct TerminalConfigurationCreateTippingCzk: StripeParams {
+public struct TerminalConfigurationTippingCzk: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -587,7 +587,7 @@ public struct TerminalConfigurationCreateTippingCzk: StripeParams {
 }
 
 /// Tipping configuration for DKK
-public struct TerminalConfigurationCreateTippingDkk: StripeParams {
+public struct TerminalConfigurationTippingDkk: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -609,7 +609,7 @@ public struct TerminalConfigurationCreateTippingDkk: StripeParams {
 }
 
 /// Tipping configuration for EUR
-public struct TerminalConfigurationCreateTippingEur: StripeParams {
+public struct TerminalConfigurationTippingEur: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -631,7 +631,7 @@ public struct TerminalConfigurationCreateTippingEur: StripeParams {
 }
 
 /// Tipping configuration for GBP
-public struct TerminalConfigurationCreateTippingGbp: StripeParams {
+public struct TerminalConfigurationTippingGbp: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -653,7 +653,7 @@ public struct TerminalConfigurationCreateTippingGbp: StripeParams {
 }
 
 /// Tipping configuration for GIP
-public struct TerminalConfigurationCreateTippingGip: StripeParams {
+public struct TerminalConfigurationTippingGip: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -675,7 +675,7 @@ public struct TerminalConfigurationCreateTippingGip: StripeParams {
 }
 
 /// Tipping configuration for HKD
-public struct TerminalConfigurationCreateTippingHkd: StripeParams {
+public struct TerminalConfigurationTippingHkd: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -697,7 +697,7 @@ public struct TerminalConfigurationCreateTippingHkd: StripeParams {
 }
 
 /// Tipping configuration for HUF
-public struct TerminalConfigurationCreateTippingHuf: StripeParams {
+public struct TerminalConfigurationTippingHuf: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -719,7 +719,7 @@ public struct TerminalConfigurationCreateTippingHuf: StripeParams {
 }
 
 /// Tipping configuration for JPY
-public struct TerminalConfigurationCreateTippingJpy: StripeParams {
+public struct TerminalConfigurationTippingJpy: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -741,7 +741,7 @@ public struct TerminalConfigurationCreateTippingJpy: StripeParams {
 }
 
 /// Tipping configuration for MXN
-public struct TerminalConfigurationCreateTippingMxn: StripeParams {
+public struct TerminalConfigurationTippingMxn: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -763,7 +763,7 @@ public struct TerminalConfigurationCreateTippingMxn: StripeParams {
 }
 
 /// Tipping configuration for MYR
-public struct TerminalConfigurationCreateTippingMyr: StripeParams {
+public struct TerminalConfigurationTippingMyr: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -785,7 +785,7 @@ public struct TerminalConfigurationCreateTippingMyr: StripeParams {
 }
 
 /// Tipping configuration for NOK
-public struct TerminalConfigurationCreateTippingNok: StripeParams {
+public struct TerminalConfigurationTippingNok: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -807,7 +807,7 @@ public struct TerminalConfigurationCreateTippingNok: StripeParams {
 }
 
 /// Tipping configuration for NZD
-public struct TerminalConfigurationCreateTippingNzd: StripeParams {
+public struct TerminalConfigurationTippingNzd: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -829,7 +829,7 @@ public struct TerminalConfigurationCreateTippingNzd: StripeParams {
 }
 
 /// Tipping configuration for PLN
-public struct TerminalConfigurationCreateTippingPln: StripeParams {
+public struct TerminalConfigurationTippingPln: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -851,7 +851,7 @@ public struct TerminalConfigurationCreateTippingPln: StripeParams {
 }
 
 /// Tipping configuration for RON
-public struct TerminalConfigurationCreateTippingRon: StripeParams {
+public struct TerminalConfigurationTippingRon: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -873,7 +873,7 @@ public struct TerminalConfigurationCreateTippingRon: StripeParams {
 }
 
 /// Tipping configuration for SEK
-public struct TerminalConfigurationCreateTippingSek: StripeParams {
+public struct TerminalConfigurationTippingSek: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -895,7 +895,7 @@ public struct TerminalConfigurationCreateTippingSek: StripeParams {
 }
 
 /// Tipping configuration for SGD
-public struct TerminalConfigurationCreateTippingSgd: StripeParams {
+public struct TerminalConfigurationTippingSgd: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -917,7 +917,7 @@ public struct TerminalConfigurationCreateTippingSgd: StripeParams {
 }
 
 /// Tipping configuration for USD
-public struct TerminalConfigurationCreateTippingUsd: StripeParams {
+public struct TerminalConfigurationTippingUsd: StripeParams {
     /// Fixed amounts displayed when collecting a tip
     public var fixedAmounts: [Int]?
     /// Percentages displayed when collecting a tip
@@ -939,7 +939,7 @@ public struct TerminalConfigurationCreateTippingUsd: StripeParams {
 }
 
 /// An object containing device type specific settings for Verifone M425 readers.
-public struct TerminalConfigurationCreateVerifoneM425: ClearableParams {
+public struct TerminalConfigurationVerifoneM425: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -961,7 +961,7 @@ public struct TerminalConfigurationCreateVerifoneM425: ClearableParams {
 }
 
 /// An object containing device type specific settings for Verifone P400 readers.
-public struct TerminalConfigurationCreateVerifoneP400: ClearableParams {
+public struct TerminalConfigurationVerifoneP400: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -983,7 +983,7 @@ public struct TerminalConfigurationCreateVerifoneP400: ClearableParams {
 }
 
 /// An object containing device type specific settings for Verifone P630 readers.
-public struct TerminalConfigurationCreateVerifoneP630: ClearableParams {
+public struct TerminalConfigurationVerifoneP630: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -1005,7 +1005,7 @@ public struct TerminalConfigurationCreateVerifoneP630: ClearableParams {
 }
 
 /// An object containing device type specific settings for Verifone UX700 readers.
-public struct TerminalConfigurationCreateVerifoneUx700: ClearableParams {
+public struct TerminalConfigurationVerifoneUx700: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -1027,7 +1027,7 @@ public struct TerminalConfigurationCreateVerifoneUx700: ClearableParams {
 }
 
 /// An object containing device type specific settings for Verifone V660p readers.
-public struct TerminalConfigurationCreateVerifoneV660P: ClearableParams {
+public struct TerminalConfigurationVerifoneV660P: ClearableParams {
     /// A File ID representing an image you want to display on the reader.
     public var splashscreen: String?
     /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
@@ -1048,18 +1048,18 @@ public struct TerminalConfigurationCreateVerifoneV660P: ClearableParams {
     }
 }
 
-public struct TerminalConfigurationCreateWifi: StripeParams {
+public struct TerminalConfigurationWifi: StripeParams {
     /// Security type of the WiFi network. Fill out the hash with the corresponding name to provide the set
     /// of credentials for this security type.
-    public var type: TerminalConfigurationCreateWifiType
+    public var type: TerminalConfigurationWifiType
     /// Credentials for a WPA-Enterprise WiFi network using the EAP-PEAP authentication method.
-    public var enterpriseEapPeap: TerminalConfigurationCreateWifiEnterpriseEapPeap?
+    public var enterpriseEapPeap: TerminalConfigurationWifiEnterpriseEapPeap?
     /// Credentials for a WPA-Enterprise WiFi network using the EAP-TLS authentication method.
-    public var enterpriseEapTls: TerminalConfigurationCreateWifiEnterpriseEapTls?
+    public var enterpriseEapTls: TerminalConfigurationWifiEnterpriseEapTls?
     /// Credentials for a WPA-Personal WiFi network.
-    public var personalPsk: TerminalConfigurationCreateWifiPersonalPsk?
+    public var personalPsk: TerminalConfigurationWifiPersonalPsk?
 
-    public init(type: TerminalConfigurationCreateWifiType, enterpriseEapPeap: TerminalConfigurationCreateWifiEnterpriseEapPeap? = nil, enterpriseEapTls: TerminalConfigurationCreateWifiEnterpriseEapTls? = nil, personalPsk: TerminalConfigurationCreateWifiPersonalPsk? = nil) {
+    public init(type: TerminalConfigurationWifiType, enterpriseEapPeap: TerminalConfigurationWifiEnterpriseEapPeap? = nil, enterpriseEapTls: TerminalConfigurationWifiEnterpriseEapTls? = nil, personalPsk: TerminalConfigurationWifiPersonalPsk? = nil) {
         self.type = type
         self.enterpriseEapPeap = enterpriseEapPeap
         self.enterpriseEapTls = enterpriseEapTls
@@ -1074,7 +1074,7 @@ public struct TerminalConfigurationCreateWifi: StripeParams {
     }
 }
 
-public struct TerminalConfigurationCreateWifiType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TerminalConfigurationWifiType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1087,7 +1087,7 @@ public struct TerminalConfigurationCreateWifiType: RawRepresentable, Codable, Ha
 }
 
 /// Credentials for a WPA-Enterprise WiFi network using the EAP-PEAP authentication method.
-public struct TerminalConfigurationCreateWifiEnterpriseEapPeap: StripeParams {
+public struct TerminalConfigurationWifiEnterpriseEapPeap: StripeParams {
     /// Password for connecting to the WiFi network
     public var password: String
     /// Name of the WiFi network
@@ -1113,7 +1113,7 @@ public struct TerminalConfigurationCreateWifiEnterpriseEapPeap: StripeParams {
 }
 
 /// Credentials for a WPA-Enterprise WiFi network using the EAP-TLS authentication method.
-public struct TerminalConfigurationCreateWifiEnterpriseEapTls: StripeParams {
+public struct TerminalConfigurationWifiEnterpriseEapTls: StripeParams {
     /// A File ID representing a PEM file containing the client certificate
     public var clientCertificateFile: String
     /// A File ID representing a PEM file containing the client RSA private key
@@ -1143,912 +1143,7 @@ public struct TerminalConfigurationCreateWifiEnterpriseEapTls: StripeParams {
 }
 
 /// Credentials for a WPA-Personal WiFi network.
-public struct TerminalConfigurationCreateWifiPersonalPsk: StripeParams {
-    /// Password for connecting to the WiFi network
-    public var password: String
-    /// Name of the WiFi network
-    public var ssid: String
-
-    public init(password: String, ssid: String) {
-        self.password = password
-        self.ssid = ssid
-    }
-}
-
-public struct TerminalConfigurationUpdateBbposWisepad3: ClearableParams {
-    /// A File ID representing an image you want to display on the reader.
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateBbposWiseposE: ClearableParams {
-    /// A File ID representing an image to display on the reader
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateCellular: StripeParams {
-    /// Determines whether to allow the reader to connect to a cellular network.
-    public var enabled: Bool
-
-    public init(enabled: Bool) {
-        self.enabled = enabled
-    }
-}
-
-public struct TerminalConfigurationUpdateOffline: StripeParams {
-    /// Determines whether to allow transactions to be collected while reader is offline.
-    public var enabled: Bool
-
-    public init(enabled: Bool) {
-        self.enabled = enabled
-    }
-}
-
-public struct TerminalConfigurationUpdateReaderSecurity: ClearableParams {
-    /// Passcode used to access a reader's admin menu.
-    public var adminMenuPasscode: String?
-    /// Fields to send empty, which clears them: `params.clear(.adminMenuPasscode)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(adminMenuPasscode: String? = nil) {
-        self.adminMenuPasscode = adminMenuPasscode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case adminMenuPasscode = "admin_menu_passcode"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case adminMenuPasscode = "admin_menu_passcode"
-    }
-}
-
-public struct TerminalConfigurationUpdateRebootWindow: StripeParams {
-    /// Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be
-    /// different than the start_hour.
-    public var endHour: Int
-    /// Integer between 0 to 23 that represents the start hour of the reboot time window.
-    public var startHour: Int
-
-    public init(endHour: Int, startHour: Int) {
-        self.endHour = endHour
-        self.startHour = startHour
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case endHour = "end_hour"
-        case startHour = "start_hour"
-    }
-}
-
-public struct TerminalConfigurationUpdateStripeS700: ClearableParams {
-    /// A File ID representing an image you want to display on the reader.
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateStripeS710: ClearableParams {
-    /// A File ID representing an image you want to display on the reader.
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateStripeT600: ClearableParams {
-    /// A File ID representing an image you want to display on the reader.
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateTipping: StripeParams {
-    /// Tipping configuration for AED
-    public var aed: TerminalConfigurationUpdateTippingAed?
-    /// Tipping configuration for AUD
-    public var aud: TerminalConfigurationUpdateTippingAud?
-    /// Tipping configuration for CAD
-    public var cad: TerminalConfigurationUpdateTippingCad?
-    /// Tipping configuration for CHF
-    public var chf: TerminalConfigurationUpdateTippingChf?
-    /// Tipping configuration for CZK
-    public var czk: TerminalConfigurationUpdateTippingCzk?
-    /// Tipping configuration for DKK
-    public var dkk: TerminalConfigurationUpdateTippingDkk?
-    /// Tipping configuration for EUR
-    public var eur: TerminalConfigurationUpdateTippingEur?
-    /// Tipping configuration for GBP
-    public var gbp: TerminalConfigurationUpdateTippingGbp?
-    /// Tipping configuration for GIP
-    public var gip: TerminalConfigurationUpdateTippingGip?
-    /// Tipping configuration for HKD
-    public var hkd: TerminalConfigurationUpdateTippingHkd?
-    /// Tipping configuration for HUF
-    public var huf: TerminalConfigurationUpdateTippingHuf?
-    /// Tipping configuration for JPY
-    public var jpy: TerminalConfigurationUpdateTippingJpy?
-    /// Tipping configuration for MXN
-    public var mxn: TerminalConfigurationUpdateTippingMxn?
-    /// Tipping configuration for MYR
-    public var myr: TerminalConfigurationUpdateTippingMyr?
-    /// Tipping configuration for NOK
-    public var nok: TerminalConfigurationUpdateTippingNok?
-    /// Tipping configuration for NZD
-    public var nzd: TerminalConfigurationUpdateTippingNzd?
-    /// Tipping configuration for PLN
-    public var pln: TerminalConfigurationUpdateTippingPln?
-    /// Tipping configuration for RON
-    public var ron: TerminalConfigurationUpdateTippingRon?
-    /// Tipping configuration for SEK
-    public var sek: TerminalConfigurationUpdateTippingSek?
-    /// Tipping configuration for SGD
-    public var sgd: TerminalConfigurationUpdateTippingSgd?
-    /// Tipping configuration for USD
-    public var usd: TerminalConfigurationUpdateTippingUsd?
-
-    public init(aed: TerminalConfigurationUpdateTippingAed? = nil, aud: TerminalConfigurationUpdateTippingAud? = nil, cad: TerminalConfigurationUpdateTippingCad? = nil, chf: TerminalConfigurationUpdateTippingChf? = nil, czk: TerminalConfigurationUpdateTippingCzk? = nil, dkk: TerminalConfigurationUpdateTippingDkk? = nil, eur: TerminalConfigurationUpdateTippingEur? = nil, gbp: TerminalConfigurationUpdateTippingGbp? = nil, gip: TerminalConfigurationUpdateTippingGip? = nil, hkd: TerminalConfigurationUpdateTippingHkd? = nil, huf: TerminalConfigurationUpdateTippingHuf? = nil, jpy: TerminalConfigurationUpdateTippingJpy? = nil, mxn: TerminalConfigurationUpdateTippingMxn? = nil, myr: TerminalConfigurationUpdateTippingMyr? = nil, nok: TerminalConfigurationUpdateTippingNok? = nil, nzd: TerminalConfigurationUpdateTippingNzd? = nil, pln: TerminalConfigurationUpdateTippingPln? = nil, ron: TerminalConfigurationUpdateTippingRon? = nil, sek: TerminalConfigurationUpdateTippingSek? = nil, sgd: TerminalConfigurationUpdateTippingSgd? = nil, usd: TerminalConfigurationUpdateTippingUsd? = nil) {
-        self.aed = aed
-        self.aud = aud
-        self.cad = cad
-        self.chf = chf
-        self.czk = czk
-        self.dkk = dkk
-        self.eur = eur
-        self.gbp = gbp
-        self.gip = gip
-        self.hkd = hkd
-        self.huf = huf
-        self.jpy = jpy
-        self.mxn = mxn
-        self.myr = myr
-        self.nok = nok
-        self.nzd = nzd
-        self.pln = pln
-        self.ron = ron
-        self.sek = sek
-        self.sgd = sgd
-        self.usd = usd
-    }
-}
-
-/// Tipping configuration for AED
-public struct TerminalConfigurationUpdateTippingAed: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for AUD
-public struct TerminalConfigurationUpdateTippingAud: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for CAD
-public struct TerminalConfigurationUpdateTippingCad: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for CHF
-public struct TerminalConfigurationUpdateTippingChf: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for CZK
-public struct TerminalConfigurationUpdateTippingCzk: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for DKK
-public struct TerminalConfigurationUpdateTippingDkk: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for EUR
-public struct TerminalConfigurationUpdateTippingEur: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for GBP
-public struct TerminalConfigurationUpdateTippingGbp: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for GIP
-public struct TerminalConfigurationUpdateTippingGip: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for HKD
-public struct TerminalConfigurationUpdateTippingHkd: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for HUF
-public struct TerminalConfigurationUpdateTippingHuf: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for JPY
-public struct TerminalConfigurationUpdateTippingJpy: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for MXN
-public struct TerminalConfigurationUpdateTippingMxn: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for MYR
-public struct TerminalConfigurationUpdateTippingMyr: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for NOK
-public struct TerminalConfigurationUpdateTippingNok: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for NZD
-public struct TerminalConfigurationUpdateTippingNzd: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for PLN
-public struct TerminalConfigurationUpdateTippingPln: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for RON
-public struct TerminalConfigurationUpdateTippingRon: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for SEK
-public struct TerminalConfigurationUpdateTippingSek: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for SGD
-public struct TerminalConfigurationUpdateTippingSgd: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-/// Tipping configuration for USD
-public struct TerminalConfigurationUpdateTippingUsd: StripeParams {
-    /// Fixed amounts displayed when collecting a tip
-    public var fixedAmounts: [Int]?
-    /// Percentages displayed when collecting a tip
-    public var percentages: [Int]?
-    /// Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-    public var smartTipThreshold: Int?
-
-    public init(fixedAmounts: [Int]? = nil, percentages: [Int]? = nil, smartTipThreshold: Int? = nil) {
-        self.fixedAmounts = fixedAmounts
-        self.percentages = percentages
-        self.smartTipThreshold = smartTipThreshold
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case fixedAmounts = "fixed_amounts"
-        case percentages
-        case smartTipThreshold = "smart_tip_threshold"
-    }
-}
-
-public struct TerminalConfigurationUpdateVerifoneM425: ClearableParams {
-    /// A File ID representing an image you want to display on the reader.
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateVerifoneP400: ClearableParams {
-    /// A File ID representing an image you want to display on the reader.
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateVerifoneP630: ClearableParams {
-    /// A File ID representing an image you want to display on the reader.
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateVerifoneUx700: ClearableParams {
-    /// A File ID representing an image you want to display on the reader.
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateVerifoneV660P: ClearableParams {
-    /// A File ID representing an image you want to display on the reader.
-    public var splashscreen: String?
-    /// Fields to send empty, which clears them: `params.clear(.splashscreen)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(splashscreen: String? = nil) {
-        self.splashscreen = splashscreen
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case splashscreen
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case splashscreen
-    }
-}
-
-public struct TerminalConfigurationUpdateWifi: StripeParams {
-    /// Security type of the WiFi network. Fill out the hash with the corresponding name to provide the set
-    /// of credentials for this security type.
-    public var type: TerminalConfigurationUpdateWifiType
-    /// Credentials for a WPA-Enterprise WiFi network using the EAP-PEAP authentication method.
-    public var enterpriseEapPeap: TerminalConfigurationUpdateWifiEnterpriseEapPeap?
-    /// Credentials for a WPA-Enterprise WiFi network using the EAP-TLS authentication method.
-    public var enterpriseEapTls: TerminalConfigurationUpdateWifiEnterpriseEapTls?
-    /// Credentials for a WPA-Personal WiFi network.
-    public var personalPsk: TerminalConfigurationUpdateWifiPersonalPsk?
-
-    public init(type: TerminalConfigurationUpdateWifiType, enterpriseEapPeap: TerminalConfigurationUpdateWifiEnterpriseEapPeap? = nil, enterpriseEapTls: TerminalConfigurationUpdateWifiEnterpriseEapTls? = nil, personalPsk: TerminalConfigurationUpdateWifiPersonalPsk? = nil) {
-        self.type = type
-        self.enterpriseEapPeap = enterpriseEapPeap
-        self.enterpriseEapTls = enterpriseEapTls
-        self.personalPsk = personalPsk
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case enterpriseEapPeap = "enterprise_eap_peap"
-        case enterpriseEapTls = "enterprise_eap_tls"
-        case personalPsk = "personal_psk"
-        case type
-    }
-}
-
-public struct TerminalConfigurationUpdateWifiType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var enterpriseEapPeap: Self { .init(rawValue: "enterprise_eap_peap") }
-    public static var enterpriseEapTls: Self { .init(rawValue: "enterprise_eap_tls") }
-    public static var personalPsk: Self { .init(rawValue: "personal_psk") }
-}
-
-/// Credentials for a WPA-Enterprise WiFi network using the EAP-PEAP authentication method.
-public struct TerminalConfigurationUpdateWifiEnterpriseEapPeap: StripeParams {
-    /// Password for connecting to the WiFi network
-    public var password: String
-    /// Name of the WiFi network
-    public var ssid: String
-    /// Username for connecting to the WiFi network
-    public var username: String
-    /// A File ID representing a PEM file containing the server certificate
-    public var caCertificateFile: String?
-
-    public init(password: String, ssid: String, username: String, caCertificateFile: String? = nil) {
-        self.password = password
-        self.ssid = ssid
-        self.username = username
-        self.caCertificateFile = caCertificateFile
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case caCertificateFile = "ca_certificate_file"
-        case password
-        case ssid
-        case username
-    }
-}
-
-/// Credentials for a WPA-Enterprise WiFi network using the EAP-TLS authentication method.
-public struct TerminalConfigurationUpdateWifiEnterpriseEapTls: StripeParams {
-    /// A File ID representing a PEM file containing the client certificate
-    public var clientCertificateFile: String
-    /// A File ID representing a PEM file containing the client RSA private key
-    public var privateKeyFile: String
-    /// Name of the WiFi network
-    public var ssid: String
-    /// A File ID representing a PEM file containing the server certificate
-    public var caCertificateFile: String?
-    /// Password for the private key file
-    public var privateKeyFilePassword: String?
-
-    public init(clientCertificateFile: String, privateKeyFile: String, ssid: String, caCertificateFile: String? = nil, privateKeyFilePassword: String? = nil) {
-        self.clientCertificateFile = clientCertificateFile
-        self.privateKeyFile = privateKeyFile
-        self.ssid = ssid
-        self.caCertificateFile = caCertificateFile
-        self.privateKeyFilePassword = privateKeyFilePassword
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case caCertificateFile = "ca_certificate_file"
-        case clientCertificateFile = "client_certificate_file"
-        case privateKeyFile = "private_key_file"
-        case privateKeyFilePassword = "private_key_file_password"
-        case ssid
-    }
-}
-
-/// Credentials for a WPA-Personal WiFi network.
-public struct TerminalConfigurationUpdateWifiPersonalPsk: StripeParams {
+public struct TerminalConfigurationWifiPersonalPsk: StripeParams {
     /// Password for connecting to the WiFi network
     public var password: String
     /// Name of the WiFi network

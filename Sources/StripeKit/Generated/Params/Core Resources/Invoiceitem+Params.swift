@@ -25,7 +25,7 @@ public struct InvoiceitemCreateParams: ClearableParams {
     /// invoice items, and true for all other invoice items.
     public var discountable: Bool?
     /// The coupons and promotion codes to redeem into discounts for the invoice item or invoice line item.
-    public var discounts: [InvoiceitemCreateDiscounts]?
+    public var discounts: [InvoiceitemDiscounts]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The ID of an existing invoice to add this invoice item to. For subscription invoices, when left
@@ -46,11 +46,11 @@ public struct InvoiceitemCreateParams: ClearableParams {
     /// recognize and defer revenue. See the [Revenue Recognition
     /// documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing)
     /// for details.
-    public var period: InvoiceitemCreatePeriod?
+    public var period: InvoiceitemPeriod?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-    public var priceData: InvoiceitemCreatePriceData?
+    public var priceData: InvoiceitemPriceData?
     /// The pricing information for the invoice item.
-    public var pricing: InvoiceitemCreatePricing?
+    public var pricing: InvoiceitemPricing?
     /// Non-negative integer. The quantity of units for the invoice item. Use `quantity_decimal` instead to
     /// provide decimal precision. This field will be deprecated in favor of `quantity_decimal` in a future
     /// version.
@@ -67,7 +67,7 @@ public struct InvoiceitemCreateParams: ClearableParams {
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: InvoiceitemCreateTaxBehavior?
+    public var taxBehavior: InvoiceitemTaxBehavior?
     /// A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
     public var taxCode: String?
     /// The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do
@@ -81,7 +81,7 @@ public struct InvoiceitemCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.discounts)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amount: Int? = nil, currency: String? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, discountable: Bool? = nil, discounts: [InvoiceitemCreateDiscounts]? = nil, expand: [String]? = nil, invoice: String? = nil, metadata: [String: String]? = nil, period: InvoiceitemCreatePeriod? = nil, priceData: InvoiceitemCreatePriceData? = nil, pricing: InvoiceitemCreatePricing? = nil, quantity: Int? = nil, quantityDecimal: String? = nil, subscription: String? = nil, taxBehavior: InvoiceitemCreateTaxBehavior? = nil, taxCode: String? = nil, taxRates: [String]? = nil, unitAmountDecimal: String? = nil) {
+    public init(amount: Int? = nil, currency: String? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, discountable: Bool? = nil, discounts: [InvoiceitemDiscounts]? = nil, expand: [String]? = nil, invoice: String? = nil, metadata: [String: String]? = nil, period: InvoiceitemPeriod? = nil, priceData: InvoiceitemPriceData? = nil, pricing: InvoiceitemPricing? = nil, quantity: Int? = nil, quantityDecimal: String? = nil, subscription: String? = nil, taxBehavior: InvoiceitemTaxBehavior? = nil, taxCode: String? = nil, taxRates: [String]? = nil, unitAmountDecimal: String? = nil) {
         self.amount = amount
         self.currency = currency
         self.customer = customer
@@ -205,7 +205,7 @@ public struct InvoiceitemUpdateParams: ClearableParams {
     /// The coupons, promotion codes & existing discounts which apply to the invoice item or invoice line
     /// item. Item discounts are applied before invoice discounts. Pass an empty string to remove
     /// previously-defined discounts.
-    public var discounts: [InvoiceitemUpdateDiscounts]?
+    public var discounts: [InvoiceitemDiscounts]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Pass an empty string to remove previously-defined invoicing rules. Setting invoicing rules is not
@@ -222,11 +222,11 @@ public struct InvoiceitemUpdateParams: ClearableParams {
     /// recognize and defer revenue. See the [Revenue Recognition
     /// documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing)
     /// for details.
-    public var period: InvoiceitemUpdatePeriod?
+    public var period: InvoiceitemPeriod?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-    public var priceData: InvoiceitemUpdatePriceData?
+    public var priceData: InvoiceitemPriceData?
     /// The pricing information for the invoice item.
-    public var pricing: InvoiceitemUpdatePricing?
+    public var pricing: InvoiceitemPricing?
     /// Non-negative integer. The quantity of units for the invoice item. Use `quantity_decimal` instead to
     /// provide decimal precision. This field will be deprecated in favor of `quantity_decimal` in a future
     /// version.
@@ -238,7 +238,7 @@ public struct InvoiceitemUpdateParams: ClearableParams {
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: InvoiceitemUpdateTaxBehavior?
+    public var taxBehavior: InvoiceitemTaxBehavior?
     /// A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
     public var taxCode: String?
     /// The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do
@@ -252,7 +252,7 @@ public struct InvoiceitemUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.discounts)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amount: Int? = nil, description: String? = nil, discountable: Bool? = nil, discounts: [InvoiceitemUpdateDiscounts]? = nil, expand: [String]? = nil, invoicingRules: String? = nil, metadata: [String: String]? = nil, period: InvoiceitemUpdatePeriod? = nil, priceData: InvoiceitemUpdatePriceData? = nil, pricing: InvoiceitemUpdatePricing? = nil, quantity: Int? = nil, quantityDecimal: String? = nil, taxBehavior: InvoiceitemUpdateTaxBehavior? = nil, taxCode: String? = nil, taxRates: [String]? = nil, unitAmountDecimal: String? = nil) {
+    public init(amount: Int? = nil, description: String? = nil, discountable: Bool? = nil, discounts: [InvoiceitemDiscounts]? = nil, expand: [String]? = nil, invoicingRules: String? = nil, metadata: [String: String]? = nil, period: InvoiceitemPeriod? = nil, priceData: InvoiceitemPriceData? = nil, pricing: InvoiceitemPricing? = nil, quantity: Int? = nil, quantityDecimal: String? = nil, taxBehavior: InvoiceitemTaxBehavior? = nil, taxCode: String? = nil, taxRates: [String]? = nil, unitAmountDecimal: String? = nil) {
         self.amount = amount
         self.description = description
         self.discountable = discountable
@@ -301,7 +301,7 @@ public struct InvoiceitemUpdateParams: ClearableParams {
     }
 }
 
-public struct InvoiceitemCreateDiscounts: StripeParams {
+public struct InvoiceitemDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
     /// ID of an existing discount on the object (or one of its ancestors) to reuse.
@@ -328,7 +328,7 @@ public struct InvoiceitemCreateDiscounts: StripeParams {
 /// recognize and defer revenue. See the [Revenue Recognition
 /// documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing)
 /// for details.
-public struct InvoiceitemCreatePeriod: StripeParams {
+public struct InvoiceitemPeriod: StripeParams {
     /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
     public var end: Date
     /// The start of the period. This value is inclusive.
@@ -341,7 +341,7 @@ public struct InvoiceitemCreatePeriod: StripeParams {
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-public struct InvoiceitemCreatePriceData: StripeParams {
+public struct InvoiceitemPriceData: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -353,7 +353,7 @@ public struct InvoiceitemCreatePriceData: StripeParams {
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: InvoiceitemCreatePriceDataTaxBehavior?
+    public var taxBehavior: InvoiceitemPriceDataTaxBehavior?
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
     /// charge.
     public var unitAmount: Int?
@@ -361,7 +361,7 @@ public struct InvoiceitemCreatePriceData: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, product: String, taxBehavior: InvoiceitemCreatePriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, product: String, taxBehavior: InvoiceitemPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.product = product
         self.taxBehavior = taxBehavior
@@ -378,7 +378,7 @@ public struct InvoiceitemCreatePriceData: StripeParams {
     }
 }
 
-public struct InvoiceitemCreatePriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct InvoiceitemPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -391,7 +391,7 @@ public struct InvoiceitemCreatePriceDataTaxBehavior: RawRepresentable, Codable, 
 }
 
 /// The pricing information for the invoice item.
-public struct InvoiceitemCreatePricing: StripeParams {
+public struct InvoiceitemPricing: StripeParams {
     /// The ID of the price object.
     public var price: String?
 
@@ -400,118 +400,7 @@ public struct InvoiceitemCreatePricing: StripeParams {
     }
 }
 
-public struct InvoiceitemCreateTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var exclusive: Self { .init(rawValue: "exclusive") }
-    public static var inclusive: Self { .init(rawValue: "inclusive") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
-}
-
-public struct InvoiceitemUpdateDiscounts: StripeParams {
-    /// ID of the coupon to create a new discount for.
-    public var coupon: String?
-    /// ID of an existing discount on the object (or one of its ancestors) to reuse.
-    public var discount: String?
-    /// ID of the promotion code to create a new discount for.
-    public var promotionCode: String?
-
-    public init(coupon: String? = nil, discount: String? = nil, promotionCode: String? = nil) {
-        self.coupon = coupon
-        self.discount = discount
-        self.promotionCode = promotionCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case coupon
-        case discount
-        case promotionCode = "promotion_code"
-    }
-}
-
-/// The period associated with this invoice item. When set to different values, the period will be
-/// rendered on the invoice. If you have [Stripe Revenue
-/// Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to
-/// recognize and defer revenue. See the [Revenue Recognition
-/// documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing)
-/// for details.
-public struct InvoiceitemUpdatePeriod: StripeParams {
-    /// The end of the period, which must be greater than or equal to the start. This value is inclusive.
-    public var end: Date
-    /// The start of the period. This value is inclusive.
-    public var start: Date
-
-    public init(end: Date, start: Date) {
-        self.end = end
-        self.start = start
-    }
-}
-
-/// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-public struct InvoiceitemUpdatePriceData: StripeParams {
-    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-    /// Must be a [supported currency](https://stripe.com/docs/currencies).
-    public var currency: String
-    /// The ID of the [Product](https://docs.stripe.com/api/products) that this
-    /// [Price](https://docs.stripe.com/api/prices) will belong to.
-    public var product: String
-    /// Only required if a [default tax
-    /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
-    /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
-    /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
-    /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: InvoiceitemUpdatePriceDataTaxBehavior?
-    /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
-    /// charge.
-    public var unitAmount: Int?
-    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
-    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    public var unitAmountDecimal: String?
-
-    public init(currency: String, product: String, taxBehavior: InvoiceitemUpdatePriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
-        self.currency = currency
-        self.product = product
-        self.taxBehavior = taxBehavior
-        self.unitAmount = unitAmount
-        self.unitAmountDecimal = unitAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case currency
-        case product
-        case taxBehavior = "tax_behavior"
-        case unitAmount = "unit_amount"
-        case unitAmountDecimal = "unit_amount_decimal"
-    }
-}
-
-public struct InvoiceitemUpdatePriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var exclusive: Self { .init(rawValue: "exclusive") }
-    public static var inclusive: Self { .init(rawValue: "inclusive") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
-}
-
-/// The pricing information for the invoice item.
-public struct InvoiceitemUpdatePricing: StripeParams {
-    /// The ID of the price object.
-    public var price: String?
-
-    public init(price: String? = nil) {
-        self.price = price
-    }
-}
-
-public struct InvoiceitemUpdateTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct InvoiceitemTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

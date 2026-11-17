@@ -12,11 +12,11 @@ public struct AccountSessionCreateParams: StripeParams {
     public var account: String
     /// Each key of the dictionary represents an embedded component, and each embedded component maps to its
     /// configuration (e.g. whether it has been enabled or not).
-    public var components: AccountSessionCreateComponents
+    public var components: AccountSessionComponents
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(account: String, components: AccountSessionCreateComponents, expand: [String]? = nil) {
+    public init(account: String, components: AccountSessionComponents, expand: [String]? = nil) {
         self.account = account
         self.components = components
         self.expand = expand
@@ -25,85 +25,85 @@ public struct AccountSessionCreateParams: StripeParams {
 
 /// Each key of the dictionary represents an embedded component, and each embedded component maps to its
 /// configuration (e.g. whether it has been enabled or not).
-public struct AccountSessionCreateComponents: StripeParams {
+public struct AccountSessionComponents: StripeParams {
     /// Configuration for the [account
     /// management](/connect/supported-embedded-components/account-management/) embedded component.
-    public var accountManagement: AccountSessionCreateComponentsAccountManagement?
+    public var accountManagement: AccountSessionComponentsAccountManagement?
     /// Configuration for the [account
     /// onboarding](/connect/supported-embedded-components/account-onboarding/) embedded component.
-    public var accountOnboarding: AccountSessionCreateComponentsAccountOnboarding?
+    public var accountOnboarding: AccountSessionComponentsAccountOnboarding?
     /// Configuration for the [balance
     /// report](/connect/supported-embedded-components/financial-reports#balance-report) embedded component.
-    public var balanceReport: AccountSessionCreateComponentsBalanceReport?
+    public var balanceReport: AccountSessionComponentsBalanceReport?
     /// Configuration for the [balances](/connect/supported-embedded-components/balances/) embedded
     /// component.
-    public var balances: AccountSessionCreateComponentsBalances?
+    public var balances: AccountSessionComponentsBalances?
     /// Configuration for the [disputes list](/connect/supported-embedded-components/disputes-list/)
     /// embedded component.
-    public var disputesList: AccountSessionCreateComponentsDisputesList?
+    public var disputesList: AccountSessionComponentsDisputesList?
     /// Configuration for the [documents](/connect/supported-embedded-components/documents/) embedded
     /// component.
-    public var documents: AccountSessionCreateComponentsDocuments?
+    public var documents: AccountSessionComponentsDocuments?
     /// Configuration for the [financial account](/connect/supported-embedded-components/financial-account/)
     /// embedded component.
-    public var financialAccount: AccountSessionCreateComponentsFinancialAccount?
+    public var financialAccount: AccountSessionComponentsFinancialAccount?
     /// Configuration for the [financial account
     /// transactions](/connect/supported-embedded-components/financial-account-transactions/) embedded
     /// component.
-    public var financialAccountTransactions: AccountSessionCreateComponentsFinancialAccountTransactions?
+    public var financialAccountTransactions: AccountSessionComponentsFinancialAccountTransactions?
     /// Configuration for the [instant payouts
     /// promotion](/connect/supported-embedded-components/instant-payouts-promotion/) embedded component.
-    public var instantPayoutsPromotion: AccountSessionCreateComponentsInstantPayoutsPromotion?
+    public var instantPayoutsPromotion: AccountSessionComponentsInstantPayoutsPromotion?
     /// Configuration for the [issuing card](/connect/supported-embedded-components/issuing-card/) embedded
     /// component.
-    public var issuingCard: AccountSessionCreateComponentsIssuingCard?
+    public var issuingCard: AccountSessionComponentsIssuingCard?
     /// Configuration for the [issuing cards
     /// list](/connect/supported-embedded-components/issuing-cards-list/) embedded component.
-    public var issuingCardsList: AccountSessionCreateComponentsIssuingCardsList?
+    public var issuingCardsList: AccountSessionComponentsIssuingCardsList?
     /// Configuration for the [notification
     /// banner](/connect/supported-embedded-components/notification-banner/) embedded component.
-    public var notificationBanner: AccountSessionCreateComponentsNotificationBanner?
+    public var notificationBanner: AccountSessionComponentsNotificationBanner?
     /// Configuration for the [payment details](/connect/supported-embedded-components/payment-details/)
     /// embedded component.
-    public var paymentDetails: AccountSessionCreateComponentsPaymentDetails?
+    public var paymentDetails: AccountSessionComponentsPaymentDetails?
     /// Configuration for the [payment disputes](/connect/supported-embedded-components/payment-disputes/)
     /// embedded component.
-    public var paymentDisputes: AccountSessionCreateComponentsPaymentDisputes?
+    public var paymentDisputes: AccountSessionComponentsPaymentDisputes?
     /// Configuration for the [payment method
     /// settings](/connect/supported-embedded-components/payment-method-settings/) embedded component.
-    public var paymentMethodSettings: AccountSessionCreateComponentsPaymentMethodSettings?
+    public var paymentMethodSettings: AccountSessionComponentsPaymentMethodSettings?
     /// Configuration for the [payments](/connect/supported-embedded-components/payments/) embedded
     /// component.
-    public var payments: AccountSessionCreateComponentsPayments?
+    public var payments: AccountSessionComponentsPayments?
     /// Configuration for the [payout details](/connect/supported-embedded-components/payout-details/)
     /// embedded component.
-    public var payoutDetails: AccountSessionCreateComponentsPayoutDetails?
+    public var payoutDetails: AccountSessionComponentsPayoutDetails?
     /// Configuration for the [payout reconciliation
     /// report](/connect/supported-embedded-components/financial-reports#payout-reconciliation-report)
     /// embedded component.
-    public var payoutReconciliationReport: AccountSessionCreateComponentsPayoutReconciliationReport?
+    public var payoutReconciliationReport: AccountSessionComponentsPayoutReconciliationReport?
     /// Configuration for the [payouts](/connect/supported-embedded-components/payouts/) embedded component.
-    public var payouts: AccountSessionCreateComponentsPayouts?
+    public var payouts: AccountSessionComponentsPayouts?
     /// Configuration for the [payouts list](/connect/supported-embedded-components/payouts-list/) embedded
     /// component.
-    public var payoutsList: AccountSessionCreateComponentsPayoutsList?
+    public var payoutsList: AccountSessionComponentsPayoutsList?
     /// Configuration for the [reporting chart](/connect/supported-embedded-components/reporting-chart/)
     /// embedded component.
-    public var reportingChart: AccountSessionCreateComponentsReportingChart?
+    public var reportingChart: AccountSessionComponentsReportingChart?
     /// Configuration for the [tax registrations](/connect/supported-embedded-components/tax-registrations/)
     /// embedded component.
-    public var taxRegistrations: AccountSessionCreateComponentsTaxRegistrations?
+    public var taxRegistrations: AccountSessionComponentsTaxRegistrations?
     /// Configuration for the [tax settings](/connect/supported-embedded-components/tax-settings/) embedded
     /// component.
-    public var taxSettings: AccountSessionCreateComponentsTaxSettings?
+    public var taxSettings: AccountSessionComponentsTaxSettings?
     /// Configuration for the [Terminal hardware
     /// orders](/connect/supported-embedded-components/terminal-hardware-orders/) embedded component.
-    public var terminalHardwareOrders: AccountSessionCreateComponentsTerminalHardwareOrders?
+    public var terminalHardwareOrders: AccountSessionComponentsTerminalHardwareOrders?
     /// Configuration for the [Terminal hardware
     /// shop](/connect/supported-embedded-components/terminal-hardware-shop/) embedded component.
-    public var terminalHardwareShop: AccountSessionCreateComponentsTerminalHardwareShop?
+    public var terminalHardwareShop: AccountSessionComponentsTerminalHardwareShop?
 
-    public init(accountManagement: AccountSessionCreateComponentsAccountManagement? = nil, accountOnboarding: AccountSessionCreateComponentsAccountOnboarding? = nil, balanceReport: AccountSessionCreateComponentsBalanceReport? = nil, balances: AccountSessionCreateComponentsBalances? = nil, disputesList: AccountSessionCreateComponentsDisputesList? = nil, documents: AccountSessionCreateComponentsDocuments? = nil, financialAccount: AccountSessionCreateComponentsFinancialAccount? = nil, financialAccountTransactions: AccountSessionCreateComponentsFinancialAccountTransactions? = nil, instantPayoutsPromotion: AccountSessionCreateComponentsInstantPayoutsPromotion? = nil, issuingCard: AccountSessionCreateComponentsIssuingCard? = nil, issuingCardsList: AccountSessionCreateComponentsIssuingCardsList? = nil, notificationBanner: AccountSessionCreateComponentsNotificationBanner? = nil, paymentDetails: AccountSessionCreateComponentsPaymentDetails? = nil, paymentDisputes: AccountSessionCreateComponentsPaymentDisputes? = nil, paymentMethodSettings: AccountSessionCreateComponentsPaymentMethodSettings? = nil, payments: AccountSessionCreateComponentsPayments? = nil, payoutDetails: AccountSessionCreateComponentsPayoutDetails? = nil, payoutReconciliationReport: AccountSessionCreateComponentsPayoutReconciliationReport? = nil, payouts: AccountSessionCreateComponentsPayouts? = nil, payoutsList: AccountSessionCreateComponentsPayoutsList? = nil, reportingChart: AccountSessionCreateComponentsReportingChart? = nil, taxRegistrations: AccountSessionCreateComponentsTaxRegistrations? = nil, taxSettings: AccountSessionCreateComponentsTaxSettings? = nil, terminalHardwareOrders: AccountSessionCreateComponentsTerminalHardwareOrders? = nil, terminalHardwareShop: AccountSessionCreateComponentsTerminalHardwareShop? = nil) {
+    public init(accountManagement: AccountSessionComponentsAccountManagement? = nil, accountOnboarding: AccountSessionComponentsAccountOnboarding? = nil, balanceReport: AccountSessionComponentsBalanceReport? = nil, balances: AccountSessionComponentsBalances? = nil, disputesList: AccountSessionComponentsDisputesList? = nil, documents: AccountSessionComponentsDocuments? = nil, financialAccount: AccountSessionComponentsFinancialAccount? = nil, financialAccountTransactions: AccountSessionComponentsFinancialAccountTransactions? = nil, instantPayoutsPromotion: AccountSessionComponentsInstantPayoutsPromotion? = nil, issuingCard: AccountSessionComponentsIssuingCard? = nil, issuingCardsList: AccountSessionComponentsIssuingCardsList? = nil, notificationBanner: AccountSessionComponentsNotificationBanner? = nil, paymentDetails: AccountSessionComponentsPaymentDetails? = nil, paymentDisputes: AccountSessionComponentsPaymentDisputes? = nil, paymentMethodSettings: AccountSessionComponentsPaymentMethodSettings? = nil, payments: AccountSessionComponentsPayments? = nil, payoutDetails: AccountSessionComponentsPayoutDetails? = nil, payoutReconciliationReport: AccountSessionComponentsPayoutReconciliationReport? = nil, payouts: AccountSessionComponentsPayouts? = nil, payoutsList: AccountSessionComponentsPayoutsList? = nil, reportingChart: AccountSessionComponentsReportingChart? = nil, taxRegistrations: AccountSessionComponentsTaxRegistrations? = nil, taxSettings: AccountSessionComponentsTaxSettings? = nil, terminalHardwareOrders: AccountSessionComponentsTerminalHardwareOrders? = nil, terminalHardwareShop: AccountSessionComponentsTerminalHardwareShop? = nil) {
         self.accountManagement = accountManagement
         self.accountOnboarding = accountOnboarding
         self.balanceReport = balanceReport
@@ -162,20 +162,20 @@ public struct AccountSessionCreateComponents: StripeParams {
 
 /// Configuration for the [account
 /// management](/connect/supported-embedded-components/account-management/) embedded component.
-public struct AccountSessionCreateComponentsAccountManagement: StripeParams {
+public struct AccountSessionComponentsAccountManagement: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsAccountManagementFeatures?
+    public var features: AccountSessionComponentsAccountManagementFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsAccountManagementFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsAccountManagementFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsAccountManagementFeatures: StripeParams {
+public struct AccountSessionComponentsAccountManagementFeatures: StripeParams {
     /// Whether Stripe user authentication is disabled. This value can only be `true` for accounts where
     /// `controller.requirement_collection` is `application` for the account. The default value is the
     /// opposite of the `external_account_collection` value. For example, if you don't set
@@ -200,20 +200,20 @@ public struct AccountSessionCreateComponentsAccountManagementFeatures: StripePar
 
 /// Configuration for the [account
 /// onboarding](/connect/supported-embedded-components/account-onboarding/) embedded component.
-public struct AccountSessionCreateComponentsAccountOnboarding: StripeParams {
+public struct AccountSessionComponentsAccountOnboarding: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsAccountOnboardingFeatures?
+    public var features: AccountSessionComponentsAccountOnboardingFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsAccountOnboardingFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsAccountOnboardingFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsAccountOnboardingFeatures: StripeParams {
+public struct AccountSessionComponentsAccountOnboardingFeatures: StripeParams {
     /// Whether Stripe user authentication is disabled. This value can only be `true` for accounts where
     /// `controller.requirement_collection` is `application` for the account. The default value is the
     /// opposite of the `external_account_collection` value. For example, if you don't set
@@ -238,7 +238,7 @@ public struct AccountSessionCreateComponentsAccountOnboardingFeatures: StripePar
 
 /// Configuration for the [balance
 /// report](/connect/supported-embedded-components/financial-reports#balance-report) embedded component.
-public struct AccountSessionCreateComponentsBalanceReport: StripeParams {
+public struct AccountSessionComponentsBalanceReport: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.
@@ -252,20 +252,20 @@ public struct AccountSessionCreateComponentsBalanceReport: StripeParams {
 
 /// Configuration for the [balances](/connect/supported-embedded-components/balances/) embedded
 /// component.
-public struct AccountSessionCreateComponentsBalances: StripeParams {
+public struct AccountSessionComponentsBalances: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsBalancesFeatures?
+    public var features: AccountSessionComponentsBalancesFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsBalancesFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsBalancesFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsBalancesFeatures: StripeParams {
+public struct AccountSessionComponentsBalancesFeatures: StripeParams {
     /// Whether Stripe user authentication is disabled. This value can only be `true` for accounts where
     /// `controller.requirement_collection` is `application` for the account. The default value is the
     /// opposite of the `external_account_collection` value. For example, if you don't set
@@ -304,20 +304,20 @@ public struct AccountSessionCreateComponentsBalancesFeatures: StripeParams {
 
 /// Configuration for the [disputes list](/connect/supported-embedded-components/disputes-list/)
 /// embedded component.
-public struct AccountSessionCreateComponentsDisputesList: StripeParams {
+public struct AccountSessionComponentsDisputesList: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsDisputesListFeatures?
+    public var features: AccountSessionComponentsDisputesListFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsDisputesListFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsDisputesListFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsDisputesListFeatures: StripeParams {
+public struct AccountSessionComponentsDisputesListFeatures: StripeParams {
     /// Whether to allow capturing and cancelling payment intents. This is `true` by default.
     public var capturePayments: Bool?
     /// Whether connected accounts can manage destination charges that are created on behalf of them. This
@@ -351,7 +351,7 @@ public struct AccountSessionCreateComponentsDisputesListFeatures: StripeParams {
 
 /// Configuration for the [documents](/connect/supported-embedded-components/documents/) embedded
 /// component.
-public struct AccountSessionCreateComponentsDocuments: StripeParams {
+public struct AccountSessionComponentsDocuments: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.
@@ -365,20 +365,20 @@ public struct AccountSessionCreateComponentsDocuments: StripeParams {
 
 /// Configuration for the [financial account](/connect/supported-embedded-components/financial-account/)
 /// embedded component.
-public struct AccountSessionCreateComponentsFinancialAccount: StripeParams {
+public struct AccountSessionComponentsFinancialAccount: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsFinancialAccountFeatures?
+    public var features: AccountSessionComponentsFinancialAccountFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsFinancialAccountFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsFinancialAccountFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsFinancialAccountFeatures: StripeParams {
+public struct AccountSessionComponentsFinancialAccountFeatures: StripeParams {
     /// Whether Stripe user authentication is disabled. This value can only be `true` for accounts where
     /// `controller.requirement_collection` is `application` for the account. The default value is the
     /// opposite of the `external_account_collection` value. For example, if you don't set
@@ -412,20 +412,20 @@ public struct AccountSessionCreateComponentsFinancialAccountFeatures: StripePara
 /// Configuration for the [financial account
 /// transactions](/connect/supported-embedded-components/financial-account-transactions/) embedded
 /// component.
-public struct AccountSessionCreateComponentsFinancialAccountTransactions: StripeParams {
+public struct AccountSessionComponentsFinancialAccountTransactions: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsFinancialAccountTransactionsFeatures?
+    public var features: AccountSessionComponentsFinancialAccountTransactionsFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsFinancialAccountTransactionsFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsFinancialAccountTransactionsFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsFinancialAccountTransactionsFeatures: StripeParams {
+public struct AccountSessionComponentsFinancialAccountTransactionsFeatures: StripeParams {
     /// Whether to allow card spend dispute management features.
     public var cardSpendDisputeManagement: Bool?
 
@@ -440,20 +440,20 @@ public struct AccountSessionCreateComponentsFinancialAccountTransactionsFeatures
 
 /// Configuration for the [instant payouts
 /// promotion](/connect/supported-embedded-components/instant-payouts-promotion/) embedded component.
-public struct AccountSessionCreateComponentsInstantPayoutsPromotion: StripeParams {
+public struct AccountSessionComponentsInstantPayoutsPromotion: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsInstantPayoutsPromotionFeatures?
+    public var features: AccountSessionComponentsInstantPayoutsPromotionFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsInstantPayoutsPromotionFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsInstantPayoutsPromotionFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsInstantPayoutsPromotionFeatures: StripeParams {
+public struct AccountSessionComponentsInstantPayoutsPromotionFeatures: StripeParams {
     /// Whether Stripe user authentication is disabled. This value can only be `true` for accounts where
     /// `controller.requirement_collection` is `application` for the account. The default value is the
     /// opposite of the `external_account_collection` value. For example, if you don't set
@@ -482,20 +482,20 @@ public struct AccountSessionCreateComponentsInstantPayoutsPromotionFeatures: Str
 
 /// Configuration for the [issuing card](/connect/supported-embedded-components/issuing-card/) embedded
 /// component.
-public struct AccountSessionCreateComponentsIssuingCard: StripeParams {
+public struct AccountSessionComponentsIssuingCard: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsIssuingCardFeatures?
+    public var features: AccountSessionComponentsIssuingCardFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsIssuingCardFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsIssuingCardFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsIssuingCardFeatures: StripeParams {
+public struct AccountSessionComponentsIssuingCardFeatures: StripeParams {
     /// Whether to allow card management features.
     public var cardManagement: Bool?
     /// Whether to allow card spend dispute management features.
@@ -522,20 +522,20 @@ public struct AccountSessionCreateComponentsIssuingCardFeatures: StripeParams {
 
 /// Configuration for the [issuing cards
 /// list](/connect/supported-embedded-components/issuing-cards-list/) embedded component.
-public struct AccountSessionCreateComponentsIssuingCardsList: StripeParams {
+public struct AccountSessionComponentsIssuingCardsList: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsIssuingCardsListFeatures?
+    public var features: AccountSessionComponentsIssuingCardsListFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsIssuingCardsListFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsIssuingCardsListFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsIssuingCardsListFeatures: StripeParams {
+public struct AccountSessionComponentsIssuingCardsListFeatures: StripeParams {
     /// Whether to allow card management features.
     public var cardManagement: Bool?
     /// Whether to allow card spend dispute management features.
@@ -570,20 +570,20 @@ public struct AccountSessionCreateComponentsIssuingCardsListFeatures: StripePara
 
 /// Configuration for the [notification
 /// banner](/connect/supported-embedded-components/notification-banner/) embedded component.
-public struct AccountSessionCreateComponentsNotificationBanner: StripeParams {
+public struct AccountSessionComponentsNotificationBanner: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsNotificationBannerFeatures?
+    public var features: AccountSessionComponentsNotificationBannerFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsNotificationBannerFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsNotificationBannerFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsNotificationBannerFeatures: StripeParams {
+public struct AccountSessionComponentsNotificationBannerFeatures: StripeParams {
     /// Whether Stripe user authentication is disabled. This value can only be `true` for accounts where
     /// `controller.requirement_collection` is `application` for the account. The default value is the
     /// opposite of the `external_account_collection` value. For example, if you don't set
@@ -608,20 +608,20 @@ public struct AccountSessionCreateComponentsNotificationBannerFeatures: StripePa
 
 /// Configuration for the [payment details](/connect/supported-embedded-components/payment-details/)
 /// embedded component.
-public struct AccountSessionCreateComponentsPaymentDetails: StripeParams {
+public struct AccountSessionComponentsPaymentDetails: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsPaymentDetailsFeatures?
+    public var features: AccountSessionComponentsPaymentDetailsFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsPaymentDetailsFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsPaymentDetailsFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsPaymentDetailsFeatures: StripeParams {
+public struct AccountSessionComponentsPaymentDetailsFeatures: StripeParams {
     /// Whether to allow capturing and cancelling payment intents. This is `true` by default.
     public var capturePayments: Bool?
     /// Whether connected accounts can manage destination charges that are created on behalf of them. This
@@ -655,20 +655,20 @@ public struct AccountSessionCreateComponentsPaymentDetailsFeatures: StripeParams
 
 /// Configuration for the [payment disputes](/connect/supported-embedded-components/payment-disputes/)
 /// embedded component.
-public struct AccountSessionCreateComponentsPaymentDisputes: StripeParams {
+public struct AccountSessionComponentsPaymentDisputes: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsPaymentDisputesFeatures?
+    public var features: AccountSessionComponentsPaymentDisputesFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsPaymentDisputesFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsPaymentDisputesFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsPaymentDisputesFeatures: StripeParams {
+public struct AccountSessionComponentsPaymentDisputesFeatures: StripeParams {
     /// Whether connected accounts can manage destination charges that are created on behalf of them. This
     /// is `false` by default.
     public var destinationOnBehalfOfChargeManagement: Bool?
@@ -698,20 +698,20 @@ public struct AccountSessionCreateComponentsPaymentDisputesFeatures: StripeParam
 
 /// Configuration for the [payment method
 /// settings](/connect/supported-embedded-components/payment-method-settings/) embedded component.
-public struct AccountSessionCreateComponentsPaymentMethodSettings: StripeParams {
+public struct AccountSessionComponentsPaymentMethodSettings: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsPaymentMethodSettingsFeatures?
+    public var features: AccountSessionComponentsPaymentMethodSettingsFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsPaymentMethodSettingsFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsPaymentMethodSettingsFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsPaymentMethodSettingsFeatures: StripeParams {
+public struct AccountSessionComponentsPaymentMethodSettingsFeatures: StripeParams {
     /// Whether Stripe user authentication is disabled. This value can only be `true` for accounts where
     /// `controller.requirement_collection` is `application` for the account. This is `false` by default.
     public var disableStripeUserAuthentication: Bool?
@@ -727,20 +727,20 @@ public struct AccountSessionCreateComponentsPaymentMethodSettingsFeatures: Strip
 
 /// Configuration for the [payments](/connect/supported-embedded-components/payments/) embedded
 /// component.
-public struct AccountSessionCreateComponentsPayments: StripeParams {
+public struct AccountSessionComponentsPayments: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsPaymentsFeatures?
+    public var features: AccountSessionComponentsPaymentsFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsPaymentsFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsPaymentsFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsPaymentsFeatures: StripeParams {
+public struct AccountSessionComponentsPaymentsFeatures: StripeParams {
     /// Whether to allow capturing and cancelling payment intents. This is `true` by default.
     public var capturePayments: Bool?
     /// Whether connected accounts can manage destination charges that are created on behalf of them. This
@@ -774,7 +774,7 @@ public struct AccountSessionCreateComponentsPaymentsFeatures: StripeParams {
 
 /// Configuration for the [payout details](/connect/supported-embedded-components/payout-details/)
 /// embedded component.
-public struct AccountSessionCreateComponentsPayoutDetails: StripeParams {
+public struct AccountSessionComponentsPayoutDetails: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.
@@ -789,7 +789,7 @@ public struct AccountSessionCreateComponentsPayoutDetails: StripeParams {
 /// Configuration for the [payout reconciliation
 /// report](/connect/supported-embedded-components/financial-reports#payout-reconciliation-report)
 /// embedded component.
-public struct AccountSessionCreateComponentsPayoutReconciliationReport: StripeParams {
+public struct AccountSessionComponentsPayoutReconciliationReport: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.
@@ -802,20 +802,20 @@ public struct AccountSessionCreateComponentsPayoutReconciliationReport: StripePa
 }
 
 /// Configuration for the [payouts](/connect/supported-embedded-components/payouts/) embedded component.
-public struct AccountSessionCreateComponentsPayouts: StripeParams {
+public struct AccountSessionComponentsPayouts: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// The list of features enabled in the embedded component.
-    public var features: AccountSessionCreateComponentsPayoutsFeatures?
+    public var features: AccountSessionComponentsPayoutsFeatures?
 
-    public init(enabled: Bool, features: AccountSessionCreateComponentsPayoutsFeatures? = nil) {
+    public init(enabled: Bool, features: AccountSessionComponentsPayoutsFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// The list of features enabled in the embedded component.
-public struct AccountSessionCreateComponentsPayoutsFeatures: StripeParams {
+public struct AccountSessionComponentsPayoutsFeatures: StripeParams {
     /// Whether Stripe user authentication is disabled. This value can only be `true` for accounts where
     /// `controller.requirement_collection` is `application` for the account. The default value is the
     /// opposite of the `external_account_collection` value. For example, if you don't set
@@ -854,7 +854,7 @@ public struct AccountSessionCreateComponentsPayoutsFeatures: StripeParams {
 
 /// Configuration for the [payouts list](/connect/supported-embedded-components/payouts-list/) embedded
 /// component.
-public struct AccountSessionCreateComponentsPayoutsList: StripeParams {
+public struct AccountSessionComponentsPayoutsList: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.
@@ -868,7 +868,7 @@ public struct AccountSessionCreateComponentsPayoutsList: StripeParams {
 
 /// Configuration for the [reporting chart](/connect/supported-embedded-components/reporting-chart/)
 /// embedded component.
-public struct AccountSessionCreateComponentsReportingChart: StripeParams {
+public struct AccountSessionComponentsReportingChart: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.
@@ -882,7 +882,7 @@ public struct AccountSessionCreateComponentsReportingChart: StripeParams {
 
 /// Configuration for the [tax registrations](/connect/supported-embedded-components/tax-registrations/)
 /// embedded component.
-public struct AccountSessionCreateComponentsTaxRegistrations: StripeParams {
+public struct AccountSessionComponentsTaxRegistrations: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.
@@ -896,7 +896,7 @@ public struct AccountSessionCreateComponentsTaxRegistrations: StripeParams {
 
 /// Configuration for the [tax settings](/connect/supported-embedded-components/tax-settings/) embedded
 /// component.
-public struct AccountSessionCreateComponentsTaxSettings: StripeParams {
+public struct AccountSessionComponentsTaxSettings: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.
@@ -910,7 +910,7 @@ public struct AccountSessionCreateComponentsTaxSettings: StripeParams {
 
 /// Configuration for the [Terminal hardware
 /// orders](/connect/supported-embedded-components/terminal-hardware-orders/) embedded component.
-public struct AccountSessionCreateComponentsTerminalHardwareOrders: StripeParams {
+public struct AccountSessionComponentsTerminalHardwareOrders: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.
@@ -924,7 +924,7 @@ public struct AccountSessionCreateComponentsTerminalHardwareOrders: StripeParams
 
 /// Configuration for the [Terminal hardware
 /// shop](/connect/supported-embedded-components/terminal-hardware-shop/) embedded component.
-public struct AccountSessionCreateComponentsTerminalHardwareShop: StripeParams {
+public struct AccountSessionComponentsTerminalHardwareShop: StripeParams {
     /// Whether the embedded component is enabled.
     public var enabled: Bool
     /// An empty list, because this embedded component has no features.

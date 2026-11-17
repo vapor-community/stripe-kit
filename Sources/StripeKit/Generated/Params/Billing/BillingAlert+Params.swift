@@ -33,9 +33,9 @@ public struct BillingAlertCreateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The configuration of the usage threshold.
-    public var usageThreshold: BillingAlertCreateUsageThreshold?
+    public var usageThreshold: BillingAlertUsageThreshold?
 
-    public init(alertType: BillingAlertCreateAlertType, title: String, expand: [String]? = nil, usageThreshold: BillingAlertCreateUsageThreshold? = nil) {
+    public init(alertType: BillingAlertCreateAlertType, title: String, expand: [String]? = nil, usageThreshold: BillingAlertUsageThreshold? = nil) {
         self.alertType = alertType
         self.title = title
         self.expand = expand
@@ -109,18 +109,18 @@ public struct BillingAlertCreateAlertType: RawRepresentable, Codable, Hashable, 
 }
 
 /// The configuration of the usage threshold.
-public struct BillingAlertCreateUsageThreshold: StripeParams {
+public struct BillingAlertUsageThreshold: StripeParams {
     /// Defines the threshold value that triggers the alert. The value must be greater than 0.
     public var gte: Int
     /// The [Billing Meter](/api/billing/meter) ID whose usage is monitored.
     public var meter: String
     /// Defines how the alert will behave.
-    public var recurrence: BillingAlertCreateUsageThresholdRecurrence
+    public var recurrence: BillingAlertUsageThresholdRecurrence
     /// The filters allows limiting the scope of this usage alert. You can only specify up to one filter at
     /// this time.
-    public var filters: [BillingAlertCreateUsageThresholdFilters]?
+    public var filters: [BillingAlertUsageThresholdFilters]?
 
-    public init(gte: Int, meter: String, recurrence: BillingAlertCreateUsageThresholdRecurrence, filters: [BillingAlertCreateUsageThresholdFilters]? = nil) {
+    public init(gte: Int, meter: String, recurrence: BillingAlertUsageThresholdRecurrence, filters: [BillingAlertUsageThresholdFilters]? = nil) {
         self.gte = gte
         self.meter = meter
         self.recurrence = recurrence
@@ -128,7 +128,7 @@ public struct BillingAlertCreateUsageThreshold: StripeParams {
     }
 }
 
-public struct BillingAlertCreateUsageThresholdRecurrence: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingAlertUsageThresholdRecurrence: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -138,19 +138,19 @@ public struct BillingAlertCreateUsageThresholdRecurrence: RawRepresentable, Coda
     public static var oneTime: Self { .init(rawValue: "one_time") }
 }
 
-public struct BillingAlertCreateUsageThresholdFilters: StripeParams {
+public struct BillingAlertUsageThresholdFilters: StripeParams {
     /// What type of filter is being applied to this usage alert.
-    public var type: BillingAlertCreateUsageThresholdFiltersType
+    public var type: BillingAlertUsageThresholdFiltersType
     /// Limit the scope to this usage alert only to this customer.
     public var customer: String?
 
-    public init(type: BillingAlertCreateUsageThresholdFiltersType, customer: String? = nil) {
+    public init(type: BillingAlertUsageThresholdFiltersType, customer: String? = nil) {
         self.type = type
         self.customer = customer
     }
 }
 
-public struct BillingAlertCreateUsageThresholdFiltersType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingAlertUsageThresholdFiltersType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

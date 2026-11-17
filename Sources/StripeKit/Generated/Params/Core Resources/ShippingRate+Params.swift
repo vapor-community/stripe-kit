@@ -144,30 +144,30 @@ public struct ShippingRateUpdateParams: ClearableParams {
 /// will appear on CheckoutSessions.
 public struct ShippingRateCreateDeliveryEstimate: StripeParams {
     /// The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
-    public var maximum: ShippingRateCreateDeliveryEstimateMaximum?
+    public var maximum: ShippingRateDeliveryEstimateMaximum?
     /// The lower bound of the estimated range. If empty, represents no lower bound.
-    public var minimum: ShippingRateCreateDeliveryEstimateMinimum?
+    public var minimum: ShippingRateDeliveryEstimateMinimum?
 
-    public init(maximum: ShippingRateCreateDeliveryEstimateMaximum? = nil, minimum: ShippingRateCreateDeliveryEstimateMinimum? = nil) {
+    public init(maximum: ShippingRateDeliveryEstimateMaximum? = nil, minimum: ShippingRateDeliveryEstimateMinimum? = nil) {
         self.maximum = maximum
         self.minimum = minimum
     }
 }
 
 /// The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
-public struct ShippingRateCreateDeliveryEstimateMaximum: StripeParams {
+public struct ShippingRateDeliveryEstimateMaximum: StripeParams {
     /// A unit of time.
-    public var unit: ShippingRateCreateDeliveryEstimateMaximumUnit
+    public var unit: ShippingRateDeliveryEstimateMaximumUnit
     /// Must be greater than 0.
     public var value: Int
 
-    public init(unit: ShippingRateCreateDeliveryEstimateMaximumUnit, value: Int) {
+    public init(unit: ShippingRateDeliveryEstimateMaximumUnit, value: Int) {
         self.unit = unit
         self.value = value
     }
 }
 
-public struct ShippingRateCreateDeliveryEstimateMaximumUnit: RawRepresentable, Codable, Hashable, Sendable {
+public struct ShippingRateDeliveryEstimateMaximumUnit: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -182,19 +182,19 @@ public struct ShippingRateCreateDeliveryEstimateMaximumUnit: RawRepresentable, C
 }
 
 /// The lower bound of the estimated range. If empty, represents no lower bound.
-public struct ShippingRateCreateDeliveryEstimateMinimum: StripeParams {
+public struct ShippingRateDeliveryEstimateMinimum: StripeParams {
     /// A unit of time.
-    public var unit: ShippingRateCreateDeliveryEstimateMinimumUnit
+    public var unit: ShippingRateDeliveryEstimateMinimumUnit
     /// Must be greater than 0.
     public var value: Int
 
-    public init(unit: ShippingRateCreateDeliveryEstimateMinimumUnit, value: Int) {
+    public init(unit: ShippingRateDeliveryEstimateMinimumUnit, value: Int) {
         self.unit = unit
         self.value = value
     }
 }
 
-public struct ShippingRateCreateDeliveryEstimateMinimumUnit: RawRepresentable, Codable, Hashable, Sendable {
+public struct ShippingRateDeliveryEstimateMinimumUnit: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -238,9 +238,9 @@ public struct ShippingRateCreateFixedAmountCurrencyOptions: StripeParams {
     public var amount: Int
     /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
     /// `inclusive`, `exclusive`, or `unspecified`.
-    public var taxBehavior: ShippingRateCreateFixedAmountCurrencyOptionsTaxBehavior?
+    public var taxBehavior: ShippingRateFixedAmountCurrencyOptionsTaxBehavior?
 
-    public init(amount: Int, taxBehavior: ShippingRateCreateFixedAmountCurrencyOptionsTaxBehavior? = nil) {
+    public init(amount: Int, taxBehavior: ShippingRateFixedAmountCurrencyOptionsTaxBehavior? = nil) {
         self.amount = amount
         self.taxBehavior = taxBehavior
     }
@@ -251,7 +251,7 @@ public struct ShippingRateCreateFixedAmountCurrencyOptions: StripeParams {
     }
 }
 
-public struct ShippingRateCreateFixedAmountCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct ShippingRateFixedAmountCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -306,9 +306,9 @@ public struct ShippingRateUpdateFixedAmountCurrencyOptions: StripeParams {
     public var amount: Int?
     /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
     /// `inclusive`, `exclusive`, or `unspecified`.
-    public var taxBehavior: ShippingRateUpdateFixedAmountCurrencyOptionsTaxBehavior?
+    public var taxBehavior: ShippingRateFixedAmountCurrencyOptionsTaxBehavior?
 
-    public init(amount: Int? = nil, taxBehavior: ShippingRateUpdateFixedAmountCurrencyOptionsTaxBehavior? = nil) {
+    public init(amount: Int? = nil, taxBehavior: ShippingRateFixedAmountCurrencyOptionsTaxBehavior? = nil) {
         self.amount = amount
         self.taxBehavior = taxBehavior
     }
@@ -317,18 +317,6 @@ public struct ShippingRateUpdateFixedAmountCurrencyOptions: StripeParams {
         case amount
         case taxBehavior = "tax_behavior"
     }
-}
-
-public struct ShippingRateUpdateFixedAmountCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var exclusive: Self { .init(rawValue: "exclusive") }
-    public static var inclusive: Self { .init(rawValue: "inclusive") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 public struct ShippingRateUpdateTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {

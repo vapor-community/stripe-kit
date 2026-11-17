@@ -19,7 +19,7 @@ public struct CouponCreateParams: ClearableParams {
     /// Coupons defined in each available currency option (only supported if `amount_off` is passed). Each
     /// key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and
     /// a [supported currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: CouponCreateCurrencyOptions]?
+    public var currencyOptions: [String: CouponCurrencyOptions]?
     /// Specifies how long the discount will be in effect if used on a subscription. Defaults to `once`.
     public var duration: CouponCreateDuration?
     /// Required only if `duration` is `repeating`, in which case it must be a positive integer that
@@ -52,7 +52,7 @@ public struct CouponCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amountOff: Int? = nil, appliesTo: CouponCreateAppliesTo? = nil, currency: String? = nil, currencyOptions: [String: CouponCreateCurrencyOptions]? = nil, duration: CouponCreateDuration? = nil, durationInMonths: Int? = nil, expand: [String]? = nil, id: String? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, name: String? = nil, percentOff: Double? = nil, redeemBy: Date? = nil) {
+    public init(amountOff: Int? = nil, appliesTo: CouponCreateAppliesTo? = nil, currency: String? = nil, currencyOptions: [String: CouponCurrencyOptions]? = nil, duration: CouponCreateDuration? = nil, durationInMonths: Int? = nil, expand: [String]? = nil, id: String? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, name: String? = nil, percentOff: Double? = nil, redeemBy: Date? = nil) {
         self.amountOff = amountOff
         self.appliesTo = appliesTo
         self.currency = currency
@@ -132,7 +132,7 @@ public struct CouponUpdateParams: ClearableParams {
     /// Each key must be a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: CouponUpdateCurrencyOptions]?
+    public var currencyOptions: [String: CouponCurrencyOptions]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -146,7 +146,7 @@ public struct CouponUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(currencyOptions: [String: CouponUpdateCurrencyOptions]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil) {
+    public init(currencyOptions: [String: CouponCurrencyOptions]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.currencyOptions = currencyOptions
         self.expand = expand
         self.metadata = metadata
@@ -177,7 +177,7 @@ public struct CouponCreateAppliesTo: StripeParams {
     }
 }
 
-public struct CouponCreateCurrencyOptions: StripeParams {
+public struct CouponCurrencyOptions: StripeParams {
     /// A positive integer representing the amount to subtract from an invoice total.
     public var amountOff: Int
 
@@ -200,17 +200,4 @@ public struct CouponCreateDuration: RawRepresentable, Codable, Hashable, Sendabl
     public static var forever: Self { .init(rawValue: "forever") }
     public static var once: Self { .init(rawValue: "once") }
     public static var repeating: Self { .init(rawValue: "repeating") }
-}
-
-public struct CouponUpdateCurrencyOptions: StripeParams {
-    /// A positive integer representing the amount to subtract from an invoice total.
-    public var amountOff: Int
-
-    public init(amountOff: Int) {
-        self.amountOff = amountOff
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amountOff = "amount_off"
-    }
 }

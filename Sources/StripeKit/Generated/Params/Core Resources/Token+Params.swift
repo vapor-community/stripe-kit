@@ -9,28 +9,28 @@ import Foundation
 
 public struct TokenCreateParams: StripeParams {
     /// Information for the account this token represents.
-    public var account: TokenCreateAccount?
+    public var account: TokenAccount?
     /// The bank account this token will represent.
-    public var bankAccount: TokenCreateBankAccount?
+    public var bankAccount: TokenBankAccount?
     /// The card this token will represent. If you also pass in a customer, the card must be the ID of a
     /// card belonging to the customer. Otherwise, if you do not pass in a customer, this is a dictionary
     /// containing a user's credit card details, with the options described below.
-    public var card: TokenCreateCard?
+    public var card: TokenCard?
     /// Create a token for the customer, which is owned by the application's account. You can only use this
     /// with an [OAuth access token](https://docs.stripe.com/connect/standard-accounts) or [Stripe-Account
     /// header](https://docs.stripe.com/connect/authentication). Learn more about [cloning saved payment
     /// methods](https://docs.stripe.com/connect/cloning-saved-payment-methods).
     public var customer: String?
     /// The updated CVC value this token represents.
-    public var cvcUpdate: TokenCreateCvcUpdate?
+    public var cvcUpdate: TokenCvcUpdate?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Information for the person this token represents.
-    public var person: TokenCreatePerson?
+    public var person: TokenPerson?
     /// The PII this token represents.
-    public var pii: TokenCreatePii?
+    public var pii: TokenPii?
 
-    public init(account: TokenCreateAccount? = nil, bankAccount: TokenCreateBankAccount? = nil, card: TokenCreateCard? = nil, customer: String? = nil, cvcUpdate: TokenCreateCvcUpdate? = nil, expand: [String]? = nil, person: TokenCreatePerson? = nil, pii: TokenCreatePii? = nil) {
+    public init(account: TokenAccount? = nil, bankAccount: TokenBankAccount? = nil, card: TokenCard? = nil, customer: String? = nil, cvcUpdate: TokenCvcUpdate? = nil, expand: [String]? = nil, person: TokenPerson? = nil, pii: TokenPii? = nil) {
         self.account = account
         self.bankAccount = bankAccount
         self.card = card
@@ -54,19 +54,19 @@ public struct TokenCreateParams: StripeParams {
 }
 
 /// Information for the account this token represents.
-public struct TokenCreateAccount: StripeParams {
+public struct TokenAccount: StripeParams {
     /// The business type.
-    public var businessType: TokenCreateAccountBusinessType?
+    public var businessType: TokenAccountBusinessType?
     /// Information about the company or business.
-    public var company: TokenCreateAccountCompany?
+    public var company: TokenAccountCompany?
     /// Information about the person represented by the account.
-    public var individual: TokenCreateAccountIndividual?
+    public var individual: TokenAccountIndividual?
     /// Whether the user described by the data in the token has been shown [the Stripe Connected Account
     /// Agreement](/connect/account-tokens#stripe-connected-account-agreement). When creating an account
     /// token to create a new Connect account, this value must be `true`.
     public var tosShownAndAccepted: Bool?
 
-    public init(businessType: TokenCreateAccountBusinessType? = nil, company: TokenCreateAccountCompany? = nil, individual: TokenCreateAccountIndividual? = nil, tosShownAndAccepted: Bool? = nil) {
+    public init(businessType: TokenAccountBusinessType? = nil, company: TokenAccountCompany? = nil, individual: TokenAccountIndividual? = nil, tosShownAndAccepted: Bool? = nil) {
         self.businessType = businessType
         self.company = company
         self.individual = individual
@@ -81,7 +81,7 @@ public struct TokenCreateAccount: StripeParams {
     }
 }
 
-public struct TokenCreateAccountBusinessType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenAccountBusinessType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -95,15 +95,15 @@ public struct TokenCreateAccountBusinessType: RawRepresentable, Codable, Hashabl
 }
 
 /// Information about the company or business.
-public struct TokenCreateAccountCompany: ClearableParams {
+public struct TokenAccountCompany: ClearableParams {
     /// The company's primary address.
-    public var address: TokenCreateAccountCompanyAddress?
+    public var address: TokenAccountCompanyAddress?
     /// The Kana variation of the company's primary address (Japan only).
-    public var addressKana: TokenCreateAccountCompanyAddressKana?
+    public var addressKana: TokenAccountCompanyAddressKana?
     /// The Kanji variation of the company's primary address (Japan only).
-    public var addressKanji: TokenCreateAccountCompanyAddressKanji?
+    public var addressKanji: TokenAccountCompanyAddressKanji?
     /// The location where the business is administered.
-    public var administrativeAddress: TokenCreateAccountCompanyAdministrativeAddress?
+    public var administrativeAddress: TokenAccountCompanyAdministrativeAddress?
     /// Whether the company's directors have been provided. Set this Boolean to `true` after creating all
     /// the company's directors with [the Persons API](/api/persons) for accounts with a
     /// `relationship.director` requirement. This value is not automatically set to `true` after creating
@@ -111,7 +111,7 @@ public struct TokenCreateAccountCompany: ClearableParams {
     public var directorsProvided: Bool?
     /// This hash is used to attest that the directors information provided to Stripe is both current and
     /// correct.
-    public var directorshipDeclaration: TokenCreateAccountCompanyDirectorshipDeclaration?
+    public var directorshipDeclaration: TokenAccountCompanyDirectorshipDeclaration?
     /// Whether the company's executives have been provided. Set this Boolean to `true` after creating all
     /// the company's executives with [the Persons API](/api/persons) for accounts with a
     /// `relationship.executive` requirement.
@@ -132,7 +132,7 @@ public struct TokenCreateAccountCompany: ClearableParams {
     public var ownersProvided: Bool?
     /// This hash is used to attest that the beneficial owner information provided to Stripe is both current
     /// and correct.
-    public var ownershipDeclaration: TokenCreateAccountCompanyOwnershipDeclaration?
+    public var ownershipDeclaration: TokenAccountCompanyOwnershipDeclaration?
     /// Whether the user described by the data in the token has been shown the Ownership Declaration and
     /// indicated that it is correct.
     public var ownershipDeclarationShownAndSigned: Bool?
@@ -141,26 +141,26 @@ public struct TokenCreateAccountCompany: ClearableParams {
     /// article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and
     /// [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api)
     /// for more details.
-    public var ownershipExemptionReason: TokenCreateAccountCompanyOwnershipExemptionReason?
+    public var ownershipExemptionReason: TokenAccountCompanyOwnershipExemptionReason?
     /// The company's phone number (used for verification).
     public var phone: String?
     /// A location where the business has a meaningful physical operating presence.
-    public var physicalAddress: TokenCreateAccountCompanyPhysicalAddress?
+    public var physicalAddress: TokenAccountCompanyPhysicalAddress?
     /// The primary location where the business conducts operations.
-    public var principalPlaceOfBusiness: TokenCreateAccountCompanyPrincipalPlaceOfBusiness?
+    public var principalPlaceOfBusiness: TokenAccountCompanyPrincipalPlaceOfBusiness?
     /// When the business was incorporated or registered.
-    public var registrationDate: TokenCreateAccountCompanyRegistrationDate?
+    public var registrationDate: TokenAccountCompanyRegistrationDate?
     /// The identification number given to a company when it is registered or incorporated, if distinct from
     /// the identification number used for filing taxes. (Examples are the CIN for companies and LLP IN for
     /// partnerships in India, and the Company Registration Number in Hong Kong).
     public var registrationNumber: String?
     /// This hash is used to attest that the representative is authorized to act as the representative of
     /// their legal entity.
-    public var representativeDeclaration: TokenCreateAccountCompanyRepresentativeDeclaration?
+    public var representativeDeclaration: TokenAccountCompanyRepresentativeDeclaration?
     /// The category identifying the legal structure of the company or legal entity. See [Business
     /// structure](/connect/identity-verification#business-structure) for more details. Pass an empty string
     /// to unset this value.
-    public var structure: TokenCreateAccountCompanyStructure?
+    public var structure: TokenAccountCompanyStructure?
     /// The business ID number of the company, as appropriate for the company’s country. (Examples are an
     /// Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
     /// Changing this value requires that the account re-accept the [terms of
@@ -171,11 +171,11 @@ public struct TokenCreateAccountCompany: ClearableParams {
     /// The VAT number of the company.
     public var vatId: String?
     /// Information on the verification state of the company.
-    public var verification: TokenCreateAccountCompanyVerification?
+    public var verification: TokenAccountCompanyVerification?
     /// Fields to send empty, which clears them: `params.clear(.ownershipExemptionReason)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: TokenCreateAccountCompanyAddress? = nil, addressKana: TokenCreateAccountCompanyAddressKana? = nil, addressKanji: TokenCreateAccountCompanyAddressKanji? = nil, administrativeAddress: TokenCreateAccountCompanyAdministrativeAddress? = nil, directorsProvided: Bool? = nil, directorshipDeclaration: TokenCreateAccountCompanyDirectorshipDeclaration? = nil, executivesProvided: Bool? = nil, exportLicenseId: String? = nil, exportPurposeCode: String? = nil, name: String? = nil, nameKana: String? = nil, nameKanji: String? = nil, ownersProvided: Bool? = nil, ownershipDeclaration: TokenCreateAccountCompanyOwnershipDeclaration? = nil, ownershipDeclarationShownAndSigned: Bool? = nil, ownershipExemptionReason: TokenCreateAccountCompanyOwnershipExemptionReason? = nil, phone: String? = nil, physicalAddress: TokenCreateAccountCompanyPhysicalAddress? = nil, principalPlaceOfBusiness: TokenCreateAccountCompanyPrincipalPlaceOfBusiness? = nil, registrationDate: TokenCreateAccountCompanyRegistrationDate? = nil, registrationNumber: String? = nil, representativeDeclaration: TokenCreateAccountCompanyRepresentativeDeclaration? = nil, structure: TokenCreateAccountCompanyStructure? = nil, taxId: String? = nil, taxIdRegistrar: String? = nil, vatId: String? = nil, verification: TokenCreateAccountCompanyVerification? = nil) {
+    public init(address: TokenAccountCompanyAddress? = nil, addressKana: TokenAccountCompanyAddressKana? = nil, addressKanji: TokenAccountCompanyAddressKanji? = nil, administrativeAddress: TokenAccountCompanyAdministrativeAddress? = nil, directorsProvided: Bool? = nil, directorshipDeclaration: TokenAccountCompanyDirectorshipDeclaration? = nil, executivesProvided: Bool? = nil, exportLicenseId: String? = nil, exportPurposeCode: String? = nil, name: String? = nil, nameKana: String? = nil, nameKanji: String? = nil, ownersProvided: Bool? = nil, ownershipDeclaration: TokenAccountCompanyOwnershipDeclaration? = nil, ownershipDeclarationShownAndSigned: Bool? = nil, ownershipExemptionReason: TokenAccountCompanyOwnershipExemptionReason? = nil, phone: String? = nil, physicalAddress: TokenAccountCompanyPhysicalAddress? = nil, principalPlaceOfBusiness: TokenAccountCompanyPrincipalPlaceOfBusiness? = nil, registrationDate: TokenAccountCompanyRegistrationDate? = nil, registrationNumber: String? = nil, representativeDeclaration: TokenAccountCompanyRepresentativeDeclaration? = nil, structure: TokenAccountCompanyStructure? = nil, taxId: String? = nil, taxIdRegistrar: String? = nil, vatId: String? = nil, verification: TokenAccountCompanyVerification? = nil) {
         self.address = address
         self.addressKana = addressKana
         self.addressKanji = addressKanji
@@ -245,7 +245,7 @@ public struct TokenCreateAccountCompany: ClearableParams {
 }
 
 /// The company's primary address.
-public struct TokenCreateAccountCompanyAddress: StripeParams {
+public struct TokenAccountCompanyAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -279,7 +279,7 @@ public struct TokenCreateAccountCompanyAddress: StripeParams {
 }
 
 /// The Kana variation of the company's primary address (Japan only).
-public struct TokenCreateAccountCompanyAddressKana: StripeParams {
+public struct TokenAccountCompanyAddressKana: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -317,7 +317,7 @@ public struct TokenCreateAccountCompanyAddressKana: StripeParams {
 }
 
 /// The Kanji variation of the company's primary address (Japan only).
-public struct TokenCreateAccountCompanyAddressKanji: StripeParams {
+public struct TokenAccountCompanyAddressKanji: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -355,7 +355,7 @@ public struct TokenCreateAccountCompanyAddressKanji: StripeParams {
 }
 
 /// The location where the business is administered.
-public struct TokenCreateAccountCompanyAdministrativeAddress: StripeParams {
+public struct TokenAccountCompanyAdministrativeAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -390,7 +390,7 @@ public struct TokenCreateAccountCompanyAdministrativeAddress: StripeParams {
 
 /// This hash is used to attest that the directors information provided to Stripe is both current and
 /// correct.
-public struct TokenCreateAccountCompanyDirectorshipDeclaration: StripeParams {
+public struct TokenAccountCompanyDirectorshipDeclaration: StripeParams {
     /// The Unix timestamp marking when the directorship declaration attestation was made.
     public var date: Date?
     /// The IP address from which the directorship declaration attestation was made.
@@ -413,7 +413,7 @@ public struct TokenCreateAccountCompanyDirectorshipDeclaration: StripeParams {
 
 /// This hash is used to attest that the beneficial owner information provided to Stripe is both current
 /// and correct.
-public struct TokenCreateAccountCompanyOwnershipDeclaration: StripeParams {
+public struct TokenAccountCompanyOwnershipDeclaration: StripeParams {
     /// The Unix timestamp marking when the beneficial owner attestation was made.
     public var date: Date?
     /// The IP address from which the beneficial owner attestation was made.
@@ -434,7 +434,7 @@ public struct TokenCreateAccountCompanyOwnershipDeclaration: StripeParams {
     }
 }
 
-public struct TokenCreateAccountCompanyOwnershipExemptionReason: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenAccountCompanyOwnershipExemptionReason: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -446,7 +446,7 @@ public struct TokenCreateAccountCompanyOwnershipExemptionReason: RawRepresentabl
 }
 
 /// A location where the business has a meaningful physical operating presence.
-public struct TokenCreateAccountCompanyPhysicalAddress: StripeParams {
+public struct TokenAccountCompanyPhysicalAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -480,7 +480,7 @@ public struct TokenCreateAccountCompanyPhysicalAddress: StripeParams {
 }
 
 /// The primary location where the business conducts operations.
-public struct TokenCreateAccountCompanyPrincipalPlaceOfBusiness: StripeParams {
+public struct TokenAccountCompanyPrincipalPlaceOfBusiness: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -513,7 +513,7 @@ public struct TokenCreateAccountCompanyPrincipalPlaceOfBusiness: StripeParams {
     }
 }
 
-public struct TokenCreateAccountCompanyRegistrationDate: StripeParams {
+public struct TokenAccountCompanyRegistrationDate: StripeParams {
     /// The day of registration, between 1 and 31.
     public var day: Int
     /// The month of registration, between 1 and 12.
@@ -530,7 +530,7 @@ public struct TokenCreateAccountCompanyRegistrationDate: StripeParams {
 
 /// This hash is used to attest that the representative is authorized to act as the representative of
 /// their legal entity.
-public struct TokenCreateAccountCompanyRepresentativeDeclaration: StripeParams {
+public struct TokenAccountCompanyRepresentativeDeclaration: StripeParams {
     /// The Unix timestamp marking when the representative declaration attestation was made.
     public var date: Date?
     /// The IP address from which the representative declaration attestation was made.
@@ -551,7 +551,7 @@ public struct TokenCreateAccountCompanyRepresentativeDeclaration: StripeParams {
     }
 }
 
-public struct TokenCreateAccountCompanyStructure: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenAccountCompanyStructure: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -584,17 +584,17 @@ public struct TokenCreateAccountCompanyStructure: RawRepresentable, Codable, Has
 }
 
 /// Information on the verification state of the company.
-public struct TokenCreateAccountCompanyVerification: StripeParams {
+public struct TokenAccountCompanyVerification: StripeParams {
     /// A document verifying the business.
-    public var document: TokenCreateAccountCompanyVerificationDocument?
+    public var document: TokenAccountCompanyVerificationDocument?
 
-    public init(document: TokenCreateAccountCompanyVerificationDocument? = nil) {
+    public init(document: TokenAccountCompanyVerificationDocument? = nil) {
         self.document = document
     }
 }
 
 /// A document verifying the business.
-public struct TokenCreateAccountCompanyVerificationDocument: StripeParams {
+public struct TokenAccountCompanyVerificationDocument: StripeParams {
     /// The back of a document returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller
     /// than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -611,15 +611,15 @@ public struct TokenCreateAccountCompanyVerificationDocument: StripeParams {
 }
 
 /// Information about the person represented by the account.
-public struct TokenCreateAccountIndividual: ClearableParams {
+public struct TokenAccountIndividual: ClearableParams {
     /// The individual's primary address.
-    public var address: TokenCreateAccountIndividualAddress?
+    public var address: TokenAccountIndividualAddress?
     /// The Kana variation of the individual's primary address (Japan only).
-    public var addressKana: TokenCreateAccountIndividualAddressKana?
+    public var addressKana: TokenAccountIndividualAddressKana?
     /// The Kanji variation of the individual's primary address (Japan only).
-    public var addressKanji: TokenCreateAccountIndividualAddressKanji?
+    public var addressKanji: TokenAccountIndividualAddressKanji?
     /// The individual's date of birth.
-    public var dob: TokenCreateAccountIndividualDob?
+    public var dob: TokenAccountIndividualDob?
     /// The individual's email address.
     public var email: String?
     /// The individual's first name.
@@ -660,19 +660,19 @@ public struct TokenCreateAccountIndividual: ClearableParams {
     /// Indicates if the person or any of their representatives, family members, or other closely related
     /// persons, declares that they hold or have held an important public job or function, in any
     /// jurisdiction.
-    public var politicalExposure: TokenCreateAccountIndividualPoliticalExposure?
+    public var politicalExposure: TokenAccountIndividualPoliticalExposure?
     /// The individual's registered address.
-    public var registeredAddress: TokenCreateAccountIndividualRegisteredAddress?
+    public var registeredAddress: TokenAccountIndividualRegisteredAddress?
     /// Describes the person’s relationship to the account.
-    public var relationship: TokenCreateAccountIndividualRelationship?
+    public var relationship: TokenAccountIndividualRelationship?
     /// The last four digits of the individual's Social Security Number (U.S. only).
     public var ssnLast4: String?
     /// The individual's verification document information.
-    public var verification: TokenCreateAccountIndividualVerification?
+    public var verification: TokenAccountIndividualVerification?
     /// Fields to send empty, which clears them: `params.clear(.dob)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: TokenCreateAccountIndividualAddress? = nil, addressKana: TokenCreateAccountIndividualAddressKana? = nil, addressKanji: TokenCreateAccountIndividualAddressKanji? = nil, dob: TokenCreateAccountIndividualDob? = nil, email: String? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, phone: String? = nil, politicalExposure: TokenCreateAccountIndividualPoliticalExposure? = nil, registeredAddress: TokenCreateAccountIndividualRegisteredAddress? = nil, relationship: TokenCreateAccountIndividualRelationship? = nil, ssnLast4: String? = nil, verification: TokenCreateAccountIndividualVerification? = nil) {
+    public init(address: TokenAccountIndividualAddress? = nil, addressKana: TokenAccountIndividualAddressKana? = nil, addressKanji: TokenAccountIndividualAddressKanji? = nil, dob: TokenAccountIndividualDob? = nil, email: String? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, phone: String? = nil, politicalExposure: TokenAccountIndividualPoliticalExposure? = nil, registeredAddress: TokenAccountIndividualRegisteredAddress? = nil, relationship: TokenAccountIndividualRelationship? = nil, ssnLast4: String? = nil, verification: TokenAccountIndividualVerification? = nil) {
         self.address = address
         self.addressKana = addressKana
         self.addressKanji = addressKanji
@@ -734,7 +734,7 @@ public struct TokenCreateAccountIndividual: ClearableParams {
 }
 
 /// The individual's primary address.
-public struct TokenCreateAccountIndividualAddress: StripeParams {
+public struct TokenAccountIndividualAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -768,7 +768,7 @@ public struct TokenCreateAccountIndividualAddress: StripeParams {
 }
 
 /// The Kana variation of the individual's primary address (Japan only).
-public struct TokenCreateAccountIndividualAddressKana: StripeParams {
+public struct TokenAccountIndividualAddressKana: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -806,7 +806,7 @@ public struct TokenCreateAccountIndividualAddressKana: StripeParams {
 }
 
 /// The Kanji variation of the individual's primary address (Japan only).
-public struct TokenCreateAccountIndividualAddressKanji: StripeParams {
+public struct TokenAccountIndividualAddressKanji: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -843,7 +843,7 @@ public struct TokenCreateAccountIndividualAddressKanji: StripeParams {
     }
 }
 
-public struct TokenCreateAccountIndividualDob: StripeParams {
+public struct TokenAccountIndividualDob: StripeParams {
     /// The day of birth, between 1 and 31.
     public var day: Int
     /// The month of birth, between 1 and 12.
@@ -858,7 +858,7 @@ public struct TokenCreateAccountIndividualDob: StripeParams {
     }
 }
 
-public struct TokenCreateAccountIndividualPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenAccountIndividualPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -870,7 +870,7 @@ public struct TokenCreateAccountIndividualPoliticalExposure: RawRepresentable, C
 }
 
 /// The individual's registered address.
-public struct TokenCreateAccountIndividualRegisteredAddress: StripeParams {
+public struct TokenAccountIndividualRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -904,7 +904,7 @@ public struct TokenCreateAccountIndividualRegisteredAddress: StripeParams {
 }
 
 /// Describes the person’s relationship to the account.
-public struct TokenCreateAccountIndividualRelationship: ClearableParams {
+public struct TokenAccountIndividualRelationship: ClearableParams {
     /// Whether the person is a director of the account's legal entity. Directors are typically members of
     /// the governing board of the company, or responsible for ensuring the company meets its regulatory
     /// obligations.
@@ -944,14 +944,14 @@ public struct TokenCreateAccountIndividualRelationship: ClearableParams {
 }
 
 /// The individual's verification document information.
-public struct TokenCreateAccountIndividualVerification: StripeParams {
+public struct TokenAccountIndividualVerification: StripeParams {
     /// A document showing address, either a passport, local ID card, or utility bill from a well-known
     /// utility company.
-    public var additionalDocument: TokenCreateAccountIndividualVerificationAdditionalDocument?
+    public var additionalDocument: TokenAccountIndividualVerificationAdditionalDocument?
     /// An identifying document, either a passport or local ID card.
-    public var document: TokenCreateAccountIndividualVerificationDocument?
+    public var document: TokenAccountIndividualVerificationDocument?
 
-    public init(additionalDocument: TokenCreateAccountIndividualVerificationAdditionalDocument? = nil, document: TokenCreateAccountIndividualVerificationDocument? = nil) {
+    public init(additionalDocument: TokenAccountIndividualVerificationAdditionalDocument? = nil, document: TokenAccountIndividualVerificationDocument? = nil) {
         self.additionalDocument = additionalDocument
         self.document = document
     }
@@ -964,7 +964,7 @@ public struct TokenCreateAccountIndividualVerification: StripeParams {
 
 /// A document showing address, either a passport, local ID card, or utility bill from a well-known
 /// utility company.
-public struct TokenCreateAccountIndividualVerificationAdditionalDocument: StripeParams {
+public struct TokenAccountIndividualVerificationAdditionalDocument: StripeParams {
     /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
     /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -981,7 +981,7 @@ public struct TokenCreateAccountIndividualVerificationAdditionalDocument: Stripe
 }
 
 /// An identifying document, either a passport or local ID card.
-public struct TokenCreateAccountIndividualVerificationDocument: StripeParams {
+public struct TokenAccountIndividualVerificationDocument: StripeParams {
     /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
     /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -998,7 +998,7 @@ public struct TokenCreateAccountIndividualVerificationDocument: StripeParams {
 }
 
 /// The bank account this token will represent.
-public struct TokenCreateBankAccount: StripeParams {
+public struct TokenBankAccount: StripeParams {
     /// The account number for the bank account, in string form. Must be a checking account.
     public var accountNumber: String
     /// The country in which the bank account is located.
@@ -1008,10 +1008,10 @@ public struct TokenCreateBankAccount: StripeParams {
     public var accountHolderName: String?
     /// The type of entity that holds the account. It can be `company` or `individual`. This field is
     /// required when attaching the bank account to a `Customer` object.
-    public var accountHolderType: TokenCreateBankAccountAccountHolderType?
+    public var accountHolderType: TokenBankAccountAccountHolderType?
     /// The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this
     /// can only be `futsu` or `toza`.
-    public var accountType: TokenCreateBankAccountAccountType?
+    public var accountType: TokenBankAccountAccountType?
     /// The currency the bank account is in. This must be a country/currency pairing that [Stripe
     /// supports.](https://docs.stripe.com/payouts)
     public var currency: String?
@@ -1027,7 +1027,7 @@ public struct TokenCreateBankAccount: StripeParams {
     /// number. If you are providing an IBAN for `account_number`, this field is not required.
     public var routingNumber: String?
 
-    public init(accountNumber: String, country: String, accountHolderName: String? = nil, accountHolderType: TokenCreateBankAccountAccountHolderType? = nil, accountType: TokenCreateBankAccountAccountType? = nil, currency: String? = nil, paymentMethod: String? = nil, routingNumber: String? = nil) {
+    public init(accountNumber: String, country: String, accountHolderName: String? = nil, accountHolderType: TokenBankAccountAccountHolderType? = nil, accountType: TokenBankAccountAccountType? = nil, currency: String? = nil, paymentMethod: String? = nil, routingNumber: String? = nil) {
         self.accountNumber = accountNumber
         self.country = country
         self.accountHolderName = accountHolderName
@@ -1050,7 +1050,7 @@ public struct TokenCreateBankAccount: StripeParams {
     }
 }
 
-public struct TokenCreateBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1061,7 +1061,7 @@ public struct TokenCreateBankAccountAccountHolderType: RawRepresentable, Codable
     public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public struct TokenCreateBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1074,7 +1074,7 @@ public struct TokenCreateBankAccountAccountType: RawRepresentable, Codable, Hash
     public static var toza: Self { .init(rawValue: "toza") }
 }
 
-public struct TokenCreateCardCreditCardSpecs: StripeParams {
+public struct TokenCardCreditCardSpecs: StripeParams {
     /// Two-digit number representing the card's expiration month.
     public var expMonth: String
     /// Two- or four-digit number representing the card's expiration year.
@@ -1102,9 +1102,9 @@ public struct TokenCreateCardCreditCardSpecs: StripeParams {
     /// Cardholder's full name.
     public var name: String?
     /// Contains information about card networks used to process the payment.
-    public var networks: TokenCreateCardCreditCardSpecsNetworks?
+    public var networks: TokenCardCreditCardSpecsNetworks?
 
-    public init(expMonth: String, expYear: String, number: String, addressCity: String? = nil, addressCountry: String? = nil, addressLine1: String? = nil, addressLine2: String? = nil, addressState: String? = nil, addressZip: String? = nil, currency: String? = nil, cvc: String? = nil, name: String? = nil, networks: TokenCreateCardCreditCardSpecsNetworks? = nil) {
+    public init(expMonth: String, expYear: String, number: String, addressCity: String? = nil, addressCountry: String? = nil, addressLine1: String? = nil, addressLine2: String? = nil, addressState: String? = nil, addressZip: String? = nil, currency: String? = nil, cvc: String? = nil, name: String? = nil, networks: TokenCardCreditCardSpecsNetworks? = nil) {
         self.expMonth = expMonth
         self.expYear = expYear
         self.number = number
@@ -1138,18 +1138,18 @@ public struct TokenCreateCardCreditCardSpecs: StripeParams {
 }
 
 /// Contains information about card networks used to process the payment.
-public struct TokenCreateCardCreditCardSpecsNetworks: StripeParams {
+public struct TokenCardCreditCardSpecsNetworks: StripeParams {
     /// The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`,
     /// `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as
     /// `invalid_preference` on the card.
-    public var preferred: TokenCreateCardCreditCardSpecsNetworksPreferred?
+    public var preferred: TokenCardCreditCardSpecsNetworksPreferred?
 
-    public init(preferred: TokenCreateCardCreditCardSpecsNetworksPreferred? = nil) {
+    public init(preferred: TokenCardCreditCardSpecsNetworksPreferred? = nil) {
         self.preferred = preferred
     }
 }
 
-public struct TokenCreateCardCreditCardSpecsNetworksPreferred: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenCardCreditCardSpecsNetworksPreferred: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1162,8 +1162,8 @@ public struct TokenCreateCardCreditCardSpecsNetworksPreferred: RawRepresentable,
 }
 
 /// One of the forms `card` accepts.
-public enum TokenCreateCard: Codable, Sendable, ExpressibleByStringLiteral {
-    case creditCardSpecs(TokenCreateCardCreditCardSpecs)
+public enum TokenCard: Codable, Sendable, ExpressibleByStringLiteral {
+    case creditCardSpecs(TokenCardCreditCardSpecs)
     case value(String)
 
     public init(stringLiteral value: String) { self = .value(value) }
@@ -1171,8 +1171,8 @@ public enum TokenCreateCard: Codable, Sendable, ExpressibleByStringLiteral {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(String.self) { self = .value(value); return }
-        if let value = try? TokenCreateCardCreditCardSpecs(from: decoder) { self = .creditCardSpecs(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TokenCreateCard matches")
+        if let value = try? TokenCardCreditCardSpecs(from: decoder) { self = .creditCardSpecs(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TokenCard matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -1187,7 +1187,7 @@ public enum TokenCreateCard: Codable, Sendable, ExpressibleByStringLiteral {
 }
 
 /// The updated CVC value this token represents.
-public struct TokenCreateCvcUpdate: StripeParams {
+public struct TokenCvcUpdate: StripeParams {
     /// The CVC value, in string form.
     public var cvc: String
 
@@ -1197,19 +1197,19 @@ public struct TokenCreateCvcUpdate: StripeParams {
 }
 
 /// Information for the person this token represents.
-public struct TokenCreatePerson: ClearableParams {
+public struct TokenPerson: ClearableParams {
     /// Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
-    public var additionalTosAcceptances: TokenCreatePersonAdditionalTosAcceptances?
+    public var additionalTosAcceptances: TokenPersonAdditionalTosAcceptances?
     /// The person's address.
-    public var address: TokenCreatePersonAddress?
+    public var address: TokenPersonAddress?
     /// The Kana variation of the person's address (Japan only).
-    public var addressKana: TokenCreatePersonAddressKana?
+    public var addressKana: TokenPersonAddressKana?
     /// The Kanji variation of the person's address (Japan only).
-    public var addressKanji: TokenCreatePersonAddressKanji?
+    public var addressKanji: TokenPersonAddressKanji?
     /// The person's date of birth.
-    public var dob: TokenCreatePersonDob?
+    public var dob: TokenPersonDob?
     /// Documents that may be submitted to satisfy various informational requests.
-    public var documents: TokenCreatePersonDocuments?
+    public var documents: TokenPersonDocuments?
     /// The person's email address.
     public var email: String?
     /// The person's first name.
@@ -1256,23 +1256,23 @@ public struct TokenCreatePerson: ClearableParams {
     /// Indicates if the person or any of their representatives, family members, or other closely related
     /// persons, declares that they hold or have held an important public job or function, in any
     /// jurisdiction.
-    public var politicalExposure: TokenCreatePersonPoliticalExposure?
+    public var politicalExposure: TokenPersonPoliticalExposure?
     /// The person's registered address.
-    public var registeredAddress: TokenCreatePersonRegisteredAddress?
+    public var registeredAddress: TokenPersonRegisteredAddress?
     /// The relationship that this person has with the account's legal entity.
-    public var relationship: TokenCreatePersonRelationship?
+    public var relationship: TokenPersonRelationship?
     /// The last four digits of the person's Social Security number (U.S. only). Changing this value for the
     /// account's representative requires that the account re-accept the [terms of
     /// service](/api/accounts/object#account_object-tos_acceptance).
     public var ssnLast4: String?
     /// Demographic data related to the person.
-    public var usCfpbData: TokenCreatePersonUsCfpbData?
+    public var usCfpbData: TokenPersonUsCfpbData?
     /// The person's verification status.
-    public var verification: TokenCreatePersonVerification?
+    public var verification: TokenPersonVerification?
     /// Fields to send empty, which clears them: `params.clear(.dob)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(additionalTosAcceptances: TokenCreatePersonAdditionalTosAcceptances? = nil, address: TokenCreatePersonAddress? = nil, addressKana: TokenCreatePersonAddressKana? = nil, addressKanji: TokenCreatePersonAddressKanji? = nil, dob: TokenCreatePersonDob? = nil, documents: TokenCreatePersonDocuments? = nil, email: String? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, nationality: String? = nil, phone: String? = nil, politicalExposure: TokenCreatePersonPoliticalExposure? = nil, registeredAddress: TokenCreatePersonRegisteredAddress? = nil, relationship: TokenCreatePersonRelationship? = nil, ssnLast4: String? = nil, usCfpbData: TokenCreatePersonUsCfpbData? = nil, verification: TokenCreatePersonVerification? = nil) {
+    public init(additionalTosAcceptances: TokenPersonAdditionalTosAcceptances? = nil, address: TokenPersonAddress? = nil, addressKana: TokenPersonAddressKana? = nil, addressKanji: TokenPersonAddressKanji? = nil, dob: TokenPersonDob? = nil, documents: TokenPersonDocuments? = nil, email: String? = nil, firstName: String? = nil, firstNameKana: String? = nil, firstNameKanji: String? = nil, fullNameAliases: [String]? = nil, gender: String? = nil, idNumber: String? = nil, idNumberSecondary: String? = nil, lastName: String? = nil, lastNameKana: String? = nil, lastNameKanji: String? = nil, maidenName: String? = nil, metadata: [String: String]? = nil, nationality: String? = nil, phone: String? = nil, politicalExposure: TokenPersonPoliticalExposure? = nil, registeredAddress: TokenPersonRegisteredAddress? = nil, relationship: TokenPersonRelationship? = nil, ssnLast4: String? = nil, usCfpbData: TokenPersonUsCfpbData? = nil, verification: TokenPersonVerification? = nil) {
         self.additionalTosAcceptances = additionalTosAcceptances
         self.address = address
         self.addressKana = addressKana
@@ -1342,17 +1342,17 @@ public struct TokenCreatePerson: ClearableParams {
 }
 
 /// Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
-public struct TokenCreatePersonAdditionalTosAcceptances: StripeParams {
+public struct TokenPersonAdditionalTosAcceptances: StripeParams {
     /// Details on the legal guardian's acceptance of the main Stripe service agreement.
-    public var account: TokenCreatePersonAdditionalTosAcceptancesAccount?
+    public var account: TokenPersonAdditionalTosAcceptancesAccount?
 
-    public init(account: TokenCreatePersonAdditionalTosAcceptancesAccount? = nil) {
+    public init(account: TokenPersonAdditionalTosAcceptancesAccount? = nil) {
         self.account = account
     }
 }
 
 /// Details on the legal guardian's acceptance of the main Stripe service agreement.
-public struct TokenCreatePersonAdditionalTosAcceptancesAccount: ClearableParams {
+public struct TokenPersonAdditionalTosAcceptancesAccount: ClearableParams {
     /// The Unix timestamp marking when the account representative accepted the service agreement.
     public var date: Date?
     /// The IP address from which the account representative accepted the service agreement.
@@ -1382,7 +1382,7 @@ public struct TokenCreatePersonAdditionalTosAcceptancesAccount: ClearableParams 
 }
 
 /// The person's address.
-public struct TokenCreatePersonAddress: StripeParams {
+public struct TokenPersonAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1416,7 +1416,7 @@ public struct TokenCreatePersonAddress: StripeParams {
 }
 
 /// The Kana variation of the person's address (Japan only).
-public struct TokenCreatePersonAddressKana: StripeParams {
+public struct TokenPersonAddressKana: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1454,7 +1454,7 @@ public struct TokenCreatePersonAddressKana: StripeParams {
 }
 
 /// The Kanji variation of the person's address (Japan only).
-public struct TokenCreatePersonAddressKanji: StripeParams {
+public struct TokenPersonAddressKanji: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1491,7 +1491,7 @@ public struct TokenCreatePersonAddressKanji: StripeParams {
     }
 }
 
-public struct TokenCreatePersonDob: StripeParams {
+public struct TokenPersonDob: StripeParams {
     /// The day of birth, between 1 and 31.
     public var day: Int
     /// The month of birth, between 1 and 12.
@@ -1507,17 +1507,17 @@ public struct TokenCreatePersonDob: StripeParams {
 }
 
 /// Documents that may be submitted to satisfy various informational requests.
-public struct TokenCreatePersonDocuments: StripeParams {
+public struct TokenPersonDocuments: StripeParams {
     /// One or more documents that demonstrate proof that this person is authorized to represent the
     /// company.
-    public var companyAuthorization: TokenCreatePersonDocumentsCompanyAuthorization?
+    public var companyAuthorization: TokenPersonDocumentsCompanyAuthorization?
     /// One or more documents showing the person's passport page with photo and personal data.
-    public var passport: TokenCreatePersonDocumentsPassport?
+    public var passport: TokenPersonDocumentsPassport?
     /// One or more documents showing the person's visa required for living in the country where they are
     /// residing.
-    public var visa: TokenCreatePersonDocumentsVisa?
+    public var visa: TokenPersonDocumentsVisa?
 
-    public init(companyAuthorization: TokenCreatePersonDocumentsCompanyAuthorization? = nil, passport: TokenCreatePersonDocumentsPassport? = nil, visa: TokenCreatePersonDocumentsVisa? = nil) {
+    public init(companyAuthorization: TokenPersonDocumentsCompanyAuthorization? = nil, passport: TokenPersonDocumentsPassport? = nil, visa: TokenPersonDocumentsVisa? = nil) {
         self.companyAuthorization = companyAuthorization
         self.passport = passport
         self.visa = visa
@@ -1532,7 +1532,7 @@ public struct TokenCreatePersonDocuments: StripeParams {
 
 /// One or more documents that demonstrate proof that this person is authorized to represent the
 /// company.
-public struct TokenCreatePersonDocumentsCompanyAuthorization: StripeParams {
+public struct TokenPersonDocumentsCompanyAuthorization: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -1543,7 +1543,7 @@ public struct TokenCreatePersonDocumentsCompanyAuthorization: StripeParams {
 }
 
 /// One or more documents showing the person's passport page with photo and personal data.
-public struct TokenCreatePersonDocumentsPassport: StripeParams {
+public struct TokenPersonDocumentsPassport: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -1555,7 +1555,7 @@ public struct TokenCreatePersonDocumentsPassport: StripeParams {
 
 /// One or more documents showing the person's visa required for living in the country where they are
 /// residing.
-public struct TokenCreatePersonDocumentsVisa: StripeParams {
+public struct TokenPersonDocumentsVisa: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?
@@ -1565,7 +1565,7 @@ public struct TokenCreatePersonDocumentsVisa: StripeParams {
     }
 }
 
-public struct TokenCreatePersonPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenPersonPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1577,7 +1577,7 @@ public struct TokenCreatePersonPoliticalExposure: RawRepresentable, Codable, Has
 }
 
 /// The person's registered address.
-public struct TokenCreatePersonRegisteredAddress: StripeParams {
+public struct TokenPersonRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1611,7 +1611,7 @@ public struct TokenCreatePersonRegisteredAddress: StripeParams {
 }
 
 /// The relationship that this person has with the account's legal entity.
-public struct TokenCreatePersonRelationship: ClearableParams {
+public struct TokenPersonRelationship: ClearableParams {
     /// Whether the person is the authorizer of the account's representative.
     public var authorizer: Bool?
     /// Whether the person is a director of the account's legal entity. Directors are typically members of
@@ -1666,15 +1666,15 @@ public struct TokenCreatePersonRelationship: ClearableParams {
 }
 
 /// Demographic data related to the person.
-public struct TokenCreatePersonUsCfpbData: StripeParams {
+public struct TokenPersonUsCfpbData: StripeParams {
     /// The persons ethnicity details
-    public var ethnicityDetails: TokenCreatePersonUsCfpbDataEthnicityDetails?
+    public var ethnicityDetails: TokenPersonUsCfpbDataEthnicityDetails?
     /// The persons race details
-    public var raceDetails: TokenCreatePersonUsCfpbDataRaceDetails?
+    public var raceDetails: TokenPersonUsCfpbDataRaceDetails?
     /// The persons self-identified gender
     public var selfIdentifiedGender: String?
 
-    public init(ethnicityDetails: TokenCreatePersonUsCfpbDataEthnicityDetails? = nil, raceDetails: TokenCreatePersonUsCfpbDataRaceDetails? = nil, selfIdentifiedGender: String? = nil) {
+    public init(ethnicityDetails: TokenPersonUsCfpbDataEthnicityDetails? = nil, raceDetails: TokenPersonUsCfpbDataRaceDetails? = nil, selfIdentifiedGender: String? = nil) {
         self.ethnicityDetails = ethnicityDetails
         self.raceDetails = raceDetails
         self.selfIdentifiedGender = selfIdentifiedGender
@@ -1688,13 +1688,13 @@ public struct TokenCreatePersonUsCfpbData: StripeParams {
 }
 
 /// The persons ethnicity details
-public struct TokenCreatePersonUsCfpbDataEthnicityDetails: StripeParams {
+public struct TokenPersonUsCfpbDataEthnicityDetails: StripeParams {
     /// The persons ethnicity
-    public var ethnicity: [TokenCreatePersonUsCfpbDataEthnicityDetailsEthnicity]?
+    public var ethnicity: [TokenPersonUsCfpbDataEthnicityDetailsEthnicity]?
     /// Please specify your origin, when other is selected.
     public var ethnicityOther: String?
 
-    public init(ethnicity: [TokenCreatePersonUsCfpbDataEthnicityDetailsEthnicity]? = nil, ethnicityOther: String? = nil) {
+    public init(ethnicity: [TokenPersonUsCfpbDataEthnicityDetailsEthnicity]? = nil, ethnicityOther: String? = nil) {
         self.ethnicity = ethnicity
         self.ethnicityOther = ethnicityOther
     }
@@ -1705,7 +1705,7 @@ public struct TokenCreatePersonUsCfpbDataEthnicityDetails: StripeParams {
     }
 }
 
-public struct TokenCreatePersonUsCfpbDataEthnicityDetailsEthnicity: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenPersonUsCfpbDataEthnicityDetailsEthnicity: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1722,13 +1722,13 @@ public struct TokenCreatePersonUsCfpbDataEthnicityDetailsEthnicity: RawRepresent
 }
 
 /// The persons race details
-public struct TokenCreatePersonUsCfpbDataRaceDetails: StripeParams {
+public struct TokenPersonUsCfpbDataRaceDetails: StripeParams {
     /// The persons race.
-    public var race: [TokenCreatePersonUsCfpbDataRaceDetailsRace]?
+    public var race: [TokenPersonUsCfpbDataRaceDetailsRace]?
     /// Please specify your race, when other is selected.
     public var raceOther: String?
 
-    public init(race: [TokenCreatePersonUsCfpbDataRaceDetailsRace]? = nil, raceOther: String? = nil) {
+    public init(race: [TokenPersonUsCfpbDataRaceDetailsRace]? = nil, raceOther: String? = nil) {
         self.race = race
         self.raceOther = raceOther
     }
@@ -1739,7 +1739,7 @@ public struct TokenCreatePersonUsCfpbDataRaceDetails: StripeParams {
     }
 }
 
-public struct TokenCreatePersonUsCfpbDataRaceDetailsRace: RawRepresentable, Codable, Hashable, Sendable {
+public struct TokenPersonUsCfpbDataRaceDetailsRace: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1773,14 +1773,14 @@ public struct TokenCreatePersonUsCfpbDataRaceDetailsRace: RawRepresentable, Coda
 }
 
 /// The person's verification status.
-public struct TokenCreatePersonVerification: StripeParams {
+public struct TokenPersonVerification: StripeParams {
     /// A document showing address, either a passport, local ID card, or utility bill from a well-known
     /// utility company.
-    public var additionalDocument: TokenCreatePersonVerificationAdditionalDocument?
+    public var additionalDocument: TokenPersonVerificationAdditionalDocument?
     /// An identifying document, either a passport or local ID card.
-    public var document: TokenCreatePersonVerificationDocument?
+    public var document: TokenPersonVerificationDocument?
 
-    public init(additionalDocument: TokenCreatePersonVerificationAdditionalDocument? = nil, document: TokenCreatePersonVerificationDocument? = nil) {
+    public init(additionalDocument: TokenPersonVerificationAdditionalDocument? = nil, document: TokenPersonVerificationDocument? = nil) {
         self.additionalDocument = additionalDocument
         self.document = document
     }
@@ -1793,7 +1793,7 @@ public struct TokenCreatePersonVerification: StripeParams {
 
 /// A document showing address, either a passport, local ID card, or utility bill from a well-known
 /// utility company.
-public struct TokenCreatePersonVerificationAdditionalDocument: StripeParams {
+public struct TokenPersonVerificationAdditionalDocument: StripeParams {
     /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
     /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -1810,7 +1810,7 @@ public struct TokenCreatePersonVerificationAdditionalDocument: StripeParams {
 }
 
 /// An identifying document, either a passport or local ID card.
-public struct TokenCreatePersonVerificationDocument: StripeParams {
+public struct TokenPersonVerificationDocument: StripeParams {
     /// The back of an ID returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than
     /// 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -1827,7 +1827,7 @@ public struct TokenCreatePersonVerificationDocument: StripeParams {
 }
 
 /// The PII this token represents.
-public struct TokenCreatePii: StripeParams {
+public struct TokenPii: StripeParams {
     /// The `id_number` for the PII, in string form.
     public var idNumber: String?
 

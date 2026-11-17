@@ -24,9 +24,9 @@ public struct TreasuryReceivedCreditCreateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Initiating payment method details for the object.
-    public var initiatingPaymentMethodDetails: TreasuryReceivedCreditCreateInitiatingPaymentMethodDetails?
+    public var initiatingPaymentMethodDetails: TreasuryReceivedCreditInitiatingPaymentMethodDetails?
 
-    public init(amount: Int, currency: String, financialAccount: String, network: TreasuryReceivedCreditCreateNetwork, description: String? = nil, expand: [String]? = nil, initiatingPaymentMethodDetails: TreasuryReceivedCreditCreateInitiatingPaymentMethodDetails? = nil) {
+    public init(amount: Int, currency: String, financialAccount: String, network: TreasuryReceivedCreditCreateNetwork, description: String? = nil, expand: [String]? = nil, initiatingPaymentMethodDetails: TreasuryReceivedCreditInitiatingPaymentMethodDetails? = nil) {
         self.amount = amount
         self.currency = currency
         self.financialAccount = financialAccount
@@ -61,7 +61,7 @@ public struct TreasuryReceivedCreditListParams: StripeParams {
     /// is 10.
     public var limit: Int?
     /// Only return ReceivedCredits described by the flow.
-    public var linkedFlows: TreasuryReceivedCreditListLinkedFlows?
+    public var linkedFlows: TreasuryReceivedCreditLinkedFlows?
     /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
@@ -69,7 +69,7 @@ public struct TreasuryReceivedCreditListParams: StripeParams {
     /// Only return ReceivedCredits that have the given status: `succeeded` or `failed`.
     public var status: TreasuryReceivedCreditListStatus?
 
-    public init(financialAccount: String, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, linkedFlows: TreasuryReceivedCreditListLinkedFlows? = nil, startingAfter: String? = nil, status: TreasuryReceivedCreditListStatus? = nil) {
+    public init(financialAccount: String, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, linkedFlows: TreasuryReceivedCreditLinkedFlows? = nil, startingAfter: String? = nil, status: TreasuryReceivedCreditListStatus? = nil) {
         self.financialAccount = financialAccount
         self.endingBefore = endingBefore
         self.expand = expand
@@ -103,13 +103,13 @@ public struct TreasuryReceivedCreditCreateNetwork: RawRepresentable, Codable, Ha
 }
 
 /// Initiating payment method details for the object.
-public struct TreasuryReceivedCreditCreateInitiatingPaymentMethodDetails: StripeParams {
+public struct TreasuryReceivedCreditInitiatingPaymentMethodDetails: StripeParams {
     /// The source type.
-    public var type: TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsType
+    public var type: TreasuryReceivedCreditInitiatingPaymentMethodDetailsType
     /// Optional fields for `us_bank_account`.
-    public var usBankAccount: TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsUsBankAccount?
+    public var usBankAccount: TreasuryReceivedCreditInitiatingPaymentMethodDetailsUsBankAccount?
 
-    public init(type: TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsType, usBankAccount: TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsUsBankAccount? = nil) {
+    public init(type: TreasuryReceivedCreditInitiatingPaymentMethodDetailsType, usBankAccount: TreasuryReceivedCreditInitiatingPaymentMethodDetailsUsBankAccount? = nil) {
         self.type = type
         self.usBankAccount = usBankAccount
     }
@@ -120,7 +120,7 @@ public struct TreasuryReceivedCreditCreateInitiatingPaymentMethodDetails: Stripe
     }
 }
 
-public struct TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryReceivedCreditInitiatingPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -131,7 +131,7 @@ public struct TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsType: Ra
 }
 
 /// Optional fields for `us_bank_account`.
-public struct TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsUsBankAccount: StripeParams {
+public struct TreasuryReceivedCreditInitiatingPaymentMethodDetailsUsBankAccount: StripeParams {
     /// The bank account holder's name.
     public var accountHolderName: String?
     /// The bank account number.
@@ -153,11 +153,11 @@ public struct TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsUsBankAc
 }
 
 /// Only return ReceivedCredits described by the flow.
-public struct TreasuryReceivedCreditListLinkedFlows: StripeParams {
+public struct TreasuryReceivedCreditLinkedFlows: StripeParams {
     /// The source flow type.
-    public var sourceFlowType: TreasuryReceivedCreditListLinkedFlowsSourceFlowType
+    public var sourceFlowType: TreasuryReceivedCreditLinkedFlowsSourceFlowType
 
-    public init(sourceFlowType: TreasuryReceivedCreditListLinkedFlowsSourceFlowType) {
+    public init(sourceFlowType: TreasuryReceivedCreditLinkedFlowsSourceFlowType) {
         self.sourceFlowType = sourceFlowType
     }
 
@@ -166,7 +166,7 @@ public struct TreasuryReceivedCreditListLinkedFlows: StripeParams {
     }
 }
 
-public struct TreasuryReceivedCreditListLinkedFlowsSourceFlowType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryReceivedCreditLinkedFlowsSourceFlowType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

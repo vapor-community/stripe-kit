@@ -35,7 +35,7 @@ public struct TopupCreateParams: ClearableParams {
     /// of type `us_bank_account` can be used.
     public var paymentMethod: String?
     /// Payment method-specific configuration for this top-up.
-    public var paymentMethodOptions: TopupCreatePaymentMethodOptions?
+    public var paymentMethodOptions: TopupPaymentMethodOptions?
     /// The ID of a source to transfer funds from. For most users, this should be left unspecified which
     /// will use the bank account that was set up in the dashboard for the specified currency. While
     /// testing, this can be a test bank token (see [Testing
@@ -48,7 +48,7 @@ public struct TopupCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amount: Int, currency: String, description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentMethod: String? = nil, paymentMethodOptions: TopupCreatePaymentMethodOptions? = nil, source: String? = nil, statementDescriptor: String? = nil, transferGroup: String? = nil) {
+    public init(amount: Int, currency: String, description: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentMethod: String? = nil, paymentMethodOptions: TopupPaymentMethodOptions? = nil, source: String? = nil, statementDescriptor: String? = nil, transferGroup: String? = nil) {
         self.amount = amount
         self.currency = currency
         self.description = description
@@ -159,10 +159,10 @@ public struct TopupUpdateParams: ClearableParams {
 }
 
 /// Payment method-specific configuration for this top-up.
-public struct TopupCreatePaymentMethodOptions: StripeParams {
-    public var usBankAccount: TopupCreatePaymentMethodOptionsUsBankAccount?
+public struct TopupPaymentMethodOptions: StripeParams {
+    public var usBankAccount: TopupPaymentMethodOptionsUsBankAccount?
 
-    public init(usBankAccount: TopupCreatePaymentMethodOptionsUsBankAccount? = nil) {
+    public init(usBankAccount: TopupPaymentMethodOptionsUsBankAccount? = nil) {
         self.usBankAccount = usBankAccount
     }
 
@@ -171,15 +171,15 @@ public struct TopupCreatePaymentMethodOptions: StripeParams {
     }
 }
 
-public struct TopupCreatePaymentMethodOptionsUsBankAccount: StripeParams {
-    public var network: TopupCreatePaymentMethodOptionsUsBankAccountNetwork
+public struct TopupPaymentMethodOptionsUsBankAccount: StripeParams {
+    public var network: TopupPaymentMethodOptionsUsBankAccountNetwork
 
-    public init(network: TopupCreatePaymentMethodOptionsUsBankAccountNetwork) {
+    public init(network: TopupPaymentMethodOptionsUsBankAccountNetwork) {
         self.network = network
     }
 }
 
-public struct TopupCreatePaymentMethodOptionsUsBankAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
+public struct TopupPaymentMethodOptionsUsBankAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

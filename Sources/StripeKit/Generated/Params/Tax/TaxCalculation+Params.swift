@@ -18,13 +18,13 @@ public struct TaxCalculationCreateParams: StripeParams {
     /// tax IDs are copied to `customer_details`.
     public var customer: String?
     /// Details about the customer, including address and tax IDs.
-    public var customerDetails: TaxCalculationCreateCustomerDetails?
+    public var customerDetails: TaxCalculationCustomerDetails?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Details about the address from which the goods are being shipped.
-    public var shipFromDetails: TaxCalculationCreateShipFromDetails?
+    public var shipFromDetails: TaxCalculationShipFromDetails?
     /// Shipping cost details to be used for the calculation.
-    public var shippingCost: TaxCalculationCreateShippingCost?
+    public var shippingCost: TaxCalculationShippingCost?
     /// The calculation uses the tax rules and rates that are in effect at this timestamp. You can use a
     /// date up to 31 days in the past or up to 31 days in the future. If you use a future date, Stripe
     /// doesn't guarantee that the expected tax rules and rate being used match the actual rules and rate
@@ -32,7 +32,7 @@ public struct TaxCalculationCreateParams: StripeParams {
     /// within a fixed window.
     public var taxDate: Int?
 
-    public init(currency: String, lineItems: [TaxCalculationCreateLineItems], customer: String? = nil, customerDetails: TaxCalculationCreateCustomerDetails? = nil, expand: [String]? = nil, shipFromDetails: TaxCalculationCreateShipFromDetails? = nil, shippingCost: TaxCalculationCreateShippingCost? = nil, taxDate: Int? = nil) {
+    public init(currency: String, lineItems: [TaxCalculationCreateLineItems], customer: String? = nil, customerDetails: TaxCalculationCustomerDetails? = nil, expand: [String]? = nil, shipFromDetails: TaxCalculationShipFromDetails? = nil, shippingCost: TaxCalculationShippingCost? = nil, taxDate: Int? = nil) {
         self.currency = currency
         self.lineItems = lineItems
         self.customer = customer
@@ -150,22 +150,22 @@ public struct TaxCalculationCreateLineItemsTaxBehavior: RawRepresentable, Codabl
 }
 
 /// Details about the customer, including address and tax IDs.
-public struct TaxCalculationCreateCustomerDetails: StripeParams {
+public struct TaxCalculationCustomerDetails: StripeParams {
     /// The customer's postal address (for example, home or business location).
-    public var address: TaxCalculationCreateCustomerDetailsAddress?
+    public var address: TaxCalculationCustomerDetailsAddress?
     /// The type of customer address provided.
-    public var addressSource: TaxCalculationCreateCustomerDetailsAddressSource?
+    public var addressSource: TaxCalculationCustomerDetailsAddressSource?
     /// The customer's IP address (IPv4 or IPv6).
     public var ipAddress: String?
     /// The customer's tax IDs. Stripe Tax might consider a transaction with applicable tax IDs to be B2B,
     /// which might affect the tax calculation result. Stripe Tax doesn't validate tax IDs for correctness.
-    public var taxIds: [TaxCalculationCreateCustomerDetailsTaxIds]?
+    public var taxIds: [TaxCalculationCustomerDetailsTaxIds]?
     /// Overrides the tax calculation result to allow you to not collect tax from your customer. Use this if
     /// you've manually checked your customer's tax exemptions. Prefer providing the customer's `tax_ids`
     /// where possible, which automatically determines whether `reverse_charge` applies.
-    public var taxabilityOverride: TaxCalculationCreateCustomerDetailsTaxabilityOverride?
+    public var taxabilityOverride: TaxCalculationCustomerDetailsTaxabilityOverride?
 
-    public init(address: TaxCalculationCreateCustomerDetailsAddress? = nil, addressSource: TaxCalculationCreateCustomerDetailsAddressSource? = nil, ipAddress: String? = nil, taxIds: [TaxCalculationCreateCustomerDetailsTaxIds]? = nil, taxabilityOverride: TaxCalculationCreateCustomerDetailsTaxabilityOverride? = nil) {
+    public init(address: TaxCalculationCustomerDetailsAddress? = nil, addressSource: TaxCalculationCustomerDetailsAddressSource? = nil, ipAddress: String? = nil, taxIds: [TaxCalculationCustomerDetailsTaxIds]? = nil, taxabilityOverride: TaxCalculationCustomerDetailsTaxabilityOverride? = nil) {
         self.address = address
         self.addressSource = addressSource
         self.ipAddress = ipAddress
@@ -183,7 +183,7 @@ public struct TaxCalculationCreateCustomerDetails: StripeParams {
 }
 
 /// The customer's postal address (for example, home or business location).
-public struct TaxCalculationCreateCustomerDetailsAddress: ClearableParams {
+public struct TaxCalculationCustomerDetailsAddress: ClearableParams {
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     public var country: String
     /// City, district, suburb, town, or village.
@@ -229,7 +229,7 @@ public struct TaxCalculationCreateCustomerDetailsAddress: ClearableParams {
     }
 }
 
-public struct TaxCalculationCreateCustomerDetailsAddressSource: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxCalculationCustomerDetailsAddressSource: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -240,7 +240,7 @@ public struct TaxCalculationCreateCustomerDetailsAddressSource: RawRepresentable
     public static var shipping: Self { .init(rawValue: "shipping") }
 }
 
-public struct TaxCalculationCreateCustomerDetailsTaxIds: StripeParams {
+public struct TaxCalculationCustomerDetailsTaxIds: StripeParams {
     /// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`,
     /// `au_acn`, `au_arn`, `au_wpn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`,
     /// `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `bw_vat`, `by_tin`, `ca_bn`,
@@ -256,17 +256,17 @@ public struct TaxCalculationCreateCustomerDetailsTaxIds: StripeParams {
     /// `sm_coe`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tt_bir`, `tt_vat`,
     /// `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`,
     /// `za_vat`, `zm_tin`, or `zw_tin`
-    public var type: TaxCalculationCreateCustomerDetailsTaxIdsType
+    public var type: TaxCalculationCustomerDetailsTaxIdsType
     /// Value of the tax ID.
     public var value: String
 
-    public init(type: TaxCalculationCreateCustomerDetailsTaxIdsType, value: String) {
+    public init(type: TaxCalculationCustomerDetailsTaxIdsType, value: String) {
         self.type = type
         self.value = value
     }
 }
 
-public struct TaxCalculationCreateCustomerDetailsTaxIdsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxCalculationCustomerDetailsTaxIdsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -410,7 +410,7 @@ public struct TaxCalculationCreateCustomerDetailsTaxIdsType: RawRepresentable, C
     public static var zwTin: Self { .init(rawValue: "zw_tin") }
 }
 
-public struct TaxCalculationCreateCustomerDetailsTaxabilityOverride: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxCalculationCustomerDetailsTaxabilityOverride: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -423,17 +423,17 @@ public struct TaxCalculationCreateCustomerDetailsTaxabilityOverride: RawRepresen
 }
 
 /// Details about the address from which the goods are being shipped.
-public struct TaxCalculationCreateShipFromDetails: StripeParams {
+public struct TaxCalculationShipFromDetails: StripeParams {
     /// The address from which the goods are being shipped from.
-    public var address: TaxCalculationCreateShipFromDetailsAddress
+    public var address: TaxCalculationShipFromDetailsAddress
 
-    public init(address: TaxCalculationCreateShipFromDetailsAddress) {
+    public init(address: TaxCalculationShipFromDetailsAddress) {
         self.address = address
     }
 }
 
 /// The address from which the goods are being shipped from.
-public struct TaxCalculationCreateShipFromDetailsAddress: ClearableParams {
+public struct TaxCalculationShipFromDetailsAddress: ClearableParams {
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     public var country: String
     /// City, district, suburb, town, or village.
@@ -480,7 +480,7 @@ public struct TaxCalculationCreateShipFromDetailsAddress: ClearableParams {
 }
 
 /// Shipping cost details to be used for the calculation.
-public struct TaxCalculationCreateShippingCost: StripeParams {
+public struct TaxCalculationShippingCost: StripeParams {
     /// A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units)
     /// representing the shipping charge. If `tax_behavior=inclusive`, then this amount includes taxes.
     /// Otherwise, taxes are calculated on top of this amount.
@@ -491,13 +491,13 @@ public struct TaxCalculationCreateShippingCost: StripeParams {
     public var shippingRate: String?
     /// Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes
     /// taxes. Defaults to `exclusive`.
-    public var taxBehavior: TaxCalculationCreateShippingCostTaxBehavior?
+    public var taxBehavior: TaxCalculationShippingCostTaxBehavior?
     /// The [tax code](https://docs.stripe.com/tax/tax-categories) used to calculate tax on shipping. If not
     /// provided, the default shipping tax code from your [Tax
     /// Settings](https://dashboard.stripe.com/settings/tax) is used.
     public var taxCode: String?
 
-    public init(amount: Int? = nil, shippingRate: String? = nil, taxBehavior: TaxCalculationCreateShippingCostTaxBehavior? = nil, taxCode: String? = nil) {
+    public init(amount: Int? = nil, shippingRate: String? = nil, taxBehavior: TaxCalculationShippingCostTaxBehavior? = nil, taxCode: String? = nil) {
         self.amount = amount
         self.shippingRate = shippingRate
         self.taxBehavior = taxBehavior
@@ -512,7 +512,7 @@ public struct TaxCalculationCreateShippingCost: StripeParams {
     }
 }
 
-public struct TaxCalculationCreateShippingCostTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxCalculationShippingCostTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

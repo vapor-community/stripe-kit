@@ -14,11 +14,11 @@ public struct BillingMeterEventAdjustmentCreateParams: StripeParams {
     /// cancellation is not supported yet.
     public var type: BillingMeterEventAdjustmentCreateType
     /// Specifies which event to cancel.
-    public var cancel: BillingMeterEventAdjustmentCreateCancel?
+    public var cancel: BillingMeterEventAdjustmentCancel?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(eventName: String, type: BillingMeterEventAdjustmentCreateType, cancel: BillingMeterEventAdjustmentCreateCancel? = nil, expand: [String]? = nil) {
+    public init(eventName: String, type: BillingMeterEventAdjustmentCreateType, cancel: BillingMeterEventAdjustmentCancel? = nil, expand: [String]? = nil) {
         self.eventName = eventName
         self.type = type
         self.cancel = cancel
@@ -44,7 +44,7 @@ public struct BillingMeterEventAdjustmentCreateType: RawRepresentable, Codable, 
 }
 
 /// Specifies which event to cancel.
-public struct BillingMeterEventAdjustmentCreateCancel: StripeParams {
+public struct BillingMeterEventAdjustmentCancel: StripeParams {
     /// Unique identifier for the event. You can only cancel events within 24 hours of Stripe receiving
     /// them.
     public var identifier: String?

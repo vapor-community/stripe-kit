@@ -12,7 +12,7 @@ public struct PaymentLinkCreateParams: StripeParams {
     /// 20 line items are supported.
     public var lineItems: [PaymentLinkCreateLineItems]
     /// Behavior after the purchase is complete.
-    public var afterCompletion: PaymentLinkCreateAfterCompletion?
+    public var afterCompletion: PaymentLinkAfterCompletion?
     /// Enables user redeemable promotion codes.
     public var allowPromotionCodes: Bool?
     /// The amount of the application fee (if any) that will be requested to be applied to the payment and
@@ -24,21 +24,21 @@ public struct PaymentLinkCreateParams: StripeParams {
     /// Stripe account. There must be at least 1 line item with a recurring price to use this field.
     public var applicationFeePercent: Double?
     /// Configuration for automatic tax collection.
-    public var automaticTax: PaymentLinkCreateAutomaticTax?
+    public var automaticTax: PaymentLinkAutomaticTax?
     /// Configuration for collecting the customer's billing address. Defaults to `auto`.
     public var billingAddressCollection: PaymentLinkCreateBillingAddressCollection?
     /// Configure fields to gather active consent from customers.
-    public var consentCollection: PaymentLinkCreateConsentCollection?
+    public var consentCollection: PaymentLinkConsentCollection?
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies) and supported by each line item's
     /// price.
     public var currency: String?
     /// Collect additional information from your customer using custom fields. Up to 3 fields are supported.
     /// You can't set this parameter if `ui_mode` is `elements`.
-    public var customFields: [PaymentLinkCreateCustomFields]?
+    public var customFields: [PaymentLinkCustomFields]?
     /// Display additional text for your customers using custom text. You can't set this parameter if
     /// `ui_mode` is `elements`.
-    public var customText: PaymentLinkCreateCustomText?
+    public var customText: PaymentLinkCustomText?
     /// Configures whether [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by
     /// this payment link create a [Customer](https://docs.stripe.com/api/customers).
     public var customerCreation: PaymentLinkCreateCustomerCreation?
@@ -47,11 +47,11 @@ public struct PaymentLinkCreateParams: StripeParams {
     /// The custom message to be displayed to a customer when a payment link is no longer active.
     public var inactiveMessage: String?
     /// Generate a post-purchase Invoice for one-time payments.
-    public var invoiceCreation: PaymentLinkCreateInvoiceCreation?
+    public var invoiceCreation: PaymentLinkInvoiceCreation?
     /// Settings for Managed Payments for this Payment Link and resulting
     /// [CheckoutSessions](/api/checkout/sessions/object), [PaymentIntents](/api/payment_intents/object),
     /// [Invoices](/api/invoices/object), and [Subscriptions](/api/subscriptions/object).
-    public var managedPayments: PaymentLinkCreateManagedPayments?
+    public var managedPayments: PaymentLinkManagedPayments?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -59,7 +59,7 @@ public struct PaymentLinkCreateParams: StripeParams {
     /// to [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
     public var metadata: [String: String]?
     /// Controls settings applied for collecting the customer's name.
-    public var nameCollection: PaymentLinkCreateNameCollection?
+    public var nameCollection: PaymentLinkNameCollection?
     /// The account on behalf of which to charge.
     public var onBehalfOf: String?
     /// A list of optional items the customer can add to their order at checkout. Use this parameter to pass
@@ -67,7 +67,7 @@ public struct PaymentLinkCreateParams: StripeParams {
     /// optional items allowed on a payment link, and the existing limits on the number of line items
     /// allowed on a payment link apply to the combined number of line items and optional items. There is a
     /// maximum of 20 combined line items and optional items.
-    public var optionalItems: [PaymentLinkCreateOptionalItems]?
+    public var optionalItems: [PaymentLinkOptionalItems]?
     /// A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment`
     /// mode.
     public var paymentIntentData: PaymentLinkCreatePaymentIntentData?
@@ -84,17 +84,17 @@ public struct PaymentLinkCreateParams: StripeParams {
     /// dynamically show relevant payment methods from your [payment method
     /// settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods
     /// [supported](https://docs.stripe.com/payments/payment-methods/integration-options#payment-method-product-support)).
-    public var paymentMethodTypes: [PaymentLinkCreatePaymentMethodTypes]?
+    public var paymentMethodTypes: [PaymentLinkPaymentMethodTypes]?
     /// Controls phone number collection settings during checkout. We recommend that you review your privacy
     /// policy and check with your legal contacts.
-    public var phoneNumberCollection: PaymentLinkCreatePhoneNumberCollection?
+    public var phoneNumberCollection: PaymentLinkPhoneNumberCollection?
     /// Settings that restrict the usage of a payment link.
-    public var restrictions: PaymentLinkCreateRestrictions?
+    public var restrictions: PaymentLinkRestrictions?
     /// Configuration for collecting the customer's shipping address.
-    public var shippingAddressCollection: PaymentLinkCreateShippingAddressCollection?
+    public var shippingAddressCollection: PaymentLinkShippingAddressCollection?
     /// The shipping rate options to apply to [checkout
     /// sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
-    public var shippingOptions: [PaymentLinkCreateShippingOptions]?
+    public var shippingOptions: [PaymentLinkShippingOptions]?
     /// Describes the type of transaction being performed in order to customize relevant text on the page,
     /// such as the submit button. Changing this value will also affect the hostname in the
     /// [url](https://docs.stripe.com/api/payment_links/payment_links/object#url) property (example:
@@ -104,12 +104,12 @@ public struct PaymentLinkCreateParams: StripeParams {
     /// one line item with a recurring price to use `subscription_data`.
     public var subscriptionData: PaymentLinkCreateSubscriptionData?
     /// Controls tax ID collection during checkout.
-    public var taxIdCollection: PaymentLinkCreateTaxIdCollection?
+    public var taxIdCollection: PaymentLinkTaxIdCollection?
     /// The account (if any) the payments will be attributed to for tax reporting, and where funds from each
     /// payment will be transferred to.
     public var transferData: PaymentLinkCreateTransferData?
 
-    public init(lineItems: [PaymentLinkCreateLineItems], afterCompletion: PaymentLinkCreateAfterCompletion? = nil, allowPromotionCodes: Bool? = nil, applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: PaymentLinkCreateAutomaticTax? = nil, billingAddressCollection: PaymentLinkCreateBillingAddressCollection? = nil, consentCollection: PaymentLinkCreateConsentCollection? = nil, currency: String? = nil, customFields: [PaymentLinkCreateCustomFields]? = nil, customText: PaymentLinkCreateCustomText? = nil, customerCreation: PaymentLinkCreateCustomerCreation? = nil, expand: [String]? = nil, inactiveMessage: String? = nil, invoiceCreation: PaymentLinkCreateInvoiceCreation? = nil, managedPayments: PaymentLinkCreateManagedPayments? = nil, metadata: [String: String]? = nil, nameCollection: PaymentLinkCreateNameCollection? = nil, onBehalfOf: String? = nil, optionalItems: [PaymentLinkCreateOptionalItems]? = nil, paymentIntentData: PaymentLinkCreatePaymentIntentData? = nil, paymentMethodCollection: PaymentLinkCreatePaymentMethodCollection? = nil, paymentMethodOptions: PaymentLinkCreatePaymentMethodOptions? = nil, paymentMethodTypes: [PaymentLinkCreatePaymentMethodTypes]? = nil, phoneNumberCollection: PaymentLinkCreatePhoneNumberCollection? = nil, restrictions: PaymentLinkCreateRestrictions? = nil, shippingAddressCollection: PaymentLinkCreateShippingAddressCollection? = nil, shippingOptions: [PaymentLinkCreateShippingOptions]? = nil, submitType: PaymentLinkCreateSubmitType? = nil, subscriptionData: PaymentLinkCreateSubscriptionData? = nil, taxIdCollection: PaymentLinkCreateTaxIdCollection? = nil, transferData: PaymentLinkCreateTransferData? = nil) {
+    public init(lineItems: [PaymentLinkCreateLineItems], afterCompletion: PaymentLinkAfterCompletion? = nil, allowPromotionCodes: Bool? = nil, applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: PaymentLinkAutomaticTax? = nil, billingAddressCollection: PaymentLinkCreateBillingAddressCollection? = nil, consentCollection: PaymentLinkConsentCollection? = nil, currency: String? = nil, customFields: [PaymentLinkCustomFields]? = nil, customText: PaymentLinkCustomText? = nil, customerCreation: PaymentLinkCreateCustomerCreation? = nil, expand: [String]? = nil, inactiveMessage: String? = nil, invoiceCreation: PaymentLinkInvoiceCreation? = nil, managedPayments: PaymentLinkManagedPayments? = nil, metadata: [String: String]? = nil, nameCollection: PaymentLinkNameCollection? = nil, onBehalfOf: String? = nil, optionalItems: [PaymentLinkOptionalItems]? = nil, paymentIntentData: PaymentLinkCreatePaymentIntentData? = nil, paymentMethodCollection: PaymentLinkCreatePaymentMethodCollection? = nil, paymentMethodOptions: PaymentLinkCreatePaymentMethodOptions? = nil, paymentMethodTypes: [PaymentLinkPaymentMethodTypes]? = nil, phoneNumberCollection: PaymentLinkPhoneNumberCollection? = nil, restrictions: PaymentLinkRestrictions? = nil, shippingAddressCollection: PaymentLinkShippingAddressCollection? = nil, shippingOptions: [PaymentLinkShippingOptions]? = nil, submitType: PaymentLinkCreateSubmitType? = nil, subscriptionData: PaymentLinkCreateSubscriptionData? = nil, taxIdCollection: PaymentLinkTaxIdCollection? = nil, transferData: PaymentLinkCreateTransferData? = nil) {
         self.lineItems = lineItems
         self.afterCompletion = afterCompletion
         self.allowPromotionCodes = allowPromotionCodes
@@ -252,7 +252,7 @@ public struct PaymentLinkUpdateParams: ClearableParams {
     /// page saying that the link has been deactivated.
     public var active: Bool?
     /// Behavior after the purchase is complete.
-    public var afterCompletion: PaymentLinkUpdateAfterCompletion?
+    public var afterCompletion: PaymentLinkAfterCompletion?
     /// Enables user redeemable promotion codes.
     public var allowPromotionCodes: Bool?
     /// The amount of the application fee (if any) that will be requested to be applied to the payment and
@@ -264,17 +264,17 @@ public struct PaymentLinkUpdateParams: ClearableParams {
     /// Stripe account. There must be at least 1 line item with a recurring price to use this field.
     public var applicationFeePercent: Double?
     /// Configuration for automatic tax collection.
-    public var automaticTax: PaymentLinkUpdateAutomaticTax?
+    public var automaticTax: PaymentLinkAutomaticTax?
     /// Configuration for collecting the customer's billing address. Defaults to `auto`.
     public var billingAddressCollection: PaymentLinkUpdateBillingAddressCollection?
     /// Configure fields to gather active consent from customers.
-    public var consentCollection: PaymentLinkUpdateConsentCollection?
+    public var consentCollection: PaymentLinkConsentCollection?
     /// Collect additional information from your customer using custom fields. Up to 3 fields are supported.
     /// You can't set this parameter if `ui_mode` is `elements`.
-    public var customFields: [PaymentLinkUpdateCustomFields]?
+    public var customFields: [PaymentLinkCustomFields]?
     /// Display additional text for your customers using custom text. You can't set this parameter if
     /// `ui_mode` is `elements`.
-    public var customText: PaymentLinkUpdateCustomText?
+    public var customText: PaymentLinkCustomText?
     /// Configures whether [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by
     /// this payment link create a [Customer](https://docs.stripe.com/api/customers).
     public var customerCreation: PaymentLinkUpdateCustomerCreation?
@@ -283,7 +283,7 @@ public struct PaymentLinkUpdateParams: ClearableParams {
     /// The custom message to be displayed to a customer when a payment link is no longer active.
     public var inactiveMessage: String?
     /// Generate a post-purchase Invoice for one-time payments.
-    public var invoiceCreation: PaymentLinkUpdateInvoiceCreation?
+    public var invoiceCreation: PaymentLinkInvoiceCreation?
     /// The line items representing what is being sold. Each line item represents an item being sold. Up to
     /// 20 line items are supported.
     public var lineItems: [PaymentLinkUpdateLineItems]?
@@ -294,7 +294,7 @@ public struct PaymentLinkUpdateParams: ClearableParams {
     /// to [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
     public var metadata: [String: String]?
     /// Controls settings applied for collecting the customer's name.
-    public var nameCollection: PaymentLinkUpdateNameCollection?
+    public var nameCollection: PaymentLinkNameCollection?
     /// The account on behalf of which to charge.
     public var onBehalfOf: String?
     /// A list of optional items the customer can add to their order at checkout. Use this parameter to pass
@@ -302,7 +302,7 @@ public struct PaymentLinkUpdateParams: ClearableParams {
     /// optional items allowed on a payment link, and the existing limits on the number of line items
     /// allowed on a payment link apply to the combined number of line items and optional items. There is a
     /// maximum of 20 combined line items and optional items.
-    public var optionalItems: [PaymentLinkUpdateOptionalItems]?
+    public var optionalItems: [PaymentLinkOptionalItems]?
     /// A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment`
     /// mode.
     public var paymentIntentData: PaymentLinkUpdatePaymentIntentData?
@@ -318,17 +318,17 @@ public struct PaymentLinkUpdateParams: ClearableParams {
     /// The list of payment method types that customers can use. Pass an empty string to enable dynamic
     /// payment methods that use your [payment method
     /// settings](https://dashboard.stripe.com/settings/payment_methods).
-    public var paymentMethodTypes: [PaymentLinkUpdatePaymentMethodTypes]?
+    public var paymentMethodTypes: [PaymentLinkPaymentMethodTypes]?
     /// Controls phone number collection settings during checkout. We recommend that you review your privacy
     /// policy and check with your legal contacts.
-    public var phoneNumberCollection: PaymentLinkUpdatePhoneNumberCollection?
+    public var phoneNumberCollection: PaymentLinkPhoneNumberCollection?
     /// Settings that restrict the usage of a payment link.
-    public var restrictions: PaymentLinkUpdateRestrictions?
+    public var restrictions: PaymentLinkRestrictions?
     /// Configuration for collecting the customer's shipping address.
-    public var shippingAddressCollection: PaymentLinkUpdateShippingAddressCollection?
+    public var shippingAddressCollection: PaymentLinkShippingAddressCollection?
     /// The shipping rate options to apply to [checkout
     /// sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
-    public var shippingOptions: [PaymentLinkUpdateShippingOptions]?
+    public var shippingOptions: [PaymentLinkShippingOptions]?
     /// Describes the type of transaction being performed in order to customize relevant text on the page,
     /// such as the submit button. Changing this value will also affect the hostname in the
     /// [url](https://docs.stripe.com/api/payment_links/payment_links/object#url) property (example:
@@ -338,14 +338,14 @@ public struct PaymentLinkUpdateParams: ClearableParams {
     /// one line item with a recurring price to use `subscription_data`.
     public var subscriptionData: PaymentLinkUpdateSubscriptionData?
     /// Controls tax ID collection during checkout.
-    public var taxIdCollection: PaymentLinkUpdateTaxIdCollection?
+    public var taxIdCollection: PaymentLinkTaxIdCollection?
     /// The account (if any) the payments will be attributed to for tax reporting, and where funds from each
     /// payment will be transferred to.
     public var transferData: PaymentLinkUpdateTransferData?
     /// Fields to send empty, which clears them: `params.clear(.applicationFeeAmount)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(active: Bool? = nil, afterCompletion: PaymentLinkUpdateAfterCompletion? = nil, allowPromotionCodes: Bool? = nil, applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: PaymentLinkUpdateAutomaticTax? = nil, billingAddressCollection: PaymentLinkUpdateBillingAddressCollection? = nil, consentCollection: PaymentLinkUpdateConsentCollection? = nil, customFields: [PaymentLinkUpdateCustomFields]? = nil, customText: PaymentLinkUpdateCustomText? = nil, customerCreation: PaymentLinkUpdateCustomerCreation? = nil, expand: [String]? = nil, inactiveMessage: String? = nil, invoiceCreation: PaymentLinkUpdateInvoiceCreation? = nil, lineItems: [PaymentLinkUpdateLineItems]? = nil, metadata: [String: String]? = nil, nameCollection: PaymentLinkUpdateNameCollection? = nil, onBehalfOf: String? = nil, optionalItems: [PaymentLinkUpdateOptionalItems]? = nil, paymentIntentData: PaymentLinkUpdatePaymentIntentData? = nil, paymentMethodCollection: PaymentLinkUpdatePaymentMethodCollection? = nil, paymentMethodOptions: PaymentLinkUpdatePaymentMethodOptions? = nil, paymentMethodTypes: [PaymentLinkUpdatePaymentMethodTypes]? = nil, phoneNumberCollection: PaymentLinkUpdatePhoneNumberCollection? = nil, restrictions: PaymentLinkUpdateRestrictions? = nil, shippingAddressCollection: PaymentLinkUpdateShippingAddressCollection? = nil, shippingOptions: [PaymentLinkUpdateShippingOptions]? = nil, submitType: PaymentLinkUpdateSubmitType? = nil, subscriptionData: PaymentLinkUpdateSubscriptionData? = nil, taxIdCollection: PaymentLinkUpdateTaxIdCollection? = nil, transferData: PaymentLinkUpdateTransferData? = nil) {
+    public init(active: Bool? = nil, afterCompletion: PaymentLinkAfterCompletion? = nil, allowPromotionCodes: Bool? = nil, applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: PaymentLinkAutomaticTax? = nil, billingAddressCollection: PaymentLinkUpdateBillingAddressCollection? = nil, consentCollection: PaymentLinkConsentCollection? = nil, customFields: [PaymentLinkCustomFields]? = nil, customText: PaymentLinkCustomText? = nil, customerCreation: PaymentLinkUpdateCustomerCreation? = nil, expand: [String]? = nil, inactiveMessage: String? = nil, invoiceCreation: PaymentLinkInvoiceCreation? = nil, lineItems: [PaymentLinkUpdateLineItems]? = nil, metadata: [String: String]? = nil, nameCollection: PaymentLinkNameCollection? = nil, onBehalfOf: String? = nil, optionalItems: [PaymentLinkOptionalItems]? = nil, paymentIntentData: PaymentLinkUpdatePaymentIntentData? = nil, paymentMethodCollection: PaymentLinkUpdatePaymentMethodCollection? = nil, paymentMethodOptions: PaymentLinkUpdatePaymentMethodOptions? = nil, paymentMethodTypes: [PaymentLinkPaymentMethodTypes]? = nil, phoneNumberCollection: PaymentLinkPhoneNumberCollection? = nil, restrictions: PaymentLinkRestrictions? = nil, shippingAddressCollection: PaymentLinkShippingAddressCollection? = nil, shippingOptions: [PaymentLinkShippingOptions]? = nil, submitType: PaymentLinkUpdateSubmitType? = nil, subscriptionData: PaymentLinkUpdateSubscriptionData? = nil, taxIdCollection: PaymentLinkTaxIdCollection? = nil, transferData: PaymentLinkUpdateTransferData? = nil) {
         self.active = active
         self.afterCompletion = afterCompletion
         self.allowPromotionCodes = allowPromotionCodes
@@ -437,15 +437,15 @@ public struct PaymentLinkCreateLineItems: StripeParams {
     public var quantity: Int
     /// When set, provides configuration for this item’s quantity to be adjusted by the customer during
     /// checkout.
-    public var adjustableQuantity: PaymentLinkCreateLineItemsAdjustableQuantity?
+    public var adjustableQuantity: PaymentLinkLineItemsAdjustableQuantity?
     /// The ID of the [Price](https://docs.stripe.com/api/prices) or
     /// [Plan](https://docs.stripe.com/api/plans) object. One of `price` or `price_data` is required.
     public var price: String?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
     /// `price` or `price_data` is required.
-    public var priceData: PaymentLinkCreateLineItemsPriceData?
+    public var priceData: PaymentLinkLineItemsPriceData?
 
-    public init(quantity: Int, adjustableQuantity: PaymentLinkCreateLineItemsAdjustableQuantity? = nil, price: String? = nil, priceData: PaymentLinkCreateLineItemsPriceData? = nil) {
+    public init(quantity: Int, adjustableQuantity: PaymentLinkLineItemsAdjustableQuantity? = nil, price: String? = nil, priceData: PaymentLinkLineItemsPriceData? = nil) {
         self.quantity = quantity
         self.adjustableQuantity = adjustableQuantity
         self.price = price
@@ -462,7 +462,7 @@ public struct PaymentLinkCreateLineItems: StripeParams {
 
 /// When set, provides configuration for this item’s quantity to be adjusted by the customer during
 /// checkout.
-public struct PaymentLinkCreateLineItemsAdjustableQuantity: StripeParams {
+public struct PaymentLinkLineItemsAdjustableQuantity: StripeParams {
     /// Set to true if the quantity can be adjusted to any non-negative Integer.
     public var enabled: Bool
     /// The maximum quantity the customer can purchase. By default this value is 99. You can specify a value
@@ -481,7 +481,7 @@ public struct PaymentLinkCreateLineItemsAdjustableQuantity: StripeParams {
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
 /// `price` or `price_data` is required.
-public struct PaymentLinkCreateLineItemsPriceData: StripeParams {
+public struct PaymentLinkLineItemsPriceData: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -491,15 +491,15 @@ public struct PaymentLinkCreateLineItemsPriceData: StripeParams {
     public var product: String?
     /// Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of
     /// `product` or `product_data` is required.
-    public var productData: PaymentLinkCreateLineItemsPriceDataProductData?
+    public var productData: PaymentLinkLineItemsPriceDataProductData?
     /// The recurring components of a price such as `interval` and `interval_count`.
-    public var recurring: PaymentLinkCreateLineItemsPriceDataRecurring?
+    public var recurring: PaymentLinkLineItemsPriceDataRecurring?
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: PaymentLinkCreateLineItemsPriceDataTaxBehavior?
+    public var taxBehavior: PaymentLinkLineItemsPriceDataTaxBehavior?
     /// A non-negative integer in cents (or local equivalent) representing how much to charge. One of
     /// `unit_amount` or `unit_amount_decimal` is required.
     public var unitAmount: Int?
@@ -507,7 +507,7 @@ public struct PaymentLinkCreateLineItemsPriceData: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, product: String? = nil, productData: PaymentLinkCreateLineItemsPriceDataProductData? = nil, recurring: PaymentLinkCreateLineItemsPriceDataRecurring? = nil, taxBehavior: PaymentLinkCreateLineItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, product: String? = nil, productData: PaymentLinkLineItemsPriceDataProductData? = nil, recurring: PaymentLinkLineItemsPriceDataRecurring? = nil, taxBehavior: PaymentLinkLineItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.product = product
         self.productData = productData
@@ -530,7 +530,7 @@ public struct PaymentLinkCreateLineItemsPriceData: StripeParams {
 
 /// Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of
 /// `product` or `product_data` is required.
-public struct PaymentLinkCreateLineItemsPriceDataProductData: StripeParams {
+public struct PaymentLinkLineItemsPriceDataProductData: StripeParams {
     /// The product's name, meant to be displayable to the customer.
     public var name: String
     /// The product's description, meant to be displayable to the customer. Use this field to optionally
@@ -547,12 +547,12 @@ public struct PaymentLinkCreateLineItemsPriceDataProductData: StripeParams {
     public var taxCode: String?
     /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
     /// location.
-    public var taxDetails: PaymentLinkCreateLineItemsPriceDataProductDataTaxDetails?
+    public var taxDetails: PaymentLinkLineItemsPriceDataProductDataTaxDetails?
     /// A label that represents units of this product. When set, this will be included in customers'
     /// receipts, invoices, Checkout, and the customer portal.
     public var unitLabel: String?
 
-    public init(name: String, description: String? = nil, images: [String]? = nil, metadata: [String: String]? = nil, taxCode: String? = nil, taxDetails: PaymentLinkCreateLineItemsPriceDataProductDataTaxDetails? = nil, unitLabel: String? = nil) {
+    public init(name: String, description: String? = nil, images: [String]? = nil, metadata: [String: String]? = nil, taxCode: String? = nil, taxDetails: PaymentLinkLineItemsPriceDataProductDataTaxDetails? = nil, unitLabel: String? = nil) {
         self.name = name
         self.description = description
         self.images = images
@@ -575,7 +575,7 @@ public struct PaymentLinkCreateLineItemsPriceDataProductData: StripeParams {
 
 /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
 /// location.
-public struct PaymentLinkCreateLineItemsPriceDataProductDataTaxDetails: ClearableParams {
+public struct PaymentLinkLineItemsPriceDataProductDataTaxDetails: ClearableParams {
     /// A tax location ID. Depending on the [tax
     /// code](/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not
     /// supported.
@@ -603,15 +603,15 @@ public struct PaymentLinkCreateLineItemsPriceDataProductDataTaxDetails: Clearabl
 }
 
 /// The recurring components of a price such as `interval` and `interval_count`.
-public struct PaymentLinkCreateLineItemsPriceDataRecurring: StripeParams {
+public struct PaymentLinkLineItemsPriceDataRecurring: StripeParams {
     /// Specifies billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: PaymentLinkCreateLineItemsPriceDataRecurringInterval
+    public var interval: PaymentLinkLineItemsPriceDataRecurringInterval
     /// The number of intervals between subscription billings. For example, `interval=month` and
     /// `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36
     /// months, or 156 weeks).
     public var intervalCount: Int?
 
-    public init(interval: PaymentLinkCreateLineItemsPriceDataRecurringInterval, intervalCount: Int? = nil) {
+    public init(interval: PaymentLinkLineItemsPriceDataRecurringInterval, intervalCount: Int? = nil) {
         self.interval = interval
         self.intervalCount = intervalCount
     }
@@ -622,7 +622,7 @@ public struct PaymentLinkCreateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
-public struct PaymentLinkCreateLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -635,7 +635,7 @@ public struct PaymentLinkCreateLineItemsPriceDataRecurringInterval: RawRepresent
     public static var year: Self { .init(rawValue: "year") }
 }
 
-public struct PaymentLinkCreateLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -648,15 +648,15 @@ public struct PaymentLinkCreateLineItemsPriceDataTaxBehavior: RawRepresentable, 
 }
 
 /// Behavior after the purchase is complete.
-public struct PaymentLinkCreateAfterCompletion: StripeParams {
+public struct PaymentLinkAfterCompletion: StripeParams {
     /// The specified behavior after the purchase is complete. Either `redirect` or `hosted_confirmation`.
-    public var type: PaymentLinkCreateAfterCompletionType
+    public var type: PaymentLinkAfterCompletionType
     /// Configuration when `type=hosted_confirmation`.
-    public var hostedConfirmation: PaymentLinkCreateAfterCompletionHostedConfirmation?
+    public var hostedConfirmation: PaymentLinkAfterCompletionHostedConfirmation?
     /// Configuration when `type=redirect`.
-    public var redirect: PaymentLinkCreateAfterCompletionRedirect?
+    public var redirect: PaymentLinkAfterCompletionRedirect?
 
-    public init(type: PaymentLinkCreateAfterCompletionType, hostedConfirmation: PaymentLinkCreateAfterCompletionHostedConfirmation? = nil, redirect: PaymentLinkCreateAfterCompletionRedirect? = nil) {
+    public init(type: PaymentLinkAfterCompletionType, hostedConfirmation: PaymentLinkAfterCompletionHostedConfirmation? = nil, redirect: PaymentLinkAfterCompletionRedirect? = nil) {
         self.type = type
         self.hostedConfirmation = hostedConfirmation
         self.redirect = redirect
@@ -669,7 +669,7 @@ public struct PaymentLinkCreateAfterCompletion: StripeParams {
     }
 }
 
-public struct PaymentLinkCreateAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -681,7 +681,7 @@ public struct PaymentLinkCreateAfterCompletionType: RawRepresentable, Codable, H
 }
 
 /// Configuration when `type=hosted_confirmation`.
-public struct PaymentLinkCreateAfterCompletionHostedConfirmation: StripeParams {
+public struct PaymentLinkAfterCompletionHostedConfirmation: StripeParams {
     /// A custom message to display to the customer after the purchase is complete.
     public var customMessage: String?
 
@@ -695,7 +695,7 @@ public struct PaymentLinkCreateAfterCompletionHostedConfirmation: StripeParams {
 }
 
 /// Configuration when `type=redirect`.
-public struct PaymentLinkCreateAfterCompletionRedirect: StripeParams {
+public struct PaymentLinkAfterCompletionRedirect: StripeParams {
     /// The URL the customer will be redirected to after the purchase is complete. You can embed
     /// `{CHECKOUT_SESSION_ID}` into the URL to have the `id` of the completed [checkout
     /// session](https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-id) included.
@@ -707,7 +707,7 @@ public struct PaymentLinkCreateAfterCompletionRedirect: StripeParams {
 }
 
 /// Configuration for automatic tax collection.
-public struct PaymentLinkCreateAutomaticTax: StripeParams {
+public struct PaymentLinkAutomaticTax: StripeParams {
     /// Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's
     /// location. Enabling this parameter causes the payment link to collect any billing address information
     /// necessary for tax calculation.
@@ -715,9 +715,9 @@ public struct PaymentLinkCreateAutomaticTax: StripeParams {
     /// The account that's liable for tax. If set, the business address and tax registrations required to
     /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
     /// report of the connected account.
-    public var liability: PaymentLinkCreateAutomaticTaxLiability?
+    public var liability: PaymentLinkAutomaticTaxLiability?
 
-    public init(enabled: Bool, liability: PaymentLinkCreateAutomaticTaxLiability? = nil) {
+    public init(enabled: Bool, liability: PaymentLinkAutomaticTaxLiability? = nil) {
         self.enabled = enabled
         self.liability = liability
     }
@@ -726,19 +726,19 @@ public struct PaymentLinkCreateAutomaticTax: StripeParams {
 /// The account that's liable for tax. If set, the business address and tax registrations required to
 /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
 /// report of the connected account.
-public struct PaymentLinkCreateAutomaticTaxLiability: StripeParams {
+public struct PaymentLinkAutomaticTaxLiability: StripeParams {
     /// Type of the account referenced in the request.
-    public var type: PaymentLinkCreateAutomaticTaxLiabilityType
+    public var type: PaymentLinkAutomaticTaxLiabilityType
     /// The connected account being referenced when `type` is `account`.
     public var account: String?
 
-    public init(type: PaymentLinkCreateAutomaticTaxLiabilityType, account: String? = nil) {
+    public init(type: PaymentLinkAutomaticTaxLiabilityType, account: String? = nil) {
         self.type = type
         self.account = account
     }
 }
 
-public struct PaymentLinkCreateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -761,21 +761,21 @@ public struct PaymentLinkCreateBillingAddressCollection: RawRepresentable, Codab
 }
 
 /// Configure fields to gather active consent from customers.
-public struct PaymentLinkCreateConsentCollection: StripeParams {
+public struct PaymentLinkConsentCollection: StripeParams {
     /// Determines the display of payment method reuse agreement text in the UI. If set to `hidden`, it will
     /// hide legal text related to the reuse of a payment method.
-    public var paymentMethodReuseAgreement: PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreement?
+    public var paymentMethodReuseAgreement: PaymentLinkConsentCollectionPaymentMethodReuseAgreement?
     /// If set to `auto`, enables the collection of customer consent for promotional communications. The
     /// Checkout Session will determine whether to display an option to opt into promotional communication
     /// from the merchant depending on the customer's locale. Only available to US merchants and US
     /// customers.
-    public var promotions: PaymentLinkCreateConsentCollectionPromotions?
+    public var promotions: PaymentLinkConsentCollectionPromotions?
     /// If set to `required`, it requires customers to check a terms of service checkbox before being able
     /// to pay. There must be a valid terms of service URL set in your [Dashboard
     /// settings](https://dashboard.stripe.com/settings/public).
-    public var termsOfService: PaymentLinkCreateConsentCollectionTermsOfService?
+    public var termsOfService: PaymentLinkConsentCollectionTermsOfService?
 
-    public init(paymentMethodReuseAgreement: PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreement? = nil, promotions: PaymentLinkCreateConsentCollectionPromotions? = nil, termsOfService: PaymentLinkCreateConsentCollectionTermsOfService? = nil) {
+    public init(paymentMethodReuseAgreement: PaymentLinkConsentCollectionPaymentMethodReuseAgreement? = nil, promotions: PaymentLinkConsentCollectionPromotions? = nil, termsOfService: PaymentLinkConsentCollectionTermsOfService? = nil) {
         self.paymentMethodReuseAgreement = paymentMethodReuseAgreement
         self.promotions = promotions
         self.termsOfService = termsOfService
@@ -790,18 +790,18 @@ public struct PaymentLinkCreateConsentCollection: StripeParams {
 
 /// Determines the display of payment method reuse agreement text in the UI. If set to `hidden`, it will
 /// hide legal text related to the reuse of a payment method.
-public struct PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreement: StripeParams {
+public struct PaymentLinkConsentCollectionPaymentMethodReuseAgreement: StripeParams {
     /// Determines the position and visibility of the payment method reuse agreement in the UI. When set to
     /// `auto`, Stripe's defaults will be used. When set to `hidden`, the payment method reuse agreement
     /// text will always be hidden in the UI.
-    public var position: PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreementPosition
+    public var position: PaymentLinkConsentCollectionPaymentMethodReuseAgreementPosition
 
-    public init(position: PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreementPosition) {
+    public init(position: PaymentLinkConsentCollectionPaymentMethodReuseAgreementPosition) {
         self.position = position
     }
 }
 
-public struct PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreementPosition: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkConsentCollectionPaymentMethodReuseAgreementPosition: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -812,7 +812,7 @@ public struct PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreementPosit
     public static var hidden: Self { .init(rawValue: "hidden") }
 }
 
-public struct PaymentLinkCreateConsentCollectionPromotions: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkConsentCollectionPromotions: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -823,7 +823,7 @@ public struct PaymentLinkCreateConsentCollectionPromotions: RawRepresentable, Co
     public static var none: Self { .init(rawValue: "none") }
 }
 
-public struct PaymentLinkCreateConsentCollectionTermsOfService: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkConsentCollectionTermsOfService: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -834,25 +834,25 @@ public struct PaymentLinkCreateConsentCollectionTermsOfService: RawRepresentable
     public static var required: Self { .init(rawValue: "required") }
 }
 
-public struct PaymentLinkCreateCustomFields: StripeParams {
+public struct PaymentLinkCustomFields: StripeParams {
     /// String of your choice that your integration can use to reconcile this field. Must be unique to this
     /// field, alphanumeric, and up to 200 characters.
     public var key: String
     /// The label for the field, displayed to the customer.
-    public var label: PaymentLinkCreateCustomFieldsLabel
+    public var label: PaymentLinkCustomFieldsLabel
     /// The type of the field.
-    public var type: PaymentLinkCreateCustomFieldsType
+    public var type: PaymentLinkCustomFieldsType
     /// Configuration for `type=dropdown` fields.
-    public var dropdown: PaymentLinkCreateCustomFieldsDropdown?
+    public var dropdown: PaymentLinkCustomFieldsDropdown?
     /// Configuration for `type=numeric` fields.
-    public var numeric: PaymentLinkCreateCustomFieldsNumeric?
+    public var numeric: PaymentLinkCustomFieldsNumeric?
     /// Whether the customer is required to complete the field before completing the Checkout Session.
     /// Defaults to `false`.
     public var optional: Bool?
     /// Configuration for `type=text` fields.
-    public var text: PaymentLinkCreateCustomFieldsText?
+    public var text: PaymentLinkCustomFieldsText?
 
-    public init(key: String, label: PaymentLinkCreateCustomFieldsLabel, type: PaymentLinkCreateCustomFieldsType, dropdown: PaymentLinkCreateCustomFieldsDropdown? = nil, numeric: PaymentLinkCreateCustomFieldsNumeric? = nil, optional: Bool? = nil, text: PaymentLinkCreateCustomFieldsText? = nil) {
+    public init(key: String, label: PaymentLinkCustomFieldsLabel, type: PaymentLinkCustomFieldsType, dropdown: PaymentLinkCustomFieldsDropdown? = nil, numeric: PaymentLinkCustomFieldsNumeric? = nil, optional: Bool? = nil, text: PaymentLinkCustomFieldsText? = nil) {
         self.key = key
         self.label = label
         self.type = type
@@ -864,19 +864,19 @@ public struct PaymentLinkCreateCustomFields: StripeParams {
 }
 
 /// The label for the field, displayed to the customer.
-public struct PaymentLinkCreateCustomFieldsLabel: StripeParams {
+public struct PaymentLinkCustomFieldsLabel: StripeParams {
     /// Custom text for the label, displayed to the customer. Up to 100 characters.
     public var custom: String
     /// The type of the label.
-    public var type: PaymentLinkCreateCustomFieldsLabelType
+    public var type: PaymentLinkCustomFieldsLabelType
 
-    public init(custom: String, type: PaymentLinkCreateCustomFieldsLabelType) {
+    public init(custom: String, type: PaymentLinkCustomFieldsLabelType) {
         self.custom = custom
         self.type = type
     }
 }
 
-public struct PaymentLinkCreateCustomFieldsLabelType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkCustomFieldsLabelType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -886,7 +886,7 @@ public struct PaymentLinkCreateCustomFieldsLabelType: RawRepresentable, Codable,
     public static var custom: Self { .init(rawValue: "custom") }
 }
 
-public struct PaymentLinkCreateCustomFieldsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkCustomFieldsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -899,13 +899,13 @@ public struct PaymentLinkCreateCustomFieldsType: RawRepresentable, Codable, Hash
 }
 
 /// Configuration for `type=dropdown` fields.
-public struct PaymentLinkCreateCustomFieldsDropdown: StripeParams {
+public struct PaymentLinkCustomFieldsDropdown: StripeParams {
     /// The options available for the customer to select. Up to 200 options allowed.
-    public var options: [PaymentLinkCreateCustomFieldsDropdownOptions]
+    public var options: [PaymentLinkCustomFieldsDropdownOptions]
     /// The value that pre-fills the field on the payment page. Must match a `value` in the `options` array.
     public var defaultValue: String?
 
-    public init(options: [PaymentLinkCreateCustomFieldsDropdownOptions], defaultValue: String? = nil) {
+    public init(options: [PaymentLinkCustomFieldsDropdownOptions], defaultValue: String? = nil) {
         self.options = options
         self.defaultValue = defaultValue
     }
@@ -916,7 +916,7 @@ public struct PaymentLinkCreateCustomFieldsDropdown: StripeParams {
     }
 }
 
-public struct PaymentLinkCreateCustomFieldsDropdownOptions: StripeParams {
+public struct PaymentLinkCustomFieldsDropdownOptions: StripeParams {
     /// The label for the option, displayed to the customer. Up to 100 characters.
     public var label: String
     /// The value for this option, not displayed to the customer, used by your integration to reconcile the
@@ -931,7 +931,7 @@ public struct PaymentLinkCreateCustomFieldsDropdownOptions: StripeParams {
 }
 
 /// Configuration for `type=numeric` fields.
-public struct PaymentLinkCreateCustomFieldsNumeric: StripeParams {
+public struct PaymentLinkCustomFieldsNumeric: StripeParams {
     /// The value that pre-fills the field on the payment page.
     public var defaultValue: String?
     /// The maximum character length constraint for the customer's input.
@@ -953,7 +953,7 @@ public struct PaymentLinkCreateCustomFieldsNumeric: StripeParams {
 }
 
 /// Configuration for `type=text` fields.
-public struct PaymentLinkCreateCustomFieldsText: StripeParams {
+public struct PaymentLinkCustomFieldsText: StripeParams {
     /// The value that pre-fills the field on the payment page.
     public var defaultValue: String?
     /// The maximum character length constraint for the customer's input.
@@ -976,19 +976,19 @@ public struct PaymentLinkCreateCustomFieldsText: StripeParams {
 
 /// Display additional text for your customers using custom text. You can't set this parameter if
 /// `ui_mode` is `elements`.
-public struct PaymentLinkCreateCustomText: ClearableParams {
+public struct PaymentLinkCustomText: ClearableParams {
     /// Custom text that should be displayed after the payment confirmation button.
-    public var afterSubmit: PaymentLinkCreateCustomTextAfterSubmit?
+    public var afterSubmit: PaymentLinkCustomTextAfterSubmit?
     /// Custom text that should be displayed alongside shipping address collection.
-    public var shippingAddress: PaymentLinkCreateCustomTextShippingAddress?
+    public var shippingAddress: PaymentLinkCustomTextShippingAddress?
     /// Custom text that should be displayed alongside the payment confirmation button.
-    public var submit: PaymentLinkCreateCustomTextSubmit?
+    public var submit: PaymentLinkCustomTextSubmit?
     /// Custom text that should be displayed in place of the default terms of service agreement text.
-    public var termsOfServiceAcceptance: PaymentLinkCreateCustomTextTermsOfServiceAcceptance?
+    public var termsOfServiceAcceptance: PaymentLinkCustomTextTermsOfServiceAcceptance?
     /// Fields to send empty, which clears them: `params.clear(.afterSubmit)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(afterSubmit: PaymentLinkCreateCustomTextAfterSubmit? = nil, shippingAddress: PaymentLinkCreateCustomTextShippingAddress? = nil, submit: PaymentLinkCreateCustomTextSubmit? = nil, termsOfServiceAcceptance: PaymentLinkCreateCustomTextTermsOfServiceAcceptance? = nil) {
+    public init(afterSubmit: PaymentLinkCustomTextAfterSubmit? = nil, shippingAddress: PaymentLinkCustomTextShippingAddress? = nil, submit: PaymentLinkCustomTextSubmit? = nil, termsOfServiceAcceptance: PaymentLinkCustomTextTermsOfServiceAcceptance? = nil) {
         self.afterSubmit = afterSubmit
         self.shippingAddress = shippingAddress
         self.submit = submit
@@ -1012,7 +1012,7 @@ public struct PaymentLinkCreateCustomText: ClearableParams {
     }
 }
 
-public struct PaymentLinkCreateCustomTextAfterSubmit: StripeParams {
+public struct PaymentLinkCustomTextAfterSubmit: StripeParams {
     /// Text can be up to 1200 characters in length.
     public var message: String
 
@@ -1021,7 +1021,7 @@ public struct PaymentLinkCreateCustomTextAfterSubmit: StripeParams {
     }
 }
 
-public struct PaymentLinkCreateCustomTextShippingAddress: StripeParams {
+public struct PaymentLinkCustomTextShippingAddress: StripeParams {
     /// Text can be up to 1200 characters in length.
     public var message: String
 
@@ -1030,7 +1030,7 @@ public struct PaymentLinkCreateCustomTextShippingAddress: StripeParams {
     }
 }
 
-public struct PaymentLinkCreateCustomTextSubmit: StripeParams {
+public struct PaymentLinkCustomTextSubmit: StripeParams {
     /// Text can be up to 1200 characters in length.
     public var message: String
 
@@ -1039,7 +1039,7 @@ public struct PaymentLinkCreateCustomTextSubmit: StripeParams {
     }
 }
 
-public struct PaymentLinkCreateCustomTextTermsOfServiceAcceptance: StripeParams {
+public struct PaymentLinkCustomTextTermsOfServiceAcceptance: StripeParams {
     /// Text can be up to 1200 characters in length.
     public var message: String
 
@@ -1060,13 +1060,13 @@ public struct PaymentLinkCreateCustomerCreation: RawRepresentable, Codable, Hash
 }
 
 /// Generate a post-purchase Invoice for one-time payments.
-public struct PaymentLinkCreateInvoiceCreation: StripeParams {
+public struct PaymentLinkInvoiceCreation: StripeParams {
     /// Whether the feature is enabled
     public var enabled: Bool
     /// Invoice PDF configuration.
-    public var invoiceData: PaymentLinkCreateInvoiceCreationInvoiceData?
+    public var invoiceData: PaymentLinkInvoiceCreationInvoiceData?
 
-    public init(enabled: Bool, invoiceData: PaymentLinkCreateInvoiceCreationInvoiceData? = nil) {
+    public init(enabled: Bool, invoiceData: PaymentLinkInvoiceCreationInvoiceData? = nil) {
         self.enabled = enabled
         self.invoiceData = invoiceData
     }
@@ -1078,29 +1078,29 @@ public struct PaymentLinkCreateInvoiceCreation: StripeParams {
 }
 
 /// Invoice PDF configuration.
-public struct PaymentLinkCreateInvoiceCreationInvoiceData: ClearableParams {
+public struct PaymentLinkInvoiceCreationInvoiceData: ClearableParams {
     /// The account tax IDs associated with the invoice.
     public var accountTaxIds: [String]?
     /// Default custom fields to be displayed on invoices for this customer.
-    public var customFields: [PaymentLinkCreateInvoiceCreationInvoiceDataCustomFields]?
+    public var customFields: [PaymentLinkInvoiceCreationInvoiceDataCustomFields]?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Default footer to be displayed on invoices for this customer.
     public var footer: String?
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
-    public var issuer: PaymentLinkCreateInvoiceCreationInvoiceDataIssuer?
+    public var issuer: PaymentLinkInvoiceCreationInvoiceDataIssuer?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
     /// empty value to `metadata`.
     public var metadata: [String: String]?
     /// Default options for invoice PDF rendering for this customer.
-    public var renderingOptions: PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions?
+    public var renderingOptions: PaymentLinkInvoiceCreationInvoiceDataRenderingOptions?
     /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkCreateInvoiceCreationInvoiceDataCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkCreateInvoiceCreationInvoiceDataIssuer? = nil, metadata: [String: String]? = nil, renderingOptions: PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions? = nil) {
+    public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkInvoiceCreationInvoiceDataCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkInvoiceCreationInvoiceDataIssuer? = nil, metadata: [String: String]? = nil, renderingOptions: PaymentLinkInvoiceCreationInvoiceDataRenderingOptions? = nil) {
         self.accountTaxIds = accountTaxIds
         self.customFields = customFields
         self.description = description
@@ -1130,7 +1130,7 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceData: ClearableParams {
     }
 }
 
-public struct PaymentLinkCreateInvoiceCreationInvoiceDataCustomFields: StripeParams {
+public struct PaymentLinkInvoiceCreationInvoiceDataCustomFields: StripeParams {
     /// The name of the custom field. This may be up to 40 characters.
     public var name: String
     /// The value of the custom field. This may be up to 140 characters.
@@ -1144,19 +1144,19 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataCustomFields: StripePar
 
 /// The connected account that issues the invoice. The invoice is presented with the branding and
 /// support information of the specified account.
-public struct PaymentLinkCreateInvoiceCreationInvoiceDataIssuer: StripeParams {
+public struct PaymentLinkInvoiceCreationInvoiceDataIssuer: StripeParams {
     /// Type of the account referenced in the request.
-    public var type: PaymentLinkCreateInvoiceCreationInvoiceDataIssuerType
+    public var type: PaymentLinkInvoiceCreationInvoiceDataIssuerType
     /// The connected account being referenced when `type` is `account`.
     public var account: String?
 
-    public init(type: PaymentLinkCreateInvoiceCreationInvoiceDataIssuerType, account: String? = nil) {
+    public init(type: PaymentLinkInvoiceCreationInvoiceDataIssuerType, account: String? = nil) {
         self.type = type
         self.account = account
     }
 }
 
-public struct PaymentLinkCreateInvoiceCreationInvoiceDataIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkInvoiceCreationInvoiceDataIssuerType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1167,18 +1167,18 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataIssuerType: RawRepresen
     public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: ClearableParams {
+public struct PaymentLinkInvoiceCreationInvoiceDataRenderingOptions: ClearableParams {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
     /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
     /// exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and
     /// exclusive alike) from invoice PDF amounts.
-    public var amountTaxDisplay: PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay?
+    public var amountTaxDisplay: PaymentLinkInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay?
     /// ID of the invoice rendering template to use for this invoice.
     public var template: String?
     /// Fields to send empty, which clears them: `params.clear(.amountTaxDisplay)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amountTaxDisplay: PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
+    public init(amountTaxDisplay: PaymentLinkInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
         self.amountTaxDisplay = amountTaxDisplay
         self.template = template
     }
@@ -1195,7 +1195,7 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: Clear
     }
 }
 
-public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1209,7 +1209,7 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptionsAmountT
 /// Settings for Managed Payments for this Payment Link and resulting
 /// [CheckoutSessions](/api/checkout/sessions/object), [PaymentIntents](/api/payment_intents/object),
 /// [Invoices](/api/invoices/object), and [Subscriptions](/api/subscriptions/object).
-public struct PaymentLinkCreateManagedPayments: StripeParams {
+public struct PaymentLinkManagedPayments: StripeParams {
     /// Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments),
     /// Stripe's merchant of record solution, for this session.
     public var enabled: Bool?
@@ -1220,20 +1220,20 @@ public struct PaymentLinkCreateManagedPayments: StripeParams {
 }
 
 /// Controls settings applied for collecting the customer's name.
-public struct PaymentLinkCreateNameCollection: StripeParams {
+public struct PaymentLinkNameCollection: StripeParams {
     /// Controls settings applied for collecting the customer's business name.
-    public var business: PaymentLinkCreateNameCollectionBusiness?
+    public var business: PaymentLinkNameCollectionBusiness?
     /// Controls settings applied for collecting the customer's individual name.
-    public var individual: PaymentLinkCreateNameCollectionIndividual?
+    public var individual: PaymentLinkNameCollectionIndividual?
 
-    public init(business: PaymentLinkCreateNameCollectionBusiness? = nil, individual: PaymentLinkCreateNameCollectionIndividual? = nil) {
+    public init(business: PaymentLinkNameCollectionBusiness? = nil, individual: PaymentLinkNameCollectionIndividual? = nil) {
         self.business = business
         self.individual = individual
     }
 }
 
 /// Controls settings applied for collecting the customer's business name.
-public struct PaymentLinkCreateNameCollectionBusiness: StripeParams {
+public struct PaymentLinkNameCollectionBusiness: StripeParams {
     /// Enable business name collection on the payment link. Defaults to `false`.
     public var enabled: Bool
     /// Whether the customer is required to provide their business name before checking out. Defaults to
@@ -1247,7 +1247,7 @@ public struct PaymentLinkCreateNameCollectionBusiness: StripeParams {
 }
 
 /// Controls settings applied for collecting the customer's individual name.
-public struct PaymentLinkCreateNameCollectionIndividual: StripeParams {
+public struct PaymentLinkNameCollectionIndividual: StripeParams {
     /// Enable individual name collection on the payment link. Defaults to `false`.
     public var enabled: Bool
     /// Whether the customer is required to provide their full name before checking out. Defaults to
@@ -1260,7 +1260,7 @@ public struct PaymentLinkCreateNameCollectionIndividual: StripeParams {
     }
 }
 
-public struct PaymentLinkCreateOptionalItems: StripeParams {
+public struct PaymentLinkOptionalItems: StripeParams {
     /// The ID of the [Price](https://docs.stripe.com/api/prices) or
     /// [Plan](https://docs.stripe.com/api/plans) object.
     public var price: String
@@ -1269,9 +1269,9 @@ public struct PaymentLinkCreateOptionalItems: StripeParams {
     public var quantity: Int
     /// When set, provides configuration for the customer to adjust the quantity of the line item created
     /// when a customer chooses to add this optional item to their order.
-    public var adjustableQuantity: PaymentLinkCreateOptionalItemsAdjustableQuantity?
+    public var adjustableQuantity: PaymentLinkOptionalItemsAdjustableQuantity?
 
-    public init(price: String, quantity: Int, adjustableQuantity: PaymentLinkCreateOptionalItemsAdjustableQuantity? = nil) {
+    public init(price: String, quantity: Int, adjustableQuantity: PaymentLinkOptionalItemsAdjustableQuantity? = nil) {
         self.price = price
         self.quantity = quantity
         self.adjustableQuantity = adjustableQuantity
@@ -1286,7 +1286,7 @@ public struct PaymentLinkCreateOptionalItems: StripeParams {
 
 /// When set, provides configuration for the customer to adjust the quantity of the line item created
 /// when a customer chooses to add this optional item to their order.
-public struct PaymentLinkCreateOptionalItemsAdjustableQuantity: StripeParams {
+public struct PaymentLinkOptionalItemsAdjustableQuantity: StripeParams {
     /// Set to true if the quantity can be adjusted to any non-negative integer.
     public var enabled: Bool
     /// The maximum quantity of this item the customer can purchase. By default this value is 99.
@@ -1307,7 +1307,7 @@ public struct PaymentLinkCreateOptionalItemsAdjustableQuantity: StripeParams {
 /// mode.
 public struct PaymentLinkCreatePaymentIntentData: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
-    public var captureMethod: PaymentLinkCreatePaymentIntentDataCaptureMethod?
+    public var captureMethod: PaymentLinkPaymentIntentDataCaptureMethod?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will declaratively set metadata
@@ -1325,7 +1325,7 @@ public struct PaymentLinkCreatePaymentIntentData: StripeParams {
     /// Checkout Session's PaymentIntent. When processing card payments, Checkout also uses
     /// `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation
     /// and network rules, such as SCA.
-    public var setupFutureUsage: PaymentLinkCreatePaymentIntentDataSetupFutureUsage?
+    public var setupFutureUsage: PaymentLinkPaymentIntentDataSetupFutureUsage?
     /// Text that appears on the customer's statement as the statement descriptor for a non-card charge.
     /// This value overrides the account's default statement descriptor. For information about requirements,
     /// including the 22-character limit, see [the Statement Descriptor
@@ -1342,7 +1342,7 @@ public struct PaymentLinkCreatePaymentIntentData: StripeParams {
     /// for connected accounts](https://docs.stripe.com/connect/separate-charges-and-transfers) for details.
     public var transferGroup: String?
 
-    public init(captureMethod: PaymentLinkCreatePaymentIntentDataCaptureMethod? = nil, description: String? = nil, metadata: [String: String]? = nil, setupFutureUsage: PaymentLinkCreatePaymentIntentDataSetupFutureUsage? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferGroup: String? = nil) {
+    public init(captureMethod: PaymentLinkPaymentIntentDataCaptureMethod? = nil, description: String? = nil, metadata: [String: String]? = nil, setupFutureUsage: PaymentLinkPaymentIntentDataSetupFutureUsage? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferGroup: String? = nil) {
         self.captureMethod = captureMethod
         self.description = description
         self.metadata = metadata
@@ -1363,7 +1363,7 @@ public struct PaymentLinkCreatePaymentIntentData: StripeParams {
     }
 }
 
-public struct PaymentLinkCreatePaymentIntentDataCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkPaymentIntentDataCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1375,7 +1375,7 @@ public struct PaymentLinkCreatePaymentIntentDataCaptureMethod: RawRepresentable,
     public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public struct PaymentLinkCreatePaymentIntentDataSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkPaymentIntentDataSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1421,9 +1421,9 @@ public struct PaymentLinkCreatePaymentMethodOptionsCard: StripeParams {
 public struct PaymentLinkCreatePaymentMethodOptionsCardRestrictions: StripeParams {
     /// The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they
     /// can't complete the payment.
-    public var brandsBlocked: [PaymentLinkCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked]?
+    public var brandsBlocked: [PaymentLinkPaymentMethodOptionsCardRestrictionsBrandsBlocked]?
 
-    public init(brandsBlocked: [PaymentLinkCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked]? = nil) {
+    public init(brandsBlocked: [PaymentLinkPaymentMethodOptionsCardRestrictionsBrandsBlocked]? = nil) {
         self.brandsBlocked = brandsBlocked
     }
 
@@ -1432,7 +1432,7 @@ public struct PaymentLinkCreatePaymentMethodOptionsCardRestrictions: StripeParam
     }
 }
 
-public struct PaymentLinkCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkPaymentMethodOptionsCardRestrictionsBrandsBlocked: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1445,7 +1445,7 @@ public struct PaymentLinkCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked
     public static var visa: Self { .init(rawValue: "visa") }
 }
 
-public struct PaymentLinkCreatePaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1501,7 +1501,7 @@ public struct PaymentLinkCreatePaymentMethodTypes: RawRepresentable, Codable, Ha
 
 /// Controls phone number collection settings during checkout. We recommend that you review your privacy
 /// policy and check with your legal contacts.
-public struct PaymentLinkCreatePhoneNumberCollection: StripeParams {
+public struct PaymentLinkPhoneNumberCollection: StripeParams {
     /// Set to `true` to enable phone number collection.
     public var enabled: Bool
 
@@ -1511,11 +1511,11 @@ public struct PaymentLinkCreatePhoneNumberCollection: StripeParams {
 }
 
 /// Settings that restrict the usage of a payment link.
-public struct PaymentLinkCreateRestrictions: StripeParams {
+public struct PaymentLinkRestrictions: StripeParams {
     /// Configuration for the `completed_sessions` restriction type.
-    public var completedSessions: PaymentLinkCreateRestrictionsCompletedSessions
+    public var completedSessions: PaymentLinkRestrictionsCompletedSessions
 
-    public init(completedSessions: PaymentLinkCreateRestrictionsCompletedSessions) {
+    public init(completedSessions: PaymentLinkRestrictionsCompletedSessions) {
         self.completedSessions = completedSessions
     }
 
@@ -1525,7 +1525,7 @@ public struct PaymentLinkCreateRestrictions: StripeParams {
 }
 
 /// Configuration for the `completed_sessions` restriction type.
-public struct PaymentLinkCreateRestrictionsCompletedSessions: StripeParams {
+public struct PaymentLinkRestrictionsCompletedSessions: StripeParams {
     /// The maximum number of checkout sessions that can be completed for the `completed_sessions`
     /// restriction to be met.
     public var limit: Int
@@ -1536,12 +1536,12 @@ public struct PaymentLinkCreateRestrictionsCompletedSessions: StripeParams {
 }
 
 /// Configuration for collecting the customer's shipping address.
-public struct PaymentLinkCreateShippingAddressCollection: StripeParams {
+public struct PaymentLinkShippingAddressCollection: StripeParams {
     /// An array of two-letter ISO country codes representing which countries Checkout should provide as
     /// options for shipping locations.
-    public var allowedCountries: [PaymentLinkCreateShippingAddressCollectionAllowedCountries]
+    public var allowedCountries: [PaymentLinkShippingAddressCollectionAllowedCountries]
 
-    public init(allowedCountries: [PaymentLinkCreateShippingAddressCollectionAllowedCountries]) {
+    public init(allowedCountries: [PaymentLinkShippingAddressCollectionAllowedCountries]) {
         self.allowedCountries = allowedCountries
     }
 
@@ -1550,7 +1550,7 @@ public struct PaymentLinkCreateShippingAddressCollection: StripeParams {
     }
 }
 
-public struct PaymentLinkCreateShippingAddressCollectionAllowedCountries: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkShippingAddressCollectionAllowedCountries: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1797,7 +1797,7 @@ public struct PaymentLinkCreateShippingAddressCollectionAllowedCountries: RawRep
     public static var zz: Self { .init(rawValue: "ZZ") }
 }
 
-public struct PaymentLinkCreateShippingOptions: StripeParams {
+public struct PaymentLinkShippingOptions: StripeParams {
     /// The ID of the Shipping Rate to use for this shipping option.
     public var shippingRate: String?
 
@@ -1832,7 +1832,7 @@ public struct PaymentLinkCreateSubscriptionData: StripeParams {
     /// local payment methods UIs.
     public var description: String?
     /// All invoices will be billed using the specified settings.
-    public var invoiceSettings: PaymentLinkCreateSubscriptionDataInvoiceSettings?
+    public var invoiceSettings: PaymentLinkSubscriptionDataInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will declaratively set metadata
     /// on [Subscriptions](https://docs.stripe.com/api/subscriptions) generated from this payment link.
     /// Unlike object-level metadata, this field is declarative. Updates will clear prior values.
@@ -1841,9 +1841,9 @@ public struct PaymentLinkCreateSubscriptionData: StripeParams {
     /// time. Has to be at least 1.
     public var trialPeriodDays: Int?
     /// Settings related to subscription trials.
-    public var trialSettings: PaymentLinkCreateSubscriptionDataTrialSettings?
+    public var trialSettings: PaymentLinkSubscriptionDataTrialSettings?
 
-    public init(description: String? = nil, invoiceSettings: PaymentLinkCreateSubscriptionDataInvoiceSettings? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil, trialSettings: PaymentLinkCreateSubscriptionDataTrialSettings? = nil) {
+    public init(description: String? = nil, invoiceSettings: PaymentLinkSubscriptionDataInvoiceSettings? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil, trialSettings: PaymentLinkSubscriptionDataTrialSettings? = nil) {
         self.description = description
         self.invoiceSettings = invoiceSettings
         self.metadata = metadata
@@ -1861,23 +1861,23 @@ public struct PaymentLinkCreateSubscriptionData: StripeParams {
 }
 
 /// All invoices will be billed using the specified settings.
-public struct PaymentLinkCreateSubscriptionDataInvoiceSettings: ClearableParams {
+public struct PaymentLinkSubscriptionDataInvoiceSettings: ClearableParams {
     /// The account tax IDs associated with the subscription. Will be set on invoices generated by the
     /// subscription.
     public var accountTaxIds: [String]?
     /// A list of up to 4 custom fields to be displayed on the invoice.
-    public var customFields: [PaymentLinkCreateSubscriptionDataInvoiceSettingsCustomFields]?
+    public var customFields: [PaymentLinkSubscriptionDataInvoiceSettingsCustomFields]?
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Footer to be displayed on the invoice.
     public var footer: String?
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
-    public var issuer: PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuer?
+    public var issuer: PaymentLinkSubscriptionDataInvoiceSettingsIssuer?
     /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkCreateSubscriptionDataInvoiceSettingsCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuer? = nil) {
+    public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkSubscriptionDataInvoiceSettingsCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkSubscriptionDataInvoiceSettingsIssuer? = nil) {
         self.accountTaxIds = accountTaxIds
         self.customFields = customFields
         self.description = description
@@ -1901,7 +1901,7 @@ public struct PaymentLinkCreateSubscriptionDataInvoiceSettings: ClearableParams 
     }
 }
 
-public struct PaymentLinkCreateSubscriptionDataInvoiceSettingsCustomFields: StripeParams {
+public struct PaymentLinkSubscriptionDataInvoiceSettingsCustomFields: StripeParams {
     /// The name of the custom field. This may be up to 40 characters.
     public var name: String
     /// The value of the custom field. This may be up to 140 characters.
@@ -1915,19 +1915,19 @@ public struct PaymentLinkCreateSubscriptionDataInvoiceSettingsCustomFields: Stri
 
 /// The connected account that issues the invoice. The invoice is presented with the branding and
 /// support information of the specified account.
-public struct PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuer: StripeParams {
+public struct PaymentLinkSubscriptionDataInvoiceSettingsIssuer: StripeParams {
     /// Type of the account referenced in the request.
-    public var type: PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuerType
+    public var type: PaymentLinkSubscriptionDataInvoiceSettingsIssuerType
     /// The connected account being referenced when `type` is `account`.
     public var account: String?
 
-    public init(type: PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuerType, account: String? = nil) {
+    public init(type: PaymentLinkSubscriptionDataInvoiceSettingsIssuerType, account: String? = nil) {
         self.type = type
         self.account = account
     }
 }
 
-public struct PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkSubscriptionDataInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1939,11 +1939,11 @@ public struct PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuerType: RawRep
 }
 
 /// Settings related to subscription trials.
-public struct PaymentLinkCreateSubscriptionDataTrialSettings: StripeParams {
+public struct PaymentLinkSubscriptionDataTrialSettings: StripeParams {
     /// Defines how the subscription should behave when the user's free trial ends.
-    public var endBehavior: PaymentLinkCreateSubscriptionDataTrialSettingsEndBehavior
+    public var endBehavior: PaymentLinkSubscriptionDataTrialSettingsEndBehavior
 
-    public init(endBehavior: PaymentLinkCreateSubscriptionDataTrialSettingsEndBehavior) {
+    public init(endBehavior: PaymentLinkSubscriptionDataTrialSettingsEndBehavior) {
         self.endBehavior = endBehavior
     }
 
@@ -1953,12 +1953,12 @@ public struct PaymentLinkCreateSubscriptionDataTrialSettings: StripeParams {
 }
 
 /// Defines how the subscription should behave when the user's free trial ends.
-public struct PaymentLinkCreateSubscriptionDataTrialSettingsEndBehavior: StripeParams {
+public struct PaymentLinkSubscriptionDataTrialSettingsEndBehavior: StripeParams {
     /// Indicates how the subscription should change when the trial ends if the user did not provide a
     /// payment method.
-    public var missingPaymentMethod: PaymentLinkCreateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod
+    public var missingPaymentMethod: PaymentLinkSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod
 
-    public init(missingPaymentMethod: PaymentLinkCreateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod) {
+    public init(missingPaymentMethod: PaymentLinkSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod) {
         self.missingPaymentMethod = missingPaymentMethod
     }
 
@@ -1967,7 +1967,7 @@ public struct PaymentLinkCreateSubscriptionDataTrialSettingsEndBehavior: StripeP
     }
 }
 
-public struct PaymentLinkCreateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1980,20 +1980,20 @@ public struct PaymentLinkCreateSubscriptionDataTrialSettingsEndBehaviorMissingPa
 }
 
 /// Controls tax ID collection during checkout.
-public struct PaymentLinkCreateTaxIdCollection: StripeParams {
+public struct PaymentLinkTaxIdCollection: StripeParams {
     /// Enable tax ID collection during checkout. Defaults to `false`.
     public var enabled: Bool
     /// Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this
     /// parameter if `ui_mode` is `elements`.
-    public var required: PaymentLinkCreateTaxIdCollectionRequired?
+    public var required: PaymentLinkTaxIdCollectionRequired?
 
-    public init(enabled: Bool, required: PaymentLinkCreateTaxIdCollectionRequired? = nil) {
+    public init(enabled: Bool, required: PaymentLinkTaxIdCollectionRequired? = nil) {
         self.enabled = enabled
         self.required = required
     }
 }
 
-public struct PaymentLinkCreateTaxIdCollectionRequired: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentLinkTaxIdCollectionRequired: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2020,108 +2020,6 @@ public struct PaymentLinkCreateTransferData: StripeParams {
     }
 }
 
-/// Behavior after the purchase is complete.
-public struct PaymentLinkUpdateAfterCompletion: StripeParams {
-    /// The specified behavior after the purchase is complete. Either `redirect` or `hosted_confirmation`.
-    public var type: PaymentLinkUpdateAfterCompletionType
-    /// Configuration when `type=hosted_confirmation`.
-    public var hostedConfirmation: PaymentLinkUpdateAfterCompletionHostedConfirmation?
-    /// Configuration when `type=redirect`.
-    public var redirect: PaymentLinkUpdateAfterCompletionRedirect?
-
-    public init(type: PaymentLinkUpdateAfterCompletionType, hostedConfirmation: PaymentLinkUpdateAfterCompletionHostedConfirmation? = nil, redirect: PaymentLinkUpdateAfterCompletionRedirect? = nil) {
-        self.type = type
-        self.hostedConfirmation = hostedConfirmation
-        self.redirect = redirect
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case hostedConfirmation = "hosted_confirmation"
-        case redirect
-        case type
-    }
-}
-
-public struct PaymentLinkUpdateAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var hostedConfirmation: Self { .init(rawValue: "hosted_confirmation") }
-    public static var redirect: Self { .init(rawValue: "redirect") }
-}
-
-/// Configuration when `type=hosted_confirmation`.
-public struct PaymentLinkUpdateAfterCompletionHostedConfirmation: StripeParams {
-    /// A custom message to display to the customer after the purchase is complete.
-    public var customMessage: String?
-
-    public init(customMessage: String? = nil) {
-        self.customMessage = customMessage
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case customMessage = "custom_message"
-    }
-}
-
-/// Configuration when `type=redirect`.
-public struct PaymentLinkUpdateAfterCompletionRedirect: StripeParams {
-    /// The URL the customer will be redirected to after the purchase is complete. You can embed
-    /// `{CHECKOUT_SESSION_ID}` into the URL to have the `id` of the completed [checkout
-    /// session](https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-id) included.
-    public var url: String
-
-    public init(url: String) {
-        self.url = url
-    }
-}
-
-/// Configuration for automatic tax collection.
-public struct PaymentLinkUpdateAutomaticTax: StripeParams {
-    /// Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's
-    /// location. Enabling this parameter causes the payment link to collect any billing address information
-    /// necessary for tax calculation.
-    public var enabled: Bool
-    /// The account that's liable for tax. If set, the business address and tax registrations required to
-    /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
-    /// report of the connected account.
-    public var liability: PaymentLinkUpdateAutomaticTaxLiability?
-
-    public init(enabled: Bool, liability: PaymentLinkUpdateAutomaticTaxLiability? = nil) {
-        self.enabled = enabled
-        self.liability = liability
-    }
-}
-
-/// The account that's liable for tax. If set, the business address and tax registrations required to
-/// perform the tax calculation are loaded from this account. The tax transaction is returned in the
-/// report of the connected account.
-public struct PaymentLinkUpdateAutomaticTaxLiability: StripeParams {
-    /// Type of the account referenced in the request.
-    public var type: PaymentLinkUpdateAutomaticTaxLiabilityType
-    /// The connected account being referenced when `type` is `account`.
-    public var account: String?
-
-    public init(type: PaymentLinkUpdateAutomaticTaxLiabilityType, account: String? = nil) {
-        self.type = type
-        self.account = account
-    }
-}
-
-public struct PaymentLinkUpdateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var `self`: Self { .init(rawValue: "self") }
-}
-
 public struct PaymentLinkUpdateBillingAddressCollection: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
@@ -2131,294 +2029,6 @@ public struct PaymentLinkUpdateBillingAddressCollection: RawRepresentable, Codab
 
     public static var auto: Self { .init(rawValue: "auto") }
     public static var required: Self { .init(rawValue: "required") }
-}
-
-/// Configure fields to gather active consent from customers.
-public struct PaymentLinkUpdateConsentCollection: StripeParams {
-    /// Determines the display of payment method reuse agreement text in the UI. If set to `hidden`, it will
-    /// hide legal text related to the reuse of a payment method.
-    public var paymentMethodReuseAgreement: PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreement?
-    /// If set to `auto`, enables the collection of customer consent for promotional communications. The
-    /// Checkout Session will determine whether to display an option to opt into promotional communication
-    /// from the merchant depending on the customer's locale. Only available to US merchants and US
-    /// customers.
-    public var promotions: PaymentLinkUpdateConsentCollectionPromotions?
-    /// If set to `required`, it requires customers to check a terms of service checkbox before being able
-    /// to pay. There must be a valid terms of service URL set in your [Dashboard
-    /// settings](https://dashboard.stripe.com/settings/public).
-    public var termsOfService: PaymentLinkUpdateConsentCollectionTermsOfService?
-
-    public init(paymentMethodReuseAgreement: PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreement? = nil, promotions: PaymentLinkUpdateConsentCollectionPromotions? = nil, termsOfService: PaymentLinkUpdateConsentCollectionTermsOfService? = nil) {
-        self.paymentMethodReuseAgreement = paymentMethodReuseAgreement
-        self.promotions = promotions
-        self.termsOfService = termsOfService
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case paymentMethodReuseAgreement = "payment_method_reuse_agreement"
-        case promotions
-        case termsOfService = "terms_of_service"
-    }
-}
-
-/// Determines the display of payment method reuse agreement text in the UI. If set to `hidden`, it will
-/// hide legal text related to the reuse of a payment method.
-public struct PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreement: StripeParams {
-    /// Determines the position and visibility of the payment method reuse agreement in the UI. When set to
-    /// `auto`, Stripe's defaults will be used. When set to `hidden`, the payment method reuse agreement
-    /// text will always be hidden in the UI.
-    public var position: PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreementPosition
-
-    public init(position: PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreementPosition) {
-        self.position = position
-    }
-}
-
-public struct PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreementPosition: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var auto: Self { .init(rawValue: "auto") }
-    public static var hidden: Self { .init(rawValue: "hidden") }
-}
-
-public struct PaymentLinkUpdateConsentCollectionPromotions: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var auto: Self { .init(rawValue: "auto") }
-    public static var none: Self { .init(rawValue: "none") }
-}
-
-public struct PaymentLinkUpdateConsentCollectionTermsOfService: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var required: Self { .init(rawValue: "required") }
-}
-
-public struct PaymentLinkUpdateCustomFields: StripeParams {
-    /// String of your choice that your integration can use to reconcile this field. Must be unique to this
-    /// field, alphanumeric, and up to 200 characters.
-    public var key: String
-    /// The label for the field, displayed to the customer.
-    public var label: PaymentLinkUpdateCustomFieldsLabel
-    /// The type of the field.
-    public var type: PaymentLinkUpdateCustomFieldsType
-    /// Configuration for `type=dropdown` fields.
-    public var dropdown: PaymentLinkUpdateCustomFieldsDropdown?
-    /// Configuration for `type=numeric` fields.
-    public var numeric: PaymentLinkUpdateCustomFieldsNumeric?
-    /// Whether the customer is required to complete the field before completing the Checkout Session.
-    /// Defaults to `false`.
-    public var optional: Bool?
-    /// Configuration for `type=text` fields.
-    public var text: PaymentLinkUpdateCustomFieldsText?
-
-    public init(key: String, label: PaymentLinkUpdateCustomFieldsLabel, type: PaymentLinkUpdateCustomFieldsType, dropdown: PaymentLinkUpdateCustomFieldsDropdown? = nil, numeric: PaymentLinkUpdateCustomFieldsNumeric? = nil, optional: Bool? = nil, text: PaymentLinkUpdateCustomFieldsText? = nil) {
-        self.key = key
-        self.label = label
-        self.type = type
-        self.dropdown = dropdown
-        self.numeric = numeric
-        self.optional = optional
-        self.text = text
-    }
-}
-
-/// The label for the field, displayed to the customer.
-public struct PaymentLinkUpdateCustomFieldsLabel: StripeParams {
-    /// Custom text for the label, displayed to the customer. Up to 100 characters.
-    public var custom: String
-    /// The type of the label.
-    public var type: PaymentLinkUpdateCustomFieldsLabelType
-
-    public init(custom: String, type: PaymentLinkUpdateCustomFieldsLabelType) {
-        self.custom = custom
-        self.type = type
-    }
-}
-
-public struct PaymentLinkUpdateCustomFieldsLabelType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var custom: Self { .init(rawValue: "custom") }
-}
-
-public struct PaymentLinkUpdateCustomFieldsType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var dropdown: Self { .init(rawValue: "dropdown") }
-    public static var numeric: Self { .init(rawValue: "numeric") }
-    public static var text: Self { .init(rawValue: "text") }
-}
-
-/// Configuration for `type=dropdown` fields.
-public struct PaymentLinkUpdateCustomFieldsDropdown: StripeParams {
-    /// The options available for the customer to select. Up to 200 options allowed.
-    public var options: [PaymentLinkUpdateCustomFieldsDropdownOptions]
-    /// The value that pre-fills the field on the payment page. Must match a `value` in the `options` array.
-    public var defaultValue: String?
-
-    public init(options: [PaymentLinkUpdateCustomFieldsDropdownOptions], defaultValue: String? = nil) {
-        self.options = options
-        self.defaultValue = defaultValue
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case defaultValue = "default_value"
-        case options
-    }
-}
-
-public struct PaymentLinkUpdateCustomFieldsDropdownOptions: StripeParams {
-    /// The label for the option, displayed to the customer. Up to 100 characters.
-    public var label: String
-    /// The value for this option, not displayed to the customer, used by your integration to reconcile the
-    /// option selected by the customer. Must be unique to this option, alphanumeric, and up to 100
-    /// characters.
-    public var value: String
-
-    public init(label: String, value: String) {
-        self.label = label
-        self.value = value
-    }
-}
-
-/// Configuration for `type=numeric` fields.
-public struct PaymentLinkUpdateCustomFieldsNumeric: StripeParams {
-    /// The value that pre-fills the field on the payment page.
-    public var defaultValue: String?
-    /// The maximum character length constraint for the customer's input.
-    public var maximumLength: Int?
-    /// The minimum character length requirement for the customer's input.
-    public var minimumLength: Int?
-
-    public init(defaultValue: String? = nil, maximumLength: Int? = nil, minimumLength: Int? = nil) {
-        self.defaultValue = defaultValue
-        self.maximumLength = maximumLength
-        self.minimumLength = minimumLength
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case defaultValue = "default_value"
-        case maximumLength = "maximum_length"
-        case minimumLength = "minimum_length"
-    }
-}
-
-/// Configuration for `type=text` fields.
-public struct PaymentLinkUpdateCustomFieldsText: StripeParams {
-    /// The value that pre-fills the field on the payment page.
-    public var defaultValue: String?
-    /// The maximum character length constraint for the customer's input.
-    public var maximumLength: Int?
-    /// The minimum character length requirement for the customer's input.
-    public var minimumLength: Int?
-
-    public init(defaultValue: String? = nil, maximumLength: Int? = nil, minimumLength: Int? = nil) {
-        self.defaultValue = defaultValue
-        self.maximumLength = maximumLength
-        self.minimumLength = minimumLength
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case defaultValue = "default_value"
-        case maximumLength = "maximum_length"
-        case minimumLength = "minimum_length"
-    }
-}
-
-/// Display additional text for your customers using custom text. You can't set this parameter if
-/// `ui_mode` is `elements`.
-public struct PaymentLinkUpdateCustomText: ClearableParams {
-    /// Custom text that should be displayed after the payment confirmation button.
-    public var afterSubmit: PaymentLinkUpdateCustomTextAfterSubmit?
-    /// Custom text that should be displayed alongside shipping address collection.
-    public var shippingAddress: PaymentLinkUpdateCustomTextShippingAddress?
-    /// Custom text that should be displayed alongside the payment confirmation button.
-    public var submit: PaymentLinkUpdateCustomTextSubmit?
-    /// Custom text that should be displayed in place of the default terms of service agreement text.
-    public var termsOfServiceAcceptance: PaymentLinkUpdateCustomTextTermsOfServiceAcceptance?
-    /// Fields to send empty, which clears them: `params.clear(.afterSubmit)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(afterSubmit: PaymentLinkUpdateCustomTextAfterSubmit? = nil, shippingAddress: PaymentLinkUpdateCustomTextShippingAddress? = nil, submit: PaymentLinkUpdateCustomTextSubmit? = nil, termsOfServiceAcceptance: PaymentLinkUpdateCustomTextTermsOfServiceAcceptance? = nil) {
-        self.afterSubmit = afterSubmit
-        self.shippingAddress = shippingAddress
-        self.submit = submit
-        self.termsOfServiceAcceptance = termsOfServiceAcceptance
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case afterSubmit = "after_submit"
-        case shippingAddress = "shipping_address"
-        case submit
-        case termsOfServiceAcceptance = "terms_of_service_acceptance"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case afterSubmit = "after_submit"
-        case shippingAddress = "shipping_address"
-        case submit
-        case termsOfServiceAcceptance = "terms_of_service_acceptance"
-    }
-}
-
-public struct PaymentLinkUpdateCustomTextAfterSubmit: StripeParams {
-    /// Text can be up to 1200 characters in length.
-    public var message: String
-
-    public init(message: String) {
-        self.message = message
-    }
-}
-
-public struct PaymentLinkUpdateCustomTextShippingAddress: StripeParams {
-    /// Text can be up to 1200 characters in length.
-    public var message: String
-
-    public init(message: String) {
-        self.message = message
-    }
-}
-
-public struct PaymentLinkUpdateCustomTextSubmit: StripeParams {
-    /// Text can be up to 1200 characters in length.
-    public var message: String
-
-    public init(message: String) {
-        self.message = message
-    }
-}
-
-public struct PaymentLinkUpdateCustomTextTermsOfServiceAcceptance: StripeParams {
-    /// Text can be up to 1200 characters in length.
-    public var message: String
-
-    public init(message: String) {
-        self.message = message
-    }
 }
 
 public struct PaymentLinkUpdateCustomerCreation: RawRepresentable, Codable, Hashable, Sendable {
@@ -2432,163 +2042,16 @@ public struct PaymentLinkUpdateCustomerCreation: RawRepresentable, Codable, Hash
     public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
-/// Generate a post-purchase Invoice for one-time payments.
-public struct PaymentLinkUpdateInvoiceCreation: StripeParams {
-    /// Whether the feature is enabled
-    public var enabled: Bool
-    /// Invoice PDF configuration.
-    public var invoiceData: PaymentLinkUpdateInvoiceCreationInvoiceData?
-
-    public init(enabled: Bool, invoiceData: PaymentLinkUpdateInvoiceCreationInvoiceData? = nil) {
-        self.enabled = enabled
-        self.invoiceData = invoiceData
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case enabled
-        case invoiceData = "invoice_data"
-    }
-}
-
-/// Invoice PDF configuration.
-public struct PaymentLinkUpdateInvoiceCreationInvoiceData: ClearableParams {
-    /// The account tax IDs associated with the invoice.
-    public var accountTaxIds: [String]?
-    /// Default custom fields to be displayed on invoices for this customer.
-    public var customFields: [PaymentLinkUpdateInvoiceCreationInvoiceDataCustomFields]?
-    /// An arbitrary string attached to the object. Often useful for displaying to users.
-    public var description: String?
-    /// Default footer to be displayed on invoices for this customer.
-    public var footer: String?
-    /// The connected account that issues the invoice. The invoice is presented with the branding and
-    /// support information of the specified account.
-    public var issuer: PaymentLinkUpdateInvoiceCreationInvoiceDataIssuer?
-    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
-    /// This can be useful for storing additional information about the object in a structured format.
-    /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
-    /// empty value to `metadata`.
-    public var metadata: [String: String]?
-    /// Default options for invoice PDF rendering for this customer.
-    public var renderingOptions: PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions?
-    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkUpdateInvoiceCreationInvoiceDataCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkUpdateInvoiceCreationInvoiceDataIssuer? = nil, metadata: [String: String]? = nil, renderingOptions: PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions? = nil) {
-        self.accountTaxIds = accountTaxIds
-        self.customFields = customFields
-        self.description = description
-        self.footer = footer
-        self.issuer = issuer
-        self.metadata = metadata
-        self.renderingOptions = renderingOptions
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountTaxIds = "account_tax_ids"
-        case customFields = "custom_fields"
-        case description
-        case footer
-        case issuer
-        case metadata
-        case renderingOptions = "rendering_options"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case accountTaxIds = "account_tax_ids"
-        case customFields = "custom_fields"
-        case metadata
-        case renderingOptions = "rendering_options"
-    }
-}
-
-public struct PaymentLinkUpdateInvoiceCreationInvoiceDataCustomFields: StripeParams {
-    /// The name of the custom field. This may be up to 40 characters.
-    public var name: String
-    /// The value of the custom field. This may be up to 140 characters.
-    public var value: String
-
-    public init(name: String, value: String) {
-        self.name = name
-        self.value = value
-    }
-}
-
-/// The connected account that issues the invoice. The invoice is presented with the branding and
-/// support information of the specified account.
-public struct PaymentLinkUpdateInvoiceCreationInvoiceDataIssuer: StripeParams {
-    /// Type of the account referenced in the request.
-    public var type: PaymentLinkUpdateInvoiceCreationInvoiceDataIssuerType
-    /// The connected account being referenced when `type` is `account`.
-    public var account: String?
-
-    public init(type: PaymentLinkUpdateInvoiceCreationInvoiceDataIssuerType, account: String? = nil) {
-        self.type = type
-        self.account = account
-    }
-}
-
-public struct PaymentLinkUpdateInvoiceCreationInvoiceDataIssuerType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var `self`: Self { .init(rawValue: "self") }
-}
-
-public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions: ClearableParams {
-    /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
-    /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
-    /// exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and
-    /// exclusive alike) from invoice PDF amounts.
-    public var amountTaxDisplay: PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay?
-    /// ID of the invoice rendering template to use for this invoice.
-    public var template: String?
-    /// Fields to send empty, which clears them: `params.clear(.amountTaxDisplay)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(amountTaxDisplay: PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay? = nil, template: String? = nil) {
-        self.amountTaxDisplay = amountTaxDisplay
-        self.template = template
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amountTaxDisplay = "amount_tax_display"
-        case template
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case amountTaxDisplay = "amount_tax_display"
-    }
-}
-
-public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var excludeTax: Self { .init(rawValue: "exclude_tax") }
-    public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
-}
-
 public struct PaymentLinkUpdateLineItems: StripeParams {
     /// The ID of an existing line item on the payment link.
     public var id: String
     /// When set, provides configuration for this item’s quantity to be adjusted by the customer during
     /// checkout.
-    public var adjustableQuantity: PaymentLinkUpdateLineItemsAdjustableQuantity?
+    public var adjustableQuantity: PaymentLinkLineItemsAdjustableQuantity?
     /// The quantity of the line item being purchased.
     public var quantity: Int?
 
-    public init(id: String, adjustableQuantity: PaymentLinkUpdateLineItemsAdjustableQuantity? = nil, quantity: Int? = nil) {
+    public init(id: String, adjustableQuantity: PaymentLinkLineItemsAdjustableQuantity? = nil, quantity: Int? = nil) {
         self.id = id
         self.adjustableQuantity = adjustableQuantity
         self.quantity = quantity
@@ -2598,108 +2061,6 @@ public struct PaymentLinkUpdateLineItems: StripeParams {
         case adjustableQuantity = "adjustable_quantity"
         case id
         case quantity
-    }
-}
-
-/// When set, provides configuration for this item’s quantity to be adjusted by the customer during
-/// checkout.
-public struct PaymentLinkUpdateLineItemsAdjustableQuantity: StripeParams {
-    /// Set to true if the quantity can be adjusted to any non-negative Integer.
-    public var enabled: Bool
-    /// The maximum quantity the customer can purchase. By default this value is 99. You can specify a value
-    /// up to 999999.
-    public var maximum: Int?
-    /// The minimum quantity the customer can purchase. By default this value is 0. If there is only one
-    /// item in the cart then that item's quantity cannot go down to 0.
-    public var minimum: Int?
-
-    public init(enabled: Bool, maximum: Int? = nil, minimum: Int? = nil) {
-        self.enabled = enabled
-        self.maximum = maximum
-        self.minimum = minimum
-    }
-}
-
-public struct PaymentLinkUpdateNameCollection: StripeParams {
-    /// Controls settings applied for collecting the customer's business name.
-    public var business: PaymentLinkUpdateNameCollectionBusiness?
-    /// Controls settings applied for collecting the customer's individual name.
-    public var individual: PaymentLinkUpdateNameCollectionIndividual?
-
-    public init(business: PaymentLinkUpdateNameCollectionBusiness? = nil, individual: PaymentLinkUpdateNameCollectionIndividual? = nil) {
-        self.business = business
-        self.individual = individual
-    }
-}
-
-/// Controls settings applied for collecting the customer's business name.
-public struct PaymentLinkUpdateNameCollectionBusiness: StripeParams {
-    /// Enable business name collection on the payment link. Defaults to `false`.
-    public var enabled: Bool
-    /// Whether the customer is required to provide their business name before checking out. Defaults to
-    /// `false`.
-    public var optional: Bool?
-
-    public init(enabled: Bool, optional: Bool? = nil) {
-        self.enabled = enabled
-        self.optional = optional
-    }
-}
-
-/// Controls settings applied for collecting the customer's individual name.
-public struct PaymentLinkUpdateNameCollectionIndividual: StripeParams {
-    /// Enable individual name collection on the payment link. Defaults to `false`.
-    public var enabled: Bool
-    /// Whether the customer is required to provide their full name before checking out. Defaults to
-    /// `false`.
-    public var optional: Bool?
-
-    public init(enabled: Bool, optional: Bool? = nil) {
-        self.enabled = enabled
-        self.optional = optional
-    }
-}
-
-public struct PaymentLinkUpdateOptionalItems: StripeParams {
-    /// The ID of the [Price](https://docs.stripe.com/api/prices) or
-    /// [Plan](https://docs.stripe.com/api/plans) object.
-    public var price: String
-    /// The initial quantity of the line item created when a customer chooses to add this optional item to
-    /// their order.
-    public var quantity: Int
-    /// When set, provides configuration for the customer to adjust the quantity of the line item created
-    /// when a customer chooses to add this optional item to their order.
-    public var adjustableQuantity: PaymentLinkUpdateOptionalItemsAdjustableQuantity?
-
-    public init(price: String, quantity: Int, adjustableQuantity: PaymentLinkUpdateOptionalItemsAdjustableQuantity? = nil) {
-        self.price = price
-        self.quantity = quantity
-        self.adjustableQuantity = adjustableQuantity
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case adjustableQuantity = "adjustable_quantity"
-        case price
-        case quantity
-    }
-}
-
-/// When set, provides configuration for the customer to adjust the quantity of the line item created
-/// when a customer chooses to add this optional item to their order.
-public struct PaymentLinkUpdateOptionalItemsAdjustableQuantity: StripeParams {
-    /// Set to true if the quantity can be adjusted to any non-negative integer.
-    public var enabled: Bool
-    /// The maximum quantity of this item the customer can purchase. By default this value is 99.
-    public var maximum: Int?
-    /// The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because
-    /// this item is optional, the customer will always be able to remove it from their order, even if the
-    /// `minimum` configured here is greater than 0. By default this value is 0.
-    public var minimum: Int?
-
-    public init(enabled: Bool, maximum: Int? = nil, minimum: Int? = nil) {
-        self.enabled = enabled
-        self.maximum = maximum
-        self.minimum = minimum
     }
 }
 
@@ -2723,7 +2084,7 @@ public struct PaymentLinkUpdatePaymentIntentData: ClearableParams {
     /// Checkout Session's PaymentIntent. When processing card payments, Checkout also uses
     /// `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation
     /// and network rules, such as SCA.
-    public var setupFutureUsage: PaymentLinkUpdatePaymentIntentDataSetupFutureUsage?
+    public var setupFutureUsage: PaymentLinkPaymentIntentDataSetupFutureUsage?
     /// Text that appears on the customer's statement as the statement descriptor for a non-card charge.
     /// This value overrides the account's default statement descriptor. For information about requirements,
     /// including the 22-character limit, see [the Statement Descriptor
@@ -2742,7 +2103,7 @@ public struct PaymentLinkUpdatePaymentIntentData: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.description)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(description: String? = nil, metadata: [String: String]? = nil, setupFutureUsage: PaymentLinkUpdatePaymentIntentDataSetupFutureUsage? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferGroup: String? = nil) {
+    public init(description: String? = nil, metadata: [String: String]? = nil, setupFutureUsage: PaymentLinkPaymentIntentDataSetupFutureUsage? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferGroup: String? = nil) {
         self.description = description
         self.metadata = metadata
         self.setupFutureUsage = setupFutureUsage
@@ -2770,17 +2131,6 @@ public struct PaymentLinkUpdatePaymentIntentData: ClearableParams {
         case statementDescriptorSuffix = "statement_descriptor_suffix"
         case transferGroup = "transfer_group"
     }
-}
-
-public struct PaymentLinkUpdatePaymentIntentDataSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var offSession: Self { .init(rawValue: "off_session") }
-    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 public struct PaymentLinkUpdatePaymentMethodCollection: RawRepresentable, Codable, Hashable, Sendable {
@@ -2839,11 +2189,11 @@ public struct PaymentLinkUpdatePaymentMethodOptionsCard: ClearableParams {
 public struct PaymentLinkUpdatePaymentMethodOptionsCardRestrictions: ClearableParams {
     /// The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they
     /// can't complete the payment.
-    public var brandsBlocked: [PaymentLinkUpdatePaymentMethodOptionsCardRestrictionsBrandsBlocked]?
+    public var brandsBlocked: [PaymentLinkPaymentMethodOptionsCardRestrictionsBrandsBlocked]?
     /// Fields to send empty, which clears them: `params.clear(.brandsBlocked)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(brandsBlocked: [PaymentLinkUpdatePaymentMethodOptionsCardRestrictionsBrandsBlocked]? = nil) {
+    public init(brandsBlocked: [PaymentLinkPaymentMethodOptionsCardRestrictionsBrandsBlocked]? = nil) {
         self.brandsBlocked = brandsBlocked
     }
 
@@ -2855,382 +2205,6 @@ public struct PaymentLinkUpdatePaymentMethodOptionsCardRestrictions: ClearablePa
     /// The fields Stripe lets you clear by sending them empty
     public enum ClearableField: String, StripeClearableField {
         case brandsBlocked = "brands_blocked"
-    }
-}
-
-public struct PaymentLinkUpdatePaymentMethodOptionsCardRestrictionsBrandsBlocked: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var americanExpress: Self { .init(rawValue: "american_express") }
-    public static var discoverGlobalNetwork: Self { .init(rawValue: "discover_global_network") }
-    public static var mastercard: Self { .init(rawValue: "mastercard") }
-    public static var visa: Self { .init(rawValue: "visa") }
-}
-
-public struct PaymentLinkUpdatePaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var affirm: Self { .init(rawValue: "affirm") }
-    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
-    public static var alipay: Self { .init(rawValue: "alipay") }
-    public static var alma: Self { .init(rawValue: "alma") }
-    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
-    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
-    public static var bancontact: Self { .init(rawValue: "bancontact") }
-    public static var billie: Self { .init(rawValue: "billie") }
-    public static var bizum: Self { .init(rawValue: "bizum") }
-    public static var blik: Self { .init(rawValue: "blik") }
-    public static var boleto: Self { .init(rawValue: "boleto") }
-    public static var card: Self { .init(rawValue: "card") }
-    public static var cashapp: Self { .init(rawValue: "cashapp") }
-    public static var eps: Self { .init(rawValue: "eps") }
-    public static var fpx: Self { .init(rawValue: "fpx") }
-    public static var giropay: Self { .init(rawValue: "giropay") }
-    public static var grabpay: Self { .init(rawValue: "grabpay") }
-    public static var ideal: Self { .init(rawValue: "ideal") }
-    public static var klarna: Self { .init(rawValue: "klarna") }
-    public static var konbini: Self { .init(rawValue: "konbini") }
-    public static var link: Self { .init(rawValue: "link") }
-    public static var mbWay: Self { .init(rawValue: "mb_way") }
-    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
-    public static var multibanco: Self { .init(rawValue: "multibanco") }
-    public static var oxxo: Self { .init(rawValue: "oxxo") }
-    public static var p24: Self { .init(rawValue: "p24") }
-    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
-    public static var paynow: Self { .init(rawValue: "paynow") }
-    public static var paypal: Self { .init(rawValue: "paypal") }
-    public static var paypay: Self { .init(rawValue: "paypay") }
-    public static var payto: Self { .init(rawValue: "payto") }
-    public static var pix: Self { .init(rawValue: "pix") }
-    public static var promptpay: Self { .init(rawValue: "promptpay") }
-    public static var satispay: Self { .init(rawValue: "satispay") }
-    public static var scalapay: Self { .init(rawValue: "scalapay") }
-    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
-    public static var sequra: Self { .init(rawValue: "sequra") }
-    public static var sofort: Self { .init(rawValue: "sofort") }
-    public static var sunbit: Self { .init(rawValue: "sunbit") }
-    public static var swish: Self { .init(rawValue: "swish") }
-    public static var twint: Self { .init(rawValue: "twint") }
-    public static var upi: Self { .init(rawValue: "upi") }
-    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
-    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
-    public static var zip: Self { .init(rawValue: "zip") }
-}
-
-/// Controls phone number collection settings during checkout. We recommend that you review your privacy
-/// policy and check with your legal contacts.
-public struct PaymentLinkUpdatePhoneNumberCollection: StripeParams {
-    /// Set to `true` to enable phone number collection.
-    public var enabled: Bool
-
-    public init(enabled: Bool) {
-        self.enabled = enabled
-    }
-}
-
-public struct PaymentLinkUpdateRestrictions: StripeParams {
-    /// Configuration for the `completed_sessions` restriction type.
-    public var completedSessions: PaymentLinkUpdateRestrictionsCompletedSessions
-
-    public init(completedSessions: PaymentLinkUpdateRestrictionsCompletedSessions) {
-        self.completedSessions = completedSessions
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case completedSessions = "completed_sessions"
-    }
-}
-
-/// Configuration for the `completed_sessions` restriction type.
-public struct PaymentLinkUpdateRestrictionsCompletedSessions: StripeParams {
-    /// The maximum number of checkout sessions that can be completed for the `completed_sessions`
-    /// restriction to be met.
-    public var limit: Int
-
-    public init(limit: Int) {
-        self.limit = limit
-    }
-}
-
-public struct PaymentLinkUpdateShippingAddressCollection: StripeParams {
-    /// An array of two-letter ISO country codes representing which countries Checkout should provide as
-    /// options for shipping locations.
-    public var allowedCountries: [PaymentLinkUpdateShippingAddressCollectionAllowedCountries]
-
-    public init(allowedCountries: [PaymentLinkUpdateShippingAddressCollectionAllowedCountries]) {
-        self.allowedCountries = allowedCountries
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case allowedCountries = "allowed_countries"
-    }
-}
-
-public struct PaymentLinkUpdateShippingAddressCollectionAllowedCountries: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var ac: Self { .init(rawValue: "AC") }
-    public static var ad: Self { .init(rawValue: "AD") }
-    public static var ae: Self { .init(rawValue: "AE") }
-    public static var af: Self { .init(rawValue: "AF") }
-    public static var ag: Self { .init(rawValue: "AG") }
-    public static var ai: Self { .init(rawValue: "AI") }
-    public static var al: Self { .init(rawValue: "AL") }
-    public static var am: Self { .init(rawValue: "AM") }
-    public static var ao: Self { .init(rawValue: "AO") }
-    public static var aq: Self { .init(rawValue: "AQ") }
-    public static var ar: Self { .init(rawValue: "AR") }
-    public static var at: Self { .init(rawValue: "AT") }
-    public static var au: Self { .init(rawValue: "AU") }
-    public static var aw: Self { .init(rawValue: "AW") }
-    public static var ax: Self { .init(rawValue: "AX") }
-    public static var az: Self { .init(rawValue: "AZ") }
-    public static var ba: Self { .init(rawValue: "BA") }
-    public static var bb: Self { .init(rawValue: "BB") }
-    public static var bd: Self { .init(rawValue: "BD") }
-    public static var be: Self { .init(rawValue: "BE") }
-    public static var bf: Self { .init(rawValue: "BF") }
-    public static var bg: Self { .init(rawValue: "BG") }
-    public static var bh: Self { .init(rawValue: "BH") }
-    public static var bi: Self { .init(rawValue: "BI") }
-    public static var bj: Self { .init(rawValue: "BJ") }
-    public static var bl: Self { .init(rawValue: "BL") }
-    public static var bm: Self { .init(rawValue: "BM") }
-    public static var bn: Self { .init(rawValue: "BN") }
-    public static var bo: Self { .init(rawValue: "BO") }
-    public static var bq: Self { .init(rawValue: "BQ") }
-    public static var br: Self { .init(rawValue: "BR") }
-    public static var bs: Self { .init(rawValue: "BS") }
-    public static var bt: Self { .init(rawValue: "BT") }
-    public static var bv: Self { .init(rawValue: "BV") }
-    public static var bw: Self { .init(rawValue: "BW") }
-    public static var by: Self { .init(rawValue: "BY") }
-    public static var bz: Self { .init(rawValue: "BZ") }
-    public static var ca: Self { .init(rawValue: "CA") }
-    public static var cd: Self { .init(rawValue: "CD") }
-    public static var cf: Self { .init(rawValue: "CF") }
-    public static var cg: Self { .init(rawValue: "CG") }
-    public static var ch: Self { .init(rawValue: "CH") }
-    public static var ci: Self { .init(rawValue: "CI") }
-    public static var ck: Self { .init(rawValue: "CK") }
-    public static var cl: Self { .init(rawValue: "CL") }
-    public static var cm: Self { .init(rawValue: "CM") }
-    public static var cn: Self { .init(rawValue: "CN") }
-    public static var co: Self { .init(rawValue: "CO") }
-    public static var cr: Self { .init(rawValue: "CR") }
-    public static var cv: Self { .init(rawValue: "CV") }
-    public static var cw: Self { .init(rawValue: "CW") }
-    public static var cy: Self { .init(rawValue: "CY") }
-    public static var cz: Self { .init(rawValue: "CZ") }
-    public static var de: Self { .init(rawValue: "DE") }
-    public static var dj: Self { .init(rawValue: "DJ") }
-    public static var dk: Self { .init(rawValue: "DK") }
-    public static var dm: Self { .init(rawValue: "DM") }
-    public static var `do`: Self { .init(rawValue: "DO") }
-    public static var dz: Self { .init(rawValue: "DZ") }
-    public static var ec: Self { .init(rawValue: "EC") }
-    public static var ee: Self { .init(rawValue: "EE") }
-    public static var eg: Self { .init(rawValue: "EG") }
-    public static var eh: Self { .init(rawValue: "EH") }
-    public static var er: Self { .init(rawValue: "ER") }
-    public static var es: Self { .init(rawValue: "ES") }
-    public static var et: Self { .init(rawValue: "ET") }
-    public static var fi: Self { .init(rawValue: "FI") }
-    public static var fj: Self { .init(rawValue: "FJ") }
-    public static var fk: Self { .init(rawValue: "FK") }
-    public static var fo: Self { .init(rawValue: "FO") }
-    public static var fr: Self { .init(rawValue: "FR") }
-    public static var ga: Self { .init(rawValue: "GA") }
-    public static var gb: Self { .init(rawValue: "GB") }
-    public static var gd: Self { .init(rawValue: "GD") }
-    public static var ge: Self { .init(rawValue: "GE") }
-    public static var gf: Self { .init(rawValue: "GF") }
-    public static var gg: Self { .init(rawValue: "GG") }
-    public static var gh: Self { .init(rawValue: "GH") }
-    public static var gi: Self { .init(rawValue: "GI") }
-    public static var gl: Self { .init(rawValue: "GL") }
-    public static var gm: Self { .init(rawValue: "GM") }
-    public static var gn: Self { .init(rawValue: "GN") }
-    public static var gp: Self { .init(rawValue: "GP") }
-    public static var gq: Self { .init(rawValue: "GQ") }
-    public static var gr: Self { .init(rawValue: "GR") }
-    public static var gs: Self { .init(rawValue: "GS") }
-    public static var gt: Self { .init(rawValue: "GT") }
-    public static var gu: Self { .init(rawValue: "GU") }
-    public static var gw: Self { .init(rawValue: "GW") }
-    public static var gy: Self { .init(rawValue: "GY") }
-    public static var hk: Self { .init(rawValue: "HK") }
-    public static var hn: Self { .init(rawValue: "HN") }
-    public static var hr: Self { .init(rawValue: "HR") }
-    public static var ht: Self { .init(rawValue: "HT") }
-    public static var hu: Self { .init(rawValue: "HU") }
-    public static var id: Self { .init(rawValue: "ID") }
-    public static var ie: Self { .init(rawValue: "IE") }
-    public static var il: Self { .init(rawValue: "IL") }
-    public static var im: Self { .init(rawValue: "IM") }
-    public static var `in`: Self { .init(rawValue: "IN") }
-    public static var io: Self { .init(rawValue: "IO") }
-    public static var iq: Self { .init(rawValue: "IQ") }
-    public static var `is`: Self { .init(rawValue: "IS") }
-    public static var it: Self { .init(rawValue: "IT") }
-    public static var je: Self { .init(rawValue: "JE") }
-    public static var jm: Self { .init(rawValue: "JM") }
-    public static var jo: Self { .init(rawValue: "JO") }
-    public static var jp: Self { .init(rawValue: "JP") }
-    public static var ke: Self { .init(rawValue: "KE") }
-    public static var kg: Self { .init(rawValue: "KG") }
-    public static var kh: Self { .init(rawValue: "KH") }
-    public static var ki: Self { .init(rawValue: "KI") }
-    public static var km: Self { .init(rawValue: "KM") }
-    public static var kn: Self { .init(rawValue: "KN") }
-    public static var kr: Self { .init(rawValue: "KR") }
-    public static var kw: Self { .init(rawValue: "KW") }
-    public static var ky: Self { .init(rawValue: "KY") }
-    public static var kz: Self { .init(rawValue: "KZ") }
-    public static var la: Self { .init(rawValue: "LA") }
-    public static var lb: Self { .init(rawValue: "LB") }
-    public static var lc: Self { .init(rawValue: "LC") }
-    public static var li: Self { .init(rawValue: "LI") }
-    public static var lk: Self { .init(rawValue: "LK") }
-    public static var lr: Self { .init(rawValue: "LR") }
-    public static var ls: Self { .init(rawValue: "LS") }
-    public static var lt: Self { .init(rawValue: "LT") }
-    public static var lu: Self { .init(rawValue: "LU") }
-    public static var lv: Self { .init(rawValue: "LV") }
-    public static var ly: Self { .init(rawValue: "LY") }
-    public static var ma: Self { .init(rawValue: "MA") }
-    public static var mc: Self { .init(rawValue: "MC") }
-    public static var md: Self { .init(rawValue: "MD") }
-    public static var me: Self { .init(rawValue: "ME") }
-    public static var mf: Self { .init(rawValue: "MF") }
-    public static var mg: Self { .init(rawValue: "MG") }
-    public static var mk: Self { .init(rawValue: "MK") }
-    public static var ml: Self { .init(rawValue: "ML") }
-    public static var mm: Self { .init(rawValue: "MM") }
-    public static var mn: Self { .init(rawValue: "MN") }
-    public static var mo: Self { .init(rawValue: "MO") }
-    public static var mq: Self { .init(rawValue: "MQ") }
-    public static var mr: Self { .init(rawValue: "MR") }
-    public static var ms: Self { .init(rawValue: "MS") }
-    public static var mt: Self { .init(rawValue: "MT") }
-    public static var mu: Self { .init(rawValue: "MU") }
-    public static var mv: Self { .init(rawValue: "MV") }
-    public static var mw: Self { .init(rawValue: "MW") }
-    public static var mx: Self { .init(rawValue: "MX") }
-    public static var my: Self { .init(rawValue: "MY") }
-    public static var mz: Self { .init(rawValue: "MZ") }
-    public static var na: Self { .init(rawValue: "NA") }
-    public static var nc: Self { .init(rawValue: "NC") }
-    public static var ne: Self { .init(rawValue: "NE") }
-    public static var ng: Self { .init(rawValue: "NG") }
-    public static var ni: Self { .init(rawValue: "NI") }
-    public static var nl: Self { .init(rawValue: "NL") }
-    public static var no: Self { .init(rawValue: "NO") }
-    public static var np: Self { .init(rawValue: "NP") }
-    public static var nr: Self { .init(rawValue: "NR") }
-    public static var nu: Self { .init(rawValue: "NU") }
-    public static var nz: Self { .init(rawValue: "NZ") }
-    public static var om: Self { .init(rawValue: "OM") }
-    public static var pa: Self { .init(rawValue: "PA") }
-    public static var pe: Self { .init(rawValue: "PE") }
-    public static var pf: Self { .init(rawValue: "PF") }
-    public static var pg: Self { .init(rawValue: "PG") }
-    public static var ph: Self { .init(rawValue: "PH") }
-    public static var pk: Self { .init(rawValue: "PK") }
-    public static var pl: Self { .init(rawValue: "PL") }
-    public static var pm: Self { .init(rawValue: "PM") }
-    public static var pn: Self { .init(rawValue: "PN") }
-    public static var pr: Self { .init(rawValue: "PR") }
-    public static var ps: Self { .init(rawValue: "PS") }
-    public static var pt: Self { .init(rawValue: "PT") }
-    public static var py: Self { .init(rawValue: "PY") }
-    public static var qa: Self { .init(rawValue: "QA") }
-    public static var re: Self { .init(rawValue: "RE") }
-    public static var ro: Self { .init(rawValue: "RO") }
-    public static var rs: Self { .init(rawValue: "RS") }
-    public static var ru: Self { .init(rawValue: "RU") }
-    public static var rw: Self { .init(rawValue: "RW") }
-    public static var sa: Self { .init(rawValue: "SA") }
-    public static var sb: Self { .init(rawValue: "SB") }
-    public static var sc: Self { .init(rawValue: "SC") }
-    public static var sd: Self { .init(rawValue: "SD") }
-    public static var se: Self { .init(rawValue: "SE") }
-    public static var sg: Self { .init(rawValue: "SG") }
-    public static var sh: Self { .init(rawValue: "SH") }
-    public static var si: Self { .init(rawValue: "SI") }
-    public static var sj: Self { .init(rawValue: "SJ") }
-    public static var sk: Self { .init(rawValue: "SK") }
-    public static var sl: Self { .init(rawValue: "SL") }
-    public static var sm: Self { .init(rawValue: "SM") }
-    public static var sn: Self { .init(rawValue: "SN") }
-    public static var so: Self { .init(rawValue: "SO") }
-    public static var sr: Self { .init(rawValue: "SR") }
-    public static var ss: Self { .init(rawValue: "SS") }
-    public static var st: Self { .init(rawValue: "ST") }
-    public static var sv: Self { .init(rawValue: "SV") }
-    public static var sx: Self { .init(rawValue: "SX") }
-    public static var sz: Self { .init(rawValue: "SZ") }
-    public static var ta: Self { .init(rawValue: "TA") }
-    public static var tc: Self { .init(rawValue: "TC") }
-    public static var td: Self { .init(rawValue: "TD") }
-    public static var tf: Self { .init(rawValue: "TF") }
-    public static var tg: Self { .init(rawValue: "TG") }
-    public static var th: Self { .init(rawValue: "TH") }
-    public static var tj: Self { .init(rawValue: "TJ") }
-    public static var tk: Self { .init(rawValue: "TK") }
-    public static var tl: Self { .init(rawValue: "TL") }
-    public static var tm: Self { .init(rawValue: "TM") }
-    public static var tn: Self { .init(rawValue: "TN") }
-    public static var to: Self { .init(rawValue: "TO") }
-    public static var tr: Self { .init(rawValue: "TR") }
-    public static var tt: Self { .init(rawValue: "TT") }
-    public static var tv: Self { .init(rawValue: "TV") }
-    public static var tw: Self { .init(rawValue: "TW") }
-    public static var tz: Self { .init(rawValue: "TZ") }
-    public static var ua: Self { .init(rawValue: "UA") }
-    public static var ug: Self { .init(rawValue: "UG") }
-    public static var us: Self { .init(rawValue: "US") }
-    public static var uy: Self { .init(rawValue: "UY") }
-    public static var uz: Self { .init(rawValue: "UZ") }
-    public static var va: Self { .init(rawValue: "VA") }
-    public static var vc: Self { .init(rawValue: "VC") }
-    public static var ve: Self { .init(rawValue: "VE") }
-    public static var vg: Self { .init(rawValue: "VG") }
-    public static var vn: Self { .init(rawValue: "VN") }
-    public static var vu: Self { .init(rawValue: "VU") }
-    public static var wf: Self { .init(rawValue: "WF") }
-    public static var ws: Self { .init(rawValue: "WS") }
-    public static var xk: Self { .init(rawValue: "XK") }
-    public static var ye: Self { .init(rawValue: "YE") }
-    public static var yt: Self { .init(rawValue: "YT") }
-    public static var za: Self { .init(rawValue: "ZA") }
-    public static var zm: Self { .init(rawValue: "ZM") }
-    public static var zw: Self { .init(rawValue: "ZW") }
-    public static var zz: Self { .init(rawValue: "ZZ") }
-}
-
-public struct PaymentLinkUpdateShippingOptions: StripeParams {
-    /// The ID of the Shipping Rate to use for this shipping option.
-    public var shippingRate: String?
-
-    public init(shippingRate: String? = nil) {
-        self.shippingRate = shippingRate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case shippingRate = "shipping_rate"
     }
 }
 
@@ -3252,7 +2226,7 @@ public struct PaymentLinkUpdateSubmitType: RawRepresentable, Codable, Hashable, 
 /// one line item with a recurring price to use `subscription_data`.
 public struct PaymentLinkUpdateSubscriptionData: ClearableParams {
     /// All invoices will be billed using the specified settings.
-    public var invoiceSettings: PaymentLinkUpdateSubscriptionDataInvoiceSettings?
+    public var invoiceSettings: PaymentLinkSubscriptionDataInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will declaratively set metadata
     /// on [Subscriptions](https://docs.stripe.com/api/subscriptions) generated from this payment link.
     /// Unlike object-level metadata, this field is declarative. Updates will clear prior values.
@@ -3261,11 +2235,11 @@ public struct PaymentLinkUpdateSubscriptionData: ClearableParams {
     /// time. Has to be at least 1.
     public var trialPeriodDays: Int?
     /// Settings related to subscription trials.
-    public var trialSettings: PaymentLinkUpdateSubscriptionDataTrialSettings?
+    public var trialSettings: PaymentLinkSubscriptionDataTrialSettings?
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(invoiceSettings: PaymentLinkUpdateSubscriptionDataInvoiceSettings? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil, trialSettings: PaymentLinkUpdateSubscriptionDataTrialSettings? = nil) {
+    public init(invoiceSettings: PaymentLinkSubscriptionDataInvoiceSettings? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil, trialSettings: PaymentLinkSubscriptionDataTrialSettings? = nil) {
         self.invoiceSettings = invoiceSettings
         self.metadata = metadata
         self.trialPeriodDays = trialPeriodDays
@@ -3286,149 +2260,6 @@ public struct PaymentLinkUpdateSubscriptionData: ClearableParams {
         case trialPeriodDays = "trial_period_days"
         case trialSettings = "trial_settings"
     }
-}
-
-/// All invoices will be billed using the specified settings.
-public struct PaymentLinkUpdateSubscriptionDataInvoiceSettings: ClearableParams {
-    /// The account tax IDs associated with the subscription. Will be set on invoices generated by the
-    /// subscription.
-    public var accountTaxIds: [String]?
-    /// A list of up to 4 custom fields to be displayed on the invoice.
-    public var customFields: [PaymentLinkUpdateSubscriptionDataInvoiceSettingsCustomFields]?
-    /// An arbitrary string attached to the object. Often useful for displaying to users.
-    public var description: String?
-    /// Footer to be displayed on the invoice.
-    public var footer: String?
-    /// The connected account that issues the invoice. The invoice is presented with the branding and
-    /// support information of the specified account.
-    public var issuer: PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuer?
-    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(accountTaxIds: [String]? = nil, customFields: [PaymentLinkUpdateSubscriptionDataInvoiceSettingsCustomFields]? = nil, description: String? = nil, footer: String? = nil, issuer: PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuer? = nil) {
-        self.accountTaxIds = accountTaxIds
-        self.customFields = customFields
-        self.description = description
-        self.footer = footer
-        self.issuer = issuer
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountTaxIds = "account_tax_ids"
-        case customFields = "custom_fields"
-        case description
-        case footer
-        case issuer
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case accountTaxIds = "account_tax_ids"
-        case customFields = "custom_fields"
-    }
-}
-
-public struct PaymentLinkUpdateSubscriptionDataInvoiceSettingsCustomFields: StripeParams {
-    /// The name of the custom field. This may be up to 40 characters.
-    public var name: String
-    /// The value of the custom field. This may be up to 140 characters.
-    public var value: String
-
-    public init(name: String, value: String) {
-        self.name = name
-        self.value = value
-    }
-}
-
-/// The connected account that issues the invoice. The invoice is presented with the branding and
-/// support information of the specified account.
-public struct PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuer: StripeParams {
-    /// Type of the account referenced in the request.
-    public var type: PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuerType
-    /// The connected account being referenced when `type` is `account`.
-    public var account: String?
-
-    public init(type: PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuerType, account: String? = nil) {
-        self.type = type
-        self.account = account
-    }
-}
-
-public struct PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var `self`: Self { .init(rawValue: "self") }
-}
-
-public struct PaymentLinkUpdateSubscriptionDataTrialSettings: StripeParams {
-    /// Defines how the subscription should behave when the user's free trial ends.
-    public var endBehavior: PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehavior
-
-    public init(endBehavior: PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehavior) {
-        self.endBehavior = endBehavior
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case endBehavior = "end_behavior"
-    }
-}
-
-/// Defines how the subscription should behave when the user's free trial ends.
-public struct PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehavior: StripeParams {
-    /// Indicates how the subscription should change when the trial ends if the user did not provide a
-    /// payment method.
-    public var missingPaymentMethod: PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod
-
-    public init(missingPaymentMethod: PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod) {
-        self.missingPaymentMethod = missingPaymentMethod
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case missingPaymentMethod = "missing_payment_method"
-    }
-}
-
-public struct PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var cancel: Self { .init(rawValue: "cancel") }
-    public static var createInvoice: Self { .init(rawValue: "create_invoice") }
-    public static var pause: Self { .init(rawValue: "pause") }
-}
-
-/// Controls tax ID collection during checkout.
-public struct PaymentLinkUpdateTaxIdCollection: StripeParams {
-    /// Enable tax ID collection during checkout. Defaults to `false`.
-    public var enabled: Bool
-    /// Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this
-    /// parameter if `ui_mode` is `elements`.
-    public var required: PaymentLinkUpdateTaxIdCollectionRequired?
-
-    public init(enabled: Bool, required: PaymentLinkUpdateTaxIdCollectionRequired? = nil) {
-        self.enabled = enabled
-        self.required = required
-    }
-}
-
-public struct PaymentLinkUpdateTaxIdCollectionRequired: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var ifSupported: Self { .init(rawValue: "if_supported") }
-    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct PaymentLinkUpdateTransferData: ClearableParams {

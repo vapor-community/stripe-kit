@@ -9,13 +9,13 @@ import Foundation
 
 public struct TaxSettingsUpdateParams: StripeParams {
     /// Default configuration to be used on Stripe Tax calculations.
-    public var defaults: TaxSettingsUpdateDefaults?
+    public var defaults: TaxSettingsDefaults?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The place where your business is located.
-    public var headOffice: TaxSettingsUpdateHeadOffice?
+    public var headOffice: TaxSettingsHeadOffice?
 
-    public init(defaults: TaxSettingsUpdateDefaults? = nil, expand: [String]? = nil, headOffice: TaxSettingsUpdateHeadOffice? = nil) {
+    public init(defaults: TaxSettingsDefaults? = nil, expand: [String]? = nil, headOffice: TaxSettingsHeadOffice? = nil) {
         self.defaults = defaults
         self.expand = expand
         self.headOffice = headOffice
@@ -29,16 +29,16 @@ public struct TaxSettingsUpdateParams: StripeParams {
 }
 
 /// Default configuration to be used on Stripe Tax calculations.
-public struct TaxSettingsUpdateDefaults: StripeParams {
+public struct TaxSettingsDefaults: StripeParams {
     /// Specifies the default [tax
     /// behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#tax-behavior) to
     /// be used when the item's price has unspecified tax behavior. One of inclusive, exclusive, or
     /// inferred_by_currency. Once specified, it cannot be changed back to null.
-    public var taxBehavior: TaxSettingsUpdateDefaultsTaxBehavior?
+    public var taxBehavior: TaxSettingsDefaultsTaxBehavior?
     /// A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
     public var taxCode: String?
 
-    public init(taxBehavior: TaxSettingsUpdateDefaultsTaxBehavior? = nil, taxCode: String? = nil) {
+    public init(taxBehavior: TaxSettingsDefaultsTaxBehavior? = nil, taxCode: String? = nil) {
         self.taxBehavior = taxBehavior
         self.taxCode = taxCode
     }
@@ -49,7 +49,7 @@ public struct TaxSettingsUpdateDefaults: StripeParams {
     }
 }
 
-public struct TaxSettingsUpdateDefaultsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxSettingsDefaultsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -62,17 +62,17 @@ public struct TaxSettingsUpdateDefaultsTaxBehavior: RawRepresentable, Codable, H
 }
 
 /// The place where your business is located.
-public struct TaxSettingsUpdateHeadOffice: StripeParams {
+public struct TaxSettingsHeadOffice: StripeParams {
     /// The location of the business for tax purposes.
-    public var address: TaxSettingsUpdateHeadOfficeAddress
+    public var address: TaxSettingsHeadOfficeAddress
 
-    public init(address: TaxSettingsUpdateHeadOfficeAddress) {
+    public init(address: TaxSettingsHeadOfficeAddress) {
         self.address = address
     }
 }
 
 /// The location of the business for tax purposes.
-public struct TaxSettingsUpdateHeadOfficeAddress: StripeParams {
+public struct TaxSettingsHeadOfficeAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).

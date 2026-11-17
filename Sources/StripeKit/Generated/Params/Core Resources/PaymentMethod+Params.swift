@@ -61,7 +61,7 @@ public struct PaymentMethodCreateParams: StripeParams {
     public var billie: [String: String]?
     /// Billing information associated with the PaymentMethod that may be used or required by particular
     /// types of payment methods.
-    public var billingDetails: PaymentMethodCreateBillingDetails?
+    public var billingDetails: PaymentMethodBillingDetails?
     /// If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
     public var bizum: [String: String]?
     /// If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
@@ -160,7 +160,7 @@ public struct PaymentMethodCreateParams: StripeParams {
     public var promptpay: [String: String]?
     /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
     /// more information.
-    public var radarOptions: PaymentMethodCreateRadarOptions?
+    public var radarOptions: PaymentMethodRadarOptions?
     /// If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment
     /// method.
     public var revolutPay: [String: String]?
@@ -198,7 +198,7 @@ public struct PaymentMethodCreateParams: StripeParams {
     /// If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
     public var zip: [String: String]?
 
-    public init(acssDebit: PaymentMethodCreateAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: PaymentMethodCreateAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: PaymentMethodCreateAuBecsDebit? = nil, bacsDebit: PaymentMethodCreateBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: PaymentMethodCreateBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: PaymentMethodCreateBoleto? = nil, card: PaymentMethodCreateCard? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, custom: PaymentMethodCreateCustom? = nil, customer: String? = nil, customerBalance: [String: String]? = nil, eps: PaymentMethodCreateEps? = nil, expand: [String]? = nil, fpx: PaymentMethodCreateFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: PaymentMethodCreateIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: PaymentMethodCreateKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: PaymentMethodCreateNaverPay? = nil, nzBankAccount: PaymentMethodCreateNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: PaymentMethodCreateP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paymentMethod: String? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: PaymentMethodCreatePayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: PaymentMethodCreateRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: PaymentMethodCreateSepaDebit? = nil, sequra: [String: String]? = nil, sofort: PaymentMethodCreateSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, type: PaymentMethodCreateType? = nil, upi: PaymentMethodCreateUpi? = nil, usBankAccount: PaymentMethodCreateUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
+    public init(acssDebit: PaymentMethodCreateAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: PaymentMethodCreateAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: PaymentMethodCreateAuBecsDebit? = nil, bacsDebit: PaymentMethodCreateBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: PaymentMethodBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: PaymentMethodCreateBoleto? = nil, card: PaymentMethodCreateCard? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, custom: PaymentMethodCreateCustom? = nil, customer: String? = nil, customerBalance: [String: String]? = nil, eps: PaymentMethodCreateEps? = nil, expand: [String]? = nil, fpx: PaymentMethodCreateFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: PaymentMethodCreateIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: PaymentMethodCreateKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: PaymentMethodCreateNaverPay? = nil, nzBankAccount: PaymentMethodCreateNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: PaymentMethodCreateP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paymentMethod: String? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: PaymentMethodCreatePayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: PaymentMethodRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: PaymentMethodCreateSepaDebit? = nil, sequra: [String: String]? = nil, sofort: PaymentMethodCreateSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, type: PaymentMethodCreateType? = nil, upi: PaymentMethodCreateUpi? = nil, usBankAccount: PaymentMethodCreateUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
         self.acssDebit = acssDebit
         self.affirm = affirm
         self.afterpayClearpay = afterpayClearpay
@@ -405,7 +405,7 @@ public struct PaymentMethodUpdateParams: ClearableParams {
     public var allowRedisplay: PaymentMethodUpdateAllowRedisplay?
     /// Billing information associated with the PaymentMethod that may be used or required by particular
     /// types of payment methods.
-    public var billingDetails: PaymentMethodUpdateBillingDetails?
+    public var billingDetails: PaymentMethodBillingDetails?
     /// If this is a `card` PaymentMethod, this hash contains the user's card details.
     public var card: PaymentMethodUpdateCard?
     /// Specifies which fields in the response should be expanded.
@@ -421,7 +421,7 @@ public struct PaymentMethodUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(allowRedisplay: PaymentMethodUpdateAllowRedisplay? = nil, billingDetails: PaymentMethodUpdateBillingDetails? = nil, card: PaymentMethodUpdateCard? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, usBankAccount: PaymentMethodUpdateUsBankAccount? = nil) {
+    public init(allowRedisplay: PaymentMethodUpdateAllowRedisplay? = nil, billingDetails: PaymentMethodBillingDetails? = nil, card: PaymentMethodUpdateCard? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, usBankAccount: PaymentMethodUpdateUsBankAccount? = nil) {
         self.allowRedisplay = allowRedisplay
         self.billingDetails = billingDetails
         self.card = card
@@ -520,9 +520,9 @@ public struct PaymentMethodCreateBacsDebit: StripeParams {
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct PaymentMethodCreateBillingDetails: ClearableParams {
+public struct PaymentMethodBillingDetails: ClearableParams {
     /// Billing address.
-    public var address: PaymentMethodCreateBillingDetailsAddress?
+    public var address: PaymentMethodBillingDetailsAddress?
     /// Email address.
     public var email: String?
     /// Full name.
@@ -535,7 +535,7 @@ public struct PaymentMethodCreateBillingDetails: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.address)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: PaymentMethodCreateBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
+    public init(address: PaymentMethodBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
         self.address = address
         self.email = email
         self.name = name
@@ -561,7 +561,7 @@ public struct PaymentMethodCreateBillingDetails: ClearableParams {
     }
 }
 
-public struct PaymentMethodCreateBillingDetailsAddress: StripeParams {
+public struct PaymentMethodBillingDetailsAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -608,7 +608,7 @@ public struct PaymentMethodCreateBoleto: StripeParams {
     }
 }
 
-public struct PaymentMethodCreateCardCardDetails: StripeParams {
+public struct PaymentMethodCardCardDetails: StripeParams {
     /// Two-digit number representing the card's expiration month.
     public var expMonth: Int
     /// Four-digit number representing the card's expiration year.
@@ -618,9 +618,9 @@ public struct PaymentMethodCreateCardCardDetails: StripeParams {
     /// The card's CVC. It is highly recommended to always include this value.
     public var cvc: String?
     /// Contains information about card networks used to process the payment.
-    public var networks: PaymentMethodCreateCardCardDetailsNetworks?
+    public var networks: PaymentMethodCardCardDetailsNetworks?
 
-    public init(expMonth: Int, expYear: Int, number: String, cvc: String? = nil, networks: PaymentMethodCreateCardCardDetailsNetworks? = nil) {
+    public init(expMonth: Int, expYear: Int, number: String, cvc: String? = nil, networks: PaymentMethodCardCardDetailsNetworks? = nil) {
         self.expMonth = expMonth
         self.expYear = expYear
         self.number = number
@@ -638,18 +638,18 @@ public struct PaymentMethodCreateCardCardDetails: StripeParams {
 }
 
 /// Contains information about card networks used to process the payment.
-public struct PaymentMethodCreateCardCardDetailsNetworks: StripeParams {
+public struct PaymentMethodCardCardDetailsNetworks: StripeParams {
     /// The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`,
     /// `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as
     /// `invalid_preference` on the card.
-    public var preferred: PaymentMethodCreateCardCardDetailsNetworksPreferred?
+    public var preferred: PaymentMethodCardCardDetailsNetworksPreferred?
 
-    public init(preferred: PaymentMethodCreateCardCardDetailsNetworksPreferred? = nil) {
+    public init(preferred: PaymentMethodCardCardDetailsNetworksPreferred? = nil) {
         self.preferred = preferred
     }
 }
 
-public struct PaymentMethodCreateCardCardDetailsNetworksPreferred: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodCardCardDetailsNetworksPreferred: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -661,7 +661,7 @@ public struct PaymentMethodCreateCardCardDetailsNetworksPreferred: RawRepresenta
     public static var visa: Self { .init(rawValue: "visa") }
 }
 
-public struct PaymentMethodCreateCardToken: StripeParams {
+public struct PaymentMethodCardToken: StripeParams {
     /// For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex
     /// Express Checkout, or legacy Checkout) into the card hash with format card: {token: "tok_visa"}.
     public var token: String
@@ -673,13 +673,13 @@ public struct PaymentMethodCreateCardToken: StripeParams {
 
 /// One of the forms `card` accepts.
 public enum PaymentMethodCreateCard: Codable, Sendable {
-    case cardDetails(PaymentMethodCreateCardCardDetails)
-    case token(PaymentMethodCreateCardToken)
+    case cardDetails(PaymentMethodCardCardDetails)
+    case token(PaymentMethodCardToken)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = try? PaymentMethodCreateCardCardDetails(from: decoder) { self = .cardDetails(value); return }
-        if let value = try? PaymentMethodCreateCardToken(from: decoder) { self = .token(value); return }
+        if let value = try? PaymentMethodCardCardDetails(from: decoder) { self = .cardDetails(value); return }
+        if let value = try? PaymentMethodCardToken(from: decoder) { self = .token(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentMethodCreateCard matches")
     }
 
@@ -856,15 +856,15 @@ public struct PaymentMethodCreateIdealBank: RawRepresentable, Codable, Hashable,
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
 public struct PaymentMethodCreateKlarna: StripeParams {
     /// Customer's date of birth
-    public var dob: PaymentMethodCreateKlarnaDob?
+    public var dob: PaymentMethodKlarnaDob?
 
-    public init(dob: PaymentMethodCreateKlarnaDob? = nil) {
+    public init(dob: PaymentMethodKlarnaDob? = nil) {
         self.dob = dob
     }
 }
 
 /// Customer's date of birth
-public struct PaymentMethodCreateKlarnaDob: StripeParams {
+public struct PaymentMethodKlarnaDob: StripeParams {
     /// The day of birth, between 1 and 31.
     public var day: Int
     /// The month of birth, between 1 and 12.
@@ -1006,7 +1006,7 @@ public struct PaymentMethodCreatePayto: StripeParams {
 
 /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
 /// more information.
-public struct PaymentMethodCreateRadarOptions: StripeParams {
+public struct PaymentMethodRadarOptions: StripeParams {
     /// A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata
     /// and device details that help Radar make more accurate predictions on your payments.
     public var session: String?
@@ -1030,14 +1030,14 @@ public struct PaymentMethodCreateSepaDebit: StripeParams {
 /// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
 public struct PaymentMethodCreateSofort: StripeParams {
     /// Two-letter ISO code representing the country the bank account is located in.
-    public var country: PaymentMethodCreateSofortCountry
+    public var country: PaymentMethodSofortCountry
 
-    public init(country: PaymentMethodCreateSofortCountry) {
+    public init(country: PaymentMethodSofortCountry) {
         self.country = country
     }
 }
 
-public struct PaymentMethodCreateSofortCountry: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodSofortCountry: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1121,9 +1121,9 @@ public struct PaymentMethodCreateType: RawRepresentable, Codable, Hashable, Send
 /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
 public struct PaymentMethodCreateUpi: StripeParams {
     /// Configuration options for setting up an eMandate
-    public var mandateOptions: PaymentMethodCreateUpiMandateOptions?
+    public var mandateOptions: PaymentMethodUpiMandateOptions?
 
-    public init(mandateOptions: PaymentMethodCreateUpiMandateOptions? = nil) {
+    public init(mandateOptions: PaymentMethodUpiMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
@@ -1133,19 +1133,19 @@ public struct PaymentMethodCreateUpi: StripeParams {
 }
 
 /// Configuration options for setting up an eMandate
-public struct PaymentMethodCreateUpiMandateOptions: StripeParams {
+public struct PaymentMethodUpiMandateOptions: StripeParams {
     /// Amount to be charged for future payments.
     public var amount: Int?
     /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
     /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
     /// param.
-    public var amountType: PaymentMethodCreateUpiMandateOptionsAmountType?
+    public var amountType: PaymentMethodUpiMandateOptionsAmountType?
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
     public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: PaymentMethodCreateUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
+    public init(amount: Int? = nil, amountType: PaymentMethodUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -1160,7 +1160,7 @@ public struct PaymentMethodCreateUpiMandateOptions: StripeParams {
     }
 }
 
-public struct PaymentMethodCreateUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1314,82 +1314,6 @@ public struct PaymentMethodUpdateAllowRedisplay: RawRepresentable, Codable, Hash
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-/// Billing information associated with the PaymentMethod that may be used or required by particular
-/// types of payment methods.
-public struct PaymentMethodUpdateBillingDetails: ClearableParams {
-    /// Billing address.
-    public var address: PaymentMethodUpdateBillingDetailsAddress?
-    /// Email address.
-    public var email: String?
-    /// Full name.
-    public var name: String?
-    /// Billing phone number (including extension).
-    public var phone: String?
-    /// Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM
-    /// sellers.
-    public var taxId: String?
-    /// Fields to send empty, which clears them: `params.clear(.address)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(address: PaymentMethodUpdateBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
-        self.address = address
-        self.email = email
-        self.name = name
-        self.phone = phone
-        self.taxId = taxId
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case address
-        case email
-        case name
-        case phone
-        case taxId = "tax_id"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case address
-        case email
-        case name
-        case phone
-    }
-}
-
-public struct PaymentMethodUpdateBillingDetailsAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
 /// If this is a `card` PaymentMethod, this hash contains the user's card details.
 public struct PaymentMethodUpdateCard: StripeParams {
     /// Two-digit number representing the card's expiration month.
@@ -1397,9 +1321,9 @@ public struct PaymentMethodUpdateCard: StripeParams {
     /// Four-digit number representing the card's expiration year.
     public var expYear: Int?
     /// Contains information about card networks used to process the payment.
-    public var networks: PaymentMethodUpdateCardNetworks?
+    public var networks: PaymentMethodCardNetworks?
 
-    public init(expMonth: Int? = nil, expYear: Int? = nil, networks: PaymentMethodUpdateCardNetworks? = nil) {
+    public init(expMonth: Int? = nil, expYear: Int? = nil, networks: PaymentMethodCardNetworks? = nil) {
         self.expMonth = expMonth
         self.expYear = expYear
         self.networks = networks
@@ -1413,15 +1337,15 @@ public struct PaymentMethodUpdateCard: StripeParams {
 }
 
 /// Contains information about card networks used to process the payment.
-public struct PaymentMethodUpdateCardNetworks: ClearableParams {
+public struct PaymentMethodCardNetworks: ClearableParams {
     /// The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`,
     /// `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as
     /// `invalid_preference` on the card.
-    public var preferred: PaymentMethodUpdateCardNetworksPreferred?
+    public var preferred: PaymentMethodCardNetworksPreferred?
     /// Fields to send empty, which clears them: `params.clear(.preferred)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(preferred: PaymentMethodUpdateCardNetworksPreferred? = nil) {
+    public init(preferred: PaymentMethodCardNetworksPreferred? = nil) {
         self.preferred = preferred
     }
 
@@ -1436,7 +1360,7 @@ public struct PaymentMethodUpdateCardNetworks: ClearableParams {
     }
 }
 
-public struct PaymentMethodUpdateCardNetworksPreferred: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentMethodCardNetworksPreferred: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

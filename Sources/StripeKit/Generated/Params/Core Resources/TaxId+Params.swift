@@ -29,9 +29,9 @@ public struct TaxIdCreateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The account or customer the tax ID belongs to. Defaults to `owner[type]=self`.
-    public var owner: TaxIdCreateOwner?
+    public var owner: TaxIdOwner?
 
-    public init(type: TaxIdCreateType, value: String, expand: [String]? = nil, owner: TaxIdCreateOwner? = nil) {
+    public init(type: TaxIdCreateType, value: String, expand: [String]? = nil, owner: TaxIdOwner? = nil) {
         self.type = type
         self.value = value
         self.expand = expand
@@ -80,13 +80,13 @@ public struct TaxIdListParams: StripeParams {
     /// is 10.
     public var limit: Int?
     /// The account or customer the tax ID belongs to. Defaults to `owner[type]=self`.
-    public var owner: TaxIdListOwner?
+    public var owner: TaxIdOwner?
     /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
 
-    public init(endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, owner: TaxIdListOwner? = nil, startingAfter: String? = nil) {
+    public init(endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, owner: TaxIdOwner? = nil, startingAfter: String? = nil) {
         self.endingBefore = endingBefore
         self.expand = expand
         self.limit = limit
@@ -279,9 +279,9 @@ public struct TaxIdCreateType: RawRepresentable, Codable, Hashable, Sendable {
 }
 
 /// The account or customer the tax ID belongs to. Defaults to `owner[type]=self`.
-public struct TaxIdCreateOwner: StripeParams {
+public struct TaxIdOwner: StripeParams {
     /// Type of owner referenced.
-    public var type: TaxIdCreateOwnerType
+    public var type: TaxIdOwnerType
     /// Connected Account the tax ID belongs to. Required when `type=account`
     public var account: String?
     /// Customer the tax ID belongs to. Required when `type=customer`
@@ -290,7 +290,7 @@ public struct TaxIdCreateOwner: StripeParams {
     /// `customer` when `type=customer`
     public var customerAccount: String?
 
-    public init(type: TaxIdCreateOwnerType, account: String? = nil, customer: String? = nil, customerAccount: String? = nil) {
+    public init(type: TaxIdOwnerType, account: String? = nil, customer: String? = nil, customerAccount: String? = nil) {
         self.type = type
         self.account = account
         self.customer = customer
@@ -305,7 +305,7 @@ public struct TaxIdCreateOwner: StripeParams {
     }
 }
 
-public struct TaxIdCreateOwnerType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxIdOwnerType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -460,44 +460,4 @@ public struct TaxIdCreateForCustomerType: RawRepresentable, Codable, Hashable, S
     public static var zaVat: Self { .init(rawValue: "za_vat") }
     public static var zmTin: Self { .init(rawValue: "zm_tin") }
     public static var zwTin: Self { .init(rawValue: "zw_tin") }
-}
-
-/// The account or customer the tax ID belongs to. Defaults to `owner[type]=self`.
-public struct TaxIdListOwner: StripeParams {
-    /// Type of owner referenced.
-    public var type: TaxIdListOwnerType
-    /// Connected Account the tax ID belongs to. Required when `type=account`
-    public var account: String?
-    /// Customer the tax ID belongs to. Required when `type=customer`
-    public var customer: String?
-    /// ID of the Account representing the customer that the tax ID belongs to. Can be used in place of
-    /// `customer` when `type=customer`
-    public var customerAccount: String?
-
-    public init(type: TaxIdListOwnerType, account: String? = nil, customer: String? = nil, customerAccount: String? = nil) {
-        self.type = type
-        self.account = account
-        self.customer = customer
-        self.customerAccount = customerAccount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case account
-        case customer
-        case customerAccount = "customer_account"
-        case type
-    }
-}
-
-public struct TaxIdListOwnerType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var application: Self { .init(rawValue: "application") }
-    public static var customer: Self { .init(rawValue: "customer") }
-    public static var `self`: Self { .init(rawValue: "self") }
 }

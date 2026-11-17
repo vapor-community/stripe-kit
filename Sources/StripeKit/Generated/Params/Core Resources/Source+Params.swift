@@ -22,10 +22,10 @@ public struct SourceCreateParams: StripeParams {
     public var expand: [String]?
     /// The authentication `flow` of the source to create. `flow` is one of `redirect`, `receiver`,
     /// `code_verification`, `none`. It is generally inferred unless a type supports multiple flows.
-    public var flow: SourceCreateFlow?
+    public var flow: SourceFlow?
     /// Information about a mandate possibility attached to a source object (generally for bank debits) as
     /// well as its acceptance status.
-    public var mandate: SourceCreateMandate?
+    public var mandate: SourceMandate?
     public var metadata: [String: String]?
     /// The source to share.
     public var originalSource: String?
@@ -34,13 +34,13 @@ public struct SourceCreateParams: StripeParams {
     public var owner: SourceCreateOwner?
     /// Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is
     /// `receiver`).
-    public var receiver: SourceCreateReceiver?
+    public var receiver: SourceReceiver?
     /// Parameters required for the redirect flow. Required if the source is authenticated by a redirect
     /// (`flow` is `redirect`).
-    public var redirect: SourceCreateRedirect?
+    public var redirect: SourceRedirect?
     /// Information about the items and shipping associated with the source. Required for transactional
     /// credit (for example Klarna) sources before you can charge it.
-    public var sourceOrder: SourceCreateSourceOrder?
+    public var sourceOrder: SourceSourceOrder?
     /// An arbitrary string to be displayed on your customer's statement. As an example, if your website is
     /// `RunClub` and the item you're charging for is a race ticket, you may want to specify a
     /// `statement_descriptor` of `RunClub 5K race ticket.` While many payment types will display this
@@ -52,9 +52,9 @@ public struct SourceCreateParams: StripeParams {
     /// The `type` of the source to create. Required unless `customer` and `original_source` are specified
     /// (see the [Cloning card Sources](https://docs.stripe.com/sources/connect#cloning-card-sources) guide)
     public var type: String?
-    public var usage: SourceCreateUsage?
+    public var usage: SourceUsage?
 
-    public init(amount: Int? = nil, currency: String? = nil, customer: String? = nil, expand: [String]? = nil, flow: SourceCreateFlow? = nil, mandate: SourceCreateMandate? = nil, metadata: [String: String]? = nil, originalSource: String? = nil, owner: SourceCreateOwner? = nil, receiver: SourceCreateReceiver? = nil, redirect: SourceCreateRedirect? = nil, sourceOrder: SourceCreateSourceOrder? = nil, statementDescriptor: String? = nil, token: String? = nil, type: String? = nil, usage: SourceCreateUsage? = nil) {
+    public init(amount: Int? = nil, currency: String? = nil, customer: String? = nil, expand: [String]? = nil, flow: SourceFlow? = nil, mandate: SourceMandate? = nil, metadata: [String: String]? = nil, originalSource: String? = nil, owner: SourceCreateOwner? = nil, receiver: SourceReceiver? = nil, redirect: SourceRedirect? = nil, sourceOrder: SourceSourceOrder? = nil, statementDescriptor: String? = nil, token: String? = nil, type: String? = nil, usage: SourceUsage? = nil) {
         self.amount = amount
         self.currency = currency
         self.customer = customer
@@ -149,7 +149,7 @@ public struct SourceUpdateParams: ClearableParams {
     public var expand: [String]?
     /// Information about a mandate possibility attached to a source object (generally for bank debits) as
     /// well as its acceptance status.
-    public var mandate: SourceUpdateMandate?
+    public var mandate: SourceMandate?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -160,11 +160,11 @@ public struct SourceUpdateParams: ClearableParams {
     public var owner: SourceUpdateOwner?
     /// Information about the items and shipping associated with the source. Required for transactional
     /// credit (for example Klarna) sources before you can charge it.
-    public var sourceOrder: SourceUpdateSourceOrder?
+    public var sourceOrder: SourceSourceOrder?
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amount: Int? = nil, expand: [String]? = nil, mandate: SourceUpdateMandate? = nil, metadata: [String: String]? = nil, owner: SourceUpdateOwner? = nil, sourceOrder: SourceUpdateSourceOrder? = nil) {
+    public init(amount: Int? = nil, expand: [String]? = nil, mandate: SourceMandate? = nil, metadata: [String: String]? = nil, owner: SourceUpdateOwner? = nil, sourceOrder: SourceSourceOrder? = nil) {
         self.amount = amount
         self.expand = expand
         self.mandate = mandate
@@ -201,7 +201,7 @@ public struct SourceVerifyParams: StripeParams {
     }
 }
 
-public struct SourceCreateFlow: RawRepresentable, Codable, Hashable, Sendable {
+public struct SourceFlow: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -216,9 +216,9 @@ public struct SourceCreateFlow: RawRepresentable, Codable, Hashable, Sendable {
 
 /// Information about a mandate possibility attached to a source object (generally for bank debits) as
 /// well as its acceptance status.
-public struct SourceCreateMandate: ClearableParams {
+public struct SourceMandate: ClearableParams {
     /// The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
-    public var acceptance: SourceCreateMandateAcceptance?
+    public var acceptance: SourceMandateAcceptance?
     /// The amount specified by the mandate. (Leave null for a mandate covering all amounts)
     public var amount: Int?
     /// The currency specified by the mandate. (Must match `currency` of the source)
@@ -226,17 +226,17 @@ public struct SourceCreateMandate: ClearableParams {
     /// The interval of debits permitted by the mandate. Either `one_time` (just permitting a single debit),
     /// `scheduled` (with debits on an agreed schedule or for clearly-defined events), or `variable`(for
     /// debits with any frequency)
-    public var interval: SourceCreateMandateInterval?
+    public var interval: SourceMandateInterval?
     /// The method Stripe should use to notify the customer of upcoming debit instructions and/or mandate
     /// confirmation as required by the underlying debit network. Either `email` (an email is sent directly
     /// to the customer), `manual` (a `source.mandate_notification` event is sent to your webhooks endpoint
     /// and you should handle the notification) or `none` (the underlying debit network does not require any
     /// notification).
-    public var notificationMethod: SourceCreateMandateNotificationMethod?
+    public var notificationMethod: SourceMandateNotificationMethod?
     /// Fields to send empty, which clears them: `params.clear(.amount)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(acceptance: SourceCreateMandateAcceptance? = nil, amount: Int? = nil, currency: String? = nil, interval: SourceCreateMandateInterval? = nil, notificationMethod: SourceCreateMandateNotificationMethod? = nil) {
+    public init(acceptance: SourceMandateAcceptance? = nil, amount: Int? = nil, currency: String? = nil, interval: SourceMandateInterval? = nil, notificationMethod: SourceMandateNotificationMethod? = nil) {
         self.acceptance = acceptance
         self.amount = amount
         self.currency = currency
@@ -260,26 +260,26 @@ public struct SourceCreateMandate: ClearableParams {
 }
 
 /// The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
-public struct SourceCreateMandateAcceptance: StripeParams {
+public struct SourceMandateAcceptance: StripeParams {
     /// The status of the mandate acceptance. Either `accepted` (the mandate was accepted) or `refused` (the
     /// mandate was refused).
-    public var status: SourceCreateMandateAcceptanceStatus
+    public var status: SourceMandateAcceptanceStatus
     /// The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
     public var date: Date?
     /// The IP address from which the mandate was accepted or refused by the customer.
     public var ip: String?
     /// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
     /// is `offline`
-    public var offline: SourceCreateMandateAcceptanceOffline?
+    public var offline: SourceMandateAcceptanceOffline?
     /// The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is
     /// `online`
-    public var online: SourceCreateMandateAcceptanceOnline?
+    public var online: SourceMandateAcceptanceOnline?
     /// The type of acceptance information included with the mandate. Either `online` or `offline`
-    public var type: SourceCreateMandateAcceptanceType?
+    public var type: SourceMandateAcceptanceType?
     /// The user agent of the browser from which the mandate was accepted or refused by the customer.
     public var userAgent: String?
 
-    public init(status: SourceCreateMandateAcceptanceStatus, date: Date? = nil, ip: String? = nil, offline: SourceCreateMandateAcceptanceOffline? = nil, online: SourceCreateMandateAcceptanceOnline? = nil, type: SourceCreateMandateAcceptanceType? = nil, userAgent: String? = nil) {
+    public init(status: SourceMandateAcceptanceStatus, date: Date? = nil, ip: String? = nil, offline: SourceMandateAcceptanceOffline? = nil, online: SourceMandateAcceptanceOnline? = nil, type: SourceMandateAcceptanceType? = nil, userAgent: String? = nil) {
         self.status = status
         self.date = date
         self.ip = ip
@@ -300,7 +300,7 @@ public struct SourceCreateMandateAcceptance: StripeParams {
     }
 }
 
-public struct SourceCreateMandateAcceptanceStatus: RawRepresentable, Codable, Hashable, Sendable {
+public struct SourceMandateAcceptanceStatus: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -315,7 +315,7 @@ public struct SourceCreateMandateAcceptanceStatus: RawRepresentable, Codable, Ha
 
 /// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
 /// is `offline`
-public struct SourceCreateMandateAcceptanceOffline: StripeParams {
+public struct SourceMandateAcceptanceOffline: StripeParams {
     /// An email to contact you with if a copy of the mandate is requested, required if `type` is `offline`.
     public var contactEmail: String
 
@@ -330,7 +330,7 @@ public struct SourceCreateMandateAcceptanceOffline: StripeParams {
 
 /// The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is
 /// `online`
-public struct SourceCreateMandateAcceptanceOnline: StripeParams {
+public struct SourceMandateAcceptanceOnline: StripeParams {
     /// The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
     public var date: Date?
     /// The IP address from which the mandate was accepted or refused by the customer.
@@ -351,7 +351,7 @@ public struct SourceCreateMandateAcceptanceOnline: StripeParams {
     }
 }
 
-public struct SourceCreateMandateAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SourceMandateAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -362,7 +362,7 @@ public struct SourceCreateMandateAcceptanceType: RawRepresentable, Codable, Hash
     public static var online: Self { .init(rawValue: "online") }
 }
 
-public struct SourceCreateMandateInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct SourceMandateInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -374,7 +374,7 @@ public struct SourceCreateMandateInterval: RawRepresentable, Codable, Hashable, 
     public static var variable: Self { .init(rawValue: "variable") }
 }
 
-public struct SourceCreateMandateNotificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+public struct SourceMandateNotificationMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -392,7 +392,7 @@ public struct SourceCreateMandateNotificationMethod: RawRepresentable, Codable, 
 /// source types.
 public struct SourceCreateOwner: StripeParams {
     /// Owner's address.
-    public var address: SourceCreateOwnerAddress?
+    public var address: SourceOwnerAddress?
     /// Owner's email address.
     public var email: String?
     /// Owner's full name.
@@ -400,7 +400,7 @@ public struct SourceCreateOwner: StripeParams {
     /// Owner's phone number.
     public var phone: String?
 
-    public init(address: SourceCreateOwnerAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+    public init(address: SourceOwnerAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
         self.address = address
         self.email = email
         self.name = name
@@ -409,7 +409,7 @@ public struct SourceCreateOwner: StripeParams {
 }
 
 /// Owner's address.
-public struct SourceCreateOwnerAddress: StripeParams {
+public struct SourceOwnerAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -444,14 +444,14 @@ public struct SourceCreateOwnerAddress: StripeParams {
 
 /// Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is
 /// `receiver`).
-public struct SourceCreateReceiver: StripeParams {
+public struct SourceReceiver: StripeParams {
     /// The method Stripe should use to request information needed to process a refund or mispayment. Either
     /// `email` (an email is sent directly to the customer) or `manual` (a
     /// `source.refund_attributes_required` event is sent to your webhooks endpoint). Refer to each payment
     /// method's documentation to learn which refund attributes may be required.
-    public var refundAttributesMethod: SourceCreateReceiverRefundAttributesMethod?
+    public var refundAttributesMethod: SourceReceiverRefundAttributesMethod?
 
-    public init(refundAttributesMethod: SourceCreateReceiverRefundAttributesMethod? = nil) {
+    public init(refundAttributesMethod: SourceReceiverRefundAttributesMethod? = nil) {
         self.refundAttributesMethod = refundAttributesMethod
     }
 
@@ -460,7 +460,7 @@ public struct SourceCreateReceiver: StripeParams {
     }
 }
 
-public struct SourceCreateReceiverRefundAttributesMethod: RawRepresentable, Codable, Hashable, Sendable {
+public struct SourceReceiverRefundAttributesMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -474,7 +474,7 @@ public struct SourceCreateReceiverRefundAttributesMethod: RawRepresentable, Coda
 
 /// Parameters required for the redirect flow. Required if the source is authenticated by a redirect
 /// (`flow` is `redirect`).
-public struct SourceCreateRedirect: StripeParams {
+public struct SourceRedirect: StripeParams {
     /// The URL you provide to redirect the customer back to you after they authenticated their payment. It
     /// can use your application URI scheme in the context of a mobile application.
     public var returnUrl: String
@@ -490,20 +490,20 @@ public struct SourceCreateRedirect: StripeParams {
 
 /// Information about the items and shipping associated with the source. Required for transactional
 /// credit (for example Klarna) sources before you can charge it.
-public struct SourceCreateSourceOrder: StripeParams {
+public struct SourceSourceOrder: StripeParams {
     /// List of items constituting the order.
-    public var items: [SourceCreateSourceOrderItems]?
+    public var items: [SourceSourceOrderItems]?
     /// Shipping address for the order. Required if any of the SKUs are for products that have `shippable`
     /// set to true.
-    public var shipping: SourceCreateSourceOrderShipping?
+    public var shipping: SourceSourceOrderShipping?
 
-    public init(items: [SourceCreateSourceOrderItems]? = nil, shipping: SourceCreateSourceOrderShipping? = nil) {
+    public init(items: [SourceSourceOrderItems]? = nil, shipping: SourceSourceOrderShipping? = nil) {
         self.items = items
         self.shipping = shipping
     }
 }
 
-public struct SourceCreateSourceOrderItems: StripeParams {
+public struct SourceSourceOrderItems: StripeParams {
     public var amount: Int?
     public var currency: String?
     public var description: String?
@@ -512,9 +512,9 @@ public struct SourceCreateSourceOrderItems: StripeParams {
     /// The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to
     /// be ordered.
     public var quantity: Int?
-    public var type: SourceCreateSourceOrderItemsType?
+    public var type: SourceSourceOrderItemsType?
 
-    public init(amount: Int? = nil, currency: String? = nil, description: String? = nil, parent: String? = nil, quantity: Int? = nil, type: SourceCreateSourceOrderItemsType? = nil) {
+    public init(amount: Int? = nil, currency: String? = nil, description: String? = nil, parent: String? = nil, quantity: Int? = nil, type: SourceSourceOrderItemsType? = nil) {
         self.amount = amount
         self.currency = currency
         self.description = description
@@ -524,7 +524,7 @@ public struct SourceCreateSourceOrderItems: StripeParams {
     }
 }
 
-public struct SourceCreateSourceOrderItemsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SourceSourceOrderItemsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -539,9 +539,9 @@ public struct SourceCreateSourceOrderItemsType: RawRepresentable, Codable, Hasha
 
 /// Shipping address for the order. Required if any of the SKUs are for products that have `shippable`
 /// set to true.
-public struct SourceCreateSourceOrderShipping: StripeParams {
+public struct SourceSourceOrderShipping: StripeParams {
     /// Shipping address.
-    public var address: SourceCreateSourceOrderShippingAddress
+    public var address: SourceSourceOrderShippingAddress
     /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
     public var carrier: String?
     /// Recipient name.
@@ -552,7 +552,7 @@ public struct SourceCreateSourceOrderShipping: StripeParams {
     /// numbers were generated for this purchase, please separate them with commas.
     public var trackingNumber: String?
 
-    public init(address: SourceCreateSourceOrderShippingAddress, carrier: String? = nil, name: String? = nil, phone: String? = nil, trackingNumber: String? = nil) {
+    public init(address: SourceSourceOrderShippingAddress, carrier: String? = nil, name: String? = nil, phone: String? = nil, trackingNumber: String? = nil) {
         self.address = address
         self.carrier = carrier
         self.name = name
@@ -570,7 +570,7 @@ public struct SourceCreateSourceOrderShipping: StripeParams {
 }
 
 /// Shipping address.
-public struct SourceCreateSourceOrderShippingAddress: StripeParams {
+public struct SourceSourceOrderShippingAddress: StripeParams {
     /// Address line 1, such as the street, PO Box, or company name.
     public var line1: String
     /// City, district, suburb, town, or village.
@@ -603,7 +603,7 @@ public struct SourceCreateSourceOrderShippingAddress: StripeParams {
     }
 }
 
-public struct SourceCreateUsage: RawRepresentable, Codable, Hashable, Sendable {
+public struct SourceUsage: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -614,185 +614,11 @@ public struct SourceCreateUsage: RawRepresentable, Codable, Hashable, Sendable {
     public static var singleUse: Self { .init(rawValue: "single_use") }
 }
 
-/// Information about a mandate possibility attached to a source object (generally for bank debits) as
-/// well as its acceptance status.
-public struct SourceUpdateMandate: ClearableParams {
-    /// The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
-    public var acceptance: SourceUpdateMandateAcceptance?
-    /// The amount specified by the mandate. (Leave null for a mandate covering all amounts)
-    public var amount: Int?
-    /// The currency specified by the mandate. (Must match `currency` of the source)
-    public var currency: String?
-    /// The interval of debits permitted by the mandate. Either `one_time` (just permitting a single debit),
-    /// `scheduled` (with debits on an agreed schedule or for clearly-defined events), or `variable`(for
-    /// debits with any frequency)
-    public var interval: SourceUpdateMandateInterval?
-    /// The method Stripe should use to notify the customer of upcoming debit instructions and/or mandate
-    /// confirmation as required by the underlying debit network. Either `email` (an email is sent directly
-    /// to the customer), `manual` (a `source.mandate_notification` event is sent to your webhooks endpoint
-    /// and you should handle the notification) or `none` (the underlying debit network does not require any
-    /// notification).
-    public var notificationMethod: SourceUpdateMandateNotificationMethod?
-    /// Fields to send empty, which clears them: `params.clear(.amount)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(acceptance: SourceUpdateMandateAcceptance? = nil, amount: Int? = nil, currency: String? = nil, interval: SourceUpdateMandateInterval? = nil, notificationMethod: SourceUpdateMandateNotificationMethod? = nil) {
-        self.acceptance = acceptance
-        self.amount = amount
-        self.currency = currency
-        self.interval = interval
-        self.notificationMethod = notificationMethod
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case acceptance
-        case amount
-        case currency
-        case interval
-        case notificationMethod = "notification_method"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case amount
-    }
-}
-
-/// The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
-public struct SourceUpdateMandateAcceptance: StripeParams {
-    /// The status of the mandate acceptance. Either `accepted` (the mandate was accepted) or `refused` (the
-    /// mandate was refused).
-    public var status: SourceUpdateMandateAcceptanceStatus
-    /// The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
-    public var date: Date?
-    /// The IP address from which the mandate was accepted or refused by the customer.
-    public var ip: String?
-    /// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
-    /// is `offline`
-    public var offline: SourceUpdateMandateAcceptanceOffline?
-    /// The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is
-    /// `online`
-    public var online: SourceUpdateMandateAcceptanceOnline?
-    /// The type of acceptance information included with the mandate. Either `online` or `offline`
-    public var type: SourceUpdateMandateAcceptanceType?
-    /// The user agent of the browser from which the mandate was accepted or refused by the customer.
-    public var userAgent: String?
-
-    public init(status: SourceUpdateMandateAcceptanceStatus, date: Date? = nil, ip: String? = nil, offline: SourceUpdateMandateAcceptanceOffline? = nil, online: SourceUpdateMandateAcceptanceOnline? = nil, type: SourceUpdateMandateAcceptanceType? = nil, userAgent: String? = nil) {
-        self.status = status
-        self.date = date
-        self.ip = ip
-        self.offline = offline
-        self.online = online
-        self.type = type
-        self.userAgent = userAgent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case date
-        case ip
-        case offline
-        case online
-        case status
-        case type
-        case userAgent = "user_agent"
-    }
-}
-
-public struct SourceUpdateMandateAcceptanceStatus: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var accepted: Self { .init(rawValue: "accepted") }
-    public static var pending: Self { .init(rawValue: "pending") }
-    public static var refused: Self { .init(rawValue: "refused") }
-    public static var revoked: Self { .init(rawValue: "revoked") }
-}
-
-/// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
-/// is `offline`
-public struct SourceUpdateMandateAcceptanceOffline: StripeParams {
-    /// An email to contact you with if a copy of the mandate is requested, required if `type` is `offline`.
-    public var contactEmail: String
-
-    public init(contactEmail: String) {
-        self.contactEmail = contactEmail
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case contactEmail = "contact_email"
-    }
-}
-
-/// The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is
-/// `online`
-public struct SourceUpdateMandateAcceptanceOnline: StripeParams {
-    /// The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
-    public var date: Date?
-    /// The IP address from which the mandate was accepted or refused by the customer.
-    public var ip: String?
-    /// The user agent of the browser from which the mandate was accepted or refused by the customer.
-    public var userAgent: String?
-
-    public init(date: Date? = nil, ip: String? = nil, userAgent: String? = nil) {
-        self.date = date
-        self.ip = ip
-        self.userAgent = userAgent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case date
-        case ip
-        case userAgent = "user_agent"
-    }
-}
-
-public struct SourceUpdateMandateAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var offline: Self { .init(rawValue: "offline") }
-    public static var online: Self { .init(rawValue: "online") }
-}
-
-public struct SourceUpdateMandateInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var oneTime: Self { .init(rawValue: "one_time") }
-    public static var scheduled: Self { .init(rawValue: "scheduled") }
-    public static var variable: Self { .init(rawValue: "variable") }
-}
-
-public struct SourceUpdateMandateNotificationMethod: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var deprecatedNone: Self { .init(rawValue: "deprecated_none") }
-    public static var email: Self { .init(rawValue: "email") }
-    public static var manual: Self { .init(rawValue: "manual") }
-    public static var none: Self { .init(rawValue: "none") }
-    public static var stripeEmail: Self { .init(rawValue: "stripe_email") }
-}
-
 /// Information about the owner of the payment instrument that may be used or required by particular
 /// source types.
 public struct SourceUpdateOwner: StripeParams {
     /// Owner's address.
-    public var address: SourceUpdateOwnerAddress?
+    public var address: SourceOwnerAddress?
     /// Owner's email address.
     public var email: String?
     /// Owner's full name.
@@ -800,159 +626,10 @@ public struct SourceUpdateOwner: StripeParams {
     /// Owner's phone number.
     public var phone: String?
 
-    public init(address: SourceUpdateOwnerAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+    public init(address: SourceOwnerAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
         self.address = address
         self.email = email
         self.name = name
         self.phone = phone
-    }
-}
-
-/// Owner's address.
-public struct SourceUpdateOwnerAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// Information about the items and shipping associated with the source. Required for transactional
-/// credit (for example Klarna) sources before you can charge it.
-public struct SourceUpdateSourceOrder: StripeParams {
-    /// List of items constituting the order.
-    public var items: [SourceUpdateSourceOrderItems]?
-    /// Shipping address for the order. Required if any of the SKUs are for products that have `shippable`
-    /// set to true.
-    public var shipping: SourceUpdateSourceOrderShipping?
-
-    public init(items: [SourceUpdateSourceOrderItems]? = nil, shipping: SourceUpdateSourceOrderShipping? = nil) {
-        self.items = items
-        self.shipping = shipping
-    }
-}
-
-public struct SourceUpdateSourceOrderItems: StripeParams {
-    public var amount: Int?
-    public var currency: String?
-    public var description: String?
-    /// The ID of the SKU being ordered.
-    public var parent: String?
-    /// The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to
-    /// be ordered.
-    public var quantity: Int?
-    public var type: SourceUpdateSourceOrderItemsType?
-
-    public init(amount: Int? = nil, currency: String? = nil, description: String? = nil, parent: String? = nil, quantity: Int? = nil, type: SourceUpdateSourceOrderItemsType? = nil) {
-        self.amount = amount
-        self.currency = currency
-        self.description = description
-        self.parent = parent
-        self.quantity = quantity
-        self.type = type
-    }
-}
-
-public struct SourceUpdateSourceOrderItemsType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var discount: Self { .init(rawValue: "discount") }
-    public static var shipping: Self { .init(rawValue: "shipping") }
-    public static var sku: Self { .init(rawValue: "sku") }
-    public static var tax: Self { .init(rawValue: "tax") }
-}
-
-/// Shipping address for the order. Required if any of the SKUs are for products that have `shippable`
-/// set to true.
-public struct SourceUpdateSourceOrderShipping: StripeParams {
-    /// Shipping address.
-    public var address: SourceUpdateSourceOrderShippingAddress
-    /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-    public var carrier: String?
-    /// Recipient name.
-    public var name: String?
-    /// Recipient phone (including extension).
-    public var phone: String?
-    /// The tracking number for a physical product, obtained from the delivery service. If multiple tracking
-    /// numbers were generated for this purchase, please separate them with commas.
-    public var trackingNumber: String?
-
-    public init(address: SourceUpdateSourceOrderShippingAddress, carrier: String? = nil, name: String? = nil, phone: String? = nil, trackingNumber: String? = nil) {
-        self.address = address
-        self.carrier = carrier
-        self.name = name
-        self.phone = phone
-        self.trackingNumber = trackingNumber
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case address
-        case carrier
-        case name
-        case phone
-        case trackingNumber = "tracking_number"
-    }
-}
-
-/// Shipping address.
-public struct SourceUpdateSourceOrderShippingAddress: StripeParams {
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(line1: String, city: String? = nil, country: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.line1 = line1
-        self.city = city
-        self.country = country
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
     }
 }

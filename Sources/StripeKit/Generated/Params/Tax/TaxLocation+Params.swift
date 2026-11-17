@@ -9,7 +9,7 @@ import Foundation
 
 public struct TaxLocationCreateParams: StripeParams {
     /// The physical address of the tax location.
-    public var address: TaxLocationCreateAddress
+    public var address: TaxLocationAddress
     /// The type of tax location. The only supported value is "performance".
     public var type: TaxLocationCreateType
     /// Details to identify the tax location by its venue, types of events held, or available services, such
@@ -18,7 +18,7 @@ public struct TaxLocationCreateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(address: TaxLocationCreateAddress, type: TaxLocationCreateType, description: String? = nil, expand: [String]? = nil) {
+    public init(address: TaxLocationAddress, type: TaxLocationCreateType, description: String? = nil, expand: [String]? = nil) {
         self.address = address
         self.type = type
         self.description = description
@@ -62,7 +62,7 @@ public struct TaxLocationListParams: StripeParams {
 }
 
 /// The physical address of the tax location.
-public struct TaxLocationCreateAddress: ClearableParams {
+public struct TaxLocationAddress: ClearableParams {
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     public var country: String
     /// City, district, suburb, town, or village.

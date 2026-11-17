@@ -9,9 +9,9 @@ import Foundation
 
 public struct ProductCatalogTrialOfferCreateParams: StripeParams {
     /// Duration of one service period of the trial.
-    public var duration: ProductCatalogTrialOfferCreateDuration
+    public var duration: ProductCatalogTrialOfferDuration
     /// Define behavior that occurs at the end of the trial.
-    public var endBehavior: ProductCatalogTrialOfferCreateEndBehavior
+    public var endBehavior: ProductCatalogTrialOfferEndBehavior
     /// Price configuration during the trial period (amount, billing scheme, etc).
     public var price: String
     /// Whether the trial offer can be used for new subscriptions. Defaults to true.
@@ -21,7 +21,7 @@ public struct ProductCatalogTrialOfferCreateParams: StripeParams {
     /// A brief description of the trial offer, hidden from customers.
     public var nickname: String?
 
-    public init(duration: ProductCatalogTrialOfferCreateDuration, endBehavior: ProductCatalogTrialOfferCreateEndBehavior, price: String, active: Bool? = nil, expand: [String]? = nil, nickname: String? = nil) {
+    public init(duration: ProductCatalogTrialOfferDuration, endBehavior: ProductCatalogTrialOfferEndBehavior, price: String, active: Bool? = nil, expand: [String]? = nil, nickname: String? = nil) {
         self.duration = duration
         self.endBehavior = endBehavior
         self.price = price
@@ -97,19 +97,19 @@ public struct ProductCatalogTrialOfferUpdateParams: StripeParams {
 }
 
 /// Duration of one service period of the trial.
-public struct ProductCatalogTrialOfferCreateDuration: StripeParams {
+public struct ProductCatalogTrialOfferDuration: StripeParams {
     /// Specifies how the trial offer duration is determined.
-    public var type: ProductCatalogTrialOfferCreateDurationType
+    public var type: ProductCatalogTrialOfferDurationType
     /// The relative duration of the trial period computed as the number of recurring price intervals.
-    public var relative: ProductCatalogTrialOfferCreateDurationRelative?
+    public var relative: ProductCatalogTrialOfferDurationRelative?
 
-    public init(type: ProductCatalogTrialOfferCreateDurationType, relative: ProductCatalogTrialOfferCreateDurationRelative? = nil) {
+    public init(type: ProductCatalogTrialOfferDurationType, relative: ProductCatalogTrialOfferDurationRelative? = nil) {
         self.type = type
         self.relative = relative
     }
 }
 
-public struct ProductCatalogTrialOfferCreateDurationType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ProductCatalogTrialOfferDurationType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -121,7 +121,7 @@ public struct ProductCatalogTrialOfferCreateDurationType: RawRepresentable, Coda
 }
 
 /// The relative duration of the trial period computed as the number of recurring price intervals.
-public struct ProductCatalogTrialOfferCreateDurationRelative: StripeParams {
+public struct ProductCatalogTrialOfferDurationRelative: StripeParams {
     /// The number of recurring price's interval to apply for the trial period.
     public var iterations: Int
 
@@ -131,17 +131,17 @@ public struct ProductCatalogTrialOfferCreateDurationRelative: StripeParams {
 }
 
 /// Define behavior that occurs at the end of the trial.
-public struct ProductCatalogTrialOfferCreateEndBehavior: StripeParams {
+public struct ProductCatalogTrialOfferEndBehavior: StripeParams {
     /// The transition to apply when the trial offer ends.
-    public var transition: ProductCatalogTrialOfferCreateEndBehaviorTransition
+    public var transition: ProductCatalogTrialOfferEndBehaviorTransition
 
-    public init(transition: ProductCatalogTrialOfferCreateEndBehaviorTransition) {
+    public init(transition: ProductCatalogTrialOfferEndBehaviorTransition) {
         self.transition = transition
     }
 }
 
 /// The transition to apply when the trial offer ends.
-public struct ProductCatalogTrialOfferCreateEndBehaviorTransition: StripeParams {
+public struct ProductCatalogTrialOfferEndBehaviorTransition: StripeParams {
     /// The price to transition the recurring item to when the trial offer ends.
     public var price: String
 

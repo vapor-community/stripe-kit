@@ -14,9 +14,9 @@ public struct SubscriptionItemCreateParams: ClearableParams {
     /// period. Pass an empty string to remove previously-defined thresholds.
     public var billingThresholds: SubscriptionItemCreateBillingThresholds?
     /// The trial offer to apply to this subscription item.
-    public var currentTrial: SubscriptionItemCreateCurrentTrial?
+    public var currentTrial: SubscriptionItemCurrentTrial?
     /// The coupons to redeem into discounts for the subscription item.
-    public var discounts: [SubscriptionItemCreateDiscounts]?
+    public var discounts: [SubscriptionItemDiscounts]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -26,17 +26,17 @@ public struct SubscriptionItemCreateParams: ClearableParams {
     public var metadata: [String: String]?
     /// Controls how Stripe handles payment when a subscription update requires payment and
     /// `collection_method=charge_automatically`.
-    public var paymentBehavior: SubscriptionItemCreatePaymentBehavior?
+    public var paymentBehavior: SubscriptionItemPaymentBehavior?
     /// The identifier of the plan to add to the subscription.
     public var plan: String?
     /// The ID of the price object.
     public var price: String?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-    public var priceData: SubscriptionItemCreatePriceData?
+    public var priceData: SubscriptionItemPriceData?
     /// Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when
     /// the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or
     /// starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
-    public var prorationBehavior: SubscriptionItemCreateProrationBehavior?
+    public var prorationBehavior: SubscriptionItemProrationBehavior?
     /// If set, the proration will be calculated as though the subscription was updated at the given time.
     /// This can be used to apply the same proration that was previewed with the [upcoming
     /// invoice](/api/invoices/create_preview) endpoint.
@@ -50,7 +50,7 @@ public struct SubscriptionItemCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(subscription: String, billingThresholds: SubscriptionItemCreateBillingThresholds? = nil, currentTrial: SubscriptionItemCreateCurrentTrial? = nil, discounts: [SubscriptionItemCreateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentBehavior: SubscriptionItemCreatePaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemCreatePriceData? = nil, prorationBehavior: SubscriptionItemCreateProrationBehavior? = nil, prorationDate: Date? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
+    public init(subscription: String, billingThresholds: SubscriptionItemCreateBillingThresholds? = nil, currentTrial: SubscriptionItemCurrentTrial? = nil, discounts: [SubscriptionItemDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentBehavior: SubscriptionItemPaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemPriceData? = nil, prorationBehavior: SubscriptionItemProrationBehavior? = nil, prorationDate: Date? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.subscription = subscription
         self.billingThresholds = billingThresholds
         self.currentTrial = currentTrial
@@ -133,9 +133,9 @@ public struct SubscriptionItemUpdateParams: ClearableParams {
     /// period. Pass an empty string to remove previously-defined thresholds.
     public var billingThresholds: SubscriptionItemUpdateBillingThresholds?
     /// The trial offer to apply to this subscription item.
-    public var currentTrial: SubscriptionItemUpdateCurrentTrial?
+    public var currentTrial: SubscriptionItemCurrentTrial?
     /// The coupons to redeem into discounts for the subscription item.
-    public var discounts: [SubscriptionItemUpdateDiscounts]?
+    public var discounts: [SubscriptionItemDiscounts]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -148,7 +148,7 @@ public struct SubscriptionItemUpdateParams: ClearableParams {
     public var offSession: Bool?
     /// Controls how Stripe handles payment when a subscription update requires payment and
     /// `collection_method=charge_automatically`.
-    public var paymentBehavior: SubscriptionItemUpdatePaymentBehavior?
+    public var paymentBehavior: SubscriptionItemPaymentBehavior?
     /// The identifier of the new plan for this subscription item.
     public var plan: String?
     /// The ID of the price object. You can use either `price` or `price_data`, but not both, to set or
@@ -159,11 +159,11 @@ public struct SubscriptionItemUpdateParams: ClearableParams {
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. You can use
     /// either `price` or `price_data`, but not both, to set or change this item's price. If you're updating
     /// an existing item without changing its price, omit both.
-    public var priceData: SubscriptionItemUpdatePriceData?
+    public var priceData: SubscriptionItemPriceData?
     /// Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when
     /// the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or
     /// starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
-    public var prorationBehavior: SubscriptionItemUpdateProrationBehavior?
+    public var prorationBehavior: SubscriptionItemProrationBehavior?
     /// If set, the proration will be calculated as though the subscription was updated at the given time.
     /// This can be used to apply the same proration that was previewed with the [upcoming
     /// invoice](/api/invoices/create_preview) endpoint.
@@ -177,7 +177,7 @@ public struct SubscriptionItemUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(billingThresholds: SubscriptionItemUpdateBillingThresholds? = nil, currentTrial: SubscriptionItemUpdateCurrentTrial? = nil, discounts: [SubscriptionItemUpdateDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, paymentBehavior: SubscriptionItemUpdatePaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemUpdatePriceData? = nil, prorationBehavior: SubscriptionItemUpdateProrationBehavior? = nil, prorationDate: Date? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
+    public init(billingThresholds: SubscriptionItemUpdateBillingThresholds? = nil, currentTrial: SubscriptionItemCurrentTrial? = nil, discounts: [SubscriptionItemDiscounts]? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, offSession: Bool? = nil, paymentBehavior: SubscriptionItemPaymentBehavior? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionItemPriceData? = nil, prorationBehavior: SubscriptionItemProrationBehavior? = nil, prorationDate: Date? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.billingThresholds = billingThresholds
         self.currentTrial = currentTrial
         self.discounts = discounts
@@ -237,7 +237,7 @@ public struct SubscriptionItemCreateBillingThresholds: StripeParams {
 }
 
 /// The trial offer to apply to this subscription item.
-public struct SubscriptionItemCreateCurrentTrial: StripeParams {
+public struct SubscriptionItemCurrentTrial: StripeParams {
     /// The ID of the trial offer to apply to the subscription item.
     public var trialOffer: String
 
@@ -250,7 +250,7 @@ public struct SubscriptionItemCreateCurrentTrial: StripeParams {
     }
 }
 
-public struct SubscriptionItemCreateDiscounts: StripeParams {
+public struct SubscriptionItemDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
     /// ID of an existing discount on the object (or one of its ancestors) to reuse.
@@ -271,7 +271,7 @@ public struct SubscriptionItemCreateDiscounts: StripeParams {
     }
 }
 
-public struct SubscriptionItemCreatePaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionItemPaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -310,7 +310,7 @@ public struct SubscriptionItemCreatePaymentBehavior: RawRepresentable, Codable, 
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-public struct SubscriptionItemCreatePriceData: StripeParams {
+public struct SubscriptionItemPriceData: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -318,13 +318,13 @@ public struct SubscriptionItemCreatePriceData: StripeParams {
     /// [Price](https://docs.stripe.com/api/prices) will belong to.
     public var product: String
     /// The recurring components of a price such as `interval` and `interval_count`.
-    public var recurring: SubscriptionItemCreatePriceDataRecurring
+    public var recurring: SubscriptionItemPriceDataRecurring
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: SubscriptionItemCreatePriceDataTaxBehavior?
+    public var taxBehavior: SubscriptionItemPriceDataTaxBehavior?
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
     /// charge.
     public var unitAmount: Int?
@@ -332,7 +332,7 @@ public struct SubscriptionItemCreatePriceData: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, product: String, recurring: SubscriptionItemCreatePriceDataRecurring, taxBehavior: SubscriptionItemCreatePriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, product: String, recurring: SubscriptionItemPriceDataRecurring, taxBehavior: SubscriptionItemPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.product = product
         self.recurring = recurring
@@ -352,15 +352,15 @@ public struct SubscriptionItemCreatePriceData: StripeParams {
 }
 
 /// The recurring components of a price such as `interval` and `interval_count`.
-public struct SubscriptionItemCreatePriceDataRecurring: StripeParams {
+public struct SubscriptionItemPriceDataRecurring: StripeParams {
     /// Specifies billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: SubscriptionItemCreatePriceDataRecurringInterval
+    public var interval: SubscriptionItemPriceDataRecurringInterval
     /// The number of intervals between subscription billings. For example, `interval=month` and
     /// `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36
     /// months, or 156 weeks).
     public var intervalCount: Int?
 
-    public init(interval: SubscriptionItemCreatePriceDataRecurringInterval, intervalCount: Int? = nil) {
+    public init(interval: SubscriptionItemPriceDataRecurringInterval, intervalCount: Int? = nil) {
         self.interval = interval
         self.intervalCount = intervalCount
     }
@@ -371,7 +371,7 @@ public struct SubscriptionItemCreatePriceDataRecurring: StripeParams {
     }
 }
 
-public struct SubscriptionItemCreatePriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionItemPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -384,7 +384,7 @@ public struct SubscriptionItemCreatePriceDataRecurringInterval: RawRepresentable
     public static var year: Self { .init(rawValue: "year") }
 }
 
-public struct SubscriptionItemCreatePriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionItemPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -396,7 +396,7 @@ public struct SubscriptionItemCreatePriceDataTaxBehavior: RawRepresentable, Coda
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct SubscriptionItemCreateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionItemProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -421,178 +421,4 @@ public struct SubscriptionItemUpdateBillingThresholds: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case usageGte = "usage_gte"
     }
-}
-
-/// The trial offer to apply to this subscription item.
-public struct SubscriptionItemUpdateCurrentTrial: StripeParams {
-    /// The ID of the trial offer to apply to the subscription item.
-    public var trialOffer: String
-
-    public init(trialOffer: String) {
-        self.trialOffer = trialOffer
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case trialOffer = "trial_offer"
-    }
-}
-
-public struct SubscriptionItemUpdateDiscounts: StripeParams {
-    /// ID of the coupon to create a new discount for.
-    public var coupon: String?
-    /// ID of an existing discount on the object (or one of its ancestors) to reuse.
-    public var discount: String?
-    /// ID of the promotion code to create a new discount for.
-    public var promotionCode: String?
-
-    public init(coupon: String? = nil, discount: String? = nil, promotionCode: String? = nil) {
-        self.coupon = coupon
-        self.discount = discount
-        self.promotionCode = promotionCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case coupon
-        case discount
-        case promotionCode = "promotion_code"
-    }
-}
-
-public struct SubscriptionItemUpdatePaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    /// This is the default behavior since
-    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails).
-    /// Transition the subscription to `status=past_due` if payment fails. If you have payment retries
-    /// configured, Stripe automatically retries the payment. If the payment requires action, you receive an
-    /// `invoice.payment_action_required` webhook and must manage additional user actions. For example, SCA
-    /// regulations might require 3DS authentication to complete payment. See the [SCA Migration
-    /// Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for Billing to
-    /// learn more.
-    public static var allowIncomplete: Self { .init(rawValue: "allow_incomplete") }
-    /// When payment is required, transition the subscription to `status=past_due` without attempting
-    /// payment. You must request explicit confirmation of the Invoice's PaymentIntent. The resulting
-    /// Invoice has
-    /// [auto_advance=false](https://docs.stripe.com/api/invoices/object#invoice_object-auto_advance), so
-    /// Stripe doesn't automatically attempt payment, retry payment, or finalize the subscription.
-    public static var defaultIncomplete: Self { .init(rawValue: "default_incomplete") }
-    /// If payment fails, return an HTTP `402` status code and don't update the subscription. This behavior
-    /// doesn't support payments that require user action, such as 3DS authentication, because it returns an
-    /// error instead of creating a PaymentIntent with `status=requires_action`. To handle payments that
-    /// require action, use `allow_incomplete` or `default_incomplete` instead. This behavior was the
-    /// default for API versions before
-    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails).
-    public static var errorIfIncomplete: Self { .init(rawValue: "error_if_incomplete") }
-    /// If payment fails, Stripe creates a [pending
-    /// update](https://docs.stripe.com/billing/subscriptions/pending-updates), which applies only if the
-    /// payment eventually succeeds. This behavior doesn't support all [attributes and payment
-    /// methods](https://docs.stripe.com/billing/pending-updates-reference#supported-attributes). This
-    /// option is the simplest way to ensure the customer completes payment before Stripe applies the
-    /// update.
-    public static var pendingIfIncomplete: Self { .init(rawValue: "pending_if_incomplete") }
-}
-
-/// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. You can use
-/// either `price` or `price_data`, but not both, to set or change this item's price. If you're updating
-/// an existing item without changing its price, omit both.
-public struct SubscriptionItemUpdatePriceData: StripeParams {
-    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-    /// Must be a [supported currency](https://stripe.com/docs/currencies).
-    public var currency: String
-    /// The ID of the [Product](https://docs.stripe.com/api/products) that this
-    /// [Price](https://docs.stripe.com/api/prices) will belong to.
-    public var product: String
-    /// The recurring components of a price such as `interval` and `interval_count`.
-    public var recurring: SubscriptionItemUpdatePriceDataRecurring
-    /// Only required if a [default tax
-    /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
-    /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
-    /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
-    /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: SubscriptionItemUpdatePriceDataTaxBehavior?
-    /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
-    /// charge.
-    public var unitAmount: Int?
-    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
-    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    public var unitAmountDecimal: String?
-
-    public init(currency: String, product: String, recurring: SubscriptionItemUpdatePriceDataRecurring, taxBehavior: SubscriptionItemUpdatePriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
-        self.currency = currency
-        self.product = product
-        self.recurring = recurring
-        self.taxBehavior = taxBehavior
-        self.unitAmount = unitAmount
-        self.unitAmountDecimal = unitAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case currency
-        case product
-        case recurring
-        case taxBehavior = "tax_behavior"
-        case unitAmount = "unit_amount"
-        case unitAmountDecimal = "unit_amount_decimal"
-    }
-}
-
-/// The recurring components of a price such as `interval` and `interval_count`.
-public struct SubscriptionItemUpdatePriceDataRecurring: StripeParams {
-    /// Specifies billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: SubscriptionItemUpdatePriceDataRecurringInterval
-    /// The number of intervals between subscription billings. For example, `interval=month` and
-    /// `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36
-    /// months, or 156 weeks).
-    public var intervalCount: Int?
-
-    public init(interval: SubscriptionItemUpdatePriceDataRecurringInterval, intervalCount: Int? = nil) {
-        self.interval = interval
-        self.intervalCount = intervalCount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case interval
-        case intervalCount = "interval_count"
-    }
-}
-
-public struct SubscriptionItemUpdatePriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
-public struct SubscriptionItemUpdatePriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var exclusive: Self { .init(rawValue: "exclusive") }
-    public static var inclusive: Self { .init(rawValue: "inclusive") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
-}
-
-public struct SubscriptionItemUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
-    public static var createProrations: Self { .init(rawValue: "create_prorations") }
-    public static var none: Self { .init(rawValue: "none") }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 public struct CustomerSessionCreateParams: StripeParams {
     /// Configuration for each component. At least 1 component must be enabled.
-    public var components: CustomerSessionCreateComponents
+    public var components: CustomerSessionComponents
     /// The ID of an existing customer for which to create the Customer Session.
     public var customer: String?
     /// The ID of an existing Account for which to create the Customer Session.
@@ -17,7 +17,7 @@ public struct CustomerSessionCreateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(components: CustomerSessionCreateComponents, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil) {
+    public init(components: CustomerSessionComponents, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil) {
         self.components = components
         self.customer = customer
         self.customerAccount = customerAccount
@@ -33,23 +33,23 @@ public struct CustomerSessionCreateParams: StripeParams {
 }
 
 /// Configuration for each component. At least 1 component must be enabled.
-public struct CustomerSessionCreateComponents: StripeParams {
+public struct CustomerSessionComponents: StripeParams {
     /// Configuration for active entitlements.
-    public var activeEntitlements: CustomerSessionCreateComponentsActiveEntitlements?
+    public var activeEntitlements: CustomerSessionComponentsActiveEntitlements?
     /// Configuration for buy button.
-    public var buyButton: CustomerSessionCreateComponentsBuyButton?
+    public var buyButton: CustomerSessionComponentsBuyButton?
     /// Configuration for customer portal.
-    public var customerPortal: CustomerSessionCreateComponentsCustomerPortal?
+    public var customerPortal: CustomerSessionComponentsCustomerPortal?
     /// Configuration for the customer sheet.
-    public var customerSheet: CustomerSessionCreateComponentsCustomerSheet?
+    public var customerSheet: CustomerSessionComponentsCustomerSheet?
     /// Configuration for the mobile payment element.
-    public var mobilePaymentElement: CustomerSessionCreateComponentsMobilePaymentElement?
+    public var mobilePaymentElement: CustomerSessionComponentsMobilePaymentElement?
     /// Configuration for the Payment Element.
-    public var paymentElement: CustomerSessionCreateComponentsPaymentElement?
+    public var paymentElement: CustomerSessionComponentsPaymentElement?
     /// Configuration for the pricing table.
-    public var pricingTable: CustomerSessionCreateComponentsPricingTable?
+    public var pricingTable: CustomerSessionComponentsPricingTable?
 
-    public init(activeEntitlements: CustomerSessionCreateComponentsActiveEntitlements? = nil, buyButton: CustomerSessionCreateComponentsBuyButton? = nil, customerPortal: CustomerSessionCreateComponentsCustomerPortal? = nil, customerSheet: CustomerSessionCreateComponentsCustomerSheet? = nil, mobilePaymentElement: CustomerSessionCreateComponentsMobilePaymentElement? = nil, paymentElement: CustomerSessionCreateComponentsPaymentElement? = nil, pricingTable: CustomerSessionCreateComponentsPricingTable? = nil) {
+    public init(activeEntitlements: CustomerSessionComponentsActiveEntitlements? = nil, buyButton: CustomerSessionComponentsBuyButton? = nil, customerPortal: CustomerSessionComponentsCustomerPortal? = nil, customerSheet: CustomerSessionComponentsCustomerSheet? = nil, mobilePaymentElement: CustomerSessionComponentsMobilePaymentElement? = nil, paymentElement: CustomerSessionComponentsPaymentElement? = nil, pricingTable: CustomerSessionComponentsPricingTable? = nil) {
         self.activeEntitlements = activeEntitlements
         self.buyButton = buyButton
         self.customerPortal = customerPortal
@@ -71,7 +71,7 @@ public struct CustomerSessionCreateComponents: StripeParams {
 }
 
 /// Configuration for active entitlements.
-public struct CustomerSessionCreateComponentsActiveEntitlements: StripeParams {
+public struct CustomerSessionComponentsActiveEntitlements: StripeParams {
     /// Whether the active entitlements is enabled.
     public var enabled: Bool
 
@@ -81,7 +81,7 @@ public struct CustomerSessionCreateComponentsActiveEntitlements: StripeParams {
 }
 
 /// Configuration for buy button.
-public struct CustomerSessionCreateComponentsBuyButton: StripeParams {
+public struct CustomerSessionComponentsBuyButton: StripeParams {
     /// Whether the buy button is enabled.
     public var enabled: Bool
 
@@ -91,7 +91,7 @@ public struct CustomerSessionCreateComponentsBuyButton: StripeParams {
 }
 
 /// Configuration for customer portal.
-public struct CustomerSessionCreateComponentsCustomerPortal: StripeParams {
+public struct CustomerSessionComponentsCustomerPortal: StripeParams {
     /// Whether the customer portal is enabled.
     public var enabled: Bool
 
@@ -101,35 +101,35 @@ public struct CustomerSessionCreateComponentsCustomerPortal: StripeParams {
 }
 
 /// Configuration for the customer sheet.
-public struct CustomerSessionCreateComponentsCustomerSheet: StripeParams {
+public struct CustomerSessionComponentsCustomerSheet: StripeParams {
     /// Whether the customer sheet is enabled.
     public var enabled: Bool
     /// This hash defines whether the customer sheet supports certain features.
-    public var features: CustomerSessionCreateComponentsCustomerSheetFeatures?
+    public var features: CustomerSessionComponentsCustomerSheetFeatures?
 
-    public init(enabled: Bool, features: CustomerSessionCreateComponentsCustomerSheetFeatures? = nil) {
+    public init(enabled: Bool, features: CustomerSessionComponentsCustomerSheetFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// This hash defines whether the customer sheet supports certain features.
-public struct CustomerSessionCreateComponentsCustomerSheetFeatures: StripeParams {
+public struct CustomerSessionComponentsCustomerSheetFeatures: StripeParams {
     /// A list of
     /// [`allow_redisplay`](https://docs.stripe.com/api/payment_methods/object#payment_method_object-allow_redisplay)
     /// values that controls which saved payment methods the customer sheet displays by filtering to only
     /// show payment methods with an `allow_redisplay` value that is present in this list. If not specified,
     /// defaults to ["always"]. In order to display all saved payment methods, specify ["always", "limited",
     /// "unspecified"].
-    public var paymentMethodAllowRedisplayFilters: [CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodAllowRedisplayFilters]?
+    public var paymentMethodAllowRedisplayFilters: [CustomerSessionComponentsCustomerSheetFeaturesPaymentMethodAllowRedisplayFilters]?
     /// Controls whether the customer sheet displays the option to remove a saved payment method." Allowing
     /// buyers to remove their saved payment methods impacts subscriptions that depend on that payment
     /// method. Removing the payment method detaches the [`customer`
     /// object](https://docs.stripe.com/api/payment_methods/object#payment_method_object-customer) from that
     /// [PaymentMethod](https://docs.stripe.com/api/payment_methods).
-    public var paymentMethodRemove: CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodRemove?
+    public var paymentMethodRemove: CustomerSessionComponentsCustomerSheetFeaturesPaymentMethodRemove?
 
-    public init(paymentMethodAllowRedisplayFilters: [CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodAllowRedisplayFilters]? = nil, paymentMethodRemove: CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodRemove? = nil) {
+    public init(paymentMethodAllowRedisplayFilters: [CustomerSessionComponentsCustomerSheetFeaturesPaymentMethodAllowRedisplayFilters]? = nil, paymentMethodRemove: CustomerSessionComponentsCustomerSheetFeaturesPaymentMethodRemove? = nil) {
         self.paymentMethodAllowRedisplayFilters = paymentMethodAllowRedisplayFilters
         self.paymentMethodRemove = paymentMethodRemove
     }
@@ -140,7 +140,7 @@ public struct CustomerSessionCreateComponentsCustomerSheetFeatures: StripeParams
     }
 }
 
-public struct CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsCustomerSheetFeaturesPaymentMethodAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -152,7 +152,7 @@ public struct CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodA
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsCustomerSheetFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -164,48 +164,48 @@ public struct CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodR
 }
 
 /// Configuration for the mobile payment element.
-public struct CustomerSessionCreateComponentsMobilePaymentElement: StripeParams {
+public struct CustomerSessionComponentsMobilePaymentElement: StripeParams {
     /// Whether the mobile payment element is enabled.
     public var enabled: Bool
     /// This hash defines whether the mobile payment element supports certain features.
-    public var features: CustomerSessionCreateComponentsMobilePaymentElementFeatures?
+    public var features: CustomerSessionComponentsMobilePaymentElementFeatures?
 
-    public init(enabled: Bool, features: CustomerSessionCreateComponentsMobilePaymentElementFeatures? = nil) {
+    public init(enabled: Bool, features: CustomerSessionComponentsMobilePaymentElementFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// This hash defines whether the mobile payment element supports certain features.
-public struct CustomerSessionCreateComponentsMobilePaymentElementFeatures: StripeParams {
+public struct CustomerSessionComponentsMobilePaymentElementFeatures: StripeParams {
     /// A list of
     /// [`allow_redisplay`](https://docs.stripe.com/api/payment_methods/object#payment_method_object-allow_redisplay)
     /// values that controls which saved payment methods the mobile payment element displays by filtering to
     /// only show payment methods with an `allow_redisplay` value that is present in this list. If not
     /// specified, defaults to ["always"]. In order to display all saved payment methods, specify ["always",
     /// "limited", "unspecified"].
-    public var paymentMethodAllowRedisplayFilters: [CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodAllowRedisplayFilters]?
+    public var paymentMethodAllowRedisplayFilters: [CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodAllowRedisplayFilters]?
     /// Controls whether or not the mobile payment element shows saved payment methods.
-    public var paymentMethodRedisplay: CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRedisplay?
+    public var paymentMethodRedisplay: CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodRedisplay?
     /// Controls whether the mobile payment element displays the option to remove a saved payment method."
     /// Allowing buyers to remove their saved payment methods impacts subscriptions that depend on that
     /// payment method. Removing the payment method detaches the [`customer`
     /// object](https://docs.stripe.com/api/payment_methods/object#payment_method_object-customer) from that
     /// [PaymentMethod](https://docs.stripe.com/api/payment_methods).
-    public var paymentMethodRemove: CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRemove?
+    public var paymentMethodRemove: CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodRemove?
     /// Controls whether the mobile payment element displays a checkbox offering to save a new payment
     /// method. If a customer checks the box, the
     /// [`allow_redisplay`](https://docs.stripe.com/api/payment_methods/object#payment_method_object-allow_redisplay)
     /// value on the PaymentMethod is set to `'always'` at confirmation time. For PaymentIntents, the
     /// [`setup_future_usage`](https://docs.stripe.com/api/payment_intents/object#payment_intent_object-setup_future_usage)
     /// value is also set to the value defined in `payment_method_save_usage`.
-    public var paymentMethodSave: CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSave?
+    public var paymentMethodSave: CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodSave?
     /// Allows overriding the value of allow_override when saving a new payment method when
     /// payment_method_save is set to disabled. Use values: "always", "limited", or "unspecified". If not
     /// specified, defaults to `nil` (no override value).
-    public var paymentMethodSaveAllowRedisplayOverride: CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSaveAllowRedisplayOverride?
+    public var paymentMethodSaveAllowRedisplayOverride: CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodSaveAllowRedisplayOverride?
 
-    public init(paymentMethodAllowRedisplayFilters: [CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodAllowRedisplayFilters]? = nil, paymentMethodRedisplay: CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRedisplay? = nil, paymentMethodRemove: CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRemove? = nil, paymentMethodSave: CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSave? = nil, paymentMethodSaveAllowRedisplayOverride: CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSaveAllowRedisplayOverride? = nil) {
+    public init(paymentMethodAllowRedisplayFilters: [CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodAllowRedisplayFilters]? = nil, paymentMethodRedisplay: CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodRedisplay? = nil, paymentMethodRemove: CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodRemove? = nil, paymentMethodSave: CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodSave? = nil, paymentMethodSaveAllowRedisplayOverride: CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodSaveAllowRedisplayOverride? = nil) {
         self.paymentMethodAllowRedisplayFilters = paymentMethodAllowRedisplayFilters
         self.paymentMethodRedisplay = paymentMethodRedisplay
         self.paymentMethodRemove = paymentMethodRemove
@@ -222,7 +222,7 @@ public struct CustomerSessionCreateComponentsMobilePaymentElementFeatures: Strip
     }
 }
 
-public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -234,7 +234,7 @@ public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPayment
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodRedisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -245,7 +245,7 @@ public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPayment
     public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -256,7 +256,7 @@ public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPayment
     public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -267,7 +267,7 @@ public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPayment
     public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSaveAllowRedisplayOverride: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsMobilePaymentElementFeaturesPaymentMethodSaveAllowRedisplayOverride: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -280,30 +280,30 @@ public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPayment
 }
 
 /// Configuration for the Payment Element.
-public struct CustomerSessionCreateComponentsPaymentElement: StripeParams {
+public struct CustomerSessionComponentsPaymentElement: StripeParams {
     /// Whether the Payment Element is enabled.
     public var enabled: Bool
     /// This hash defines whether the Payment Element supports certain features.
-    public var features: CustomerSessionCreateComponentsPaymentElementFeatures?
+    public var features: CustomerSessionComponentsPaymentElementFeatures?
 
-    public init(enabled: Bool, features: CustomerSessionCreateComponentsPaymentElementFeatures? = nil) {
+    public init(enabled: Bool, features: CustomerSessionComponentsPaymentElementFeatures? = nil) {
         self.enabled = enabled
         self.features = features
     }
 }
 
 /// This hash defines whether the Payment Element supports certain features.
-public struct CustomerSessionCreateComponentsPaymentElementFeatures: StripeParams {
+public struct CustomerSessionComponentsPaymentElementFeatures: StripeParams {
     /// A list of
     /// [`allow_redisplay`](https://docs.stripe.com/api/payment_methods/object#payment_method_object-allow_redisplay)
     /// values that controls which saved payment methods the Payment Element displays by filtering to only
     /// show payment methods with an `allow_redisplay` value that is present in this list. If not specified,
     /// defaults to ["always"]. In order to display all saved payment methods, specify ["always", "limited",
     /// "unspecified"].
-    public var paymentMethodAllowRedisplayFilters: [CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters]?
+    public var paymentMethodAllowRedisplayFilters: [CustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters]?
     /// Controls whether or not the Payment Element shows saved payment methods. This parameter defaults to
     /// `disabled`.
-    public var paymentMethodRedisplay: CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRedisplay?
+    public var paymentMethodRedisplay: CustomerSessionComponentsPaymentElementFeaturesPaymentMethodRedisplay?
     /// Determines the max number of saved payment methods for the Payment Element to display. This
     /// parameter defaults to `3`. The maximum redisplay limit is `10`.
     public var paymentMethodRedisplayLimit: Int?
@@ -313,22 +313,22 @@ public struct CustomerSessionCreateComponentsPaymentElementFeatures: StripeParam
     /// [`customer`
     /// object](https://docs.stripe.com/api/payment_methods/object#payment_method_object-customer) from that
     /// [PaymentMethod](https://docs.stripe.com/api/payment_methods).
-    public var paymentMethodRemove: CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRemove?
+    public var paymentMethodRemove: CustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove?
     /// Controls whether the Payment Element displays a checkbox offering to save a new payment method. This
     /// parameter defaults to `disabled`. If a customer checks the box, the
     /// [`allow_redisplay`](https://docs.stripe.com/api/payment_methods/object#payment_method_object-allow_redisplay)
     /// value on the PaymentMethod is set to `'always'` at confirmation time. For PaymentIntents, the
     /// [`setup_future_usage`](https://docs.stripe.com/api/payment_intents/object#payment_intent_object-setup_future_usage)
     /// value is also set to the value defined in `payment_method_save_usage`.
-    public var paymentMethodSave: CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSave?
+    public var paymentMethodSave: CustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave?
     /// When using PaymentIntents and the customer checks the save checkbox, this field determines the
     /// [`setup_future_usage`](https://docs.stripe.com/api/payment_intents/object#payment_intent_object-setup_future_usage)
     /// value used to confirm the PaymentIntent. When using SetupIntents, directly configure the
     /// [`usage`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-usage) value on
     /// SetupIntent creation.
-    public var paymentMethodSaveUsage: CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSaveUsage?
+    public var paymentMethodSaveUsage: CustomerSessionComponentsPaymentElementFeaturesPaymentMethodSaveUsage?
 
-    public init(paymentMethodAllowRedisplayFilters: [CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters]? = nil, paymentMethodRedisplay: CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRedisplay? = nil, paymentMethodRedisplayLimit: Int? = nil, paymentMethodRemove: CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRemove? = nil, paymentMethodSave: CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSave? = nil, paymentMethodSaveUsage: CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSaveUsage? = nil) {
+    public init(paymentMethodAllowRedisplayFilters: [CustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters]? = nil, paymentMethodRedisplay: CustomerSessionComponentsPaymentElementFeaturesPaymentMethodRedisplay? = nil, paymentMethodRedisplayLimit: Int? = nil, paymentMethodRemove: CustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove? = nil, paymentMethodSave: CustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave? = nil, paymentMethodSaveUsage: CustomerSessionComponentsPaymentElementFeaturesPaymentMethodSaveUsage? = nil) {
         self.paymentMethodAllowRedisplayFilters = paymentMethodAllowRedisplayFilters
         self.paymentMethodRedisplay = paymentMethodRedisplay
         self.paymentMethodRedisplayLimit = paymentMethodRedisplayLimit
@@ -347,7 +347,7 @@ public struct CustomerSessionCreateComponentsPaymentElementFeatures: StripeParam
     }
 }
 
-public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -359,7 +359,7 @@ public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethod
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsPaymentElementFeaturesPaymentMethodRedisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -370,7 +370,7 @@ public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethod
     public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -381,7 +381,7 @@ public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethod
     public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -392,7 +392,7 @@ public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethod
     public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSaveUsage: RawRepresentable, Codable, Hashable, Sendable {
+public struct CustomerSessionComponentsPaymentElementFeaturesPaymentMethodSaveUsage: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -404,7 +404,7 @@ public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethod
 }
 
 /// Configuration for the pricing table.
-public struct CustomerSessionCreateComponentsPricingTable: StripeParams {
+public struct CustomerSessionComponentsPricingTable: StripeParams {
     /// Whether the pricing table is enabled.
     public var enabled: Bool
 

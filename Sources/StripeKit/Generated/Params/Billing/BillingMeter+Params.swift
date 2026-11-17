@@ -9,22 +9,22 @@ import Foundation
 
 public struct BillingMeterCreateParams: StripeParams {
     /// The default settings to aggregate a meter's events with.
-    public var defaultAggregation: BillingMeterCreateDefaultAggregation
+    public var defaultAggregation: BillingMeterDefaultAggregation
     /// The meter’s name. Not visible to the customer.
     public var displayName: String
     /// The name of the meter event to record usage for. Corresponds with the `event_name` field on meter
     /// events.
     public var eventName: String
     /// Fields that specify how to map a meter event to a customer.
-    public var customerMapping: BillingMeterCreateCustomerMapping?
+    public var customerMapping: BillingMeterCustomerMapping?
     /// The time window which meter events have been pre-aggregated for, if any.
     public var eventTimeWindow: BillingMeterCreateEventTimeWindow?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Fields that specify how to calculate a meter event's value.
-    public var valueSettings: BillingMeterCreateValueSettings?
+    public var valueSettings: BillingMeterValueSettings?
 
-    public init(defaultAggregation: BillingMeterCreateDefaultAggregation, displayName: String, eventName: String, customerMapping: BillingMeterCreateCustomerMapping? = nil, eventTimeWindow: BillingMeterCreateEventTimeWindow? = nil, expand: [String]? = nil, valueSettings: BillingMeterCreateValueSettings? = nil) {
+    public init(defaultAggregation: BillingMeterDefaultAggregation, displayName: String, eventName: String, customerMapping: BillingMeterCustomerMapping? = nil, eventTimeWindow: BillingMeterCreateEventTimeWindow? = nil, expand: [String]? = nil, valueSettings: BillingMeterValueSettings? = nil) {
         self.defaultAggregation = defaultAggregation
         self.displayName = displayName
         self.eventName = eventName
@@ -116,16 +116,16 @@ public struct BillingMeterUpdateParams: StripeParams {
 }
 
 /// The default settings to aggregate a meter's events with.
-public struct BillingMeterCreateDefaultAggregation: StripeParams {
+public struct BillingMeterDefaultAggregation: StripeParams {
     /// Specifies how events are aggregated.
-    public var formula: BillingMeterCreateDefaultAggregationFormula
+    public var formula: BillingMeterDefaultAggregationFormula
 
-    public init(formula: BillingMeterCreateDefaultAggregationFormula) {
+    public init(formula: BillingMeterDefaultAggregationFormula) {
         self.formula = formula
     }
 }
 
-public struct BillingMeterCreateDefaultAggregationFormula: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingMeterDefaultAggregationFormula: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -138,13 +138,13 @@ public struct BillingMeterCreateDefaultAggregationFormula: RawRepresentable, Cod
 }
 
 /// Fields that specify how to map a meter event to a customer.
-public struct BillingMeterCreateCustomerMapping: StripeParams {
+public struct BillingMeterCustomerMapping: StripeParams {
     /// The key in the meter event payload to use for mapping the event to a customer.
     public var eventPayloadKey: String
     /// The method for mapping a meter event to a customer. Must be `by_id`.
-    public var type: BillingMeterCreateCustomerMappingType
+    public var type: BillingMeterCustomerMappingType
 
-    public init(eventPayloadKey: String, type: BillingMeterCreateCustomerMappingType) {
+    public init(eventPayloadKey: String, type: BillingMeterCustomerMappingType) {
         self.eventPayloadKey = eventPayloadKey
         self.type = type
     }
@@ -155,7 +155,7 @@ public struct BillingMeterCreateCustomerMapping: StripeParams {
     }
 }
 
-public struct BillingMeterCreateCustomerMappingType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingMeterCustomerMappingType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -177,7 +177,7 @@ public struct BillingMeterCreateEventTimeWindow: RawRepresentable, Codable, Hash
 }
 
 /// Fields that specify how to calculate a meter event's value.
-public struct BillingMeterCreateValueSettings: StripeParams {
+public struct BillingMeterValueSettings: StripeParams {
     /// The key in the usage event payload to use as the value for this meter. For example, if the event
     /// payload contains usage on a `bytes_used` field, then set the event_payload_key to "bytes_used".
     public var eventPayloadKey: String

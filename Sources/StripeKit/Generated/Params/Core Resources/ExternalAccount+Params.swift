@@ -50,13 +50,13 @@ public struct ExternalAccountListParams: StripeParams {
     /// is 10.
     public var limit: Int?
     /// Filter external accounts according to a particular object type.
-    public var object: ExternalAccountListObject?
+    public var object: ExternalAccountObject?
     /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
 
-    public init(endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, object: ExternalAccountListObject? = nil, startingAfter: String? = nil) {
+    public init(endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, object: ExternalAccountObject? = nil, startingAfter: String? = nil) {
         self.endingBefore = endingBefore
         self.expand = expand
         self.limit = limit
@@ -77,10 +77,10 @@ public struct ExternalAccountUpdateParams: ClearableParams {
     /// The name of the person or business that owns the bank account.
     public var accountHolderName: String?
     /// The type of entity that holds the account. This can be either `individual` or `company`.
-    public var accountHolderType: ExternalAccountUpdateAccountHolderType?
+    public var accountHolderType: ExternalAccountAccountHolderType?
     /// The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this
     /// can only be `futsu` or `toza`.
-    public var accountType: ExternalAccountUpdateAccountType?
+    public var accountType: ExternalAccountAccountType?
     /// City/District/Suburb/Town/Village.
     public var addressCity: String?
     /// Billing address country, if provided when creating card.
@@ -96,7 +96,7 @@ public struct ExternalAccountUpdateParams: ClearableParams {
     /// When set to true, this becomes the default external account for its currency.
     public var defaultForCurrency: Bool?
     /// Documents that may be submitted to satisfy various informational requests.
-    public var documents: ExternalAccountUpdateDocuments?
+    public var documents: ExternalAccountDocuments?
     /// Two digit number representing the card’s expiration month.
     public var expMonth: String?
     /// Four digit number representing the card’s expiration year.
@@ -113,7 +113,7 @@ public struct ExternalAccountUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.accountHolderType)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(accountHolderName: String? = nil, accountHolderType: ExternalAccountUpdateAccountHolderType? = nil, accountType: ExternalAccountUpdateAccountType? = nil, addressCity: String? = nil, addressCountry: String? = nil, addressLine1: String? = nil, addressLine2: String? = nil, addressState: String? = nil, addressZip: String? = nil, defaultForCurrency: Bool? = nil, documents: ExternalAccountUpdateDocuments? = nil, expMonth: String? = nil, expYear: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil) {
+    public init(accountHolderName: String? = nil, accountHolderType: ExternalAccountAccountHolderType? = nil, accountType: ExternalAccountAccountType? = nil, addressCity: String? = nil, addressCountry: String? = nil, addressLine1: String? = nil, addressLine2: String? = nil, addressState: String? = nil, addressZip: String? = nil, defaultForCurrency: Bool? = nil, documents: ExternalAccountDocuments? = nil, expMonth: String? = nil, expYear: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil) {
         self.accountHolderName = accountHolderName
         self.accountHolderType = accountHolderType
         self.accountType = accountType
@@ -159,7 +159,7 @@ public struct ExternalAccountUpdateParams: ClearableParams {
     }
 }
 
-public struct ExternalAccountListObject: RawRepresentable, Codable, Hashable, Sendable {
+public struct ExternalAccountObject: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -170,7 +170,7 @@ public struct ExternalAccountListObject: RawRepresentable, Codable, Hashable, Se
     public static var card: Self { .init(rawValue: "card") }
 }
 
-public struct ExternalAccountUpdateAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ExternalAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -181,7 +181,7 @@ public struct ExternalAccountUpdateAccountHolderType: RawRepresentable, Codable,
     public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public struct ExternalAccountUpdateAccountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ExternalAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -195,14 +195,14 @@ public struct ExternalAccountUpdateAccountType: RawRepresentable, Codable, Hasha
 }
 
 /// Documents that may be submitted to satisfy various informational requests.
-public struct ExternalAccountUpdateDocuments: StripeParams {
+public struct ExternalAccountDocuments: StripeParams {
     /// One or more documents that support the [Bank account ownership
     /// verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement.
     /// Must be a document associated with the bank account that displays the last 4 digits of the account
     /// number, either a statement or a check.
-    public var bankAccountOwnershipVerification: ExternalAccountUpdateDocumentsBankAccountOwnershipVerification?
+    public var bankAccountOwnershipVerification: ExternalAccountDocumentsBankAccountOwnershipVerification?
 
-    public init(bankAccountOwnershipVerification: ExternalAccountUpdateDocumentsBankAccountOwnershipVerification? = nil) {
+    public init(bankAccountOwnershipVerification: ExternalAccountDocumentsBankAccountOwnershipVerification? = nil) {
         self.bankAccountOwnershipVerification = bankAccountOwnershipVerification
     }
 
@@ -215,7 +215,7 @@ public struct ExternalAccountUpdateDocuments: StripeParams {
 /// verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement.
 /// Must be a document associated with the bank account that displays the last 4 digits of the account
 /// number, either a statement or a check.
-public struct ExternalAccountUpdateDocumentsBankAccountOwnershipVerification: StripeParams {
+public struct ExternalAccountDocumentsBankAccountOwnershipVerification: StripeParams {
     /// One or more document ids returned by a [file upload](https://docs.stripe.com/api#create_file) with a
     /// `purpose` value of `account_requirement`.
     public var files: [String]?

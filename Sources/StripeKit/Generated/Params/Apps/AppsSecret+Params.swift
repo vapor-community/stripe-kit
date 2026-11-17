@@ -14,13 +14,13 @@ public struct AppsSecretCreateParams: StripeParams {
     public var payload: String
     /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
     /// account-scoped secrets or secrets scoped to their own user.
-    public var scope: AppsSecretCreateScope
+    public var scope: AppsSecretScope
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// The Unix timestamp for the expiry time of the secret, after which the secret deletes.
     public var expiresAt: Date?
 
-    public init(name: String, payload: String, scope: AppsSecretCreateScope, expand: [String]? = nil, expiresAt: Date? = nil) {
+    public init(name: String, payload: String, scope: AppsSecretScope, expand: [String]? = nil, expiresAt: Date? = nil) {
         self.name = name
         self.payload = payload
         self.scope = scope
@@ -42,11 +42,11 @@ public struct AppsSecretDeleteWhereParams: StripeParams {
     public var name: String
     /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
     /// account-scoped secrets or secrets scoped to their own user.
-    public var scope: AppsSecretDeleteWhereScope
+    public var scope: AppsSecretScope
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(name: String, scope: AppsSecretDeleteWhereScope, expand: [String]? = nil) {
+    public init(name: String, scope: AppsSecretScope, expand: [String]? = nil) {
         self.name = name
         self.scope = scope
         self.expand = expand
@@ -59,11 +59,11 @@ public struct AppsSecretFindParams: StripeParams {
     public var name: String
     /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
     /// account-scoped secrets or secrets scoped to their own user.
-    public var scope: AppsSecretFindScope
+    public var scope: AppsSecretScope
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(name: String, scope: AppsSecretFindScope, expand: [String]? = nil) {
+    public init(name: String, scope: AppsSecretScope, expand: [String]? = nil) {
         self.name = name
         self.scope = scope
         self.expand = expand
@@ -74,7 +74,7 @@ public struct AppsSecretFindParams: StripeParams {
 public struct AppsSecretListParams: StripeParams {
     /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
     /// account-scoped secrets or secrets scoped to their own user.
-    public var scope: AppsSecretListScope
+    public var scope: AppsSecretScope
     /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
     /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
     /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -89,7 +89,7 @@ public struct AppsSecretListParams: StripeParams {
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
 
-    public init(scope: AppsSecretListScope, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
+    public init(scope: AppsSecretScope, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil) {
         self.scope = scope
         self.endingBefore = endingBefore
         self.expand = expand
@@ -108,98 +108,20 @@ public struct AppsSecretListParams: StripeParams {
 
 /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
 /// account-scoped secrets or secrets scoped to their own user.
-public struct AppsSecretCreateScope: StripeParams {
+public struct AppsSecretScope: StripeParams {
     /// The secret scope type.
-    public var type: AppsSecretCreateScopeType
+    public var type: AppsSecretScopeType
     /// The user ID. This field is required if `type` is set to `user`, and should not be provided if `type`
     /// is set to `account`.
     public var user: String?
 
-    public init(type: AppsSecretCreateScopeType, user: String? = nil) {
+    public init(type: AppsSecretScopeType, user: String? = nil) {
         self.type = type
         self.user = user
     }
 }
 
-public struct AppsSecretCreateScopeType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var user: Self { .init(rawValue: "user") }
-}
-
-/// Specifies the scoping of the secret. Requests originating from UI extensions can only access
-/// account-scoped secrets or secrets scoped to their own user.
-public struct AppsSecretDeleteWhereScope: StripeParams {
-    /// The secret scope type.
-    public var type: AppsSecretDeleteWhereScopeType
-    /// The user ID. This field is required if `type` is set to `user`, and should not be provided if `type`
-    /// is set to `account`.
-    public var user: String?
-
-    public init(type: AppsSecretDeleteWhereScopeType, user: String? = nil) {
-        self.type = type
-        self.user = user
-    }
-}
-
-public struct AppsSecretDeleteWhereScopeType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var user: Self { .init(rawValue: "user") }
-}
-
-/// Specifies the scoping of the secret. Requests originating from UI extensions can only access
-/// account-scoped secrets or secrets scoped to their own user.
-public struct AppsSecretFindScope: StripeParams {
-    /// The secret scope type.
-    public var type: AppsSecretFindScopeType
-    /// The user ID. This field is required if `type` is set to `user`, and should not be provided if `type`
-    /// is set to `account`.
-    public var user: String?
-
-    public init(type: AppsSecretFindScopeType, user: String? = nil) {
-        self.type = type
-        self.user = user
-    }
-}
-
-public struct AppsSecretFindScopeType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var user: Self { .init(rawValue: "user") }
-}
-
-/// Specifies the scoping of the secret. Requests originating from UI extensions can only access
-/// account-scoped secrets or secrets scoped to their own user.
-public struct AppsSecretListScope: StripeParams {
-    /// The secret scope type.
-    public var type: AppsSecretListScopeType
-    /// The user ID. This field is required if `type` is set to `user`, and should not be provided if `type`
-    /// is set to `account`.
-    public var user: String?
-
-    public init(type: AppsSecretListScopeType, user: String? = nil) {
-        self.type = type
-        self.user = user
-    }
-}
-
-public struct AppsSecretListScopeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct AppsSecretScopeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

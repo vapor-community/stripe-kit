@@ -11,25 +11,25 @@ public struct BalanceSettingsUpdateParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Settings that apply to the [Payments Balance](https://docs.stripe.com/api/balance).
-    public var payments: BalanceSettingsUpdatePayments?
+    public var payments: BalanceSettingsPayments?
 
-    public init(expand: [String]? = nil, payments: BalanceSettingsUpdatePayments? = nil) {
+    public init(expand: [String]? = nil, payments: BalanceSettingsPayments? = nil) {
         self.expand = expand
         self.payments = payments
     }
 }
 
 /// Settings that apply to the [Payments Balance](https://docs.stripe.com/api/balance).
-public struct BalanceSettingsUpdatePayments: StripeParams {
+public struct BalanceSettingsPayments: StripeParams {
     /// A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank
     /// account. For details, see [Understanding Connect Account Balances](/connect/account-balances).
     public var debitNegativeBalances: Bool?
     /// Settings specific to the account's payouts.
-    public var payouts: BalanceSettingsUpdatePaymentsPayouts?
+    public var payouts: BalanceSettingsPaymentsPayouts?
     /// Settings related to the account's balance settlement timing.
-    public var settlementTiming: BalanceSettingsUpdatePaymentsSettlementTiming?
+    public var settlementTiming: BalanceSettingsPaymentsSettlementTiming?
 
-    public init(debitNegativeBalances: Bool? = nil, payouts: BalanceSettingsUpdatePaymentsPayouts? = nil, settlementTiming: BalanceSettingsUpdatePaymentsSettlementTiming? = nil) {
+    public init(debitNegativeBalances: Bool? = nil, payouts: BalanceSettingsPaymentsPayouts? = nil, settlementTiming: BalanceSettingsPaymentsSettlementTiming? = nil) {
         self.debitNegativeBalances = debitNegativeBalances
         self.payouts = payouts
         self.settlementTiming = settlementTiming
@@ -43,10 +43,10 @@ public struct BalanceSettingsUpdatePayments: StripeParams {
 }
 
 /// Settings specific to the account's payouts.
-public struct BalanceSettingsUpdatePaymentsPayouts: ClearableParams {
+public struct BalanceSettingsPaymentsPayouts: ClearableParams {
     /// Configures per-currency rules for automatically transferring funds from the payments balance to a
     /// FinancialAccount.
-    public var automaticTransferRulesByCurrency: [String: [BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrency]]?
+    public var automaticTransferRulesByCurrency: [String: [BalanceSettingsPaymentsPayoutsAutomaticTransferRulesByCurrency]]?
     /// The minimum balance amount to retain per currency after automatic payouts. Only funds that exceed
     /// these amounts are paid out. Learn more about the [minimum balances for automatic
     /// payouts](/payouts/minimum-balances-for-automatic-payouts).
@@ -54,14 +54,14 @@ public struct BalanceSettingsUpdatePaymentsPayouts: ClearableParams {
     /// Details on when funds from charges are available, and when they are paid out to an external account.
     /// For details, see our [Setting Bank and Debit Card
     /// Payouts](/connect/bank-transfers#payout-information) documentation.
-    public var schedule: BalanceSettingsUpdatePaymentsPayoutsSchedule?
+    public var schedule: BalanceSettingsPaymentsPayoutsSchedule?
     /// The text that appears on the bank account statement for payouts. If not set, this defaults to the
     /// platform's bank descriptor as set in the Dashboard.
     public var statementDescriptor: String?
     /// Fields to send empty, which clears them: `params.clear(.automaticTransferRulesByCurrency)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(automaticTransferRulesByCurrency: [String: [BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrency]]? = nil, minimumBalanceByCurrency: [String: Int]? = nil, schedule: BalanceSettingsUpdatePaymentsPayoutsSchedule? = nil, statementDescriptor: String? = nil) {
+    public init(automaticTransferRulesByCurrency: [String: [BalanceSettingsPaymentsPayoutsAutomaticTransferRulesByCurrency]]? = nil, minimumBalanceByCurrency: [String: Int]? = nil, schedule: BalanceSettingsPaymentsPayoutsSchedule? = nil, statementDescriptor: String? = nil) {
         self.automaticTransferRulesByCurrency = automaticTransferRulesByCurrency
         self.minimumBalanceByCurrency = minimumBalanceByCurrency
         self.schedule = schedule
@@ -83,16 +83,16 @@ public struct BalanceSettingsUpdatePaymentsPayouts: ClearableParams {
     }
 }
 
-public struct BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrency: StripeParams {
+public struct BalanceSettingsPaymentsPayoutsAutomaticTransferRulesByCurrency: StripeParams {
     /// The ID of the FinancialAccount that funds will be transferred to during automatic transfers.
     public var payoutMethod: String
     /// The type of automatic transfer rule.
-    public var type: BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrencyType
+    public var type: BalanceSettingsPaymentsPayoutsAutomaticTransferRulesByCurrencyType
     /// The maximum amount in minor units to transfer to the FinancialAccount. Required and only applicable
     /// when `type` is `transfer_up_to_amount`.
     public var transferUpToAmount: Int?
 
-    public init(payoutMethod: String, type: BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrencyType, transferUpToAmount: Int? = nil) {
+    public init(payoutMethod: String, type: BalanceSettingsPaymentsPayoutsAutomaticTransferRulesByCurrencyType, transferUpToAmount: Int? = nil) {
         self.payoutMethod = payoutMethod
         self.type = type
         self.transferUpToAmount = transferUpToAmount
@@ -105,7 +105,7 @@ public struct BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurren
     }
 }
 
-public struct BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrencyType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BalanceSettingsPaymentsPayoutsAutomaticTransferRulesByCurrencyType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -119,19 +119,19 @@ public struct BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurren
 /// Details on when funds from charges are available, and when they are paid out to an external account.
 /// For details, see our [Setting Bank and Debit Card
 /// Payouts](/connect/bank-transfers#payout-information) documentation.
-public struct BalanceSettingsUpdatePaymentsPayoutsSchedule: StripeParams {
+public struct BalanceSettingsPaymentsPayoutsSchedule: StripeParams {
     /// How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`.
     /// Default is `daily`.
-    public var interval: BalanceSettingsUpdatePaymentsPayoutsScheduleInterval?
+    public var interval: BalanceSettingsPaymentsPayoutsScheduleInterval?
     /// The days of the month when available funds are paid out, specified as an array of numbers between
     /// 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the
     /// last day of a shorter month. Required and applicable only if `interval` is `monthly`.
     public var monthlyPayoutDays: [Int]?
     /// The days of the week when available funds are paid out, specified as an array, e.g., [`monday`,
     /// `tuesday`]. Required and applicable only if `interval` is `weekly`.
-    public var weeklyPayoutDays: [BalanceSettingsUpdatePaymentsPayoutsScheduleWeeklyPayoutDays]?
+    public var weeklyPayoutDays: [BalanceSettingsPaymentsPayoutsScheduleWeeklyPayoutDays]?
 
-    public init(interval: BalanceSettingsUpdatePaymentsPayoutsScheduleInterval? = nil, monthlyPayoutDays: [Int]? = nil, weeklyPayoutDays: [BalanceSettingsUpdatePaymentsPayoutsScheduleWeeklyPayoutDays]? = nil) {
+    public init(interval: BalanceSettingsPaymentsPayoutsScheduleInterval? = nil, monthlyPayoutDays: [Int]? = nil, weeklyPayoutDays: [BalanceSettingsPaymentsPayoutsScheduleWeeklyPayoutDays]? = nil) {
         self.interval = interval
         self.monthlyPayoutDays = monthlyPayoutDays
         self.weeklyPayoutDays = weeklyPayoutDays
@@ -144,7 +144,7 @@ public struct BalanceSettingsUpdatePaymentsPayoutsSchedule: StripeParams {
     }
 }
 
-public struct BalanceSettingsUpdatePaymentsPayoutsScheduleInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct BalanceSettingsPaymentsPayoutsScheduleInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -157,7 +157,7 @@ public struct BalanceSettingsUpdatePaymentsPayoutsScheduleInterval: RawRepresent
     public static var weekly: Self { .init(rawValue: "weekly") }
 }
 
-public struct BalanceSettingsUpdatePaymentsPayoutsScheduleWeeklyPayoutDays: RawRepresentable, Codable, Hashable, Sendable {
+public struct BalanceSettingsPaymentsPayoutsScheduleWeeklyPayoutDays: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -172,7 +172,7 @@ public struct BalanceSettingsUpdatePaymentsPayoutsScheduleWeeklyPayoutDays: RawR
 }
 
 /// Settings related to the account's balance settlement timing.
-public struct BalanceSettingsUpdatePaymentsSettlementTiming: ClearableParams {
+public struct BalanceSettingsPaymentsSettlementTiming: ClearableParams {
     /// Change `delay_days` for this account, which determines the number of days charge funds are held
     /// before becoming available. The maximum value is 31. Passing an empty string to `delay_days_override`
     /// will return `delay_days` to the default, which is the lowest available value for the account. [Learn
@@ -181,11 +181,11 @@ public struct BalanceSettingsUpdatePaymentsSettlementTiming: ClearableParams {
     /// Customized start of day configuration for automatic payouts to group and send payments in local
     /// timezones with a customized day starting time. For details, see our [Customized start of
     /// day](/connect/customized-start-of-day) documentation.
-    public var startOfDay: BalanceSettingsUpdatePaymentsSettlementTimingStartOfDay?
+    public var startOfDay: BalanceSettingsPaymentsSettlementTimingStartOfDay?
     /// Fields to send empty, which clears them: `params.clear(.delayDaysOverride)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(delayDaysOverride: Int? = nil, startOfDay: BalanceSettingsUpdatePaymentsSettlementTimingStartOfDay? = nil) {
+    public init(delayDaysOverride: Int? = nil, startOfDay: BalanceSettingsPaymentsSettlementTimingStartOfDay? = nil) {
         self.delayDaysOverride = delayDaysOverride
         self.startOfDay = startOfDay
     }
@@ -203,7 +203,7 @@ public struct BalanceSettingsUpdatePaymentsSettlementTiming: ClearableParams {
     }
 }
 
-public struct BalanceSettingsUpdatePaymentsSettlementTimingStartOfDay: StripeParams {
+public struct BalanceSettingsPaymentsSettlementTimingStartOfDay: StripeParams {
     /// Hour at which the customized start of day begins according to the given timezone. Must be a
     /// [supported customized start of day
     /// hour](/connect/customized-start-of-day#available-timezones-and-cutoffs).

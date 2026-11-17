@@ -35,9 +35,9 @@ public struct TerminalOnboardingLinkCreateParams: StripeParams {
 /// Specific fields needed to generate the desired link type.
 public struct TerminalOnboardingLinkCreateLinkOptions: StripeParams {
     /// The options associated with the Apple Terms and Conditions link type.
-    public var appleTermsAndConditions: TerminalOnboardingLinkCreateLinkOptionsAppleTermsAndConditions?
+    public var appleTermsAndConditions: TerminalOnboardingLinkLinkOptionsAppleTermsAndConditions?
 
-    public init(appleTermsAndConditions: TerminalOnboardingLinkCreateLinkOptionsAppleTermsAndConditions? = nil) {
+    public init(appleTermsAndConditions: TerminalOnboardingLinkLinkOptionsAppleTermsAndConditions? = nil) {
         self.appleTermsAndConditions = appleTermsAndConditions
     }
 
@@ -47,7 +47,7 @@ public struct TerminalOnboardingLinkCreateLinkOptions: StripeParams {
 }
 
 /// The options associated with the Apple Terms and Conditions link type.
-public struct TerminalOnboardingLinkCreateLinkOptionsAppleTermsAndConditions: StripeParams {
+public struct TerminalOnboardingLinkLinkOptionsAppleTermsAndConditions: StripeParams {
     /// The business name of the merchant accepting Apple's Terms and Conditions.
     public var merchantDisplayName: String
     /// Whether the link should also support users relinking their Apple account.

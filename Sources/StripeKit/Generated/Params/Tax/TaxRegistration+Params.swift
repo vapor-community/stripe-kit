@@ -10,18 +10,18 @@ import Foundation
 public struct TaxRegistrationCreateParams: StripeParams {
     /// Time at which the Tax Registration becomes active. It can be either `now` to indicate the current
     /// time, or a future timestamp measured in seconds since the Unix epoch.
-    public var activeFrom: TaxRegistrationCreateActiveFrom
+    public var activeFrom: TaxRegistrationActiveFrom
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     public var country: String
     /// Specific options for a registration in the specified `country`.
-    public var countryOptions: TaxRegistrationCreateCountryOptions
+    public var countryOptions: TaxRegistrationCountryOptions
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// If set, the Tax Registration stops being active at this time. If not set, the Tax Registration will
     /// be active indefinitely. Timestamp measured in seconds since the Unix epoch.
     public var expiresAt: Date?
 
-    public init(activeFrom: TaxRegistrationCreateActiveFrom, country: String, countryOptions: TaxRegistrationCreateCountryOptions, expand: [String]? = nil, expiresAt: Date? = nil) {
+    public init(activeFrom: TaxRegistrationActiveFrom, country: String, countryOptions: TaxRegistrationCountryOptions, expand: [String]? = nil, expiresAt: Date? = nil) {
         self.activeFrom = activeFrom
         self.country = country
         self.countryOptions = countryOptions
@@ -76,17 +76,17 @@ public struct TaxRegistrationListParams: StripeParams {
 public struct TaxRegistrationUpdateParams: ClearableParams {
     /// Time at which the registration becomes active. It can be either `now` to indicate the current time,
     /// or a timestamp measured in seconds since the Unix epoch.
-    public var activeFrom: TaxRegistrationUpdateActiveFrom?
+    public var activeFrom: TaxRegistrationActiveFrom?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// If set, the registration stops being active at this time. If not set, the registration will be
     /// active indefinitely. It can be either `now` to indicate the current time, or a timestamp measured in
     /// seconds since the Unix epoch.
-    public var expiresAt: TaxRegistrationUpdateExpiresAt?
+    public var expiresAt: TaxRegistrationExpiresAt?
     /// Fields to send empty, which clears them: `params.clear(.expiresAt)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(activeFrom: TaxRegistrationUpdateActiveFrom? = nil, expand: [String]? = nil, expiresAt: TaxRegistrationUpdateExpiresAt? = nil) {
+    public init(activeFrom: TaxRegistrationActiveFrom? = nil, expand: [String]? = nil, expiresAt: TaxRegistrationExpiresAt? = nil) {
         self.activeFrom = activeFrom
         self.expand = expand
         self.expiresAt = expiresAt
@@ -106,7 +106,7 @@ public struct TaxRegistrationUpdateParams: ClearableParams {
 }
 
 /// One of the forms `active_from` accepts.
-public enum TaxRegistrationCreateActiveFrom: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum TaxRegistrationActiveFrom: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
@@ -122,7 +122,7 @@ public enum TaxRegistrationCreateActiveFrom: Codable, Sendable, ExpressibleByInt
             }
         }
         if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TaxRegistrationCreateActiveFrom matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TaxRegistrationActiveFrom matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -138,219 +138,219 @@ public enum TaxRegistrationCreateActiveFrom: Codable, Sendable, ExpressibleByInt
 }
 
 /// Specific options for a registration in the specified `country`.
-public struct TaxRegistrationCreateCountryOptions: StripeParams {
+public struct TaxRegistrationCountryOptions: StripeParams {
     /// Options for the registration in AE.
-    public var ae: TaxRegistrationCreateCountryOptionsAe?
+    public var ae: TaxRegistrationCountryOptionsAe?
     /// Options for the registration in AL.
-    public var al: TaxRegistrationCreateCountryOptionsAl?
+    public var al: TaxRegistrationCountryOptionsAl?
     /// Options for the registration in AM.
-    public var am: TaxRegistrationCreateCountryOptionsAm?
+    public var am: TaxRegistrationCountryOptionsAm?
     /// Options for the registration in AO.
-    public var ao: TaxRegistrationCreateCountryOptionsAo?
+    public var ao: TaxRegistrationCountryOptionsAo?
     /// Options for the registration in AT.
-    public var at: TaxRegistrationCreateCountryOptionsAt?
+    public var at: TaxRegistrationCountryOptionsAt?
     /// Options for the registration in AU.
-    public var au: TaxRegistrationCreateCountryOptionsAu?
+    public var au: TaxRegistrationCountryOptionsAu?
     /// Options for the registration in AW.
-    public var aw: TaxRegistrationCreateCountryOptionsAw?
+    public var aw: TaxRegistrationCountryOptionsAw?
     /// Options for the registration in AZ.
-    public var az: TaxRegistrationCreateCountryOptionsAz?
+    public var az: TaxRegistrationCountryOptionsAz?
     /// Options for the registration in BA.
-    public var ba: TaxRegistrationCreateCountryOptionsBa?
+    public var ba: TaxRegistrationCountryOptionsBa?
     /// Options for the registration in BB.
-    public var bb: TaxRegistrationCreateCountryOptionsBb?
+    public var bb: TaxRegistrationCountryOptionsBb?
     /// Options for the registration in BD.
-    public var bd: TaxRegistrationCreateCountryOptionsBd?
+    public var bd: TaxRegistrationCountryOptionsBd?
     /// Options for the registration in BE.
-    public var be: TaxRegistrationCreateCountryOptionsBe?
+    public var be: TaxRegistrationCountryOptionsBe?
     /// Options for the registration in BF.
-    public var bf: TaxRegistrationCreateCountryOptionsBf?
+    public var bf: TaxRegistrationCountryOptionsBf?
     /// Options for the registration in BG.
-    public var bg: TaxRegistrationCreateCountryOptionsBg?
+    public var bg: TaxRegistrationCountryOptionsBg?
     /// Options for the registration in BH.
-    public var bh: TaxRegistrationCreateCountryOptionsBh?
+    public var bh: TaxRegistrationCountryOptionsBh?
     /// Options for the registration in BJ.
-    public var bj: TaxRegistrationCreateCountryOptionsBj?
+    public var bj: TaxRegistrationCountryOptionsBj?
     /// Options for the registration in BS.
-    public var bs: TaxRegistrationCreateCountryOptionsBs?
+    public var bs: TaxRegistrationCountryOptionsBs?
     /// Options for the registration in BW.
-    public var bw: TaxRegistrationCreateCountryOptionsBw?
+    public var bw: TaxRegistrationCountryOptionsBw?
     /// Options for the registration in BY.
-    public var by: TaxRegistrationCreateCountryOptionsBy?
+    public var by: TaxRegistrationCountryOptionsBy?
     /// Options for the registration in CA.
-    public var ca: TaxRegistrationCreateCountryOptionsCa?
+    public var ca: TaxRegistrationCountryOptionsCa?
     /// Options for the registration in CD.
-    public var cd: TaxRegistrationCreateCountryOptionsCd?
+    public var cd: TaxRegistrationCountryOptionsCd?
     /// Options for the registration in CH.
-    public var ch: TaxRegistrationCreateCountryOptionsCh?
+    public var ch: TaxRegistrationCountryOptionsCh?
     /// Options for the registration in CI.
-    public var ci: TaxRegistrationCreateCountryOptionsCi?
+    public var ci: TaxRegistrationCountryOptionsCi?
     /// Options for the registration in CL.
-    public var cl: TaxRegistrationCreateCountryOptionsCl?
+    public var cl: TaxRegistrationCountryOptionsCl?
     /// Options for the registration in CM.
-    public var cm: TaxRegistrationCreateCountryOptionsCm?
+    public var cm: TaxRegistrationCountryOptionsCm?
     /// Options for the registration in CO.
-    public var co: TaxRegistrationCreateCountryOptionsCo?
+    public var co: TaxRegistrationCountryOptionsCo?
     /// Options for the registration in CR.
-    public var cr: TaxRegistrationCreateCountryOptionsCr?
+    public var cr: TaxRegistrationCountryOptionsCr?
     /// Options for the registration in CV.
-    public var cv: TaxRegistrationCreateCountryOptionsCv?
+    public var cv: TaxRegistrationCountryOptionsCv?
     /// Options for the registration in CY.
-    public var cy: TaxRegistrationCreateCountryOptionsCy?
+    public var cy: TaxRegistrationCountryOptionsCy?
     /// Options for the registration in CZ.
-    public var cz: TaxRegistrationCreateCountryOptionsCz?
+    public var cz: TaxRegistrationCountryOptionsCz?
     /// Options for the registration in DE.
-    public var de: TaxRegistrationCreateCountryOptionsDe?
+    public var de: TaxRegistrationCountryOptionsDe?
     /// Options for the registration in DK.
-    public var dk: TaxRegistrationCreateCountryOptionsDk?
+    public var dk: TaxRegistrationCountryOptionsDk?
     /// Options for the registration in EC.
-    public var ec: TaxRegistrationCreateCountryOptionsEc?
+    public var ec: TaxRegistrationCountryOptionsEc?
     /// Options for the registration in EE.
-    public var ee: TaxRegistrationCreateCountryOptionsEe?
+    public var ee: TaxRegistrationCountryOptionsEe?
     /// Options for the registration in EG.
-    public var eg: TaxRegistrationCreateCountryOptionsEg?
+    public var eg: TaxRegistrationCountryOptionsEg?
     /// Options for the registration in ES.
-    public var es: TaxRegistrationCreateCountryOptionsEs?
+    public var es: TaxRegistrationCountryOptionsEs?
     /// Options for the registration in ET.
-    public var et: TaxRegistrationCreateCountryOptionsEt?
+    public var et: TaxRegistrationCountryOptionsEt?
     /// Options for the registration in FI.
-    public var fi: TaxRegistrationCreateCountryOptionsFi?
+    public var fi: TaxRegistrationCountryOptionsFi?
     /// Options for the registration in FR.
-    public var fr: TaxRegistrationCreateCountryOptionsFr?
+    public var fr: TaxRegistrationCountryOptionsFr?
     /// Options for the registration in GB.
-    public var gb: TaxRegistrationCreateCountryOptionsGb?
+    public var gb: TaxRegistrationCountryOptionsGb?
     /// Options for the registration in GE.
-    public var ge: TaxRegistrationCreateCountryOptionsGe?
+    public var ge: TaxRegistrationCountryOptionsGe?
     /// Options for the registration in GH.
-    public var gh: TaxRegistrationCreateCountryOptionsGh?
+    public var gh: TaxRegistrationCountryOptionsGh?
     /// Options for the registration in GN.
-    public var gn: TaxRegistrationCreateCountryOptionsGn?
+    public var gn: TaxRegistrationCountryOptionsGn?
     /// Options for the registration in GR.
-    public var gr: TaxRegistrationCreateCountryOptionsGr?
+    public var gr: TaxRegistrationCountryOptionsGr?
     /// Options for the registration in HR.
-    public var hr: TaxRegistrationCreateCountryOptionsHr?
+    public var hr: TaxRegistrationCountryOptionsHr?
     /// Options for the registration in HU.
-    public var hu: TaxRegistrationCreateCountryOptionsHu?
+    public var hu: TaxRegistrationCountryOptionsHu?
     /// Options for the registration in ID.
-    public var id: TaxRegistrationCreateCountryOptionsId?
+    public var id: TaxRegistrationCountryOptionsId?
     /// Options for the registration in IE.
-    public var ie: TaxRegistrationCreateCountryOptionsIe?
+    public var ie: TaxRegistrationCountryOptionsIe?
     /// Options for the registration in IN.
-    public var `in`: TaxRegistrationCreateCountryOptionsIn?
+    public var `in`: TaxRegistrationCountryOptionsIn?
     /// Options for the registration in IS.
-    public var `is`: TaxRegistrationCreateCountryOptionsIs?
+    public var `is`: TaxRegistrationCountryOptionsIs?
     /// Options for the registration in IT.
-    public var it: TaxRegistrationCreateCountryOptionsIt?
+    public var it: TaxRegistrationCountryOptionsIt?
     /// Options for the registration in JP.
-    public var jp: TaxRegistrationCreateCountryOptionsJp?
+    public var jp: TaxRegistrationCountryOptionsJp?
     /// Options for the registration in KE.
-    public var ke: TaxRegistrationCreateCountryOptionsKe?
+    public var ke: TaxRegistrationCountryOptionsKe?
     /// Options for the registration in KG.
-    public var kg: TaxRegistrationCreateCountryOptionsKg?
+    public var kg: TaxRegistrationCountryOptionsKg?
     /// Options for the registration in KH.
-    public var kh: TaxRegistrationCreateCountryOptionsKh?
+    public var kh: TaxRegistrationCountryOptionsKh?
     /// Options for the registration in KR.
-    public var kr: TaxRegistrationCreateCountryOptionsKr?
+    public var kr: TaxRegistrationCountryOptionsKr?
     /// Options for the registration in KZ.
-    public var kz: TaxRegistrationCreateCountryOptionsKz?
+    public var kz: TaxRegistrationCountryOptionsKz?
     /// Options for the registration in LA.
-    public var la: TaxRegistrationCreateCountryOptionsLa?
+    public var la: TaxRegistrationCountryOptionsLa?
     /// Options for the registration in LK.
-    public var lk: TaxRegistrationCreateCountryOptionsLk?
+    public var lk: TaxRegistrationCountryOptionsLk?
     /// Options for the registration in LT.
-    public var lt: TaxRegistrationCreateCountryOptionsLt?
+    public var lt: TaxRegistrationCountryOptionsLt?
     /// Options for the registration in LU.
-    public var lu: TaxRegistrationCreateCountryOptionsLu?
+    public var lu: TaxRegistrationCountryOptionsLu?
     /// Options for the registration in LV.
-    public var lv: TaxRegistrationCreateCountryOptionsLv?
+    public var lv: TaxRegistrationCountryOptionsLv?
     /// Options for the registration in MA.
-    public var ma: TaxRegistrationCreateCountryOptionsMa?
+    public var ma: TaxRegistrationCountryOptionsMa?
     /// Options for the registration in MD.
-    public var md: TaxRegistrationCreateCountryOptionsMd?
+    public var md: TaxRegistrationCountryOptionsMd?
     /// Options for the registration in ME.
-    public var me: TaxRegistrationCreateCountryOptionsMe?
+    public var me: TaxRegistrationCountryOptionsMe?
     /// Options for the registration in MK.
-    public var mk: TaxRegistrationCreateCountryOptionsMk?
+    public var mk: TaxRegistrationCountryOptionsMk?
     /// Options for the registration in MR.
-    public var mr: TaxRegistrationCreateCountryOptionsMr?
+    public var mr: TaxRegistrationCountryOptionsMr?
     /// Options for the registration in MT.
-    public var mt: TaxRegistrationCreateCountryOptionsMt?
+    public var mt: TaxRegistrationCountryOptionsMt?
     /// Options for the registration in MU.
-    public var mu: TaxRegistrationCreateCountryOptionsMu?
+    public var mu: TaxRegistrationCountryOptionsMu?
     /// Options for the registration in MX.
-    public var mx: TaxRegistrationCreateCountryOptionsMx?
+    public var mx: TaxRegistrationCountryOptionsMx?
     /// Options for the registration in MY.
-    public var my: TaxRegistrationCreateCountryOptionsMy?
+    public var my: TaxRegistrationCountryOptionsMy?
     /// Options for the registration in NG.
-    public var ng: TaxRegistrationCreateCountryOptionsNg?
+    public var ng: TaxRegistrationCountryOptionsNg?
     /// Options for the registration in NL.
-    public var nl: TaxRegistrationCreateCountryOptionsNl?
+    public var nl: TaxRegistrationCountryOptionsNl?
     /// Options for the registration in NO.
-    public var no: TaxRegistrationCreateCountryOptionsNo?
+    public var no: TaxRegistrationCountryOptionsNo?
     /// Options for the registration in NP.
-    public var np: TaxRegistrationCreateCountryOptionsNp?
+    public var np: TaxRegistrationCountryOptionsNp?
     /// Options for the registration in NZ.
-    public var nz: TaxRegistrationCreateCountryOptionsNz?
+    public var nz: TaxRegistrationCountryOptionsNz?
     /// Options for the registration in OM.
-    public var om: TaxRegistrationCreateCountryOptionsOm?
+    public var om: TaxRegistrationCountryOptionsOm?
     /// Options for the registration in PE.
-    public var pe: TaxRegistrationCreateCountryOptionsPe?
+    public var pe: TaxRegistrationCountryOptionsPe?
     /// Options for the registration in PH.
-    public var ph: TaxRegistrationCreateCountryOptionsPh?
+    public var ph: TaxRegistrationCountryOptionsPh?
     /// Options for the registration in PL.
-    public var pl: TaxRegistrationCreateCountryOptionsPl?
+    public var pl: TaxRegistrationCountryOptionsPl?
     /// Options for the registration in PT.
-    public var pt: TaxRegistrationCreateCountryOptionsPt?
+    public var pt: TaxRegistrationCountryOptionsPt?
     /// Options for the registration in RO.
-    public var ro: TaxRegistrationCreateCountryOptionsRo?
+    public var ro: TaxRegistrationCountryOptionsRo?
     /// Options for the registration in RS.
-    public var rs: TaxRegistrationCreateCountryOptionsRs?
+    public var rs: TaxRegistrationCountryOptionsRs?
     /// Options for the registration in RU.
-    public var ru: TaxRegistrationCreateCountryOptionsRu?
+    public var ru: TaxRegistrationCountryOptionsRu?
     /// Options for the registration in SA.
-    public var sa: TaxRegistrationCreateCountryOptionsSa?
+    public var sa: TaxRegistrationCountryOptionsSa?
     /// Options for the registration in SE.
-    public var se: TaxRegistrationCreateCountryOptionsSe?
+    public var se: TaxRegistrationCountryOptionsSe?
     /// Options for the registration in SG.
-    public var sg: TaxRegistrationCreateCountryOptionsSg?
+    public var sg: TaxRegistrationCountryOptionsSg?
     /// Options for the registration in SI.
-    public var si: TaxRegistrationCreateCountryOptionsSi?
+    public var si: TaxRegistrationCountryOptionsSi?
     /// Options for the registration in SK.
-    public var sk: TaxRegistrationCreateCountryOptionsSk?
+    public var sk: TaxRegistrationCountryOptionsSk?
     /// Options for the registration in SN.
-    public var sn: TaxRegistrationCreateCountryOptionsSn?
+    public var sn: TaxRegistrationCountryOptionsSn?
     /// Options for the registration in SR.
-    public var sr: TaxRegistrationCreateCountryOptionsSr?
+    public var sr: TaxRegistrationCountryOptionsSr?
     /// Options for the registration in TH.
-    public var th: TaxRegistrationCreateCountryOptionsTh?
+    public var th: TaxRegistrationCountryOptionsTh?
     /// Options for the registration in TJ.
-    public var tj: TaxRegistrationCreateCountryOptionsTj?
+    public var tj: TaxRegistrationCountryOptionsTj?
     /// Options for the registration in TR.
-    public var tr: TaxRegistrationCreateCountryOptionsTr?
+    public var tr: TaxRegistrationCountryOptionsTr?
     /// Options for the registration in TW.
-    public var tw: TaxRegistrationCreateCountryOptionsTw?
+    public var tw: TaxRegistrationCountryOptionsTw?
     /// Options for the registration in TZ.
-    public var tz: TaxRegistrationCreateCountryOptionsTz?
+    public var tz: TaxRegistrationCountryOptionsTz?
     /// Options for the registration in UA.
-    public var ua: TaxRegistrationCreateCountryOptionsUa?
+    public var ua: TaxRegistrationCountryOptionsUa?
     /// Options for the registration in UG.
-    public var ug: TaxRegistrationCreateCountryOptionsUg?
+    public var ug: TaxRegistrationCountryOptionsUg?
     /// Options for the registration in US.
-    public var us: TaxRegistrationCreateCountryOptionsUs?
+    public var us: TaxRegistrationCountryOptionsUs?
     /// Options for the registration in UY.
-    public var uy: TaxRegistrationCreateCountryOptionsUy?
+    public var uy: TaxRegistrationCountryOptionsUy?
     /// Options for the registration in UZ.
-    public var uz: TaxRegistrationCreateCountryOptionsUz?
+    public var uz: TaxRegistrationCountryOptionsUz?
     /// Options for the registration in VN.
-    public var vn: TaxRegistrationCreateCountryOptionsVn?
+    public var vn: TaxRegistrationCountryOptionsVn?
     /// Options for the registration in ZA.
-    public var za: TaxRegistrationCreateCountryOptionsZa?
+    public var za: TaxRegistrationCountryOptionsZa?
     /// Options for the registration in ZM.
-    public var zm: TaxRegistrationCreateCountryOptionsZm?
+    public var zm: TaxRegistrationCountryOptionsZm?
     /// Options for the registration in ZW.
-    public var zw: TaxRegistrationCreateCountryOptionsZw?
+    public var zw: TaxRegistrationCountryOptionsZw?
 
-    public init(ae: TaxRegistrationCreateCountryOptionsAe? = nil, al: TaxRegistrationCreateCountryOptionsAl? = nil, am: TaxRegistrationCreateCountryOptionsAm? = nil, ao: TaxRegistrationCreateCountryOptionsAo? = nil, at: TaxRegistrationCreateCountryOptionsAt? = nil, au: TaxRegistrationCreateCountryOptionsAu? = nil, aw: TaxRegistrationCreateCountryOptionsAw? = nil, az: TaxRegistrationCreateCountryOptionsAz? = nil, ba: TaxRegistrationCreateCountryOptionsBa? = nil, bb: TaxRegistrationCreateCountryOptionsBb? = nil, bd: TaxRegistrationCreateCountryOptionsBd? = nil, be: TaxRegistrationCreateCountryOptionsBe? = nil, bf: TaxRegistrationCreateCountryOptionsBf? = nil, bg: TaxRegistrationCreateCountryOptionsBg? = nil, bh: TaxRegistrationCreateCountryOptionsBh? = nil, bj: TaxRegistrationCreateCountryOptionsBj? = nil, bs: TaxRegistrationCreateCountryOptionsBs? = nil, bw: TaxRegistrationCreateCountryOptionsBw? = nil, by: TaxRegistrationCreateCountryOptionsBy? = nil, ca: TaxRegistrationCreateCountryOptionsCa? = nil, cd: TaxRegistrationCreateCountryOptionsCd? = nil, ch: TaxRegistrationCreateCountryOptionsCh? = nil, ci: TaxRegistrationCreateCountryOptionsCi? = nil, cl: TaxRegistrationCreateCountryOptionsCl? = nil, cm: TaxRegistrationCreateCountryOptionsCm? = nil, co: TaxRegistrationCreateCountryOptionsCo? = nil, cr: TaxRegistrationCreateCountryOptionsCr? = nil, cv: TaxRegistrationCreateCountryOptionsCv? = nil, cy: TaxRegistrationCreateCountryOptionsCy? = nil, cz: TaxRegistrationCreateCountryOptionsCz? = nil, de: TaxRegistrationCreateCountryOptionsDe? = nil, dk: TaxRegistrationCreateCountryOptionsDk? = nil, ec: TaxRegistrationCreateCountryOptionsEc? = nil, ee: TaxRegistrationCreateCountryOptionsEe? = nil, eg: TaxRegistrationCreateCountryOptionsEg? = nil, es: TaxRegistrationCreateCountryOptionsEs? = nil, et: TaxRegistrationCreateCountryOptionsEt? = nil, fi: TaxRegistrationCreateCountryOptionsFi? = nil, fr: TaxRegistrationCreateCountryOptionsFr? = nil, gb: TaxRegistrationCreateCountryOptionsGb? = nil, ge: TaxRegistrationCreateCountryOptionsGe? = nil, gh: TaxRegistrationCreateCountryOptionsGh? = nil, gn: TaxRegistrationCreateCountryOptionsGn? = nil, gr: TaxRegistrationCreateCountryOptionsGr? = nil, hr: TaxRegistrationCreateCountryOptionsHr? = nil, hu: TaxRegistrationCreateCountryOptionsHu? = nil, id: TaxRegistrationCreateCountryOptionsId? = nil, ie: TaxRegistrationCreateCountryOptionsIe? = nil, `in`: TaxRegistrationCreateCountryOptionsIn? = nil, `is`: TaxRegistrationCreateCountryOptionsIs? = nil, it: TaxRegistrationCreateCountryOptionsIt? = nil, jp: TaxRegistrationCreateCountryOptionsJp? = nil, ke: TaxRegistrationCreateCountryOptionsKe? = nil, kg: TaxRegistrationCreateCountryOptionsKg? = nil, kh: TaxRegistrationCreateCountryOptionsKh? = nil, kr: TaxRegistrationCreateCountryOptionsKr? = nil, kz: TaxRegistrationCreateCountryOptionsKz? = nil, la: TaxRegistrationCreateCountryOptionsLa? = nil, lk: TaxRegistrationCreateCountryOptionsLk? = nil, lt: TaxRegistrationCreateCountryOptionsLt? = nil, lu: TaxRegistrationCreateCountryOptionsLu? = nil, lv: TaxRegistrationCreateCountryOptionsLv? = nil, ma: TaxRegistrationCreateCountryOptionsMa? = nil, md: TaxRegistrationCreateCountryOptionsMd? = nil, me: TaxRegistrationCreateCountryOptionsMe? = nil, mk: TaxRegistrationCreateCountryOptionsMk? = nil, mr: TaxRegistrationCreateCountryOptionsMr? = nil, mt: TaxRegistrationCreateCountryOptionsMt? = nil, mu: TaxRegistrationCreateCountryOptionsMu? = nil, mx: TaxRegistrationCreateCountryOptionsMx? = nil, my: TaxRegistrationCreateCountryOptionsMy? = nil, ng: TaxRegistrationCreateCountryOptionsNg? = nil, nl: TaxRegistrationCreateCountryOptionsNl? = nil, no: TaxRegistrationCreateCountryOptionsNo? = nil, np: TaxRegistrationCreateCountryOptionsNp? = nil, nz: TaxRegistrationCreateCountryOptionsNz? = nil, om: TaxRegistrationCreateCountryOptionsOm? = nil, pe: TaxRegistrationCreateCountryOptionsPe? = nil, ph: TaxRegistrationCreateCountryOptionsPh? = nil, pl: TaxRegistrationCreateCountryOptionsPl? = nil, pt: TaxRegistrationCreateCountryOptionsPt? = nil, ro: TaxRegistrationCreateCountryOptionsRo? = nil, rs: TaxRegistrationCreateCountryOptionsRs? = nil, ru: TaxRegistrationCreateCountryOptionsRu? = nil, sa: TaxRegistrationCreateCountryOptionsSa? = nil, se: TaxRegistrationCreateCountryOptionsSe? = nil, sg: TaxRegistrationCreateCountryOptionsSg? = nil, si: TaxRegistrationCreateCountryOptionsSi? = nil, sk: TaxRegistrationCreateCountryOptionsSk? = nil, sn: TaxRegistrationCreateCountryOptionsSn? = nil, sr: TaxRegistrationCreateCountryOptionsSr? = nil, th: TaxRegistrationCreateCountryOptionsTh? = nil, tj: TaxRegistrationCreateCountryOptionsTj? = nil, tr: TaxRegistrationCreateCountryOptionsTr? = nil, tw: TaxRegistrationCreateCountryOptionsTw? = nil, tz: TaxRegistrationCreateCountryOptionsTz? = nil, ua: TaxRegistrationCreateCountryOptionsUa? = nil, ug: TaxRegistrationCreateCountryOptionsUg? = nil, us: TaxRegistrationCreateCountryOptionsUs? = nil, uy: TaxRegistrationCreateCountryOptionsUy? = nil, uz: TaxRegistrationCreateCountryOptionsUz? = nil, vn: TaxRegistrationCreateCountryOptionsVn? = nil, za: TaxRegistrationCreateCountryOptionsZa? = nil, zm: TaxRegistrationCreateCountryOptionsZm? = nil, zw: TaxRegistrationCreateCountryOptionsZw? = nil) {
+    public init(ae: TaxRegistrationCountryOptionsAe? = nil, al: TaxRegistrationCountryOptionsAl? = nil, am: TaxRegistrationCountryOptionsAm? = nil, ao: TaxRegistrationCountryOptionsAo? = nil, at: TaxRegistrationCountryOptionsAt? = nil, au: TaxRegistrationCountryOptionsAu? = nil, aw: TaxRegistrationCountryOptionsAw? = nil, az: TaxRegistrationCountryOptionsAz? = nil, ba: TaxRegistrationCountryOptionsBa? = nil, bb: TaxRegistrationCountryOptionsBb? = nil, bd: TaxRegistrationCountryOptionsBd? = nil, be: TaxRegistrationCountryOptionsBe? = nil, bf: TaxRegistrationCountryOptionsBf? = nil, bg: TaxRegistrationCountryOptionsBg? = nil, bh: TaxRegistrationCountryOptionsBh? = nil, bj: TaxRegistrationCountryOptionsBj? = nil, bs: TaxRegistrationCountryOptionsBs? = nil, bw: TaxRegistrationCountryOptionsBw? = nil, by: TaxRegistrationCountryOptionsBy? = nil, ca: TaxRegistrationCountryOptionsCa? = nil, cd: TaxRegistrationCountryOptionsCd? = nil, ch: TaxRegistrationCountryOptionsCh? = nil, ci: TaxRegistrationCountryOptionsCi? = nil, cl: TaxRegistrationCountryOptionsCl? = nil, cm: TaxRegistrationCountryOptionsCm? = nil, co: TaxRegistrationCountryOptionsCo? = nil, cr: TaxRegistrationCountryOptionsCr? = nil, cv: TaxRegistrationCountryOptionsCv? = nil, cy: TaxRegistrationCountryOptionsCy? = nil, cz: TaxRegistrationCountryOptionsCz? = nil, de: TaxRegistrationCountryOptionsDe? = nil, dk: TaxRegistrationCountryOptionsDk? = nil, ec: TaxRegistrationCountryOptionsEc? = nil, ee: TaxRegistrationCountryOptionsEe? = nil, eg: TaxRegistrationCountryOptionsEg? = nil, es: TaxRegistrationCountryOptionsEs? = nil, et: TaxRegistrationCountryOptionsEt? = nil, fi: TaxRegistrationCountryOptionsFi? = nil, fr: TaxRegistrationCountryOptionsFr? = nil, gb: TaxRegistrationCountryOptionsGb? = nil, ge: TaxRegistrationCountryOptionsGe? = nil, gh: TaxRegistrationCountryOptionsGh? = nil, gn: TaxRegistrationCountryOptionsGn? = nil, gr: TaxRegistrationCountryOptionsGr? = nil, hr: TaxRegistrationCountryOptionsHr? = nil, hu: TaxRegistrationCountryOptionsHu? = nil, id: TaxRegistrationCountryOptionsId? = nil, ie: TaxRegistrationCountryOptionsIe? = nil, `in`: TaxRegistrationCountryOptionsIn? = nil, `is`: TaxRegistrationCountryOptionsIs? = nil, it: TaxRegistrationCountryOptionsIt? = nil, jp: TaxRegistrationCountryOptionsJp? = nil, ke: TaxRegistrationCountryOptionsKe? = nil, kg: TaxRegistrationCountryOptionsKg? = nil, kh: TaxRegistrationCountryOptionsKh? = nil, kr: TaxRegistrationCountryOptionsKr? = nil, kz: TaxRegistrationCountryOptionsKz? = nil, la: TaxRegistrationCountryOptionsLa? = nil, lk: TaxRegistrationCountryOptionsLk? = nil, lt: TaxRegistrationCountryOptionsLt? = nil, lu: TaxRegistrationCountryOptionsLu? = nil, lv: TaxRegistrationCountryOptionsLv? = nil, ma: TaxRegistrationCountryOptionsMa? = nil, md: TaxRegistrationCountryOptionsMd? = nil, me: TaxRegistrationCountryOptionsMe? = nil, mk: TaxRegistrationCountryOptionsMk? = nil, mr: TaxRegistrationCountryOptionsMr? = nil, mt: TaxRegistrationCountryOptionsMt? = nil, mu: TaxRegistrationCountryOptionsMu? = nil, mx: TaxRegistrationCountryOptionsMx? = nil, my: TaxRegistrationCountryOptionsMy? = nil, ng: TaxRegistrationCountryOptionsNg? = nil, nl: TaxRegistrationCountryOptionsNl? = nil, no: TaxRegistrationCountryOptionsNo? = nil, np: TaxRegistrationCountryOptionsNp? = nil, nz: TaxRegistrationCountryOptionsNz? = nil, om: TaxRegistrationCountryOptionsOm? = nil, pe: TaxRegistrationCountryOptionsPe? = nil, ph: TaxRegistrationCountryOptionsPh? = nil, pl: TaxRegistrationCountryOptionsPl? = nil, pt: TaxRegistrationCountryOptionsPt? = nil, ro: TaxRegistrationCountryOptionsRo? = nil, rs: TaxRegistrationCountryOptionsRs? = nil, ru: TaxRegistrationCountryOptionsRu? = nil, sa: TaxRegistrationCountryOptionsSa? = nil, se: TaxRegistrationCountryOptionsSe? = nil, sg: TaxRegistrationCountryOptionsSg? = nil, si: TaxRegistrationCountryOptionsSi? = nil, sk: TaxRegistrationCountryOptionsSk? = nil, sn: TaxRegistrationCountryOptionsSn? = nil, sr: TaxRegistrationCountryOptionsSr? = nil, th: TaxRegistrationCountryOptionsTh? = nil, tj: TaxRegistrationCountryOptionsTj? = nil, tr: TaxRegistrationCountryOptionsTr? = nil, tw: TaxRegistrationCountryOptionsTw? = nil, tz: TaxRegistrationCountryOptionsTz? = nil, ua: TaxRegistrationCountryOptionsUa? = nil, ug: TaxRegistrationCountryOptionsUg? = nil, us: TaxRegistrationCountryOptionsUs? = nil, uy: TaxRegistrationCountryOptionsUy? = nil, uz: TaxRegistrationCountryOptionsUz? = nil, vn: TaxRegistrationCountryOptionsVn? = nil, za: TaxRegistrationCountryOptionsZa? = nil, zm: TaxRegistrationCountryOptionsZm? = nil, zw: TaxRegistrationCountryOptionsZw? = nil) {
         self.ae = ae
         self.al = al
         self.am = am
@@ -460,19 +460,19 @@ public struct TaxRegistrationCreateCountryOptions: StripeParams {
 }
 
 /// Options for the registration in AE.
-public struct TaxRegistrationCreateCountryOptionsAe: StripeParams {
+public struct TaxRegistrationCountryOptionsAe: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsAeType
+    public var type: TaxRegistrationCountryOptionsAeType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsAeStandard?
+    public var standard: TaxRegistrationCountryOptionsAeStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsAeType, standard: TaxRegistrationCreateCountryOptionsAeStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsAeType, standard: TaxRegistrationCountryOptionsAeStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -483,11 +483,11 @@ public struct TaxRegistrationCreateCountryOptionsAeType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsAeStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsAeStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAeStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsAeStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAeStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsAeStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -496,7 +496,7 @@ public struct TaxRegistrationCreateCountryOptionsAeStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -508,19 +508,19 @@ public struct TaxRegistrationCreateCountryOptionsAeStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in AL.
-public struct TaxRegistrationCreateCountryOptionsAl: StripeParams {
+public struct TaxRegistrationCountryOptionsAl: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsAlType
+    public var type: TaxRegistrationCountryOptionsAlType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsAlStandard?
+    public var standard: TaxRegistrationCountryOptionsAlStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsAlType, standard: TaxRegistrationCreateCountryOptionsAlStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsAlType, standard: TaxRegistrationCountryOptionsAlStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAlType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAlType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -531,11 +531,11 @@ public struct TaxRegistrationCreateCountryOptionsAlType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsAlStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsAlStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAlStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsAlStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAlStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsAlStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -544,7 +544,7 @@ public struct TaxRegistrationCreateCountryOptionsAlStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAlStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAlStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -556,16 +556,16 @@ public struct TaxRegistrationCreateCountryOptionsAlStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in AM.
-public struct TaxRegistrationCreateCountryOptionsAm: StripeParams {
+public struct TaxRegistrationCountryOptionsAm: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsAmType
+    public var type: TaxRegistrationCountryOptionsAmType
 
-    public init(type: TaxRegistrationCreateCountryOptionsAmType) {
+    public init(type: TaxRegistrationCountryOptionsAmType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAmType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAmType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -576,19 +576,19 @@ public struct TaxRegistrationCreateCountryOptionsAmType: RawRepresentable, Codab
 }
 
 /// Options for the registration in AO.
-public struct TaxRegistrationCreateCountryOptionsAo: StripeParams {
+public struct TaxRegistrationCountryOptionsAo: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsAoType
+    public var type: TaxRegistrationCountryOptionsAoType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsAoStandard?
+    public var standard: TaxRegistrationCountryOptionsAoStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsAoType, standard: TaxRegistrationCreateCountryOptionsAoStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsAoType, standard: TaxRegistrationCountryOptionsAoStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAoType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAoType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -599,11 +599,11 @@ public struct TaxRegistrationCreateCountryOptionsAoType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsAoStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsAoStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAoStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsAoStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAoStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsAoStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -612,7 +612,7 @@ public struct TaxRegistrationCreateCountryOptionsAoStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAoStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAoStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -624,19 +624,19 @@ public struct TaxRegistrationCreateCountryOptionsAoStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in AT.
-public struct TaxRegistrationCreateCountryOptionsAt: StripeParams {
+public struct TaxRegistrationCountryOptionsAt: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsAtType
+    public var type: TaxRegistrationCountryOptionsAtType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsAtStandard?
+    public var standard: TaxRegistrationCountryOptionsAtStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsAtType, standard: TaxRegistrationCreateCountryOptionsAtStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsAtType, standard: TaxRegistrationCountryOptionsAtStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAtType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAtType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -650,11 +650,11 @@ public struct TaxRegistrationCreateCountryOptionsAtType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsAtStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsAtStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAtStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsAtStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAtStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsAtStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -663,7 +663,7 @@ public struct TaxRegistrationCreateCountryOptionsAtStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -676,19 +676,19 @@ public struct TaxRegistrationCreateCountryOptionsAtStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in AU.
-public struct TaxRegistrationCreateCountryOptionsAu: StripeParams {
+public struct TaxRegistrationCountryOptionsAu: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsAuType
+    public var type: TaxRegistrationCountryOptionsAuType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsAuStandard?
+    public var standard: TaxRegistrationCountryOptionsAuStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsAuType, standard: TaxRegistrationCreateCountryOptionsAuStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsAuType, standard: TaxRegistrationCountryOptionsAuStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAuType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAuType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -699,11 +699,11 @@ public struct TaxRegistrationCreateCountryOptionsAuType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsAuStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsAuStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAuStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsAuStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAuStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsAuStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -712,7 +712,7 @@ public struct TaxRegistrationCreateCountryOptionsAuStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -724,19 +724,19 @@ public struct TaxRegistrationCreateCountryOptionsAuStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in AW.
-public struct TaxRegistrationCreateCountryOptionsAw: StripeParams {
+public struct TaxRegistrationCountryOptionsAw: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsAwType
+    public var type: TaxRegistrationCountryOptionsAwType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsAwStandard?
+    public var standard: TaxRegistrationCountryOptionsAwStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsAwType, standard: TaxRegistrationCreateCountryOptionsAwStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsAwType, standard: TaxRegistrationCountryOptionsAwStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAwType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAwType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -747,11 +747,11 @@ public struct TaxRegistrationCreateCountryOptionsAwType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsAwStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsAwStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAwStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsAwStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsAwStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsAwStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -760,7 +760,7 @@ public struct TaxRegistrationCreateCountryOptionsAwStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAwStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAwStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -772,16 +772,16 @@ public struct TaxRegistrationCreateCountryOptionsAwStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in AZ.
-public struct TaxRegistrationCreateCountryOptionsAz: StripeParams {
+public struct TaxRegistrationCountryOptionsAz: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsAzType
+    public var type: TaxRegistrationCountryOptionsAzType
 
-    public init(type: TaxRegistrationCreateCountryOptionsAzType) {
+    public init(type: TaxRegistrationCountryOptionsAzType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsAzType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsAzType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -792,19 +792,19 @@ public struct TaxRegistrationCreateCountryOptionsAzType: RawRepresentable, Codab
 }
 
 /// Options for the registration in BA.
-public struct TaxRegistrationCreateCountryOptionsBa: StripeParams {
+public struct TaxRegistrationCountryOptionsBa: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsBaType
+    public var type: TaxRegistrationCountryOptionsBaType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsBaStandard?
+    public var standard: TaxRegistrationCountryOptionsBaStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsBaType, standard: TaxRegistrationCreateCountryOptionsBaStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsBaType, standard: TaxRegistrationCountryOptionsBaStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBaType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBaType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -815,11 +815,11 @@ public struct TaxRegistrationCreateCountryOptionsBaType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsBaStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsBaStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBaStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsBaStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBaStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsBaStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -828,7 +828,7 @@ public struct TaxRegistrationCreateCountryOptionsBaStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBaStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBaStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -840,19 +840,19 @@ public struct TaxRegistrationCreateCountryOptionsBaStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in BB.
-public struct TaxRegistrationCreateCountryOptionsBb: StripeParams {
+public struct TaxRegistrationCountryOptionsBb: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsBbType
+    public var type: TaxRegistrationCountryOptionsBbType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsBbStandard?
+    public var standard: TaxRegistrationCountryOptionsBbStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsBbType, standard: TaxRegistrationCreateCountryOptionsBbStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsBbType, standard: TaxRegistrationCountryOptionsBbStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBbType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBbType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -863,11 +863,11 @@ public struct TaxRegistrationCreateCountryOptionsBbType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsBbStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsBbStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBbStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsBbStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBbStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsBbStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -876,7 +876,7 @@ public struct TaxRegistrationCreateCountryOptionsBbStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBbStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBbStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -888,19 +888,19 @@ public struct TaxRegistrationCreateCountryOptionsBbStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in BD.
-public struct TaxRegistrationCreateCountryOptionsBd: StripeParams {
+public struct TaxRegistrationCountryOptionsBd: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsBdType
+    public var type: TaxRegistrationCountryOptionsBdType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsBdStandard?
+    public var standard: TaxRegistrationCountryOptionsBdStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsBdType, standard: TaxRegistrationCreateCountryOptionsBdStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsBdType, standard: TaxRegistrationCountryOptionsBdStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBdType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBdType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -911,11 +911,11 @@ public struct TaxRegistrationCreateCountryOptionsBdType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsBdStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsBdStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBdStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsBdStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBdStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsBdStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -924,7 +924,7 @@ public struct TaxRegistrationCreateCountryOptionsBdStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBdStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBdStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -936,19 +936,19 @@ public struct TaxRegistrationCreateCountryOptionsBdStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in BE.
-public struct TaxRegistrationCreateCountryOptionsBe: StripeParams {
+public struct TaxRegistrationCountryOptionsBe: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsBeType
+    public var type: TaxRegistrationCountryOptionsBeType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsBeStandard?
+    public var standard: TaxRegistrationCountryOptionsBeStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsBeType, standard: TaxRegistrationCreateCountryOptionsBeStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsBeType, standard: TaxRegistrationCountryOptionsBeStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -962,11 +962,11 @@ public struct TaxRegistrationCreateCountryOptionsBeType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsBeStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsBeStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBeStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsBeStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBeStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsBeStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -975,7 +975,7 @@ public struct TaxRegistrationCreateCountryOptionsBeStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -988,19 +988,19 @@ public struct TaxRegistrationCreateCountryOptionsBeStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in BF.
-public struct TaxRegistrationCreateCountryOptionsBf: StripeParams {
+public struct TaxRegistrationCountryOptionsBf: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsBfType
+    public var type: TaxRegistrationCountryOptionsBfType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsBfStandard?
+    public var standard: TaxRegistrationCountryOptionsBfStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsBfType, standard: TaxRegistrationCreateCountryOptionsBfStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsBfType, standard: TaxRegistrationCountryOptionsBfStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBfType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBfType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1011,11 +1011,11 @@ public struct TaxRegistrationCreateCountryOptionsBfType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsBfStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsBfStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBfStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsBfStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBfStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsBfStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1024,7 +1024,7 @@ public struct TaxRegistrationCreateCountryOptionsBfStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBfStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBfStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1036,19 +1036,19 @@ public struct TaxRegistrationCreateCountryOptionsBfStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in BG.
-public struct TaxRegistrationCreateCountryOptionsBg: StripeParams {
+public struct TaxRegistrationCountryOptionsBg: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsBgType
+    public var type: TaxRegistrationCountryOptionsBgType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsBgStandard?
+    public var standard: TaxRegistrationCountryOptionsBgStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsBgType, standard: TaxRegistrationCreateCountryOptionsBgStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsBgType, standard: TaxRegistrationCountryOptionsBgStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBgType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBgType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1062,11 +1062,11 @@ public struct TaxRegistrationCreateCountryOptionsBgType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsBgStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsBgStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBgStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsBgStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBgStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsBgStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1075,7 +1075,7 @@ public struct TaxRegistrationCreateCountryOptionsBgStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBgStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBgStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1088,19 +1088,19 @@ public struct TaxRegistrationCreateCountryOptionsBgStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in BH.
-public struct TaxRegistrationCreateCountryOptionsBh: StripeParams {
+public struct TaxRegistrationCountryOptionsBh: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsBhType
+    public var type: TaxRegistrationCountryOptionsBhType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsBhStandard?
+    public var standard: TaxRegistrationCountryOptionsBhStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsBhType, standard: TaxRegistrationCreateCountryOptionsBhStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsBhType, standard: TaxRegistrationCountryOptionsBhStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBhType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBhType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1111,11 +1111,11 @@ public struct TaxRegistrationCreateCountryOptionsBhType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsBhStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsBhStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBhStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsBhStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBhStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsBhStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1124,7 +1124,7 @@ public struct TaxRegistrationCreateCountryOptionsBhStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBhStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBhStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1136,16 +1136,16 @@ public struct TaxRegistrationCreateCountryOptionsBhStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in BJ.
-public struct TaxRegistrationCreateCountryOptionsBj: StripeParams {
+public struct TaxRegistrationCountryOptionsBj: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsBjType
+    public var type: TaxRegistrationCountryOptionsBjType
 
-    public init(type: TaxRegistrationCreateCountryOptionsBjType) {
+    public init(type: TaxRegistrationCountryOptionsBjType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBjType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBjType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1156,19 +1156,19 @@ public struct TaxRegistrationCreateCountryOptionsBjType: RawRepresentable, Codab
 }
 
 /// Options for the registration in BS.
-public struct TaxRegistrationCreateCountryOptionsBs: StripeParams {
+public struct TaxRegistrationCountryOptionsBs: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsBsType
+    public var type: TaxRegistrationCountryOptionsBsType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsBsStandard?
+    public var standard: TaxRegistrationCountryOptionsBsStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsBsType, standard: TaxRegistrationCreateCountryOptionsBsStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsBsType, standard: TaxRegistrationCountryOptionsBsStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1179,11 +1179,11 @@ public struct TaxRegistrationCreateCountryOptionsBsType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsBsStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsBsStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBsStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsBsStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsBsStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsBsStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1192,7 +1192,7 @@ public struct TaxRegistrationCreateCountryOptionsBsStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1204,16 +1204,16 @@ public struct TaxRegistrationCreateCountryOptionsBsStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in BW.
-public struct TaxRegistrationCreateCountryOptionsBw: StripeParams {
+public struct TaxRegistrationCountryOptionsBw: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsBwType
+    public var type: TaxRegistrationCountryOptionsBwType
 
-    public init(type: TaxRegistrationCreateCountryOptionsBwType) {
+    public init(type: TaxRegistrationCountryOptionsBwType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsBwType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsBwType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1224,16 +1224,16 @@ public struct TaxRegistrationCreateCountryOptionsBwType: RawRepresentable, Codab
 }
 
 /// Options for the registration in BY.
-public struct TaxRegistrationCreateCountryOptionsBy: StripeParams {
+public struct TaxRegistrationCountryOptionsBy: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsByType
+    public var type: TaxRegistrationCountryOptionsByType
 
-    public init(type: TaxRegistrationCreateCountryOptionsByType) {
+    public init(type: TaxRegistrationCountryOptionsByType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsByType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsByType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1244,13 +1244,13 @@ public struct TaxRegistrationCreateCountryOptionsByType: RawRepresentable, Codab
 }
 
 /// Options for the registration in CA.
-public struct TaxRegistrationCreateCountryOptionsCa: StripeParams {
+public struct TaxRegistrationCountryOptionsCa: StripeParams {
     /// Type of registration to be created in Canada.
-    public var type: TaxRegistrationCreateCountryOptionsCaType
+    public var type: TaxRegistrationCountryOptionsCaType
     /// Options for the provincial tax registration.
-    public var provinceStandard: TaxRegistrationCreateCountryOptionsCaProvinceStandard?
+    public var provinceStandard: TaxRegistrationCountryOptionsCaProvinceStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsCaType, provinceStandard: TaxRegistrationCreateCountryOptionsCaProvinceStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsCaType, provinceStandard: TaxRegistrationCountryOptionsCaProvinceStandard? = nil) {
         self.type = type
         self.provinceStandard = provinceStandard
     }
@@ -1261,7 +1261,7 @@ public struct TaxRegistrationCreateCountryOptionsCa: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCaType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCaType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1274,7 +1274,7 @@ public struct TaxRegistrationCreateCountryOptionsCaType: RawRepresentable, Codab
 }
 
 /// Options for the provincial tax registration.
-public struct TaxRegistrationCreateCountryOptionsCaProvinceStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsCaProvinceStandard: StripeParams {
     /// Two-letter CA province code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
     public var province: String
 
@@ -1284,19 +1284,19 @@ public struct TaxRegistrationCreateCountryOptionsCaProvinceStandard: StripeParam
 }
 
 /// Options for the registration in CD.
-public struct TaxRegistrationCreateCountryOptionsCd: StripeParams {
+public struct TaxRegistrationCountryOptionsCd: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsCdType
+    public var type: TaxRegistrationCountryOptionsCdType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsCdStandard?
+    public var standard: TaxRegistrationCountryOptionsCdStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsCdType, standard: TaxRegistrationCreateCountryOptionsCdStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsCdType, standard: TaxRegistrationCountryOptionsCdStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCdType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCdType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1307,11 +1307,11 @@ public struct TaxRegistrationCreateCountryOptionsCdType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsCdStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsCdStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsCdStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsCdStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsCdStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsCdStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1320,7 +1320,7 @@ public struct TaxRegistrationCreateCountryOptionsCdStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCdStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCdStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1332,19 +1332,19 @@ public struct TaxRegistrationCreateCountryOptionsCdStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in CH.
-public struct TaxRegistrationCreateCountryOptionsCh: StripeParams {
+public struct TaxRegistrationCountryOptionsCh: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsChType
+    public var type: TaxRegistrationCountryOptionsChType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsChStandard?
+    public var standard: TaxRegistrationCountryOptionsChStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsChType, standard: TaxRegistrationCreateCountryOptionsChStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsChType, standard: TaxRegistrationCountryOptionsChStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsChType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsChType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1355,11 +1355,11 @@ public struct TaxRegistrationCreateCountryOptionsChType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsChStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsChStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsChStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsChStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsChStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsChStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1368,7 +1368,7 @@ public struct TaxRegistrationCreateCountryOptionsChStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsChStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsChStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1380,16 +1380,16 @@ public struct TaxRegistrationCreateCountryOptionsChStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in CI.
-public struct TaxRegistrationCreateCountryOptionsCi: StripeParams {
+public struct TaxRegistrationCountryOptionsCi: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsCiType
+    public var type: TaxRegistrationCountryOptionsCiType
 
-    public init(type: TaxRegistrationCreateCountryOptionsCiType) {
+    public init(type: TaxRegistrationCountryOptionsCiType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCiType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCiType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1400,16 +1400,16 @@ public struct TaxRegistrationCreateCountryOptionsCiType: RawRepresentable, Codab
 }
 
 /// Options for the registration in CL.
-public struct TaxRegistrationCreateCountryOptionsCl: StripeParams {
+public struct TaxRegistrationCountryOptionsCl: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsClType
+    public var type: TaxRegistrationCountryOptionsClType
 
-    public init(type: TaxRegistrationCreateCountryOptionsClType) {
+    public init(type: TaxRegistrationCountryOptionsClType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsClType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsClType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1420,16 +1420,16 @@ public struct TaxRegistrationCreateCountryOptionsClType: RawRepresentable, Codab
 }
 
 /// Options for the registration in CM.
-public struct TaxRegistrationCreateCountryOptionsCm: StripeParams {
+public struct TaxRegistrationCountryOptionsCm: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsCmType
+    public var type: TaxRegistrationCountryOptionsCmType
 
-    public init(type: TaxRegistrationCreateCountryOptionsCmType) {
+    public init(type: TaxRegistrationCountryOptionsCmType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCmType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCmType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1440,16 +1440,16 @@ public struct TaxRegistrationCreateCountryOptionsCmType: RawRepresentable, Codab
 }
 
 /// Options for the registration in CO.
-public struct TaxRegistrationCreateCountryOptionsCo: StripeParams {
+public struct TaxRegistrationCountryOptionsCo: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsCoType
+    public var type: TaxRegistrationCountryOptionsCoType
 
-    public init(type: TaxRegistrationCreateCountryOptionsCoType) {
+    public init(type: TaxRegistrationCountryOptionsCoType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCoType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCoType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1460,16 +1460,16 @@ public struct TaxRegistrationCreateCountryOptionsCoType: RawRepresentable, Codab
 }
 
 /// Options for the registration in CR.
-public struct TaxRegistrationCreateCountryOptionsCr: StripeParams {
+public struct TaxRegistrationCountryOptionsCr: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsCrType
+    public var type: TaxRegistrationCountryOptionsCrType
 
-    public init(type: TaxRegistrationCreateCountryOptionsCrType) {
+    public init(type: TaxRegistrationCountryOptionsCrType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCrType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCrType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1480,16 +1480,16 @@ public struct TaxRegistrationCreateCountryOptionsCrType: RawRepresentable, Codab
 }
 
 /// Options for the registration in CV.
-public struct TaxRegistrationCreateCountryOptionsCv: StripeParams {
+public struct TaxRegistrationCountryOptionsCv: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsCvType
+    public var type: TaxRegistrationCountryOptionsCvType
 
-    public init(type: TaxRegistrationCreateCountryOptionsCvType) {
+    public init(type: TaxRegistrationCountryOptionsCvType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCvType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCvType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1500,19 +1500,19 @@ public struct TaxRegistrationCreateCountryOptionsCvType: RawRepresentable, Codab
 }
 
 /// Options for the registration in CY.
-public struct TaxRegistrationCreateCountryOptionsCy: StripeParams {
+public struct TaxRegistrationCountryOptionsCy: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsCyType
+    public var type: TaxRegistrationCountryOptionsCyType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsCyStandard?
+    public var standard: TaxRegistrationCountryOptionsCyStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsCyType, standard: TaxRegistrationCreateCountryOptionsCyStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsCyType, standard: TaxRegistrationCountryOptionsCyStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCyType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCyType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1526,11 +1526,11 @@ public struct TaxRegistrationCreateCountryOptionsCyType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsCyStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsCyStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsCyStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsCyStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsCyStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsCyStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1539,7 +1539,7 @@ public struct TaxRegistrationCreateCountryOptionsCyStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCyStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCyStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1552,19 +1552,19 @@ public struct TaxRegistrationCreateCountryOptionsCyStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in CZ.
-public struct TaxRegistrationCreateCountryOptionsCz: StripeParams {
+public struct TaxRegistrationCountryOptionsCz: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsCzType
+    public var type: TaxRegistrationCountryOptionsCzType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsCzStandard?
+    public var standard: TaxRegistrationCountryOptionsCzStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsCzType, standard: TaxRegistrationCreateCountryOptionsCzStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsCzType, standard: TaxRegistrationCountryOptionsCzStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCzType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCzType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1578,11 +1578,11 @@ public struct TaxRegistrationCreateCountryOptionsCzType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsCzStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsCzStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsCzStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsCzStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsCzStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsCzStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1591,7 +1591,7 @@ public struct TaxRegistrationCreateCountryOptionsCzStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsCzStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsCzStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1604,19 +1604,19 @@ public struct TaxRegistrationCreateCountryOptionsCzStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in DE.
-public struct TaxRegistrationCreateCountryOptionsDe: StripeParams {
+public struct TaxRegistrationCountryOptionsDe: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsDeType
+    public var type: TaxRegistrationCountryOptionsDeType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsDeStandard?
+    public var standard: TaxRegistrationCountryOptionsDeStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsDeType, standard: TaxRegistrationCreateCountryOptionsDeStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsDeType, standard: TaxRegistrationCountryOptionsDeStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsDeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsDeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1630,11 +1630,11 @@ public struct TaxRegistrationCreateCountryOptionsDeType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsDeStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsDeStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsDeStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsDeStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsDeStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsDeStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1643,7 +1643,7 @@ public struct TaxRegistrationCreateCountryOptionsDeStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsDeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsDeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1656,19 +1656,19 @@ public struct TaxRegistrationCreateCountryOptionsDeStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in DK.
-public struct TaxRegistrationCreateCountryOptionsDk: StripeParams {
+public struct TaxRegistrationCountryOptionsDk: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsDkType
+    public var type: TaxRegistrationCountryOptionsDkType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsDkStandard?
+    public var standard: TaxRegistrationCountryOptionsDkStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsDkType, standard: TaxRegistrationCreateCountryOptionsDkStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsDkType, standard: TaxRegistrationCountryOptionsDkStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsDkType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsDkType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1682,11 +1682,11 @@ public struct TaxRegistrationCreateCountryOptionsDkType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsDkStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsDkStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsDkStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsDkStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsDkStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsDkStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1695,7 +1695,7 @@ public struct TaxRegistrationCreateCountryOptionsDkStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsDkStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsDkStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1708,16 +1708,16 @@ public struct TaxRegistrationCreateCountryOptionsDkStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in EC.
-public struct TaxRegistrationCreateCountryOptionsEc: StripeParams {
+public struct TaxRegistrationCountryOptionsEc: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsEcType
+    public var type: TaxRegistrationCountryOptionsEcType
 
-    public init(type: TaxRegistrationCreateCountryOptionsEcType) {
+    public init(type: TaxRegistrationCountryOptionsEcType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsEcType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsEcType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1728,19 +1728,19 @@ public struct TaxRegistrationCreateCountryOptionsEcType: RawRepresentable, Codab
 }
 
 /// Options for the registration in EE.
-public struct TaxRegistrationCreateCountryOptionsEe: StripeParams {
+public struct TaxRegistrationCountryOptionsEe: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsEeType
+    public var type: TaxRegistrationCountryOptionsEeType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsEeStandard?
+    public var standard: TaxRegistrationCountryOptionsEeStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsEeType, standard: TaxRegistrationCreateCountryOptionsEeStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsEeType, standard: TaxRegistrationCountryOptionsEeStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsEeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsEeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1754,11 +1754,11 @@ public struct TaxRegistrationCreateCountryOptionsEeType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsEeStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsEeStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsEeStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsEeStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsEeStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsEeStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1767,7 +1767,7 @@ public struct TaxRegistrationCreateCountryOptionsEeStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsEeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsEeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1780,16 +1780,16 @@ public struct TaxRegistrationCreateCountryOptionsEeStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in EG.
-public struct TaxRegistrationCreateCountryOptionsEg: StripeParams {
+public struct TaxRegistrationCountryOptionsEg: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsEgType
+    public var type: TaxRegistrationCountryOptionsEgType
 
-    public init(type: TaxRegistrationCreateCountryOptionsEgType) {
+    public init(type: TaxRegistrationCountryOptionsEgType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsEgType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsEgType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1800,19 +1800,19 @@ public struct TaxRegistrationCreateCountryOptionsEgType: RawRepresentable, Codab
 }
 
 /// Options for the registration in ES.
-public struct TaxRegistrationCreateCountryOptionsEs: StripeParams {
+public struct TaxRegistrationCountryOptionsEs: StripeParams {
     /// Type of registration to be created in ES.
-    public var type: TaxRegistrationCreateCountryOptionsEsType
+    public var type: TaxRegistrationCountryOptionsEsType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsEsStandard?
+    public var standard: TaxRegistrationCountryOptionsEsStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsEsType, standard: TaxRegistrationCreateCountryOptionsEsStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsEsType, standard: TaxRegistrationCountryOptionsEsStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsEsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsEsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1830,11 +1830,11 @@ public struct TaxRegistrationCreateCountryOptionsEsType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsEsStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsEsStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsEsStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsEsStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsEsStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsEsStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1843,7 +1843,7 @@ public struct TaxRegistrationCreateCountryOptionsEsStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsEsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsEsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1856,19 +1856,19 @@ public struct TaxRegistrationCreateCountryOptionsEsStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in ET.
-public struct TaxRegistrationCreateCountryOptionsEt: StripeParams {
+public struct TaxRegistrationCountryOptionsEt: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsEtType
+    public var type: TaxRegistrationCountryOptionsEtType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsEtStandard?
+    public var standard: TaxRegistrationCountryOptionsEtStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsEtType, standard: TaxRegistrationCreateCountryOptionsEtStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsEtType, standard: TaxRegistrationCountryOptionsEtStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsEtType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsEtType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1879,11 +1879,11 @@ public struct TaxRegistrationCreateCountryOptionsEtType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsEtStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsEtStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsEtStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsEtStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsEtStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsEtStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1892,7 +1892,7 @@ public struct TaxRegistrationCreateCountryOptionsEtStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsEtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsEtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1904,19 +1904,19 @@ public struct TaxRegistrationCreateCountryOptionsEtStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in FI.
-public struct TaxRegistrationCreateCountryOptionsFi: StripeParams {
+public struct TaxRegistrationCountryOptionsFi: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsFiType
+    public var type: TaxRegistrationCountryOptionsFiType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsFiStandard?
+    public var standard: TaxRegistrationCountryOptionsFiStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsFiType, standard: TaxRegistrationCreateCountryOptionsFiStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsFiType, standard: TaxRegistrationCountryOptionsFiStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsFiType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsFiType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1930,11 +1930,11 @@ public struct TaxRegistrationCreateCountryOptionsFiType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsFiStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsFiStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsFiStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsFiStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsFiStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsFiStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1943,7 +1943,7 @@ public struct TaxRegistrationCreateCountryOptionsFiStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsFiStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsFiStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1956,19 +1956,19 @@ public struct TaxRegistrationCreateCountryOptionsFiStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in FR.
-public struct TaxRegistrationCreateCountryOptionsFr: StripeParams {
+public struct TaxRegistrationCountryOptionsFr: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsFrType
+    public var type: TaxRegistrationCountryOptionsFrType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsFrStandard?
+    public var standard: TaxRegistrationCountryOptionsFrStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsFrType, standard: TaxRegistrationCreateCountryOptionsFrStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsFrType, standard: TaxRegistrationCountryOptionsFrStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsFrType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsFrType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1982,11 +1982,11 @@ public struct TaxRegistrationCreateCountryOptionsFrType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsFrStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsFrStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsFrStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsFrStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsFrStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsFrStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -1995,7 +1995,7 @@ public struct TaxRegistrationCreateCountryOptionsFrStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsFrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsFrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2008,19 +2008,19 @@ public struct TaxRegistrationCreateCountryOptionsFrStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in GB.
-public struct TaxRegistrationCreateCountryOptionsGb: StripeParams {
+public struct TaxRegistrationCountryOptionsGb: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsGbType
+    public var type: TaxRegistrationCountryOptionsGbType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsGbStandard?
+    public var standard: TaxRegistrationCountryOptionsGbStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsGbType, standard: TaxRegistrationCreateCountryOptionsGbStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsGbType, standard: TaxRegistrationCountryOptionsGbStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsGbType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsGbType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2031,11 +2031,11 @@ public struct TaxRegistrationCreateCountryOptionsGbType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsGbStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsGbStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsGbStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsGbStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsGbStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsGbStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2044,7 +2044,7 @@ public struct TaxRegistrationCreateCountryOptionsGbStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsGbStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsGbStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2056,16 +2056,16 @@ public struct TaxRegistrationCreateCountryOptionsGbStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in GE.
-public struct TaxRegistrationCreateCountryOptionsGe: StripeParams {
+public struct TaxRegistrationCountryOptionsGe: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsGeType
+    public var type: TaxRegistrationCountryOptionsGeType
 
-    public init(type: TaxRegistrationCreateCountryOptionsGeType) {
+    public init(type: TaxRegistrationCountryOptionsGeType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsGeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsGeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2076,16 +2076,16 @@ public struct TaxRegistrationCreateCountryOptionsGeType: RawRepresentable, Codab
 }
 
 /// Options for the registration in GH.
-public struct TaxRegistrationCreateCountryOptionsGh: StripeParams {
+public struct TaxRegistrationCountryOptionsGh: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsGhType
+    public var type: TaxRegistrationCountryOptionsGhType
 
-    public init(type: TaxRegistrationCreateCountryOptionsGhType) {
+    public init(type: TaxRegistrationCountryOptionsGhType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsGhType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsGhType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2096,19 +2096,19 @@ public struct TaxRegistrationCreateCountryOptionsGhType: RawRepresentable, Codab
 }
 
 /// Options for the registration in GN.
-public struct TaxRegistrationCreateCountryOptionsGn: StripeParams {
+public struct TaxRegistrationCountryOptionsGn: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsGnType
+    public var type: TaxRegistrationCountryOptionsGnType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsGnStandard?
+    public var standard: TaxRegistrationCountryOptionsGnStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsGnType, standard: TaxRegistrationCreateCountryOptionsGnStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsGnType, standard: TaxRegistrationCountryOptionsGnStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsGnType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsGnType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2119,11 +2119,11 @@ public struct TaxRegistrationCreateCountryOptionsGnType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsGnStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsGnStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsGnStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsGnStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsGnStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsGnStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2132,7 +2132,7 @@ public struct TaxRegistrationCreateCountryOptionsGnStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsGnStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsGnStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2144,19 +2144,19 @@ public struct TaxRegistrationCreateCountryOptionsGnStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in GR.
-public struct TaxRegistrationCreateCountryOptionsGr: StripeParams {
+public struct TaxRegistrationCountryOptionsGr: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsGrType
+    public var type: TaxRegistrationCountryOptionsGrType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsGrStandard?
+    public var standard: TaxRegistrationCountryOptionsGrStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsGrType, standard: TaxRegistrationCreateCountryOptionsGrStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsGrType, standard: TaxRegistrationCountryOptionsGrStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsGrType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsGrType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2170,11 +2170,11 @@ public struct TaxRegistrationCreateCountryOptionsGrType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsGrStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsGrStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsGrStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsGrStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsGrStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsGrStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2183,7 +2183,7 @@ public struct TaxRegistrationCreateCountryOptionsGrStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsGrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsGrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2196,19 +2196,19 @@ public struct TaxRegistrationCreateCountryOptionsGrStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in HR.
-public struct TaxRegistrationCreateCountryOptionsHr: StripeParams {
+public struct TaxRegistrationCountryOptionsHr: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsHrType
+    public var type: TaxRegistrationCountryOptionsHrType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsHrStandard?
+    public var standard: TaxRegistrationCountryOptionsHrStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsHrType, standard: TaxRegistrationCreateCountryOptionsHrStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsHrType, standard: TaxRegistrationCountryOptionsHrStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsHrType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsHrType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2222,11 +2222,11 @@ public struct TaxRegistrationCreateCountryOptionsHrType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsHrStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsHrStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsHrStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsHrStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsHrStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsHrStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2235,7 +2235,7 @@ public struct TaxRegistrationCreateCountryOptionsHrStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsHrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsHrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2248,19 +2248,19 @@ public struct TaxRegistrationCreateCountryOptionsHrStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in HU.
-public struct TaxRegistrationCreateCountryOptionsHu: StripeParams {
+public struct TaxRegistrationCountryOptionsHu: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsHuType
+    public var type: TaxRegistrationCountryOptionsHuType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsHuStandard?
+    public var standard: TaxRegistrationCountryOptionsHuStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsHuType, standard: TaxRegistrationCreateCountryOptionsHuStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsHuType, standard: TaxRegistrationCountryOptionsHuStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsHuType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsHuType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2274,11 +2274,11 @@ public struct TaxRegistrationCreateCountryOptionsHuType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsHuStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsHuStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsHuStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsHuStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsHuStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsHuStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2287,7 +2287,7 @@ public struct TaxRegistrationCreateCountryOptionsHuStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsHuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsHuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2300,16 +2300,16 @@ public struct TaxRegistrationCreateCountryOptionsHuStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in ID.
-public struct TaxRegistrationCreateCountryOptionsId: StripeParams {
+public struct TaxRegistrationCountryOptionsId: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsIdType
+    public var type: TaxRegistrationCountryOptionsIdType
 
-    public init(type: TaxRegistrationCreateCountryOptionsIdType) {
+    public init(type: TaxRegistrationCountryOptionsIdType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsIdType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsIdType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2320,19 +2320,19 @@ public struct TaxRegistrationCreateCountryOptionsIdType: RawRepresentable, Codab
 }
 
 /// Options for the registration in IE.
-public struct TaxRegistrationCreateCountryOptionsIe: StripeParams {
+public struct TaxRegistrationCountryOptionsIe: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsIeType
+    public var type: TaxRegistrationCountryOptionsIeType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsIeStandard?
+    public var standard: TaxRegistrationCountryOptionsIeStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsIeType, standard: TaxRegistrationCreateCountryOptionsIeStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsIeType, standard: TaxRegistrationCountryOptionsIeStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsIeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsIeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2346,11 +2346,11 @@ public struct TaxRegistrationCreateCountryOptionsIeType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsIeStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsIeStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsIeStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsIeStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsIeStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsIeStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2359,7 +2359,7 @@ public struct TaxRegistrationCreateCountryOptionsIeStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsIeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsIeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2372,16 +2372,16 @@ public struct TaxRegistrationCreateCountryOptionsIeStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in IN.
-public struct TaxRegistrationCreateCountryOptionsIn: StripeParams {
+public struct TaxRegistrationCountryOptionsIn: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsInType
+    public var type: TaxRegistrationCountryOptionsInType
 
-    public init(type: TaxRegistrationCreateCountryOptionsInType) {
+    public init(type: TaxRegistrationCountryOptionsInType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsInType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsInType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2392,19 +2392,19 @@ public struct TaxRegistrationCreateCountryOptionsInType: RawRepresentable, Codab
 }
 
 /// Options for the registration in IS.
-public struct TaxRegistrationCreateCountryOptionsIs: StripeParams {
+public struct TaxRegistrationCountryOptionsIs: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsIsType
+    public var type: TaxRegistrationCountryOptionsIsType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsIsStandard?
+    public var standard: TaxRegistrationCountryOptionsIsStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsIsType, standard: TaxRegistrationCreateCountryOptionsIsStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsIsType, standard: TaxRegistrationCountryOptionsIsStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsIsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsIsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2415,11 +2415,11 @@ public struct TaxRegistrationCreateCountryOptionsIsType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsIsStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsIsStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsIsStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsIsStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsIsStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsIsStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2428,7 +2428,7 @@ public struct TaxRegistrationCreateCountryOptionsIsStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsIsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsIsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2440,19 +2440,19 @@ public struct TaxRegistrationCreateCountryOptionsIsStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in IT.
-public struct TaxRegistrationCreateCountryOptionsIt: StripeParams {
+public struct TaxRegistrationCountryOptionsIt: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsItType
+    public var type: TaxRegistrationCountryOptionsItType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsItStandard?
+    public var standard: TaxRegistrationCountryOptionsItStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsItType, standard: TaxRegistrationCreateCountryOptionsItStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsItType, standard: TaxRegistrationCountryOptionsItStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsItType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsItType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2466,11 +2466,11 @@ public struct TaxRegistrationCreateCountryOptionsItType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsItStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsItStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsItStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsItStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsItStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsItStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2479,7 +2479,7 @@ public struct TaxRegistrationCreateCountryOptionsItStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsItStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsItStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2492,19 +2492,19 @@ public struct TaxRegistrationCreateCountryOptionsItStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in JP.
-public struct TaxRegistrationCreateCountryOptionsJp: StripeParams {
+public struct TaxRegistrationCountryOptionsJp: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsJpType
+    public var type: TaxRegistrationCountryOptionsJpType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsJpStandard?
+    public var standard: TaxRegistrationCountryOptionsJpStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsJpType, standard: TaxRegistrationCreateCountryOptionsJpStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsJpType, standard: TaxRegistrationCountryOptionsJpStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsJpType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsJpType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2515,11 +2515,11 @@ public struct TaxRegistrationCreateCountryOptionsJpType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsJpStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsJpStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsJpStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsJpStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsJpStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsJpStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2528,7 +2528,7 @@ public struct TaxRegistrationCreateCountryOptionsJpStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsJpStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsJpStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2540,16 +2540,16 @@ public struct TaxRegistrationCreateCountryOptionsJpStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in KE.
-public struct TaxRegistrationCreateCountryOptionsKe: StripeParams {
+public struct TaxRegistrationCountryOptionsKe: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsKeType
+    public var type: TaxRegistrationCountryOptionsKeType
 
-    public init(type: TaxRegistrationCreateCountryOptionsKeType) {
+    public init(type: TaxRegistrationCountryOptionsKeType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsKeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsKeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2560,16 +2560,16 @@ public struct TaxRegistrationCreateCountryOptionsKeType: RawRepresentable, Codab
 }
 
 /// Options for the registration in KG.
-public struct TaxRegistrationCreateCountryOptionsKg: StripeParams {
+public struct TaxRegistrationCountryOptionsKg: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsKgType
+    public var type: TaxRegistrationCountryOptionsKgType
 
-    public init(type: TaxRegistrationCreateCountryOptionsKgType) {
+    public init(type: TaxRegistrationCountryOptionsKgType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsKgType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsKgType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2580,16 +2580,16 @@ public struct TaxRegistrationCreateCountryOptionsKgType: RawRepresentable, Codab
 }
 
 /// Options for the registration in KH.
-public struct TaxRegistrationCreateCountryOptionsKh: StripeParams {
+public struct TaxRegistrationCountryOptionsKh: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsKhType
+    public var type: TaxRegistrationCountryOptionsKhType
 
-    public init(type: TaxRegistrationCreateCountryOptionsKhType) {
+    public init(type: TaxRegistrationCountryOptionsKhType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsKhType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsKhType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2600,16 +2600,16 @@ public struct TaxRegistrationCreateCountryOptionsKhType: RawRepresentable, Codab
 }
 
 /// Options for the registration in KR.
-public struct TaxRegistrationCreateCountryOptionsKr: StripeParams {
+public struct TaxRegistrationCountryOptionsKr: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsKrType
+    public var type: TaxRegistrationCountryOptionsKrType
 
-    public init(type: TaxRegistrationCreateCountryOptionsKrType) {
+    public init(type: TaxRegistrationCountryOptionsKrType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsKrType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsKrType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2620,16 +2620,16 @@ public struct TaxRegistrationCreateCountryOptionsKrType: RawRepresentable, Codab
 }
 
 /// Options for the registration in KZ.
-public struct TaxRegistrationCreateCountryOptionsKz: StripeParams {
+public struct TaxRegistrationCountryOptionsKz: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsKzType
+    public var type: TaxRegistrationCountryOptionsKzType
 
-    public init(type: TaxRegistrationCreateCountryOptionsKzType) {
+    public init(type: TaxRegistrationCountryOptionsKzType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsKzType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsKzType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2640,16 +2640,16 @@ public struct TaxRegistrationCreateCountryOptionsKzType: RawRepresentable, Codab
 }
 
 /// Options for the registration in LA.
-public struct TaxRegistrationCreateCountryOptionsLa: StripeParams {
+public struct TaxRegistrationCountryOptionsLa: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsLaType
+    public var type: TaxRegistrationCountryOptionsLaType
 
-    public init(type: TaxRegistrationCreateCountryOptionsLaType) {
+    public init(type: TaxRegistrationCountryOptionsLaType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsLaType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsLaType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2660,16 +2660,16 @@ public struct TaxRegistrationCreateCountryOptionsLaType: RawRepresentable, Codab
 }
 
 /// Options for the registration in LK.
-public struct TaxRegistrationCreateCountryOptionsLk: StripeParams {
+public struct TaxRegistrationCountryOptionsLk: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsLkType
+    public var type: TaxRegistrationCountryOptionsLkType
 
-    public init(type: TaxRegistrationCreateCountryOptionsLkType) {
+    public init(type: TaxRegistrationCountryOptionsLkType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsLkType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsLkType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2680,19 +2680,19 @@ public struct TaxRegistrationCreateCountryOptionsLkType: RawRepresentable, Codab
 }
 
 /// Options for the registration in LT.
-public struct TaxRegistrationCreateCountryOptionsLt: StripeParams {
+public struct TaxRegistrationCountryOptionsLt: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsLtType
+    public var type: TaxRegistrationCountryOptionsLtType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsLtStandard?
+    public var standard: TaxRegistrationCountryOptionsLtStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsLtType, standard: TaxRegistrationCreateCountryOptionsLtStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsLtType, standard: TaxRegistrationCountryOptionsLtStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsLtType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsLtType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2706,11 +2706,11 @@ public struct TaxRegistrationCreateCountryOptionsLtType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsLtStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsLtStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsLtStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsLtStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsLtStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsLtStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2719,7 +2719,7 @@ public struct TaxRegistrationCreateCountryOptionsLtStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsLtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsLtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2732,19 +2732,19 @@ public struct TaxRegistrationCreateCountryOptionsLtStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in LU.
-public struct TaxRegistrationCreateCountryOptionsLu: StripeParams {
+public struct TaxRegistrationCountryOptionsLu: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsLuType
+    public var type: TaxRegistrationCountryOptionsLuType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsLuStandard?
+    public var standard: TaxRegistrationCountryOptionsLuStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsLuType, standard: TaxRegistrationCreateCountryOptionsLuStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsLuType, standard: TaxRegistrationCountryOptionsLuStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsLuType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsLuType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2758,11 +2758,11 @@ public struct TaxRegistrationCreateCountryOptionsLuType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsLuStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsLuStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsLuStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsLuStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsLuStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsLuStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2771,7 +2771,7 @@ public struct TaxRegistrationCreateCountryOptionsLuStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsLuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsLuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2784,19 +2784,19 @@ public struct TaxRegistrationCreateCountryOptionsLuStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in LV.
-public struct TaxRegistrationCreateCountryOptionsLv: StripeParams {
+public struct TaxRegistrationCountryOptionsLv: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsLvType
+    public var type: TaxRegistrationCountryOptionsLvType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsLvStandard?
+    public var standard: TaxRegistrationCountryOptionsLvStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsLvType, standard: TaxRegistrationCreateCountryOptionsLvStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsLvType, standard: TaxRegistrationCountryOptionsLvStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsLvType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsLvType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2810,11 +2810,11 @@ public struct TaxRegistrationCreateCountryOptionsLvType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsLvStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsLvStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsLvStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsLvStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsLvStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsLvStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2823,7 +2823,7 @@ public struct TaxRegistrationCreateCountryOptionsLvStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsLvStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsLvStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2836,16 +2836,16 @@ public struct TaxRegistrationCreateCountryOptionsLvStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in MA.
-public struct TaxRegistrationCreateCountryOptionsMa: StripeParams {
+public struct TaxRegistrationCountryOptionsMa: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsMaType
+    public var type: TaxRegistrationCountryOptionsMaType
 
-    public init(type: TaxRegistrationCreateCountryOptionsMaType) {
+    public init(type: TaxRegistrationCountryOptionsMaType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMaType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMaType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2856,16 +2856,16 @@ public struct TaxRegistrationCreateCountryOptionsMaType: RawRepresentable, Codab
 }
 
 /// Options for the registration in MD.
-public struct TaxRegistrationCreateCountryOptionsMd: StripeParams {
+public struct TaxRegistrationCountryOptionsMd: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsMdType
+    public var type: TaxRegistrationCountryOptionsMdType
 
-    public init(type: TaxRegistrationCreateCountryOptionsMdType) {
+    public init(type: TaxRegistrationCountryOptionsMdType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMdType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMdType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2876,19 +2876,19 @@ public struct TaxRegistrationCreateCountryOptionsMdType: RawRepresentable, Codab
 }
 
 /// Options for the registration in ME.
-public struct TaxRegistrationCreateCountryOptionsMe: StripeParams {
+public struct TaxRegistrationCountryOptionsMe: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsMeType
+    public var type: TaxRegistrationCountryOptionsMeType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsMeStandard?
+    public var standard: TaxRegistrationCountryOptionsMeStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsMeType, standard: TaxRegistrationCreateCountryOptionsMeStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsMeType, standard: TaxRegistrationCountryOptionsMeStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2899,11 +2899,11 @@ public struct TaxRegistrationCreateCountryOptionsMeType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsMeStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsMeStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsMeStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsMeStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsMeStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsMeStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2912,7 +2912,7 @@ public struct TaxRegistrationCreateCountryOptionsMeStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2924,19 +2924,19 @@ public struct TaxRegistrationCreateCountryOptionsMeStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in MK.
-public struct TaxRegistrationCreateCountryOptionsMk: StripeParams {
+public struct TaxRegistrationCountryOptionsMk: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsMkType
+    public var type: TaxRegistrationCountryOptionsMkType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsMkStandard?
+    public var standard: TaxRegistrationCountryOptionsMkStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsMkType, standard: TaxRegistrationCreateCountryOptionsMkStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsMkType, standard: TaxRegistrationCountryOptionsMkStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMkType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMkType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2947,11 +2947,11 @@ public struct TaxRegistrationCreateCountryOptionsMkType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsMkStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsMkStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsMkStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsMkStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsMkStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsMkStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -2960,7 +2960,7 @@ public struct TaxRegistrationCreateCountryOptionsMkStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMkStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMkStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2972,19 +2972,19 @@ public struct TaxRegistrationCreateCountryOptionsMkStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in MR.
-public struct TaxRegistrationCreateCountryOptionsMr: StripeParams {
+public struct TaxRegistrationCountryOptionsMr: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsMrType
+    public var type: TaxRegistrationCountryOptionsMrType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsMrStandard?
+    public var standard: TaxRegistrationCountryOptionsMrStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsMrType, standard: TaxRegistrationCreateCountryOptionsMrStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsMrType, standard: TaxRegistrationCountryOptionsMrStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMrType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMrType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2995,11 +2995,11 @@ public struct TaxRegistrationCreateCountryOptionsMrType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsMrStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsMrStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsMrStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsMrStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsMrStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsMrStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3008,7 +3008,7 @@ public struct TaxRegistrationCreateCountryOptionsMrStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3020,19 +3020,19 @@ public struct TaxRegistrationCreateCountryOptionsMrStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in MT.
-public struct TaxRegistrationCreateCountryOptionsMt: StripeParams {
+public struct TaxRegistrationCountryOptionsMt: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsMtType
+    public var type: TaxRegistrationCountryOptionsMtType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsMtStandard?
+    public var standard: TaxRegistrationCountryOptionsMtStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsMtType, standard: TaxRegistrationCreateCountryOptionsMtStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsMtType, standard: TaxRegistrationCountryOptionsMtStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMtType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMtType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3046,11 +3046,11 @@ public struct TaxRegistrationCreateCountryOptionsMtType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsMtStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsMtStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsMtStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsMtStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsMtStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsMtStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3059,7 +3059,7 @@ public struct TaxRegistrationCreateCountryOptionsMtStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3072,16 +3072,16 @@ public struct TaxRegistrationCreateCountryOptionsMtStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in MU.
-public struct TaxRegistrationCreateCountryOptionsMu: StripeParams {
+public struct TaxRegistrationCountryOptionsMu: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsMuType
+    public var type: TaxRegistrationCountryOptionsMuType
 
-    public init(type: TaxRegistrationCreateCountryOptionsMuType) {
+    public init(type: TaxRegistrationCountryOptionsMuType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMuType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMuType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3092,16 +3092,16 @@ public struct TaxRegistrationCreateCountryOptionsMuType: RawRepresentable, Codab
 }
 
 /// Options for the registration in MX.
-public struct TaxRegistrationCreateCountryOptionsMx: StripeParams {
+public struct TaxRegistrationCountryOptionsMx: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsMxType
+    public var type: TaxRegistrationCountryOptionsMxType
 
-    public init(type: TaxRegistrationCreateCountryOptionsMxType) {
+    public init(type: TaxRegistrationCountryOptionsMxType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMxType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMxType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3112,16 +3112,16 @@ public struct TaxRegistrationCreateCountryOptionsMxType: RawRepresentable, Codab
 }
 
 /// Options for the registration in MY.
-public struct TaxRegistrationCreateCountryOptionsMy: StripeParams {
+public struct TaxRegistrationCountryOptionsMy: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsMyType
+    public var type: TaxRegistrationCountryOptionsMyType
 
-    public init(type: TaxRegistrationCreateCountryOptionsMyType) {
+    public init(type: TaxRegistrationCountryOptionsMyType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsMyType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsMyType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3132,16 +3132,16 @@ public struct TaxRegistrationCreateCountryOptionsMyType: RawRepresentable, Codab
 }
 
 /// Options for the registration in NG.
-public struct TaxRegistrationCreateCountryOptionsNg: StripeParams {
+public struct TaxRegistrationCountryOptionsNg: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsNgType
+    public var type: TaxRegistrationCountryOptionsNgType
 
-    public init(type: TaxRegistrationCreateCountryOptionsNgType) {
+    public init(type: TaxRegistrationCountryOptionsNgType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsNgType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsNgType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3152,19 +3152,19 @@ public struct TaxRegistrationCreateCountryOptionsNgType: RawRepresentable, Codab
 }
 
 /// Options for the registration in NL.
-public struct TaxRegistrationCreateCountryOptionsNl: StripeParams {
+public struct TaxRegistrationCountryOptionsNl: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsNlType
+    public var type: TaxRegistrationCountryOptionsNlType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsNlStandard?
+    public var standard: TaxRegistrationCountryOptionsNlStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsNlType, standard: TaxRegistrationCreateCountryOptionsNlStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsNlType, standard: TaxRegistrationCountryOptionsNlStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsNlType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsNlType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3178,11 +3178,11 @@ public struct TaxRegistrationCreateCountryOptionsNlType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsNlStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsNlStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsNlStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsNlStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsNlStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsNlStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3191,7 +3191,7 @@ public struct TaxRegistrationCreateCountryOptionsNlStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsNlStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsNlStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3204,19 +3204,19 @@ public struct TaxRegistrationCreateCountryOptionsNlStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in NO.
-public struct TaxRegistrationCreateCountryOptionsNo: StripeParams {
+public struct TaxRegistrationCountryOptionsNo: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsNoType
+    public var type: TaxRegistrationCountryOptionsNoType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsNoStandard?
+    public var standard: TaxRegistrationCountryOptionsNoStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsNoType, standard: TaxRegistrationCreateCountryOptionsNoStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsNoType, standard: TaxRegistrationCountryOptionsNoStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsNoType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsNoType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3227,11 +3227,11 @@ public struct TaxRegistrationCreateCountryOptionsNoType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsNoStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsNoStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsNoStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsNoStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsNoStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsNoStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3240,7 +3240,7 @@ public struct TaxRegistrationCreateCountryOptionsNoStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsNoStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsNoStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3252,16 +3252,16 @@ public struct TaxRegistrationCreateCountryOptionsNoStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in NP.
-public struct TaxRegistrationCreateCountryOptionsNp: StripeParams {
+public struct TaxRegistrationCountryOptionsNp: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsNpType
+    public var type: TaxRegistrationCountryOptionsNpType
 
-    public init(type: TaxRegistrationCreateCountryOptionsNpType) {
+    public init(type: TaxRegistrationCountryOptionsNpType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsNpType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsNpType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3272,19 +3272,19 @@ public struct TaxRegistrationCreateCountryOptionsNpType: RawRepresentable, Codab
 }
 
 /// Options for the registration in NZ.
-public struct TaxRegistrationCreateCountryOptionsNz: StripeParams {
+public struct TaxRegistrationCountryOptionsNz: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsNzType
+    public var type: TaxRegistrationCountryOptionsNzType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsNzStandard?
+    public var standard: TaxRegistrationCountryOptionsNzStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsNzType, standard: TaxRegistrationCreateCountryOptionsNzStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsNzType, standard: TaxRegistrationCountryOptionsNzStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsNzType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsNzType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3295,11 +3295,11 @@ public struct TaxRegistrationCreateCountryOptionsNzType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsNzStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsNzStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsNzStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsNzStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsNzStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsNzStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3308,7 +3308,7 @@ public struct TaxRegistrationCreateCountryOptionsNzStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsNzStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsNzStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3320,19 +3320,19 @@ public struct TaxRegistrationCreateCountryOptionsNzStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in OM.
-public struct TaxRegistrationCreateCountryOptionsOm: StripeParams {
+public struct TaxRegistrationCountryOptionsOm: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsOmType
+    public var type: TaxRegistrationCountryOptionsOmType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsOmStandard?
+    public var standard: TaxRegistrationCountryOptionsOmStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsOmType, standard: TaxRegistrationCreateCountryOptionsOmStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsOmType, standard: TaxRegistrationCountryOptionsOmStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsOmType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsOmType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3343,11 +3343,11 @@ public struct TaxRegistrationCreateCountryOptionsOmType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsOmStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsOmStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsOmStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsOmStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsOmStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsOmStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3356,7 +3356,7 @@ public struct TaxRegistrationCreateCountryOptionsOmStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsOmStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsOmStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3368,16 +3368,16 @@ public struct TaxRegistrationCreateCountryOptionsOmStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in PE.
-public struct TaxRegistrationCreateCountryOptionsPe: StripeParams {
+public struct TaxRegistrationCountryOptionsPe: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsPeType
+    public var type: TaxRegistrationCountryOptionsPeType
 
-    public init(type: TaxRegistrationCreateCountryOptionsPeType) {
+    public init(type: TaxRegistrationCountryOptionsPeType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsPeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsPeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3388,16 +3388,16 @@ public struct TaxRegistrationCreateCountryOptionsPeType: RawRepresentable, Codab
 }
 
 /// Options for the registration in PH.
-public struct TaxRegistrationCreateCountryOptionsPh: StripeParams {
+public struct TaxRegistrationCountryOptionsPh: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsPhType
+    public var type: TaxRegistrationCountryOptionsPhType
 
-    public init(type: TaxRegistrationCreateCountryOptionsPhType) {
+    public init(type: TaxRegistrationCountryOptionsPhType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsPhType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsPhType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3408,19 +3408,19 @@ public struct TaxRegistrationCreateCountryOptionsPhType: RawRepresentable, Codab
 }
 
 /// Options for the registration in PL.
-public struct TaxRegistrationCreateCountryOptionsPl: StripeParams {
+public struct TaxRegistrationCountryOptionsPl: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsPlType
+    public var type: TaxRegistrationCountryOptionsPlType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsPlStandard?
+    public var standard: TaxRegistrationCountryOptionsPlStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsPlType, standard: TaxRegistrationCreateCountryOptionsPlStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsPlType, standard: TaxRegistrationCountryOptionsPlStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsPlType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsPlType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3434,11 +3434,11 @@ public struct TaxRegistrationCreateCountryOptionsPlType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsPlStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsPlStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsPlStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsPlStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsPlStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsPlStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3447,7 +3447,7 @@ public struct TaxRegistrationCreateCountryOptionsPlStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsPlStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsPlStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3460,19 +3460,19 @@ public struct TaxRegistrationCreateCountryOptionsPlStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in PT.
-public struct TaxRegistrationCreateCountryOptionsPt: StripeParams {
+public struct TaxRegistrationCountryOptionsPt: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsPtType
+    public var type: TaxRegistrationCountryOptionsPtType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsPtStandard?
+    public var standard: TaxRegistrationCountryOptionsPtStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsPtType, standard: TaxRegistrationCreateCountryOptionsPtStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsPtType, standard: TaxRegistrationCountryOptionsPtStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsPtType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsPtType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3486,11 +3486,11 @@ public struct TaxRegistrationCreateCountryOptionsPtType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsPtStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsPtStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsPtStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsPtStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsPtStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsPtStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3499,7 +3499,7 @@ public struct TaxRegistrationCreateCountryOptionsPtStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsPtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsPtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3512,19 +3512,19 @@ public struct TaxRegistrationCreateCountryOptionsPtStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in RO.
-public struct TaxRegistrationCreateCountryOptionsRo: StripeParams {
+public struct TaxRegistrationCountryOptionsRo: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsRoType
+    public var type: TaxRegistrationCountryOptionsRoType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsRoStandard?
+    public var standard: TaxRegistrationCountryOptionsRoStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsRoType, standard: TaxRegistrationCreateCountryOptionsRoStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsRoType, standard: TaxRegistrationCountryOptionsRoStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsRoType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsRoType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3538,11 +3538,11 @@ public struct TaxRegistrationCreateCountryOptionsRoType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsRoStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsRoStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsRoStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsRoStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsRoStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsRoStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3551,7 +3551,7 @@ public struct TaxRegistrationCreateCountryOptionsRoStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsRoStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsRoStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3564,19 +3564,19 @@ public struct TaxRegistrationCreateCountryOptionsRoStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in RS.
-public struct TaxRegistrationCreateCountryOptionsRs: StripeParams {
+public struct TaxRegistrationCountryOptionsRs: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsRsType
+    public var type: TaxRegistrationCountryOptionsRsType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsRsStandard?
+    public var standard: TaxRegistrationCountryOptionsRsStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsRsType, standard: TaxRegistrationCreateCountryOptionsRsStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsRsType, standard: TaxRegistrationCountryOptionsRsStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsRsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsRsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3587,11 +3587,11 @@ public struct TaxRegistrationCreateCountryOptionsRsType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsRsStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsRsStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsRsStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsRsStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsRsStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsRsStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3600,7 +3600,7 @@ public struct TaxRegistrationCreateCountryOptionsRsStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsRsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsRsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3612,16 +3612,16 @@ public struct TaxRegistrationCreateCountryOptionsRsStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in RU.
-public struct TaxRegistrationCreateCountryOptionsRu: StripeParams {
+public struct TaxRegistrationCountryOptionsRu: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsRuType
+    public var type: TaxRegistrationCountryOptionsRuType
 
-    public init(type: TaxRegistrationCreateCountryOptionsRuType) {
+    public init(type: TaxRegistrationCountryOptionsRuType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsRuType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsRuType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3632,16 +3632,16 @@ public struct TaxRegistrationCreateCountryOptionsRuType: RawRepresentable, Codab
 }
 
 /// Options for the registration in SA.
-public struct TaxRegistrationCreateCountryOptionsSa: StripeParams {
+public struct TaxRegistrationCountryOptionsSa: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsSaType
+    public var type: TaxRegistrationCountryOptionsSaType
 
-    public init(type: TaxRegistrationCreateCountryOptionsSaType) {
+    public init(type: TaxRegistrationCountryOptionsSaType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSaType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSaType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3652,19 +3652,19 @@ public struct TaxRegistrationCreateCountryOptionsSaType: RawRepresentable, Codab
 }
 
 /// Options for the registration in SE.
-public struct TaxRegistrationCreateCountryOptionsSe: StripeParams {
+public struct TaxRegistrationCountryOptionsSe: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsSeType
+    public var type: TaxRegistrationCountryOptionsSeType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsSeStandard?
+    public var standard: TaxRegistrationCountryOptionsSeStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsSeType, standard: TaxRegistrationCreateCountryOptionsSeStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsSeType, standard: TaxRegistrationCountryOptionsSeStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3678,11 +3678,11 @@ public struct TaxRegistrationCreateCountryOptionsSeType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsSeStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsSeStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSeStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsSeStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSeStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsSeStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3691,7 +3691,7 @@ public struct TaxRegistrationCreateCountryOptionsSeStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3704,19 +3704,19 @@ public struct TaxRegistrationCreateCountryOptionsSeStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in SG.
-public struct TaxRegistrationCreateCountryOptionsSg: StripeParams {
+public struct TaxRegistrationCountryOptionsSg: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsSgType
+    public var type: TaxRegistrationCountryOptionsSgType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsSgStandard?
+    public var standard: TaxRegistrationCountryOptionsSgStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsSgType, standard: TaxRegistrationCreateCountryOptionsSgStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsSgType, standard: TaxRegistrationCountryOptionsSgStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSgType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSgType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3727,11 +3727,11 @@ public struct TaxRegistrationCreateCountryOptionsSgType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsSgStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsSgStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSgStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsSgStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSgStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsSgStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3740,7 +3740,7 @@ public struct TaxRegistrationCreateCountryOptionsSgStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSgStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSgStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3752,19 +3752,19 @@ public struct TaxRegistrationCreateCountryOptionsSgStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in SI.
-public struct TaxRegistrationCreateCountryOptionsSi: StripeParams {
+public struct TaxRegistrationCountryOptionsSi: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsSiType
+    public var type: TaxRegistrationCountryOptionsSiType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsSiStandard?
+    public var standard: TaxRegistrationCountryOptionsSiStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsSiType, standard: TaxRegistrationCreateCountryOptionsSiStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsSiType, standard: TaxRegistrationCountryOptionsSiStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSiType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSiType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3778,11 +3778,11 @@ public struct TaxRegistrationCreateCountryOptionsSiType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsSiStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsSiStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSiStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsSiStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSiStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsSiStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3791,7 +3791,7 @@ public struct TaxRegistrationCreateCountryOptionsSiStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSiStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSiStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3804,19 +3804,19 @@ public struct TaxRegistrationCreateCountryOptionsSiStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in SK.
-public struct TaxRegistrationCreateCountryOptionsSk: StripeParams {
+public struct TaxRegistrationCountryOptionsSk: StripeParams {
     /// Type of registration to be created in an EU country.
-    public var type: TaxRegistrationCreateCountryOptionsSkType
+    public var type: TaxRegistrationCountryOptionsSkType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsSkStandard?
+    public var standard: TaxRegistrationCountryOptionsSkStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsSkType, standard: TaxRegistrationCreateCountryOptionsSkStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsSkType, standard: TaxRegistrationCountryOptionsSkStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSkType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSkType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3830,11 +3830,11 @@ public struct TaxRegistrationCreateCountryOptionsSkType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsSkStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsSkStandard: StripeParams {
     /// Place of supply scheme used in an EU standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSkStandardPlaceOfSupplyScheme
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsSkStandardPlaceOfSupplyScheme
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSkStandardPlaceOfSupplyScheme) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsSkStandardPlaceOfSupplyScheme) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3843,7 +3843,7 @@ public struct TaxRegistrationCreateCountryOptionsSkStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSkStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSkStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3856,16 +3856,16 @@ public struct TaxRegistrationCreateCountryOptionsSkStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in SN.
-public struct TaxRegistrationCreateCountryOptionsSn: StripeParams {
+public struct TaxRegistrationCountryOptionsSn: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsSnType
+    public var type: TaxRegistrationCountryOptionsSnType
 
-    public init(type: TaxRegistrationCreateCountryOptionsSnType) {
+    public init(type: TaxRegistrationCountryOptionsSnType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSnType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSnType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3876,19 +3876,19 @@ public struct TaxRegistrationCreateCountryOptionsSnType: RawRepresentable, Codab
 }
 
 /// Options for the registration in SR.
-public struct TaxRegistrationCreateCountryOptionsSr: StripeParams {
+public struct TaxRegistrationCountryOptionsSr: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsSrType
+    public var type: TaxRegistrationCountryOptionsSrType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsSrStandard?
+    public var standard: TaxRegistrationCountryOptionsSrStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsSrType, standard: TaxRegistrationCreateCountryOptionsSrStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsSrType, standard: TaxRegistrationCountryOptionsSrStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSrType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSrType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3899,11 +3899,11 @@ public struct TaxRegistrationCreateCountryOptionsSrType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsSrStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsSrStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSrStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsSrStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsSrStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsSrStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -3912,7 +3912,7 @@ public struct TaxRegistrationCreateCountryOptionsSrStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsSrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsSrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3924,16 +3924,16 @@ public struct TaxRegistrationCreateCountryOptionsSrStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in TH.
-public struct TaxRegistrationCreateCountryOptionsTh: StripeParams {
+public struct TaxRegistrationCountryOptionsTh: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsThType
+    public var type: TaxRegistrationCountryOptionsThType
 
-    public init(type: TaxRegistrationCreateCountryOptionsThType) {
+    public init(type: TaxRegistrationCountryOptionsThType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsThType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsThType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3945,16 +3945,16 @@ public struct TaxRegistrationCreateCountryOptionsThType: RawRepresentable, Codab
 }
 
 /// Options for the registration in TJ.
-public struct TaxRegistrationCreateCountryOptionsTj: StripeParams {
+public struct TaxRegistrationCountryOptionsTj: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsTjType
+    public var type: TaxRegistrationCountryOptionsTjType
 
-    public init(type: TaxRegistrationCreateCountryOptionsTjType) {
+    public init(type: TaxRegistrationCountryOptionsTjType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsTjType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsTjType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3965,16 +3965,16 @@ public struct TaxRegistrationCreateCountryOptionsTjType: RawRepresentable, Codab
 }
 
 /// Options for the registration in TR.
-public struct TaxRegistrationCreateCountryOptionsTr: StripeParams {
+public struct TaxRegistrationCountryOptionsTr: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsTrType
+    public var type: TaxRegistrationCountryOptionsTrType
 
-    public init(type: TaxRegistrationCreateCountryOptionsTrType) {
+    public init(type: TaxRegistrationCountryOptionsTrType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsTrType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsTrType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3985,16 +3985,16 @@ public struct TaxRegistrationCreateCountryOptionsTrType: RawRepresentable, Codab
 }
 
 /// Options for the registration in TW.
-public struct TaxRegistrationCreateCountryOptionsTw: StripeParams {
+public struct TaxRegistrationCountryOptionsTw: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsTwType
+    public var type: TaxRegistrationCountryOptionsTwType
 
-    public init(type: TaxRegistrationCreateCountryOptionsTwType) {
+    public init(type: TaxRegistrationCountryOptionsTwType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsTwType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsTwType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4005,16 +4005,16 @@ public struct TaxRegistrationCreateCountryOptionsTwType: RawRepresentable, Codab
 }
 
 /// Options for the registration in TZ.
-public struct TaxRegistrationCreateCountryOptionsTz: StripeParams {
+public struct TaxRegistrationCountryOptionsTz: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsTzType
+    public var type: TaxRegistrationCountryOptionsTzType
 
-    public init(type: TaxRegistrationCreateCountryOptionsTzType) {
+    public init(type: TaxRegistrationCountryOptionsTzType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsTzType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsTzType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4025,16 +4025,16 @@ public struct TaxRegistrationCreateCountryOptionsTzType: RawRepresentable, Codab
 }
 
 /// Options for the registration in UA.
-public struct TaxRegistrationCreateCountryOptionsUa: StripeParams {
+public struct TaxRegistrationCountryOptionsUa: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsUaType
+    public var type: TaxRegistrationCountryOptionsUaType
 
-    public init(type: TaxRegistrationCreateCountryOptionsUaType) {
+    public init(type: TaxRegistrationCountryOptionsUaType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsUaType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsUaType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4045,16 +4045,16 @@ public struct TaxRegistrationCreateCountryOptionsUaType: RawRepresentable, Codab
 }
 
 /// Options for the registration in UG.
-public struct TaxRegistrationCreateCountryOptionsUg: StripeParams {
+public struct TaxRegistrationCountryOptionsUg: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsUgType
+    public var type: TaxRegistrationCountryOptionsUgType
 
-    public init(type: TaxRegistrationCreateCountryOptionsUgType) {
+    public init(type: TaxRegistrationCountryOptionsUgType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsUgType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsUgType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4065,41 +4065,41 @@ public struct TaxRegistrationCreateCountryOptionsUgType: RawRepresentable, Codab
 }
 
 /// Options for the registration in US.
-public struct TaxRegistrationCreateCountryOptionsUs: StripeParams {
+public struct TaxRegistrationCountryOptionsUs: StripeParams {
     /// Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
     public var state: String
     /// Type of registration to be created in the US.
-    public var type: TaxRegistrationCreateCountryOptionsUsType
+    public var type: TaxRegistrationCountryOptionsUsType
     /// Options for the admission tax registration.
-    public var admissionsTax: TaxRegistrationCreateCountryOptionsUsAdmissionsTax?
+    public var admissionsTax: TaxRegistrationCountryOptionsUsAdmissionsTax?
     /// Options for the attendance tax registration.
-    public var attendanceTax: TaxRegistrationCreateCountryOptionsUsAttendanceTax?
+    public var attendanceTax: TaxRegistrationCountryOptionsUsAttendanceTax?
     /// Options for the entertainment tax registration.
-    public var entertainmentTax: TaxRegistrationCreateCountryOptionsUsEntertainmentTax?
+    public var entertainmentTax: TaxRegistrationCountryOptionsUsEntertainmentTax?
     /// Options for the gross receipts tax registration.
-    public var grossReceiptsTax: TaxRegistrationCreateCountryOptionsUsGrossReceiptsTax?
+    public var grossReceiptsTax: TaxRegistrationCountryOptionsUsGrossReceiptsTax?
     /// Options for the hospitality tax registration.
-    public var hospitalityTax: TaxRegistrationCreateCountryOptionsUsHospitalityTax?
+    public var hospitalityTax: TaxRegistrationCountryOptionsUsHospitalityTax?
     /// Options for the local amusement tax registration.
-    public var localAmusementTax: TaxRegistrationCreateCountryOptionsUsLocalAmusementTax?
+    public var localAmusementTax: TaxRegistrationCountryOptionsUsLocalAmusementTax?
     /// Options for the local lease tax registration.
-    public var localLeaseTax: TaxRegistrationCreateCountryOptionsUsLocalLeaseTax?
+    public var localLeaseTax: TaxRegistrationCountryOptionsUsLocalLeaseTax?
     /// Options for the luxury tax registration.
-    public var luxuryTax: TaxRegistrationCreateCountryOptionsUsLuxuryTax?
+    public var luxuryTax: TaxRegistrationCountryOptionsUsLuxuryTax?
     /// Options for the mass transit parking tax registration.
-    public var massTransitParkingTax: TaxRegistrationCreateCountryOptionsUsMassTransitParkingTax?
+    public var massTransitParkingTax: TaxRegistrationCountryOptionsUsMassTransitParkingTax?
     /// Options for the parking tax registration.
-    public var parkingTax: TaxRegistrationCreateCountryOptionsUsParkingTax?
+    public var parkingTax: TaxRegistrationCountryOptionsUsParkingTax?
     /// Options for the resort tax registration.
-    public var resortTax: TaxRegistrationCreateCountryOptionsUsResortTax?
+    public var resortTax: TaxRegistrationCountryOptionsUsResortTax?
     /// Options for the state sales tax registration.
-    public var stateSalesTax: TaxRegistrationCreateCountryOptionsUsStateSalesTax?
+    public var stateSalesTax: TaxRegistrationCountryOptionsUsStateSalesTax?
     /// Options for the tourism tax registration.
-    public var tourismTax: TaxRegistrationCreateCountryOptionsUsTourismTax?
+    public var tourismTax: TaxRegistrationCountryOptionsUsTourismTax?
     /// Options for the utility users tax registration.
-    public var utilityUsersTax: TaxRegistrationCreateCountryOptionsUsUtilityUsersTax?
+    public var utilityUsersTax: TaxRegistrationCountryOptionsUsUtilityUsersTax?
 
-    public init(state: String, type: TaxRegistrationCreateCountryOptionsUsType, admissionsTax: TaxRegistrationCreateCountryOptionsUsAdmissionsTax? = nil, attendanceTax: TaxRegistrationCreateCountryOptionsUsAttendanceTax? = nil, entertainmentTax: TaxRegistrationCreateCountryOptionsUsEntertainmentTax? = nil, grossReceiptsTax: TaxRegistrationCreateCountryOptionsUsGrossReceiptsTax? = nil, hospitalityTax: TaxRegistrationCreateCountryOptionsUsHospitalityTax? = nil, localAmusementTax: TaxRegistrationCreateCountryOptionsUsLocalAmusementTax? = nil, localLeaseTax: TaxRegistrationCreateCountryOptionsUsLocalLeaseTax? = nil, luxuryTax: TaxRegistrationCreateCountryOptionsUsLuxuryTax? = nil, massTransitParkingTax: TaxRegistrationCreateCountryOptionsUsMassTransitParkingTax? = nil, parkingTax: TaxRegistrationCreateCountryOptionsUsParkingTax? = nil, resortTax: TaxRegistrationCreateCountryOptionsUsResortTax? = nil, stateSalesTax: TaxRegistrationCreateCountryOptionsUsStateSalesTax? = nil, tourismTax: TaxRegistrationCreateCountryOptionsUsTourismTax? = nil, utilityUsersTax: TaxRegistrationCreateCountryOptionsUsUtilityUsersTax? = nil) {
+    public init(state: String, type: TaxRegistrationCountryOptionsUsType, admissionsTax: TaxRegistrationCountryOptionsUsAdmissionsTax? = nil, attendanceTax: TaxRegistrationCountryOptionsUsAttendanceTax? = nil, entertainmentTax: TaxRegistrationCountryOptionsUsEntertainmentTax? = nil, grossReceiptsTax: TaxRegistrationCountryOptionsUsGrossReceiptsTax? = nil, hospitalityTax: TaxRegistrationCountryOptionsUsHospitalityTax? = nil, localAmusementTax: TaxRegistrationCountryOptionsUsLocalAmusementTax? = nil, localLeaseTax: TaxRegistrationCountryOptionsUsLocalLeaseTax? = nil, luxuryTax: TaxRegistrationCountryOptionsUsLuxuryTax? = nil, massTransitParkingTax: TaxRegistrationCountryOptionsUsMassTransitParkingTax? = nil, parkingTax: TaxRegistrationCountryOptionsUsParkingTax? = nil, resortTax: TaxRegistrationCountryOptionsUsResortTax? = nil, stateSalesTax: TaxRegistrationCountryOptionsUsStateSalesTax? = nil, tourismTax: TaxRegistrationCountryOptionsUsTourismTax? = nil, utilityUsersTax: TaxRegistrationCountryOptionsUsUtilityUsersTax? = nil) {
         self.state = state
         self.type = type
         self.admissionsTax = admissionsTax
@@ -4138,7 +4138,7 @@ public struct TaxRegistrationCreateCountryOptionsUs: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsUsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsUsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4182,7 +4182,7 @@ public struct TaxRegistrationCreateCountryOptionsUsType: RawRepresentable, Codab
 }
 
 /// Options for the admission tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsAdmissionsTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsAdmissionsTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=admissions_tax#registration-types).
     public var jurisdiction: String
@@ -4193,7 +4193,7 @@ public struct TaxRegistrationCreateCountryOptionsUsAdmissionsTax: StripeParams {
 }
 
 /// Options for the attendance tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsAttendanceTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsAttendanceTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=attendance_tax#registration-types).
     public var jurisdiction: String
@@ -4204,7 +4204,7 @@ public struct TaxRegistrationCreateCountryOptionsUsAttendanceTax: StripeParams {
 }
 
 /// Options for the entertainment tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsEntertainmentTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsEntertainmentTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=entertainment_tax#registration-types).
     public var jurisdiction: String
@@ -4215,7 +4215,7 @@ public struct TaxRegistrationCreateCountryOptionsUsEntertainmentTax: StripeParam
 }
 
 /// Options for the gross receipts tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsGrossReceiptsTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsGrossReceiptsTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=gross_receipts_tax#registration-types).
     public var jurisdiction: String
@@ -4226,7 +4226,7 @@ public struct TaxRegistrationCreateCountryOptionsUsGrossReceiptsTax: StripeParam
 }
 
 /// Options for the hospitality tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsHospitalityTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsHospitalityTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=hospitality_tax#registration-types).
     public var jurisdiction: String
@@ -4237,7 +4237,7 @@ public struct TaxRegistrationCreateCountryOptionsUsHospitalityTax: StripeParams 
 }
 
 /// Options for the local amusement tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsLocalAmusementTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsLocalAmusementTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=amusement_tax#registration-types).
     public var jurisdiction: String
@@ -4248,7 +4248,7 @@ public struct TaxRegistrationCreateCountryOptionsUsLocalAmusementTax: StripePara
 }
 
 /// Options for the local lease tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsLocalLeaseTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsLocalLeaseTax: StripeParams {
     /// A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local
     /// jurisdiction. Supported FIPS codes are: `14000` (Chicago).
     public var jurisdiction: String
@@ -4259,7 +4259,7 @@ public struct TaxRegistrationCreateCountryOptionsUsLocalLeaseTax: StripeParams {
 }
 
 /// Options for the luxury tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsLuxuryTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsLuxuryTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=luxury_tax#registration-types).
     public var jurisdiction: String
@@ -4270,7 +4270,7 @@ public struct TaxRegistrationCreateCountryOptionsUsLuxuryTax: StripeParams {
 }
 
 /// Options for the mass transit parking tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsMassTransitParkingTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsMassTransitParkingTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=mass_transit_parking_tax#registration-types).
     public var jurisdiction: String
@@ -4281,7 +4281,7 @@ public struct TaxRegistrationCreateCountryOptionsUsMassTransitParkingTax: Stripe
 }
 
 /// Options for the parking tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsParkingTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsParkingTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=parking_tax#registration-types).
     public var jurisdiction: String
@@ -4292,7 +4292,7 @@ public struct TaxRegistrationCreateCountryOptionsUsParkingTax: StripeParams {
 }
 
 /// Options for the resort tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsResortTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsResortTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=resort_tax#registration-types).
     public var jurisdiction: String
@@ -4303,29 +4303,29 @@ public struct TaxRegistrationCreateCountryOptionsUsResortTax: StripeParams {
 }
 
 /// Options for the state sales tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsStateSalesTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsStateSalesTax: StripeParams {
     /// Elections for the state sales tax registration.
-    public var elections: [TaxRegistrationCreateCountryOptionsUsStateSalesTaxElections]
+    public var elections: [TaxRegistrationCountryOptionsUsStateSalesTaxElections]
 
-    public init(elections: [TaxRegistrationCreateCountryOptionsUsStateSalesTaxElections]) {
+    public init(elections: [TaxRegistrationCountryOptionsUsStateSalesTaxElections]) {
         self.elections = elections
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsUsStateSalesTaxElections: StripeParams {
+public struct TaxRegistrationCountryOptionsUsStateSalesTaxElections: StripeParams {
     /// The type of the election for the state sales tax registration.
-    public var type: TaxRegistrationCreateCountryOptionsUsStateSalesTaxElectionsType
+    public var type: TaxRegistrationCountryOptionsUsStateSalesTaxElectionsType
     /// A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local
     /// jurisdiction.
     public var jurisdiction: String?
 
-    public init(type: TaxRegistrationCreateCountryOptionsUsStateSalesTaxElectionsType, jurisdiction: String? = nil) {
+    public init(type: TaxRegistrationCountryOptionsUsStateSalesTaxElectionsType, jurisdiction: String? = nil) {
         self.type = type
         self.jurisdiction = jurisdiction
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsUsStateSalesTaxElectionsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsUsStateSalesTaxElectionsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4338,7 +4338,7 @@ public struct TaxRegistrationCreateCountryOptionsUsStateSalesTaxElectionsType: R
 }
 
 /// Options for the tourism tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsTourismTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsTourismTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=tourism_tax#registration-types).
     public var jurisdiction: String
@@ -4349,7 +4349,7 @@ public struct TaxRegistrationCreateCountryOptionsUsTourismTax: StripeParams {
 }
 
 /// Options for the utility users tax registration.
-public struct TaxRegistrationCreateCountryOptionsUsUtilityUsersTax: StripeParams {
+public struct TaxRegistrationCountryOptionsUsUtilityUsersTax: StripeParams {
     /// A jurisdiction code representing the [local
     /// jurisdiction](/tax/registering?type=utility_users_tax#registration-types).
     public var jurisdiction: String
@@ -4360,19 +4360,19 @@ public struct TaxRegistrationCreateCountryOptionsUsUtilityUsersTax: StripeParams
 }
 
 /// Options for the registration in UY.
-public struct TaxRegistrationCreateCountryOptionsUy: StripeParams {
+public struct TaxRegistrationCountryOptionsUy: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsUyType
+    public var type: TaxRegistrationCountryOptionsUyType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsUyStandard?
+    public var standard: TaxRegistrationCountryOptionsUyStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsUyType, standard: TaxRegistrationCreateCountryOptionsUyStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsUyType, standard: TaxRegistrationCountryOptionsUyStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsUyType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsUyType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4383,11 +4383,11 @@ public struct TaxRegistrationCreateCountryOptionsUyType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsUyStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsUyStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsUyStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsUyStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsUyStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsUyStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -4396,7 +4396,7 @@ public struct TaxRegistrationCreateCountryOptionsUyStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsUyStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsUyStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4408,16 +4408,16 @@ public struct TaxRegistrationCreateCountryOptionsUyStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in UZ.
-public struct TaxRegistrationCreateCountryOptionsUz: StripeParams {
+public struct TaxRegistrationCountryOptionsUz: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsUzType
+    public var type: TaxRegistrationCountryOptionsUzType
 
-    public init(type: TaxRegistrationCreateCountryOptionsUzType) {
+    public init(type: TaxRegistrationCountryOptionsUzType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsUzType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsUzType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4428,16 +4428,16 @@ public struct TaxRegistrationCreateCountryOptionsUzType: RawRepresentable, Codab
 }
 
 /// Options for the registration in VN.
-public struct TaxRegistrationCreateCountryOptionsVn: StripeParams {
+public struct TaxRegistrationCountryOptionsVn: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsVnType
+    public var type: TaxRegistrationCountryOptionsVnType
 
-    public init(type: TaxRegistrationCreateCountryOptionsVnType) {
+    public init(type: TaxRegistrationCountryOptionsVnType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsVnType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsVnType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4448,19 +4448,19 @@ public struct TaxRegistrationCreateCountryOptionsVnType: RawRepresentable, Codab
 }
 
 /// Options for the registration in ZA.
-public struct TaxRegistrationCreateCountryOptionsZa: StripeParams {
+public struct TaxRegistrationCountryOptionsZa: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsZaType
+    public var type: TaxRegistrationCountryOptionsZaType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsZaStandard?
+    public var standard: TaxRegistrationCountryOptionsZaStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsZaType, standard: TaxRegistrationCreateCountryOptionsZaStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsZaType, standard: TaxRegistrationCountryOptionsZaStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsZaType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsZaType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4471,11 +4471,11 @@ public struct TaxRegistrationCreateCountryOptionsZaType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsZaStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsZaStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsZaStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsZaStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsZaStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsZaStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -4484,7 +4484,7 @@ public struct TaxRegistrationCreateCountryOptionsZaStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsZaStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsZaStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4496,16 +4496,16 @@ public struct TaxRegistrationCreateCountryOptionsZaStandardPlaceOfSupplyScheme: 
 }
 
 /// Options for the registration in ZM.
-public struct TaxRegistrationCreateCountryOptionsZm: StripeParams {
+public struct TaxRegistrationCountryOptionsZm: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsZmType
+    public var type: TaxRegistrationCountryOptionsZmType
 
-    public init(type: TaxRegistrationCreateCountryOptionsZmType) {
+    public init(type: TaxRegistrationCountryOptionsZmType) {
         self.type = type
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsZmType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsZmType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4516,19 +4516,19 @@ public struct TaxRegistrationCreateCountryOptionsZmType: RawRepresentable, Codab
 }
 
 /// Options for the registration in ZW.
-public struct TaxRegistrationCreateCountryOptionsZw: StripeParams {
+public struct TaxRegistrationCountryOptionsZw: StripeParams {
     /// Type of registration to be created in `country`.
-    public var type: TaxRegistrationCreateCountryOptionsZwType
+    public var type: TaxRegistrationCountryOptionsZwType
     /// Options for the standard registration.
-    public var standard: TaxRegistrationCreateCountryOptionsZwStandard?
+    public var standard: TaxRegistrationCountryOptionsZwStandard?
 
-    public init(type: TaxRegistrationCreateCountryOptionsZwType, standard: TaxRegistrationCreateCountryOptionsZwStandard? = nil) {
+    public init(type: TaxRegistrationCountryOptionsZwType, standard: TaxRegistrationCountryOptionsZwStandard? = nil) {
         self.type = type
         self.standard = standard
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsZwType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsZwType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4539,11 +4539,11 @@ public struct TaxRegistrationCreateCountryOptionsZwType: RawRepresentable, Codab
 }
 
 /// Options for the standard registration.
-public struct TaxRegistrationCreateCountryOptionsZwStandard: StripeParams {
+public struct TaxRegistrationCountryOptionsZwStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
-    public var placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsZwStandardPlaceOfSupplyScheme?
+    public var placeOfSupplyScheme: TaxRegistrationCountryOptionsZwStandardPlaceOfSupplyScheme?
 
-    public init(placeOfSupplyScheme: TaxRegistrationCreateCountryOptionsZwStandardPlaceOfSupplyScheme? = nil) {
+    public init(placeOfSupplyScheme: TaxRegistrationCountryOptionsZwStandardPlaceOfSupplyScheme? = nil) {
         self.placeOfSupplyScheme = placeOfSupplyScheme
     }
 
@@ -4552,7 +4552,7 @@ public struct TaxRegistrationCreateCountryOptionsZwStandard: StripeParams {
     }
 }
 
-public struct TaxRegistrationCreateCountryOptionsZwStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+public struct TaxRegistrationCountryOptionsZwStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -4576,40 +4576,8 @@ public struct TaxRegistrationListStatus: RawRepresentable, Codable, Hashable, Se
     public static var scheduled: Self { .init(rawValue: "scheduled") }
 }
 
-/// One of the forms `active_from` accepts.
-public enum TaxRegistrationUpdateActiveFrom: Codable, Sendable, ExpressibleByIntegerLiteral {
-    /// `now`
-    case now
-    case value(Date)
-
-    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TaxRegistrationUpdateActiveFrom matches")
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        switch self {
-        case .now:
-            var container = encoder.singleValueContainer()
-            try container.encode("now")
-        case .value(let value):
-            var container = encoder.singleValueContainer()
-            try container.encode(value)
-        }
-    }
-}
-
 /// One of the forms `expires_at` accepts.
-public enum TaxRegistrationUpdateExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum TaxRegistrationExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
@@ -4625,7 +4593,7 @@ public enum TaxRegistrationUpdateExpiresAt: Codable, Sendable, ExpressibleByInte
             }
         }
         if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TaxRegistrationUpdateExpiresAt matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TaxRegistrationExpiresAt matches")
     }
 
     public func encode(to encoder: Encoder) throws {

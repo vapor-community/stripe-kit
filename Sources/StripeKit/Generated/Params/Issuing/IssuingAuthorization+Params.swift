@@ -53,9 +53,9 @@ public struct IssuingAuthorizationCaptureParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Additional purchase information that is optionally provided by the merchant.
-    public var purchaseDetails: IssuingAuthorizationCapturePurchaseDetails?
+    public var purchaseDetails: IssuingAuthorizationPurchaseDetails?
 
-    public init(captureAmount: Int? = nil, closeAuthorization: Bool? = nil, expand: [String]? = nil, purchaseDetails: IssuingAuthorizationCapturePurchaseDetails? = nil) {
+    public init(captureAmount: Int? = nil, closeAuthorization: Bool? = nil, expand: [String]? = nil, purchaseDetails: IssuingAuthorizationPurchaseDetails? = nil) {
         self.captureAmount = captureAmount
         self.closeAuthorization = closeAuthorization
         self.expand = expand
@@ -92,9 +92,9 @@ public struct IssuingAuthorizationCreateParams: StripeParams {
     public var fleet: IssuingAuthorizationCreateFleet?
     /// Probability that this transaction can be disputed in the event of fraud. Assessed by comparing the
     /// characteristics of the authorization to card network rules.
-    public var fraudDisputabilityLikelihood: IssuingAuthorizationCreateFraudDisputabilityLikelihood?
+    public var fraudDisputabilityLikelihood: IssuingAuthorizationFraudDisputabilityLikelihood?
     /// Information about fuel that was purchased with this transaction.
-    public var fuel: IssuingAuthorizationCreateFuel?
+    public var fuel: IssuingAuthorizationFuel?
     /// If set `true`, you may provide
     /// [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount)
     /// to control how much to hold for the authorization.
@@ -112,14 +112,14 @@ public struct IssuingAuthorizationCreateParams: StripeParams {
     /// Details about the authorization, such as identifiers, set by the card network.
     public var networkData: IssuingAuthorizationCreateNetworkData?
     /// Stripe’s assessment of the fraud risk for this authorization.
-    public var riskAssessment: IssuingAuthorizationCreateRiskAssessment?
+    public var riskAssessment: IssuingAuthorizationRiskAssessment?
     /// Verifications that Stripe performed on information that the cardholder provided to the merchant.
     public var verificationData: IssuingAuthorizationCreateVerificationData?
     /// The digital wallet used for this transaction. One of `apple_pay`, `google_pay`, or `samsung_pay`.
     /// Will populate as `null` when no digital wallet was utilized.
-    public var wallet: IssuingAuthorizationCreateWallet?
+    public var wallet: IssuingAuthorizationWallet?
 
-    public init(card: String, amount: Int? = nil, amountDetails: IssuingAuthorizationCreateAmountDetails? = nil, authorizationMethod: IssuingAuthorizationCreateAuthorizationMethod? = nil, currency: String? = nil, expand: [String]? = nil, fleet: IssuingAuthorizationCreateFleet? = nil, fraudDisputabilityLikelihood: IssuingAuthorizationCreateFraudDisputabilityLikelihood? = nil, fuel: IssuingAuthorizationCreateFuel? = nil, isAmountControllable: Bool? = nil, merchantAmount: Int? = nil, merchantCurrency: String? = nil, merchantData: IssuingAuthorizationCreateMerchantData? = nil, networkData: IssuingAuthorizationCreateNetworkData? = nil, riskAssessment: IssuingAuthorizationCreateRiskAssessment? = nil, verificationData: IssuingAuthorizationCreateVerificationData? = nil, wallet: IssuingAuthorizationCreateWallet? = nil) {
+    public init(card: String, amount: Int? = nil, amountDetails: IssuingAuthorizationCreateAmountDetails? = nil, authorizationMethod: IssuingAuthorizationCreateAuthorizationMethod? = nil, currency: String? = nil, expand: [String]? = nil, fleet: IssuingAuthorizationCreateFleet? = nil, fraudDisputabilityLikelihood: IssuingAuthorizationFraudDisputabilityLikelihood? = nil, fuel: IssuingAuthorizationFuel? = nil, isAmountControllable: Bool? = nil, merchantAmount: Int? = nil, merchantCurrency: String? = nil, merchantData: IssuingAuthorizationCreateMerchantData? = nil, networkData: IssuingAuthorizationCreateNetworkData? = nil, riskAssessment: IssuingAuthorizationRiskAssessment? = nil, verificationData: IssuingAuthorizationCreateVerificationData? = nil, wallet: IssuingAuthorizationWallet? = nil) {
         self.card = card
         self.amount = amount
         self.amountDetails = amountDetails
@@ -207,9 +207,9 @@ public struct IssuingAuthorizationFinalizeAmountParams: StripeParams {
     /// Fleet-specific information for authorizations using Fleet cards.
     public var fleet: IssuingAuthorizationFinalizeAmountFleet?
     /// Information about fuel that was purchased with this transaction.
-    public var fuel: IssuingAuthorizationFinalizeAmountFuel?
+    public var fuel: IssuingAuthorizationFuel?
 
-    public init(finalAmount: Int, expand: [String]? = nil, fleet: IssuingAuthorizationFinalizeAmountFleet? = nil, fuel: IssuingAuthorizationFinalizeAmountFuel? = nil) {
+    public init(finalAmount: Int, expand: [String]? = nil, fleet: IssuingAuthorizationFinalizeAmountFleet? = nil, fuel: IssuingAuthorizationFuel? = nil) {
         self.finalAmount = finalAmount
         self.expand = expand
         self.fleet = fleet
@@ -356,21 +356,21 @@ public struct IssuingAuthorizationUpdateParams: ClearableParams {
 }
 
 /// Additional purchase information that is optionally provided by the merchant.
-public struct IssuingAuthorizationCapturePurchaseDetails: StripeParams {
+public struct IssuingAuthorizationPurchaseDetails: StripeParams {
     /// Fleet-specific information for transactions using Fleet cards.
-    public var fleet: IssuingAuthorizationCapturePurchaseDetailsFleet?
+    public var fleet: IssuingAuthorizationPurchaseDetailsFleet?
     /// Information about the flight that was purchased with this transaction.
-    public var flight: IssuingAuthorizationCapturePurchaseDetailsFlight?
+    public var flight: IssuingAuthorizationPurchaseDetailsFlight?
     /// Information about fuel that was purchased with this transaction.
-    public var fuel: IssuingAuthorizationCapturePurchaseDetailsFuel?
+    public var fuel: IssuingAuthorizationPurchaseDetailsFuel?
     /// Information about lodging that was purchased with this transaction.
-    public var lodging: IssuingAuthorizationCapturePurchaseDetailsLodging?
+    public var lodging: IssuingAuthorizationPurchaseDetailsLodging?
     /// The line items in the purchase.
-    public var receipt: [IssuingAuthorizationCapturePurchaseDetailsReceipt]?
+    public var receipt: [IssuingAuthorizationPurchaseDetailsReceipt]?
     /// A merchant-specific order number.
     public var reference: String?
 
-    public init(fleet: IssuingAuthorizationCapturePurchaseDetailsFleet? = nil, flight: IssuingAuthorizationCapturePurchaseDetailsFlight? = nil, fuel: IssuingAuthorizationCapturePurchaseDetailsFuel? = nil, lodging: IssuingAuthorizationCapturePurchaseDetailsLodging? = nil, receipt: [IssuingAuthorizationCapturePurchaseDetailsReceipt]? = nil, reference: String? = nil) {
+    public init(fleet: IssuingAuthorizationPurchaseDetailsFleet? = nil, flight: IssuingAuthorizationPurchaseDetailsFlight? = nil, fuel: IssuingAuthorizationPurchaseDetailsFuel? = nil, lodging: IssuingAuthorizationPurchaseDetailsLodging? = nil, receipt: [IssuingAuthorizationPurchaseDetailsReceipt]? = nil, reference: String? = nil) {
         self.fleet = fleet
         self.flight = flight
         self.fuel = fuel
@@ -381,20 +381,20 @@ public struct IssuingAuthorizationCapturePurchaseDetails: StripeParams {
 }
 
 /// Fleet-specific information for transactions using Fleet cards.
-public struct IssuingAuthorizationCapturePurchaseDetailsFleet: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsFleet: StripeParams {
     /// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
     /// on the configuration of your physical fleet cards. Typical points of sale support only numeric
     /// entry.
-    public var cardholderPromptData: IssuingAuthorizationCapturePurchaseDetailsFleetCardholderPromptData?
+    public var cardholderPromptData: IssuingAuthorizationPurchaseDetailsFleetCardholderPromptData?
     /// The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
-    public var purchaseType: IssuingAuthorizationCapturePurchaseDetailsFleetPurchaseType?
+    public var purchaseType: IssuingAuthorizationPurchaseDetailsFleetPurchaseType?
     /// More information about the total amount. This information is not guaranteed to be accurate as some
     /// merchants may provide unreliable data.
-    public var reportedBreakdown: IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdown?
+    public var reportedBreakdown: IssuingAuthorizationPurchaseDetailsFleetReportedBreakdown?
     /// The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
-    public var serviceType: IssuingAuthorizationCapturePurchaseDetailsFleetServiceType?
+    public var serviceType: IssuingAuthorizationPurchaseDetailsFleetServiceType?
 
-    public init(cardholderPromptData: IssuingAuthorizationCapturePurchaseDetailsFleetCardholderPromptData? = nil, purchaseType: IssuingAuthorizationCapturePurchaseDetailsFleetPurchaseType? = nil, reportedBreakdown: IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdown? = nil, serviceType: IssuingAuthorizationCapturePurchaseDetailsFleetServiceType? = nil) {
+    public init(cardholderPromptData: IssuingAuthorizationPurchaseDetailsFleetCardholderPromptData? = nil, purchaseType: IssuingAuthorizationPurchaseDetailsFleetPurchaseType? = nil, reportedBreakdown: IssuingAuthorizationPurchaseDetailsFleetReportedBreakdown? = nil, serviceType: IssuingAuthorizationPurchaseDetailsFleetServiceType? = nil) {
         self.cardholderPromptData = cardholderPromptData
         self.purchaseType = purchaseType
         self.reportedBreakdown = reportedBreakdown
@@ -412,7 +412,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFleet: StripeParams {
 /// Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending
 /// on the configuration of your physical fleet cards. Typical points of sale support only numeric
 /// entry.
-public struct IssuingAuthorizationCapturePurchaseDetailsFleetCardholderPromptData: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsFleetCardholderPromptData: StripeParams {
     /// Driver ID.
     public var driverId: String?
     /// Odometer reading.
@@ -442,7 +442,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFleetCardholderPromptDat
     }
 }
 
-public struct IssuingAuthorizationCapturePurchaseDetailsFleetPurchaseType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationPurchaseDetailsFleetPurchaseType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -456,15 +456,15 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFleetPurchaseType: RawRe
 
 /// More information about the total amount. This information is not guaranteed to be accurate as some
 /// merchants may provide unreliable data.
-public struct IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdown: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsFleetReportedBreakdown: StripeParams {
     /// Breakdown of fuel portion of the purchase.
-    public var fuel: IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownFuel?
+    public var fuel: IssuingAuthorizationPurchaseDetailsFleetReportedBreakdownFuel?
     /// Breakdown of non-fuel portion of the purchase.
-    public var nonFuel: IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownNonFuel?
+    public var nonFuel: IssuingAuthorizationPurchaseDetailsFleetReportedBreakdownNonFuel?
     /// Information about tax included in this transaction.
-    public var tax: IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownTax?
+    public var tax: IssuingAuthorizationPurchaseDetailsFleetReportedBreakdownTax?
 
-    public init(fuel: IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownFuel? = nil, nonFuel: IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownNonFuel? = nil, tax: IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownTax? = nil) {
+    public init(fuel: IssuingAuthorizationPurchaseDetailsFleetReportedBreakdownFuel? = nil, nonFuel: IssuingAuthorizationPurchaseDetailsFleetReportedBreakdownNonFuel? = nil, tax: IssuingAuthorizationPurchaseDetailsFleetReportedBreakdownTax? = nil) {
         self.fuel = fuel
         self.nonFuel = nonFuel
         self.tax = tax
@@ -478,7 +478,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdown: 
 }
 
 /// Breakdown of fuel portion of the purchase.
-public struct IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownFuel: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsFleetReportedBreakdownFuel: StripeParams {
     /// Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
     public var grossAmountDecimal: String?
 
@@ -492,7 +492,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownFu
 }
 
 /// Breakdown of non-fuel portion of the purchase.
-public struct IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownNonFuel: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsFleetReportedBreakdownNonFuel: StripeParams {
     /// Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
     public var grossAmountDecimal: String?
 
@@ -506,7 +506,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownNo
 }
 
 /// Information about tax included in this transaction.
-public struct IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownTax: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsFleetReportedBreakdownTax: StripeParams {
     /// Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by
     /// merchant or not subject to tax.
     public var localAmountDecimal: String?
@@ -525,7 +525,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFleetReportedBreakdownTa
     }
 }
 
-public struct IssuingAuthorizationCapturePurchaseDetailsFleetServiceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationPurchaseDetailsFleetServiceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -538,7 +538,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFleetServiceType: RawRep
 }
 
 /// Information about the flight that was purchased with this transaction.
-public struct IssuingAuthorizationCapturePurchaseDetailsFlight: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsFlight: StripeParams {
     /// The time that the flight departed.
     public var departureAt: Date?
     /// The name of the passenger.
@@ -546,11 +546,11 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFlight: StripeParams {
     /// Whether the ticket is refundable.
     public var refundable: Bool?
     /// The legs of the trip.
-    public var segments: [IssuingAuthorizationCapturePurchaseDetailsFlightSegments]?
+    public var segments: [IssuingAuthorizationPurchaseDetailsFlightSegments]?
     /// The travel agency that issued the ticket.
     public var travelAgency: String?
 
-    public init(departureAt: Date? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingAuthorizationCapturePurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
+    public init(departureAt: Date? = nil, passengerName: String? = nil, refundable: Bool? = nil, segments: [IssuingAuthorizationPurchaseDetailsFlightSegments]? = nil, travelAgency: String? = nil) {
         self.departureAt = departureAt
         self.passengerName = passengerName
         self.refundable = refundable
@@ -567,7 +567,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFlight: StripeParams {
     }
 }
 
-public struct IssuingAuthorizationCapturePurchaseDetailsFlightSegments: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsFlightSegments: StripeParams {
     /// The three-letter IATA airport code of the flight's destination.
     public var arrivalAirportCode: String?
     /// The airline carrier code.
@@ -601,7 +601,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFlightSegments: StripePa
 }
 
 /// Information about fuel that was purchased with this transaction.
-public struct IssuingAuthorizationCapturePurchaseDetailsFuel: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsFuel: StripeParams {
     /// [Conexxus Payment System Product
     /// Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel
     /// product purchased.
@@ -611,15 +611,15 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFuel: StripeParams {
     public var quantityDecimal: String?
     /// The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`,
     /// `unleaded_super`, or `other`.
-    public var type: IssuingAuthorizationCapturePurchaseDetailsFuelType?
+    public var type: IssuingAuthorizationPurchaseDetailsFuelType?
     /// The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`,
     /// `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
-    public var unit: IssuingAuthorizationCapturePurchaseDetailsFuelUnit?
+    public var unit: IssuingAuthorizationPurchaseDetailsFuelUnit?
     /// The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal
     /// places.
     public var unitCostDecimal: String?
 
-    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingAuthorizationCapturePurchaseDetailsFuelType? = nil, unit: IssuingAuthorizationCapturePurchaseDetailsFuelUnit? = nil, unitCostDecimal: String? = nil) {
+    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingAuthorizationPurchaseDetailsFuelType? = nil, unit: IssuingAuthorizationPurchaseDetailsFuelUnit? = nil, unitCostDecimal: String? = nil) {
         self.industryProductCode = industryProductCode
         self.quantityDecimal = quantityDecimal
         self.type = type
@@ -636,7 +636,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFuel: StripeParams {
     }
 }
 
-public struct IssuingAuthorizationCapturePurchaseDetailsFuelType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationPurchaseDetailsFuelType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -650,7 +650,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFuelType: RawRepresentab
     public static var unleadedSuper: Self { .init(rawValue: "unleaded_super") }
 }
 
-public struct IssuingAuthorizationCapturePurchaseDetailsFuelUnit: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationPurchaseDetailsFuelUnit: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -668,7 +668,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsFuelUnit: RawRepresentab
 }
 
 /// Information about lodging that was purchased with this transaction.
-public struct IssuingAuthorizationCapturePurchaseDetailsLodging: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsLodging: StripeParams {
     /// The time of checking into the lodging.
     public var checkInAt: Date?
     /// The number of nights stayed at the lodging.
@@ -685,7 +685,7 @@ public struct IssuingAuthorizationCapturePurchaseDetailsLodging: StripeParams {
     }
 }
 
-public struct IssuingAuthorizationCapturePurchaseDetailsReceipt: StripeParams {
+public struct IssuingAuthorizationPurchaseDetailsReceipt: StripeParams {
     public var description: String?
     public var quantity: String?
     public var total: Int?
@@ -746,14 +746,14 @@ public struct IssuingAuthorizationCreateFleet: StripeParams {
     /// entry.
     public var cardholderPromptData: IssuingAuthorizationCreateFleetCardholderPromptData?
     /// The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
-    public var purchaseType: IssuingAuthorizationCreateFleetPurchaseType?
+    public var purchaseType: IssuingAuthorizationFleetPurchaseType?
     /// More information about the total amount. This information is not guaranteed to be accurate as some
     /// merchants may provide unreliable data.
     public var reportedBreakdown: IssuingAuthorizationCreateFleetReportedBreakdown?
     /// The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
-    public var serviceType: IssuingAuthorizationCreateFleetServiceType?
+    public var serviceType: IssuingAuthorizationFleetServiceType?
 
-    public init(cardholderPromptData: IssuingAuthorizationCreateFleetCardholderPromptData? = nil, purchaseType: IssuingAuthorizationCreateFleetPurchaseType? = nil, reportedBreakdown: IssuingAuthorizationCreateFleetReportedBreakdown? = nil, serviceType: IssuingAuthorizationCreateFleetServiceType? = nil) {
+    public init(cardholderPromptData: IssuingAuthorizationCreateFleetCardholderPromptData? = nil, purchaseType: IssuingAuthorizationFleetPurchaseType? = nil, reportedBreakdown: IssuingAuthorizationCreateFleetReportedBreakdown? = nil, serviceType: IssuingAuthorizationFleetServiceType? = nil) {
         self.cardholderPromptData = cardholderPromptData
         self.purchaseType = purchaseType
         self.reportedBreakdown = reportedBreakdown
@@ -801,7 +801,7 @@ public struct IssuingAuthorizationCreateFleetCardholderPromptData: StripeParams 
     }
 }
 
-public struct IssuingAuthorizationCreateFleetPurchaseType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationFleetPurchaseType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -817,13 +817,13 @@ public struct IssuingAuthorizationCreateFleetPurchaseType: RawRepresentable, Cod
 /// merchants may provide unreliable data.
 public struct IssuingAuthorizationCreateFleetReportedBreakdown: StripeParams {
     /// Breakdown of fuel portion of the purchase.
-    public var fuel: IssuingAuthorizationCreateFleetReportedBreakdownFuel?
+    public var fuel: IssuingAuthorizationFleetReportedBreakdownFuel?
     /// Breakdown of non-fuel portion of the purchase.
-    public var nonFuel: IssuingAuthorizationCreateFleetReportedBreakdownNonFuel?
+    public var nonFuel: IssuingAuthorizationFleetReportedBreakdownNonFuel?
     /// Information about tax included in this transaction.
-    public var tax: IssuingAuthorizationCreateFleetReportedBreakdownTax?
+    public var tax: IssuingAuthorizationFleetReportedBreakdownTax?
 
-    public init(fuel: IssuingAuthorizationCreateFleetReportedBreakdownFuel? = nil, nonFuel: IssuingAuthorizationCreateFleetReportedBreakdownNonFuel? = nil, tax: IssuingAuthorizationCreateFleetReportedBreakdownTax? = nil) {
+    public init(fuel: IssuingAuthorizationFleetReportedBreakdownFuel? = nil, nonFuel: IssuingAuthorizationFleetReportedBreakdownNonFuel? = nil, tax: IssuingAuthorizationFleetReportedBreakdownTax? = nil) {
         self.fuel = fuel
         self.nonFuel = nonFuel
         self.tax = tax
@@ -837,7 +837,7 @@ public struct IssuingAuthorizationCreateFleetReportedBreakdown: StripeParams {
 }
 
 /// Breakdown of fuel portion of the purchase.
-public struct IssuingAuthorizationCreateFleetReportedBreakdownFuel: StripeParams {
+public struct IssuingAuthorizationFleetReportedBreakdownFuel: StripeParams {
     /// Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
     public var grossAmountDecimal: String?
 
@@ -851,7 +851,7 @@ public struct IssuingAuthorizationCreateFleetReportedBreakdownFuel: StripeParams
 }
 
 /// Breakdown of non-fuel portion of the purchase.
-public struct IssuingAuthorizationCreateFleetReportedBreakdownNonFuel: StripeParams {
+public struct IssuingAuthorizationFleetReportedBreakdownNonFuel: StripeParams {
     /// Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
     public var grossAmountDecimal: String?
 
@@ -865,7 +865,7 @@ public struct IssuingAuthorizationCreateFleetReportedBreakdownNonFuel: StripePar
 }
 
 /// Information about tax included in this transaction.
-public struct IssuingAuthorizationCreateFleetReportedBreakdownTax: StripeParams {
+public struct IssuingAuthorizationFleetReportedBreakdownTax: StripeParams {
     /// Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by
     /// merchant or not subject to tax.
     public var localAmountDecimal: String?
@@ -884,7 +884,7 @@ public struct IssuingAuthorizationCreateFleetReportedBreakdownTax: StripeParams 
     }
 }
 
-public struct IssuingAuthorizationCreateFleetServiceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationFleetServiceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -896,7 +896,7 @@ public struct IssuingAuthorizationCreateFleetServiceType: RawRepresentable, Coda
     public static var selfService: Self { .init(rawValue: "self_service") }
 }
 
-public struct IssuingAuthorizationCreateFraudDisputabilityLikelihood: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationFraudDisputabilityLikelihood: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -910,7 +910,7 @@ public struct IssuingAuthorizationCreateFraudDisputabilityLikelihood: RawReprese
 }
 
 /// Information about fuel that was purchased with this transaction.
-public struct IssuingAuthorizationCreateFuel: StripeParams {
+public struct IssuingAuthorizationFuel: StripeParams {
     /// [Conexxus Payment System Product
     /// Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel
     /// product purchased.
@@ -920,15 +920,15 @@ public struct IssuingAuthorizationCreateFuel: StripeParams {
     public var quantityDecimal: String?
     /// The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`,
     /// `unleaded_super`, or `other`.
-    public var type: IssuingAuthorizationCreateFuelType?
+    public var type: IssuingAuthorizationFuelType?
     /// The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`,
     /// `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
-    public var unit: IssuingAuthorizationCreateFuelUnit?
+    public var unit: IssuingAuthorizationFuelUnit?
     /// The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal
     /// places.
     public var unitCostDecimal: String?
 
-    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingAuthorizationCreateFuelType? = nil, unit: IssuingAuthorizationCreateFuelUnit? = nil, unitCostDecimal: String? = nil) {
+    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingAuthorizationFuelType? = nil, unit: IssuingAuthorizationFuelUnit? = nil, unitCostDecimal: String? = nil) {
         self.industryProductCode = industryProductCode
         self.quantityDecimal = quantityDecimal
         self.type = type
@@ -945,7 +945,7 @@ public struct IssuingAuthorizationCreateFuel: StripeParams {
     }
 }
 
-public struct IssuingAuthorizationCreateFuelType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationFuelType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -959,7 +959,7 @@ public struct IssuingAuthorizationCreateFuelType: RawRepresentable, Codable, Has
     public static var unleadedSuper: Self { .init(rawValue: "unleaded_super") }
 }
 
-public struct IssuingAuthorizationCreateFuelUnit: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationFuelUnit: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -981,7 +981,7 @@ public struct IssuingAuthorizationCreateFuelUnit: RawRepresentable, Codable, Has
 public struct IssuingAuthorizationCreateMerchantData: StripeParams {
     /// A categorization of the seller's type of business. See our [merchant categories
     /// guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
-    public var category: IssuingAuthorizationCreateMerchantDataCategory?
+    public var category: IssuingAuthorizationMerchantDataCategory?
     /// City where the seller is located
     public var city: String?
     /// Country where the seller is located
@@ -1000,7 +1000,7 @@ public struct IssuingAuthorizationCreateMerchantData: StripeParams {
     /// URL provided by the merchant on a 3DS request
     public var url: String?
 
-    public init(category: IssuingAuthorizationCreateMerchantDataCategory? = nil, city: String? = nil, country: String? = nil, name: String? = nil, networkId: String? = nil, postalCode: String? = nil, state: String? = nil, terminalId: String? = nil, url: String? = nil) {
+    public init(category: IssuingAuthorizationMerchantDataCategory? = nil, city: String? = nil, country: String? = nil, name: String? = nil, networkId: String? = nil, postalCode: String? = nil, state: String? = nil, terminalId: String? = nil, url: String? = nil) {
         self.category = category
         self.city = city
         self.country = country
@@ -1025,7 +1025,7 @@ public struct IssuingAuthorizationCreateMerchantData: StripeParams {
     }
 }
 
-public struct IssuingAuthorizationCreateMerchantDataCategory: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationMerchantDataCategory: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1343,16 +1343,16 @@ public struct IssuingAuthorizationCreateNetworkData: StripeParams {
 }
 
 /// Stripe’s assessment of the fraud risk for this authorization.
-public struct IssuingAuthorizationCreateRiskAssessment: StripeParams {
+public struct IssuingAuthorizationRiskAssessment: StripeParams {
     /// Stripe's assessment of this authorization's likelihood of being card testing activity.
-    public var cardTestingRisk: IssuingAuthorizationCreateRiskAssessmentCardTestingRisk?
+    public var cardTestingRisk: IssuingAuthorizationRiskAssessmentCardTestingRisk?
     /// Stripe’s assessment of this authorization’s likelihood to be fraudulent.
-    public var fraudRisk: IssuingAuthorizationCreateRiskAssessmentFraudRisk?
+    public var fraudRisk: IssuingAuthorizationRiskAssessmentFraudRisk?
     /// The dispute risk of the merchant (the seller on a purchase) on an authorization based on all Stripe
     /// Issuing activity.
-    public var merchantDisputeRisk: IssuingAuthorizationCreateRiskAssessmentMerchantDisputeRisk?
+    public var merchantDisputeRisk: IssuingAuthorizationRiskAssessmentMerchantDisputeRisk?
 
-    public init(cardTestingRisk: IssuingAuthorizationCreateRiskAssessmentCardTestingRisk? = nil, fraudRisk: IssuingAuthorizationCreateRiskAssessmentFraudRisk? = nil, merchantDisputeRisk: IssuingAuthorizationCreateRiskAssessmentMerchantDisputeRisk? = nil) {
+    public init(cardTestingRisk: IssuingAuthorizationRiskAssessmentCardTestingRisk? = nil, fraudRisk: IssuingAuthorizationRiskAssessmentFraudRisk? = nil, merchantDisputeRisk: IssuingAuthorizationRiskAssessmentMerchantDisputeRisk? = nil) {
         self.cardTestingRisk = cardTestingRisk
         self.fraudRisk = fraudRisk
         self.merchantDisputeRisk = merchantDisputeRisk
@@ -1366,10 +1366,10 @@ public struct IssuingAuthorizationCreateRiskAssessment: StripeParams {
 }
 
 /// Stripe's assessment of this authorization's likelihood of being card testing activity.
-public struct IssuingAuthorizationCreateRiskAssessmentCardTestingRisk: StripeParams {
+public struct IssuingAuthorizationRiskAssessmentCardTestingRisk: StripeParams {
     /// The likelihood that this authorization is associated with card testing activity. This is assessed by
     /// evaluating decline activity over the last hour.
-    public var level: IssuingAuthorizationCreateRiskAssessmentCardTestingRiskLevel
+    public var level: IssuingAuthorizationRiskAssessmentCardTestingRiskLevel
     /// The % of declines due to a card number not existing in the past hour, taking place at the same
     /// merchant. Higher rates correspond to a greater probability of card testing activity, meaning bad
     /// actors may be attempting different card number combinations to guess a correct one. Takes on values
@@ -1381,7 +1381,7 @@ public struct IssuingAuthorizationCreateRiskAssessmentCardTestingRisk: StripePar
     /// values between 0 and 100.
     public var invalidCredentialsDeclineRatePastHour: Int?
 
-    public init(level: IssuingAuthorizationCreateRiskAssessmentCardTestingRiskLevel, invalidAccountNumberDeclineRatePastHour: Int? = nil, invalidCredentialsDeclineRatePastHour: Int? = nil) {
+    public init(level: IssuingAuthorizationRiskAssessmentCardTestingRiskLevel, invalidAccountNumberDeclineRatePastHour: Int? = nil, invalidCredentialsDeclineRatePastHour: Int? = nil) {
         self.level = level
         self.invalidAccountNumberDeclineRatePastHour = invalidAccountNumberDeclineRatePastHour
         self.invalidCredentialsDeclineRatePastHour = invalidCredentialsDeclineRatePastHour
@@ -1394,7 +1394,7 @@ public struct IssuingAuthorizationCreateRiskAssessmentCardTestingRisk: StripePar
     }
 }
 
-public struct IssuingAuthorizationCreateRiskAssessmentCardTestingRiskLevel: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationRiskAssessmentCardTestingRiskLevel: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1410,20 +1410,20 @@ public struct IssuingAuthorizationCreateRiskAssessmentCardTestingRiskLevel: RawR
 }
 
 /// Stripe’s assessment of this authorization’s likelihood to be fraudulent.
-public struct IssuingAuthorizationCreateRiskAssessmentFraudRisk: StripeParams {
+public struct IssuingAuthorizationRiskAssessmentFraudRisk: StripeParams {
     /// Stripe’s assessment of the likelihood of fraud on an authorization.
-    public var level: IssuingAuthorizationCreateRiskAssessmentFraudRiskLevel
+    public var level: IssuingAuthorizationRiskAssessmentFraudRiskLevel
     /// Stripe’s numerical model score assessing the likelihood of fraudulent activity. A higher score means
     /// a higher likelihood of fraudulent activity, and anything above 25 is considered high risk.
     public var score: Double?
 
-    public init(level: IssuingAuthorizationCreateRiskAssessmentFraudRiskLevel, score: Double? = nil) {
+    public init(level: IssuingAuthorizationRiskAssessmentFraudRiskLevel, score: Double? = nil) {
         self.level = level
         self.score = score
     }
 }
 
-public struct IssuingAuthorizationCreateRiskAssessmentFraudRiskLevel: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationRiskAssessmentFraudRiskLevel: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1440,17 +1440,17 @@ public struct IssuingAuthorizationCreateRiskAssessmentFraudRiskLevel: RawReprese
 
 /// The dispute risk of the merchant (the seller on a purchase) on an authorization based on all Stripe
 /// Issuing activity.
-public struct IssuingAuthorizationCreateRiskAssessmentMerchantDisputeRisk: StripeParams {
+public struct IssuingAuthorizationRiskAssessmentMerchantDisputeRisk: StripeParams {
     /// The likelihood that authorizations from this merchant will result in a dispute based on their
     /// history on Stripe Issuing.
-    public var level: IssuingAuthorizationCreateRiskAssessmentMerchantDisputeRiskLevel
+    public var level: IssuingAuthorizationRiskAssessmentMerchantDisputeRiskLevel
     /// The dispute rate observed across all Stripe Issuing authorizations for this merchant. For example, a
     /// value of 50 means 50% of authorizations from this merchant on Stripe Issuing have resulted in a
     /// dispute. Higher values mean a higher likelihood the authorization is disputed. Takes on values
     /// between 0 and 100.
     public var disputeRate: Int?
 
-    public init(level: IssuingAuthorizationCreateRiskAssessmentMerchantDisputeRiskLevel, disputeRate: Int? = nil) {
+    public init(level: IssuingAuthorizationRiskAssessmentMerchantDisputeRiskLevel, disputeRate: Int? = nil) {
         self.level = level
         self.disputeRate = disputeRate
     }
@@ -1461,7 +1461,7 @@ public struct IssuingAuthorizationCreateRiskAssessmentMerchantDisputeRisk: Strip
     }
 }
 
-public struct IssuingAuthorizationCreateRiskAssessmentMerchantDisputeRiskLevel: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationRiskAssessmentMerchantDisputeRiskLevel: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1485,15 +1485,15 @@ public struct IssuingAuthorizationCreateVerificationData: StripeParams {
     /// `billing.address.postal_code`.
     public var addressPostalCodeCheck: IssuingAuthorizationCreateVerificationDataAddressPostalCodeCheck?
     /// The exemption applied to this authorization.
-    public var authenticationExemption: IssuingAuthorizationCreateVerificationDataAuthenticationExemption?
+    public var authenticationExemption: IssuingAuthorizationVerificationDataAuthenticationExemption?
     /// Whether the cardholder provided a CVC and if it matched Stripe’s record.
     public var cvcCheck: IssuingAuthorizationCreateVerificationDataCvcCheck?
     /// Whether the cardholder provided an expiry date and if it matched Stripe’s record.
     public var expiryCheck: IssuingAuthorizationCreateVerificationDataExpiryCheck?
     /// 3D Secure details.
-    public var threeDSecure: IssuingAuthorizationCreateVerificationDataThreeDSecure?
+    public var threeDSecure: IssuingAuthorizationVerificationDataThreeDSecure?
 
-    public init(addressLine1Check: IssuingAuthorizationCreateVerificationDataAddressLine1Check? = nil, addressPostalCodeCheck: IssuingAuthorizationCreateVerificationDataAddressPostalCodeCheck? = nil, authenticationExemption: IssuingAuthorizationCreateVerificationDataAuthenticationExemption? = nil, cvcCheck: IssuingAuthorizationCreateVerificationDataCvcCheck? = nil, expiryCheck: IssuingAuthorizationCreateVerificationDataExpiryCheck? = nil, threeDSecure: IssuingAuthorizationCreateVerificationDataThreeDSecure? = nil) {
+    public init(addressLine1Check: IssuingAuthorizationCreateVerificationDataAddressLine1Check? = nil, addressPostalCodeCheck: IssuingAuthorizationCreateVerificationDataAddressPostalCodeCheck? = nil, authenticationExemption: IssuingAuthorizationVerificationDataAuthenticationExemption? = nil, cvcCheck: IssuingAuthorizationCreateVerificationDataCvcCheck? = nil, expiryCheck: IssuingAuthorizationCreateVerificationDataExpiryCheck? = nil, threeDSecure: IssuingAuthorizationVerificationDataThreeDSecure? = nil) {
         self.addressLine1Check = addressLine1Check
         self.addressPostalCodeCheck = addressPostalCodeCheck
         self.authenticationExemption = authenticationExemption
@@ -1537,13 +1537,13 @@ public struct IssuingAuthorizationCreateVerificationDataAddressPostalCodeCheck: 
 }
 
 /// The exemption applied to this authorization.
-public struct IssuingAuthorizationCreateVerificationDataAuthenticationExemption: StripeParams {
+public struct IssuingAuthorizationVerificationDataAuthenticationExemption: StripeParams {
     /// The entity that requested the exemption, either the acquiring merchant or the Issuing user.
-    public var claimedBy: IssuingAuthorizationCreateVerificationDataAuthenticationExemptionClaimedBy
+    public var claimedBy: IssuingAuthorizationVerificationDataAuthenticationExemptionClaimedBy
     /// The specific exemption claimed for this authorization.
-    public var type: IssuingAuthorizationCreateVerificationDataAuthenticationExemptionType
+    public var type: IssuingAuthorizationVerificationDataAuthenticationExemptionType
 
-    public init(claimedBy: IssuingAuthorizationCreateVerificationDataAuthenticationExemptionClaimedBy, type: IssuingAuthorizationCreateVerificationDataAuthenticationExemptionType) {
+    public init(claimedBy: IssuingAuthorizationVerificationDataAuthenticationExemptionClaimedBy, type: IssuingAuthorizationVerificationDataAuthenticationExemptionType) {
         self.claimedBy = claimedBy
         self.type = type
     }
@@ -1554,7 +1554,7 @@ public struct IssuingAuthorizationCreateVerificationDataAuthenticationExemption:
     }
 }
 
-public struct IssuingAuthorizationCreateVerificationDataAuthenticationExemptionClaimedBy: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationVerificationDataAuthenticationExemptionClaimedBy: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1565,7 +1565,7 @@ public struct IssuingAuthorizationCreateVerificationDataAuthenticationExemptionC
     public static var issuer: Self { .init(rawValue: "issuer") }
 }
 
-public struct IssuingAuthorizationCreateVerificationDataAuthenticationExemptionType: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationVerificationDataAuthenticationExemptionType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1602,16 +1602,16 @@ public struct IssuingAuthorizationCreateVerificationDataExpiryCheck: RawRepresen
 }
 
 /// 3D Secure details.
-public struct IssuingAuthorizationCreateVerificationDataThreeDSecure: StripeParams {
+public struct IssuingAuthorizationVerificationDataThreeDSecure: StripeParams {
     /// The outcome of the 3D Secure authentication request.
-    public var result: IssuingAuthorizationCreateVerificationDataThreeDSecureResult
+    public var result: IssuingAuthorizationVerificationDataThreeDSecureResult
 
-    public init(result: IssuingAuthorizationCreateVerificationDataThreeDSecureResult) {
+    public init(result: IssuingAuthorizationVerificationDataThreeDSecureResult) {
         self.result = result
     }
 }
 
-public struct IssuingAuthorizationCreateVerificationDataThreeDSecureResult: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationVerificationDataThreeDSecureResult: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1624,7 +1624,7 @@ public struct IssuingAuthorizationCreateVerificationDataThreeDSecureResult: RawR
     public static var required: Self { .init(rawValue: "required") }
 }
 
-public struct IssuingAuthorizationCreateWallet: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingAuthorizationWallet: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1643,14 +1643,14 @@ public struct IssuingAuthorizationFinalizeAmountFleet: StripeParams {
     /// entry.
     public var cardholderPromptData: IssuingAuthorizationFinalizeAmountFleetCardholderPromptData?
     /// The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
-    public var purchaseType: IssuingAuthorizationFinalizeAmountFleetPurchaseType?
+    public var purchaseType: IssuingAuthorizationFleetPurchaseType?
     /// More information about the total amount. This information is not guaranteed to be accurate as some
     /// merchants may provide unreliable data.
     public var reportedBreakdown: IssuingAuthorizationFinalizeAmountFleetReportedBreakdown?
     /// The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
-    public var serviceType: IssuingAuthorizationFinalizeAmountFleetServiceType?
+    public var serviceType: IssuingAuthorizationFleetServiceType?
 
-    public init(cardholderPromptData: IssuingAuthorizationFinalizeAmountFleetCardholderPromptData? = nil, purchaseType: IssuingAuthorizationFinalizeAmountFleetPurchaseType? = nil, reportedBreakdown: IssuingAuthorizationFinalizeAmountFleetReportedBreakdown? = nil, serviceType: IssuingAuthorizationFinalizeAmountFleetServiceType? = nil) {
+    public init(cardholderPromptData: IssuingAuthorizationFinalizeAmountFleetCardholderPromptData? = nil, purchaseType: IssuingAuthorizationFleetPurchaseType? = nil, reportedBreakdown: IssuingAuthorizationFinalizeAmountFleetReportedBreakdown? = nil, serviceType: IssuingAuthorizationFleetServiceType? = nil) {
         self.cardholderPromptData = cardholderPromptData
         self.purchaseType = purchaseType
         self.reportedBreakdown = reportedBreakdown
@@ -1698,29 +1698,17 @@ public struct IssuingAuthorizationFinalizeAmountFleetCardholderPromptData: Strip
     }
 }
 
-public struct IssuingAuthorizationFinalizeAmountFleetPurchaseType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fuelAndNonFuelPurchase: Self { .init(rawValue: "fuel_and_non_fuel_purchase") }
-    public static var fuelPurchase: Self { .init(rawValue: "fuel_purchase") }
-    public static var nonFuelPurchase: Self { .init(rawValue: "non_fuel_purchase") }
-}
-
 /// More information about the total amount. This information is not guaranteed to be accurate as some
 /// merchants may provide unreliable data.
 public struct IssuingAuthorizationFinalizeAmountFleetReportedBreakdown: StripeParams {
     /// Breakdown of fuel portion of the purchase.
-    public var fuel: IssuingAuthorizationFinalizeAmountFleetReportedBreakdownFuel?
+    public var fuel: IssuingAuthorizationFleetReportedBreakdownFuel?
     /// Breakdown of non-fuel portion of the purchase.
-    public var nonFuel: IssuingAuthorizationFinalizeAmountFleetReportedBreakdownNonFuel?
+    public var nonFuel: IssuingAuthorizationFleetReportedBreakdownNonFuel?
     /// Information about tax included in this transaction.
-    public var tax: IssuingAuthorizationFinalizeAmountFleetReportedBreakdownTax?
+    public var tax: IssuingAuthorizationFleetReportedBreakdownTax?
 
-    public init(fuel: IssuingAuthorizationFinalizeAmountFleetReportedBreakdownFuel? = nil, nonFuel: IssuingAuthorizationFinalizeAmountFleetReportedBreakdownNonFuel? = nil, tax: IssuingAuthorizationFinalizeAmountFleetReportedBreakdownTax? = nil) {
+    public init(fuel: IssuingAuthorizationFleetReportedBreakdownFuel? = nil, nonFuel: IssuingAuthorizationFleetReportedBreakdownNonFuel? = nil, tax: IssuingAuthorizationFleetReportedBreakdownTax? = nil) {
         self.fuel = fuel
         self.nonFuel = nonFuel
         self.tax = tax
@@ -1731,133 +1719,6 @@ public struct IssuingAuthorizationFinalizeAmountFleetReportedBreakdown: StripePa
         case nonFuel = "non_fuel"
         case tax
     }
-}
-
-/// Breakdown of fuel portion of the purchase.
-public struct IssuingAuthorizationFinalizeAmountFleetReportedBreakdownFuel: StripeParams {
-    /// Gross fuel amount that should equal Fuel Volume multiplied by Fuel Unit Cost, inclusive of taxes.
-    public var grossAmountDecimal: String?
-
-    public init(grossAmountDecimal: String? = nil) {
-        self.grossAmountDecimal = grossAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case grossAmountDecimal = "gross_amount_decimal"
-    }
-}
-
-/// Breakdown of non-fuel portion of the purchase.
-public struct IssuingAuthorizationFinalizeAmountFleetReportedBreakdownNonFuel: StripeParams {
-    /// Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
-    public var grossAmountDecimal: String?
-
-    public init(grossAmountDecimal: String? = nil) {
-        self.grossAmountDecimal = grossAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case grossAmountDecimal = "gross_amount_decimal"
-    }
-}
-
-/// Information about tax included in this transaction.
-public struct IssuingAuthorizationFinalizeAmountFleetReportedBreakdownTax: StripeParams {
-    /// Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by
-    /// merchant or not subject to tax.
-    public var localAmountDecimal: String?
-    /// Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by
-    /// merchant or not subject to tax.
-    public var nationalAmountDecimal: String?
-
-    public init(localAmountDecimal: String? = nil, nationalAmountDecimal: String? = nil) {
-        self.localAmountDecimal = localAmountDecimal
-        self.nationalAmountDecimal = nationalAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case localAmountDecimal = "local_amount_decimal"
-        case nationalAmountDecimal = "national_amount_decimal"
-    }
-}
-
-public struct IssuingAuthorizationFinalizeAmountFleetServiceType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fullService: Self { .init(rawValue: "full_service") }
-    public static var nonFuelTransaction: Self { .init(rawValue: "non_fuel_transaction") }
-    public static var selfService: Self { .init(rawValue: "self_service") }
-}
-
-/// Information about fuel that was purchased with this transaction.
-public struct IssuingAuthorizationFinalizeAmountFuel: StripeParams {
-    /// [Conexxus Payment System Product
-    /// Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel
-    /// product purchased.
-    public var industryProductCode: String?
-    /// The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12
-    /// decimal places.
-    public var quantityDecimal: String?
-    /// The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`,
-    /// `unleaded_super`, or `other`.
-    public var type: IssuingAuthorizationFinalizeAmountFuelType?
-    /// The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`,
-    /// `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
-    public var unit: IssuingAuthorizationFinalizeAmountFuelUnit?
-    /// The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal
-    /// places.
-    public var unitCostDecimal: String?
-
-    public init(industryProductCode: String? = nil, quantityDecimal: String? = nil, type: IssuingAuthorizationFinalizeAmountFuelType? = nil, unit: IssuingAuthorizationFinalizeAmountFuelUnit? = nil, unitCostDecimal: String? = nil) {
-        self.industryProductCode = industryProductCode
-        self.quantityDecimal = quantityDecimal
-        self.type = type
-        self.unit = unit
-        self.unitCostDecimal = unitCostDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case industryProductCode = "industry_product_code"
-        case quantityDecimal = "quantity_decimal"
-        case type
-        case unit
-        case unitCostDecimal = "unit_cost_decimal"
-    }
-}
-
-public struct IssuingAuthorizationFinalizeAmountFuelType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var diesel: Self { .init(rawValue: "diesel") }
-    public static var other: Self { .init(rawValue: "other") }
-    public static var unleadedPlus: Self { .init(rawValue: "unleaded_plus") }
-    public static var unleadedRegular: Self { .init(rawValue: "unleaded_regular") }
-    public static var unleadedSuper: Self { .init(rawValue: "unleaded_super") }
-}
-
-public struct IssuingAuthorizationFinalizeAmountFuelUnit: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var chargingMinute: Self { .init(rawValue: "charging_minute") }
-    public static var imperialGallon: Self { .init(rawValue: "imperial_gallon") }
-    public static var kilogram: Self { .init(rawValue: "kilogram") }
-    public static var kilowattHour: Self { .init(rawValue: "kilowatt_hour") }
-    public static var liter: Self { .init(rawValue: "liter") }
-    public static var other: Self { .init(rawValue: "other") }
-    public static var pound: Self { .init(rawValue: "pound") }
-    public static var usGallon: Self { .init(rawValue: "us_gallon") }
 }
 
 public struct IssuingAuthorizationListStatus: RawRepresentable, Codable, Hashable, Sendable {

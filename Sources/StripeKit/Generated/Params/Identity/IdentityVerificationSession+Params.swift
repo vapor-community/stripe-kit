@@ -28,15 +28,15 @@ public struct IdentityVerificationSessionCreateParams: StripeParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
     /// A set of options for the session’s verification checks.
-    public var options: IdentityVerificationSessionCreateOptions?
+    public var options: IdentityVerificationSessionOptions?
     /// Details provided about the user being verified. These details might be shown to the user.
-    public var providedDetails: IdentityVerificationSessionCreateProvidedDetails?
+    public var providedDetails: IdentityVerificationSessionProvidedDetails?
     /// Customer ID
     public var relatedCustomer: String?
     /// The ID of the Account representing a customer.
     public var relatedCustomerAccount: String?
     /// Tokens referencing a Person resource and its associated account.
-    public var relatedPerson: IdentityVerificationSessionCreateRelatedPerson?
+    public var relatedPerson: IdentityVerificationSessionRelatedPerson?
     /// The URL that the user will be redirected to upon completing the verification flow.
     public var returnUrl: String?
     /// The type of [verification check](https://docs.stripe.com/identity/verification-checks) to be
@@ -46,7 +46,7 @@ public struct IdentityVerificationSessionCreateParams: StripeParams {
     /// https://docs.stripe.com/identity/verification-flows.
     public var verificationFlow: String?
 
-    public init(clientReferenceId: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, options: IdentityVerificationSessionCreateOptions? = nil, providedDetails: IdentityVerificationSessionCreateProvidedDetails? = nil, relatedCustomer: String? = nil, relatedCustomerAccount: String? = nil, relatedPerson: IdentityVerificationSessionCreateRelatedPerson? = nil, returnUrl: String? = nil, type: IdentityVerificationSessionCreateType? = nil, verificationFlow: String? = nil) {
+    public init(clientReferenceId: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, options: IdentityVerificationSessionOptions? = nil, providedDetails: IdentityVerificationSessionProvidedDetails? = nil, relatedCustomer: String? = nil, relatedCustomerAccount: String? = nil, relatedPerson: IdentityVerificationSessionRelatedPerson? = nil, returnUrl: String? = nil, type: IdentityVerificationSessionCreateType? = nil, verificationFlow: String? = nil) {
         self.clientReferenceId = clientReferenceId
         self.expand = expand
         self.metadata = metadata
@@ -146,14 +146,14 @@ public struct IdentityVerificationSessionUpdateParams: StripeParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
     /// A set of options for the session’s verification checks.
-    public var options: IdentityVerificationSessionUpdateOptions?
+    public var options: IdentityVerificationSessionOptions?
     /// Details provided about the user being verified. These details may be shown to the user.
-    public var providedDetails: IdentityVerificationSessionUpdateProvidedDetails?
+    public var providedDetails: IdentityVerificationSessionProvidedDetails?
     /// The type of [verification check](https://docs.stripe.com/identity/verification-checks) to be
     /// performed.
     public var type: IdentityVerificationSessionUpdateType?
 
-    public init(expand: [String]? = nil, metadata: [String: String]? = nil, options: IdentityVerificationSessionUpdateOptions? = nil, providedDetails: IdentityVerificationSessionUpdateProvidedDetails? = nil, type: IdentityVerificationSessionUpdateType? = nil) {
+    public init(expand: [String]? = nil, metadata: [String: String]? = nil, options: IdentityVerificationSessionOptions? = nil, providedDetails: IdentityVerificationSessionProvidedDetails? = nil, type: IdentityVerificationSessionUpdateType? = nil) {
         self.expand = expand
         self.metadata = metadata
         self.options = options
@@ -171,14 +171,14 @@ public struct IdentityVerificationSessionUpdateParams: StripeParams {
 }
 
 /// A set of options for the session’s verification checks.
-public struct IdentityVerificationSessionCreateOptions: ClearableParams {
+public struct IdentityVerificationSessionOptions: ClearableParams {
     /// Options that apply to the [document
     /// check](https://docs.stripe.com/identity/verification-checks?type=document).
-    public var document: IdentityVerificationSessionCreateOptionsDocument?
+    public var document: IdentityVerificationSessionOptionsDocument?
     /// Fields to send empty, which clears them: `params.clear(.document)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(document: IdentityVerificationSessionCreateOptionsDocument? = nil) {
+    public init(document: IdentityVerificationSessionOptionsDocument? = nil) {
         self.document = document
     }
 
@@ -193,10 +193,10 @@ public struct IdentityVerificationSessionCreateOptions: ClearableParams {
     }
 }
 
-public struct IdentityVerificationSessionCreateOptionsDocument: StripeParams {
+public struct IdentityVerificationSessionOptionsDocument: StripeParams {
     /// Array of strings of allowed identity document types. If the provided identity document isn’t one of
     /// the allowed types, the verification check will fail with a document_type_not_allowed error code.
-    public var allowedTypes: [IdentityVerificationSessionCreateOptionsDocumentAllowedTypes]?
+    public var allowedTypes: [IdentityVerificationSessionOptionsDocumentAllowedTypes]?
     /// Collect an ID number and perform an [ID number
     /// check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document’s
     /// extracted name and date of birth.
@@ -208,7 +208,7 @@ public struct IdentityVerificationSessionCreateOptionsDocument: StripeParams {
     /// picture of your user’s face. [Learn more](https://docs.stripe.com/identity/selfie).
     public var requireMatchingSelfie: Bool?
 
-    public init(allowedTypes: [IdentityVerificationSessionCreateOptionsDocumentAllowedTypes]? = nil, requireIdNumber: Bool? = nil, requireLiveCapture: Bool? = nil, requireMatchingSelfie: Bool? = nil) {
+    public init(allowedTypes: [IdentityVerificationSessionOptionsDocumentAllowedTypes]? = nil, requireIdNumber: Bool? = nil, requireLiveCapture: Bool? = nil, requireMatchingSelfie: Bool? = nil) {
         self.allowedTypes = allowedTypes
         self.requireIdNumber = requireIdNumber
         self.requireLiveCapture = requireLiveCapture
@@ -223,7 +223,7 @@ public struct IdentityVerificationSessionCreateOptionsDocument: StripeParams {
     }
 }
 
-public struct IdentityVerificationSessionCreateOptionsDocumentAllowedTypes: RawRepresentable, Codable, Hashable, Sendable {
+public struct IdentityVerificationSessionOptionsDocumentAllowedTypes: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -236,7 +236,7 @@ public struct IdentityVerificationSessionCreateOptionsDocumentAllowedTypes: RawR
 }
 
 /// Details provided about the user being verified. These details might be shown to the user.
-public struct IdentityVerificationSessionCreateProvidedDetails: StripeParams {
+public struct IdentityVerificationSessionProvidedDetails: StripeParams {
     /// Email of user being verified
     public var email: String?
     /// Phone number of user being verified
@@ -249,7 +249,7 @@ public struct IdentityVerificationSessionCreateProvidedDetails: StripeParams {
 }
 
 /// Tokens referencing a Person resource and its associated account.
-public struct IdentityVerificationSessionCreateRelatedPerson: StripeParams {
+public struct IdentityVerificationSessionRelatedPerson: StripeParams {
     /// A token representing a connected account. If provided, the person parameter is also required and
     /// must be associated with the account.
     public var account: String
@@ -284,84 +284,6 @@ public struct IdentityVerificationSessionListStatus: RawRepresentable, Codable, 
     public static var processing: Self { .init(rawValue: "processing") }
     public static var requiresInput: Self { .init(rawValue: "requires_input") }
     public static var verified: Self { .init(rawValue: "verified") }
-}
-
-/// A set of options for the session’s verification checks.
-public struct IdentityVerificationSessionUpdateOptions: ClearableParams {
-    /// Options that apply to the [document
-    /// check](https://docs.stripe.com/identity/verification-checks?type=document).
-    public var document: IdentityVerificationSessionUpdateOptionsDocument?
-    /// Fields to send empty, which clears them: `params.clear(.document)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(document: IdentityVerificationSessionUpdateOptionsDocument? = nil) {
-        self.document = document
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case document
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case document
-    }
-}
-
-public struct IdentityVerificationSessionUpdateOptionsDocument: StripeParams {
-    /// Array of strings of allowed identity document types. If the provided identity document isn’t one of
-    /// the allowed types, the verification check will fail with a document_type_not_allowed error code.
-    public var allowedTypes: [IdentityVerificationSessionUpdateOptionsDocumentAllowedTypes]?
-    /// Collect an ID number and perform an [ID number
-    /// check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document’s
-    /// extracted name and date of birth.
-    public var requireIdNumber: Bool?
-    /// Disable image uploads, identity document images have to be captured using the device’s camera.
-    public var requireLiveCapture: Bool?
-    /// Capture a face image and perform a [selfie
-    /// check](https://docs.stripe.com/identity/verification-checks?type=selfie) comparing a photo ID and a
-    /// picture of your user’s face. [Learn more](https://docs.stripe.com/identity/selfie).
-    public var requireMatchingSelfie: Bool?
-
-    public init(allowedTypes: [IdentityVerificationSessionUpdateOptionsDocumentAllowedTypes]? = nil, requireIdNumber: Bool? = nil, requireLiveCapture: Bool? = nil, requireMatchingSelfie: Bool? = nil) {
-        self.allowedTypes = allowedTypes
-        self.requireIdNumber = requireIdNumber
-        self.requireLiveCapture = requireLiveCapture
-        self.requireMatchingSelfie = requireMatchingSelfie
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case allowedTypes = "allowed_types"
-        case requireIdNumber = "require_id_number"
-        case requireLiveCapture = "require_live_capture"
-        case requireMatchingSelfie = "require_matching_selfie"
-    }
-}
-
-public struct IdentityVerificationSessionUpdateOptionsDocumentAllowedTypes: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var drivingLicense: Self { .init(rawValue: "driving_license") }
-    public static var idCard: Self { .init(rawValue: "id_card") }
-    public static var passport: Self { .init(rawValue: "passport") }
-}
-
-/// Details provided about the user being verified. These details may be shown to the user.
-public struct IdentityVerificationSessionUpdateProvidedDetails: StripeParams {
-    /// Email of user being verified
-    public var email: String?
-    /// Phone number of user being verified
-    public var phone: String?
-
-    public init(email: String? = nil, phone: String? = nil) {
-        self.email = email
-        self.phone = phone
-    }
 }
 
 public struct IdentityVerificationSessionUpdateType: RawRepresentable, Codable, Hashable, Sendable {

@@ -35,7 +35,7 @@ public struct QuoteCreateParams: ClearableParams {
     /// Stripe account. There must be at least 1 line item with a recurring price to use this field.
     public var applicationFeePercent: Double?
     /// Settings for automatic tax lookup for this quote and resulting invoices and subscriptions.
-    public var automaticTax: QuoteCreateAutomaticTax?
+    public var automaticTax: QuoteAutomaticTax?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay invoices at the end of the subscription cycle or at invoice finalization using the default
     /// payment method attached to the subscription or customer. When sending an invoice, Stripe will email
@@ -55,7 +55,7 @@ public struct QuoteCreateParams: ClearableParams {
     /// settings](https://dashboard.stripe.com/settings/billing/quote) will be used.
     public var description: String?
     /// The discounts applied to the quote.
-    public var discounts: [QuoteCreateDiscounts]?
+    public var discounts: [QuoteDiscounts]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in
@@ -68,13 +68,13 @@ public struct QuoteCreateParams: ClearableParams {
     public var footer: String?
     /// Clone an existing quote. The new quote will be created in `status=draft`. When using this parameter,
     /// you cannot specify any other parameters except for `expires_at`.
-    public var fromQuote: QuoteCreateFromQuote?
+    public var fromQuote: QuoteFromQuote?
     /// A header that will be displayed on the quote PDF. If no value is passed, the default header
     /// configured in your [quote template settings](https://dashboard.stripe.com/settings/billing/quote)
     /// will be used.
     public var header: String?
     /// All invoices will be billed using the specified settings.
-    public var invoiceSettings: QuoteCreateInvoiceSettings?
+    public var invoiceSettings: QuoteInvoiceSettings?
     /// A list of line items the customer is being quoted for. Each line item includes information about the
     /// product, the quantity, and the resulting cost.
     public var lineItems: [QuoteCreateLineItems]?
@@ -93,11 +93,11 @@ public struct QuoteCreateParams: ClearableParams {
     /// ID of the test clock to attach to the quote.
     public var testClock: String?
     /// The data with which to automatically create a Transfer for each of the invoices.
-    public var transferData: QuoteCreateTransferData?
+    public var transferData: QuoteTransferData?
     /// Fields to send empty, which clears them: `params.clear(.applicationFeeAmount)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteCreateAutomaticTax? = nil, collectionMethod: QuoteCreateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteCreateDiscounts]? = nil, expand: [String]? = nil, expiresAt: Date? = nil, footer: String? = nil, fromQuote: QuoteCreateFromQuote? = nil, header: String? = nil, invoiceSettings: QuoteCreateInvoiceSettings? = nil, lineItems: [QuoteCreateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteCreateSubscriptionData? = nil, testClock: String? = nil, transferData: QuoteCreateTransferData? = nil) {
+    public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteAutomaticTax? = nil, collectionMethod: QuoteCreateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteDiscounts]? = nil, expand: [String]? = nil, expiresAt: Date? = nil, footer: String? = nil, fromQuote: QuoteFromQuote? = nil, header: String? = nil, invoiceSettings: QuoteInvoiceSettings? = nil, lineItems: [QuoteCreateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteCreateSubscriptionData? = nil, testClock: String? = nil, transferData: QuoteTransferData? = nil) {
         self.applicationFeeAmount = applicationFeeAmount
         self.applicationFeePercent = applicationFeePercent
         self.automaticTax = automaticTax
@@ -298,7 +298,7 @@ public struct QuoteUpdateParams: ClearableParams {
     /// Stripe account. There must be at least 1 line item with a recurring price to use this field.
     public var applicationFeePercent: Double?
     /// Settings for automatic tax lookup for this quote and resulting invoices and subscriptions.
-    public var automaticTax: QuoteUpdateAutomaticTax?
+    public var automaticTax: QuoteAutomaticTax?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay invoices at the end of the subscription cycle or at invoice finalization using the default
     /// payment method attached to the subscription or customer. When sending an invoice, Stripe will email
@@ -316,7 +316,7 @@ public struct QuoteUpdateParams: ClearableParams {
     /// A description that will be displayed on the quote PDF.
     public var description: String?
     /// The discounts applied to the quote.
-    public var discounts: [QuoteUpdateDiscounts]?
+    public var discounts: [QuoteDiscounts]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in
@@ -327,7 +327,7 @@ public struct QuoteUpdateParams: ClearableParams {
     /// A header that will be displayed on the quote PDF.
     public var header: String?
     /// All invoices will be billed using the specified settings.
-    public var invoiceSettings: QuoteUpdateInvoiceSettings?
+    public var invoiceSettings: QuoteInvoiceSettings?
     /// A list of line items the customer is being quoted for. Each line item includes information about the
     /// product, the quantity, and the resulting cost.
     public var lineItems: [QuoteUpdateLineItems]?
@@ -344,11 +344,11 @@ public struct QuoteUpdateParams: ClearableParams {
     /// present and in the future, otherwise a subscription is created.
     public var subscriptionData: QuoteUpdateSubscriptionData?
     /// The data with which to automatically create a Transfer for each of the invoices.
-    public var transferData: QuoteUpdateTransferData?
+    public var transferData: QuoteTransferData?
     /// Fields to send empty, which clears them: `params.clear(.applicationFeeAmount)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteUpdateAutomaticTax? = nil, collectionMethod: QuoteUpdateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteUpdateDiscounts]? = nil, expand: [String]? = nil, expiresAt: Date? = nil, footer: String? = nil, header: String? = nil, invoiceSettings: QuoteUpdateInvoiceSettings? = nil, lineItems: [QuoteUpdateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteUpdateSubscriptionData? = nil, transferData: QuoteUpdateTransferData? = nil) {
+    public init(applicationFeeAmount: Int? = nil, applicationFeePercent: Double? = nil, automaticTax: QuoteAutomaticTax? = nil, collectionMethod: QuoteUpdateCollectionMethod? = nil, customer: String? = nil, customerAccount: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [QuoteDiscounts]? = nil, expand: [String]? = nil, expiresAt: Date? = nil, footer: String? = nil, header: String? = nil, invoiceSettings: QuoteInvoiceSettings? = nil, lineItems: [QuoteUpdateLineItems]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, subscriptionData: QuoteUpdateSubscriptionData? = nil, transferData: QuoteTransferData? = nil) {
         self.applicationFeeAmount = applicationFeeAmount
         self.applicationFeePercent = applicationFeePercent
         self.automaticTax = automaticTax
@@ -408,16 +408,16 @@ public struct QuoteUpdateParams: ClearableParams {
 }
 
 /// Settings for automatic tax lookup for this quote and resulting invoices and subscriptions.
-public struct QuoteCreateAutomaticTax: StripeParams {
+public struct QuoteAutomaticTax: StripeParams {
     /// Controls whether Stripe will automatically compute tax on the resulting invoices or subscriptions as
     /// well as the quote itself.
     public var enabled: Bool
     /// The account that's liable for tax. If set, the business address and tax registrations required to
     /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
     /// report of the connected account.
-    public var liability: QuoteCreateAutomaticTaxLiability?
+    public var liability: QuoteAutomaticTaxLiability?
 
-    public init(enabled: Bool, liability: QuoteCreateAutomaticTaxLiability? = nil) {
+    public init(enabled: Bool, liability: QuoteAutomaticTaxLiability? = nil) {
         self.enabled = enabled
         self.liability = liability
     }
@@ -426,19 +426,19 @@ public struct QuoteCreateAutomaticTax: StripeParams {
 /// The account that's liable for tax. If set, the business address and tax registrations required to
 /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
 /// report of the connected account.
-public struct QuoteCreateAutomaticTaxLiability: StripeParams {
+public struct QuoteAutomaticTaxLiability: StripeParams {
     /// Type of the account referenced in the request.
-    public var type: QuoteCreateAutomaticTaxLiabilityType
+    public var type: QuoteAutomaticTaxLiabilityType
     /// The connected account being referenced when `type` is `account`.
     public var account: String?
 
-    public init(type: QuoteCreateAutomaticTaxLiabilityType, account: String? = nil) {
+    public init(type: QuoteAutomaticTaxLiabilityType, account: String? = nil) {
         self.type = type
         self.account = account
     }
 }
 
-public struct QuoteCreateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+public struct QuoteAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -460,7 +460,7 @@ public struct QuoteCreateCollectionMethod: RawRepresentable, Codable, Hashable, 
     public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
-public struct QuoteCreateDiscounts: StripeParams {
+public struct QuoteDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
     /// ID of an existing discount on the object (or one of its ancestors) to reuse.
@@ -483,7 +483,7 @@ public struct QuoteCreateDiscounts: StripeParams {
 
 /// Clone an existing quote. The new quote will be created in `status=draft`. When using this parameter,
 /// you cannot specify any other parameters except for `expires_at`.
-public struct QuoteCreateFromQuote: StripeParams {
+public struct QuoteFromQuote: StripeParams {
     /// The `id` of the quote that will be cloned.
     public var quote: String
     /// Whether this quote is a revision of the previous quote.
@@ -501,9 +501,9 @@ public struct QuoteCreateFromQuote: StripeParams {
 }
 
 /// All invoices will be billed using the specified settings.
-public struct QuoteCreateInvoiceSettings: ClearableParams {
+public struct QuoteInvoiceSettings: ClearableParams {
     /// A list of up to 4 custom fields to be displayed on the invoice.
-    public var customFields: [QuoteCreateInvoiceSettingsCustomFields]?
+    public var customFields: [QuoteInvoiceSettingsCustomFields]?
     /// Number of days within which a customer must pay the invoice generated by this quote. This value will
     /// be `null` for quotes where `collection_method=charge_automatically`.
     public var daysUntilDue: Int?
@@ -513,11 +513,11 @@ public struct QuoteCreateInvoiceSettings: ClearableParams {
     public var footer: String?
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
-    public var issuer: QuoteCreateInvoiceSettingsIssuer?
+    public var issuer: QuoteInvoiceSettingsIssuer?
     /// Fields to send empty, which clears them: `params.clear(.customFields)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(customFields: [QuoteCreateInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: QuoteCreateInvoiceSettingsIssuer? = nil) {
+    public init(customFields: [QuoteInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: QuoteInvoiceSettingsIssuer? = nil) {
         self.customFields = customFields
         self.daysUntilDue = daysUntilDue
         self.description = description
@@ -542,7 +542,7 @@ public struct QuoteCreateInvoiceSettings: ClearableParams {
     }
 }
 
-public struct QuoteCreateInvoiceSettingsCustomFields: StripeParams {
+public struct QuoteInvoiceSettingsCustomFields: StripeParams {
     /// The name of the custom field. This may be up to 40 characters.
     public var name: String
     /// The value of the custom field. This may be up to 140 characters.
@@ -556,19 +556,19 @@ public struct QuoteCreateInvoiceSettingsCustomFields: StripeParams {
 
 /// The connected account that issues the invoice. The invoice is presented with the branding and
 /// support information of the specified account.
-public struct QuoteCreateInvoiceSettingsIssuer: StripeParams {
+public struct QuoteInvoiceSettingsIssuer: StripeParams {
     /// Type of the account referenced in the request.
-    public var type: QuoteCreateInvoiceSettingsIssuerType
+    public var type: QuoteInvoiceSettingsIssuerType
     /// The connected account being referenced when `type` is `account`.
     public var account: String?
 
-    public init(type: QuoteCreateInvoiceSettingsIssuerType, account: String? = nil) {
+    public init(type: QuoteInvoiceSettingsIssuerType, account: String? = nil) {
         self.type = type
         self.account = account
     }
 }
 
-public struct QuoteCreateInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+public struct QuoteInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -581,12 +581,12 @@ public struct QuoteCreateInvoiceSettingsIssuerType: RawRepresentable, Codable, H
 
 public struct QuoteCreateLineItems: ClearableParams {
     /// The discounts applied to this line item.
-    public var discounts: [QuoteCreateLineItemsDiscounts]?
+    public var discounts: [QuoteLineItemsDiscounts]?
     /// The ID of the price object. One of `price` or `price_data` is required.
     public var price: String?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
     /// `price` or `price_data` is required.
-    public var priceData: QuoteCreateLineItemsPriceData?
+    public var priceData: QuoteLineItemsPriceData?
     /// The quantity of the line item.
     public var quantity: Int?
     /// The tax rates which apply to the line item. When set, the `default_tax_rates` on the quote do not
@@ -595,7 +595,7 @@ public struct QuoteCreateLineItems: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.discounts)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(discounts: [QuoteCreateLineItemsDiscounts]? = nil, price: String? = nil, priceData: QuoteCreateLineItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
+    public init(discounts: [QuoteLineItemsDiscounts]? = nil, price: String? = nil, priceData: QuoteLineItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.discounts = discounts
         self.price = price
         self.priceData = priceData
@@ -619,7 +619,7 @@ public struct QuoteCreateLineItems: ClearableParams {
     }
 }
 
-public struct QuoteCreateLineItemsDiscounts: StripeParams {
+public struct QuoteLineItemsDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
     /// ID of an existing discount on the object (or one of its ancestors) to reuse.
@@ -642,7 +642,7 @@ public struct QuoteCreateLineItemsDiscounts: StripeParams {
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
 /// `price` or `price_data` is required.
-public struct QuoteCreateLineItemsPriceData: StripeParams {
+public struct QuoteLineItemsPriceData: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -650,13 +650,13 @@ public struct QuoteCreateLineItemsPriceData: StripeParams {
     /// [Price](https://docs.stripe.com/api/prices) will belong to.
     public var product: String
     /// The recurring components of a price such as `interval` and `interval_count`.
-    public var recurring: QuoteCreateLineItemsPriceDataRecurring?
+    public var recurring: QuoteLineItemsPriceDataRecurring?
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: QuoteCreateLineItemsPriceDataTaxBehavior?
+    public var taxBehavior: QuoteLineItemsPriceDataTaxBehavior?
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
     /// charge.
     public var unitAmount: Int?
@@ -664,7 +664,7 @@ public struct QuoteCreateLineItemsPriceData: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, product: String, recurring: QuoteCreateLineItemsPriceDataRecurring? = nil, taxBehavior: QuoteCreateLineItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, product: String, recurring: QuoteLineItemsPriceDataRecurring? = nil, taxBehavior: QuoteLineItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.product = product
         self.recurring = recurring
@@ -684,15 +684,15 @@ public struct QuoteCreateLineItemsPriceData: StripeParams {
 }
 
 /// The recurring components of a price such as `interval` and `interval_count`.
-public struct QuoteCreateLineItemsPriceDataRecurring: StripeParams {
+public struct QuoteLineItemsPriceDataRecurring: StripeParams {
     /// Specifies billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: QuoteCreateLineItemsPriceDataRecurringInterval
+    public var interval: QuoteLineItemsPriceDataRecurringInterval
     /// The number of intervals between subscription billings. For example, `interval=month` and
     /// `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36
     /// months, or 156 weeks).
     public var intervalCount: Int?
 
-    public init(interval: QuoteCreateLineItemsPriceDataRecurringInterval, intervalCount: Int? = nil) {
+    public init(interval: QuoteLineItemsPriceDataRecurringInterval, intervalCount: Int? = nil) {
         self.interval = interval
         self.intervalCount = intervalCount
     }
@@ -703,7 +703,7 @@ public struct QuoteCreateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
-public struct QuoteCreateLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct QuoteLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -716,7 +716,7 @@ public struct QuoteCreateLineItemsPriceDataRecurringInterval: RawRepresentable, 
     public static var year: Self { .init(rawValue: "year") }
 }
 
-public struct QuoteCreateLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct QuoteLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -734,14 +734,14 @@ public struct QuoteCreateLineItemsPriceDataTaxBehavior: RawRepresentable, Codabl
 /// present and in the future, otherwise a subscription is created.
 public struct QuoteCreateSubscriptionData: ClearableParams {
     /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
-    public var billingMode: QuoteCreateSubscriptionDataBillingMode?
+    public var billingMode: QuoteSubscriptionDataBillingMode?
     /// The subscription's description, meant to be displayable to the customer. Use this field to
     /// optionally store an explanation of the subscription for rendering in Stripe surfaces and certain
     /// local payment methods UIs.
     public var description: String?
     /// When creating a new subscription, the date of which the subscription schedule will start after the
     /// quote is accepted. The `effective_date` is ignored if it is in the past when the quote is accepted.
-    public var effectiveDate: QuoteCreateSubscriptionDataEffectiveDate?
+    public var effectiveDate: QuoteSubscriptionDataEffectiveDate?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on the
     /// subscription or subscription schedule when the quote is accepted. If a recurring price is included
     /// in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If
@@ -755,7 +755,7 @@ public struct QuoteCreateSubscriptionData: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.effectiveDate)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(billingMode: QuoteCreateSubscriptionDataBillingMode? = nil, description: String? = nil, effectiveDate: QuoteCreateSubscriptionDataEffectiveDate? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
+    public init(billingMode: QuoteSubscriptionDataBillingMode? = nil, description: String? = nil, effectiveDate: QuoteSubscriptionDataEffectiveDate? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
         self.billingMode = billingMode
         self.description = description
         self.effectiveDate = effectiveDate
@@ -780,20 +780,20 @@ public struct QuoteCreateSubscriptionData: ClearableParams {
 }
 
 /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
-public struct QuoteCreateSubscriptionDataBillingMode: StripeParams {
+public struct QuoteSubscriptionDataBillingMode: StripeParams {
     /// Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value
     /// is passed, the default is `flexible`.
-    public var type: QuoteCreateSubscriptionDataBillingModeType
+    public var type: QuoteSubscriptionDataBillingModeType
     /// Configure behavior for flexible billing mode.
-    public var flexible: QuoteCreateSubscriptionDataBillingModeFlexible?
+    public var flexible: QuoteSubscriptionDataBillingModeFlexible?
 
-    public init(type: QuoteCreateSubscriptionDataBillingModeType, flexible: QuoteCreateSubscriptionDataBillingModeFlexible? = nil) {
+    public init(type: QuoteSubscriptionDataBillingModeType, flexible: QuoteSubscriptionDataBillingModeFlexible? = nil) {
         self.type = type
         self.flexible = flexible
     }
 }
 
-public struct QuoteCreateSubscriptionDataBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct QuoteSubscriptionDataBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -805,11 +805,11 @@ public struct QuoteCreateSubscriptionDataBillingModeType: RawRepresentable, Coda
 }
 
 /// Configure behavior for flexible billing mode.
-public struct QuoteCreateSubscriptionDataBillingModeFlexible: StripeParams {
+public struct QuoteSubscriptionDataBillingModeFlexible: StripeParams {
     /// Controls how invoices and invoice items display proration amounts and discount amounts.
-    public var prorationDiscounts: QuoteCreateSubscriptionDataBillingModeFlexibleProrationDiscounts?
+    public var prorationDiscounts: QuoteSubscriptionDataBillingModeFlexibleProrationDiscounts?
 
-    public init(prorationDiscounts: QuoteCreateSubscriptionDataBillingModeFlexibleProrationDiscounts? = nil) {
+    public init(prorationDiscounts: QuoteSubscriptionDataBillingModeFlexibleProrationDiscounts? = nil) {
         self.prorationDiscounts = prorationDiscounts
     }
 
@@ -818,7 +818,7 @@ public struct QuoteCreateSubscriptionDataBillingModeFlexible: StripeParams {
     }
 }
 
-public struct QuoteCreateSubscriptionDataBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
+public struct QuoteSubscriptionDataBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -832,7 +832,7 @@ public struct QuoteCreateSubscriptionDataBillingModeFlexibleProrationDiscounts: 
 }
 
 /// One of the forms `effective_date` accepts.
-public enum QuoteCreateSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum QuoteSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `current_period_end`
     case currentPeriodEnd
     case value(Date)
@@ -848,7 +848,7 @@ public enum QuoteCreateSubscriptionDataEffectiveDate: Codable, Sendable, Express
             }
         }
         if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of QuoteCreateSubscriptionDataEffectiveDate matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of QuoteSubscriptionDataEffectiveDate matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -863,7 +863,7 @@ public enum QuoteCreateSubscriptionDataEffectiveDate: Codable, Sendable, Express
     }
 }
 
-public struct QuoteCreateTransferData: StripeParams {
+public struct QuoteTransferData: StripeParams {
     /// ID of an existing, connected Stripe account.
     public var destination: String
     /// The amount that will be transferred automatically when the invoice is paid. If no amount is set, the
@@ -902,48 +902,6 @@ public struct QuoteListStatus: RawRepresentable, Codable, Hashable, Sendable {
     public static var `open`: Self { .init(rawValue: "open") }
 }
 
-/// Settings for automatic tax lookup for this quote and resulting invoices and subscriptions.
-public struct QuoteUpdateAutomaticTax: StripeParams {
-    /// Controls whether Stripe will automatically compute tax on the resulting invoices or subscriptions as
-    /// well as the quote itself.
-    public var enabled: Bool
-    /// The account that's liable for tax. If set, the business address and tax registrations required to
-    /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
-    /// report of the connected account.
-    public var liability: QuoteUpdateAutomaticTaxLiability?
-
-    public init(enabled: Bool, liability: QuoteUpdateAutomaticTaxLiability? = nil) {
-        self.enabled = enabled
-        self.liability = liability
-    }
-}
-
-/// The account that's liable for tax. If set, the business address and tax registrations required to
-/// perform the tax calculation are loaded from this account. The tax transaction is returned in the
-/// report of the connected account.
-public struct QuoteUpdateAutomaticTaxLiability: StripeParams {
-    /// Type of the account referenced in the request.
-    public var type: QuoteUpdateAutomaticTaxLiabilityType
-    /// The connected account being referenced when `type` is `account`.
-    public var account: String?
-
-    public init(type: QuoteUpdateAutomaticTaxLiabilityType, account: String? = nil) {
-        self.type = type
-        self.account = account
-    }
-}
-
-public struct QuoteUpdateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var `self`: Self { .init(rawValue: "self") }
-}
-
 public struct QuoteUpdateCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
@@ -955,116 +913,16 @@ public struct QuoteUpdateCollectionMethod: RawRepresentable, Codable, Hashable, 
     public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
-public struct QuoteUpdateDiscounts: StripeParams {
-    /// ID of the coupon to create a new discount for.
-    public var coupon: String?
-    /// ID of an existing discount on the object (or one of its ancestors) to reuse.
-    public var discount: String?
-    /// ID of the promotion code to create a new discount for.
-    public var promotionCode: String?
-
-    public init(coupon: String? = nil, discount: String? = nil, promotionCode: String? = nil) {
-        self.coupon = coupon
-        self.discount = discount
-        self.promotionCode = promotionCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case coupon
-        case discount
-        case promotionCode = "promotion_code"
-    }
-}
-
-/// All invoices will be billed using the specified settings.
-public struct QuoteUpdateInvoiceSettings: ClearableParams {
-    /// A list of up to 4 custom fields to be displayed on the invoice.
-    public var customFields: [QuoteUpdateInvoiceSettingsCustomFields]?
-    /// Number of days within which a customer must pay the invoice generated by this quote. This value will
-    /// be `null` for quotes where `collection_method=charge_automatically`.
-    public var daysUntilDue: Int?
-    /// An arbitrary string attached to the object. Often useful for displaying to users.
-    public var description: String?
-    /// Footer to be displayed on the invoice.
-    public var footer: String?
-    /// The connected account that issues the invoice. The invoice is presented with the branding and
-    /// support information of the specified account.
-    public var issuer: QuoteUpdateInvoiceSettingsIssuer?
-    /// Fields to send empty, which clears them: `params.clear(.customFields)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(customFields: [QuoteUpdateInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: QuoteUpdateInvoiceSettingsIssuer? = nil) {
-        self.customFields = customFields
-        self.daysUntilDue = daysUntilDue
-        self.description = description
-        self.footer = footer
-        self.issuer = issuer
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case customFields = "custom_fields"
-        case daysUntilDue = "days_until_due"
-        case description
-        case footer
-        case issuer
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case customFields = "custom_fields"
-        case description
-        case footer
-    }
-}
-
-public struct QuoteUpdateInvoiceSettingsCustomFields: StripeParams {
-    /// The name of the custom field. This may be up to 40 characters.
-    public var name: String
-    /// The value of the custom field. This may be up to 140 characters.
-    public var value: String
-
-    public init(name: String, value: String) {
-        self.name = name
-        self.value = value
-    }
-}
-
-/// The connected account that issues the invoice. The invoice is presented with the branding and
-/// support information of the specified account.
-public struct QuoteUpdateInvoiceSettingsIssuer: StripeParams {
-    /// Type of the account referenced in the request.
-    public var type: QuoteUpdateInvoiceSettingsIssuerType
-    /// The connected account being referenced when `type` is `account`.
-    public var account: String?
-
-    public init(type: QuoteUpdateInvoiceSettingsIssuerType, account: String? = nil) {
-        self.type = type
-        self.account = account
-    }
-}
-
-public struct QuoteUpdateInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var `self`: Self { .init(rawValue: "self") }
-}
-
 public struct QuoteUpdateLineItems: ClearableParams {
     /// The discounts applied to this line item.
-    public var discounts: [QuoteUpdateLineItemsDiscounts]?
+    public var discounts: [QuoteLineItemsDiscounts]?
     /// The ID of an existing line item on the quote.
     public var id: String?
     /// The ID of the price object. One of `price` or `price_data` is required.
     public var price: String?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
     /// `price` or `price_data` is required.
-    public var priceData: QuoteUpdateLineItemsPriceData?
+    public var priceData: QuoteLineItemsPriceData?
     /// The quantity of the line item.
     public var quantity: Int?
     /// The tax rates which apply to the line item. When set, the `default_tax_rates` on the quote do not
@@ -1073,7 +931,7 @@ public struct QuoteUpdateLineItems: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.discounts)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(discounts: [QuoteUpdateLineItemsDiscounts]? = nil, id: String? = nil, price: String? = nil, priceData: QuoteUpdateLineItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
+    public init(discounts: [QuoteLineItemsDiscounts]? = nil, id: String? = nil, price: String? = nil, priceData: QuoteLineItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.discounts = discounts
         self.id = id
         self.price = price
@@ -1099,115 +957,6 @@ public struct QuoteUpdateLineItems: ClearableParams {
     }
 }
 
-public struct QuoteUpdateLineItemsDiscounts: StripeParams {
-    /// ID of the coupon to create a new discount for.
-    public var coupon: String?
-    /// ID of an existing discount on the object (or one of its ancestors) to reuse.
-    public var discount: String?
-    /// ID of the promotion code to create a new discount for.
-    public var promotionCode: String?
-
-    public init(coupon: String? = nil, discount: String? = nil, promotionCode: String? = nil) {
-        self.coupon = coupon
-        self.discount = discount
-        self.promotionCode = promotionCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case coupon
-        case discount
-        case promotionCode = "promotion_code"
-    }
-}
-
-/// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
-/// `price` or `price_data` is required.
-public struct QuoteUpdateLineItemsPriceData: StripeParams {
-    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-    /// Must be a [supported currency](https://stripe.com/docs/currencies).
-    public var currency: String
-    /// The ID of the [Product](https://docs.stripe.com/api/products) that this
-    /// [Price](https://docs.stripe.com/api/prices) will belong to.
-    public var product: String
-    /// The recurring components of a price such as `interval` and `interval_count`.
-    public var recurring: QuoteUpdateLineItemsPriceDataRecurring?
-    /// Only required if a [default tax
-    /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
-    /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
-    /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
-    /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: QuoteUpdateLineItemsPriceDataTaxBehavior?
-    /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
-    /// charge.
-    public var unitAmount: Int?
-    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
-    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    public var unitAmountDecimal: String?
-
-    public init(currency: String, product: String, recurring: QuoteUpdateLineItemsPriceDataRecurring? = nil, taxBehavior: QuoteUpdateLineItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
-        self.currency = currency
-        self.product = product
-        self.recurring = recurring
-        self.taxBehavior = taxBehavior
-        self.unitAmount = unitAmount
-        self.unitAmountDecimal = unitAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case currency
-        case product
-        case recurring
-        case taxBehavior = "tax_behavior"
-        case unitAmount = "unit_amount"
-        case unitAmountDecimal = "unit_amount_decimal"
-    }
-}
-
-/// The recurring components of a price such as `interval` and `interval_count`.
-public struct QuoteUpdateLineItemsPriceDataRecurring: StripeParams {
-    /// Specifies billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: QuoteUpdateLineItemsPriceDataRecurringInterval
-    /// The number of intervals between subscription billings. For example, `interval=month` and
-    /// `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36
-    /// months, or 156 weeks).
-    public var intervalCount: Int?
-
-    public init(interval: QuoteUpdateLineItemsPriceDataRecurringInterval, intervalCount: Int? = nil) {
-        self.interval = interval
-        self.intervalCount = intervalCount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case interval
-        case intervalCount = "interval_count"
-    }
-}
-
-public struct QuoteUpdateLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
-public struct QuoteUpdateLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var exclusive: Self { .init(rawValue: "exclusive") }
-    public static var inclusive: Self { .init(rawValue: "inclusive") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
-}
-
 /// When creating a subscription or subscription schedule, the specified configuration data will be
 /// used. There must be at least one line item with a recurring price for a subscription or subscription
 /// schedule to be created. A subscription schedule is created if `subscription_data[effective_date]` is
@@ -1219,7 +968,7 @@ public struct QuoteUpdateSubscriptionData: ClearableParams {
     public var description: String?
     /// When creating a new subscription, the date of which the subscription schedule will start after the
     /// quote is accepted. The `effective_date` is ignored if it is in the past when the quote is accepted.
-    public var effectiveDate: QuoteUpdateSubscriptionDataEffectiveDate?
+    public var effectiveDate: QuoteSubscriptionDataEffectiveDate?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on the
     /// subscription or subscription schedule when the quote is accepted. If a recurring price is included
     /// in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If
@@ -1233,7 +982,7 @@ public struct QuoteUpdateSubscriptionData: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.description)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(description: String? = nil, effectiveDate: QuoteUpdateSubscriptionDataEffectiveDate? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
+    public init(description: String? = nil, effectiveDate: QuoteSubscriptionDataEffectiveDate? = nil, metadata: [String: String]? = nil, trialPeriodDays: Int? = nil) {
         self.description = description
         self.effectiveDate = effectiveDate
         self.metadata = metadata
@@ -1253,63 +1002,5 @@ public struct QuoteUpdateSubscriptionData: ClearableParams {
         case description
         case effectiveDate = "effective_date"
         case trialPeriodDays = "trial_period_days"
-    }
-}
-
-/// One of the forms `effective_date` accepts.
-public enum QuoteUpdateSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleByIntegerLiteral {
-    /// `current_period_end`
-    case currentPeriodEnd
-    case value(Date)
-
-    public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "current_period_end": self = .currentPeriodEnd; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of QuoteUpdateSubscriptionDataEffectiveDate matches")
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        switch self {
-        case .currentPeriodEnd:
-            var container = encoder.singleValueContainer()
-            try container.encode("current_period_end")
-        case .value(let value):
-            var container = encoder.singleValueContainer()
-            try container.encode(value)
-        }
-    }
-}
-
-public struct QuoteUpdateTransferData: StripeParams {
-    /// ID of an existing, connected Stripe account.
-    public var destination: String
-    /// The amount that will be transferred automatically when the invoice is paid. If no amount is set, the
-    /// full amount is transferred. There cannot be any line items with recurring prices when using this
-    /// field.
-    public var amount: Int?
-    /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
-    /// percentage of the subscription invoice total that will be transferred to the destination account. By
-    /// default, the entire amount is transferred to the destination. There must be at least 1 line item
-    /// with a recurring price to use this field.
-    public var amountPercent: Double?
-
-    public init(destination: String, amount: Int? = nil, amountPercent: Double? = nil) {
-        self.destination = destination
-        self.amount = amount
-        self.amountPercent = amountPercent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case amountPercent = "amount_percent"
-        case destination
     }
 }

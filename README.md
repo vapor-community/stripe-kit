@@ -175,11 +175,12 @@ encoding. Integer range filters such as `created` use `StripeRangeQuery` (`.equa
 var params = CustomerCreateParams()
 params.email = "jane@example.com"
 params.metadata = ["source": "ios_app"]
-params.invoiceSettings = CustomerCreateParamsInvoiceSettings()
-params.invoiceSettings?.defaultPaymentMethod = "pm_..."
+params.invoiceSettings = CustomerInvoiceSettings(defaultPaymentMethod: "pm_...")
 
 let customer = try await stripe.customers.create(params)
 ```
+
+Nested params are named after the resource and field (`CustomerInvoiceSettings`, `PaymentIntentPaymentMethodData`) and shared by every endpoint that takes the same shape, as in Stripe's own SDKs. Where endpoints differ, the type includes the action: `CustomerCreateTax`.
 
 ### Expandable Fields
 

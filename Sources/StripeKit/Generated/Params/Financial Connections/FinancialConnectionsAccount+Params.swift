@@ -20,7 +20,7 @@ public struct FinancialConnectionsAccountDisconnectParams: StripeParams {
 public struct FinancialConnectionsAccountListParams: StripeParams {
     /// If present, only return accounts that belong to the specified account holder.
     /// `account_holder[customer]` and `account_holder[account]` are mutually exclusive.
-    public var accountHolder: FinancialConnectionsAccountListAccountHolder?
+    public var accountHolder: FinancialConnectionsAccountAccountHolder?
     /// A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list.
     /// For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your
     /// subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -37,7 +37,7 @@ public struct FinancialConnectionsAccountListParams: StripeParams {
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
     public var startingAfter: String?
 
-    public init(accountHolder: FinancialConnectionsAccountListAccountHolder? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, session: String? = nil, startingAfter: String? = nil) {
+    public init(accountHolder: FinancialConnectionsAccountAccountHolder? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, session: String? = nil, startingAfter: String? = nil) {
         self.accountHolder = accountHolder
         self.endingBefore = endingBefore
         self.expand = expand
@@ -129,7 +129,7 @@ public struct FinancialConnectionsAccountUnsubscribeParams: StripeParams {
 
 /// If present, only return accounts that belong to the specified account holder.
 /// `account_holder[customer]` and `account_holder[account]` are mutually exclusive.
-public struct FinancialConnectionsAccountListAccountHolder: StripeParams {
+public struct FinancialConnectionsAccountAccountHolder: StripeParams {
     /// The ID of the Stripe account whose accounts you will retrieve.
     public var account: String?
     /// The ID of the Stripe customer whose accounts you will retrieve.

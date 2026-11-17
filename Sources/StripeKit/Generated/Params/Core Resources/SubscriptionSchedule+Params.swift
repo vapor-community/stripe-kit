@@ -32,13 +32,13 @@ public struct SubscriptionScheduleCancelParams: StripeParams {
 
 public struct SubscriptionScheduleCreateParams: ClearableParams {
     /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
-    public var billingMode: SubscriptionScheduleCreateBillingMode?
+    public var billingMode: SubscriptionScheduleBillingMode?
     /// The identifier of the customer to create the subscription schedule for.
     public var customer: String?
     /// The identifier of the account to create the subscription schedule for.
     public var customerAccount: String?
     /// Object representing the subscription schedule's default settings.
-    public var defaultSettings: SubscriptionScheduleCreateDefaultSettings?
+    public var defaultSettings: SubscriptionScheduleDefaultSettings?
     /// Behavior of the subscription schedule and underlying subscription when it ends. Possible values are
     /// `release` or `cancel` with the default being `release`. `release` will end the subscription schedule
     /// and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel
@@ -69,11 +69,11 @@ public struct SubscriptionScheduleCreateParams: ClearableParams {
     /// slightly backdated or postdated start. You can also use a Unix timestamp to backdate the
     /// subscription so that it starts on a past date, or set a future date for the subscription to start
     /// on.
-    public var startDate: SubscriptionScheduleCreateStartDate?
+    public var startDate: SubscriptionScheduleStartDate?
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(billingMode: SubscriptionScheduleCreateBillingMode? = nil, customer: String? = nil, customerAccount: String? = nil, defaultSettings: SubscriptionScheduleCreateDefaultSettings? = nil, endBehavior: SubscriptionScheduleCreateEndBehavior? = nil, expand: [String]? = nil, fromSubscription: String? = nil, metadata: [String: String]? = nil, pauseSchedules: [SubscriptionScheduleCreatePauseSchedules]? = nil, phases: [SubscriptionScheduleCreatePhases]? = nil, startDate: SubscriptionScheduleCreateStartDate? = nil) {
+    public init(billingMode: SubscriptionScheduleBillingMode? = nil, customer: String? = nil, customerAccount: String? = nil, defaultSettings: SubscriptionScheduleDefaultSettings? = nil, endBehavior: SubscriptionScheduleCreateEndBehavior? = nil, expand: [String]? = nil, fromSubscription: String? = nil, metadata: [String: String]? = nil, pauseSchedules: [SubscriptionScheduleCreatePauseSchedules]? = nil, phases: [SubscriptionScheduleCreatePhases]? = nil, startDate: SubscriptionScheduleStartDate? = nil) {
         self.billingMode = billingMode
         self.customer = customer
         self.customerAccount = customerAccount
@@ -187,7 +187,7 @@ public struct SubscriptionScheduleReleaseParams: StripeParams {
 
 public struct SubscriptionScheduleUpdateParams: ClearableParams {
     /// Object representing the subscription schedule's default settings.
-    public var defaultSettings: SubscriptionScheduleUpdateDefaultSettings?
+    public var defaultSettings: SubscriptionScheduleDefaultSettings?
     /// Behavior of the subscription schedule and underlying subscription when it ends. Possible values are
     /// `release` or `cancel` with the default being `release`. `release` will end the subscription schedule
     /// and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel
@@ -211,11 +211,11 @@ public struct SubscriptionScheduleUpdateParams: ClearableParams {
     /// If the update changes the billing configuration (item price, quantity, etc.) of the current phase,
     /// indicates how prorations from this change should be handled. The default value is
     /// `create_prorations`.
-    public var prorationBehavior: SubscriptionScheduleUpdateProrationBehavior?
+    public var prorationBehavior: SubscriptionScheduleProrationBehavior?
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(defaultSettings: SubscriptionScheduleUpdateDefaultSettings? = nil, endBehavior: SubscriptionScheduleUpdateEndBehavior? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, pauseSchedules: [SubscriptionScheduleUpdatePauseSchedules]? = nil, phases: [SubscriptionScheduleUpdatePhases]? = nil, prorationBehavior: SubscriptionScheduleUpdateProrationBehavior? = nil) {
+    public init(defaultSettings: SubscriptionScheduleDefaultSettings? = nil, endBehavior: SubscriptionScheduleUpdateEndBehavior? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, pauseSchedules: [SubscriptionScheduleUpdatePauseSchedules]? = nil, phases: [SubscriptionScheduleUpdatePhases]? = nil, prorationBehavior: SubscriptionScheduleProrationBehavior? = nil) {
         self.defaultSettings = defaultSettings
         self.endBehavior = endBehavior
         self.expand = expand
@@ -244,20 +244,20 @@ public struct SubscriptionScheduleUpdateParams: ClearableParams {
 }
 
 /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
-public struct SubscriptionScheduleCreateBillingMode: StripeParams {
+public struct SubscriptionScheduleBillingMode: StripeParams {
     /// Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value
     /// is passed, the default is `flexible`.
-    public var type: SubscriptionScheduleCreateBillingModeType
+    public var type: SubscriptionScheduleBillingModeType
     /// Configure behavior for flexible billing mode.
-    public var flexible: SubscriptionScheduleCreateBillingModeFlexible?
+    public var flexible: SubscriptionScheduleBillingModeFlexible?
 
-    public init(type: SubscriptionScheduleCreateBillingModeType, flexible: SubscriptionScheduleCreateBillingModeFlexible? = nil) {
+    public init(type: SubscriptionScheduleBillingModeType, flexible: SubscriptionScheduleBillingModeFlexible? = nil) {
         self.type = type
         self.flexible = flexible
     }
 }
 
-public struct SubscriptionScheduleCreateBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionScheduleBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -269,11 +269,11 @@ public struct SubscriptionScheduleCreateBillingModeType: RawRepresentable, Codab
 }
 
 /// Configure behavior for flexible billing mode.
-public struct SubscriptionScheduleCreateBillingModeFlexible: StripeParams {
+public struct SubscriptionScheduleBillingModeFlexible: StripeParams {
     /// Controls how invoices and invoice items display proration amounts and discount amounts.
-    public var prorationDiscounts: SubscriptionScheduleCreateBillingModeFlexibleProrationDiscounts?
+    public var prorationDiscounts: SubscriptionScheduleBillingModeFlexibleProrationDiscounts?
 
-    public init(prorationDiscounts: SubscriptionScheduleCreateBillingModeFlexibleProrationDiscounts? = nil) {
+    public init(prorationDiscounts: SubscriptionScheduleBillingModeFlexibleProrationDiscounts? = nil) {
         self.prorationDiscounts = prorationDiscounts
     }
 
@@ -282,7 +282,7 @@ public struct SubscriptionScheduleCreateBillingModeFlexible: StripeParams {
     }
 }
 
-public struct SubscriptionScheduleCreateBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionScheduleBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -296,7 +296,7 @@ public struct SubscriptionScheduleCreateBillingModeFlexibleProrationDiscounts: R
 }
 
 /// Object representing the subscription schedule's default settings.
-public struct SubscriptionScheduleCreateDefaultSettings: ClearableParams {
+public struct SubscriptionScheduleDefaultSettings: ClearableParams {
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
     /// percentage of the subscription invoice total that will be transferred to the application owner's
     /// Stripe account. The request must be made by a platform account on a connected account in order to
@@ -304,21 +304,21 @@ public struct SubscriptionScheduleCreateDefaultSettings: ClearableParams {
     /// [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
     public var applicationFeePercent: Double?
     /// Default settings for automatic tax computation.
-    public var automaticTax: SubscriptionScheduleCreateDefaultSettingsAutomaticTax?
+    public var automaticTax: SubscriptionScheduleDefaultSettingsAutomaticTax?
     /// Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to
     /// automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial.
     /// For more information, see the billing cycle
     /// [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
-    public var billingCycleAnchor: SubscriptionScheduleCreateDefaultSettingsBillingCycleAnchor?
+    public var billingCycleAnchor: SubscriptionScheduleDefaultSettingsBillingCycleAnchor?
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period. Pass an empty string to remove previously-defined thresholds.
-    public var billingThresholds: SubscriptionScheduleCreateDefaultSettingsBillingThresholds?
+    public var billingThresholds: SubscriptionScheduleDefaultSettingsBillingThresholds?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay the underlying subscription at the end of each billing cycle using the default source
     /// attached to the customer. When sending an invoice, Stripe will email your customer an invoice with
     /// payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on
     /// creation.
-    public var collectionMethod: SubscriptionScheduleCreateDefaultSettingsCollectionMethod?
+    public var collectionMethod: SubscriptionScheduleDefaultSettingsCollectionMethod?
     /// ID of the default payment method for the subscription schedule. It must belong to the customer
     /// associated with the subscription schedule. If not set, invoices will use the default payment method
     /// in the customer's invoice settings.
@@ -328,16 +328,16 @@ public struct SubscriptionScheduleCreateDefaultSettings: ClearableParams {
     /// methods UIs.
     public var description: String?
     /// All invoices will be billed using the specified settings.
-    public var invoiceSettings: SubscriptionScheduleCreateDefaultSettingsInvoiceSettings?
+    public var invoiceSettings: SubscriptionScheduleDefaultSettingsInvoiceSettings?
     /// The account on behalf of which to charge, for each of the associated subscription's invoices.
     public var onBehalfOf: String?
     /// The data with which to automatically create a Transfer for each of the associated subscription's
     /// invoices.
-    public var transferData: SubscriptionScheduleCreateDefaultSettingsTransferData?
+    public var transferData: SubscriptionScheduleDefaultSettingsTransferData?
     /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleCreateDefaultSettingsAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleCreateDefaultSettingsBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleCreateDefaultSettingsBillingThresholds? = nil, collectionMethod: SubscriptionScheduleCreateDefaultSettingsCollectionMethod? = nil, defaultPaymentMethod: String? = nil, description: String? = nil, invoiceSettings: SubscriptionScheduleCreateDefaultSettingsInvoiceSettings? = nil, onBehalfOf: String? = nil, transferData: SubscriptionScheduleCreateDefaultSettingsTransferData? = nil) {
+    public init(applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleDefaultSettingsAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleDefaultSettingsBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleDefaultSettingsBillingThresholds? = nil, collectionMethod: SubscriptionScheduleDefaultSettingsCollectionMethod? = nil, defaultPaymentMethod: String? = nil, description: String? = nil, invoiceSettings: SubscriptionScheduleDefaultSettingsInvoiceSettings? = nil, onBehalfOf: String? = nil, transferData: SubscriptionScheduleDefaultSettingsTransferData? = nil) {
         self.applicationFeePercent = applicationFeePercent
         self.automaticTax = automaticTax
         self.billingCycleAnchor = billingCycleAnchor
@@ -374,16 +374,16 @@ public struct SubscriptionScheduleCreateDefaultSettings: ClearableParams {
 }
 
 /// Default settings for automatic tax computation.
-public struct SubscriptionScheduleCreateDefaultSettingsAutomaticTax: StripeParams {
+public struct SubscriptionScheduleDefaultSettingsAutomaticTax: StripeParams {
     /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
     /// generated by the subscription.
     public var enabled: Bool
     /// The account that's liable for tax. If set, the business address and tax registrations required to
     /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
     /// report of the connected account.
-    public var liability: SubscriptionScheduleCreateDefaultSettingsAutomaticTaxLiability?
+    public var liability: SubscriptionScheduleDefaultSettingsAutomaticTaxLiability?
 
-    public init(enabled: Bool, liability: SubscriptionScheduleCreateDefaultSettingsAutomaticTaxLiability? = nil) {
+    public init(enabled: Bool, liability: SubscriptionScheduleDefaultSettingsAutomaticTaxLiability? = nil) {
         self.enabled = enabled
         self.liability = liability
     }
@@ -392,19 +392,19 @@ public struct SubscriptionScheduleCreateDefaultSettingsAutomaticTax: StripeParam
 /// The account that's liable for tax. If set, the business address and tax registrations required to
 /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
 /// report of the connected account.
-public struct SubscriptionScheduleCreateDefaultSettingsAutomaticTaxLiability: StripeParams {
+public struct SubscriptionScheduleDefaultSettingsAutomaticTaxLiability: StripeParams {
     /// Type of the account referenced in the request.
-    public var type: SubscriptionScheduleCreateDefaultSettingsAutomaticTaxLiabilityType
+    public var type: SubscriptionScheduleDefaultSettingsAutomaticTaxLiabilityType
     /// The connected account being referenced when `type` is `account`.
     public var account: String?
 
-    public init(type: SubscriptionScheduleCreateDefaultSettingsAutomaticTaxLiabilityType, account: String? = nil) {
+    public init(type: SubscriptionScheduleDefaultSettingsAutomaticTaxLiabilityType, account: String? = nil) {
         self.type = type
         self.account = account
     }
 }
 
-public struct SubscriptionScheduleCreateDefaultSettingsAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionScheduleDefaultSettingsAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -415,7 +415,7 @@ public struct SubscriptionScheduleCreateDefaultSettingsAutomaticTaxLiabilityType
     public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public struct SubscriptionScheduleCreateDefaultSettingsBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionScheduleDefaultSettingsBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -426,7 +426,7 @@ public struct SubscriptionScheduleCreateDefaultSettingsBillingCycleAnchor: RawRe
     public static var phaseStart: Self { .init(rawValue: "phase_start") }
 }
 
-public struct SubscriptionScheduleCreateDefaultSettingsBillingThresholds: StripeParams {
+public struct SubscriptionScheduleDefaultSettingsBillingThresholds: StripeParams {
     /// Monetary threshold that triggers the subscription to advance to a new billing period
     public var amountGte: Int?
     /// Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true,
@@ -445,7 +445,7 @@ public struct SubscriptionScheduleCreateDefaultSettingsBillingThresholds: Stripe
     }
 }
 
-public struct SubscriptionScheduleCreateDefaultSettingsCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionScheduleDefaultSettingsCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -457,11 +457,11 @@ public struct SubscriptionScheduleCreateDefaultSettingsCollectionMethod: RawRepr
 }
 
 /// All invoices will be billed using the specified settings.
-public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettings: ClearableParams {
+public struct SubscriptionScheduleDefaultSettingsInvoiceSettings: ClearableParams {
     /// The account tax IDs associated with the subscription schedule. Will be set on invoices generated by
     /// the subscription schedule.
     public var accountTaxIds: [String]?
-    public var customFields: [SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsCustomFields]?
+    public var customFields: [SubscriptionScheduleDefaultSettingsInvoiceSettingsCustomFields]?
     /// Number of days within which a customer must pay invoices generated by this subscription schedule.
     /// This value will be `null` for subscription schedules where `collection_method=charge_automatically`.
     public var daysUntilDue: Int?
@@ -469,11 +469,11 @@ public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettings: Clearabl
     public var footer: String?
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
-    public var issuer: SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuer?
+    public var issuer: SubscriptionScheduleDefaultSettingsInvoiceSettingsIssuer?
     /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuer? = nil) {
+    public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionScheduleDefaultSettingsInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionScheduleDefaultSettingsInvoiceSettingsIssuer? = nil) {
         self.accountTaxIds = accountTaxIds
         self.customFields = customFields
         self.daysUntilDue = daysUntilDue
@@ -501,7 +501,7 @@ public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettings: Clearabl
     }
 }
 
-public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsCustomFields: StripeParams {
+public struct SubscriptionScheduleDefaultSettingsInvoiceSettingsCustomFields: StripeParams {
     /// The name of the custom field. This may be up to 40 characters.
     public var name: String
     /// The value of the custom field. This may be up to 140 characters.
@@ -515,19 +515,19 @@ public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsCustomFiel
 
 /// The connected account that issues the invoice. The invoice is presented with the branding and
 /// support information of the specified account.
-public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuer: StripeParams {
+public struct SubscriptionScheduleDefaultSettingsInvoiceSettingsIssuer: StripeParams {
     /// Type of the account referenced in the request.
-    public var type: SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuerType
+    public var type: SubscriptionScheduleDefaultSettingsInvoiceSettingsIssuerType
     /// The connected account being referenced when `type` is `account`.
     public var account: String?
 
-    public init(type: SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuerType, account: String? = nil) {
+    public init(type: SubscriptionScheduleDefaultSettingsInvoiceSettingsIssuerType, account: String? = nil) {
         self.type = type
         self.account = account
     }
 }
 
-public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionScheduleDefaultSettingsInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -538,7 +538,7 @@ public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuerType
     public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public struct SubscriptionScheduleCreateDefaultSettingsTransferData: StripeParams {
+public struct SubscriptionScheduleDefaultSettingsTransferData: StripeParams {
     /// ID of an existing, connected Stripe account.
     public var destination: String
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
@@ -588,11 +588,11 @@ public struct SubscriptionScheduleCreatePauseSchedules: StripeParams {
 /// Configuration for when and how the subscription pauses.
 public struct SubscriptionScheduleCreatePauseSchedulesPause: StripeParams {
     /// When to pause the subscription.
-    public var pauseAt: SubscriptionScheduleCreatePauseSchedulesPausePauseAt
+    public var pauseAt: SubscriptionSchedulePauseSchedulesPausePauseAt
     /// Settings controlling billing behavior during the pause.
-    public var settings: SubscriptionScheduleCreatePauseSchedulesPauseSettings?
+    public var settings: SubscriptionSchedulePauseSchedulesPauseSettings?
 
-    public init(pauseAt: SubscriptionScheduleCreatePauseSchedulesPausePauseAt, settings: SubscriptionScheduleCreatePauseSchedulesPauseSettings? = nil) {
+    public init(pauseAt: SubscriptionSchedulePauseSchedulesPausePauseAt, settings: SubscriptionSchedulePauseSchedulesPauseSettings? = nil) {
         self.pauseAt = pauseAt
         self.settings = settings
     }
@@ -604,20 +604,20 @@ public struct SubscriptionScheduleCreatePauseSchedulesPause: StripeParams {
 }
 
 /// When to pause the subscription.
-public struct SubscriptionScheduleCreatePauseSchedulesPausePauseAt: StripeParams {
+public struct SubscriptionSchedulePauseSchedulesPausePauseAt: StripeParams {
     /// When to pause the subscription. Use `now` to pause immediately or `timestamp` to pause at a specific
     /// time.
-    public var type: SubscriptionScheduleCreatePauseSchedulesPausePauseAtType
+    public var type: SubscriptionSchedulePauseSchedulesPausePauseAtType
     /// The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
     public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleCreatePauseSchedulesPausePauseAtType, timestamp: Date? = nil) {
+    public init(type: SubscriptionSchedulePauseSchedulesPausePauseAtType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesPausePauseAtType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesPausePauseAtType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -629,17 +629,17 @@ public struct SubscriptionScheduleCreatePauseSchedulesPausePauseAtType: RawRepre
 }
 
 /// Settings controlling billing behavior during the pause.
-public struct SubscriptionScheduleCreatePauseSchedulesPauseSettings: StripeParams {
+public struct SubscriptionSchedulePauseSchedulesPauseSettings: StripeParams {
     /// Controls what to bill for when pausing the subscription.
-    public var billFor: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillFor?
+    public var billFor: SubscriptionSchedulePauseSchedulesPauseSettingsBillFor?
     /// Determines whether to generate an invoice for outstanding amounts when pausing. When adding a pause
     /// schedule, defaults to `pending_invoice_item`. On updates, the existing value is preserved if not
     /// provided.
-    public var invoicingBehavior: SubscriptionScheduleCreatePauseSchedulesPauseSettingsInvoicingBehavior?
+    public var invoicingBehavior: SubscriptionSchedulePauseSchedulesPauseSettingsInvoicingBehavior?
     /// The pause type. Currently only `subscription` is supported.
-    public var type: SubscriptionScheduleCreatePauseSchedulesPauseSettingsType?
+    public var type: SubscriptionSchedulePauseSchedulesPauseSettingsType?
 
-    public init(billFor: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillFor? = nil, invoicingBehavior: SubscriptionScheduleCreatePauseSchedulesPauseSettingsInvoicingBehavior? = nil, type: SubscriptionScheduleCreatePauseSchedulesPauseSettingsType? = nil) {
+    public init(billFor: SubscriptionSchedulePauseSchedulesPauseSettingsBillFor? = nil, invoicingBehavior: SubscriptionSchedulePauseSchedulesPauseSettingsInvoicingBehavior? = nil, type: SubscriptionSchedulePauseSchedulesPauseSettingsType? = nil) {
         self.billFor = billFor
         self.invoicingBehavior = invoicingBehavior
         self.type = type
@@ -653,13 +653,13 @@ public struct SubscriptionScheduleCreatePauseSchedulesPauseSettings: StripeParam
 }
 
 /// Controls what to bill for when pausing the subscription.
-public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillFor: StripeParams {
+public struct SubscriptionSchedulePauseSchedulesPauseSettingsBillFor: StripeParams {
     /// Controls whether to collect metered usage accrued up to the pause date.
-    public var outstandingUsageThrough: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForOutstandingUsageThrough?
+    public var outstandingUsageThrough: SubscriptionSchedulePauseSchedulesPauseSettingsBillForOutstandingUsageThrough?
     /// Controls how unused time on subscription items is credited when pausing.
-    public var unusedTimeFrom: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnusedTimeFrom?
+    public var unusedTimeFrom: SubscriptionSchedulePauseSchedulesPauseSettingsBillForUnusedTimeFrom?
 
-    public init(outstandingUsageThrough: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForOutstandingUsageThrough? = nil, unusedTimeFrom: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnusedTimeFrom? = nil) {
+    public init(outstandingUsageThrough: SubscriptionSchedulePauseSchedulesPauseSettingsBillForOutstandingUsageThrough? = nil, unusedTimeFrom: SubscriptionSchedulePauseSchedulesPauseSettingsBillForUnusedTimeFrom? = nil) {
         self.outstandingUsageThrough = outstandingUsageThrough
         self.unusedTimeFrom = unusedTimeFrom
     }
@@ -671,17 +671,17 @@ public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillFor: Stri
 }
 
 /// Controls whether to collect metered usage accrued up to the pause date.
-public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForOutstandingUsageThrough: StripeParams {
+public struct SubscriptionSchedulePauseSchedulesPauseSettingsBillForOutstandingUsageThrough: StripeParams {
     /// Determines whether to collect metered usage accrued up to the pause date. When adding a pause
     /// schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
-    public var type: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType?
+    public var type: SubscriptionSchedulePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType?
 
-    public init(type: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType? = nil) {
+    public init(type: SubscriptionSchedulePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType? = nil) {
         self.type = type
     }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -695,17 +695,17 @@ public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForOutsta
 }
 
 /// Controls how unused time on subscription items is credited when pausing.
-public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnusedTimeFrom: StripeParams {
+public struct SubscriptionSchedulePauseSchedulesPauseSettingsBillForUnusedTimeFrom: StripeParams {
     /// Determines which point in the billing period unused time is credited from. When adding a pause
     /// schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
-    public var type: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnusedTimeFromType?
+    public var type: SubscriptionSchedulePauseSchedulesPauseSettingsBillForUnusedTimeFromType?
 
-    public init(type: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnusedTimeFromType? = nil) {
+    public init(type: SubscriptionSchedulePauseSchedulesPauseSettingsBillForUnusedTimeFromType? = nil) {
         self.type = type
     }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnusedTimeFromType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesPauseSettingsBillForUnusedTimeFromType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -720,7 +720,7 @@ public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnused
     public static var pauseAt: Self { .init(rawValue: "pause_at") }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsInvoicingBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesPauseSettingsInvoicingBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -734,7 +734,7 @@ public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsInvoicingBeha
     public static var pendingInvoiceItem: Self { .init(rawValue: "pending_invoice_item") }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesPauseSettingsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -748,11 +748,11 @@ public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsType: RawRepr
 /// Configuration for when and how the subscription resumes.
 public struct SubscriptionScheduleCreatePauseSchedulesResume: StripeParams {
     /// When to resume the subscription.
-    public var resumeAt: SubscriptionScheduleCreatePauseSchedulesResumeResumeAt
+    public var resumeAt: SubscriptionSchedulePauseSchedulesResumeResumeAt
     /// Settings controlling how the subscription resumes.
-    public var settings: SubscriptionScheduleCreatePauseSchedulesResumeSettings?
+    public var settings: SubscriptionSchedulePauseSchedulesResumeSettings?
 
-    public init(resumeAt: SubscriptionScheduleCreatePauseSchedulesResumeResumeAt, settings: SubscriptionScheduleCreatePauseSchedulesResumeSettings? = nil) {
+    public init(resumeAt: SubscriptionSchedulePauseSchedulesResumeResumeAt, settings: SubscriptionSchedulePauseSchedulesResumeSettings? = nil) {
         self.resumeAt = resumeAt
         self.settings = settings
     }
@@ -764,23 +764,23 @@ public struct SubscriptionScheduleCreatePauseSchedulesResume: StripeParams {
 }
 
 /// When to resume the subscription.
-public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAt: StripeParams {
+public struct SubscriptionSchedulePauseSchedulesResumeResumeAt: StripeParams {
     /// When to resume the subscription. Use `now` to resume immediately, `duration` to resume after a set
     /// duration, or `timestamp` to resume at a specific time.
-    public var type: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtType
+    public var type: SubscriptionSchedulePauseSchedulesResumeResumeAtType
     /// The duration after which to resume the subscription. Required when `type` is `duration`.
-    public var duration: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDuration?
+    public var duration: SubscriptionSchedulePauseSchedulesResumeResumeAtDuration?
     /// The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
     public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtType, duration: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDuration? = nil, timestamp: Date? = nil) {
+    public init(type: SubscriptionSchedulePauseSchedulesResumeResumeAtType, duration: SubscriptionSchedulePauseSchedulesResumeResumeAtDuration? = nil, timestamp: Date? = nil) {
         self.type = type
         self.duration = duration
         self.timestamp = timestamp
     }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAtType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesResumeResumeAtType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -793,13 +793,13 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAtType: RawRep
 }
 
 /// The duration after which to resume the subscription. Required when `type` is `duration`.
-public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDuration: StripeParams {
+public struct SubscriptionSchedulePauseSchedulesResumeResumeAtDuration: StripeParams {
     /// The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
-    public var interval: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDurationInterval
+    public var interval: SubscriptionSchedulePauseSchedulesResumeResumeAtDurationInterval
     /// The number of intervals after which the subscription resumes.
     public var intervalCount: Int?
 
-    public init(interval: SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDurationInterval, intervalCount: Int? = nil) {
+    public init(interval: SubscriptionSchedulePauseSchedulesResumeResumeAtDurationInterval, intervalCount: Int? = nil) {
         self.interval = interval
         self.intervalCount = intervalCount
     }
@@ -810,7 +810,7 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDuration: St
     }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesResumeResumeAtDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -824,19 +824,19 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDurationInte
 }
 
 /// Settings controlling how the subscription resumes.
-public struct SubscriptionScheduleCreatePauseSchedulesResumeSettings: StripeParams {
+public struct SubscriptionSchedulePauseSchedulesResumeSettings: StripeParams {
     /// Controls the billing cycle anchor when the subscription resumes. When adding a pause schedule,
     /// defaults to `resume_at`. On updates, the existing value is preserved if not provided.
-    public var billingCycleAnchor: SubscriptionScheduleCreatePauseSchedulesResumeSettingsBillingCycleAnchor?
+    public var billingCycleAnchor: SubscriptionSchedulePauseSchedulesResumeSettingsBillingCycleAnchor?
     /// Controls whether Stripe attempts payment on the resumption invoice and how payment affects the
     /// subscription's status. When adding a pause schedule, defaults to `resume_on_payment_success`. On
     /// updates, the existing value is preserved if not provided.
-    public var paymentBehavior: SubscriptionScheduleCreatePauseSchedulesResumeSettingsPaymentBehavior?
+    public var paymentBehavior: SubscriptionSchedulePauseSchedulesResumeSettingsPaymentBehavior?
     /// Determines how to handle prorations when the subscription resumes. When adding a pause schedule,
     /// defaults to `create_prorations`. On updates, the existing value is preserved if not provided.
-    public var prorationBehavior: SubscriptionScheduleCreatePauseSchedulesResumeSettingsProrationBehavior?
+    public var prorationBehavior: SubscriptionSchedulePauseSchedulesResumeSettingsProrationBehavior?
 
-    public init(billingCycleAnchor: SubscriptionScheduleCreatePauseSchedulesResumeSettingsBillingCycleAnchor? = nil, paymentBehavior: SubscriptionScheduleCreatePauseSchedulesResumeSettingsPaymentBehavior? = nil, prorationBehavior: SubscriptionScheduleCreatePauseSchedulesResumeSettingsProrationBehavior? = nil) {
+    public init(billingCycleAnchor: SubscriptionSchedulePauseSchedulesResumeSettingsBillingCycleAnchor? = nil, paymentBehavior: SubscriptionSchedulePauseSchedulesResumeSettingsPaymentBehavior? = nil, prorationBehavior: SubscriptionSchedulePauseSchedulesResumeSettingsProrationBehavior? = nil) {
         self.billingCycleAnchor = billingCycleAnchor
         self.paymentBehavior = paymentBehavior
         self.prorationBehavior = prorationBehavior
@@ -849,7 +849,7 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeSettings: StripePara
     }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesResumeSettingsBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesResumeSettingsBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -862,7 +862,7 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeSettingsBillingCycle
     public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesResumeSettingsPaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesResumeSettingsPaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -883,7 +883,7 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeSettingsPaymentBehav
     public static var resumeOnPaymentSuccess: Self { .init(rawValue: "resume_on_payment_success") }
 }
 
-public struct SubscriptionScheduleCreatePauseSchedulesResumeSettingsProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePauseSchedulesResumeSettingsProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -898,10 +898,10 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeSettingsProrationBeh
 public struct SubscriptionScheduleCreatePhases: ClearableParams {
     /// List of configuration items, each with an attached price, to apply during this phase of the
     /// subscription schedule.
-    public var items: [SubscriptionScheduleCreatePhasesItems]
+    public var items: [SubscriptionSchedulePhasesItems]
     /// A list of prices and quantities that will generate invoice items appended to the next invoice for
     /// this phase. You may pass up to 20 items.
-    public var addInvoiceItems: [SubscriptionScheduleCreatePhasesAddInvoiceItems]?
+    public var addInvoiceItems: [SubscriptionSchedulePhasesAddInvoiceItems]?
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
     /// percentage of the subscription invoice total that will be transferred to the application owner's
     /// Stripe account. The request must be made by a platform account on a connected account in order to
@@ -909,21 +909,21 @@ public struct SubscriptionScheduleCreatePhases: ClearableParams {
     /// [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
     public var applicationFeePercent: Double?
     /// Automatic tax settings for this phase.
-    public var automaticTax: SubscriptionScheduleCreatePhasesAutomaticTax?
+    public var automaticTax: SubscriptionSchedulePhasesAutomaticTax?
     /// Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to
     /// automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial.
     /// For more information, see the billing cycle
     /// [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
-    public var billingCycleAnchor: SubscriptionScheduleCreatePhasesBillingCycleAnchor?
+    public var billingCycleAnchor: SubscriptionSchedulePhasesBillingCycleAnchor?
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period. Pass an empty string to remove previously-defined thresholds.
-    public var billingThresholds: SubscriptionScheduleCreatePhasesBillingThresholds?
+    public var billingThresholds: SubscriptionSchedulePhasesBillingThresholds?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay the underlying subscription at the end of each billing cycle using the default source
     /// attached to the customer. When sending an invoice, Stripe will email your customer an invoice with
     /// payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on
     /// creation.
-    public var collectionMethod: SubscriptionScheduleCreatePhasesCollectionMethod?
+    public var collectionMethod: SubscriptionSchedulePhasesCollectionMethod?
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String?
@@ -944,13 +944,13 @@ public struct SubscriptionScheduleCreatePhases: ClearableParams {
     public var description: String?
     /// The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount
     /// from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
-    public var discounts: [SubscriptionScheduleCreatePhasesDiscounts]?
+    public var discounts: [SubscriptionSchedulePhasesDiscounts]?
     /// The number of intervals the phase should last. If set, `end_date` must not be set.
-    public var duration: SubscriptionScheduleCreatePhasesDuration?
+    public var duration: SubscriptionSchedulePhasesDuration?
     /// The date at which this phase of the subscription schedule ends. If set, `duration` must not be set.
     public var endDate: Date?
     /// All invoices will be billed using the specified settings.
-    public var invoiceSettings: SubscriptionScheduleCreatePhasesInvoiceSettings?
+    public var invoiceSettings: SubscriptionSchedulePhasesInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a phase.
     /// Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase
     /// is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual
@@ -966,10 +966,10 @@ public struct SubscriptionScheduleCreatePhases: ClearableParams {
     /// [proration_behavior](https://docs.stripe.com/api/subscription_schedules/update#update_subscription_schedule-proration_behavior)
     /// parameter which controls what happens if the update request affects the billing configuration (item
     /// price, quantity, etc.) of the current phase.
-    public var prorationBehavior: SubscriptionScheduleCreatePhasesProrationBehavior?
+    public var prorationBehavior: SubscriptionSchedulePhasesProrationBehavior?
     /// The data with which to automatically create a Transfer for each of the associated subscription's
     /// invoices.
-    public var transferData: SubscriptionScheduleCreatePhasesTransferData?
+    public var transferData: SubscriptionSchedulePhasesTransferData?
     /// If set to true the entire phase is counted as a trial and the customer will not be charged for any
     /// fees.
     public var trial: Bool?
@@ -979,7 +979,7 @@ public struct SubscriptionScheduleCreatePhases: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(items: [SubscriptionScheduleCreatePhasesItems], addInvoiceItems: [SubscriptionScheduleCreatePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleCreatePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleCreatePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleCreatePhasesBillingThresholds? = nil, collectionMethod: SubscriptionScheduleCreatePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionScheduleCreatePhasesDiscounts]? = nil, duration: SubscriptionScheduleCreatePhasesDuration? = nil, endDate: Date? = nil, invoiceSettings: SubscriptionScheduleCreatePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionScheduleCreatePhasesProrationBehavior? = nil, transferData: SubscriptionScheduleCreatePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: Date? = nil) {
+    public init(items: [SubscriptionSchedulePhasesItems], addInvoiceItems: [SubscriptionSchedulePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionSchedulePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionSchedulePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionSchedulePhasesBillingThresholds? = nil, collectionMethod: SubscriptionSchedulePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionSchedulePhasesDiscounts]? = nil, duration: SubscriptionSchedulePhasesDuration? = nil, endDate: Date? = nil, invoiceSettings: SubscriptionSchedulePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionSchedulePhasesProrationBehavior? = nil, transferData: SubscriptionSchedulePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: Date? = nil) {
         self.items = items
         self.addInvoiceItems = addInvoiceItems
         self.applicationFeePercent = applicationFeePercent
@@ -1037,12 +1037,12 @@ public struct SubscriptionScheduleCreatePhases: ClearableParams {
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesItems: ClearableParams {
+public struct SubscriptionSchedulePhasesItems: ClearableParams {
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period. Pass an empty string to remove previously-defined thresholds.
-    public var billingThresholds: SubscriptionScheduleCreatePhasesItemsBillingThresholds?
+    public var billingThresholds: SubscriptionSchedulePhasesItemsBillingThresholds?
     /// The coupons to redeem into discounts for the subscription item.
-    public var discounts: [SubscriptionScheduleCreatePhasesItemsDiscounts]?
+    public var discounts: [SubscriptionSchedulePhasesItemsDiscounts]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a
     /// configuration item. Metadata on a configuration item will update the underlying subscription item's
     /// `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys
@@ -1055,7 +1055,7 @@ public struct SubscriptionScheduleCreatePhasesItems: ClearableParams {
     /// The ID of the price object.
     public var price: String?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-    public var priceData: SubscriptionScheduleCreatePhasesItemsPriceData?
+    public var priceData: SubscriptionSchedulePhasesItemsPriceData?
     /// Quantity for the given price. Can be set only if the price's `usage_type` is `licensed` and not
     /// `metered`.
     public var quantity: Int?
@@ -1066,7 +1066,7 @@ public struct SubscriptionScheduleCreatePhasesItems: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(billingThresholds: SubscriptionScheduleCreatePhasesItemsBillingThresholds? = nil, discounts: [SubscriptionScheduleCreatePhasesItemsDiscounts]? = nil, metadata: [String: String]? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionScheduleCreatePhasesItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
+    public init(billingThresholds: SubscriptionSchedulePhasesItemsBillingThresholds? = nil, discounts: [SubscriptionSchedulePhasesItemsDiscounts]? = nil, metadata: [String: String]? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionSchedulePhasesItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.billingThresholds = billingThresholds
         self.discounts = discounts
         self.metadata = metadata
@@ -1097,7 +1097,7 @@ public struct SubscriptionScheduleCreatePhasesItems: ClearableParams {
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesItemsBillingThresholds: StripeParams {
+public struct SubscriptionSchedulePhasesItemsBillingThresholds: StripeParams {
     /// Number of units that meets the billing threshold to advance the subscription to a new billing period
     /// (e.g., it takes 10 $5 units to meet a $50 [monetary
     /// threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
@@ -1112,7 +1112,7 @@ public struct SubscriptionScheduleCreatePhasesItemsBillingThresholds: StripePara
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesItemsDiscounts: StripeParams {
+public struct SubscriptionSchedulePhasesItemsDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
     /// ID of an existing discount on the object (or one of its ancestors) to reuse.
@@ -1134,7 +1134,7 @@ public struct SubscriptionScheduleCreatePhasesItemsDiscounts: StripeParams {
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-public struct SubscriptionScheduleCreatePhasesItemsPriceData: StripeParams {
+public struct SubscriptionSchedulePhasesItemsPriceData: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -1142,13 +1142,13 @@ public struct SubscriptionScheduleCreatePhasesItemsPriceData: StripeParams {
     /// [Price](https://docs.stripe.com/api/prices) will belong to.
     public var product: String
     /// The recurring components of a price such as `interval` and `interval_count`.
-    public var recurring: SubscriptionScheduleCreatePhasesItemsPriceDataRecurring
+    public var recurring: SubscriptionSchedulePhasesItemsPriceDataRecurring
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: SubscriptionScheduleCreatePhasesItemsPriceDataTaxBehavior?
+    public var taxBehavior: SubscriptionSchedulePhasesItemsPriceDataTaxBehavior?
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
     /// charge.
     public var unitAmount: Int?
@@ -1156,7 +1156,7 @@ public struct SubscriptionScheduleCreatePhasesItemsPriceData: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, product: String, recurring: SubscriptionScheduleCreatePhasesItemsPriceDataRecurring, taxBehavior: SubscriptionScheduleCreatePhasesItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, product: String, recurring: SubscriptionSchedulePhasesItemsPriceDataRecurring, taxBehavior: SubscriptionSchedulePhasesItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.product = product
         self.recurring = recurring
@@ -1176,15 +1176,15 @@ public struct SubscriptionScheduleCreatePhasesItemsPriceData: StripeParams {
 }
 
 /// The recurring components of a price such as `interval` and `interval_count`.
-public struct SubscriptionScheduleCreatePhasesItemsPriceDataRecurring: StripeParams {
+public struct SubscriptionSchedulePhasesItemsPriceDataRecurring: StripeParams {
     /// Specifies billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: SubscriptionScheduleCreatePhasesItemsPriceDataRecurringInterval
+    public var interval: SubscriptionSchedulePhasesItemsPriceDataRecurringInterval
     /// The number of intervals between subscription billings. For example, `interval=month` and
     /// `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36
     /// months, or 156 weeks).
     public var intervalCount: Int?
 
-    public init(interval: SubscriptionScheduleCreatePhasesItemsPriceDataRecurringInterval, intervalCount: Int? = nil) {
+    public init(interval: SubscriptionSchedulePhasesItemsPriceDataRecurringInterval, intervalCount: Int? = nil) {
         self.interval = interval
         self.intervalCount = intervalCount
     }
@@ -1195,7 +1195,7 @@ public struct SubscriptionScheduleCreatePhasesItemsPriceDataRecurring: StripePar
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1208,7 +1208,7 @@ public struct SubscriptionScheduleCreatePhasesItemsPriceDataRecurringInterval: R
     public static var year: Self { .init(rawValue: "year") }
 }
 
-public struct SubscriptionScheduleCreatePhasesItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1220,11 +1220,11 @@ public struct SubscriptionScheduleCreatePhasesItemsPriceDataTaxBehavior: RawRepr
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItems: ClearableParams {
+public struct SubscriptionSchedulePhasesAddInvoiceItems: ClearableParams {
     /// Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
     public var discountable: Bool?
     /// The coupons to redeem into discounts for the item.
-    public var discounts: [SubscriptionScheduleCreatePhasesAddInvoiceItemsDiscounts]?
+    public var discounts: [SubscriptionSchedulePhasesAddInvoiceItemsDiscounts]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -1232,12 +1232,12 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItems: ClearableParams {
     public var metadata: [String: String]?
     /// The period associated with this invoice item. If not set, `period.start.type` defaults to
     /// `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
-    public var period: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriod?
+    public var period: SubscriptionSchedulePhasesAddInvoiceItemsPeriod?
     /// The ID of the price object. One of `price` or `price_data` is required.
     public var price: String?
     /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
     /// `price` or `price_data` is required.
-    public var priceData: SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceData?
+    public var priceData: SubscriptionSchedulePhasesAddInvoiceItemsPriceData?
     /// Quantity for this item. Defaults to 1.
     public var quantity: Int?
     /// The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
@@ -1245,7 +1245,7 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItems: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.taxRates)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(discountable: Bool? = nil, discounts: [SubscriptionScheduleCreatePhasesAddInvoiceItemsDiscounts]? = nil, metadata: [String: String]? = nil, period: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriod? = nil, price: String? = nil, priceData: SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
+    public init(discountable: Bool? = nil, discounts: [SubscriptionSchedulePhasesAddInvoiceItemsDiscounts]? = nil, metadata: [String: String]? = nil, period: SubscriptionSchedulePhasesAddInvoiceItemsPeriod? = nil, price: String? = nil, priceData: SubscriptionSchedulePhasesAddInvoiceItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
         self.discountable = discountable
         self.discounts = discounts
         self.metadata = metadata
@@ -1274,7 +1274,7 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItems: ClearableParams {
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsDiscounts: StripeParams {
+public struct SubscriptionSchedulePhasesAddInvoiceItemsDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
     /// ID of an existing discount on the object (or one of its ancestors) to reuse.
@@ -1297,33 +1297,33 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsDiscounts: StripePa
 
 /// The period associated with this invoice item. If not set, `period.start.type` defaults to
 /// `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriod: StripeParams {
+public struct SubscriptionSchedulePhasesAddInvoiceItemsPeriod: StripeParams {
     /// End of the invoice item period.
-    public var end: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEnd
+    public var end: SubscriptionSchedulePhasesAddInvoiceItemsPeriodEnd
     /// Start of the invoice item period.
-    public var start: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStart
+    public var start: SubscriptionSchedulePhasesAddInvoiceItemsPeriodStart
 
-    public init(end: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEnd, start: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStart) {
+    public init(end: SubscriptionSchedulePhasesAddInvoiceItemsPeriodEnd, start: SubscriptionSchedulePhasesAddInvoiceItemsPeriodStart) {
         self.end = end
         self.start = start
     }
 }
 
 /// End of the invoice item period.
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEnd: StripeParams {
+public struct SubscriptionSchedulePhasesAddInvoiceItemsPeriodEnd: StripeParams {
     /// Select how to calculate the end of the invoice item period.
-    public var type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEndType
+    public var type: SubscriptionSchedulePhasesAddInvoiceItemsPeriodEndType
     /// A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to
     /// `period.start`.
     public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEndType, timestamp: Date? = nil) {
+    public init(type: SubscriptionSchedulePhasesAddInvoiceItemsPeriodEndType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEndType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesAddInvoiceItemsPeriodEndType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1336,20 +1336,20 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEndType: RawR
 }
 
 /// Start of the invoice item period.
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStart: StripeParams {
+public struct SubscriptionSchedulePhasesAddInvoiceItemsPeriodStart: StripeParams {
     /// Select how to calculate the start of the invoice item period.
-    public var type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStartType
+    public var type: SubscriptionSchedulePhasesAddInvoiceItemsPeriodStartType
     /// A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to
     /// `period.end`.
     public var timestamp: Date?
 
-    public init(type: SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStartType, timestamp: Date? = nil) {
+    public init(type: SubscriptionSchedulePhasesAddInvoiceItemsPeriodStartType, timestamp: Date? = nil) {
         self.type = type
         self.timestamp = timestamp
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStartType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesAddInvoiceItemsPeriodStartType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1363,7 +1363,7 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStartType: Ra
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
 /// `price` or `price_data` is required.
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceData: StripeParams {
+public struct SubscriptionSchedulePhasesAddInvoiceItemsPriceData: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
@@ -1375,7 +1375,7 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceData: StripePa
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceDataTaxBehavior?
+    public var taxBehavior: SubscriptionSchedulePhasesAddInvoiceItemsPriceDataTaxBehavior?
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
     /// charge or a negative integer representing the amount to credit to the customer.
     public var unitAmount: Int?
@@ -1383,7 +1383,7 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceData: StripePa
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, product: String, taxBehavior: SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, product: String, taxBehavior: SubscriptionSchedulePhasesAddInvoiceItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.product = product
         self.taxBehavior = taxBehavior
@@ -1400,7 +1400,7 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceData: StripePa
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesAddInvoiceItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1413,16 +1413,16 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceDataTaxBehavio
 }
 
 /// Automatic tax settings for this phase.
-public struct SubscriptionScheduleCreatePhasesAutomaticTax: StripeParams {
+public struct SubscriptionSchedulePhasesAutomaticTax: StripeParams {
     /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
     /// generated by the subscription.
     public var enabled: Bool
     /// The account that's liable for tax. If set, the business address and tax registrations required to
     /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
     /// report of the connected account.
-    public var liability: SubscriptionScheduleCreatePhasesAutomaticTaxLiability?
+    public var liability: SubscriptionSchedulePhasesAutomaticTaxLiability?
 
-    public init(enabled: Bool, liability: SubscriptionScheduleCreatePhasesAutomaticTaxLiability? = nil) {
+    public init(enabled: Bool, liability: SubscriptionSchedulePhasesAutomaticTaxLiability? = nil) {
         self.enabled = enabled
         self.liability = liability
     }
@@ -1431,19 +1431,19 @@ public struct SubscriptionScheduleCreatePhasesAutomaticTax: StripeParams {
 /// The account that's liable for tax. If set, the business address and tax registrations required to
 /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
 /// report of the connected account.
-public struct SubscriptionScheduleCreatePhasesAutomaticTaxLiability: StripeParams {
+public struct SubscriptionSchedulePhasesAutomaticTaxLiability: StripeParams {
     /// Type of the account referenced in the request.
-    public var type: SubscriptionScheduleCreatePhasesAutomaticTaxLiabilityType
+    public var type: SubscriptionSchedulePhasesAutomaticTaxLiabilityType
     /// The connected account being referenced when `type` is `account`.
     public var account: String?
 
-    public init(type: SubscriptionScheduleCreatePhasesAutomaticTaxLiabilityType, account: String? = nil) {
+    public init(type: SubscriptionSchedulePhasesAutomaticTaxLiabilityType, account: String? = nil) {
         self.type = type
         self.account = account
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1454,7 +1454,7 @@ public struct SubscriptionScheduleCreatePhasesAutomaticTaxLiabilityType: RawRepr
     public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public struct SubscriptionScheduleCreatePhasesBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1465,7 +1465,7 @@ public struct SubscriptionScheduleCreatePhasesBillingCycleAnchor: RawRepresentab
     public static var phaseStart: Self { .init(rawValue: "phase_start") }
 }
 
-public struct SubscriptionScheduleCreatePhasesBillingThresholds: StripeParams {
+public struct SubscriptionSchedulePhasesBillingThresholds: StripeParams {
     /// Monetary threshold that triggers the subscription to advance to a new billing period
     public var amountGte: Int?
     /// Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true,
@@ -1484,7 +1484,7 @@ public struct SubscriptionScheduleCreatePhasesBillingThresholds: StripeParams {
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1495,7 +1495,7 @@ public struct SubscriptionScheduleCreatePhasesCollectionMethod: RawRepresentable
     public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
-public struct SubscriptionScheduleCreatePhasesDiscounts: StripeParams {
+public struct SubscriptionSchedulePhasesDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
     /// ID of an existing discount on the object (or one of its ancestors) to reuse.
@@ -1517,13 +1517,13 @@ public struct SubscriptionScheduleCreatePhasesDiscounts: StripeParams {
 }
 
 /// The number of intervals the phase should last. If set, `end_date` must not be set.
-public struct SubscriptionScheduleCreatePhasesDuration: StripeParams {
+public struct SubscriptionSchedulePhasesDuration: StripeParams {
     /// Specifies phase duration. Either `day`, `week`, `month` or `year`.
-    public var interval: SubscriptionScheduleCreatePhasesDurationInterval
+    public var interval: SubscriptionSchedulePhasesDurationInterval
     /// The multiplier applied to the interval.
     public var intervalCount: Int?
 
-    public init(interval: SubscriptionScheduleCreatePhasesDurationInterval, intervalCount: Int? = nil) {
+    public init(interval: SubscriptionSchedulePhasesDurationInterval, intervalCount: Int? = nil) {
         self.interval = interval
         self.intervalCount = intervalCount
     }
@@ -1534,7 +1534,7 @@ public struct SubscriptionScheduleCreatePhasesDuration: StripeParams {
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1548,12 +1548,12 @@ public struct SubscriptionScheduleCreatePhasesDurationInterval: RawRepresentable
 }
 
 /// All invoices will be billed using the specified settings.
-public struct SubscriptionScheduleCreatePhasesInvoiceSettings: ClearableParams {
+public struct SubscriptionSchedulePhasesInvoiceSettings: ClearableParams {
     /// The account tax IDs associated with this phase of the subscription schedule. Will be set on invoices
     /// generated by this phase of the subscription schedule.
     public var accountTaxIds: [String]?
     /// A list of up to 4 custom fields to be displayed on the invoice.
-    public var customFields: [SubscriptionScheduleCreatePhasesInvoiceSettingsCustomFields]?
+    public var customFields: [SubscriptionSchedulePhasesInvoiceSettingsCustomFields]?
     /// Number of days within which a customer must pay invoices generated by this subscription schedule.
     /// This value will be `null` for subscription schedules where `collection_method=charge_automatically`.
     public var daysUntilDue: Int?
@@ -1563,11 +1563,11 @@ public struct SubscriptionScheduleCreatePhasesInvoiceSettings: ClearableParams {
     public var footer: String?
     /// The connected account that issues the invoice. The invoice is presented with the branding and
     /// support information of the specified account.
-    public var issuer: SubscriptionScheduleCreatePhasesInvoiceSettingsIssuer?
+    public var issuer: SubscriptionSchedulePhasesInvoiceSettingsIssuer?
     /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionScheduleCreatePhasesInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionScheduleCreatePhasesInvoiceSettingsIssuer? = nil) {
+    public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionSchedulePhasesInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionSchedulePhasesInvoiceSettingsIssuer? = nil) {
         self.accountTaxIds = accountTaxIds
         self.customFields = customFields
         self.daysUntilDue = daysUntilDue
@@ -1595,7 +1595,7 @@ public struct SubscriptionScheduleCreatePhasesInvoiceSettings: ClearableParams {
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesInvoiceSettingsCustomFields: StripeParams {
+public struct SubscriptionSchedulePhasesInvoiceSettingsCustomFields: StripeParams {
     /// The name of the custom field. This may be up to 40 characters.
     public var name: String
     /// The value of the custom field. This may be up to 140 characters.
@@ -1609,19 +1609,19 @@ public struct SubscriptionScheduleCreatePhasesInvoiceSettingsCustomFields: Strip
 
 /// The connected account that issues the invoice. The invoice is presented with the branding and
 /// support information of the specified account.
-public struct SubscriptionScheduleCreatePhasesInvoiceSettingsIssuer: StripeParams {
+public struct SubscriptionSchedulePhasesInvoiceSettingsIssuer: StripeParams {
     /// Type of the account referenced in the request.
-    public var type: SubscriptionScheduleCreatePhasesInvoiceSettingsIssuerType
+    public var type: SubscriptionSchedulePhasesInvoiceSettingsIssuerType
     /// The connected account being referenced when `type` is `account`.
     public var account: String?
 
-    public init(type: SubscriptionScheduleCreatePhasesInvoiceSettingsIssuerType, account: String? = nil) {
+    public init(type: SubscriptionSchedulePhasesInvoiceSettingsIssuerType, account: String? = nil) {
         self.type = type
         self.account = account
     }
 }
 
-public struct SubscriptionScheduleCreatePhasesInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1632,7 +1632,7 @@ public struct SubscriptionScheduleCreatePhasesInvoiceSettingsIssuerType: RawRepr
     public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public struct SubscriptionScheduleCreatePhasesProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionSchedulePhasesProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1646,7 +1646,7 @@ public struct SubscriptionScheduleCreatePhasesProrationBehavior: RawRepresentabl
 
 /// The data with which to automatically create a Transfer for each of the associated subscription's
 /// invoices.
-public struct SubscriptionScheduleCreatePhasesTransferData: StripeParams {
+public struct SubscriptionSchedulePhasesTransferData: StripeParams {
     /// ID of an existing, connected Stripe account.
     public var destination: String
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
@@ -1666,7 +1666,7 @@ public struct SubscriptionScheduleCreatePhasesTransferData: StripeParams {
 }
 
 /// One of the forms `start_date` accepts.
-public enum SubscriptionScheduleCreateStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionScheduleStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
@@ -1682,7 +1682,7 @@ public enum SubscriptionScheduleCreateStartDate: Codable, Sendable, ExpressibleB
             }
         }
         if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleCreateStartDate matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleStartDate matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -1694,268 +1694,6 @@ public enum SubscriptionScheduleCreateStartDate: Codable, Sendable, ExpressibleB
             var container = encoder.singleValueContainer()
             try container.encode(value)
         }
-    }
-}
-
-/// Object representing the subscription schedule's default settings.
-public struct SubscriptionScheduleUpdateDefaultSettings: ClearableParams {
-    /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
-    /// percentage of the subscription invoice total that will be transferred to the application owner's
-    /// Stripe account. The request must be made by a platform account on a connected account in order to
-    /// set an application fee percentage. For more information, see the application fees
-    /// [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
-    public var applicationFeePercent: Double?
-    /// Default settings for automatic tax computation.
-    public var automaticTax: SubscriptionScheduleUpdateDefaultSettingsAutomaticTax?
-    /// Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to
-    /// automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial.
-    /// For more information, see the billing cycle
-    /// [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
-    public var billingCycleAnchor: SubscriptionScheduleUpdateDefaultSettingsBillingCycleAnchor?
-    /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
-    /// period. Pass an empty string to remove previously-defined thresholds.
-    public var billingThresholds: SubscriptionScheduleUpdateDefaultSettingsBillingThresholds?
-    /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
-    /// to pay the underlying subscription at the end of each billing cycle using the default source
-    /// attached to the customer. When sending an invoice, Stripe will email your customer an invoice with
-    /// payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on
-    /// creation.
-    public var collectionMethod: SubscriptionScheduleUpdateDefaultSettingsCollectionMethod?
-    /// ID of the default payment method for the subscription schedule. It must belong to the customer
-    /// associated with the subscription schedule. If not set, invoices will use the default payment method
-    /// in the customer's invoice settings.
-    public var defaultPaymentMethod: String?
-    /// Subscription description, meant to be displayable to the customer. Use this field to optionally
-    /// store an explanation of the subscription for rendering in Stripe surfaces and certain local payment
-    /// methods UIs.
-    public var description: String?
-    /// All invoices will be billed using the specified settings.
-    public var invoiceSettings: SubscriptionScheduleUpdateDefaultSettingsInvoiceSettings?
-    /// The account on behalf of which to charge, for each of the associated subscription's invoices.
-    public var onBehalfOf: String?
-    /// The data with which to automatically create a Transfer for each of the associated subscription's
-    /// invoices.
-    public var transferData: SubscriptionScheduleUpdateDefaultSettingsTransferData?
-    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleUpdateDefaultSettingsAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleUpdateDefaultSettingsBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleUpdateDefaultSettingsBillingThresholds? = nil, collectionMethod: SubscriptionScheduleUpdateDefaultSettingsCollectionMethod? = nil, defaultPaymentMethod: String? = nil, description: String? = nil, invoiceSettings: SubscriptionScheduleUpdateDefaultSettingsInvoiceSettings? = nil, onBehalfOf: String? = nil, transferData: SubscriptionScheduleUpdateDefaultSettingsTransferData? = nil) {
-        self.applicationFeePercent = applicationFeePercent
-        self.automaticTax = automaticTax
-        self.billingCycleAnchor = billingCycleAnchor
-        self.billingThresholds = billingThresholds
-        self.collectionMethod = collectionMethod
-        self.defaultPaymentMethod = defaultPaymentMethod
-        self.description = description
-        self.invoiceSettings = invoiceSettings
-        self.onBehalfOf = onBehalfOf
-        self.transferData = transferData
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case applicationFeePercent = "application_fee_percent"
-        case automaticTax = "automatic_tax"
-        case billingCycleAnchor = "billing_cycle_anchor"
-        case billingThresholds = "billing_thresholds"
-        case collectionMethod = "collection_method"
-        case defaultPaymentMethod = "default_payment_method"
-        case description
-        case invoiceSettings = "invoice_settings"
-        case onBehalfOf = "on_behalf_of"
-        case transferData = "transfer_data"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case billingThresholds = "billing_thresholds"
-        case description
-        case onBehalfOf = "on_behalf_of"
-        case transferData = "transfer_data"
-    }
-}
-
-/// Default settings for automatic tax computation.
-public struct SubscriptionScheduleUpdateDefaultSettingsAutomaticTax: StripeParams {
-    /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
-    /// generated by the subscription.
-    public var enabled: Bool
-    /// The account that's liable for tax. If set, the business address and tax registrations required to
-    /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
-    /// report of the connected account.
-    public var liability: SubscriptionScheduleUpdateDefaultSettingsAutomaticTaxLiability?
-
-    public init(enabled: Bool, liability: SubscriptionScheduleUpdateDefaultSettingsAutomaticTaxLiability? = nil) {
-        self.enabled = enabled
-        self.liability = liability
-    }
-}
-
-/// The account that's liable for tax. If set, the business address and tax registrations required to
-/// perform the tax calculation are loaded from this account. The tax transaction is returned in the
-/// report of the connected account.
-public struct SubscriptionScheduleUpdateDefaultSettingsAutomaticTaxLiability: StripeParams {
-    /// Type of the account referenced in the request.
-    public var type: SubscriptionScheduleUpdateDefaultSettingsAutomaticTaxLiabilityType
-    /// The connected account being referenced when `type` is `account`.
-    public var account: String?
-
-    public init(type: SubscriptionScheduleUpdateDefaultSettingsAutomaticTaxLiabilityType, account: String? = nil) {
-        self.type = type
-        self.account = account
-    }
-}
-
-public struct SubscriptionScheduleUpdateDefaultSettingsAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var `self`: Self { .init(rawValue: "self") }
-}
-
-public struct SubscriptionScheduleUpdateDefaultSettingsBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var automatic: Self { .init(rawValue: "automatic") }
-    public static var phaseStart: Self { .init(rawValue: "phase_start") }
-}
-
-public struct SubscriptionScheduleUpdateDefaultSettingsBillingThresholds: StripeParams {
-    /// Monetary threshold that triggers the subscription to advance to a new billing period
-    public var amountGte: Int?
-    /// Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true,
-    /// `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise,
-    /// the value will remain unchanged.
-    public var resetBillingCycleAnchor: Bool?
-
-    public init(amountGte: Int? = nil, resetBillingCycleAnchor: Bool? = nil) {
-        self.amountGte = amountGte
-        self.resetBillingCycleAnchor = resetBillingCycleAnchor
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amountGte = "amount_gte"
-        case resetBillingCycleAnchor = "reset_billing_cycle_anchor"
-    }
-}
-
-public struct SubscriptionScheduleUpdateDefaultSettingsCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
-    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
-}
-
-/// All invoices will be billed using the specified settings.
-public struct SubscriptionScheduleUpdateDefaultSettingsInvoiceSettings: ClearableParams {
-    /// The account tax IDs associated with the subscription schedule. Will be set on invoices generated by
-    /// the subscription schedule.
-    public var accountTaxIds: [String]?
-    public var customFields: [SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsCustomFields]?
-    /// Number of days within which a customer must pay invoices generated by this subscription schedule.
-    /// This value will be `null` for subscription schedules where `collection_method=charge_automatically`.
-    public var daysUntilDue: Int?
-    public var description: String?
-    public var footer: String?
-    /// The connected account that issues the invoice. The invoice is presented with the branding and
-    /// support information of the specified account.
-    public var issuer: SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuer?
-    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuer? = nil) {
-        self.accountTaxIds = accountTaxIds
-        self.customFields = customFields
-        self.daysUntilDue = daysUntilDue
-        self.description = description
-        self.footer = footer
-        self.issuer = issuer
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountTaxIds = "account_tax_ids"
-        case customFields = "custom_fields"
-        case daysUntilDue = "days_until_due"
-        case description
-        case footer
-        case issuer
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case accountTaxIds = "account_tax_ids"
-        case customFields = "custom_fields"
-        case description
-        case footer
-    }
-}
-
-public struct SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsCustomFields: StripeParams {
-    /// The name of the custom field. This may be up to 40 characters.
-    public var name: String
-    /// The value of the custom field. This may be up to 140 characters.
-    public var value: String
-
-    public init(name: String, value: String) {
-        self.name = name
-        self.value = value
-    }
-}
-
-/// The connected account that issues the invoice. The invoice is presented with the branding and
-/// support information of the specified account.
-public struct SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuer: StripeParams {
-    /// Type of the account referenced in the request.
-    public var type: SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuerType
-    /// The connected account being referenced when `type` is `account`.
-    public var account: String?
-
-    public init(type: SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuerType, account: String? = nil) {
-        self.type = type
-        self.account = account
-    }
-}
-
-public struct SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var `self`: Self { .init(rawValue: "self") }
-}
-
-public struct SubscriptionScheduleUpdateDefaultSettingsTransferData: StripeParams {
-    /// ID of an existing, connected Stripe account.
-    public var destination: String
-    /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
-    /// percentage of the subscription invoice total that will be transferred to the destination account. By
-    /// default, the entire amount is transferred to the destination.
-    public var amountPercent: Double?
-
-    public init(destination: String, amountPercent: Double? = nil) {
-        self.destination = destination
-        self.amountPercent = amountPercent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amountPercent = "amount_percent"
-        case destination
     }
 }
 
@@ -2004,11 +1742,11 @@ public struct SubscriptionScheduleUpdatePauseSchedules: ClearableParams {
 /// Configuration for when and how the subscription pauses.
 public struct SubscriptionScheduleUpdatePauseSchedulesPause: StripeParams {
     /// When to pause the subscription.
-    public var pauseAt: SubscriptionScheduleUpdatePauseSchedulesPausePauseAt?
+    public var pauseAt: SubscriptionSchedulePauseSchedulesPausePauseAt?
     /// Settings controlling billing behavior during the pause.
-    public var settings: SubscriptionScheduleUpdatePauseSchedulesPauseSettings?
+    public var settings: SubscriptionSchedulePauseSchedulesPauseSettings?
 
-    public init(pauseAt: SubscriptionScheduleUpdatePauseSchedulesPausePauseAt? = nil, settings: SubscriptionScheduleUpdatePauseSchedulesPauseSettings? = nil) {
+    public init(pauseAt: SubscriptionSchedulePauseSchedulesPausePauseAt? = nil, settings: SubscriptionSchedulePauseSchedulesPauseSettings? = nil) {
         self.pauseAt = pauseAt
         self.settings = settings
     }
@@ -2019,155 +1757,13 @@ public struct SubscriptionScheduleUpdatePauseSchedulesPause: StripeParams {
     }
 }
 
-/// When to pause the subscription.
-public struct SubscriptionScheduleUpdatePauseSchedulesPausePauseAt: StripeParams {
-    /// When to pause the subscription. Use `now` to pause immediately or `timestamp` to pause at a specific
-    /// time.
-    public var type: SubscriptionScheduleUpdatePauseSchedulesPausePauseAtType
-    /// The Unix timestamp at which to pause the subscription. Required when `type` is `timestamp`.
-    public var timestamp: Date?
-
-    public init(type: SubscriptionScheduleUpdatePauseSchedulesPausePauseAtType, timestamp: Date? = nil) {
-        self.type = type
-        self.timestamp = timestamp
-    }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesPausePauseAtType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var now: Self { .init(rawValue: "now") }
-    public static var timestamp: Self { .init(rawValue: "timestamp") }
-}
-
-/// Settings controlling billing behavior during the pause.
-public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettings: StripeParams {
-    /// Controls what to bill for when pausing the subscription.
-    public var billFor: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillFor?
-    /// Determines whether to generate an invoice for outstanding amounts when pausing. When adding a pause
-    /// schedule, defaults to `pending_invoice_item`. On updates, the existing value is preserved if not
-    /// provided.
-    public var invoicingBehavior: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsInvoicingBehavior?
-    /// The pause type. Currently only `subscription` is supported.
-    public var type: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsType?
-
-    public init(billFor: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillFor? = nil, invoicingBehavior: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsInvoicingBehavior? = nil, type: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsType? = nil) {
-        self.billFor = billFor
-        self.invoicingBehavior = invoicingBehavior
-        self.type = type
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case billFor = "bill_for"
-        case invoicingBehavior = "invoicing_behavior"
-        case type
-    }
-}
-
-/// Controls what to bill for when pausing the subscription.
-public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillFor: StripeParams {
-    /// Controls whether to collect metered usage accrued up to the pause date.
-    public var outstandingUsageThrough: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForOutstandingUsageThrough?
-    /// Controls how unused time on subscription items is credited when pausing.
-    public var unusedTimeFrom: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnusedTimeFrom?
-
-    public init(outstandingUsageThrough: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForOutstandingUsageThrough? = nil, unusedTimeFrom: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnusedTimeFrom? = nil) {
-        self.outstandingUsageThrough = outstandingUsageThrough
-        self.unusedTimeFrom = unusedTimeFrom
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case outstandingUsageThrough = "outstanding_usage_through"
-        case unusedTimeFrom = "unused_time_from"
-    }
-}
-
-/// Controls whether to collect metered usage accrued up to the pause date.
-public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForOutstandingUsageThrough: StripeParams {
-    /// Determines whether to collect metered usage accrued up to the pause date. When adding a pause
-    /// schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
-    public var type: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType?
-
-    public init(type: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType? = nil) {
-        self.type = type
-    }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    /// Do not collect outstanding metered usage.
-    public static var none: Self { .init(rawValue: "none") }
-    /// Collect metered usage accrued through the pause date.
-    public static var pauseAt: Self { .init(rawValue: "pause_at") }
-}
-
-/// Controls how unused time on subscription items is credited when pausing.
-public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnusedTimeFrom: StripeParams {
-    /// Determines which point in the billing period unused time is credited from. When adding a pause
-    /// schedule, defaults to `pause_at`. On updates, the existing value is preserved if not provided.
-    public var type: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnusedTimeFromType?
-
-    public init(type: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnusedTimeFromType? = nil) {
-        self.type = type
-    }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnusedTimeFromType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    /// Credit unused time from the start of each item's current billing period.
-    public static var itemCurrentPeriodStart: Self { .init(rawValue: "item_current_period_start") }
-    /// Do not credit unused time.
-    public static var none: Self { .init(rawValue: "none") }
-    /// Credit unused time from the pause date.
-    public static var pauseAt: Self { .init(rawValue: "pause_at") }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsInvoicingBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    /// Invoices immediately for debits and credits in the current period. If pausing doesn't create any
-    /// invoice items, Stripe doesn't generate an invoice.
-    public static var invoice: Self { .init(rawValue: "invoice") }
-    /// Creates pending invoice items for debits and credits in the current period.
-    public static var pendingInvoiceItem: Self { .init(rawValue: "pending_invoice_item") }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    /// Pauses collection, billing, and servicing.
-    public static var subscription: Self { .init(rawValue: "subscription") }
-}
-
 public struct SubscriptionScheduleUpdatePauseSchedulesResume: StripeParams {
     /// When to resume the subscription.
-    public var resumeAt: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAt?
+    public var resumeAt: SubscriptionSchedulePauseSchedulesResumeResumeAt?
     /// Settings controlling how the subscription resumes.
-    public var settings: SubscriptionScheduleUpdatePauseSchedulesResumeSettings?
+    public var settings: SubscriptionSchedulePauseSchedulesResumeSettings?
 
-    public init(resumeAt: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAt? = nil, settings: SubscriptionScheduleUpdatePauseSchedulesResumeSettings? = nil) {
+    public init(resumeAt: SubscriptionSchedulePauseSchedulesResumeResumeAt? = nil, settings: SubscriptionSchedulePauseSchedulesResumeSettings? = nil) {
         self.resumeAt = resumeAt
         self.settings = settings
     }
@@ -2178,145 +1774,13 @@ public struct SubscriptionScheduleUpdatePauseSchedulesResume: StripeParams {
     }
 }
 
-/// When to resume the subscription.
-public struct SubscriptionScheduleUpdatePauseSchedulesResumeResumeAt: StripeParams {
-    /// When to resume the subscription. Use `now` to resume immediately, `duration` to resume after a set
-    /// duration, or `timestamp` to resume at a specific time.
-    public var type: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtType
-    /// The duration after which to resume the subscription. Required when `type` is `duration`.
-    public var duration: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDuration?
-    /// The Unix timestamp at which to resume the subscription. Required when `type` is `timestamp`.
-    public var timestamp: Date?
-
-    public init(type: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtType, duration: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDuration? = nil, timestamp: Date? = nil) {
-        self.type = type
-        self.duration = duration
-        self.timestamp = timestamp
-    }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var duration: Self { .init(rawValue: "duration") }
-    public static var now: Self { .init(rawValue: "now") }
-    public static var timestamp: Self { .init(rawValue: "timestamp") }
-}
-
-/// The duration after which to resume the subscription. Required when `type` is `duration`.
-public struct SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDuration: StripeParams {
-    /// The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
-    public var interval: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDurationInterval
-    /// The number of intervals after which the subscription resumes.
-    public var intervalCount: Int?
-
-    public init(interval: SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDurationInterval, intervalCount: Int? = nil) {
-        self.interval = interval
-        self.intervalCount = intervalCount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case interval
-        case intervalCount = "interval_count"
-    }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
-/// Settings controlling how the subscription resumes.
-public struct SubscriptionScheduleUpdatePauseSchedulesResumeSettings: StripeParams {
-    /// Controls the billing cycle anchor when the subscription resumes. When adding a pause schedule,
-    /// defaults to `resume_at`. On updates, the existing value is preserved if not provided.
-    public var billingCycleAnchor: SubscriptionScheduleUpdatePauseSchedulesResumeSettingsBillingCycleAnchor?
-    /// Controls whether Stripe attempts payment on the resumption invoice and how payment affects the
-    /// subscription's status. When adding a pause schedule, defaults to `resume_on_payment_success`. On
-    /// updates, the existing value is preserved if not provided.
-    public var paymentBehavior: SubscriptionScheduleUpdatePauseSchedulesResumeSettingsPaymentBehavior?
-    /// Determines how to handle prorations when the subscription resumes. When adding a pause schedule,
-    /// defaults to `create_prorations`. On updates, the existing value is preserved if not provided.
-    public var prorationBehavior: SubscriptionScheduleUpdatePauseSchedulesResumeSettingsProrationBehavior?
-
-    public init(billingCycleAnchor: SubscriptionScheduleUpdatePauseSchedulesResumeSettingsBillingCycleAnchor? = nil, paymentBehavior: SubscriptionScheduleUpdatePauseSchedulesResumeSettingsPaymentBehavior? = nil, prorationBehavior: SubscriptionScheduleUpdatePauseSchedulesResumeSettingsProrationBehavior? = nil) {
-        self.billingCycleAnchor = billingCycleAnchor
-        self.paymentBehavior = paymentBehavior
-        self.prorationBehavior = prorationBehavior
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case billingCycleAnchor = "billing_cycle_anchor"
-        case paymentBehavior = "payment_behavior"
-        case prorationBehavior = "proration_behavior"
-    }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesResumeSettingsBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    /// Set the billing cycle anchor to the date the subscription resumes.
-    public static var resumeAt: Self { .init(rawValue: "resume_at") }
-    /// Keep the existing billing cycle anchor.
-    public static var unchanged: Self { .init(rawValue: "unchanged") }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesResumeSettingsPaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    /// If you create a resumption invoice, Stripe finalizes the invoice immediately but doesn't attempt
-    /// payment. You can then manually attempt payment on the invoice using the [Pay invoice
-    /// endpoint](/api/invoices/pay). If the payment attempt succeeds, the subscription becomes `active`. If
-    /// the payment attempt fails, the subscription becomes `past_due`. If the invoice has no payment
-    /// attempts after 23 hours, Stripe voids the invoice and the subscription remains `paused`.
-    public static var resumeOnPaymentAttempt: Self { .init(rawValue: "resume_on_payment_attempt") }
-    /// If you create a resumption invoice, Stripe finalizes and attempts payment on the invoice
-    /// immediately. If that payment attempt succeeds, the subscription becomes `active`. If that payment
-    /// attempt fails, the subscription remains `paused`. You can then manually attempt payment on the
-    /// invoice using the [Pay invoice endpoint](/api/invoices/pay). If the invoice isn't paid successfully
-    /// within 1 year of its creation, Stripe voids the invoice and the subscription remains `paused`.
-    public static var resumeOnPaymentSuccess: Self { .init(rawValue: "resume_on_payment_success") }
-}
-
-public struct SubscriptionScheduleUpdatePauseSchedulesResumeSettingsProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
-    public static var createProrations: Self { .init(rawValue: "create_prorations") }
-    public static var none: Self { .init(rawValue: "none") }
-}
-
 public struct SubscriptionScheduleUpdatePhases: ClearableParams {
     /// List of configuration items, each with an attached price, to apply during this phase of the
     /// subscription schedule.
-    public var items: [SubscriptionScheduleUpdatePhasesItems]
+    public var items: [SubscriptionSchedulePhasesItems]
     /// A list of prices and quantities that will generate invoice items appended to the next invoice for
     /// this phase. You may pass up to 20 items.
-    public var addInvoiceItems: [SubscriptionScheduleUpdatePhasesAddInvoiceItems]?
+    public var addInvoiceItems: [SubscriptionSchedulePhasesAddInvoiceItems]?
     /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
     /// percentage of the subscription invoice total that will be transferred to the application owner's
     /// Stripe account. The request must be made by a platform account on a connected account in order to
@@ -2324,21 +1788,21 @@ public struct SubscriptionScheduleUpdatePhases: ClearableParams {
     /// [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
     public var applicationFeePercent: Double?
     /// Automatic tax settings for this phase.
-    public var automaticTax: SubscriptionScheduleUpdatePhasesAutomaticTax?
+    public var automaticTax: SubscriptionSchedulePhasesAutomaticTax?
     /// Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to
     /// automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial.
     /// For more information, see the billing cycle
     /// [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
-    public var billingCycleAnchor: SubscriptionScheduleUpdatePhasesBillingCycleAnchor?
+    public var billingCycleAnchor: SubscriptionSchedulePhasesBillingCycleAnchor?
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
     /// period. Pass an empty string to remove previously-defined thresholds.
-    public var billingThresholds: SubscriptionScheduleUpdatePhasesBillingThresholds?
+    public var billingThresholds: SubscriptionSchedulePhasesBillingThresholds?
     /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
     /// to pay the underlying subscription at the end of each billing cycle using the default source
     /// attached to the customer. When sending an invoice, Stripe will email your customer an invoice with
     /// payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on
     /// creation.
-    public var collectionMethod: SubscriptionScheduleUpdatePhasesCollectionMethod?
+    public var collectionMethod: SubscriptionSchedulePhasesCollectionMethod?
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String?
@@ -2359,13 +1823,13 @@ public struct SubscriptionScheduleUpdatePhases: ClearableParams {
     public var description: String?
     /// The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount
     /// from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
-    public var discounts: [SubscriptionScheduleUpdatePhasesDiscounts]?
+    public var discounts: [SubscriptionSchedulePhasesDiscounts]?
     /// The number of intervals the phase should last. If set, `end_date` must not be set.
-    public var duration: SubscriptionScheduleUpdatePhasesDuration?
+    public var duration: SubscriptionSchedulePhasesDuration?
     /// The date at which this phase of the subscription schedule ends. If set, `duration` must not be set.
-    public var endDate: SubscriptionScheduleUpdatePhasesEndDate?
+    public var endDate: SubscriptionSchedulePhasesEndDate?
     /// All invoices will be billed using the specified settings.
-    public var invoiceSettings: SubscriptionScheduleUpdatePhasesInvoiceSettings?
+    public var invoiceSettings: SubscriptionSchedulePhasesInvoiceSettings?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a phase.
     /// Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase
     /// is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual
@@ -2381,25 +1845,25 @@ public struct SubscriptionScheduleUpdatePhases: ClearableParams {
     /// [proration_behavior](https://docs.stripe.com/api/subscription_schedules/update#update_subscription_schedule-proration_behavior)
     /// parameter which controls what happens if the update request affects the billing configuration (item
     /// price, quantity, etc.) of the current phase.
-    public var prorationBehavior: SubscriptionScheduleUpdatePhasesProrationBehavior?
+    public var prorationBehavior: SubscriptionSchedulePhasesProrationBehavior?
     /// The date at which this phase of the subscription schedule starts or `now`. Must be set on the first
     /// phase. Prefer to specify `now` over an explicit timestamp when appropriate to avoid unexpected
     /// behavior due to request delays or clock skew resulting in the phase being slightly backdated or
     /// postdated.
-    public var startDate: SubscriptionScheduleUpdatePhasesStartDate?
+    public var startDate: SubscriptionSchedulePhasesStartDate?
     /// The data with which to automatically create a Transfer for each of the associated subscription's
     /// invoices.
-    public var transferData: SubscriptionScheduleUpdatePhasesTransferData?
+    public var transferData: SubscriptionSchedulePhasesTransferData?
     /// If set to true the entire phase is counted as a trial and the customer will not be charged for any
     /// fees.
     public var trial: Bool?
     /// Sets the phase to trialing from the start date to this date. Must be within the phase. When combined
     /// with `trial=true`, it must match the phase end date.
-    public var trialEnd: SubscriptionScheduleUpdatePhasesTrialEnd?
+    public var trialEnd: SubscriptionSchedulePhasesTrialEnd?
     /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(items: [SubscriptionScheduleUpdatePhasesItems], addInvoiceItems: [SubscriptionScheduleUpdatePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionScheduleUpdatePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionScheduleUpdatePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionScheduleUpdatePhasesBillingThresholds? = nil, collectionMethod: SubscriptionScheduleUpdatePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionScheduleUpdatePhasesDiscounts]? = nil, duration: SubscriptionScheduleUpdatePhasesDuration? = nil, endDate: SubscriptionScheduleUpdatePhasesEndDate? = nil, invoiceSettings: SubscriptionScheduleUpdatePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionScheduleUpdatePhasesProrationBehavior? = nil, startDate: SubscriptionScheduleUpdatePhasesStartDate? = nil, transferData: SubscriptionScheduleUpdatePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: SubscriptionScheduleUpdatePhasesTrialEnd? = nil) {
+    public init(items: [SubscriptionSchedulePhasesItems], addInvoiceItems: [SubscriptionSchedulePhasesAddInvoiceItems]? = nil, applicationFeePercent: Double? = nil, automaticTax: SubscriptionSchedulePhasesAutomaticTax? = nil, billingCycleAnchor: SubscriptionSchedulePhasesBillingCycleAnchor? = nil, billingThresholds: SubscriptionSchedulePhasesBillingThresholds? = nil, collectionMethod: SubscriptionSchedulePhasesCollectionMethod? = nil, currency: String? = nil, defaultPaymentMethod: String? = nil, defaultTaxRates: [String]? = nil, description: String? = nil, discounts: [SubscriptionSchedulePhasesDiscounts]? = nil, duration: SubscriptionSchedulePhasesDuration? = nil, endDate: SubscriptionSchedulePhasesEndDate? = nil, invoiceSettings: SubscriptionSchedulePhasesInvoiceSettings? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, prorationBehavior: SubscriptionSchedulePhasesProrationBehavior? = nil, startDate: SubscriptionSchedulePhasesStartDate? = nil, transferData: SubscriptionSchedulePhasesTransferData? = nil, trial: Bool? = nil, trialEnd: SubscriptionSchedulePhasesTrialEnd? = nil) {
         self.items = items
         self.addInvoiceItems = addInvoiceItems
         self.applicationFeePercent = applicationFeePercent
@@ -2459,518 +1923,8 @@ public struct SubscriptionScheduleUpdatePhases: ClearableParams {
     }
 }
 
-public struct SubscriptionScheduleUpdatePhasesItems: ClearableParams {
-    /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing
-    /// period. Pass an empty string to remove previously-defined thresholds.
-    public var billingThresholds: SubscriptionScheduleUpdatePhasesItemsBillingThresholds?
-    /// The coupons to redeem into discounts for the subscription item.
-    public var discounts: [SubscriptionScheduleUpdatePhasesItemsDiscounts]?
-    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a
-    /// configuration item. Metadata on a configuration item will update the underlying subscription item's
-    /// `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys
-    /// in the subscription item's `metadata` can be unset by posting an empty value to them in the
-    /// configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the
-    /// subscription item directly or unset every key individually from the configuration item's `metadata`.
-    public var metadata: [String: String]?
-    /// The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
-    public var plan: String?
-    /// The ID of the price object.
-    public var price: String?
-    /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-    public var priceData: SubscriptionScheduleUpdatePhasesItemsPriceData?
-    /// Quantity for the given price. Can be set only if the price's `usage_type` is `licensed` and not
-    /// `metered`.
-    public var quantity: Int?
-    /// A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the
-    /// [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates)
-    /// on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
-    public var taxRates: [String]?
-    /// Fields to send empty, which clears them: `params.clear(.billingThresholds)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(billingThresholds: SubscriptionScheduleUpdatePhasesItemsBillingThresholds? = nil, discounts: [SubscriptionScheduleUpdatePhasesItemsDiscounts]? = nil, metadata: [String: String]? = nil, plan: String? = nil, price: String? = nil, priceData: SubscriptionScheduleUpdatePhasesItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
-        self.billingThresholds = billingThresholds
-        self.discounts = discounts
-        self.metadata = metadata
-        self.plan = plan
-        self.price = price
-        self.priceData = priceData
-        self.quantity = quantity
-        self.taxRates = taxRates
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case billingThresholds = "billing_thresholds"
-        case discounts
-        case metadata
-        case plan
-        case price
-        case priceData = "price_data"
-        case quantity
-        case taxRates = "tax_rates"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case billingThresholds = "billing_thresholds"
-        case discounts
-        case taxRates = "tax_rates"
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesItemsBillingThresholds: StripeParams {
-    /// Number of units that meets the billing threshold to advance the subscription to a new billing period
-    /// (e.g., it takes 10 $5 units to meet a $50 [monetary
-    /// threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
-    public var usageGte: Int
-
-    public init(usageGte: Int) {
-        self.usageGte = usageGte
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case usageGte = "usage_gte"
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesItemsDiscounts: StripeParams {
-    /// ID of the coupon to create a new discount for.
-    public var coupon: String?
-    /// ID of an existing discount on the object (or one of its ancestors) to reuse.
-    public var discount: String?
-    /// ID of the promotion code to create a new discount for.
-    public var promotionCode: String?
-
-    public init(coupon: String? = nil, discount: String? = nil, promotionCode: String? = nil) {
-        self.coupon = coupon
-        self.discount = discount
-        self.promotionCode = promotionCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case coupon
-        case discount
-        case promotionCode = "promotion_code"
-    }
-}
-
-/// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
-public struct SubscriptionScheduleUpdatePhasesItemsPriceData: StripeParams {
-    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-    /// Must be a [supported currency](https://stripe.com/docs/currencies).
-    public var currency: String
-    /// The ID of the [Product](https://docs.stripe.com/api/products) that this
-    /// [Price](https://docs.stripe.com/api/prices) will belong to.
-    public var product: String
-    /// The recurring components of a price such as `interval` and `interval_count`.
-    public var recurring: SubscriptionScheduleUpdatePhasesItemsPriceDataRecurring
-    /// Only required if a [default tax
-    /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
-    /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
-    /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
-    /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: SubscriptionScheduleUpdatePhasesItemsPriceDataTaxBehavior?
-    /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
-    /// charge.
-    public var unitAmount: Int?
-    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
-    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    public var unitAmountDecimal: String?
-
-    public init(currency: String, product: String, recurring: SubscriptionScheduleUpdatePhasesItemsPriceDataRecurring, taxBehavior: SubscriptionScheduleUpdatePhasesItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
-        self.currency = currency
-        self.product = product
-        self.recurring = recurring
-        self.taxBehavior = taxBehavior
-        self.unitAmount = unitAmount
-        self.unitAmountDecimal = unitAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case currency
-        case product
-        case recurring
-        case taxBehavior = "tax_behavior"
-        case unitAmount = "unit_amount"
-        case unitAmountDecimal = "unit_amount_decimal"
-    }
-}
-
-/// The recurring components of a price such as `interval` and `interval_count`.
-public struct SubscriptionScheduleUpdatePhasesItemsPriceDataRecurring: StripeParams {
-    /// Specifies billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: SubscriptionScheduleUpdatePhasesItemsPriceDataRecurringInterval
-    /// The number of intervals between subscription billings. For example, `interval=month` and
-    /// `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36
-    /// months, or 156 weeks).
-    public var intervalCount: Int?
-
-    public init(interval: SubscriptionScheduleUpdatePhasesItemsPriceDataRecurringInterval, intervalCount: Int? = nil) {
-        self.interval = interval
-        self.intervalCount = intervalCount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case interval
-        case intervalCount = "interval_count"
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
-public struct SubscriptionScheduleUpdatePhasesItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var exclusive: Self { .init(rawValue: "exclusive") }
-    public static var inclusive: Self { .init(rawValue: "inclusive") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
-}
-
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItems: ClearableParams {
-    /// Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
-    public var discountable: Bool?
-    /// The coupons to redeem into discounts for the item.
-    public var discounts: [SubscriptionScheduleUpdatePhasesAddInvoiceItemsDiscounts]?
-    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
-    /// This can be useful for storing additional information about the object in a structured format.
-    /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
-    /// empty value to `metadata`.
-    public var metadata: [String: String]?
-    /// The period associated with this invoice item. If not set, `period.start.type` defaults to
-    /// `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
-    public var period: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriod?
-    /// The ID of the price object. One of `price` or `price_data` is required.
-    public var price: String?
-    /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
-    /// `price` or `price_data` is required.
-    public var priceData: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPriceData?
-    /// Quantity for this item. Defaults to 1.
-    public var quantity: Int?
-    /// The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
-    public var taxRates: [String]?
-    /// Fields to send empty, which clears them: `params.clear(.taxRates)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(discountable: Bool? = nil, discounts: [SubscriptionScheduleUpdatePhasesAddInvoiceItemsDiscounts]? = nil, metadata: [String: String]? = nil, period: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriod? = nil, price: String? = nil, priceData: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPriceData? = nil, quantity: Int? = nil, taxRates: [String]? = nil) {
-        self.discountable = discountable
-        self.discounts = discounts
-        self.metadata = metadata
-        self.period = period
-        self.price = price
-        self.priceData = priceData
-        self.quantity = quantity
-        self.taxRates = taxRates
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case discountable
-        case discounts
-        case metadata
-        case period
-        case price
-        case priceData = "price_data"
-        case quantity
-        case taxRates = "tax_rates"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case taxRates = "tax_rates"
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsDiscounts: StripeParams {
-    /// ID of the coupon to create a new discount for.
-    public var coupon: String?
-    /// ID of an existing discount on the object (or one of its ancestors) to reuse.
-    public var discount: String?
-    /// ID of the promotion code to create a new discount for.
-    public var promotionCode: String?
-
-    public init(coupon: String? = nil, discount: String? = nil, promotionCode: String? = nil) {
-        self.coupon = coupon
-        self.discount = discount
-        self.promotionCode = promotionCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case coupon
-        case discount
-        case promotionCode = "promotion_code"
-    }
-}
-
-/// The period associated with this invoice item. If not set, `period.start.type` defaults to
-/// `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriod: StripeParams {
-    /// End of the invoice item period.
-    public var end: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEnd
-    /// Start of the invoice item period.
-    public var start: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStart
-
-    public init(end: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEnd, start: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStart) {
-        self.end = end
-        self.start = start
-    }
-}
-
-/// End of the invoice item period.
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEnd: StripeParams {
-    /// Select how to calculate the end of the invoice item period.
-    public var type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEndType
-    /// A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to
-    /// `period.start`.
-    public var timestamp: Date?
-
-    public init(type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEndType, timestamp: Date? = nil) {
-        self.type = type
-        self.timestamp = timestamp
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEndType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var minItemPeriodEnd: Self { .init(rawValue: "min_item_period_end") }
-    public static var phaseEnd: Self { .init(rawValue: "phase_end") }
-    public static var timestamp: Self { .init(rawValue: "timestamp") }
-}
-
-/// Start of the invoice item period.
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStart: StripeParams {
-    /// Select how to calculate the start of the invoice item period.
-    public var type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStartType
-    /// A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to
-    /// `period.end`.
-    public var timestamp: Date?
-
-    public init(type: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStartType, timestamp: Date? = nil) {
-        self.type = type
-        self.timestamp = timestamp
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStartType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var maxItemPeriodStart: Self { .init(rawValue: "max_item_period_start") }
-    public static var phaseStart: Self { .init(rawValue: "phase_start") }
-    public static var timestamp: Self { .init(rawValue: "timestamp") }
-}
-
-/// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
-/// `price` or `price_data` is required.
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPriceData: StripeParams {
-    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-    /// Must be a [supported currency](https://stripe.com/docs/currencies).
-    public var currency: String
-    /// The ID of the [Product](https://docs.stripe.com/api/products) that this
-    /// [Price](https://docs.stripe.com/api/prices) will belong to.
-    public var product: String
-    /// Only required if a [default tax
-    /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
-    /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
-    /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
-    /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPriceDataTaxBehavior?
-    /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
-    /// charge or a negative integer representing the amount to credit to the customer.
-    public var unitAmount: Int?
-    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
-    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    public var unitAmountDecimal: String?
-
-    public init(currency: String, product: String, taxBehavior: SubscriptionScheduleUpdatePhasesAddInvoiceItemsPriceDataTaxBehavior? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
-        self.currency = currency
-        self.product = product
-        self.taxBehavior = taxBehavior
-        self.unitAmount = unitAmount
-        self.unitAmountDecimal = unitAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case currency
-        case product
-        case taxBehavior = "tax_behavior"
-        case unitAmount = "unit_amount"
-        case unitAmountDecimal = "unit_amount_decimal"
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var exclusive: Self { .init(rawValue: "exclusive") }
-    public static var inclusive: Self { .init(rawValue: "inclusive") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
-}
-
-/// Automatic tax settings for this phase.
-public struct SubscriptionScheduleUpdatePhasesAutomaticTax: StripeParams {
-    /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
-    /// generated by the subscription.
-    public var enabled: Bool
-    /// The account that's liable for tax. If set, the business address and tax registrations required to
-    /// perform the tax calculation are loaded from this account. The tax transaction is returned in the
-    /// report of the connected account.
-    public var liability: SubscriptionScheduleUpdatePhasesAutomaticTaxLiability?
-
-    public init(enabled: Bool, liability: SubscriptionScheduleUpdatePhasesAutomaticTaxLiability? = nil) {
-        self.enabled = enabled
-        self.liability = liability
-    }
-}
-
-/// The account that's liable for tax. If set, the business address and tax registrations required to
-/// perform the tax calculation are loaded from this account. The tax transaction is returned in the
-/// report of the connected account.
-public struct SubscriptionScheduleUpdatePhasesAutomaticTaxLiability: StripeParams {
-    /// Type of the account referenced in the request.
-    public var type: SubscriptionScheduleUpdatePhasesAutomaticTaxLiabilityType
-    /// The connected account being referenced when `type` is `account`.
-    public var account: String?
-
-    public init(type: SubscriptionScheduleUpdatePhasesAutomaticTaxLiabilityType, account: String? = nil) {
-        self.type = type
-        self.account = account
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var `self`: Self { .init(rawValue: "self") }
-}
-
-public struct SubscriptionScheduleUpdatePhasesBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var automatic: Self { .init(rawValue: "automatic") }
-    public static var phaseStart: Self { .init(rawValue: "phase_start") }
-}
-
-public struct SubscriptionScheduleUpdatePhasesBillingThresholds: StripeParams {
-    /// Monetary threshold that triggers the subscription to advance to a new billing period
-    public var amountGte: Int?
-    /// Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true,
-    /// `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise,
-    /// the value will remain unchanged.
-    public var resetBillingCycleAnchor: Bool?
-
-    public init(amountGte: Int? = nil, resetBillingCycleAnchor: Bool? = nil) {
-        self.amountGte = amountGte
-        self.resetBillingCycleAnchor = resetBillingCycleAnchor
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amountGte = "amount_gte"
-        case resetBillingCycleAnchor = "reset_billing_cycle_anchor"
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
-    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
-}
-
-public struct SubscriptionScheduleUpdatePhasesDiscounts: StripeParams {
-    /// ID of the coupon to create a new discount for.
-    public var coupon: String?
-    /// ID of an existing discount on the object (or one of its ancestors) to reuse.
-    public var discount: String?
-    /// ID of the promotion code to create a new discount for.
-    public var promotionCode: String?
-
-    public init(coupon: String? = nil, discount: String? = nil, promotionCode: String? = nil) {
-        self.coupon = coupon
-        self.discount = discount
-        self.promotionCode = promotionCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case coupon
-        case discount
-        case promotionCode = "promotion_code"
-    }
-}
-
-/// The number of intervals the phase should last. If set, `end_date` must not be set.
-public struct SubscriptionScheduleUpdatePhasesDuration: StripeParams {
-    /// Specifies phase duration. Either `day`, `week`, `month` or `year`.
-    public var interval: SubscriptionScheduleUpdatePhasesDurationInterval
-    /// The multiplier applied to the interval.
-    public var intervalCount: Int?
-
-    public init(interval: SubscriptionScheduleUpdatePhasesDurationInterval, intervalCount: Int? = nil) {
-        self.interval = interval
-        self.intervalCount = intervalCount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case interval
-        case intervalCount = "interval_count"
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
 /// One of the forms `end_date` accepts.
-public enum SubscriptionScheduleUpdatePhasesEndDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionSchedulePhasesEndDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
@@ -2986,7 +1940,7 @@ public enum SubscriptionScheduleUpdatePhasesEndDate: Codable, Sendable, Expressi
             }
         }
         if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleUpdatePhasesEndDate matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionSchedulePhasesEndDate matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -2999,107 +1953,10 @@ public enum SubscriptionScheduleUpdatePhasesEndDate: Codable, Sendable, Expressi
             try container.encode(value)
         }
     }
-}
-
-/// All invoices will be billed using the specified settings.
-public struct SubscriptionScheduleUpdatePhasesInvoiceSettings: ClearableParams {
-    /// The account tax IDs associated with this phase of the subscription schedule. Will be set on invoices
-    /// generated by this phase of the subscription schedule.
-    public var accountTaxIds: [String]?
-    /// A list of up to 4 custom fields to be displayed on the invoice.
-    public var customFields: [SubscriptionScheduleUpdatePhasesInvoiceSettingsCustomFields]?
-    /// Number of days within which a customer must pay invoices generated by this subscription schedule.
-    /// This value will be `null` for subscription schedules where `collection_method=charge_automatically`.
-    public var daysUntilDue: Int?
-    /// An arbitrary string attached to the object. Often useful for displaying to users.
-    public var description: String?
-    /// Footer to be displayed on the invoice.
-    public var footer: String?
-    /// The connected account that issues the invoice. The invoice is presented with the branding and
-    /// support information of the specified account.
-    public var issuer: SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuer?
-    /// Fields to send empty, which clears them: `params.clear(.accountTaxIds)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(accountTaxIds: [String]? = nil, customFields: [SubscriptionScheduleUpdatePhasesInvoiceSettingsCustomFields]? = nil, daysUntilDue: Int? = nil, description: String? = nil, footer: String? = nil, issuer: SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuer? = nil) {
-        self.accountTaxIds = accountTaxIds
-        self.customFields = customFields
-        self.daysUntilDue = daysUntilDue
-        self.description = description
-        self.footer = footer
-        self.issuer = issuer
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountTaxIds = "account_tax_ids"
-        case customFields = "custom_fields"
-        case daysUntilDue = "days_until_due"
-        case description
-        case footer
-        case issuer
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case accountTaxIds = "account_tax_ids"
-        case customFields = "custom_fields"
-        case description
-        case footer
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesInvoiceSettingsCustomFields: StripeParams {
-    /// The name of the custom field. This may be up to 40 characters.
-    public var name: String
-    /// The value of the custom field. This may be up to 140 characters.
-    public var value: String
-
-    public init(name: String, value: String) {
-        self.name = name
-        self.value = value
-    }
-}
-
-/// The connected account that issues the invoice. The invoice is presented with the branding and
-/// support information of the specified account.
-public struct SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuer: StripeParams {
-    /// Type of the account referenced in the request.
-    public var type: SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuerType
-    /// The connected account being referenced when `type` is `account`.
-    public var account: String?
-
-    public init(type: SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuerType, account: String? = nil) {
-        self.type = type
-        self.account = account
-    }
-}
-
-public struct SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var account: Self { .init(rawValue: "account") }
-    public static var `self`: Self { .init(rawValue: "self") }
-}
-
-public struct SubscriptionScheduleUpdatePhasesProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
-    public static var createProrations: Self { .init(rawValue: "create_prorations") }
-    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// One of the forms `start_date` accepts.
-public enum SubscriptionScheduleUpdatePhasesStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionSchedulePhasesStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
@@ -3115,7 +1972,7 @@ public enum SubscriptionScheduleUpdatePhasesStartDate: Codable, Sendable, Expres
             }
         }
         if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleUpdatePhasesStartDate matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionSchedulePhasesStartDate matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -3127,32 +1984,11 @@ public enum SubscriptionScheduleUpdatePhasesStartDate: Codable, Sendable, Expres
             var container = encoder.singleValueContainer()
             try container.encode(value)
         }
-    }
-}
-
-/// The data with which to automatically create a Transfer for each of the associated subscription's
-/// invoices.
-public struct SubscriptionScheduleUpdatePhasesTransferData: StripeParams {
-    /// ID of an existing, connected Stripe account.
-    public var destination: String
-    /// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the
-    /// percentage of the subscription invoice total that will be transferred to the destination account. By
-    /// default, the entire amount is transferred to the destination.
-    public var amountPercent: Double?
-
-    public init(destination: String, amountPercent: Double? = nil) {
-        self.destination = destination
-        self.amountPercent = amountPercent
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amountPercent = "amount_percent"
-        case destination
     }
 }
 
 /// One of the forms `trial_end` accepts.
-public enum SubscriptionScheduleUpdatePhasesTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionSchedulePhasesTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
@@ -3168,7 +2004,7 @@ public enum SubscriptionScheduleUpdatePhasesTrialEnd: Codable, Sendable, Express
             }
         }
         if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleUpdatePhasesTrialEnd matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionSchedulePhasesTrialEnd matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -3183,7 +2019,7 @@ public enum SubscriptionScheduleUpdatePhasesTrialEnd: Codable, Sendable, Express
     }
 }
 
-public struct SubscriptionScheduleUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct SubscriptionScheduleProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

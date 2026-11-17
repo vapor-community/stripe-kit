@@ -9,7 +9,7 @@ import Foundation
 
 public struct PromotionCodeCreateParams: StripeParams {
     /// The promotion referenced by this promotion code.
-    public var promotion: PromotionCodeCreatePromotion
+    public var promotion: PromotionCodePromotion
     /// Whether the promotion code is currently active.
     public var active: Bool?
     /// The customer-facing code. Regardless of case, this code must be unique across all active promotion
@@ -38,7 +38,7 @@ public struct PromotionCodeCreateParams: StripeParams {
     /// Settings that restrict the redemption of the promotion code.
     public var restrictions: PromotionCodeCreateRestrictions?
 
-    public init(promotion: PromotionCodeCreatePromotion, active: Bool? = nil, code: String? = nil, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil, expiresAt: Date? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, restrictions: PromotionCodeCreateRestrictions? = nil) {
+    public init(promotion: PromotionCodePromotion, active: Bool? = nil, code: String? = nil, customer: String? = nil, customerAccount: String? = nil, expand: [String]? = nil, expiresAt: Date? = nil, maxRedemptions: Int? = nil, metadata: [String: String]? = nil, restrictions: PromotionCodeCreateRestrictions? = nil) {
         self.promotion = promotion
         self.active = active
         self.code = code
@@ -159,19 +159,19 @@ public struct PromotionCodeUpdateParams: ClearableParams {
 }
 
 /// The promotion referenced by this promotion code.
-public struct PromotionCodeCreatePromotion: StripeParams {
+public struct PromotionCodePromotion: StripeParams {
     /// Specifies the type of promotion.
-    public var type: PromotionCodeCreatePromotionType
+    public var type: PromotionCodePromotionType
     /// If promotion `type` is `coupon`, the coupon for this promotion code.
     public var coupon: String?
 
-    public init(type: PromotionCodeCreatePromotionType, coupon: String? = nil) {
+    public init(type: PromotionCodePromotionType, coupon: String? = nil) {
         self.type = type
         self.coupon = coupon
     }
 }
 
-public struct PromotionCodeCreatePromotionType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PromotionCodePromotionType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -187,7 +187,7 @@ public struct PromotionCodeCreateRestrictions: StripeParams {
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies). Each currency must be different from the
     /// `minimum_amount_currency` set on the promotion code.
-    public var currencyOptions: [String: PromotionCodeCreateRestrictionsCurrencyOptions]?
+    public var currencyOptions: [String: PromotionCodeRestrictionsCurrencyOptions]?
     /// A Boolean indicating if the Promotion Code should only be redeemed for Customers without any
     /// successful payments or invoices
     public var firstTimeTransaction: Bool?
@@ -197,7 +197,7 @@ public struct PromotionCodeCreateRestrictions: StripeParams {
     /// Three-letter [ISO code](https://stripe.com/docs/currencies) for minimum_amount
     public var minimumAmountCurrency: String?
 
-    public init(currencyOptions: [String: PromotionCodeCreateRestrictionsCurrencyOptions]? = nil, firstTimeTransaction: Bool? = nil, minimumAmount: Int? = nil, minimumAmountCurrency: String? = nil) {
+    public init(currencyOptions: [String: PromotionCodeRestrictionsCurrencyOptions]? = nil, firstTimeTransaction: Bool? = nil, minimumAmount: Int? = nil, minimumAmountCurrency: String? = nil) {
         self.currencyOptions = currencyOptions
         self.firstTimeTransaction = firstTimeTransaction
         self.minimumAmount = minimumAmount
@@ -212,7 +212,7 @@ public struct PromotionCodeCreateRestrictions: StripeParams {
     }
 }
 
-public struct PromotionCodeCreateRestrictionsCurrencyOptions: StripeParams {
+public struct PromotionCodeRestrictionsCurrencyOptions: StripeParams {
     /// Minimum amount required to redeem this Promotion Code into a Coupon (e.g., a purchase must be $100
     /// or more to work).
     public var minimumAmount: Int?
@@ -232,27 +232,13 @@ public struct PromotionCodeUpdateRestrictions: StripeParams {
     /// currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies). Each currency must be different from the
     /// `minimum_amount_currency` set on the promotion code.
-    public var currencyOptions: [String: PromotionCodeUpdateRestrictionsCurrencyOptions]?
+    public var currencyOptions: [String: PromotionCodeRestrictionsCurrencyOptions]?
 
-    public init(currencyOptions: [String: PromotionCodeUpdateRestrictionsCurrencyOptions]? = nil) {
+    public init(currencyOptions: [String: PromotionCodeRestrictionsCurrencyOptions]? = nil) {
         self.currencyOptions = currencyOptions
     }
 
     public enum CodingKeys: String, CodingKey {
         case currencyOptions = "currency_options"
-    }
-}
-
-public struct PromotionCodeUpdateRestrictionsCurrencyOptions: StripeParams {
-    /// Minimum amount required to redeem this Promotion Code into a Coupon (e.g., a purchase must be $100
-    /// or more to work).
-    public var minimumAmount: Int?
-
-    public init(minimumAmount: Int? = nil) {
-        self.minimumAmount = minimumAmount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case minimumAmount = "minimum_amount"
     }
 }

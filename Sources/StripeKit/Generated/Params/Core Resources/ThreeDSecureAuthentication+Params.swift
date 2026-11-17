@@ -37,14 +37,14 @@ public struct ThreeDSecureAuthenticationCancelParams: ClearableParams {
 
 public struct ThreeDSecureAuthenticationCreateParams: ClearableParams {
     /// Contains additional details on the channel used for this 3DS Authentication.
-    public var channel: ThreeDSecureAuthenticationCreateChannel
+    public var channel: ThreeDSecureAuthenticationChannel
     /// Indicates whether this 3DS Authentication is being performed for a payment or non-payment use case.
     public var messageCategory: ThreeDSecureAuthenticationCreateMessageCategory
     /// Contains additional details about the acquirer for this 3DS Authentication. Refer to the [Pass
     /// acquirer details and directory server section of the standalone 3DS
     /// guide](/payments/3d-secure/standalone-3d-secure#pass-acquirer-details-and-directory-server) for more
     /// information.
-    public var acquirerDetails: ThreeDSecureAuthenticationCreateAcquirerDetails?
+    public var acquirerDetails: ThreeDSecureAuthenticationAcquirerDetails?
     /// A non-negative integer representing the amount in the [smallest currency
     /// unit](/currencies#zero-decimal). You can't include this parameter if `message_category` is
     /// `non_payment_authentication`
@@ -59,9 +59,9 @@ public struct ThreeDSecureAuthenticationCreateParams: ClearableParams {
     /// Contains additional details on your flow preference for this 3DS Authentication. Refer to the
     /// [Specify a flow preference section of the standalone 3DS
     /// guide](/payments/3d-secure/standalone-3d-secure#specify-a-flow-preference) for more information.
-    public var flowPreference: ThreeDSecureAuthenticationCreateFlowPreference?
+    public var flowPreference: ThreeDSecureAuthenticationFlowPreference?
     /// Contains information about future usage of this 3DS Authentication
-    public var futureUsage: ThreeDSecureAuthenticationCreateFutureUsage?
+    public var futureUsage: ThreeDSecureAuthenticationFutureUsage?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -71,7 +71,7 @@ public struct ThreeDSecureAuthenticationCreateParams: ClearableParams {
     public var paymentMethod: String?
     /// Hash used to generate the PaymentMethod to be used for this Authentication. This is mutually
     /// exclusive with the `payment_method` parameter.
-    public var paymentMethodData: ThreeDSecureAuthenticationCreatePaymentMethodData?
+    public var paymentMethodData: ThreeDSecureAuthenticationPaymentMethodData?
     /// The reason for invoking standalone 3DS. This is tailored specifically for cases when you want Stripe
     /// to help determine the standalone 3DS flow to fit your use case instead of needing to select a
     /// specific 3DS flow. This parameter is exclusive with `flow_preference`. You can either use `reason`
@@ -80,17 +80,17 @@ public struct ThreeDSecureAuthenticationCreateParams: ClearableParams {
     public var reason: ThreeDSecureAuthenticationCreateReason?
     /// The shipping address requested by the cardholder. You should try to include as complete address
     /// information as possible.
-    public var shippingAddress: ThreeDSecureAuthenticationCreateShippingAddress?
+    public var shippingAddress: ThreeDSecureAuthenticationShippingAddress?
     /// Set to `always` to skip the fingerprinting step and submit this Authentication immediately or
     /// `if_fingerprinting_not_supported` to submit this Authentication only if fingerprinting is not
     /// available. This parameter defaults to `never`. Refer to the [Submit at creation section of the
     /// standalone 3DS guide](/payments/3d-secure/standalone-3d-secure#submit-at-creation) for more
     /// information.
-    public var submit: ThreeDSecureAuthenticationCreateSubmit?
+    public var submit: ThreeDSecureAuthenticationSubmit?
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(channel: ThreeDSecureAuthenticationCreateChannel, messageCategory: ThreeDSecureAuthenticationCreateMessageCategory, acquirerDetails: ThreeDSecureAuthenticationCreateAcquirerDetails? = nil, amount: Int? = nil, currency: String? = nil, directoryServer: ThreeDSecureAuthenticationCreateDirectoryServer? = nil, expand: [String]? = nil, flowPreference: ThreeDSecureAuthenticationCreateFlowPreference? = nil, futureUsage: ThreeDSecureAuthenticationCreateFutureUsage? = nil, metadata: [String: String]? = nil, paymentMethod: String? = nil, paymentMethodData: ThreeDSecureAuthenticationCreatePaymentMethodData? = nil, reason: ThreeDSecureAuthenticationCreateReason? = nil, shippingAddress: ThreeDSecureAuthenticationCreateShippingAddress? = nil, submit: ThreeDSecureAuthenticationCreateSubmit? = nil) {
+    public init(channel: ThreeDSecureAuthenticationChannel, messageCategory: ThreeDSecureAuthenticationCreateMessageCategory, acquirerDetails: ThreeDSecureAuthenticationAcquirerDetails? = nil, amount: Int? = nil, currency: String? = nil, directoryServer: ThreeDSecureAuthenticationCreateDirectoryServer? = nil, expand: [String]? = nil, flowPreference: ThreeDSecureAuthenticationFlowPreference? = nil, futureUsage: ThreeDSecureAuthenticationFutureUsage? = nil, metadata: [String: String]? = nil, paymentMethod: String? = nil, paymentMethodData: ThreeDSecureAuthenticationPaymentMethodData? = nil, reason: ThreeDSecureAuthenticationCreateReason? = nil, shippingAddress: ThreeDSecureAuthenticationShippingAddress? = nil, submit: ThreeDSecureAuthenticationSubmit? = nil) {
         self.channel = channel
         self.messageCategory = messageCategory
         self.acquirerDetails = acquirerDetails
@@ -208,15 +208,15 @@ public struct ThreeDSecureAuthenticationSubmitParams: ClearableParams {
 }
 
 /// Contains additional details on the channel used for this 3DS Authentication.
-public struct ThreeDSecureAuthenticationCreateChannel: StripeParams {
+public struct ThreeDSecureAuthenticationChannel: StripeParams {
     /// Type of channel you would prefer to use for this 3DS Authentication.
-    public var type: ThreeDSecureAuthenticationCreateChannelType
+    public var type: ThreeDSecureAuthenticationChannelType
     /// Contains additional details about the browser details you collected.
-    public var browser: ThreeDSecureAuthenticationCreateChannelBrowser?
+    public var browser: ThreeDSecureAuthenticationChannelBrowser?
     /// Contains additional details about the 3DS Requestor Initiated (3RI) channel.
-    public var threeRI: ThreeDSecureAuthenticationCreateChannelThreeRI?
+    public var threeRI: ThreeDSecureAuthenticationChannelThreeRI?
 
-    public init(type: ThreeDSecureAuthenticationCreateChannelType, browser: ThreeDSecureAuthenticationCreateChannelBrowser? = nil, threeRI: ThreeDSecureAuthenticationCreateChannelThreeRI? = nil) {
+    public init(type: ThreeDSecureAuthenticationChannelType, browser: ThreeDSecureAuthenticationChannelBrowser? = nil, threeRI: ThreeDSecureAuthenticationChannelThreeRI? = nil) {
         self.type = type
         self.browser = browser
         self.threeRI = threeRI
@@ -229,7 +229,7 @@ public struct ThreeDSecureAuthenticationCreateChannel: StripeParams {
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateChannelType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationChannelType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -241,7 +241,7 @@ public struct ThreeDSecureAuthenticationCreateChannelType: RawRepresentable, Cod
 }
 
 /// Contains additional details about the browser details you collected.
-public struct ThreeDSecureAuthenticationCreateChannelBrowser: StripeParams {
+public struct ThreeDSecureAuthenticationChannelBrowser: StripeParams {
     /// The HTTP accept headers from the cardholder's browser. Collected server-side.
     public var acceptHeader: String
     /// The IP address of the browser. Included in the HTTP request to your server before you create the 3DS
@@ -305,15 +305,15 @@ public struct ThreeDSecureAuthenticationCreateChannelBrowser: StripeParams {
 }
 
 /// Contains additional details about the 3DS Requestor Initiated (3RI) channel.
-public struct ThreeDSecureAuthenticationCreateChannelThreeRI: StripeParams {
+public struct ThreeDSecureAuthenticationChannelThreeRI: StripeParams {
     /// ID of a prior `Authentication`. For example, the first recurring transaction that was authenticated
     /// by the cardholder.
     public var previousAuthentication: String
     /// It provides additional information to the ACS to determine the best approach for handling a 3RI
     /// request.
-    public var type: ThreeDSecureAuthenticationCreateChannelThreeRIType
+    public var type: ThreeDSecureAuthenticationChannelThreeRIType
 
-    public init(previousAuthentication: String, type: ThreeDSecureAuthenticationCreateChannelThreeRIType) {
+    public init(previousAuthentication: String, type: ThreeDSecureAuthenticationChannelThreeRIType) {
         self.previousAuthentication = previousAuthentication
         self.type = type
     }
@@ -324,7 +324,7 @@ public struct ThreeDSecureAuthenticationCreateChannelThreeRI: StripeParams {
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateChannelThreeRIType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationChannelThreeRIType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -352,7 +352,7 @@ public struct ThreeDSecureAuthenticationCreateMessageCategory: RawRepresentable,
 /// acquirer details and directory server section of the standalone 3DS
 /// guide](/payments/3d-secure/standalone-3d-secure#pass-acquirer-details-and-directory-server) for more
 /// information.
-public struct ThreeDSecureAuthenticationCreateAcquirerDetails: StripeParams {
+public struct ThreeDSecureAuthenticationAcquirerDetails: StripeParams {
     /// The Acquirer BIN (specific to the directory_server).
     public var acquirerBin: String
     /// The two-letter country code of the acquirer ([ISO 3166-1
@@ -407,17 +407,17 @@ public struct ThreeDSecureAuthenticationCreateDirectoryServer: RawRepresentable,
 /// Contains additional details on your flow preference for this 3DS Authentication. Refer to the
 /// [Specify a flow preference section of the standalone 3DS
 /// guide](/payments/3d-secure/standalone-3d-secure#specify-a-flow-preference) for more information.
-public struct ThreeDSecureAuthenticationCreateFlowPreference: StripeParams {
+public struct ThreeDSecureAuthenticationFlowPreference: StripeParams {
     /// Type of flow you requested for this 3DS Authentication.
-    public var type: ThreeDSecureAuthenticationCreateFlowPreferenceType
+    public var type: ThreeDSecureAuthenticationFlowPreferenceType
     /// Contains additional details about your challenge flow preference for this 3DS Authentication.
-    public var challenge: ThreeDSecureAuthenticationCreateFlowPreferenceChallenge?
+    public var challenge: ThreeDSecureAuthenticationFlowPreferenceChallenge?
     /// Contains additional details about your data share only flow preference for this 3DS Authentication.
-    public var dataShare: ThreeDSecureAuthenticationCreateFlowPreferenceDataShare?
+    public var dataShare: ThreeDSecureAuthenticationFlowPreferenceDataShare?
     /// Contains additional details about your frictionless flow preference for this 3DS Authentication.
-    public var frictionless: ThreeDSecureAuthenticationCreateFlowPreferenceFrictionless?
+    public var frictionless: ThreeDSecureAuthenticationFlowPreferenceFrictionless?
 
-    public init(type: ThreeDSecureAuthenticationCreateFlowPreferenceType, challenge: ThreeDSecureAuthenticationCreateFlowPreferenceChallenge? = nil, dataShare: ThreeDSecureAuthenticationCreateFlowPreferenceDataShare? = nil, frictionless: ThreeDSecureAuthenticationCreateFlowPreferenceFrictionless? = nil) {
+    public init(type: ThreeDSecureAuthenticationFlowPreferenceType, challenge: ThreeDSecureAuthenticationFlowPreferenceChallenge? = nil, dataShare: ThreeDSecureAuthenticationFlowPreferenceDataShare? = nil, frictionless: ThreeDSecureAuthenticationFlowPreferenceFrictionless? = nil) {
         self.type = type
         self.challenge = challenge
         self.dataShare = dataShare
@@ -432,7 +432,7 @@ public struct ThreeDSecureAuthenticationCreateFlowPreference: StripeParams {
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateFlowPreferenceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationFlowPreferenceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -445,16 +445,16 @@ public struct ThreeDSecureAuthenticationCreateFlowPreferenceType: RawRepresentab
 }
 
 /// Contains additional details about your challenge flow preference for this 3DS Authentication.
-public struct ThreeDSecureAuthenticationCreateFlowPreferenceChallenge: StripeParams {
+public struct ThreeDSecureAuthenticationFlowPreferenceChallenge: StripeParams {
     /// Type of challenge flow you requested for this 3DS Authentication.
-    public var type: ThreeDSecureAuthenticationCreateFlowPreferenceChallengeType
+    public var type: ThreeDSecureAuthenticationFlowPreferenceChallengeType
 
-    public init(type: ThreeDSecureAuthenticationCreateFlowPreferenceChallengeType) {
+    public init(type: ThreeDSecureAuthenticationFlowPreferenceChallengeType) {
         self.type = type
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateFlowPreferenceChallengeType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationFlowPreferenceChallengeType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -466,16 +466,16 @@ public struct ThreeDSecureAuthenticationCreateFlowPreferenceChallengeType: RawRe
 }
 
 /// Contains additional details about your data share only flow preference for this 3DS Authentication.
-public struct ThreeDSecureAuthenticationCreateFlowPreferenceDataShare: StripeParams {
+public struct ThreeDSecureAuthenticationFlowPreferenceDataShare: StripeParams {
     /// Type of data share only flow you requested for this 3DS Authentication.
-    public var type: ThreeDSecureAuthenticationCreateFlowPreferenceDataShareType
+    public var type: ThreeDSecureAuthenticationFlowPreferenceDataShareType
 
-    public init(type: ThreeDSecureAuthenticationCreateFlowPreferenceDataShareType) {
+    public init(type: ThreeDSecureAuthenticationFlowPreferenceDataShareType) {
         self.type = type
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateFlowPreferenceDataShareType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationFlowPreferenceDataShareType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -487,16 +487,16 @@ public struct ThreeDSecureAuthenticationCreateFlowPreferenceDataShareType: RawRe
 }
 
 /// Contains additional details about your frictionless flow preference for this 3DS Authentication.
-public struct ThreeDSecureAuthenticationCreateFlowPreferenceFrictionless: StripeParams {
+public struct ThreeDSecureAuthenticationFlowPreferenceFrictionless: StripeParams {
     /// Type of frictionless flow you requested for this 3DS Authentication.
-    public var type: ThreeDSecureAuthenticationCreateFlowPreferenceFrictionlessType
+    public var type: ThreeDSecureAuthenticationFlowPreferenceFrictionlessType
 
-    public init(type: ThreeDSecureAuthenticationCreateFlowPreferenceFrictionlessType) {
+    public init(type: ThreeDSecureAuthenticationFlowPreferenceFrictionlessType) {
         self.type = type
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateFlowPreferenceFrictionlessType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationFlowPreferenceFrictionlessType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -508,22 +508,22 @@ public struct ThreeDSecureAuthenticationCreateFlowPreferenceFrictionlessType: Ra
 }
 
 /// Contains information about future usage of this 3DS Authentication
-public struct ThreeDSecureAuthenticationCreateFutureUsage: StripeParams {
+public struct ThreeDSecureAuthenticationFutureUsage: StripeParams {
     /// The type of future usage declared for this 3DS Authentication
-    public var type: ThreeDSecureAuthenticationCreateFutureUsageType
+    public var type: ThreeDSecureAuthenticationFutureUsageType
     /// Parameters related to an installment payment.
-    public var installment: ThreeDSecureAuthenticationCreateFutureUsageInstallment?
+    public var installment: ThreeDSecureAuthenticationFutureUsageInstallment?
     /// Parameters related to a recurring payment.
-    public var recurring: ThreeDSecureAuthenticationCreateFutureUsageRecurring?
+    public var recurring: ThreeDSecureAuthenticationFutureUsageRecurring?
 
-    public init(type: ThreeDSecureAuthenticationCreateFutureUsageType, installment: ThreeDSecureAuthenticationCreateFutureUsageInstallment? = nil, recurring: ThreeDSecureAuthenticationCreateFutureUsageRecurring? = nil) {
+    public init(type: ThreeDSecureAuthenticationFutureUsageType, installment: ThreeDSecureAuthenticationFutureUsageInstallment? = nil, recurring: ThreeDSecureAuthenticationFutureUsageRecurring? = nil) {
         self.type = type
         self.installment = installment
         self.recurring = recurring
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateFutureUsageType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationFutureUsageType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -536,21 +536,21 @@ public struct ThreeDSecureAuthenticationCreateFutureUsageType: RawRepresentable,
 }
 
 /// Parameters related to an installment payment.
-public struct ThreeDSecureAuthenticationCreateFutureUsageInstallment: StripeParams {
+public struct ThreeDSecureAuthenticationFutureUsageInstallment: StripeParams {
     /// A non-negative integer representing the future authorizations' amount in the [smallest currency
     /// unit](/currencies#zero-decimal).
     public var amount: Int
     /// Information about the expiry of the future usage of this authentication.
-    public var expiry: ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiry
+    public var expiry: ThreeDSecureAuthenticationFutureUsageInstallmentExpiry
     /// The maximum number of installments. Must be greater than 1.
     public var number: Int
     /// The unit of time for `interval_count`.
-    public var interval: ThreeDSecureAuthenticationCreateFutureUsageInstallmentInterval?
+    public var interval: ThreeDSecureAuthenticationFutureUsageInstallmentInterval?
     /// The minimum number of time intervals between authorizations. Must be greater than 0, and defaults to
     /// 1.
     public var intervalCount: Int?
 
-    public init(amount: Int, expiry: ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiry, number: Int, interval: ThreeDSecureAuthenticationCreateFutureUsageInstallmentInterval? = nil, intervalCount: Int? = nil) {
+    public init(amount: Int, expiry: ThreeDSecureAuthenticationFutureUsageInstallmentExpiry, number: Int, interval: ThreeDSecureAuthenticationFutureUsageInstallmentInterval? = nil, intervalCount: Int? = nil) {
         self.amount = amount
         self.expiry = expiry
         self.number = number
@@ -568,19 +568,19 @@ public struct ThreeDSecureAuthenticationCreateFutureUsageInstallment: StripePara
 }
 
 /// Information about the expiry of the future usage of this authentication.
-public struct ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiry: StripeParams {
+public struct ThreeDSecureAuthenticationFutureUsageInstallmentExpiry: StripeParams {
     /// The type of expiry for the future use of this authentication.
-    public var type: ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiryType
+    public var type: ThreeDSecureAuthenticationFutureUsageInstallmentExpiryType
     /// The date before which the last authorization related to this authentication will occur.
     public var date: String?
 
-    public init(type: ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiryType, date: String? = nil) {
+    public init(type: ThreeDSecureAuthenticationFutureUsageInstallmentExpiryType, date: String? = nil) {
         self.type = type
         self.date = date
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiryType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationFutureUsageInstallmentExpiryType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -591,7 +591,7 @@ public struct ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiryType: 
     public static var never: Self { .init(rawValue: "never") }
 }
 
-public struct ThreeDSecureAuthenticationCreateFutureUsageInstallmentInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationFutureUsageInstallmentInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -602,19 +602,19 @@ public struct ThreeDSecureAuthenticationCreateFutureUsageInstallmentInterval: Ra
 }
 
 /// Parameters related to a recurring payment.
-public struct ThreeDSecureAuthenticationCreateFutureUsageRecurring: StripeParams {
+public struct ThreeDSecureAuthenticationFutureUsageRecurring: StripeParams {
     /// A non-negative integer representing the future authorizations' amount in the [smallest currency
     /// unit](/currencies#zero-decimal).
     public var amount: Int
     /// Information about the expiry of the future usage of this authentication.
-    public var expiry: ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiry
+    public var expiry: ThreeDSecureAuthenticationFutureUsageRecurringExpiry
     /// The unit of time for `interval_count`.
-    public var interval: ThreeDSecureAuthenticationCreateFutureUsageRecurringInterval?
+    public var interval: ThreeDSecureAuthenticationFutureUsageRecurringInterval?
     /// The minimum number of time intervals between authorizations. Must be greater than 0, and defaults to
     /// 1.
     public var intervalCount: Int?
 
-    public init(amount: Int, expiry: ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiry, interval: ThreeDSecureAuthenticationCreateFutureUsageRecurringInterval? = nil, intervalCount: Int? = nil) {
+    public init(amount: Int, expiry: ThreeDSecureAuthenticationFutureUsageRecurringExpiry, interval: ThreeDSecureAuthenticationFutureUsageRecurringInterval? = nil, intervalCount: Int? = nil) {
         self.amount = amount
         self.expiry = expiry
         self.interval = interval
@@ -630,19 +630,19 @@ public struct ThreeDSecureAuthenticationCreateFutureUsageRecurring: StripeParams
 }
 
 /// Information about the expiry of the future usage of this authentication.
-public struct ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiry: StripeParams {
+public struct ThreeDSecureAuthenticationFutureUsageRecurringExpiry: StripeParams {
     /// The type of expiry for the future use of this authentication.
-    public var type: ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiryType
+    public var type: ThreeDSecureAuthenticationFutureUsageRecurringExpiryType
     /// The date before which the last authorization related to this authentication will occur.
     public var date: String?
 
-    public init(type: ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiryType, date: String? = nil) {
+    public init(type: ThreeDSecureAuthenticationFutureUsageRecurringExpiryType, date: String? = nil) {
         self.type = type
         self.date = date
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiryType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationFutureUsageRecurringExpiryType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -653,7 +653,7 @@ public struct ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiryType: Ra
     public static var never: Self { .init(rawValue: "never") }
 }
 
-public struct ThreeDSecureAuthenticationCreateFutureUsageRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationFutureUsageRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -665,16 +665,16 @@ public struct ThreeDSecureAuthenticationCreateFutureUsageRecurringInterval: RawR
 
 /// Hash used to generate the PaymentMethod to be used for this Authentication. This is mutually
 /// exclusive with the `payment_method` parameter.
-public struct ThreeDSecureAuthenticationCreatePaymentMethodData: StripeParams {
-    public var card: ThreeDSecureAuthenticationCreatePaymentMethodDataCard
+public struct ThreeDSecureAuthenticationPaymentMethodData: StripeParams {
+    public var card: ThreeDSecureAuthenticationPaymentMethodDataCard
     /// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name
     /// matching this value. It contains additional information specific to the PaymentMethod type.
-    public var type: ThreeDSecureAuthenticationCreatePaymentMethodDataType
+    public var type: ThreeDSecureAuthenticationPaymentMethodDataType
     /// Billing information associated with the PaymentMethod that may be used or required by particular
     /// types of payment methods.
-    public var billingDetails: ThreeDSecureAuthenticationCreatePaymentMethodDataBillingDetails?
+    public var billingDetails: ThreeDSecureAuthenticationPaymentMethodDataBillingDetails?
 
-    public init(card: ThreeDSecureAuthenticationCreatePaymentMethodDataCard, type: ThreeDSecureAuthenticationCreatePaymentMethodDataType, billingDetails: ThreeDSecureAuthenticationCreatePaymentMethodDataBillingDetails? = nil) {
+    public init(card: ThreeDSecureAuthenticationPaymentMethodDataCard, type: ThreeDSecureAuthenticationPaymentMethodDataType, billingDetails: ThreeDSecureAuthenticationPaymentMethodDataBillingDetails? = nil) {
         self.card = card
         self.type = type
         self.billingDetails = billingDetails
@@ -687,7 +687,7 @@ public struct ThreeDSecureAuthenticationCreatePaymentMethodData: StripeParams {
     }
 }
 
-public struct ThreeDSecureAuthenticationCreatePaymentMethodDataCardCard: StripeParams {
+public struct ThreeDSecureAuthenticationPaymentMethodDataCardCard: StripeParams {
     public var expMonth: Int
     public var expYear: Int
     public var number: String
@@ -708,7 +708,7 @@ public struct ThreeDSecureAuthenticationCreatePaymentMethodDataCardCard: StripeP
     }
 }
 
-public struct ThreeDSecureAuthenticationCreatePaymentMethodDataCardCardToken: StripeParams {
+public struct ThreeDSecureAuthenticationPaymentMethodDataCardCardToken: StripeParams {
     public var token: String
 
     public init(token: String) {
@@ -717,15 +717,15 @@ public struct ThreeDSecureAuthenticationCreatePaymentMethodDataCardCardToken: St
 }
 
 /// One of the forms `card` accepts.
-public enum ThreeDSecureAuthenticationCreatePaymentMethodDataCard: Codable, Sendable {
-    case card(ThreeDSecureAuthenticationCreatePaymentMethodDataCardCard)
-    case cardToken(ThreeDSecureAuthenticationCreatePaymentMethodDataCardCardToken)
+public enum ThreeDSecureAuthenticationPaymentMethodDataCard: Codable, Sendable {
+    case card(ThreeDSecureAuthenticationPaymentMethodDataCardCard)
+    case cardToken(ThreeDSecureAuthenticationPaymentMethodDataCardCardToken)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = try? ThreeDSecureAuthenticationCreatePaymentMethodDataCardCard(from: decoder) { self = .card(value); return }
-        if let value = try? ThreeDSecureAuthenticationCreatePaymentMethodDataCardCardToken(from: decoder) { self = .cardToken(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of ThreeDSecureAuthenticationCreatePaymentMethodDataCard matches")
+        if let value = try? ThreeDSecureAuthenticationPaymentMethodDataCardCard(from: decoder) { self = .card(value); return }
+        if let value = try? ThreeDSecureAuthenticationPaymentMethodDataCardCardToken(from: decoder) { self = .cardToken(value); return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of ThreeDSecureAuthenticationPaymentMethodDataCard matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -738,7 +738,7 @@ public enum ThreeDSecureAuthenticationCreatePaymentMethodDataCard: Codable, Send
     }
 }
 
-public struct ThreeDSecureAuthenticationCreatePaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationPaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -750,9 +750,9 @@ public struct ThreeDSecureAuthenticationCreatePaymentMethodDataType: RawRepresen
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct ThreeDSecureAuthenticationCreatePaymentMethodDataBillingDetails: StripeParams {
+public struct ThreeDSecureAuthenticationPaymentMethodDataBillingDetails: StripeParams {
     /// Billing address.
-    public var address: ThreeDSecureAuthenticationCreatePaymentMethodDataBillingDetailsAddress?
+    public var address: ThreeDSecureAuthenticationPaymentMethodDataBillingDetailsAddress?
     /// Email address.
     public var email: String?
     /// Full name.
@@ -760,7 +760,7 @@ public struct ThreeDSecureAuthenticationCreatePaymentMethodDataBillingDetails: S
     /// Billing phone number (including extension).
     public var phone: String?
 
-    public init(address: ThreeDSecureAuthenticationCreatePaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+    public init(address: ThreeDSecureAuthenticationPaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
         self.address = address
         self.email = email
         self.name = name
@@ -769,7 +769,7 @@ public struct ThreeDSecureAuthenticationCreatePaymentMethodDataBillingDetails: S
 }
 
 /// Billing address.
-public struct ThreeDSecureAuthenticationCreatePaymentMethodDataBillingDetailsAddress: StripeParams {
+public struct ThreeDSecureAuthenticationPaymentMethodDataBillingDetailsAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -834,7 +834,7 @@ public struct ThreeDSecureAuthenticationCreateReason: RawRepresentable, Codable,
 
 /// The shipping address requested by the cardholder. You should try to include as complete address
 /// information as possible.
-public struct ThreeDSecureAuthenticationCreateShippingAddress: StripeParams {
+public struct ThreeDSecureAuthenticationShippingAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -867,7 +867,7 @@ public struct ThreeDSecureAuthenticationCreateShippingAddress: StripeParams {
     }
 }
 
-public struct ThreeDSecureAuthenticationCreateSubmit: RawRepresentable, Codable, Hashable, Sendable {
+public struct ThreeDSecureAuthenticationSubmit: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

@@ -86,7 +86,16 @@ struct CodegenCLI: AsyncParsableCommand {
         print("🗺️  Path mapping: \(pathMapping.count) schemas → API paths")
         let modelGen = ModelGenerator(parser: parser, resources: resources, inlineTypes: inlineSchemas)
         let routeGen = RouteGenerator(spec: openAPISpec, parser: parser, pathMapping: pathMapping)
-        let paramGen = ParamGenerator(spec: openAPISpec, parser: parser)
+        var paramGen = ParamGenerator(spec: openAPISpec, parser: parser)
+        paramGen.resourceTypeNames = Set(resources.map(\.swiftTypeName))
+        // Type names generated outside params, which shared params names must not take
+        var modelTypeNames = Set((resources + inlineSchemas).map(\.swiftTypeName))
+        for type in resources + inlineSchemas {
+            for property in type.properties {
+                if case .enum = property.type { modelTypeNames.insert(type.swiftTypeName + capitalize(property.swiftName)) }
+            }
+        }
+        paramGen.reservedTypeNames = modelTypeNames
 
         // Each resource's operations, computed once and shared by every generator below
         let operations = Dictionary(uniqueKeysWithValues: resources.map { ($0.schemaName, routeGen.findOperations(for: $0)) })

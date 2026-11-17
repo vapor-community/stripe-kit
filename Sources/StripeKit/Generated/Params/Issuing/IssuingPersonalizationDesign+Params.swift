@@ -290,11 +290,11 @@ public struct IssuingPersonalizationDesignListStatus: RawRepresentable, Codable,
 /// The reason(s) the personalization design was rejected.
 public struct IssuingPersonalizationDesignRejectRejectionReasons: StripeParams {
     /// The reason(s) the card logo was rejected.
-    public var cardLogo: [IssuingPersonalizationDesignRejectRejectionReasonsCardLogo]?
+    public var cardLogo: [IssuingPersonalizationDesignRejectionReasonsCardLogo]?
     /// The reason(s) the carrier text was rejected.
-    public var carrierText: [IssuingPersonalizationDesignRejectRejectionReasonsCarrierText]?
+    public var carrierText: [IssuingPersonalizationDesignRejectionReasonsCarrierText]?
 
-    public init(cardLogo: [IssuingPersonalizationDesignRejectRejectionReasonsCardLogo]? = nil, carrierText: [IssuingPersonalizationDesignRejectRejectionReasonsCarrierText]? = nil) {
+    public init(cardLogo: [IssuingPersonalizationDesignRejectionReasonsCardLogo]? = nil, carrierText: [IssuingPersonalizationDesignRejectionReasonsCarrierText]? = nil) {
         self.cardLogo = cardLogo
         self.carrierText = carrierText
     }
@@ -305,7 +305,7 @@ public struct IssuingPersonalizationDesignRejectRejectionReasons: StripeParams {
     }
 }
 
-public struct IssuingPersonalizationDesignRejectRejectionReasonsCardLogo: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingPersonalizationDesignRejectionReasonsCardLogo: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -322,7 +322,7 @@ public struct IssuingPersonalizationDesignRejectRejectionReasonsCardLogo: RawRep
     public static var promotionalMaterial: Self { .init(rawValue: "promotional_material") }
 }
 
-public struct IssuingPersonalizationDesignRejectRejectionReasonsCarrierText: RawRepresentable, Codable, Hashable, Sendable {
+public struct IssuingPersonalizationDesignRejectionReasonsCarrierText: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

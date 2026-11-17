@@ -18,7 +18,7 @@ public struct TerminalReaderCancelActionParams: StripeParams {
 
 public struct TerminalReaderCollectInputsParams: StripeParams {
     /// List of inputs to be collected from the customer using the Reader. Maximum 5 inputs.
-    public var inputs: [TerminalReaderCollectInputsInputs]
+    public var inputs: [TerminalReaderInputs]
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -27,7 +27,7 @@ public struct TerminalReaderCollectInputsParams: StripeParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
 
-    public init(inputs: [TerminalReaderCollectInputsInputs], expand: [String]? = nil, metadata: [String: String]? = nil) {
+    public init(inputs: [TerminalReaderInputs], expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.inputs = inputs
         self.expand = expand
         self.metadata = metadata
@@ -39,11 +39,11 @@ public struct TerminalReaderCollectPaymentMethodParams: StripeParams {
     public var paymentIntent: String
     /// Configuration overrides for this collection, such as tipping, surcharging, and customer cancellation
     /// settings.
-    public var collectConfig: TerminalReaderCollectPaymentMethodCollectConfig?
+    public var collectConfig: TerminalReaderCollectConfig?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(paymentIntent: String, collectConfig: TerminalReaderCollectPaymentMethodCollectConfig? = nil, expand: [String]? = nil) {
+    public init(paymentIntent: String, collectConfig: TerminalReaderCollectConfig? = nil, expand: [String]? = nil) {
         self.paymentIntent = paymentIntent
         self.collectConfig = collectConfig
         self.expand = expand
@@ -60,11 +60,11 @@ public struct TerminalReaderConfirmPaymentIntentParams: StripeParams {
     /// The ID of the PaymentIntent to confirm.
     public var paymentIntent: String
     /// Configuration overrides for this confirmation, such as surcharge settings and return URL.
-    public var confirmConfig: TerminalReaderConfirmPaymentIntentConfirmConfig?
+    public var confirmConfig: TerminalReaderConfirmConfig?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(paymentIntent: String, confirmConfig: TerminalReaderConfirmPaymentIntentConfirmConfig? = nil, expand: [String]? = nil) {
+    public init(paymentIntent: String, confirmConfig: TerminalReaderConfirmConfig? = nil, expand: [String]? = nil) {
         self.paymentIntent = paymentIntent
         self.confirmConfig = confirmConfig
         self.expand = expand
@@ -169,17 +169,17 @@ public struct TerminalReaderPresentPaymentMethodParams: StripeParams {
     /// Simulated on-reader tip amount.
     public var amountTip: Int?
     /// Simulated data for the card payment method.
-    public var card: TerminalReaderPresentPaymentMethodCard?
+    public var card: TerminalReaderCard?
     /// Simulated data for the card_present payment method.
-    public var cardPresent: TerminalReaderPresentPaymentMethodCardPresent?
+    public var cardPresent: TerminalReaderCardPresent?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Simulated data for the interac_present payment method.
-    public var interacPresent: TerminalReaderPresentPaymentMethodInteracPresent?
+    public var interacPresent: TerminalReaderInteracPresent?
     /// Simulated payment type.
     public var type: TerminalReaderPresentPaymentMethodType?
 
-    public init(amountTip: Int? = nil, card: TerminalReaderPresentPaymentMethodCard? = nil, cardPresent: TerminalReaderPresentPaymentMethodCardPresent? = nil, expand: [String]? = nil, interacPresent: TerminalReaderPresentPaymentMethodInteracPresent? = nil, type: TerminalReaderPresentPaymentMethodType? = nil) {
+    public init(amountTip: Int? = nil, card: TerminalReaderCard? = nil, cardPresent: TerminalReaderCardPresent? = nil, expand: [String]? = nil, interacPresent: TerminalReaderInteracPresent? = nil, type: TerminalReaderPresentPaymentMethodType? = nil) {
         self.amountTip = amountTip
         self.card = card
         self.cardPresent = cardPresent
@@ -223,7 +223,7 @@ public struct TerminalReaderProcessSetupIntentParams: StripeParams {
     /// This field indicates whether this payment method can be shown again to its customer in a checkout
     /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
     /// method can be shown as a saved payment method in a checkout flow.
-    public var allowRedisplay: TerminalReaderProcessSetupIntentAllowRedisplay
+    public var allowRedisplay: TerminalReaderAllowRedisplay
     /// The ID of the SetupIntent to process on the reader.
     public var setupIntent: String
     /// Specifies which fields in the response should be expanded.
@@ -231,7 +231,7 @@ public struct TerminalReaderProcessSetupIntentParams: StripeParams {
     /// Configuration overrides for this setup, such as MOTO and customer cancellation settings.
     public var processConfig: TerminalReaderProcessSetupIntentProcessConfig?
 
-    public init(allowRedisplay: TerminalReaderProcessSetupIntentAllowRedisplay, setupIntent: String, expand: [String]? = nil, processConfig: TerminalReaderProcessSetupIntentProcessConfig? = nil) {
+    public init(allowRedisplay: TerminalReaderAllowRedisplay, setupIntent: String, expand: [String]? = nil, processConfig: TerminalReaderProcessSetupIntentProcessConfig? = nil) {
         self.allowRedisplay = allowRedisplay
         self.setupIntent = setupIntent
         self.expand = expand
@@ -266,13 +266,13 @@ public struct TerminalReaderRefundPaymentParams: StripeParams {
     /// fee can be refunded only by the application that created the charge.
     public var refundApplicationFee: Bool?
     /// Configuration overrides for this refund, such as customer cancellation settings.
-    public var refundPaymentConfig: TerminalReaderRefundPaymentRefundPaymentConfig?
+    public var refundPaymentConfig: TerminalReaderRefundPaymentConfig?
     /// Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer
     /// will be reversed proportionally to the amount being refunded (either the entire or partial amount).
     /// A transfer can be reversed only by the application that created the charge.
     public var reverseTransfer: Bool?
 
-    public init(amount: Int? = nil, charge: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentIntent: String? = nil, refundApplicationFee: Bool? = nil, refundPaymentConfig: TerminalReaderRefundPaymentRefundPaymentConfig? = nil, reverseTransfer: Bool? = nil) {
+    public init(amount: Int? = nil, charge: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, paymentIntent: String? = nil, refundApplicationFee: Bool? = nil, refundPaymentConfig: TerminalReaderRefundPaymentConfig? = nil, reverseTransfer: Bool? = nil) {
         self.amount = amount
         self.charge = charge
         self.expand = expand
@@ -299,11 +299,11 @@ public struct TerminalReaderSetReaderDisplayParams: StripeParams {
     /// Type of information to display. Only `cart` is currently supported.
     public var type: TerminalReaderSetReaderDisplayType
     /// Cart details to display on the reader screen, including line items, amounts, and currency.
-    public var cart: TerminalReaderSetReaderDisplayCart?
+    public var cart: TerminalReaderCart?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(type: TerminalReaderSetReaderDisplayType, cart: TerminalReaderSetReaderDisplayCart? = nil, expand: [String]? = nil) {
+    public init(type: TerminalReaderSetReaderDisplayType, cart: TerminalReaderCart? = nil, expand: [String]? = nil) {
         self.type = type
         self.cart = cart
         self.expand = expand
@@ -314,9 +314,9 @@ public struct TerminalReaderSucceedInputCollectionParams: StripeParams {
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// This parameter defines the skip behavior for input collection.
-    public var skipNonRequiredInputs: TerminalReaderSucceedInputCollectionSkipNonRequiredInputs?
+    public var skipNonRequiredInputs: TerminalReaderSkipNonRequiredInputs?
 
-    public init(expand: [String]? = nil, skipNonRequiredInputs: TerminalReaderSucceedInputCollectionSkipNonRequiredInputs? = nil) {
+    public init(expand: [String]? = nil, skipNonRequiredInputs: TerminalReaderSkipNonRequiredInputs? = nil) {
         self.expand = expand
         self.skipNonRequiredInputs = skipNonRequiredInputs
     }
@@ -369,19 +369,19 @@ public struct TerminalReaderUpdateParams: ClearableParams {
     }
 }
 
-public struct TerminalReaderCollectInputsInputs: StripeParams {
+public struct TerminalReaderInputs: StripeParams {
     /// Customize the text which will be displayed while collecting this input
-    public var customText: TerminalReaderCollectInputsInputsCustomText
+    public var customText: TerminalReaderInputsCustomText
     /// The type of input to collect
-    public var type: TerminalReaderCollectInputsInputsType
+    public var type: TerminalReaderInputsType
     /// Indicate that this input is required, disabling the skip button
     public var required: Bool?
     /// Options for the `selection` input
-    public var selection: TerminalReaderCollectInputsInputsSelection?
+    public var selection: TerminalReaderInputsSelection?
     /// List of toggles to be displayed and customization for the toggles
-    public var toggles: [TerminalReaderCollectInputsInputsToggles]?
+    public var toggles: [TerminalReaderInputsToggles]?
 
-    public init(customText: TerminalReaderCollectInputsInputsCustomText, type: TerminalReaderCollectInputsInputsType, required: Bool? = nil, selection: TerminalReaderCollectInputsInputsSelection? = nil, toggles: [TerminalReaderCollectInputsInputsToggles]? = nil) {
+    public init(customText: TerminalReaderInputsCustomText, type: TerminalReaderInputsType, required: Bool? = nil, selection: TerminalReaderInputsSelection? = nil, toggles: [TerminalReaderInputsToggles]? = nil) {
         self.customText = customText
         self.type = type
         self.required = required
@@ -399,7 +399,7 @@ public struct TerminalReaderCollectInputsInputs: StripeParams {
 }
 
 /// Customize the text which will be displayed while collecting this input
-public struct TerminalReaderCollectInputsInputsCustomText: StripeParams {
+public struct TerminalReaderInputsCustomText: StripeParams {
     /// The title which will be displayed when collecting this input
     public var title: String
     /// The description which will be displayed when collecting this input
@@ -424,7 +424,7 @@ public struct TerminalReaderCollectInputsInputsCustomText: StripeParams {
     }
 }
 
-public struct TerminalReaderCollectInputsInputsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TerminalReaderInputsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -440,31 +440,31 @@ public struct TerminalReaderCollectInputsInputsType: RawRepresentable, Codable, 
 }
 
 /// Options for the `selection` input
-public struct TerminalReaderCollectInputsInputsSelection: StripeParams {
+public struct TerminalReaderInputsSelection: StripeParams {
     /// List of choices for the `selection` input
-    public var choices: [TerminalReaderCollectInputsInputsSelectionChoices]
+    public var choices: [TerminalReaderInputsSelectionChoices]
 
-    public init(choices: [TerminalReaderCollectInputsInputsSelectionChoices]) {
+    public init(choices: [TerminalReaderInputsSelectionChoices]) {
         self.choices = choices
     }
 }
 
-public struct TerminalReaderCollectInputsInputsSelectionChoices: StripeParams {
+public struct TerminalReaderInputsSelectionChoices: StripeParams {
     /// The unique identifier for this choice
     public var id: String
     /// The text which will be shown on the button for this choice
     public var text: String
     /// The style of the button which will be shown for this choice. Can be `primary` or `secondary`.
-    public var style: TerminalReaderCollectInputsInputsSelectionChoicesStyle?
+    public var style: TerminalReaderInputsSelectionChoicesStyle?
 
-    public init(id: String, text: String, style: TerminalReaderCollectInputsInputsSelectionChoicesStyle? = nil) {
+    public init(id: String, text: String, style: TerminalReaderInputsSelectionChoicesStyle? = nil) {
         self.id = id
         self.text = text
         self.style = style
     }
 }
 
-public struct TerminalReaderCollectInputsInputsSelectionChoicesStyle: RawRepresentable, Codable, Hashable, Sendable {
+public struct TerminalReaderInputsSelectionChoicesStyle: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -475,9 +475,9 @@ public struct TerminalReaderCollectInputsInputsSelectionChoicesStyle: RawReprese
     public static var secondary: Self { .init(rawValue: "secondary") }
 }
 
-public struct TerminalReaderCollectInputsInputsToggles: StripeParams {
+public struct TerminalReaderInputsToggles: StripeParams {
     /// The default value of the toggle. Can be `enabled` or `disabled`.
-    public var defaultValue: TerminalReaderCollectInputsInputsTogglesDefaultValue?
+    public var defaultValue: TerminalReaderInputsTogglesDefaultValue?
     /// The description which will be displayed for the toggle. Maximum 50 characters. At least one of title
     /// or description must be provided.
     public var description: String?
@@ -485,7 +485,7 @@ public struct TerminalReaderCollectInputsInputsToggles: StripeParams {
     /// description must be provided.
     public var title: String?
 
-    public init(defaultValue: TerminalReaderCollectInputsInputsTogglesDefaultValue? = nil, description: String? = nil, title: String? = nil) {
+    public init(defaultValue: TerminalReaderInputsTogglesDefaultValue? = nil, description: String? = nil, title: String? = nil) {
         self.defaultValue = defaultValue
         self.description = description
         self.title = title
@@ -498,7 +498,7 @@ public struct TerminalReaderCollectInputsInputsToggles: StripeParams {
     }
 }
 
-public struct TerminalReaderCollectInputsInputsTogglesDefaultValue: RawRepresentable, Codable, Hashable, Sendable {
+public struct TerminalReaderInputsTogglesDefaultValue: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -511,19 +511,19 @@ public struct TerminalReaderCollectInputsInputsTogglesDefaultValue: RawRepresent
 
 /// Configuration overrides for this collection, such as tipping, surcharging, and customer cancellation
 /// settings.
-public struct TerminalReaderCollectPaymentMethodCollectConfig: StripeParams {
+public struct TerminalReaderCollectConfig: StripeParams {
     /// This field indicates whether this payment method can be shown again to its customer in a checkout
     /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
     /// method can be shown as a saved payment method in a checkout flow.
-    public var allowRedisplay: TerminalReaderCollectPaymentMethodCollectConfigAllowRedisplay?
+    public var allowRedisplay: TerminalReaderCollectConfigAllowRedisplay?
     /// Enables cancel button on transaction screens.
     public var enableCustomerCancellation: Bool?
     /// Override showing a tipping selection screen on this transaction.
     public var skipTipping: Bool?
     /// Tipping configuration for this transaction.
-    public var tipping: TerminalReaderCollectPaymentMethodCollectConfigTipping?
+    public var tipping: TerminalReaderCollectConfigTipping?
 
-    public init(allowRedisplay: TerminalReaderCollectPaymentMethodCollectConfigAllowRedisplay? = nil, enableCustomerCancellation: Bool? = nil, skipTipping: Bool? = nil, tipping: TerminalReaderCollectPaymentMethodCollectConfigTipping? = nil) {
+    public init(allowRedisplay: TerminalReaderCollectConfigAllowRedisplay? = nil, enableCustomerCancellation: Bool? = nil, skipTipping: Bool? = nil, tipping: TerminalReaderCollectConfigTipping? = nil) {
         self.allowRedisplay = allowRedisplay
         self.enableCustomerCancellation = enableCustomerCancellation
         self.skipTipping = skipTipping
@@ -538,7 +538,7 @@ public struct TerminalReaderCollectPaymentMethodCollectConfig: StripeParams {
     }
 }
 
-public struct TerminalReaderCollectPaymentMethodCollectConfigAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct TerminalReaderCollectConfigAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -551,7 +551,7 @@ public struct TerminalReaderCollectPaymentMethodCollectConfigAllowRedisplay: Raw
 }
 
 /// Tipping configuration for this transaction.
-public struct TerminalReaderCollectPaymentMethodCollectConfigTipping: StripeParams {
+public struct TerminalReaderCollectConfigTipping: StripeParams {
     /// Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a
     /// positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to
     /// represent ¥100, a zero-decimal currency).
@@ -567,7 +567,7 @@ public struct TerminalReaderCollectPaymentMethodCollectConfigTipping: StripePara
 }
 
 /// Configuration overrides for this confirmation, such as surcharge settings and return URL.
-public struct TerminalReaderConfirmPaymentIntentConfirmConfig: StripeParams {
+public struct TerminalReaderConfirmConfig: StripeParams {
     /// The URL to redirect your customer back to after they authenticate or cancel their payment on the
     /// payment method's app or site. If you'd prefer to redirect to a mobile application, you can
     /// alternatively supply an application URI scheme.
@@ -624,7 +624,7 @@ public struct TerminalReaderListStatus: RawRepresentable, Codable, Hashable, Sen
 }
 
 /// Simulated data for the card payment method.
-public struct TerminalReaderPresentPaymentMethodCard: StripeParams {
+public struct TerminalReaderCard: StripeParams {
     /// Two-digit number representing the card's expiration month.
     public var expMonth: Int
     /// Two- or four-digit number representing the card's expiration year.
@@ -650,7 +650,7 @@ public struct TerminalReaderPresentPaymentMethodCard: StripeParams {
 }
 
 /// Simulated data for the card_present payment method.
-public struct TerminalReaderPresentPaymentMethodCardPresent: StripeParams {
+public struct TerminalReaderCardPresent: StripeParams {
     /// The card number, as a string without any separators.
     public var number: String?
 
@@ -660,7 +660,7 @@ public struct TerminalReaderPresentPaymentMethodCardPresent: StripeParams {
 }
 
 /// Simulated data for the interac_present payment method.
-public struct TerminalReaderPresentPaymentMethodInteracPresent: StripeParams {
+public struct TerminalReaderInteracPresent: StripeParams {
     /// The Interac card number.
     public var number: String?
 
@@ -686,7 +686,7 @@ public struct TerminalReaderProcessPaymentIntentProcessConfig: StripeParams {
     /// This field indicates whether this payment method can be shown again to its customer in a checkout
     /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
     /// method can be shown as a saved payment method in a checkout flow.
-    public var allowRedisplay: TerminalReaderProcessPaymentIntentProcessConfigAllowRedisplay?
+    public var allowRedisplay: TerminalReaderProcessConfigAllowRedisplay?
     /// Enables cancel button on transaction screens.
     public var enableCustomerCancellation: Bool?
     /// The URL to redirect your customer back to after they authenticate or cancel their payment on the
@@ -696,9 +696,9 @@ public struct TerminalReaderProcessPaymentIntentProcessConfig: StripeParams {
     /// Override showing a tipping selection screen on this transaction.
     public var skipTipping: Bool?
     /// Tipping configuration for this transaction.
-    public var tipping: TerminalReaderProcessPaymentIntentProcessConfigTipping?
+    public var tipping: TerminalReaderProcessConfigTipping?
 
-    public init(allowRedisplay: TerminalReaderProcessPaymentIntentProcessConfigAllowRedisplay? = nil, enableCustomerCancellation: Bool? = nil, returnUrl: String? = nil, skipTipping: Bool? = nil, tipping: TerminalReaderProcessPaymentIntentProcessConfigTipping? = nil) {
+    public init(allowRedisplay: TerminalReaderProcessConfigAllowRedisplay? = nil, enableCustomerCancellation: Bool? = nil, returnUrl: String? = nil, skipTipping: Bool? = nil, tipping: TerminalReaderProcessConfigTipping? = nil) {
         self.allowRedisplay = allowRedisplay
         self.enableCustomerCancellation = enableCustomerCancellation
         self.returnUrl = returnUrl
@@ -715,7 +715,7 @@ public struct TerminalReaderProcessPaymentIntentProcessConfig: StripeParams {
     }
 }
 
-public struct TerminalReaderProcessPaymentIntentProcessConfigAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct TerminalReaderProcessConfigAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -728,7 +728,7 @@ public struct TerminalReaderProcessPaymentIntentProcessConfigAllowRedisplay: Raw
 }
 
 /// Tipping configuration for this transaction.
-public struct TerminalReaderProcessPaymentIntentProcessConfigTipping: StripeParams {
+public struct TerminalReaderProcessConfigTipping: StripeParams {
     /// Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a
     /// positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to
     /// represent ¥100, a zero-decimal currency).
@@ -743,7 +743,7 @@ public struct TerminalReaderProcessPaymentIntentProcessConfigTipping: StripePara
     }
 }
 
-public struct TerminalReaderProcessSetupIntentAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct TerminalReaderAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -770,7 +770,7 @@ public struct TerminalReaderProcessSetupIntentProcessConfig: StripeParams {
 }
 
 /// Configuration overrides for this refund, such as customer cancellation settings.
-public struct TerminalReaderRefundPaymentRefundPaymentConfig: StripeParams {
+public struct TerminalReaderRefundPaymentConfig: StripeParams {
     /// Enables cancel button on transaction screens.
     public var enableCustomerCancellation: Bool?
 
@@ -794,19 +794,19 @@ public struct TerminalReaderSetReaderDisplayType: RawRepresentable, Codable, Has
 }
 
 /// Cart details to display on the reader screen, including line items, amounts, and currency.
-public struct TerminalReaderSetReaderDisplayCart: StripeParams {
+public struct TerminalReaderCart: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// Array of line items to display.
-    public var lineItems: [TerminalReaderSetReaderDisplayCartLineItems]
+    public var lineItems: [TerminalReaderCartLineItems]
     /// Total balance of cart due in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal).
     public var total: Int
     /// The amount of tax in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
     public var tax: Int?
 
-    public init(currency: String, lineItems: [TerminalReaderSetReaderDisplayCartLineItems], total: Int, tax: Int? = nil) {
+    public init(currency: String, lineItems: [TerminalReaderCartLineItems], total: Int, tax: Int? = nil) {
         self.currency = currency
         self.lineItems = lineItems
         self.total = total
@@ -821,7 +821,7 @@ public struct TerminalReaderSetReaderDisplayCart: StripeParams {
     }
 }
 
-public struct TerminalReaderSetReaderDisplayCartLineItems: StripeParams {
+public struct TerminalReaderCartLineItems: StripeParams {
     /// The price of the item in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#zero-decimal).
     public var amount: Int
@@ -837,7 +837,7 @@ public struct TerminalReaderSetReaderDisplayCartLineItems: StripeParams {
     }
 }
 
-public struct TerminalReaderSucceedInputCollectionSkipNonRequiredInputs: RawRepresentable, Codable, Hashable, Sendable {
+public struct TerminalReaderSkipNonRequiredInputs: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

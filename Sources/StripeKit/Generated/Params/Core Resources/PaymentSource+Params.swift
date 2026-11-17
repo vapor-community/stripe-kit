@@ -66,7 +66,7 @@ public struct PaymentSourceUpdateParams: ClearableParams {
     /// The name of the person or business that owns the bank account.
     public var accountHolderName: String?
     /// The type of entity that holds the account. This can be either `individual` or `company`.
-    public var accountHolderType: PaymentSourceUpdateAccountHolderType?
+    public var accountHolderType: PaymentSourceAccountHolderType?
     /// City/District/Suburb/Town/Village.
     public var addressCity: String?
     /// Billing address country, if provided when creating card.
@@ -92,11 +92,11 @@ public struct PaymentSourceUpdateParams: ClearableParams {
     public var metadata: [String: String]?
     /// Cardholder name.
     public var name: String?
-    public var owner: PaymentSourceUpdateOwner?
+    public var owner: PaymentSourceOwner?
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(accountHolderName: String? = nil, accountHolderType: PaymentSourceUpdateAccountHolderType? = nil, addressCity: String? = nil, addressCountry: String? = nil, addressLine1: String? = nil, addressLine2: String? = nil, addressState: String? = nil, addressZip: String? = nil, expMonth: String? = nil, expYear: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil, owner: PaymentSourceUpdateOwner? = nil) {
+    public init(accountHolderName: String? = nil, accountHolderType: PaymentSourceAccountHolderType? = nil, addressCity: String? = nil, addressCountry: String? = nil, addressLine1: String? = nil, addressLine2: String? = nil, addressState: String? = nil, addressZip: String? = nil, expMonth: String? = nil, expYear: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, name: String? = nil, owner: PaymentSourceOwner? = nil) {
         self.accountHolderName = accountHolderName
         self.accountHolderType = accountHolderType
         self.addressCity = addressCity
@@ -137,7 +137,7 @@ public struct PaymentSourceUpdateParams: ClearableParams {
     }
 }
 
-public struct PaymentSourceUpdateAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PaymentSourceAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -148,9 +148,9 @@ public struct PaymentSourceUpdateAccountHolderType: RawRepresentable, Codable, H
     public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public struct PaymentSourceUpdateOwner: StripeParams {
+public struct PaymentSourceOwner: StripeParams {
     /// Owner's address.
-    public var address: PaymentSourceUpdateOwnerAddress?
+    public var address: PaymentSourceOwnerAddress?
     /// Owner's email address.
     public var email: String?
     /// Owner's full name.
@@ -158,7 +158,7 @@ public struct PaymentSourceUpdateOwner: StripeParams {
     /// Owner's phone number.
     public var phone: String?
 
-    public init(address: PaymentSourceUpdateOwnerAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+    public init(address: PaymentSourceOwnerAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
         self.address = address
         self.email = email
         self.name = name
@@ -167,7 +167,7 @@ public struct PaymentSourceUpdateOwner: StripeParams {
 }
 
 /// Owner's address.
-public struct PaymentSourceUpdateOwnerAddress: StripeParams {
+public struct PaymentSourceOwnerAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).

@@ -11,9 +11,9 @@ public struct TerminalLocationCreateParams: ClearableParams {
     /// The full address of the location.
     public var address: TerminalLocationCreateAddress?
     /// The Kana variation of the full address of the location (Japan only).
-    public var addressKana: TerminalLocationCreateAddressKana?
+    public var addressKana: TerminalLocationAddressKana?
     /// The Kanji variation of the full address of the location (Japan only).
-    public var addressKanji: TerminalLocationCreateAddressKanji?
+    public var addressKanji: TerminalLocationAddressKanji?
     /// The ID of a configuration that will be used to customize all readers in this location.
     public var configurationOverrides: String?
     /// A name for the location. Maximum length is 1000 characters.
@@ -34,7 +34,7 @@ public struct TerminalLocationCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: TerminalLocationCreateAddress? = nil, addressKana: TerminalLocationCreateAddressKana? = nil, addressKanji: TerminalLocationCreateAddressKanji? = nil, configurationOverrides: String? = nil, displayName: String? = nil, displayNameKana: String? = nil, displayNameKanji: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, phone: String? = nil) {
+    public init(address: TerminalLocationCreateAddress? = nil, addressKana: TerminalLocationAddressKana? = nil, addressKanji: TerminalLocationAddressKanji? = nil, configurationOverrides: String? = nil, displayName: String? = nil, displayNameKana: String? = nil, displayNameKanji: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, phone: String? = nil) {
         self.address = address
         self.addressKana = addressKana
         self.addressKanji = addressKanji
@@ -104,9 +104,9 @@ public struct TerminalLocationUpdateParams: ClearableParams {
     /// location.
     public var address: TerminalLocationUpdateAddress?
     /// The Kana variation of the full address of the location (Japan only).
-    public var addressKana: TerminalLocationUpdateAddressKana?
+    public var addressKana: TerminalLocationAddressKana?
     /// The Kanji variation of the full address of the location (Japan only).
-    public var addressKanji: TerminalLocationUpdateAddressKanji?
+    public var addressKanji: TerminalLocationAddressKanji?
     /// The ID of a configuration that will be used to customize all readers in this location.
     public var configurationOverrides: String?
     /// A name for the location.
@@ -127,7 +127,7 @@ public struct TerminalLocationUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.configurationOverrides)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: TerminalLocationUpdateAddress? = nil, addressKana: TerminalLocationUpdateAddressKana? = nil, addressKanji: TerminalLocationUpdateAddressKanji? = nil, configurationOverrides: String? = nil, displayName: String? = nil, displayNameKana: String? = nil, displayNameKanji: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, phone: String? = nil) {
+    public init(address: TerminalLocationUpdateAddress? = nil, addressKana: TerminalLocationAddressKana? = nil, addressKanji: TerminalLocationAddressKanji? = nil, configurationOverrides: String? = nil, displayName: String? = nil, displayNameKana: String? = nil, displayNameKanji: String? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, phone: String? = nil) {
         self.address = address
         self.addressKana = addressKana
         self.addressKanji = addressKanji
@@ -200,7 +200,7 @@ public struct TerminalLocationCreateAddress: StripeParams {
 }
 
 /// The Kana variation of the full address of the location (Japan only).
-public struct TerminalLocationCreateAddressKana: StripeParams {
+public struct TerminalLocationAddressKana: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -238,7 +238,7 @@ public struct TerminalLocationCreateAddressKana: StripeParams {
 }
 
 /// The Kanji variation of the full address of the location (Japan only).
-public struct TerminalLocationCreateAddressKanji: StripeParams {
+public struct TerminalLocationAddressKanji: StripeParams {
     /// City or ward.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -308,81 +308,5 @@ public struct TerminalLocationUpdateAddress: StripeParams {
         case line2
         case postalCode = "postal_code"
         case state
-    }
-}
-
-/// The Kana variation of the full address of the location (Japan only).
-public struct TerminalLocationUpdateAddressKana: StripeParams {
-    /// City or ward.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Block or building number.
-    public var line1: String?
-    /// Building details.
-    public var line2: String?
-    /// Postal code.
-    public var postalCode: String?
-    /// Prefecture.
-    public var state: String?
-    /// Town or cho-me.
-    public var town: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil, town: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-        self.town = town
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-        case town
-    }
-}
-
-/// The Kanji variation of the full address of the location (Japan only).
-public struct TerminalLocationUpdateAddressKanji: StripeParams {
-    /// City or ward.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Block or building number.
-    public var line1: String?
-    /// Building details.
-    public var line2: String?
-    /// Postal code.
-    public var postalCode: String?
-    /// Prefecture.
-    public var state: String?
-    /// Town or cho-me.
-    public var town: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil, town: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-        self.town = town
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-        case town
     }
 }

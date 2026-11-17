@@ -34,9 +34,9 @@ public struct BillingMeterEventSummaryListParams: StripeParams {
     /// summary would be returned for the specified time range. For hourly granularity, start and end times
     /// must align with hour boundaries (e.g., 00:00, 01:00, ..., 23:00). For daily granularity, start and
     /// end times must align with UTC day boundaries (00:00 UTC).
-    public var valueGroupingWindow: BillingMeterEventSummaryListValueGroupingWindow?
+    public var valueGroupingWindow: BillingMeterEventSummaryValueGroupingWindow?
 
-    public init(customer: String, endTime: Date, startTime: Date, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, valueGroupingWindow: BillingMeterEventSummaryListValueGroupingWindow? = nil) {
+    public init(customer: String, endTime: Date, startTime: Date, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, valueGroupingWindow: BillingMeterEventSummaryValueGroupingWindow? = nil) {
         self.customer = customer
         self.endTime = endTime
         self.startTime = startTime
@@ -59,7 +59,7 @@ public struct BillingMeterEventSummaryListParams: StripeParams {
     }
 }
 
-public struct BillingMeterEventSummaryListValueGroupingWindow: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingMeterEventSummaryValueGroupingWindow: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

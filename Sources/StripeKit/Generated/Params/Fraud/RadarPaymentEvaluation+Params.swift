@@ -9,11 +9,11 @@ import Foundation
 
 public struct RadarPaymentEvaluationCreateParams: StripeParams {
     /// Details about the customer associated with the payment evaluation.
-    public var customerDetails: RadarPaymentEvaluationCreateCustomerDetails
+    public var customerDetails: RadarPaymentEvaluationCustomerDetails
     /// Details about the payment.
-    public var paymentDetails: RadarPaymentEvaluationCreatePaymentDetails
+    public var paymentDetails: RadarPaymentEvaluationPaymentDetails
     /// Details about the Client Device Metadata to associate with the payment evaluation.
-    public var clientDeviceMetadataDetails: RadarPaymentEvaluationCreateClientDeviceMetadataDetails?
+    public var clientDeviceMetadataDetails: RadarPaymentEvaluationClientDeviceMetadataDetails?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -22,7 +22,7 @@ public struct RadarPaymentEvaluationCreateParams: StripeParams {
     /// empty value to `metadata`.
     public var metadata: [String: String]?
 
-    public init(customerDetails: RadarPaymentEvaluationCreateCustomerDetails, paymentDetails: RadarPaymentEvaluationCreatePaymentDetails, clientDeviceMetadataDetails: RadarPaymentEvaluationCreateClientDeviceMetadataDetails? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
+    public init(customerDetails: RadarPaymentEvaluationCustomerDetails, paymentDetails: RadarPaymentEvaluationPaymentDetails, clientDeviceMetadataDetails: RadarPaymentEvaluationClientDeviceMetadataDetails? = nil, expand: [String]? = nil, metadata: [String: String]? = nil) {
         self.customerDetails = customerDetails
         self.paymentDetails = paymentDetails
         self.clientDeviceMetadataDetails = clientDeviceMetadataDetails
@@ -40,7 +40,7 @@ public struct RadarPaymentEvaluationCreateParams: StripeParams {
 }
 
 /// Details about the customer associated with the payment evaluation.
-public struct RadarPaymentEvaluationCreateCustomerDetails: StripeParams {
+public struct RadarPaymentEvaluationCustomerDetails: StripeParams {
     /// The ID of the customer associated with the payment evaluation.
     public var customer: String?
     /// The ID of the Account representing the customer associated with the payment evaluation.
@@ -70,7 +70,7 @@ public struct RadarPaymentEvaluationCreateCustomerDetails: StripeParams {
 }
 
 /// Details about the payment.
-public struct RadarPaymentEvaluationCreatePaymentDetails: StripeParams {
+public struct RadarPaymentEvaluationPaymentDetails: StripeParams {
     /// The intended amount to collect with this payment. A positive integer representing how much to charge
     /// in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (for example, 100
     /// cents to charge 1.00 USD or 100 to charge 100 Yen, a zero-decimal currency).
@@ -79,17 +79,17 @@ public struct RadarPaymentEvaluationCreatePaymentDetails: StripeParams {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: String
     /// Details about the payment method to use for the payment.
-    public var paymentMethodDetails: RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetails
+    public var paymentMethodDetails: RadarPaymentEvaluationPaymentDetailsPaymentMethodDetails
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// Details about the payment's customer presence and type.
-    public var moneyMovementDetails: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetails?
+    public var moneyMovementDetails: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetails?
     /// Shipping details for the payment evaluation.
-    public var shippingDetails: RadarPaymentEvaluationCreatePaymentDetailsShippingDetails?
+    public var shippingDetails: RadarPaymentEvaluationPaymentDetailsShippingDetails?
     /// Payment statement descriptor.
     public var statementDescriptor: String?
 
-    public init(amount: Int, currency: String, paymentMethodDetails: RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetails, description: String? = nil, moneyMovementDetails: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetails? = nil, shippingDetails: RadarPaymentEvaluationCreatePaymentDetailsShippingDetails? = nil, statementDescriptor: String? = nil) {
+    public init(amount: Int, currency: String, paymentMethodDetails: RadarPaymentEvaluationPaymentDetailsPaymentMethodDetails, description: String? = nil, moneyMovementDetails: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetails? = nil, shippingDetails: RadarPaymentEvaluationPaymentDetailsShippingDetails? = nil, statementDescriptor: String? = nil) {
         self.amount = amount
         self.currency = currency
         self.paymentMethodDetails = paymentMethodDetails
@@ -111,13 +111,13 @@ public struct RadarPaymentEvaluationCreatePaymentDetails: StripeParams {
 }
 
 /// Details about the payment method to use for the payment.
-public struct RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetails: StripeParams {
+public struct RadarPaymentEvaluationPaymentDetailsPaymentMethodDetails: StripeParams {
     /// ID of the payment method used in this payment evaluation.
     public var paymentMethod: String
     /// Billing information associated with the payment evaluation.
-    public var billingDetails: RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetailsBillingDetails?
+    public var billingDetails: RadarPaymentEvaluationPaymentDetailsPaymentMethodDetailsBillingDetails?
 
-    public init(paymentMethod: String, billingDetails: RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetailsBillingDetails? = nil) {
+    public init(paymentMethod: String, billingDetails: RadarPaymentEvaluationPaymentDetailsPaymentMethodDetailsBillingDetails? = nil) {
         self.paymentMethod = paymentMethod
         self.billingDetails = billingDetails
     }
@@ -129,9 +129,9 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetails: St
 }
 
 /// Billing information associated with the payment evaluation.
-public struct RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetailsBillingDetails: StripeParams {
+public struct RadarPaymentEvaluationPaymentDetailsPaymentMethodDetailsBillingDetails: StripeParams {
     /// Billing address.
-    public var address: RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetailsBillingDetailsAddress?
+    public var address: RadarPaymentEvaluationPaymentDetailsPaymentMethodDetailsBillingDetailsAddress?
     /// Email address.
     public var email: String?
     /// Full name.
@@ -139,7 +139,7 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetailsBill
     /// Billing phone number (including extension).
     public var phone: String?
 
-    public init(address: RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetailsBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+    public init(address: RadarPaymentEvaluationPaymentDetailsPaymentMethodDetailsBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
         self.address = address
         self.email = email
         self.name = name
@@ -148,7 +148,7 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetailsBill
 }
 
 /// Billing address.
-public struct RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetailsBillingDetailsAddress: StripeParams {
+public struct RadarPaymentEvaluationPaymentDetailsPaymentMethodDetailsBillingDetailsAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -182,13 +182,13 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsPaymentMethodDetailsBill
 }
 
 /// Details about the payment's customer presence and type.
-public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetails: StripeParams {
+public struct RadarPaymentEvaluationPaymentDetailsMoneyMovementDetails: StripeParams {
     /// Describes the type of money movement.
-    public var moneyMovementType: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsMoneyMovementType
+    public var moneyMovementType: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsMoneyMovementType
     /// Describes card money movement details.
-    public var card: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCard?
+    public var card: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsCard?
 
-    public init(moneyMovementType: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsMoneyMovementType, card: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCard? = nil) {
+    public init(moneyMovementType: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsMoneyMovementType, card: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsCard? = nil) {
         self.moneyMovementType = moneyMovementType
         self.card = card
     }
@@ -199,7 +199,7 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetails: St
     }
 }
 
-public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsMoneyMovementType: RawRepresentable, Codable, Hashable, Sendable {
+public struct RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsMoneyMovementType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -210,13 +210,13 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsMone
 }
 
 /// Describes card money movement details.
-public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCard: StripeParams {
+public struct RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsCard: StripeParams {
     /// Describes the presence of the customer during the payment.
-    public var customerPresence: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardCustomerPresence?
+    public var customerPresence: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsCardCustomerPresence?
     /// Describes the type of payment.
-    public var paymentType: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardPaymentType?
+    public var paymentType: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsCardPaymentType?
 
-    public init(customerPresence: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardCustomerPresence? = nil, paymentType: RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardPaymentType? = nil) {
+    public init(customerPresence: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsCardCustomerPresence? = nil, paymentType: RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsCardPaymentType? = nil) {
         self.customerPresence = customerPresence
         self.paymentType = paymentType
     }
@@ -227,7 +227,7 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCard
     }
 }
 
-public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardCustomerPresence: RawRepresentable, Codable, Hashable, Sendable {
+public struct RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsCardCustomerPresence: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -238,7 +238,7 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCard
     public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardPaymentType: RawRepresentable, Codable, Hashable, Sendable {
+public struct RadarPaymentEvaluationPaymentDetailsMoneyMovementDetailsCardPaymentType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -252,15 +252,15 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCard
 }
 
 /// Shipping details for the payment evaluation.
-public struct RadarPaymentEvaluationCreatePaymentDetailsShippingDetails: StripeParams {
+public struct RadarPaymentEvaluationPaymentDetailsShippingDetails: StripeParams {
     /// Shipping address.
-    public var address: RadarPaymentEvaluationCreatePaymentDetailsShippingDetailsAddress?
+    public var address: RadarPaymentEvaluationPaymentDetailsShippingDetailsAddress?
     /// Shipping name.
     public var name: String?
     /// Shipping phone number.
     public var phone: String?
 
-    public init(address: RadarPaymentEvaluationCreatePaymentDetailsShippingDetailsAddress? = nil, name: String? = nil, phone: String? = nil) {
+    public init(address: RadarPaymentEvaluationPaymentDetailsShippingDetailsAddress? = nil, name: String? = nil, phone: String? = nil) {
         self.address = address
         self.name = name
         self.phone = phone
@@ -268,7 +268,7 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsShippingDetails: StripeP
 }
 
 /// Shipping address.
-public struct RadarPaymentEvaluationCreatePaymentDetailsShippingDetailsAddress: StripeParams {
+public struct RadarPaymentEvaluationPaymentDetailsShippingDetailsAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -302,7 +302,7 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsShippingDetailsAddress: 
 }
 
 /// Details about the Client Device Metadata to associate with the payment evaluation.
-public struct RadarPaymentEvaluationCreateClientDeviceMetadataDetails: StripeParams {
+public struct RadarPaymentEvaluationClientDeviceMetadataDetails: StripeParams {
     /// ID for the Radar Session to associate with the payment evaluation. A [Radar
     /// Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and
     /// device details that help Radar make more accurate predictions on your payments.

@@ -29,9 +29,9 @@ public struct FinancialConnectionsTransactionListParams: StripeParams {
     public var transactedAt: StripeRangeQuery?
     /// A filter on the list based on the object `transaction_refresh` field. The value can be a dictionary
     /// with the following options:
-    public var transactionRefresh: FinancialConnectionsTransactionListTransactionRefresh?
+    public var transactionRefresh: FinancialConnectionsTransactionTransactionRefresh?
 
-    public init(account: String, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, transactedAt: StripeRangeQuery? = nil, transactionRefresh: FinancialConnectionsTransactionListTransactionRefresh? = nil) {
+    public init(account: String, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, startingAfter: String? = nil, transactedAt: StripeRangeQuery? = nil, transactionRefresh: FinancialConnectionsTransactionTransactionRefresh? = nil) {
         self.account = account
         self.endingBefore = endingBefore
         self.expand = expand
@@ -54,7 +54,7 @@ public struct FinancialConnectionsTransactionListParams: StripeParams {
 
 /// A filter on the list based on the object `transaction_refresh` field. The value can be a dictionary
 /// with the following options:
-public struct FinancialConnectionsTransactionListTransactionRefresh: StripeParams {
+public struct FinancialConnectionsTransactionTransactionRefresh: StripeParams {
     /// Return results where the transactions were created or updated by a refresh that took place after
     /// this refresh (non-inclusive).
     public var after: String

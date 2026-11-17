@@ -22,10 +22,10 @@ public struct PriceCreateParams: StripeParams {
     /// Prices defined in each available currency option. Each key must be a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: PriceCreateCurrencyOptions]?
+    public var currencyOptions: [String: PriceCurrencyOptions]?
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
     /// Sessions and Payment Links.
-    public var customUnitAmount: PriceCreateCustomUnitAmount?
+    public var customUnitAmount: PriceCustomUnitAmount?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// A lookup key used to retrieve prices dynamically from a static string. This may be up to 200
@@ -42,7 +42,7 @@ public struct PriceCreateParams: StripeParams {
     /// [Price](https://docs.stripe.com/api/prices) will belong to.
     public var product: String?
     /// These fields can be used to create a new product that this price will belong to.
-    public var productData: PriceCreateProductData?
+    public var productData: PriceProductData?
     /// The recurring components of a price such as `interval` and `usage_type`.
     public var recurring: PriceCreateRecurring?
     /// Only required if a [default tax
@@ -53,7 +53,7 @@ public struct PriceCreateParams: StripeParams {
     public var taxBehavior: PriceCreateTaxBehavior?
     /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
     /// `tiered`. See also the documentation for `billing_scheme`.
-    public var tiers: [PriceCreateTiers]?
+    public var tiers: [PriceTiers]?
     /// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the
     /// maximum quantity within a period determines the per unit price, in `graduated` tiering pricing can
     /// successively change as the quantity grows.
@@ -63,7 +63,7 @@ public struct PriceCreateParams: StripeParams {
     public var transferLookupKey: Bool?
     /// Apply a transformation to the reported usage or set quantity before computing the billed price.
     /// Cannot be combined with `tiers`.
-    public var transformQuantity: PriceCreateTransformQuantity?
+    public var transformQuantity: PriceTransformQuantity?
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
     /// charge. One of `unit_amount`, `unit_amount_decimal`, or `custom_unit_amount` is required, unless
     /// `billing_scheme=tiered`.
@@ -72,7 +72,7 @@ public struct PriceCreateParams: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(currency: String, active: Bool? = nil, billingScheme: PriceCreateBillingScheme? = nil, currencyOptions: [String: PriceCreateCurrencyOptions]? = nil, customUnitAmount: PriceCreateCustomUnitAmount? = nil, expand: [String]? = nil, lookupKey: String? = nil, metadata: [String: String]? = nil, nickname: String? = nil, product: String? = nil, productData: PriceCreateProductData? = nil, recurring: PriceCreateRecurring? = nil, taxBehavior: PriceCreateTaxBehavior? = nil, tiers: [PriceCreateTiers]? = nil, tiersMode: PriceCreateTiersMode? = nil, transferLookupKey: Bool? = nil, transformQuantity: PriceCreateTransformQuantity? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(currency: String, active: Bool? = nil, billingScheme: PriceCreateBillingScheme? = nil, currencyOptions: [String: PriceCurrencyOptions]? = nil, customUnitAmount: PriceCustomUnitAmount? = nil, expand: [String]? = nil, lookupKey: String? = nil, metadata: [String: String]? = nil, nickname: String? = nil, product: String? = nil, productData: PriceProductData? = nil, recurring: PriceCreateRecurring? = nil, taxBehavior: PriceCreateTaxBehavior? = nil, tiers: [PriceTiers]? = nil, tiersMode: PriceCreateTiersMode? = nil, transferLookupKey: Bool? = nil, transformQuantity: PriceTransformQuantity? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.currency = currency
         self.active = active
         self.billingScheme = billingScheme
@@ -206,7 +206,7 @@ public struct PriceUpdateParams: ClearableParams {
     /// Prices defined in each available currency option. Each key must be a three-letter [ISO currency
     /// code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported
     /// currency](https://stripe.com/docs/currencies).
-    public var currencyOptions: [String: PriceUpdateCurrencyOptions]?
+    public var currencyOptions: [String: PriceCurrencyOptions]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// A lookup key used to retrieve prices dynamically from a static string. This may be up to 200
@@ -231,7 +231,7 @@ public struct PriceUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.currencyOptions)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(active: Bool? = nil, currencyOptions: [String: PriceUpdateCurrencyOptions]? = nil, expand: [String]? = nil, lookupKey: String? = nil, metadata: [String: String]? = nil, nickname: String? = nil, taxBehavior: PriceUpdateTaxBehavior? = nil, transferLookupKey: Bool? = nil) {
+    public init(active: Bool? = nil, currencyOptions: [String: PriceCurrencyOptions]? = nil, expand: [String]? = nil, lookupKey: String? = nil, metadata: [String: String]? = nil, nickname: String? = nil, taxBehavior: PriceUpdateTaxBehavior? = nil, transferLookupKey: Bool? = nil) {
         self.active = active
         self.currencyOptions = currencyOptions
         self.expand = expand
@@ -272,19 +272,19 @@ public struct PriceCreateBillingScheme: RawRepresentable, Codable, Hashable, Sen
     public static var tiered: Self { .init(rawValue: "tiered") }
 }
 
-public struct PriceCreateCurrencyOptions: StripeParams {
+public struct PriceCurrencyOptions: StripeParams {
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
     /// Sessions and Payment Links.
-    public var customUnitAmount: PriceCreateCurrencyOptionsCustomUnitAmount?
+    public var customUnitAmount: PriceCurrencyOptionsCustomUnitAmount?
     /// Only required if a [default tax
     /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
     /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
     /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
     /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: PriceCreateCurrencyOptionsTaxBehavior?
+    public var taxBehavior: PriceCurrencyOptionsTaxBehavior?
     /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
     /// `tiered`. See also the documentation for `billing_scheme`.
-    public var tiers: [PriceCreateCurrencyOptionsTiers]?
+    public var tiers: [PriceCurrencyOptionsTiers]?
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
     /// charge.
     public var unitAmount: Int?
@@ -292,7 +292,7 @@ public struct PriceCreateCurrencyOptions: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(customUnitAmount: PriceCreateCurrencyOptionsCustomUnitAmount? = nil, taxBehavior: PriceCreateCurrencyOptionsTaxBehavior? = nil, tiers: [PriceCreateCurrencyOptionsTiers]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(customUnitAmount: PriceCurrencyOptionsCustomUnitAmount? = nil, taxBehavior: PriceCurrencyOptionsTaxBehavior? = nil, tiers: [PriceCurrencyOptionsTiers]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.customUnitAmount = customUnitAmount
         self.taxBehavior = taxBehavior
         self.tiers = tiers
@@ -311,7 +311,7 @@ public struct PriceCreateCurrencyOptions: StripeParams {
 
 /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
 /// Sessions and Payment Links.
-public struct PriceCreateCurrencyOptionsCustomUnitAmount: StripeParams {
+public struct PriceCurrencyOptionsCustomUnitAmount: StripeParams {
     /// Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
     public var enabled: Bool
     /// The maximum unit amount the customer can specify for this item.
@@ -330,7 +330,7 @@ public struct PriceCreateCurrencyOptionsCustomUnitAmount: StripeParams {
     }
 }
 
-public struct PriceCreateCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+public struct PriceCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -342,10 +342,10 @@ public struct PriceCreateCurrencyOptionsTaxBehavior: RawRepresentable, Codable, 
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct PriceCreateCurrencyOptionsTiers: StripeParams {
+public struct PriceCurrencyOptionsTiers: StripeParams {
     /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
     /// tier adding one. Use `inf` to define a fallback tier.
-    public var upTo: PriceCreateCurrencyOptionsTiersUpTo
+    public var upTo: PriceCurrencyOptionsTiersUpTo
     /// The flat billing amount for an entire tier, regardless of the number of units in the tier.
     public var flatAmount: Int?
     /// Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the
@@ -357,7 +357,7 @@ public struct PriceCreateCurrencyOptionsTiers: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(upTo: PriceCreateCurrencyOptionsTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(upTo: PriceCurrencyOptionsTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.upTo = upTo
         self.flatAmount = flatAmount
         self.flatAmountDecimal = flatAmountDecimal
@@ -375,7 +375,7 @@ public struct PriceCreateCurrencyOptionsTiers: StripeParams {
 }
 
 /// One of the forms `up_to` accepts.
-public enum PriceCreateCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum PriceCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `inf`
     case inf
     case value(Int)
@@ -391,7 +391,7 @@ public enum PriceCreateCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleB
             }
         }
         if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceCreateCurrencyOptionsTiersUpTo matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceCurrencyOptionsTiersUpTo matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -408,7 +408,7 @@ public enum PriceCreateCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleB
 
 /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
 /// Sessions and Payment Links.
-public struct PriceCreateCustomUnitAmount: StripeParams {
+public struct PriceCustomUnitAmount: StripeParams {
     /// Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
     public var enabled: Bool
     /// The maximum unit amount the customer can specify for this item.
@@ -428,7 +428,7 @@ public struct PriceCreateCustomUnitAmount: StripeParams {
 }
 
 /// These fields can be used to create a new product that this price will belong to.
-public struct PriceCreateProductData: StripeParams {
+public struct PriceProductData: StripeParams {
     /// The product's name, meant to be displayable to the customer.
     public var name: String
     /// Whether the product is currently available for purchase. Defaults to `true`.
@@ -451,12 +451,12 @@ public struct PriceCreateProductData: StripeParams {
     public var taxCode: String?
     /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
     /// location.
-    public var taxDetails: PriceCreateProductDataTaxDetails?
+    public var taxDetails: PriceProductDataTaxDetails?
     /// A label that represents units of this product. When set, this will be included in customers'
     /// receipts, invoices, Checkout, and the customer portal.
     public var unitLabel: String?
 
-    public init(name: String, active: Bool? = nil, id: String? = nil, metadata: [String: String]? = nil, statementDescriptor: String? = nil, taxCode: String? = nil, taxDetails: PriceCreateProductDataTaxDetails? = nil, unitLabel: String? = nil) {
+    public init(name: String, active: Bool? = nil, id: String? = nil, metadata: [String: String]? = nil, statementDescriptor: String? = nil, taxCode: String? = nil, taxDetails: PriceProductDataTaxDetails? = nil, unitLabel: String? = nil) {
         self.name = name
         self.active = active
         self.id = id
@@ -481,7 +481,7 @@ public struct PriceCreateProductData: StripeParams {
 
 /// Tax details for this product, including the [tax code](/tax/tax-codes) and an optional performance
 /// location.
-public struct PriceCreateProductDataTaxDetails: ClearableParams {
+public struct PriceProductDataTaxDetails: ClearableParams {
     /// A tax location ID. Depending on the [tax
     /// code](/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not
     /// supported.
@@ -511,7 +511,7 @@ public struct PriceCreateProductDataTaxDetails: ClearableParams {
 /// The recurring components of a price such as `interval` and `usage_type`.
 public struct PriceCreateRecurring: StripeParams {
     /// Specifies billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: PriceCreateRecurringInterval
+    public var interval: PriceRecurringInterval
     /// The number of intervals between subscription billings. For example, `interval=month` and
     /// `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36
     /// months, or 156 weeks).
@@ -524,9 +524,9 @@ public struct PriceCreateRecurring: StripeParams {
     /// Configures how the quantity per period should be determined. Can be either `metered` or `licensed`.
     /// `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered`
     /// aggregates the total usage based on usage records. Defaults to `licensed`.
-    public var usageType: PriceCreateRecurringUsageType?
+    public var usageType: PriceRecurringUsageType?
 
-    public init(interval: PriceCreateRecurringInterval, intervalCount: Int? = nil, meter: String? = nil, trialPeriodDays: Int? = nil, usageType: PriceCreateRecurringUsageType? = nil) {
+    public init(interval: PriceRecurringInterval, intervalCount: Int? = nil, meter: String? = nil, trialPeriodDays: Int? = nil, usageType: PriceRecurringUsageType? = nil) {
         self.interval = interval
         self.intervalCount = intervalCount
         self.meter = meter
@@ -543,7 +543,7 @@ public struct PriceCreateRecurring: StripeParams {
     }
 }
 
-public struct PriceCreateRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct PriceRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -556,7 +556,7 @@ public struct PriceCreateRecurringInterval: RawRepresentable, Codable, Hashable,
     public static var year: Self { .init(rawValue: "year") }
 }
 
-public struct PriceCreateRecurringUsageType: RawRepresentable, Codable, Hashable, Sendable {
+public struct PriceRecurringUsageType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -579,10 +579,10 @@ public struct PriceCreateTaxBehavior: RawRepresentable, Codable, Hashable, Senda
     public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public struct PriceCreateTiers: StripeParams {
+public struct PriceTiers: StripeParams {
     /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
     /// tier adding one. Use `inf` to define a fallback tier.
-    public var upTo: PriceCreateTiersUpTo
+    public var upTo: PriceTiersUpTo
     /// The flat billing amount for an entire tier, regardless of the number of units in the tier.
     public var flatAmount: Int?
     /// Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the
@@ -594,7 +594,7 @@ public struct PriceCreateTiers: StripeParams {
     /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
     public var unitAmountDecimal: String?
 
-    public init(upTo: PriceCreateTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
+    public init(upTo: PriceTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
         self.upTo = upTo
         self.flatAmount = flatAmount
         self.flatAmountDecimal = flatAmountDecimal
@@ -612,7 +612,7 @@ public struct PriceCreateTiers: StripeParams {
 }
 
 /// One of the forms `up_to` accepts.
-public enum PriceCreateTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum PriceTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `inf`
     case inf
     case value(Int)
@@ -628,7 +628,7 @@ public enum PriceCreateTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral
             }
         }
         if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceCreateTiersUpTo matches")
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceTiersUpTo matches")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -656,13 +656,13 @@ public struct PriceCreateTiersMode: RawRepresentable, Codable, Hashable, Sendabl
 
 /// Apply a transformation to the reported usage or set quantity before computing the billed price.
 /// Cannot be combined with `tiers`.
-public struct PriceCreateTransformQuantity: StripeParams {
+public struct PriceTransformQuantity: StripeParams {
     /// Divide usage by this number.
     public var divideBy: Int
     /// After division, either round the result `up` or `down`.
-    public var round: PriceCreateTransformQuantityRound
+    public var round: PriceTransformQuantityRound
 
-    public init(divideBy: Int, round: PriceCreateTransformQuantityRound) {
+    public init(divideBy: Int, round: PriceTransformQuantityRound) {
         self.divideBy = divideBy
         self.round = round
     }
@@ -673,7 +673,7 @@ public struct PriceCreateTransformQuantity: StripeParams {
     }
 }
 
-public struct PriceCreateTransformQuantityRound: RawRepresentable, Codable, Hashable, Sendable {
+public struct PriceTransformQuantityRound: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -687,13 +687,13 @@ public struct PriceCreateTransformQuantityRound: RawRepresentable, Codable, Hash
 /// Only return prices with these recurring fields.
 public struct PriceListRecurring: StripeParams {
     /// Filter by billing frequency. Either `day`, `week`, `month` or `year`.
-    public var interval: PriceListRecurringInterval?
+    public var interval: PriceRecurringInterval?
     /// Filter by the price's meter.
     public var meter: String?
     /// Filter by the usage type for this price. Can be either `metered` or `licensed`.
-    public var usageType: PriceListRecurringUsageType?
+    public var usageType: PriceRecurringUsageType?
 
-    public init(interval: PriceListRecurringInterval? = nil, meter: String? = nil, usageType: PriceListRecurringUsageType? = nil) {
+    public init(interval: PriceRecurringInterval? = nil, meter: String? = nil, usageType: PriceRecurringUsageType? = nil) {
         self.interval = interval
         self.meter = meter
         self.usageType = usageType
@@ -706,30 +706,6 @@ public struct PriceListRecurring: StripeParams {
     }
 }
 
-public struct PriceListRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
-public struct PriceListRecurringUsageType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var licensed: Self { .init(rawValue: "licensed") }
-    public static var metered: Self { .init(rawValue: "metered") }
-}
-
 public struct PriceListType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
@@ -739,140 +715,6 @@ public struct PriceListType: RawRepresentable, Codable, Hashable, Sendable {
 
     public static var oneTime: Self { .init(rawValue: "one_time") }
     public static var recurring: Self { .init(rawValue: "recurring") }
-}
-
-public struct PriceUpdateCurrencyOptions: StripeParams {
-    /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
-    /// Sessions and Payment Links.
-    public var customUnitAmount: PriceUpdateCurrencyOptionsCustomUnitAmount?
-    /// Only required if a [default tax
-    /// behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended))
-    /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
-    /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
-    /// either `inclusive` or `exclusive`, it cannot be changed.
-    public var taxBehavior: PriceUpdateCurrencyOptionsTaxBehavior?
-    /// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to
-    /// `tiered`. See also the documentation for `billing_scheme`.
-    public var tiers: [PriceUpdateCurrencyOptionsTiers]?
-    /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to
-    /// charge.
-    public var unitAmount: Int?
-    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
-    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    public var unitAmountDecimal: String?
-
-    public init(customUnitAmount: PriceUpdateCurrencyOptionsCustomUnitAmount? = nil, taxBehavior: PriceUpdateCurrencyOptionsTaxBehavior? = nil, tiers: [PriceUpdateCurrencyOptionsTiers]? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
-        self.customUnitAmount = customUnitAmount
-        self.taxBehavior = taxBehavior
-        self.tiers = tiers
-        self.unitAmount = unitAmount
-        self.unitAmountDecimal = unitAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case customUnitAmount = "custom_unit_amount"
-        case taxBehavior = "tax_behavior"
-        case tiers
-        case unitAmount = "unit_amount"
-        case unitAmountDecimal = "unit_amount_decimal"
-    }
-}
-
-/// When set, provides configuration for the amount to be adjusted by the customer during Checkout
-/// Sessions and Payment Links.
-public struct PriceUpdateCurrencyOptionsCustomUnitAmount: StripeParams {
-    /// Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
-    public var enabled: Bool
-    /// The maximum unit amount the customer can specify for this item.
-    public var maximum: Int?
-    /// The minimum unit amount the customer can specify for this item. Must be at least the minimum charge
-    /// amount.
-    public var minimum: Int?
-    /// The starting unit amount which can be updated by the customer.
-    public var preset: Int?
-
-    public init(enabled: Bool, maximum: Int? = nil, minimum: Int? = nil, preset: Int? = nil) {
-        self.enabled = enabled
-        self.maximum = maximum
-        self.minimum = minimum
-        self.preset = preset
-    }
-}
-
-public struct PriceUpdateCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var exclusive: Self { .init(rawValue: "exclusive") }
-    public static var inclusive: Self { .init(rawValue: "inclusive") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
-}
-
-public struct PriceUpdateCurrencyOptionsTiers: StripeParams {
-    /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
-    /// tier adding one. Use `inf` to define a fallback tier.
-    public var upTo: PriceUpdateCurrencyOptionsTiersUpTo
-    /// The flat billing amount for an entire tier, regardless of the number of units in the tier.
-    public var flatAmount: Int?
-    /// Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the
-    /// currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
-    public var flatAmountDecimal: String?
-    /// The per unit billing amount for each individual unit for which this tier applies.
-    public var unitAmount: Int?
-    /// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12
-    /// decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-    public var unitAmountDecimal: String?
-
-    public init(upTo: PriceUpdateCurrencyOptionsTiersUpTo, flatAmount: Int? = nil, flatAmountDecimal: String? = nil, unitAmount: Int? = nil, unitAmountDecimal: String? = nil) {
-        self.upTo = upTo
-        self.flatAmount = flatAmount
-        self.flatAmountDecimal = flatAmountDecimal
-        self.unitAmount = unitAmount
-        self.unitAmountDecimal = unitAmountDecimal
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case flatAmount = "flat_amount"
-        case flatAmountDecimal = "flat_amount_decimal"
-        case unitAmount = "unit_amount"
-        case unitAmountDecimal = "unit_amount_decimal"
-        case upTo = "up_to"
-    }
-}
-
-/// One of the forms `up_to` accepts.
-public enum PriceUpdateCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
-    /// `inf`
-    case inf
-    case value(Int)
-
-    public init(integerLiteral value: Int) { self = .value(value) }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "inf": self = .inf; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceUpdateCurrencyOptionsTiersUpTo matches")
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        switch self {
-        case .inf:
-            var container = encoder.singleValueContainer()
-            try container.encode("inf")
-        case .value(let value):
-            var container = encoder.singleValueContainer()
-            try container.encode(value)
-        }
-    }
 }
 
 public struct PriceUpdateTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {

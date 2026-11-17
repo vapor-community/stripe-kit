@@ -68,6 +68,20 @@ struct SpecCoverageTests {
         let _: KeyPath<BillingAlertTriggeredEvent, BillingAlertTriggered> = \.object
     }
 
+    /// Nested params every action of a resource defines identically are one type, named
+    /// without the action, as in Stripe's SDKs; ones that differ keep the action.
+    @Test("Identical nested params are shared across a resource's actions")
+    func sharedNestedParams() {
+        let _: KeyPath<PaymentIntentCreateParams, PaymentIntentPaymentMethodData?> = \.paymentMethodData
+        let _: KeyPath<PaymentIntentConfirmParams, PaymentIntentPaymentMethodData?> = \.paymentMethodData
+        let _: KeyPath<PaymentIntentUpdateParams, PaymentIntentPaymentMethodData?> = \.paymentMethodData
+        let _: KeyPath<CustomerCreateParams, CustomerInvoiceSettings?> = \.invoiceSettings
+        let _: KeyPath<CustomerUpdateParams, CustomerInvoiceSettings?> = \.invoiceSettings
+        // Create and update take different `tax` params
+        let _: KeyPath<CustomerCreateParams, CustomerCreateTax?> = \.tax
+        let _: KeyPath<CustomerUpdateParams, CustomerUpdateTax?> = \.tax
+    }
+
     @Test("Every spec operation is generated or skipped with a reason")
     func everySpecOperationIsCovered() {
         let uncovered = Self.specOperations

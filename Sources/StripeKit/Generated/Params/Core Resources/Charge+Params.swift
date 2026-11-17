@@ -97,7 +97,7 @@ public struct ChargeCreateParams: ClearableParams {
     /// customers, your receipt emails will include the `description` of the charge(s) that they are
     /// describing.
     public var description: String?
-    public var destination: ChargeCreateDestination?
+    public var destination: ChargeDestination?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -112,7 +112,7 @@ public struct ChargeCreateParams: ClearableParams {
     public var onBehalfOf: String?
     /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
     /// more information.
-    public var radarOptions: ChargeCreateRadarOptions?
+    public var radarOptions: ChargeRadarOptions?
     /// The email address to which this charge's [receipt](https://docs.stripe.com/dashboard/receipts) will
     /// be sent. The receipt will not be sent until the charge is paid, and receipts are only sent for
     /// payments in live mode. If this charge is for a
@@ -122,7 +122,7 @@ public struct ChargeCreateParams: ClearableParams {
     /// settings](https://dashboard.stripe.com/account/emails).
     public var receiptEmail: String?
     /// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-    public var shipping: ChargeCreateShipping?
+    public var shipping: ChargeShipping?
     /// A payment source to be charged. This can be the ID of a [card](https://docs.stripe.com/api#cards)
     /// (i.e., credit or debit card), a [bank account](https://docs.stripe.com/api#bank_accounts), a
     /// [source](https://docs.stripe.com/api#sources), a [token](https://docs.stripe.com/api#tokens), or a
@@ -154,7 +154,7 @@ public struct ChargeCreateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amount: Int? = nil, applicationFee: Int? = nil, applicationFeeAmount: Int? = nil, capture: Bool? = nil, currency: String? = nil, customer: String? = nil, description: String? = nil, destination: ChargeCreateDestination? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, radarOptions: ChargeCreateRadarOptions? = nil, receiptEmail: String? = nil, shipping: ChargeCreateShipping? = nil, source: String? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferData: ChargeCreateTransferData? = nil, transferGroup: String? = nil) {
+    public init(amount: Int? = nil, applicationFee: Int? = nil, applicationFeeAmount: Int? = nil, capture: Bool? = nil, currency: String? = nil, customer: String? = nil, description: String? = nil, destination: ChargeDestination? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, radarOptions: ChargeRadarOptions? = nil, receiptEmail: String? = nil, shipping: ChargeShipping? = nil, source: String? = nil, statementDescriptor: String? = nil, statementDescriptorSuffix: String? = nil, transferData: ChargeCreateTransferData? = nil, transferGroup: String? = nil) {
         self.amount = amount
         self.applicationFee = applicationFee
         self.applicationFeeAmount = applicationFeeAmount
@@ -300,7 +300,7 @@ public struct ChargeUpdateParams: ClearableParams {
     /// updated, then a new email receipt will be sent to the updated address.
     public var receiptEmail: String?
     /// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-    public var shipping: ChargeUpdateShipping?
+    public var shipping: ChargeShipping?
     /// A string that identifies this transaction as part of a group. `transfer_group` may only be provided
     /// if it has not been set. See the [Connect
     /// documentation](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-options) for
@@ -309,7 +309,7 @@ public struct ChargeUpdateParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.metadata)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(customer: String? = nil, description: String? = nil, expand: [String]? = nil, fraudDetails: ChargeUpdateFraudDetails? = nil, metadata: [String: String]? = nil, receiptEmail: String? = nil, shipping: ChargeUpdateShipping? = nil, transferGroup: String? = nil) {
+    public init(customer: String? = nil, description: String? = nil, expand: [String]? = nil, fraudDetails: ChargeUpdateFraudDetails? = nil, metadata: [String: String]? = nil, receiptEmail: String? = nil, shipping: ChargeShipping? = nil, transferGroup: String? = nil) {
         self.customer = customer
         self.description = description
         self.expand = expand
@@ -351,7 +351,7 @@ public struct ChargeCaptureTransferData: StripeParams {
     }
 }
 
-public struct ChargeCreateDestination: StripeParams {
+public struct ChargeDestination: StripeParams {
     /// ID of an existing, connected Stripe account.
     public var account: String
     /// The amount to transfer to the destination account without creating an `Application Fee` object.
@@ -367,7 +367,7 @@ public struct ChargeCreateDestination: StripeParams {
 
 /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
 /// more information.
-public struct ChargeCreateRadarOptions: StripeParams {
+public struct ChargeRadarOptions: StripeParams {
     /// A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata
     /// and device details that help Radar make more accurate predictions on your payments.
     public var session: String?
@@ -378,9 +378,9 @@ public struct ChargeCreateRadarOptions: StripeParams {
 }
 
 /// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-public struct ChargeCreateShipping: StripeParams {
+public struct ChargeShipping: StripeParams {
     /// Shipping address.
-    public var address: ChargeCreateShippingAddress
+    public var address: ChargeShippingAddress
     /// Recipient name.
     public var name: String
     /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -391,7 +391,7 @@ public struct ChargeCreateShipping: StripeParams {
     /// numbers were generated for this purchase, please separate them with commas.
     public var trackingNumber: String?
 
-    public init(address: ChargeCreateShippingAddress, name: String, carrier: String? = nil, phone: String? = nil, trackingNumber: String? = nil) {
+    public init(address: ChargeShippingAddress, name: String, carrier: String? = nil, phone: String? = nil, trackingNumber: String? = nil) {
         self.address = address
         self.name = name
         self.carrier = carrier
@@ -409,7 +409,7 @@ public struct ChargeCreateShipping: StripeParams {
 }
 
 /// Shipping address.
-public struct ChargeCreateShippingAddress: StripeParams {
+public struct ChargeShippingAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -467,11 +467,11 @@ public struct ChargeCreateTransferData: StripeParams {
 /// information you send to improve our fraud detection algorithms.
 public struct ChargeUpdateFraudDetails: ClearableParams {
     /// Either `safe` or `fraudulent`.
-    public var userReport: ChargeUpdateFraudDetailsUserReport
+    public var userReport: ChargeFraudDetailsUserReport
     /// Fields to send empty, which clears them: `params.clear(.userReport)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(userReport: ChargeUpdateFraudDetailsUserReport) {
+    public init(userReport: ChargeFraudDetailsUserReport) {
         self.userReport = userReport
     }
 
@@ -486,7 +486,7 @@ public struct ChargeUpdateFraudDetails: ClearableParams {
     }
 }
 
-public struct ChargeUpdateFraudDetailsUserReport: RawRepresentable, Codable, Hashable, Sendable {
+public struct ChargeFraudDetailsUserReport: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -495,69 +495,4 @@ public struct ChargeUpdateFraudDetailsUserReport: RawRepresentable, Codable, Has
 
     public static var fraudulent: Self { .init(rawValue: "fraudulent") }
     public static var safe: Self { .init(rawValue: "safe") }
-}
-
-/// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-public struct ChargeUpdateShipping: StripeParams {
-    /// Shipping address.
-    public var address: ChargeUpdateShippingAddress
-    /// Recipient name.
-    public var name: String
-    /// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-    public var carrier: String?
-    /// Recipient phone (including extension).
-    public var phone: String?
-    /// The tracking number for a physical product, obtained from the delivery service. If multiple tracking
-    /// numbers were generated for this purchase, please separate them with commas.
-    public var trackingNumber: String?
-
-    public init(address: ChargeUpdateShippingAddress, name: String, carrier: String? = nil, phone: String? = nil, trackingNumber: String? = nil) {
-        self.address = address
-        self.name = name
-        self.carrier = carrier
-        self.phone = phone
-        self.trackingNumber = trackingNumber
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case address
-        case carrier
-        case name
-        case phone
-        case trackingNumber = "tracking_number"
-    }
-}
-
-/// Shipping address.
-public struct ChargeUpdateShippingAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
 }

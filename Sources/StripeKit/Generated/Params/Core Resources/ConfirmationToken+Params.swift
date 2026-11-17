@@ -13,9 +13,9 @@ public struct ConfirmationTokenCreateParams: StripeParams {
     /// ID of an existing PaymentMethod.
     public var paymentMethod: String?
     /// If provided, this hash will be used to create a PaymentMethod.
-    public var paymentMethodData: ConfirmationTokenCreatePaymentMethodData?
+    public var paymentMethodData: ConfirmationTokenPaymentMethodData?
     /// Payment-method-specific configuration for this ConfirmationToken.
-    public var paymentMethodOptions: ConfirmationTokenCreatePaymentMethodOptions?
+    public var paymentMethodOptions: ConfirmationTokenPaymentMethodOptions?
     /// Return URL used to confirm the Intent.
     public var returnUrl: String?
     /// Indicates that you intend to make future payments with this ConfirmationToken's payment method. The
@@ -24,9 +24,9 @@ public struct ConfirmationTokenCreateParams: StripeParams {
     /// present, after the PaymentIntent is confirmed and any required actions from the user are complete.
     public var setupFutureUsage: ConfirmationTokenCreateSetupFutureUsage?
     /// Shipping information for this ConfirmationToken.
-    public var shipping: ConfirmationTokenCreateShipping?
+    public var shipping: ConfirmationTokenShipping?
 
-    public init(expand: [String]? = nil, paymentMethod: String? = nil, paymentMethodData: ConfirmationTokenCreatePaymentMethodData? = nil, paymentMethodOptions: ConfirmationTokenCreatePaymentMethodOptions? = nil, returnUrl: String? = nil, setupFutureUsage: ConfirmationTokenCreateSetupFutureUsage? = nil, shipping: ConfirmationTokenCreateShipping? = nil) {
+    public init(expand: [String]? = nil, paymentMethod: String? = nil, paymentMethodData: ConfirmationTokenPaymentMethodData? = nil, paymentMethodOptions: ConfirmationTokenPaymentMethodOptions? = nil, returnUrl: String? = nil, setupFutureUsage: ConfirmationTokenCreateSetupFutureUsage? = nil, shipping: ConfirmationTokenShipping? = nil) {
         self.expand = expand
         self.paymentMethod = paymentMethod
         self.paymentMethodData = paymentMethodData
@@ -48,13 +48,13 @@ public struct ConfirmationTokenCreateParams: StripeParams {
 }
 
 /// If provided, this hash will be used to create a PaymentMethod.
-public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
+public struct ConfirmationTokenPaymentMethodData: StripeParams {
     /// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name
     /// matching this value. It contains additional information specific to the PaymentMethod type.
-    public var type: ConfirmationTokenCreatePaymentMethodDataType
+    public var type: ConfirmationTokenPaymentMethodDataType
     /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
     /// method.
-    public var acssDebit: ConfirmationTokenCreatePaymentMethodDataAcssDebit?
+    public var acssDebit: ConfirmationTokenPaymentMethodDataAcssDebit?
     /// If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
     public var affirm: [String: String]?
     /// If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the
@@ -66,17 +66,17 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
     /// method can be shown as a saved payment method in a checkout flow. The field defaults to
     /// `unspecified`.
-    public var allowRedisplay: ConfirmationTokenCreatePaymentMethodDataAllowRedisplay?
+    public var allowRedisplay: ConfirmationTokenPaymentMethodDataAllowRedisplay?
     /// If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
     public var alma: [String: String]?
     /// If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment
     /// method.
     public var amazonPay: [String: String]?
     /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
-    public var auBecsDebit: ConfirmationTokenCreatePaymentMethodDataAuBecsDebit?
+    public var auBecsDebit: ConfirmationTokenPaymentMethodDataAuBecsDebit?
     /// If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank
     /// account.
-    public var bacsDebit: ConfirmationTokenCreatePaymentMethodDataBacsDebit?
+    public var bacsDebit: ConfirmationTokenPaymentMethodDataBacsDebit?
     /// If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment
     /// method.
     public var bancontact: [String: String]?
@@ -84,13 +84,13 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     public var billie: [String: String]?
     /// Billing information associated with the PaymentMethod that may be used or required by particular
     /// types of payment methods.
-    public var billingDetails: ConfirmationTokenCreatePaymentMethodDataBillingDetails?
+    public var billingDetails: ConfirmationTokenPaymentMethodDataBillingDetails?
     /// If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
     public var bizum: [String: String]?
     /// If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
     public var blik: [String: String]?
     /// If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
-    public var boleto: ConfirmationTokenCreatePaymentMethodDataBoleto?
+    public var boleto: ConfirmationTokenPaymentMethodDataBoleto?
     /// If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment
     /// method.
     public var cashapp: [String: String]?
@@ -100,15 +100,15 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     /// payment method.
     public var customerBalance: [String: String]?
     /// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
-    public var eps: ConfirmationTokenCreatePaymentMethodDataEps?
+    public var eps: ConfirmationTokenPaymentMethodDataEps?
     /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
-    public var fpx: ConfirmationTokenCreatePaymentMethodDataFpx?
+    public var fpx: ConfirmationTokenPaymentMethodDataFpx?
     /// If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
     public var giropay: [String: String]?
     /// If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
     public var grabpay: [String: String]?
     /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
-    public var ideal: ConfirmationTokenCreatePaymentMethodDataIdeal?
+    public var ideal: ConfirmationTokenPaymentMethodDataIdeal?
     /// If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present
     /// payment method.
     public var interacPresent: [String: String]?
@@ -116,7 +116,7 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     /// method.
     public var kakaoPay: [String: String]?
     /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
-    public var klarna: ConfirmationTokenCreatePaymentMethodDataKlarna?
+    public var klarna: ConfirmationTokenPaymentMethodDataKlarna?
     /// If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
     public var konbini: [String: String]?
     /// If this is a `kr_card` PaymentMethod, this hash contains details about the Korean Card payment
@@ -140,14 +140,14 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     public var multibanco: [String: String]?
     /// If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment
     /// method.
-    public var naverPay: ConfirmationTokenCreatePaymentMethodDataNaverPay?
+    public var naverPay: ConfirmationTokenPaymentMethodDataNaverPay?
     /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
     /// payment method.
-    public var nzBankAccount: ConfirmationTokenCreatePaymentMethodDataNzBankAccount?
+    public var nzBankAccount: ConfirmationTokenPaymentMethodDataNzBankAccount?
     /// If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
     public var oxxo: [String: String]?
     /// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
-    public var p24: ConfirmationTokenCreatePaymentMethodDataP24?
+    public var p24: ConfirmationTokenPaymentMethodDataP24?
     /// If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment
     /// method.
     public var payByBank: [String: String]?
@@ -160,7 +160,7 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     /// If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
     public var paypay: [String: String]?
     /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-    public var payto: ConfirmationTokenCreatePaymentMethodDataPayto?
+    public var payto: ConfirmationTokenPaymentMethodDataPayto?
     /// If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
     public var pix: [String: String]?
     /// If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment
@@ -168,7 +168,7 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     public var promptpay: [String: String]?
     /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
     /// more information.
-    public var radarOptions: ConfirmationTokenCreatePaymentMethodDataRadarOptions?
+    public var radarOptions: ConfirmationTokenPaymentMethodDataRadarOptions?
     /// If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment
     /// method.
     public var revolutPay: [String: String]?
@@ -181,11 +181,11 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     public var scalapay: [String: String]?
     /// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank
     /// account.
-    public var sepaDebit: ConfirmationTokenCreatePaymentMethodDataSepaDebit?
+    public var sepaDebit: ConfirmationTokenPaymentMethodDataSepaDebit?
     /// If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
     public var sequra: [String: String]?
     /// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-    public var sofort: ConfirmationTokenCreatePaymentMethodDataSofort?
+    public var sofort: ConfirmationTokenPaymentMethodDataSofort?
     /// If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
     public var sunbit: [String: String]?
     /// If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -193,17 +193,17 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     /// If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
     public var twint: [String: String]?
     /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
-    public var upi: ConfirmationTokenCreatePaymentMethodDataUpi?
+    public var upi: ConfirmationTokenPaymentMethodDataUpi?
     /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
     /// payment method.
-    public var usBankAccount: ConfirmationTokenCreatePaymentMethodDataUsBankAccount?
+    public var usBankAccount: ConfirmationTokenPaymentMethodDataUsBankAccount?
     /// If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment
     /// method.
     public var wechatPay: [String: String]?
     /// If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
     public var zip: [String: String]?
 
-    public init(type: ConfirmationTokenCreatePaymentMethodDataType, acssDebit: ConfirmationTokenCreatePaymentMethodDataAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: ConfirmationTokenCreatePaymentMethodDataAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: ConfirmationTokenCreatePaymentMethodDataAuBecsDebit? = nil, bacsDebit: ConfirmationTokenCreatePaymentMethodDataBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: ConfirmationTokenCreatePaymentMethodDataBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: ConfirmationTokenCreatePaymentMethodDataBoleto? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, customerBalance: [String: String]? = nil, eps: ConfirmationTokenCreatePaymentMethodDataEps? = nil, fpx: ConfirmationTokenCreatePaymentMethodDataFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: ConfirmationTokenCreatePaymentMethodDataIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: ConfirmationTokenCreatePaymentMethodDataKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: ConfirmationTokenCreatePaymentMethodDataNaverPay? = nil, nzBankAccount: ConfirmationTokenCreatePaymentMethodDataNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: ConfirmationTokenCreatePaymentMethodDataP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: ConfirmationTokenCreatePaymentMethodDataPayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: ConfirmationTokenCreatePaymentMethodDataRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: ConfirmationTokenCreatePaymentMethodDataSepaDebit? = nil, sequra: [String: String]? = nil, sofort: ConfirmationTokenCreatePaymentMethodDataSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, upi: ConfirmationTokenCreatePaymentMethodDataUpi? = nil, usBankAccount: ConfirmationTokenCreatePaymentMethodDataUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
+    public init(type: ConfirmationTokenPaymentMethodDataType, acssDebit: ConfirmationTokenPaymentMethodDataAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: ConfirmationTokenPaymentMethodDataAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: ConfirmationTokenPaymentMethodDataAuBecsDebit? = nil, bacsDebit: ConfirmationTokenPaymentMethodDataBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: ConfirmationTokenPaymentMethodDataBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: ConfirmationTokenPaymentMethodDataBoleto? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, customerBalance: [String: String]? = nil, eps: ConfirmationTokenPaymentMethodDataEps? = nil, fpx: ConfirmationTokenPaymentMethodDataFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: ConfirmationTokenPaymentMethodDataIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: ConfirmationTokenPaymentMethodDataKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: ConfirmationTokenPaymentMethodDataNaverPay? = nil, nzBankAccount: ConfirmationTokenPaymentMethodDataNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: ConfirmationTokenPaymentMethodDataP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: ConfirmationTokenPaymentMethodDataPayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: ConfirmationTokenPaymentMethodDataRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: ConfirmationTokenPaymentMethodDataSepaDebit? = nil, sequra: [String: String]? = nil, sofort: ConfirmationTokenPaymentMethodDataSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, upi: ConfirmationTokenPaymentMethodDataUpi? = nil, usBankAccount: ConfirmationTokenPaymentMethodDataUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
         self.type = type
         self.acssDebit = acssDebit
         self.affirm = affirm
@@ -332,7 +332,7 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -398,7 +398,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataType: RawRepresentable, Co
 
 /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
 /// method.
-public struct ConfirmationTokenCreatePaymentMethodDataAcssDebit: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataAcssDebit: StripeParams {
     /// Customer's bank account number.
     public var accountNumber: String
     /// Institution number of the customer's bank.
@@ -419,7 +419,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataAcssDebit: StripeParams {
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -432,7 +432,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataAllowRedisplay: RawReprese
 }
 
 /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
-public struct ConfirmationTokenCreatePaymentMethodDataAuBecsDebit: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataAuBecsDebit: StripeParams {
     /// The account number for the bank account.
     public var accountNumber: String
     /// Bank-State-Branch number of the bank account.
@@ -451,7 +451,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataAuBecsDebit: StripeParams 
 
 /// If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank
 /// account.
-public struct ConfirmationTokenCreatePaymentMethodDataBacsDebit: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataBacsDebit: StripeParams {
     /// Account number of the bank account that the funds will be debited from.
     public var accountNumber: String?
     /// Sort code of the bank account. (e.g., `10-20-30`)
@@ -470,9 +470,9 @@ public struct ConfirmationTokenCreatePaymentMethodDataBacsDebit: StripeParams {
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct ConfirmationTokenCreatePaymentMethodDataBillingDetails: ClearableParams {
+public struct ConfirmationTokenPaymentMethodDataBillingDetails: ClearableParams {
     /// Billing address.
-    public var address: ConfirmationTokenCreatePaymentMethodDataBillingDetailsAddress?
+    public var address: ConfirmationTokenPaymentMethodDataBillingDetailsAddress?
     /// Email address.
     public var email: String?
     /// Full name.
@@ -485,7 +485,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataBillingDetails: ClearableP
     /// Fields to send empty, which clears them: `params.clear(.address)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: ConfirmationTokenCreatePaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
+    public init(address: ConfirmationTokenPaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
         self.address = address
         self.email = email
         self.name = name
@@ -511,7 +511,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataBillingDetails: ClearableP
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataBillingDetailsAddress: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataBillingDetailsAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -545,7 +545,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataBillingDetailsAddress: Str
 }
 
 /// If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataBoleto: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataBoleto: StripeParams {
     /// The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
     public var taxId: String
 
@@ -559,16 +559,16 @@ public struct ConfirmationTokenCreatePaymentMethodDataBoleto: StripeParams {
 }
 
 /// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataEps: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataEps: StripeParams {
     /// The customer's bank.
-    public var bank: ConfirmationTokenCreatePaymentMethodDataEpsBank?
+    public var bank: ConfirmationTokenPaymentMethodDataEpsBank?
 
-    public init(bank: ConfirmationTokenCreatePaymentMethodDataEpsBank? = nil) {
+    public init(bank: ConfirmationTokenPaymentMethodDataEpsBank? = nil) {
         self.bank = bank
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataEpsBank: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataEpsBank: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -606,13 +606,13 @@ public struct ConfirmationTokenCreatePaymentMethodDataEpsBank: RawRepresentable,
 }
 
 /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataFpx: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataFpx: StripeParams {
     /// The customer's bank.
-    public var bank: ConfirmationTokenCreatePaymentMethodDataFpxBank
+    public var bank: ConfirmationTokenPaymentMethodDataFpxBank
     /// Account holder type for FPX transaction
-    public var accountHolderType: ConfirmationTokenCreatePaymentMethodDataFpxAccountHolderType?
+    public var accountHolderType: ConfirmationTokenPaymentMethodDataFpxAccountHolderType?
 
-    public init(bank: ConfirmationTokenCreatePaymentMethodDataFpxBank, accountHolderType: ConfirmationTokenCreatePaymentMethodDataFpxAccountHolderType? = nil) {
+    public init(bank: ConfirmationTokenPaymentMethodDataFpxBank, accountHolderType: ConfirmationTokenPaymentMethodDataFpxAccountHolderType? = nil) {
         self.bank = bank
         self.accountHolderType = accountHolderType
     }
@@ -623,7 +623,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataFpx: StripeParams {
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataFpxBank: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataFpxBank: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -657,7 +657,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataFpxBank: RawRepresentable,
     public static var uob: Self { .init(rawValue: "uob") }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataFpxAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataFpxAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -669,16 +669,16 @@ public struct ConfirmationTokenCreatePaymentMethodDataFpxAccountHolderType: RawR
 }
 
 /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataIdeal: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataIdeal: StripeParams {
     /// The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
-    public var bank: ConfirmationTokenCreatePaymentMethodDataIdealBank?
+    public var bank: ConfirmationTokenPaymentMethodDataIdealBank?
 
-    public init(bank: ConfirmationTokenCreatePaymentMethodDataIdealBank? = nil) {
+    public init(bank: ConfirmationTokenPaymentMethodDataIdealBank? = nil) {
         self.bank = bank
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataIdealBank: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataIdealBank: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -708,17 +708,17 @@ public struct ConfirmationTokenCreatePaymentMethodDataIdealBank: RawRepresentabl
 }
 
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataKlarna: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataKlarna: StripeParams {
     /// Customer's date of birth
-    public var dob: ConfirmationTokenCreatePaymentMethodDataKlarnaDob?
+    public var dob: ConfirmationTokenPaymentMethodDataKlarnaDob?
 
-    public init(dob: ConfirmationTokenCreatePaymentMethodDataKlarnaDob? = nil) {
+    public init(dob: ConfirmationTokenPaymentMethodDataKlarnaDob? = nil) {
         self.dob = dob
     }
 }
 
 /// Customer's date of birth
-public struct ConfirmationTokenCreatePaymentMethodDataKlarnaDob: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataKlarnaDob: StripeParams {
     /// The day of birth, between 1 and 31.
     public var day: Int
     /// The month of birth, between 1 and 12.
@@ -735,17 +735,17 @@ public struct ConfirmationTokenCreatePaymentMethodDataKlarnaDob: StripeParams {
 
 /// If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment
 /// method.
-public struct ConfirmationTokenCreatePaymentMethodDataNaverPay: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataNaverPay: StripeParams {
     /// Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults
     /// to `card`.
-    public var funding: ConfirmationTokenCreatePaymentMethodDataNaverPayFunding?
+    public var funding: ConfirmationTokenPaymentMethodDataNaverPayFunding?
 
-    public init(funding: ConfirmationTokenCreatePaymentMethodDataNaverPayFunding? = nil) {
+    public init(funding: ConfirmationTokenPaymentMethodDataNaverPayFunding? = nil) {
         self.funding = funding
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataNaverPayFunding: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataNaverPayFunding: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -758,7 +758,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataNaverPayFunding: RawRepres
 
 /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
 /// payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataNzBankAccount: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataNzBankAccount: StripeParams {
     /// The account number for the bank account.
     public var accountNumber: String
     /// The numeric code for the bank account's bank.
@@ -792,16 +792,16 @@ public struct ConfirmationTokenCreatePaymentMethodDataNzBankAccount: StripeParam
 }
 
 /// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataP24: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataP24: StripeParams {
     /// The customer's bank.
-    public var bank: ConfirmationTokenCreatePaymentMethodDataP24Bank?
+    public var bank: ConfirmationTokenPaymentMethodDataP24Bank?
 
-    public init(bank: ConfirmationTokenCreatePaymentMethodDataP24Bank? = nil) {
+    public init(bank: ConfirmationTokenPaymentMethodDataP24Bank? = nil) {
         self.bank = bank
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataP24Bank: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataP24Bank: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -837,7 +837,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataP24Bank: RawRepresentable,
 }
 
 /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataPayto: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataPayto: StripeParams {
     /// The account number for the bank account.
     public var accountNumber: String?
     /// Bank-State-Branch number of the bank account.
@@ -860,7 +860,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataPayto: StripeParams {
 
 /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
 /// more information.
-public struct ConfirmationTokenCreatePaymentMethodDataRadarOptions: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataRadarOptions: StripeParams {
     /// A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata
     /// and device details that help Radar make more accurate predictions on your payments.
     public var session: String?
@@ -872,7 +872,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataRadarOptions: StripeParams
 
 /// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank
 /// account.
-public struct ConfirmationTokenCreatePaymentMethodDataSepaDebit: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataSepaDebit: StripeParams {
     /// IBAN of the bank account.
     public var iban: String
 
@@ -882,16 +882,16 @@ public struct ConfirmationTokenCreatePaymentMethodDataSepaDebit: StripeParams {
 }
 
 /// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataSofort: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataSofort: StripeParams {
     /// Two-letter ISO code representing the country the bank account is located in.
-    public var country: ConfirmationTokenCreatePaymentMethodDataSofortCountry
+    public var country: ConfirmationTokenPaymentMethodDataSofortCountry
 
-    public init(country: ConfirmationTokenCreatePaymentMethodDataSofortCountry) {
+    public init(country: ConfirmationTokenPaymentMethodDataSofortCountry) {
         self.country = country
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataSofortCountry: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataSofortCountry: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -907,11 +907,11 @@ public struct ConfirmationTokenCreatePaymentMethodDataSofortCountry: RawRepresen
 }
 
 /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataUpi: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataUpi: StripeParams {
     /// Configuration options for setting up an eMandate
-    public var mandateOptions: ConfirmationTokenCreatePaymentMethodDataUpiMandateOptions?
+    public var mandateOptions: ConfirmationTokenPaymentMethodDataUpiMandateOptions?
 
-    public init(mandateOptions: ConfirmationTokenCreatePaymentMethodDataUpiMandateOptions? = nil) {
+    public init(mandateOptions: ConfirmationTokenPaymentMethodDataUpiMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
@@ -921,19 +921,19 @@ public struct ConfirmationTokenCreatePaymentMethodDataUpi: StripeParams {
 }
 
 /// Configuration options for setting up an eMandate
-public struct ConfirmationTokenCreatePaymentMethodDataUpiMandateOptions: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataUpiMandateOptions: StripeParams {
     /// Amount to be charged for future payments.
     public var amount: Int?
     /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
     /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
     /// param.
-    public var amountType: ConfirmationTokenCreatePaymentMethodDataUpiMandateOptionsAmountType?
+    public var amountType: ConfirmationTokenPaymentMethodDataUpiMandateOptionsAmountType?
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
     public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: ConfirmationTokenCreatePaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
+    public init(amount: Int? = nil, amountType: ConfirmationTokenPaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -948,7 +948,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataUpiMandateOptions: StripeP
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -961,19 +961,19 @@ public struct ConfirmationTokenCreatePaymentMethodDataUpiMandateOptionsAmountTyp
 
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
 /// payment method.
-public struct ConfirmationTokenCreatePaymentMethodDataUsBankAccount: StripeParams {
+public struct ConfirmationTokenPaymentMethodDataUsBankAccount: StripeParams {
     /// Account holder type: individual or company.
-    public var accountHolderType: ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountHolderType?
+    public var accountHolderType: ConfirmationTokenPaymentMethodDataUsBankAccountAccountHolderType?
     /// Account number of the bank account.
     public var accountNumber: String?
     /// Account type: checkings or savings. Defaults to checking if omitted.
-    public var accountType: ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountType?
+    public var accountType: ConfirmationTokenPaymentMethodDataUsBankAccountAccountType?
     /// The ID of a Financial Connections Account to use as a payment method.
     public var financialConnectionsAccount: String?
     /// Routing number of the bank account.
     public var routingNumber: String?
 
-    public init(accountHolderType: ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountHolderType? = nil, accountNumber: String? = nil, accountType: ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountType? = nil, financialConnectionsAccount: String? = nil, routingNumber: String? = nil) {
+    public init(accountHolderType: ConfirmationTokenPaymentMethodDataUsBankAccountAccountHolderType? = nil, accountNumber: String? = nil, accountType: ConfirmationTokenPaymentMethodDataUsBankAccountAccountType? = nil, financialConnectionsAccount: String? = nil, routingNumber: String? = nil) {
         self.accountHolderType = accountHolderType
         self.accountNumber = accountNumber
         self.accountType = accountType
@@ -990,7 +990,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataUsBankAccount: StripeParam
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1001,7 +1001,7 @@ public struct ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountHolder
     public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodDataUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1013,56 +1013,56 @@ public struct ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountType: 
 }
 
 /// Payment-method-specific configuration for this ConfirmationToken.
-public struct ConfirmationTokenCreatePaymentMethodOptions: StripeParams {
+public struct ConfirmationTokenPaymentMethodOptions: StripeParams {
     /// Configuration for any card payments confirmed using this ConfirmationToken.
-    public var card: ConfirmationTokenCreatePaymentMethodOptionsCard?
+    public var card: ConfirmationTokenPaymentMethodOptionsCard?
 
-    public init(card: ConfirmationTokenCreatePaymentMethodOptionsCard? = nil) {
+    public init(card: ConfirmationTokenPaymentMethodOptionsCard? = nil) {
         self.card = card
     }
 }
 
 /// Configuration for any card payments confirmed using this ConfirmationToken.
-public struct ConfirmationTokenCreatePaymentMethodOptionsCard: StripeParams {
+public struct ConfirmationTokenPaymentMethodOptionsCard: StripeParams {
     /// Installment configuration for payments confirmed using this ConfirmationToken.
-    public var installments: ConfirmationTokenCreatePaymentMethodOptionsCardInstallments?
+    public var installments: ConfirmationTokenPaymentMethodOptionsCardInstallments?
 
-    public init(installments: ConfirmationTokenCreatePaymentMethodOptionsCardInstallments? = nil) {
+    public init(installments: ConfirmationTokenPaymentMethodOptionsCardInstallments? = nil) {
         self.installments = installments
     }
 }
 
 /// Installment configuration for payments confirmed using this ConfirmationToken.
-public struct ConfirmationTokenCreatePaymentMethodOptionsCardInstallments: StripeParams {
+public struct ConfirmationTokenPaymentMethodOptionsCardInstallments: StripeParams {
     /// The selected installment plan to use for this payment attempt. This parameter can only be provided
     /// during confirmation.
-    public var plan: ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlan
+    public var plan: ConfirmationTokenPaymentMethodOptionsCardInstallmentsPlan
 
-    public init(plan: ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlan) {
+    public init(plan: ConfirmationTokenPaymentMethodOptionsCardInstallmentsPlan) {
         self.plan = plan
     }
 }
 
 /// The selected installment plan to use for this payment attempt. This parameter can only be provided
 /// during confirmation.
-public struct ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlan: StripeParams {
+public struct ConfirmationTokenPaymentMethodOptionsCardInstallmentsPlan: StripeParams {
     /// Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
-    public var type: ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlanType
+    public var type: ConfirmationTokenPaymentMethodOptionsCardInstallmentsPlanType
     /// For `fixed_count` installment plans, this is required. It represents the number of installment
     /// payments your customer will make to their credit card.
     public var count: Int?
     /// For `fixed_count` installment plans, this is required. It represents the interval between
     /// installment payments your customer will make to their credit card. One of `month`.
-    public var interval: ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlanInterval?
+    public var interval: ConfirmationTokenPaymentMethodOptionsCardInstallmentsPlanInterval?
 
-    public init(type: ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlanType, count: Int? = nil, interval: ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlanInterval? = nil) {
+    public init(type: ConfirmationTokenPaymentMethodOptionsCardInstallmentsPlanType, count: Int? = nil, interval: ConfirmationTokenPaymentMethodOptionsCardInstallmentsPlanInterval? = nil) {
         self.type = type
         self.count = count
         self.interval = interval
     }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlanType: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodOptionsCardInstallmentsPlanType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1074,7 +1074,7 @@ public struct ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlanTyp
     public static var revolving: Self { .init(rawValue: "revolving") }
 }
 
-public struct ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlanInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct ConfirmationTokenPaymentMethodOptionsCardInstallmentsPlanInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1096,9 +1096,9 @@ public struct ConfirmationTokenCreateSetupFutureUsage: RawRepresentable, Codable
 }
 
 /// Shipping information for this ConfirmationToken.
-public struct ConfirmationTokenCreateShipping: ClearableParams {
+public struct ConfirmationTokenShipping: ClearableParams {
     /// Shipping address
-    public var address: ConfirmationTokenCreateShippingAddress
+    public var address: ConfirmationTokenShippingAddress
     /// Recipient name.
     public var name: String
     /// Recipient phone (including extension)
@@ -1106,7 +1106,7 @@ public struct ConfirmationTokenCreateShipping: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.phone)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: ConfirmationTokenCreateShippingAddress, name: String, phone: String? = nil) {
+    public init(address: ConfirmationTokenShippingAddress, name: String, phone: String? = nil) {
         self.address = address
         self.name = name
         self.phone = phone
@@ -1126,7 +1126,7 @@ public struct ConfirmationTokenCreateShipping: ClearableParams {
 }
 
 /// Shipping address
-public struct ConfirmationTokenCreateShippingAddress: StripeParams {
+public struct ConfirmationTokenShippingAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).

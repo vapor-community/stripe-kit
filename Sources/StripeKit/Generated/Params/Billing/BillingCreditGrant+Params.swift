@@ -9,10 +9,10 @@ import Foundation
 
 public struct BillingCreditGrantCreateParams: StripeParams {
     /// Amount of this credit grant.
-    public var amount: BillingCreditGrantCreateAmount
+    public var amount: BillingCreditGrantAmount
     /// Configuration specifying what this credit grant applies to. We currently only support `metered`
     /// prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
-    public var applicabilityConfig: BillingCreditGrantCreateApplicabilityConfig
+    public var applicabilityConfig: BillingCreditGrantApplicabilityConfig
     /// The category of this credit grant. It defaults to `paid` if not specified.
     public var category: BillingCreditGrantCreateCategory?
     /// ID of the customer receiving the billing credits.
@@ -35,7 +35,7 @@ public struct BillingCreditGrantCreateParams: StripeParams {
     /// value of 50. The highest priority is 0 and the lowest is 100.
     public var priority: Int?
 
-    public init(amount: BillingCreditGrantCreateAmount, applicabilityConfig: BillingCreditGrantCreateApplicabilityConfig, category: BillingCreditGrantCreateCategory? = nil, customer: String? = nil, customerAccount: String? = nil, effectiveAt: Date? = nil, expand: [String]? = nil, expiresAt: Date? = nil, metadata: [String: String]? = nil, name: String? = nil, priority: Int? = nil) {
+    public init(amount: BillingCreditGrantAmount, applicabilityConfig: BillingCreditGrantApplicabilityConfig, category: BillingCreditGrantCreateCategory? = nil, customer: String? = nil, customerAccount: String? = nil, effectiveAt: Date? = nil, expand: [String]? = nil, expiresAt: Date? = nil, metadata: [String: String]? = nil, name: String? = nil, priority: Int? = nil) {
         self.amount = amount
         self.applicabilityConfig = applicabilityConfig
         self.category = category
@@ -153,19 +153,19 @@ public struct BillingCreditGrantVoidGrantParams: StripeParams {
 }
 
 /// Amount of this credit grant.
-public struct BillingCreditGrantCreateAmount: StripeParams {
+public struct BillingCreditGrantAmount: StripeParams {
     /// The type of this amount. We currently only support `monetary` billing credits.
-    public var type: BillingCreditGrantCreateAmountType
+    public var type: BillingCreditGrantAmountType
     /// The monetary amount.
-    public var monetary: BillingCreditGrantCreateAmountMonetary?
+    public var monetary: BillingCreditGrantAmountMonetary?
 
-    public init(type: BillingCreditGrantCreateAmountType, monetary: BillingCreditGrantCreateAmountMonetary? = nil) {
+    public init(type: BillingCreditGrantAmountType, monetary: BillingCreditGrantAmountMonetary? = nil) {
         self.type = type
         self.monetary = monetary
     }
 }
 
-public struct BillingCreditGrantCreateAmountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingCreditGrantAmountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -176,7 +176,7 @@ public struct BillingCreditGrantCreateAmountType: RawRepresentable, Codable, Has
 }
 
 /// The monetary amount.
-public struct BillingCreditGrantCreateAmountMonetary: StripeParams {
+public struct BillingCreditGrantAmountMonetary: StripeParams {
     /// Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `value`
     /// parameter.
     public var currency: String
@@ -191,25 +191,25 @@ public struct BillingCreditGrantCreateAmountMonetary: StripeParams {
 
 /// Configuration specifying what this credit grant applies to. We currently only support `metered`
 /// prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
-public struct BillingCreditGrantCreateApplicabilityConfig: StripeParams {
+public struct BillingCreditGrantApplicabilityConfig: StripeParams {
     /// Specify the scope of this applicability config.
-    public var scope: BillingCreditGrantCreateApplicabilityConfigScope
+    public var scope: BillingCreditGrantApplicabilityConfigScope
 
-    public init(scope: BillingCreditGrantCreateApplicabilityConfigScope) {
+    public init(scope: BillingCreditGrantApplicabilityConfigScope) {
         self.scope = scope
     }
 }
 
 /// Specify the scope of this applicability config.
-public struct BillingCreditGrantCreateApplicabilityConfigScope: StripeParams {
+public struct BillingCreditGrantApplicabilityConfigScope: StripeParams {
     /// The price type that credit grants can apply to. We currently only support the `metered` price type.
     /// Cannot be used in combination with `prices`.
-    public var priceType: BillingCreditGrantCreateApplicabilityConfigScopePriceType?
+    public var priceType: BillingCreditGrantApplicabilityConfigScopePriceType?
     /// A list of prices that the credit grant can apply to. We currently only support the `metered` prices.
     /// Cannot be used in combination with `price_type`. Limit 20 prices.
-    public var prices: [BillingCreditGrantCreateApplicabilityConfigScopePrices]?
+    public var prices: [BillingCreditGrantApplicabilityConfigScopePrices]?
 
-    public init(priceType: BillingCreditGrantCreateApplicabilityConfigScopePriceType? = nil, prices: [BillingCreditGrantCreateApplicabilityConfigScopePrices]? = nil) {
+    public init(priceType: BillingCreditGrantApplicabilityConfigScopePriceType? = nil, prices: [BillingCreditGrantApplicabilityConfigScopePrices]? = nil) {
         self.priceType = priceType
         self.prices = prices
     }
@@ -220,7 +220,7 @@ public struct BillingCreditGrantCreateApplicabilityConfigScope: StripeParams {
     }
 }
 
-public struct BillingCreditGrantCreateApplicabilityConfigScopePriceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct BillingCreditGrantApplicabilityConfigScopePriceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -230,7 +230,7 @@ public struct BillingCreditGrantCreateApplicabilityConfigScopePriceType: RawRepr
     public static var metered: Self { .init(rawValue: "metered") }
 }
 
-public struct BillingCreditGrantCreateApplicabilityConfigScopePrices: StripeParams {
+public struct BillingCreditGrantApplicabilityConfigScopePrices: StripeParams {
     /// The price ID this credit grant should apply to.
     public var id: String
 

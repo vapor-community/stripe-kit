@@ -30,9 +30,9 @@ public struct TreasuryOutboundTransferCreateParams: StripeParams {
     public var destinationPaymentMethod: String?
     /// Hash used to generate the PaymentMethod to be used for this OutboundTransfer. Exclusive with
     /// `destination_payment_method`.
-    public var destinationPaymentMethodData: TreasuryOutboundTransferCreateDestinationPaymentMethodData?
+    public var destinationPaymentMethodData: TreasuryOutboundTransferDestinationPaymentMethodData?
     /// Hash describing payment method configuration details.
-    public var destinationPaymentMethodOptions: TreasuryOutboundTransferCreateDestinationPaymentMethodOptions?
+    public var destinationPaymentMethodOptions: TreasuryOutboundTransferDestinationPaymentMethodOptions?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
@@ -45,7 +45,7 @@ public struct TreasuryOutboundTransferCreateParams: StripeParams {
     /// "transfer". Can only include -#.$&*, spaces, and alphanumeric characters.
     public var statementDescriptor: String?
 
-    public init(amount: Int, currency: String, financialAccount: String, description: String? = nil, destinationPaymentMethod: String? = nil, destinationPaymentMethodData: TreasuryOutboundTransferCreateDestinationPaymentMethodData? = nil, destinationPaymentMethodOptions: TreasuryOutboundTransferCreateDestinationPaymentMethodOptions? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, statementDescriptor: String? = nil) {
+    public init(amount: Int, currency: String, financialAccount: String, description: String? = nil, destinationPaymentMethod: String? = nil, destinationPaymentMethodData: TreasuryOutboundTransferDestinationPaymentMethodData? = nil, destinationPaymentMethodOptions: TreasuryOutboundTransferDestinationPaymentMethodOptions? = nil, expand: [String]? = nil, metadata: [String: String]? = nil, statementDescriptor: String? = nil) {
         self.amount = amount
         self.currency = currency
         self.financialAccount = financialAccount
@@ -134,9 +134,9 @@ public struct TreasuryOutboundTransferReturnOutboundTransferParams: StripeParams
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Details about a returned OutboundTransfer.
-    public var returnedDetails: TreasuryOutboundTransferReturnOutboundTransferReturnedDetails?
+    public var returnedDetails: TreasuryOutboundTransferReturnedDetails?
 
-    public init(expand: [String]? = nil, returnedDetails: TreasuryOutboundTransferReturnOutboundTransferReturnedDetails? = nil) {
+    public init(expand: [String]? = nil, returnedDetails: TreasuryOutboundTransferReturnedDetails? = nil) {
         self.expand = expand
         self.returnedDetails = returnedDetails
     }
@@ -149,11 +149,11 @@ public struct TreasuryOutboundTransferReturnOutboundTransferParams: StripeParams
 
 public struct TreasuryOutboundTransferUpdateParams: StripeParams {
     /// Details about network-specific tracking information.
-    public var trackingDetails: TreasuryOutboundTransferUpdateTrackingDetails
+    public var trackingDetails: TreasuryOutboundTransferTrackingDetails
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
 
-    public init(trackingDetails: TreasuryOutboundTransferUpdateTrackingDetails, expand: [String]? = nil) {
+    public init(trackingDetails: TreasuryOutboundTransferTrackingDetails, expand: [String]? = nil) {
         self.trackingDetails = trackingDetails
         self.expand = expand
     }
@@ -166,13 +166,13 @@ public struct TreasuryOutboundTransferUpdateParams: StripeParams {
 
 /// Hash used to generate the PaymentMethod to be used for this OutboundTransfer. Exclusive with
 /// `destination_payment_method`.
-public struct TreasuryOutboundTransferCreateDestinationPaymentMethodData: StripeParams {
+public struct TreasuryOutboundTransferDestinationPaymentMethodData: StripeParams {
     /// The type of the destination.
-    public var type: TreasuryOutboundTransferCreateDestinationPaymentMethodDataType
+    public var type: TreasuryOutboundTransferDestinationPaymentMethodDataType
     /// Required if type is set to `financial_account`. The FinancialAccount ID to send funds to.
     public var financialAccount: String?
 
-    public init(type: TreasuryOutboundTransferCreateDestinationPaymentMethodDataType, financialAccount: String? = nil) {
+    public init(type: TreasuryOutboundTransferDestinationPaymentMethodDataType, financialAccount: String? = nil) {
         self.type = type
         self.financialAccount = financialAccount
     }
@@ -183,7 +183,7 @@ public struct TreasuryOutboundTransferCreateDestinationPaymentMethodData: Stripe
     }
 }
 
-public struct TreasuryOutboundTransferCreateDestinationPaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryOutboundTransferDestinationPaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -194,13 +194,13 @@ public struct TreasuryOutboundTransferCreateDestinationPaymentMethodDataType: Ra
 }
 
 /// Hash describing payment method configuration details.
-public struct TreasuryOutboundTransferCreateDestinationPaymentMethodOptions: ClearableParams {
+public struct TreasuryOutboundTransferDestinationPaymentMethodOptions: ClearableParams {
     /// Optional fields for `us_bank_account`.
-    public var usBankAccount: TreasuryOutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccount?
+    public var usBankAccount: TreasuryOutboundTransferDestinationPaymentMethodOptionsUsBankAccount?
     /// Fields to send empty, which clears them: `params.clear(.usBankAccount)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(usBankAccount: TreasuryOutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccount? = nil) {
+    public init(usBankAccount: TreasuryOutboundTransferDestinationPaymentMethodOptionsUsBankAccount? = nil) {
         self.usBankAccount = usBankAccount
     }
 
@@ -215,18 +215,18 @@ public struct TreasuryOutboundTransferCreateDestinationPaymentMethodOptions: Cle
     }
 }
 
-public struct TreasuryOutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccount: StripeParams {
+public struct TreasuryOutboundTransferDestinationPaymentMethodOptionsUsBankAccount: StripeParams {
     /// Specifies the network rails to be used. If not set, will default to the PaymentMethod's preferred
     /// network. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more
     /// about money movement timelines for each network type.
-    public var network: TreasuryOutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccountNetwork?
+    public var network: TreasuryOutboundTransferDestinationPaymentMethodOptionsUsBankAccountNetwork?
 
-    public init(network: TreasuryOutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccountNetwork? = nil) {
+    public init(network: TreasuryOutboundTransferDestinationPaymentMethodOptionsUsBankAccountNetwork? = nil) {
         self.network = network
     }
 }
 
-public struct TreasuryOutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryOutboundTransferDestinationPaymentMethodOptionsUsBankAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -252,16 +252,16 @@ public struct TreasuryOutboundTransferListStatus: RawRepresentable, Codable, Has
 }
 
 /// Details about a returned OutboundTransfer.
-public struct TreasuryOutboundTransferReturnOutboundTransferReturnedDetails: StripeParams {
+public struct TreasuryOutboundTransferReturnedDetails: StripeParams {
     /// Reason for the return.
-    public var code: TreasuryOutboundTransferReturnOutboundTransferReturnedDetailsCode?
+    public var code: TreasuryOutboundTransferReturnedDetailsCode?
 
-    public init(code: TreasuryOutboundTransferReturnOutboundTransferReturnedDetailsCode? = nil) {
+    public init(code: TreasuryOutboundTransferReturnedDetailsCode? = nil) {
         self.code = code
     }
 }
 
-public struct TreasuryOutboundTransferReturnOutboundTransferReturnedDetailsCode: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryOutboundTransferReturnedDetailsCode: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -281,15 +281,15 @@ public struct TreasuryOutboundTransferReturnOutboundTransferReturnedDetailsCode:
 }
 
 /// Details about network-specific tracking information.
-public struct TreasuryOutboundTransferUpdateTrackingDetails: StripeParams {
+public struct TreasuryOutboundTransferTrackingDetails: StripeParams {
     /// The US bank account network used to send funds.
-    public var type: TreasuryOutboundTransferUpdateTrackingDetailsType
+    public var type: TreasuryOutboundTransferTrackingDetailsType
     /// ACH network tracking details.
-    public var ach: TreasuryOutboundTransferUpdateTrackingDetailsAch?
+    public var ach: TreasuryOutboundTransferTrackingDetailsAch?
     /// US domestic wire network tracking details.
-    public var usDomesticWire: TreasuryOutboundTransferUpdateTrackingDetailsUsDomesticWire?
+    public var usDomesticWire: TreasuryOutboundTransferTrackingDetailsUsDomesticWire?
 
-    public init(type: TreasuryOutboundTransferUpdateTrackingDetailsType, ach: TreasuryOutboundTransferUpdateTrackingDetailsAch? = nil, usDomesticWire: TreasuryOutboundTransferUpdateTrackingDetailsUsDomesticWire? = nil) {
+    public init(type: TreasuryOutboundTransferTrackingDetailsType, ach: TreasuryOutboundTransferTrackingDetailsAch? = nil, usDomesticWire: TreasuryOutboundTransferTrackingDetailsUsDomesticWire? = nil) {
         self.type = type
         self.ach = ach
         self.usDomesticWire = usDomesticWire
@@ -302,7 +302,7 @@ public struct TreasuryOutboundTransferUpdateTrackingDetails: StripeParams {
     }
 }
 
-public struct TreasuryOutboundTransferUpdateTrackingDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryOutboundTransferTrackingDetailsType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -314,7 +314,7 @@ public struct TreasuryOutboundTransferUpdateTrackingDetailsType: RawRepresentabl
 }
 
 /// ACH network tracking details.
-public struct TreasuryOutboundTransferUpdateTrackingDetailsAch: StripeParams {
+public struct TreasuryOutboundTransferTrackingDetailsAch: StripeParams {
     /// ACH trace ID for funds sent over the `ach` network.
     public var traceId: String
 
@@ -328,7 +328,7 @@ public struct TreasuryOutboundTransferUpdateTrackingDetailsAch: StripeParams {
 }
 
 /// US domestic wire network tracking details.
-public struct TreasuryOutboundTransferUpdateTrackingDetailsUsDomesticWire: StripeParams {
+public struct TreasuryOutboundTransferTrackingDetailsUsDomesticWire: StripeParams {
     /// CHIPS System Sequence Number (SSN) for funds sent over the `us_domestic_wire` network.
     public var chips: String?
     /// IMAD for funds sent over the `us_domestic_wire` network.

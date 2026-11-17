@@ -25,7 +25,7 @@ public struct TreasuryTransactionEntryListParams: StripeParams {
     public var limit: Int?
     /// The results are in reverse chronological order by `created` or `effective_at`. The default is
     /// `created`.
-    public var orderBy: TreasuryTransactionEntryListOrderBy?
+    public var orderBy: TreasuryTransactionEntryOrderBy?
     /// A cursor for use in pagination. `starting_after` is an object ID that defines your place in the
     /// list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your
     /// subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
@@ -33,7 +33,7 @@ public struct TreasuryTransactionEntryListParams: StripeParams {
     /// Only return TransactionEntries associated with this Transaction.
     public var transaction: String?
 
-    public init(financialAccount: String, created: StripeRangeQuery? = nil, effectiveAt: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, orderBy: TreasuryTransactionEntryListOrderBy? = nil, startingAfter: String? = nil, transaction: String? = nil) {
+    public init(financialAccount: String, created: StripeRangeQuery? = nil, effectiveAt: StripeRangeQuery? = nil, endingBefore: String? = nil, expand: [String]? = nil, limit: Int? = nil, orderBy: TreasuryTransactionEntryOrderBy? = nil, startingAfter: String? = nil, transaction: String? = nil) {
         self.financialAccount = financialAccount
         self.created = created
         self.effectiveAt = effectiveAt
@@ -58,7 +58,7 @@ public struct TreasuryTransactionEntryListParams: StripeParams {
     }
 }
 
-public struct TreasuryTransactionEntryListOrderBy: RawRepresentable, Codable, Hashable, Sendable {
+public struct TreasuryTransactionEntryOrderBy: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

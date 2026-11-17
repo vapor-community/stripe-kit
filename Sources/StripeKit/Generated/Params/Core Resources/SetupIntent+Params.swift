@@ -29,7 +29,7 @@ public struct SetupIntentConfirmParams: ClearableParams {
     /// The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this
     /// list when determining the payment methods to offer. A list of valid payment method types can be
     /// found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-    public var allowedPaymentMethodTypes: [SetupIntentConfirmAllowedPaymentMethodTypes]?
+    public var allowedPaymentMethodTypes: [SetupIntentAllowedPaymentMethodTypes]?
     /// ID of the ConfirmationToken used to confirm this SetupIntent. If the provided ConfirmationToken
     /// contains properties that are also being provided in this request, such as `payment_method`, then the
     /// values in this request will take precedence.
@@ -42,7 +42,7 @@ public struct SetupIntentConfirmParams: ClearableParams {
     /// When included, this hash creates a PaymentMethod that is set as the
     /// [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
     /// value in the SetupIntent.
-    public var paymentMethodData: SetupIntentConfirmPaymentMethodData?
+    public var paymentMethodData: SetupIntentPaymentMethodData?
     /// Payment method-specific configuration for this SetupIntent.
     public var paymentMethodOptions: SetupIntentConfirmPaymentMethodOptions?
     /// The URL to redirect your customer back to after they authenticate on the payment method's app or
@@ -56,7 +56,7 @@ public struct SetupIntentConfirmParams: ClearableParams {
     /// Fields to send empty, which clears them: `params.clear(.mandateData)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(allowedPaymentMethodTypes: [SetupIntentConfirmAllowedPaymentMethodTypes]? = nil, confirmationToken: String? = nil, expand: [String]? = nil, mandateData: SetupIntentConfirmMandateData? = nil, paymentMethod: String? = nil, paymentMethodData: SetupIntentConfirmPaymentMethodData? = nil, paymentMethodOptions: SetupIntentConfirmPaymentMethodOptions? = nil, returnUrl: String? = nil, useStripeSdk: Bool? = nil) {
+    public init(allowedPaymentMethodTypes: [SetupIntentAllowedPaymentMethodTypes]? = nil, confirmationToken: String? = nil, expand: [String]? = nil, mandateData: SetupIntentConfirmMandateData? = nil, paymentMethod: String? = nil, paymentMethodData: SetupIntentPaymentMethodData? = nil, paymentMethodOptions: SetupIntentConfirmPaymentMethodOptions? = nil, returnUrl: String? = nil, useStripeSdk: Bool? = nil) {
         self.allowedPaymentMethodTypes = allowedPaymentMethodTypes
         self.confirmationToken = confirmationToken
         self.expand = expand
@@ -91,7 +91,7 @@ public struct SetupIntentCreateParams: ClearableParams {
     /// The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this
     /// list when determining the payment methods to offer. A list of valid payment method types can be
     /// found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-    public var allowedPaymentMethodTypes: [SetupIntentCreateAllowedPaymentMethodTypes]?
+    public var allowedPaymentMethodTypes: [SetupIntentAllowedPaymentMethodTypes]?
     /// If present, the SetupIntent's payment method will be attached to the in-context Stripe Account. It
     /// can only be used for this Stripe Account’s own money movement flows like InboundTransfer and
     /// OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and
@@ -99,7 +99,7 @@ public struct SetupIntentCreateParams: ClearableParams {
     public var attachToSelf: Bool?
     /// When you enable this parameter, this SetupIntent accepts payment methods that you enable in the
     /// Dashboard and that are compatible with its other parameters.
-    public var automaticPaymentMethods: SetupIntentCreateAutomaticPaymentMethods?
+    public var automaticPaymentMethods: SetupIntentAutomaticPaymentMethods?
     /// Set to `true` to attempt to confirm this SetupIntent immediately. This parameter defaults to
     /// `false`. If a card is the attached payment method, you can provide a `return_url` in case further
     /// authentication is necessary.
@@ -119,14 +119,14 @@ public struct SetupIntentCreateParams: ClearableParams {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// The list of payment method types to exclude from use with this SetupIntent.
-    public var excludedPaymentMethodTypes: [SetupIntentCreateExcludedPaymentMethodTypes]?
+    public var excludedPaymentMethodTypes: [SetupIntentExcludedPaymentMethodTypes]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Indicates the directions of money movement for which this payment method is intended to be used.
     /// Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include
     /// `outbound` if you intend to use the payment method as the destination to send funds to. You can
     /// include both if you intend to use the payment method for both purposes.
-    public var flowDirections: [SetupIntentCreateFlowDirections]?
+    public var flowDirections: [SetupIntentFlowDirections]?
     /// This hash contains details about the mandate to create. This parameter can only be used with
     /// [`confirm=true`](https://docs.stripe.com/api/setup_intents/create#create_setup_intent-confirm).
     public var mandateData: SetupIntentCreateMandateData?
@@ -146,7 +146,7 @@ public struct SetupIntentCreateParams: ClearableParams {
     /// When included, this hash creates a PaymentMethod that is set as the
     /// [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
     /// value in the SetupIntent.
-    public var paymentMethodData: SetupIntentCreatePaymentMethodData?
+    public var paymentMethodData: SetupIntentPaymentMethodData?
     /// Payment method-specific configuration for this SetupIntent.
     public var paymentMethodOptions: SetupIntentCreatePaymentMethodOptions?
     /// The URL to redirect your customer back to after they authenticate or cancel their payment on the
@@ -158,17 +158,17 @@ public struct SetupIntentCreateParams: ClearableParams {
     /// completion. Single-use mandates are only valid for the following payment methods: `acss_debit`,
     /// `alipay`, `au_becs_debit`, `bacs_debit`, `bancontact`, `boleto`, `ideal`, `link`, `sepa_debit`, and
     /// `us_bank_account`.
-    public var singleUse: SetupIntentCreateSingleUse?
+    public var singleUse: SetupIntentSingleUse?
     /// Indicates how the payment method is intended to be used in the future. If not provided, this value
     /// defaults to `off_session`.
-    public var usage: SetupIntentCreateUsage?
+    public var usage: SetupIntentUsage?
     /// Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to
     /// handle the next actions.
     public var useStripeSdk: Bool?
     /// Fields to send empty, which clears them: `params.clear(.mandateData)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(allowedPaymentMethodTypes: [SetupIntentCreateAllowedPaymentMethodTypes]? = nil, attachToSelf: Bool? = nil, automaticPaymentMethods: SetupIntentCreateAutomaticPaymentMethods? = nil, confirm: Bool? = nil, confirmationToken: String? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, excludedPaymentMethodTypes: [SetupIntentCreateExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, flowDirections: [SetupIntentCreateFlowDirections]? = nil, mandateData: SetupIntentCreateMandateData? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, paymentMethod: String? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: SetupIntentCreatePaymentMethodData? = nil, paymentMethodOptions: SetupIntentCreatePaymentMethodOptions? = nil, returnUrl: String? = nil, singleUse: SetupIntentCreateSingleUse? = nil, usage: SetupIntentCreateUsage? = nil, useStripeSdk: Bool? = nil) {
+    public init(allowedPaymentMethodTypes: [SetupIntentAllowedPaymentMethodTypes]? = nil, attachToSelf: Bool? = nil, automaticPaymentMethods: SetupIntentAutomaticPaymentMethods? = nil, confirm: Bool? = nil, confirmationToken: String? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, excludedPaymentMethodTypes: [SetupIntentExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, flowDirections: [SetupIntentFlowDirections]? = nil, mandateData: SetupIntentCreateMandateData? = nil, metadata: [String: String]? = nil, onBehalfOf: String? = nil, paymentMethod: String? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: SetupIntentPaymentMethodData? = nil, paymentMethodOptions: SetupIntentCreatePaymentMethodOptions? = nil, returnUrl: String? = nil, singleUse: SetupIntentSingleUse? = nil, usage: SetupIntentUsage? = nil, useStripeSdk: Bool? = nil) {
         self.allowedPaymentMethodTypes = allowedPaymentMethodTypes
         self.attachToSelf = attachToSelf
         self.automaticPaymentMethods = automaticPaymentMethods
@@ -303,7 +303,7 @@ public struct SetupIntentUpdateParams: ClearableParams {
     /// The list of payment method types to allow for this SetupIntent. Stripe will only use methods in this
     /// list when determining the payment methods to offer. A list of valid payment method types can be
     /// found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
-    public var allowedPaymentMethodTypes: [SetupIntentUpdateAllowedPaymentMethodTypes]?
+    public var allowedPaymentMethodTypes: [SetupIntentAllowedPaymentMethodTypes]?
     /// If present, the SetupIntent's payment method will be attached to the in-context Stripe Account. It
     /// can only be used for this Stripe Account’s own money movement flows like InboundTransfer and
     /// OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and
@@ -320,14 +320,14 @@ public struct SetupIntentUpdateParams: ClearableParams {
     /// An arbitrary string attached to the object. Often useful for displaying to users.
     public var description: String?
     /// The list of payment method types to exclude from use with this SetupIntent.
-    public var excludedPaymentMethodTypes: [SetupIntentUpdateExcludedPaymentMethodTypes]?
+    public var excludedPaymentMethodTypes: [SetupIntentExcludedPaymentMethodTypes]?
     /// Specifies which fields in the response should be expanded.
     public var expand: [String]?
     /// Indicates the directions of money movement for which this payment method is intended to be used.
     /// Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include
     /// `outbound` if you intend to use the payment method as the destination to send funds to. You can
     /// include both if you intend to use the payment method for both purposes.
-    public var flowDirections: [SetupIntentUpdateFlowDirections]?
+    public var flowDirections: [SetupIntentFlowDirections]?
     /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
     /// This can be useful for storing additional information about the object in a structured format.
     /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
@@ -343,13 +343,13 @@ public struct SetupIntentUpdateParams: ClearableParams {
     /// When included, this hash creates a PaymentMethod that is set as the
     /// [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
     /// value in the SetupIntent.
-    public var paymentMethodData: SetupIntentUpdatePaymentMethodData?
+    public var paymentMethodData: SetupIntentPaymentMethodData?
     /// Payment method-specific configuration for this SetupIntent.
     public var paymentMethodOptions: SetupIntentUpdatePaymentMethodOptions?
     /// Fields to send empty, which clears them: `params.clear(.allowedPaymentMethodTypes)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(allowedPaymentMethodTypes: [SetupIntentUpdateAllowedPaymentMethodTypes]? = nil, attachToSelf: Bool? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, excludedPaymentMethodTypes: [SetupIntentUpdateExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, flowDirections: [SetupIntentUpdateFlowDirections]? = nil, metadata: [String: String]? = nil, paymentMethod: String? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: SetupIntentUpdatePaymentMethodData? = nil, paymentMethodOptions: SetupIntentUpdatePaymentMethodOptions? = nil) {
+    public init(allowedPaymentMethodTypes: [SetupIntentAllowedPaymentMethodTypes]? = nil, attachToSelf: Bool? = nil, customer: String? = nil, customerAccount: String? = nil, description: String? = nil, excludedPaymentMethodTypes: [SetupIntentExcludedPaymentMethodTypes]? = nil, expand: [String]? = nil, flowDirections: [SetupIntentFlowDirections]? = nil, metadata: [String: String]? = nil, paymentMethod: String? = nil, paymentMethodConfiguration: String? = nil, paymentMethodData: SetupIntentPaymentMethodData? = nil, paymentMethodOptions: SetupIntentUpdatePaymentMethodOptions? = nil) {
         self.allowedPaymentMethodTypes = allowedPaymentMethodTypes
         self.attachToSelf = attachToSelf
         self.customer = customer
@@ -424,7 +424,7 @@ public struct SetupIntentCancelCancellationReason: RawRepresentable, Codable, Ha
     public static var requestedByCustomer: Self { .init(rawValue: "requested_by_customer") }
 }
 
-public struct SetupIntentConfirmAllowedPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentAllowedPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -532,11 +532,11 @@ public struct SetupIntentConfirmAllowedPaymentMethodTypes: RawRepresentable, Cod
     public static var zip: Self { .init(rawValue: "zip") }
 }
 
-public struct SetupIntentConfirmMandateDataSecretKey: StripeParams {
+public struct SetupIntentMandateDataSecretKey: StripeParams {
     /// This hash contains details about the customer acceptance of the Mandate.
-    public var customerAcceptance: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptance
+    public var customerAcceptance: SetupIntentMandateDataSecretKeyCustomerAcceptance
 
-    public init(customerAcceptance: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptance) {
+    public init(customerAcceptance: SetupIntentMandateDataSecretKeyCustomerAcceptance) {
         self.customerAcceptance = customerAcceptance
     }
 
@@ -546,17 +546,17 @@ public struct SetupIntentConfirmMandateDataSecretKey: StripeParams {
 }
 
 /// This hash contains details about the customer acceptance of the Mandate.
-public struct SetupIntentConfirmMandateDataSecretKeyCustomerAcceptance: StripeParams {
+public struct SetupIntentMandateDataSecretKeyCustomerAcceptance: StripeParams {
     /// The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
-    public var type: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType
+    public var type: SetupIntentMandateDataSecretKeyCustomerAcceptanceType
     /// The time at which the customer accepted the Mandate.
     public var acceptedAt: Date?
     /// If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
     public var offline: [String: String]?
     /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
-    public var online: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline?
+    public var online: SetupIntentMandateDataSecretKeyCustomerAcceptanceOnline?
 
-    public init(type: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType, acceptedAt: Date? = nil, offline: [String: String]? = nil, online: SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline? = nil) {
+    public init(type: SetupIntentMandateDataSecretKeyCustomerAcceptanceType, acceptedAt: Date? = nil, offline: [String: String]? = nil, online: SetupIntentMandateDataSecretKeyCustomerAcceptanceOnline? = nil) {
         self.type = type
         self.acceptedAt = acceptedAt
         self.offline = offline
@@ -571,7 +571,7 @@ public struct SetupIntentConfirmMandateDataSecretKeyCustomerAcceptance: StripePa
     }
 }
 
-public struct SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentMandateDataSecretKeyCustomerAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -583,7 +583,7 @@ public struct SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceType: RawR
 }
 
 /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
-public struct SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline: StripeParams {
+public struct SetupIntentMandateDataSecretKeyCustomerAcceptanceOnline: StripeParams {
     /// The IP address from which the Mandate was accepted by the customer.
     public var ipAddress: String
     /// The user agent of the browser from which the Mandate was accepted by the customer.
@@ -601,11 +601,11 @@ public struct SetupIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline: St
 }
 
 /// This hash contains details about the Mandate to create
-public struct SetupIntentConfirmMandateDataClientKey: StripeParams {
+public struct SetupIntentMandateDataClientKey: StripeParams {
     /// This hash contains details about the customer acceptance of the Mandate.
-    public var customerAcceptance: SetupIntentConfirmMandateDataClientKeyCustomerAcceptance
+    public var customerAcceptance: SetupIntentMandateDataClientKeyCustomerAcceptance
 
-    public init(customerAcceptance: SetupIntentConfirmMandateDataClientKeyCustomerAcceptance) {
+    public init(customerAcceptance: SetupIntentMandateDataClientKeyCustomerAcceptance) {
         self.customerAcceptance = customerAcceptance
     }
 
@@ -615,20 +615,20 @@ public struct SetupIntentConfirmMandateDataClientKey: StripeParams {
 }
 
 /// This hash contains details about the customer acceptance of the Mandate.
-public struct SetupIntentConfirmMandateDataClientKeyCustomerAcceptance: StripeParams {
+public struct SetupIntentMandateDataClientKeyCustomerAcceptance: StripeParams {
     /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
-    public var online: SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline
+    public var online: SetupIntentMandateDataClientKeyCustomerAcceptanceOnline
     /// The type of customer acceptance information included with the Mandate.
-    public var type: SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceType
+    public var type: SetupIntentMandateDataClientKeyCustomerAcceptanceType
 
-    public init(online: SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline, type: SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceType) {
+    public init(online: SetupIntentMandateDataClientKeyCustomerAcceptanceOnline, type: SetupIntentMandateDataClientKeyCustomerAcceptanceType) {
         self.online = online
         self.type = type
     }
 }
 
 /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
-public struct SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline: StripeParams {
+public struct SetupIntentMandateDataClientKeyCustomerAcceptanceOnline: StripeParams {
     /// The IP address from which the Mandate was accepted by the customer.
     public var ipAddress: String?
     /// The user agent of the browser from which the Mandate was accepted by the customer.
@@ -645,7 +645,7 @@ public struct SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline: St
     }
 }
 
-public struct SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentMandateDataClientKeyCustomerAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -657,13 +657,13 @@ public struct SetupIntentConfirmMandateDataClientKeyCustomerAcceptanceType: RawR
 
 /// One of the forms `mandate_data` accepts.
 public enum SetupIntentConfirmMandateData: Codable, Sendable {
-    case secretKey(SetupIntentConfirmMandateDataSecretKey)
-    case clientKey(SetupIntentConfirmMandateDataClientKey)
+    case secretKey(SetupIntentMandateDataSecretKey)
+    case clientKey(SetupIntentMandateDataClientKey)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = try? SetupIntentConfirmMandateDataSecretKey(from: decoder) { self = .secretKey(value); return }
-        if let value = try? SetupIntentConfirmMandateDataClientKey(from: decoder) { self = .clientKey(value); return }
+        if let value = try? SetupIntentMandateDataSecretKey(from: decoder) { self = .secretKey(value); return }
+        if let value = try? SetupIntentMandateDataClientKey(from: decoder) { self = .clientKey(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SetupIntentConfirmMandateData matches")
     }
 
@@ -680,13 +680,13 @@ public enum SetupIntentConfirmMandateData: Codable, Sendable {
 /// When included, this hash creates a PaymentMethod that is set as the
 /// [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
 /// value in the SetupIntent.
-public struct SetupIntentConfirmPaymentMethodData: StripeParams {
+public struct SetupIntentPaymentMethodData: StripeParams {
     /// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name
     /// matching this value. It contains additional information specific to the PaymentMethod type.
-    public var type: SetupIntentConfirmPaymentMethodDataType
+    public var type: SetupIntentPaymentMethodDataType
     /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
     /// method.
-    public var acssDebit: SetupIntentConfirmPaymentMethodDataAcssDebit?
+    public var acssDebit: SetupIntentPaymentMethodDataAcssDebit?
     /// If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
     public var affirm: [String: String]?
     /// If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the
@@ -698,17 +698,17 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
     /// method can be shown as a saved payment method in a checkout flow. The field defaults to
     /// `unspecified`.
-    public var allowRedisplay: SetupIntentConfirmPaymentMethodDataAllowRedisplay?
+    public var allowRedisplay: SetupIntentPaymentMethodDataAllowRedisplay?
     /// If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
     public var alma: [String: String]?
     /// If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment
     /// method.
     public var amazonPay: [String: String]?
     /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
-    public var auBecsDebit: SetupIntentConfirmPaymentMethodDataAuBecsDebit?
+    public var auBecsDebit: SetupIntentPaymentMethodDataAuBecsDebit?
     /// If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank
     /// account.
-    public var bacsDebit: SetupIntentConfirmPaymentMethodDataBacsDebit?
+    public var bacsDebit: SetupIntentPaymentMethodDataBacsDebit?
     /// If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment
     /// method.
     public var bancontact: [String: String]?
@@ -716,13 +716,13 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     public var billie: [String: String]?
     /// Billing information associated with the PaymentMethod that may be used or required by particular
     /// types of payment methods.
-    public var billingDetails: SetupIntentConfirmPaymentMethodDataBillingDetails?
+    public var billingDetails: SetupIntentPaymentMethodDataBillingDetails?
     /// If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
     public var bizum: [String: String]?
     /// If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
     public var blik: [String: String]?
     /// If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
-    public var boleto: SetupIntentConfirmPaymentMethodDataBoleto?
+    public var boleto: SetupIntentPaymentMethodDataBoleto?
     /// If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment
     /// method.
     public var cashapp: [String: String]?
@@ -732,15 +732,15 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     /// payment method.
     public var customerBalance: [String: String]?
     /// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
-    public var eps: SetupIntentConfirmPaymentMethodDataEps?
+    public var eps: SetupIntentPaymentMethodDataEps?
     /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
-    public var fpx: SetupIntentConfirmPaymentMethodDataFpx?
+    public var fpx: SetupIntentPaymentMethodDataFpx?
     /// If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
     public var giropay: [String: String]?
     /// If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
     public var grabpay: [String: String]?
     /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
-    public var ideal: SetupIntentConfirmPaymentMethodDataIdeal?
+    public var ideal: SetupIntentPaymentMethodDataIdeal?
     /// If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present
     /// payment method.
     public var interacPresent: [String: String]?
@@ -748,7 +748,7 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     /// method.
     public var kakaoPay: [String: String]?
     /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
-    public var klarna: SetupIntentConfirmPaymentMethodDataKlarna?
+    public var klarna: SetupIntentPaymentMethodDataKlarna?
     /// If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
     public var konbini: [String: String]?
     /// If this is a `kr_card` PaymentMethod, this hash contains details about the Korean Card payment
@@ -772,14 +772,14 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     public var multibanco: [String: String]?
     /// If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment
     /// method.
-    public var naverPay: SetupIntentConfirmPaymentMethodDataNaverPay?
+    public var naverPay: SetupIntentPaymentMethodDataNaverPay?
     /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
     /// payment method.
-    public var nzBankAccount: SetupIntentConfirmPaymentMethodDataNzBankAccount?
+    public var nzBankAccount: SetupIntentPaymentMethodDataNzBankAccount?
     /// If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
     public var oxxo: [String: String]?
     /// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
-    public var p24: SetupIntentConfirmPaymentMethodDataP24?
+    public var p24: SetupIntentPaymentMethodDataP24?
     /// If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment
     /// method.
     public var payByBank: [String: String]?
@@ -792,7 +792,7 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     /// If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
     public var paypay: [String: String]?
     /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-    public var payto: SetupIntentConfirmPaymentMethodDataPayto?
+    public var payto: SetupIntentPaymentMethodDataPayto?
     /// If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
     public var pix: [String: String]?
     /// If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment
@@ -800,7 +800,7 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     public var promptpay: [String: String]?
     /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
     /// more information.
-    public var radarOptions: SetupIntentConfirmPaymentMethodDataRadarOptions?
+    public var radarOptions: SetupIntentPaymentMethodDataRadarOptions?
     /// If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment
     /// method.
     public var revolutPay: [String: String]?
@@ -813,11 +813,11 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     public var scalapay: [String: String]?
     /// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank
     /// account.
-    public var sepaDebit: SetupIntentConfirmPaymentMethodDataSepaDebit?
+    public var sepaDebit: SetupIntentPaymentMethodDataSepaDebit?
     /// If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
     public var sequra: [String: String]?
     /// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-    public var sofort: SetupIntentConfirmPaymentMethodDataSofort?
+    public var sofort: SetupIntentPaymentMethodDataSofort?
     /// If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
     public var sunbit: [String: String]?
     /// If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -825,17 +825,17 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     /// If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
     public var twint: [String: String]?
     /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
-    public var upi: SetupIntentConfirmPaymentMethodDataUpi?
+    public var upi: SetupIntentPaymentMethodDataUpi?
     /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
     /// payment method.
-    public var usBankAccount: SetupIntentConfirmPaymentMethodDataUsBankAccount?
+    public var usBankAccount: SetupIntentPaymentMethodDataUsBankAccount?
     /// If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment
     /// method.
     public var wechatPay: [String: String]?
     /// If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
     public var zip: [String: String]?
 
-    public init(type: SetupIntentConfirmPaymentMethodDataType, acssDebit: SetupIntentConfirmPaymentMethodDataAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: SetupIntentConfirmPaymentMethodDataAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: SetupIntentConfirmPaymentMethodDataAuBecsDebit? = nil, bacsDebit: SetupIntentConfirmPaymentMethodDataBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: SetupIntentConfirmPaymentMethodDataBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: SetupIntentConfirmPaymentMethodDataBoleto? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, customerBalance: [String: String]? = nil, eps: SetupIntentConfirmPaymentMethodDataEps? = nil, fpx: SetupIntentConfirmPaymentMethodDataFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: SetupIntentConfirmPaymentMethodDataIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: SetupIntentConfirmPaymentMethodDataKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: SetupIntentConfirmPaymentMethodDataNaverPay? = nil, nzBankAccount: SetupIntentConfirmPaymentMethodDataNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: SetupIntentConfirmPaymentMethodDataP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: SetupIntentConfirmPaymentMethodDataPayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: SetupIntentConfirmPaymentMethodDataRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: SetupIntentConfirmPaymentMethodDataSepaDebit? = nil, sequra: [String: String]? = nil, sofort: SetupIntentConfirmPaymentMethodDataSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, upi: SetupIntentConfirmPaymentMethodDataUpi? = nil, usBankAccount: SetupIntentConfirmPaymentMethodDataUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
+    public init(type: SetupIntentPaymentMethodDataType, acssDebit: SetupIntentPaymentMethodDataAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: SetupIntentPaymentMethodDataAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: SetupIntentPaymentMethodDataAuBecsDebit? = nil, bacsDebit: SetupIntentPaymentMethodDataBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: SetupIntentPaymentMethodDataBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: SetupIntentPaymentMethodDataBoleto? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, customerBalance: [String: String]? = nil, eps: SetupIntentPaymentMethodDataEps? = nil, fpx: SetupIntentPaymentMethodDataFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: SetupIntentPaymentMethodDataIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: SetupIntentPaymentMethodDataKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: SetupIntentPaymentMethodDataNaverPay? = nil, nzBankAccount: SetupIntentPaymentMethodDataNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: SetupIntentPaymentMethodDataP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: SetupIntentPaymentMethodDataPayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: SetupIntentPaymentMethodDataRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: SetupIntentPaymentMethodDataSepaDebit? = nil, sequra: [String: String]? = nil, sofort: SetupIntentPaymentMethodDataSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, upi: SetupIntentPaymentMethodDataUpi? = nil, usBankAccount: SetupIntentPaymentMethodDataUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
         self.type = type
         self.acssDebit = acssDebit
         self.affirm = affirm
@@ -964,7 +964,7 @@ public struct SetupIntentConfirmPaymentMethodData: StripeParams {
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1030,7 +1030,7 @@ public struct SetupIntentConfirmPaymentMethodDataType: RawRepresentable, Codable
 
 /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
 /// method.
-public struct SetupIntentConfirmPaymentMethodDataAcssDebit: StripeParams {
+public struct SetupIntentPaymentMethodDataAcssDebit: StripeParams {
     /// Customer's bank account number.
     public var accountNumber: String
     /// Institution number of the customer's bank.
@@ -1051,7 +1051,7 @@ public struct SetupIntentConfirmPaymentMethodDataAcssDebit: StripeParams {
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1064,7 +1064,7 @@ public struct SetupIntentConfirmPaymentMethodDataAllowRedisplay: RawRepresentabl
 }
 
 /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
-public struct SetupIntentConfirmPaymentMethodDataAuBecsDebit: StripeParams {
+public struct SetupIntentPaymentMethodDataAuBecsDebit: StripeParams {
     /// The account number for the bank account.
     public var accountNumber: String
     /// Bank-State-Branch number of the bank account.
@@ -1083,7 +1083,7 @@ public struct SetupIntentConfirmPaymentMethodDataAuBecsDebit: StripeParams {
 
 /// If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank
 /// account.
-public struct SetupIntentConfirmPaymentMethodDataBacsDebit: StripeParams {
+public struct SetupIntentPaymentMethodDataBacsDebit: StripeParams {
     /// Account number of the bank account that the funds will be debited from.
     public var accountNumber: String?
     /// Sort code of the bank account. (e.g., `10-20-30`)
@@ -1102,9 +1102,9 @@ public struct SetupIntentConfirmPaymentMethodDataBacsDebit: StripeParams {
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
-public struct SetupIntentConfirmPaymentMethodDataBillingDetails: ClearableParams {
+public struct SetupIntentPaymentMethodDataBillingDetails: ClearableParams {
     /// Billing address.
-    public var address: SetupIntentConfirmPaymentMethodDataBillingDetailsAddress?
+    public var address: SetupIntentPaymentMethodDataBillingDetailsAddress?
     /// Email address.
     public var email: String?
     /// Full name.
@@ -1117,7 +1117,7 @@ public struct SetupIntentConfirmPaymentMethodDataBillingDetails: ClearableParams
     /// Fields to send empty, which clears them: `params.clear(.address)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(address: SetupIntentConfirmPaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
+    public init(address: SetupIntentPaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
         self.address = address
         self.email = email
         self.name = name
@@ -1143,7 +1143,7 @@ public struct SetupIntentConfirmPaymentMethodDataBillingDetails: ClearableParams
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataBillingDetailsAddress: StripeParams {
+public struct SetupIntentPaymentMethodDataBillingDetailsAddress: StripeParams {
     /// City, district, suburb, town, or village.
     public var city: String?
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1177,7 +1177,7 @@ public struct SetupIntentConfirmPaymentMethodDataBillingDetailsAddress: StripePa
 }
 
 /// If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
-public struct SetupIntentConfirmPaymentMethodDataBoleto: StripeParams {
+public struct SetupIntentPaymentMethodDataBoleto: StripeParams {
     /// The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
     public var taxId: String
 
@@ -1191,16 +1191,16 @@ public struct SetupIntentConfirmPaymentMethodDataBoleto: StripeParams {
 }
 
 /// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
-public struct SetupIntentConfirmPaymentMethodDataEps: StripeParams {
+public struct SetupIntentPaymentMethodDataEps: StripeParams {
     /// The customer's bank.
-    public var bank: SetupIntentConfirmPaymentMethodDataEpsBank?
+    public var bank: SetupIntentPaymentMethodDataEpsBank?
 
-    public init(bank: SetupIntentConfirmPaymentMethodDataEpsBank? = nil) {
+    public init(bank: SetupIntentPaymentMethodDataEpsBank? = nil) {
         self.bank = bank
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataEpsBank: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataEpsBank: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1238,13 +1238,13 @@ public struct SetupIntentConfirmPaymentMethodDataEpsBank: RawRepresentable, Coda
 }
 
 /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
-public struct SetupIntentConfirmPaymentMethodDataFpx: StripeParams {
+public struct SetupIntentPaymentMethodDataFpx: StripeParams {
     /// The customer's bank.
-    public var bank: SetupIntentConfirmPaymentMethodDataFpxBank
+    public var bank: SetupIntentPaymentMethodDataFpxBank
     /// Account holder type for FPX transaction
-    public var accountHolderType: SetupIntentConfirmPaymentMethodDataFpxAccountHolderType?
+    public var accountHolderType: SetupIntentPaymentMethodDataFpxAccountHolderType?
 
-    public init(bank: SetupIntentConfirmPaymentMethodDataFpxBank, accountHolderType: SetupIntentConfirmPaymentMethodDataFpxAccountHolderType? = nil) {
+    public init(bank: SetupIntentPaymentMethodDataFpxBank, accountHolderType: SetupIntentPaymentMethodDataFpxAccountHolderType? = nil) {
         self.bank = bank
         self.accountHolderType = accountHolderType
     }
@@ -1255,7 +1255,7 @@ public struct SetupIntentConfirmPaymentMethodDataFpx: StripeParams {
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataFpxBank: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataFpxBank: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1289,7 +1289,7 @@ public struct SetupIntentConfirmPaymentMethodDataFpxBank: RawRepresentable, Coda
     public static var uob: Self { .init(rawValue: "uob") }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataFpxAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataFpxAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1301,16 +1301,16 @@ public struct SetupIntentConfirmPaymentMethodDataFpxAccountHolderType: RawRepres
 }
 
 /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
-public struct SetupIntentConfirmPaymentMethodDataIdeal: StripeParams {
+public struct SetupIntentPaymentMethodDataIdeal: StripeParams {
     /// The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
-    public var bank: SetupIntentConfirmPaymentMethodDataIdealBank?
+    public var bank: SetupIntentPaymentMethodDataIdealBank?
 
-    public init(bank: SetupIntentConfirmPaymentMethodDataIdealBank? = nil) {
+    public init(bank: SetupIntentPaymentMethodDataIdealBank? = nil) {
         self.bank = bank
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataIdealBank: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataIdealBank: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1340,17 +1340,17 @@ public struct SetupIntentConfirmPaymentMethodDataIdealBank: RawRepresentable, Co
 }
 
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
-public struct SetupIntentConfirmPaymentMethodDataKlarna: StripeParams {
+public struct SetupIntentPaymentMethodDataKlarna: StripeParams {
     /// Customer's date of birth
-    public var dob: SetupIntentConfirmPaymentMethodDataKlarnaDob?
+    public var dob: SetupIntentPaymentMethodDataKlarnaDob?
 
-    public init(dob: SetupIntentConfirmPaymentMethodDataKlarnaDob? = nil) {
+    public init(dob: SetupIntentPaymentMethodDataKlarnaDob? = nil) {
         self.dob = dob
     }
 }
 
 /// Customer's date of birth
-public struct SetupIntentConfirmPaymentMethodDataKlarnaDob: StripeParams {
+public struct SetupIntentPaymentMethodDataKlarnaDob: StripeParams {
     /// The day of birth, between 1 and 31.
     public var day: Int
     /// The month of birth, between 1 and 12.
@@ -1367,17 +1367,17 @@ public struct SetupIntentConfirmPaymentMethodDataKlarnaDob: StripeParams {
 
 /// If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment
 /// method.
-public struct SetupIntentConfirmPaymentMethodDataNaverPay: StripeParams {
+public struct SetupIntentPaymentMethodDataNaverPay: StripeParams {
     /// Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults
     /// to `card`.
-    public var funding: SetupIntentConfirmPaymentMethodDataNaverPayFunding?
+    public var funding: SetupIntentPaymentMethodDataNaverPayFunding?
 
-    public init(funding: SetupIntentConfirmPaymentMethodDataNaverPayFunding? = nil) {
+    public init(funding: SetupIntentPaymentMethodDataNaverPayFunding? = nil) {
         self.funding = funding
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataNaverPayFunding: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataNaverPayFunding: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1390,7 +1390,7 @@ public struct SetupIntentConfirmPaymentMethodDataNaverPayFunding: RawRepresentab
 
 /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
 /// payment method.
-public struct SetupIntentConfirmPaymentMethodDataNzBankAccount: StripeParams {
+public struct SetupIntentPaymentMethodDataNzBankAccount: StripeParams {
     /// The account number for the bank account.
     public var accountNumber: String
     /// The numeric code for the bank account's bank.
@@ -1424,16 +1424,16 @@ public struct SetupIntentConfirmPaymentMethodDataNzBankAccount: StripeParams {
 }
 
 /// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
-public struct SetupIntentConfirmPaymentMethodDataP24: StripeParams {
+public struct SetupIntentPaymentMethodDataP24: StripeParams {
     /// The customer's bank.
-    public var bank: SetupIntentConfirmPaymentMethodDataP24Bank?
+    public var bank: SetupIntentPaymentMethodDataP24Bank?
 
-    public init(bank: SetupIntentConfirmPaymentMethodDataP24Bank? = nil) {
+    public init(bank: SetupIntentPaymentMethodDataP24Bank? = nil) {
         self.bank = bank
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataP24Bank: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataP24Bank: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1469,7 +1469,7 @@ public struct SetupIntentConfirmPaymentMethodDataP24Bank: RawRepresentable, Coda
 }
 
 /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-public struct SetupIntentConfirmPaymentMethodDataPayto: StripeParams {
+public struct SetupIntentPaymentMethodDataPayto: StripeParams {
     /// The account number for the bank account.
     public var accountNumber: String?
     /// Bank-State-Branch number of the bank account.
@@ -1492,7 +1492,7 @@ public struct SetupIntentConfirmPaymentMethodDataPayto: StripeParams {
 
 /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
 /// more information.
-public struct SetupIntentConfirmPaymentMethodDataRadarOptions: StripeParams {
+public struct SetupIntentPaymentMethodDataRadarOptions: StripeParams {
     /// A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata
     /// and device details that help Radar make more accurate predictions on your payments.
     public var session: String?
@@ -1504,7 +1504,7 @@ public struct SetupIntentConfirmPaymentMethodDataRadarOptions: StripeParams {
 
 /// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank
 /// account.
-public struct SetupIntentConfirmPaymentMethodDataSepaDebit: StripeParams {
+public struct SetupIntentPaymentMethodDataSepaDebit: StripeParams {
     /// IBAN of the bank account.
     public var iban: String
 
@@ -1514,16 +1514,16 @@ public struct SetupIntentConfirmPaymentMethodDataSepaDebit: StripeParams {
 }
 
 /// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-public struct SetupIntentConfirmPaymentMethodDataSofort: StripeParams {
+public struct SetupIntentPaymentMethodDataSofort: StripeParams {
     /// Two-letter ISO code representing the country the bank account is located in.
-    public var country: SetupIntentConfirmPaymentMethodDataSofortCountry
+    public var country: SetupIntentPaymentMethodDataSofortCountry
 
-    public init(country: SetupIntentConfirmPaymentMethodDataSofortCountry) {
+    public init(country: SetupIntentPaymentMethodDataSofortCountry) {
         self.country = country
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataSofortCountry: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataSofortCountry: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1539,11 +1539,11 @@ public struct SetupIntentConfirmPaymentMethodDataSofortCountry: RawRepresentable
 }
 
 /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
-public struct SetupIntentConfirmPaymentMethodDataUpi: StripeParams {
+public struct SetupIntentPaymentMethodDataUpi: StripeParams {
     /// Configuration options for setting up an eMandate
-    public var mandateOptions: SetupIntentConfirmPaymentMethodDataUpiMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodDataUpiMandateOptions?
 
-    public init(mandateOptions: SetupIntentConfirmPaymentMethodDataUpiMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodDataUpiMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
@@ -1553,19 +1553,19 @@ public struct SetupIntentConfirmPaymentMethodDataUpi: StripeParams {
 }
 
 /// Configuration options for setting up an eMandate
-public struct SetupIntentConfirmPaymentMethodDataUpiMandateOptions: StripeParams {
+public struct SetupIntentPaymentMethodDataUpiMandateOptions: StripeParams {
     /// Amount to be charged for future payments.
     public var amount: Int?
     /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
     /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
     /// param.
-    public var amountType: SetupIntentConfirmPaymentMethodDataUpiMandateOptionsAmountType?
+    public var amountType: SetupIntentPaymentMethodDataUpiMandateOptionsAmountType?
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
     public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SetupIntentConfirmPaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
+    public init(amount: Int? = nil, amountType: SetupIntentPaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -1580,7 +1580,7 @@ public struct SetupIntentConfirmPaymentMethodDataUpiMandateOptions: StripeParams
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1593,19 +1593,19 @@ public struct SetupIntentConfirmPaymentMethodDataUpiMandateOptionsAmountType: Ra
 
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
 /// payment method.
-public struct SetupIntentConfirmPaymentMethodDataUsBankAccount: StripeParams {
+public struct SetupIntentPaymentMethodDataUsBankAccount: StripeParams {
     /// Account holder type: individual or company.
-    public var accountHolderType: SetupIntentConfirmPaymentMethodDataUsBankAccountAccountHolderType?
+    public var accountHolderType: SetupIntentPaymentMethodDataUsBankAccountAccountHolderType?
     /// Account number of the bank account.
     public var accountNumber: String?
     /// Account type: checkings or savings. Defaults to checking if omitted.
-    public var accountType: SetupIntentConfirmPaymentMethodDataUsBankAccountAccountType?
+    public var accountType: SetupIntentPaymentMethodDataUsBankAccountAccountType?
     /// The ID of a Financial Connections Account to use as a payment method.
     public var financialConnectionsAccount: String?
     /// Routing number of the bank account.
     public var routingNumber: String?
 
-    public init(accountHolderType: SetupIntentConfirmPaymentMethodDataUsBankAccountAccountHolderType? = nil, accountNumber: String? = nil, accountType: SetupIntentConfirmPaymentMethodDataUsBankAccountAccountType? = nil, financialConnectionsAccount: String? = nil, routingNumber: String? = nil) {
+    public init(accountHolderType: SetupIntentPaymentMethodDataUsBankAccountAccountHolderType? = nil, accountNumber: String? = nil, accountType: SetupIntentPaymentMethodDataUsBankAccountAccountType? = nil, financialConnectionsAccount: String? = nil, routingNumber: String? = nil) {
         self.accountHolderType = accountHolderType
         self.accountNumber = accountNumber
         self.accountType = accountType
@@ -1622,7 +1622,7 @@ public struct SetupIntentConfirmPaymentMethodDataUsBankAccount: StripeParams {
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1633,7 +1633,7 @@ public struct SetupIntentConfirmPaymentMethodDataUsBankAccountAccountHolderType:
     public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public struct SetupIntentConfirmPaymentMethodDataUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodDataUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1732,11 +1732,11 @@ public struct SetupIntentConfirmPaymentMethodOptionsAcssDebit: StripeParams {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: SetupIntentConfirmPaymentMethodOptionsAcssDebitCurrency?
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsAcssDebitMandateOptions?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: SetupIntentConfirmPaymentMethodOptionsAcssDebitVerificationMethod?
 
-    public init(currency: SetupIntentConfirmPaymentMethodOptionsAcssDebitCurrency? = nil, mandateOptions: SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions? = nil, verificationMethod: SetupIntentConfirmPaymentMethodOptionsAcssDebitVerificationMethod? = nil) {
+    public init(currency: SetupIntentConfirmPaymentMethodOptionsAcssDebitCurrency? = nil, mandateOptions: SetupIntentPaymentMethodOptionsAcssDebitMandateOptions? = nil, verificationMethod: SetupIntentConfirmPaymentMethodOptionsAcssDebitVerificationMethod? = nil) {
         self.currency = currency
         self.mandateOptions = mandateOptions
         self.verificationMethod = verificationMethod
@@ -1761,24 +1761,24 @@ public struct SetupIntentConfirmPaymentMethodOptionsAcssDebitCurrency: RawRepres
 }
 
 /// Additional fields for Mandate creation
-public struct SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions: ClearableParams {
+public struct SetupIntentPaymentMethodOptionsAcssDebitMandateOptions: ClearableParams {
     /// A URL for custom mandate text to render during confirmation step. The URL will be rendered with
     /// additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a
     /// Payment Intent, or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
     public var customMandateUrl: String?
     /// List of Stripe products where this mandate can be selected automatically.
-    public var defaultFor: [SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsDefaultFor]?
+    public var defaultFor: [SetupIntentPaymentMethodOptionsAcssDebitMandateOptionsDefaultFor]?
     /// Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or
     /// 'combined'.
     public var intervalDescription: String?
     /// Payment schedule for the mandate.
-    public var paymentSchedule: SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule?
+    public var paymentSchedule: SetupIntentPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule?
     /// Transaction type of the mandate.
-    public var transactionType: SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
+    public var transactionType: SetupIntentPaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
     /// Fields to send empty, which clears them: `params.clear(.customMandateUrl)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(customMandateUrl: String? = nil, defaultFor: [SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsDefaultFor]? = nil, intervalDescription: String? = nil, paymentSchedule: SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule? = nil, transactionType: SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsTransactionType? = nil) {
+    public init(customMandateUrl: String? = nil, defaultFor: [SetupIntentPaymentMethodOptionsAcssDebitMandateOptionsDefaultFor]? = nil, intervalDescription: String? = nil, paymentSchedule: SetupIntentPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule? = nil, transactionType: SetupIntentPaymentMethodOptionsAcssDebitMandateOptionsTransactionType? = nil) {
         self.customMandateUrl = customMandateUrl
         self.defaultFor = defaultFor
         self.intervalDescription = intervalDescription
@@ -1801,7 +1801,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions: Cle
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsDefaultFor: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsAcssDebitMandateOptionsDefaultFor: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1812,7 +1812,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsDefau
     public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1824,7 +1824,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsPayme
     public static var sporadic: Self { .init(rawValue: "sporadic") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -1851,9 +1851,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsAcssDebitVerificationMethod:
 /// method options.
 public struct SetupIntentConfirmPaymentMethodOptionsBacsDebit: StripeParams {
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentConfirmPaymentMethodOptionsBacsDebitMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsBacsDebitMandateOptions?
 
-    public init(mandateOptions: SetupIntentConfirmPaymentMethodOptionsBacsDebitMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsBacsDebitMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
@@ -1863,7 +1863,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsBacsDebit: StripeParams {
 }
 
 /// Additional fields for Mandate creation
-public struct SetupIntentConfirmPaymentMethodOptionsBacsDebitMandateOptions: ClearableParams {
+public struct SetupIntentPaymentMethodOptionsBacsDebitMandateOptions: ClearableParams {
     /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
     /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
     /// '.'. Cannot begin with 'DDIC' or 'STRIPE'.
@@ -1892,9 +1892,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsBlik: StripeParams {
     /// on confirmation.
     public var code: String?
     /// Details of the BLIK mandate
-    public var mandateOptions: SetupIntentConfirmPaymentMethodOptionsBlikMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsBlikMandateOptions?
 
-    public init(code: String? = nil, mandateOptions: SetupIntentConfirmPaymentMethodOptionsBlikMandateOptions? = nil) {
+    public init(code: String? = nil, mandateOptions: SetupIntentPaymentMethodOptionsBlikMandateOptions? = nil) {
         self.code = code
         self.mandateOptions = mandateOptions
     }
@@ -1906,7 +1906,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsBlik: StripeParams {
 }
 
 /// Details of the BLIK mandate
-public struct SetupIntentConfirmPaymentMethodOptionsBlikMandateOptions: StripeParams {
+public struct SetupIntentPaymentMethodOptionsBlikMandateOptions: StripeParams {
     /// Expiry date of the mandate.
     public var expiresAt: Date?
 
@@ -1941,9 +1941,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsCard: StripeParams {
     public var setupCredentialUsage: SetupIntentConfirmPaymentMethodOptionsCardSetupCredentialUsage?
     /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
     /// use for this setup.
-    public var threeDSecure: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecure?
+    public var threeDSecure: SetupIntentPaymentMethodOptionsCardThreeDSecure?
 
-    public init(mandateOptions: SetupIntentConfirmPaymentMethodOptionsCardMandateOptions? = nil, moto: Bool? = nil, network: SetupIntentConfirmPaymentMethodOptionsCardNetwork? = nil, requestThreeDSecure: SetupIntentConfirmPaymentMethodOptionsCardRequestThreeDSecure? = nil, setupCredentialUsage: SetupIntentConfirmPaymentMethodOptionsCardSetupCredentialUsage? = nil, threeDSecure: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecure? = nil) {
+    public init(mandateOptions: SetupIntentConfirmPaymentMethodOptionsCardMandateOptions? = nil, moto: Bool? = nil, network: SetupIntentConfirmPaymentMethodOptionsCardNetwork? = nil, requestThreeDSecure: SetupIntentConfirmPaymentMethodOptionsCardRequestThreeDSecure? = nil, setupCredentialUsage: SetupIntentConfirmPaymentMethodOptionsCardSetupCredentialUsage? = nil, threeDSecure: SetupIntentPaymentMethodOptionsCardThreeDSecure? = nil) {
         self.mandateOptions = mandateOptions
         self.moto = moto
         self.network = network
@@ -1990,9 +1990,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardMandateOptions: StripePa
     /// or 52 weeks). This parameter is optional when `interval=sporadic`.
     public var intervalCount: Int?
     /// Specifies the type of mandates supported. Possible values are `india`.
-    public var supportedTypes: [SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsSupportedTypes]?
+    public var supportedTypes: [SetupIntentPaymentMethodOptionsCardMandateOptionsSupportedTypes]?
 
-    public init(amount: Int, amountType: SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Date, description: String? = nil, endDate: Date? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
+    public init(amount: Int, amountType: SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Date, description: String? = nil, endDate: Date? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentPaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.currency = currency
@@ -2044,7 +2044,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsInterval: 
     public static var year: Self { .init(rawValue: "year") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsCardMandateOptionsSupportedTypes: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsCardMandateOptionsSupportedTypes: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2112,28 +2112,28 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardSetupCredentialUsage: Ra
 
 /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
 /// use for this setup.
-public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecure: StripeParams {
+public struct SetupIntentPaymentMethodOptionsCardThreeDSecure: StripeParams {
     /// The `transStatus` returned from the card Issuer’s ACS in the ARes.
-    public var aresTransStatus: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureAresTransStatus?
+    public var aresTransStatus: SetupIntentPaymentMethodOptionsCardThreeDSecureAresTransStatus?
     /// The cryptogram, also known as the "authentication value" (AAV, CAVV or AEVV). This value is 20
     /// bytes, base64-encoded into a 28-character string. (Most 3D Secure providers will return the
     /// base64-encoded version, which is what you should specify here.)
     public var cryptogram: String?
     /// The Electronic Commerce Indicator (ECI) is returned by your 3D Secure provider and indicates what
     /// degree of authentication was performed.
-    public var electronicCommerceIndicator: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator?
+    public var electronicCommerceIndicator: SetupIntentPaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator?
     /// Network specific 3DS fields. Network specific arguments require an explicit card brand choice. The
     /// parameter `payment_method_options.card.network`` must be populated accordingly
-    public var networkOptions: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptions?
+    public var networkOptions: SetupIntentPaymentMethodOptionsCardThreeDSecureNetworkOptions?
     /// The challenge indicator (`threeDSRequestorChallengeInd`) which was requested in the AReq sent to the
     /// card Issuer's ACS. A string containing 2 digits from 01-99.
     public var requestorChallengeIndicator: String?
     /// For 3D Secure 1, the XID. For 3D Secure 2, the Directory Server Transaction ID (dsTransID).
     public var transactionId: String?
     /// The version of 3D Secure that was performed.
-    public var version: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureVersion?
+    public var version: SetupIntentPaymentMethodOptionsCardThreeDSecureVersion?
 
-    public init(aresTransStatus: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureAresTransStatus? = nil, cryptogram: String? = nil, electronicCommerceIndicator: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator? = nil, networkOptions: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptions? = nil, requestorChallengeIndicator: String? = nil, transactionId: String? = nil, version: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureVersion? = nil) {
+    public init(aresTransStatus: SetupIntentPaymentMethodOptionsCardThreeDSecureAresTransStatus? = nil, cryptogram: String? = nil, electronicCommerceIndicator: SetupIntentPaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator? = nil, networkOptions: SetupIntentPaymentMethodOptionsCardThreeDSecureNetworkOptions? = nil, requestorChallengeIndicator: String? = nil, transactionId: String? = nil, version: SetupIntentPaymentMethodOptionsCardThreeDSecureVersion? = nil) {
         self.aresTransStatus = aresTransStatus
         self.cryptogram = cryptogram
         self.electronicCommerceIndicator = electronicCommerceIndicator
@@ -2154,7 +2154,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecure: StripePara
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureAresTransStatus: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsCardThreeDSecureAresTransStatus: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2170,7 +2170,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureAresTransSta
     public static var y: Self { .init(rawValue: "Y") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2186,11 +2186,11 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureElectronicCo
 
 /// Network specific 3DS fields. Network specific arguments require an explicit card brand choice. The
 /// parameter `payment_method_options.card.network`` must be populated accordingly
-public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptions: StripeParams {
+public struct SetupIntentPaymentMethodOptionsCardThreeDSecureNetworkOptions: StripeParams {
     /// Cartes Bancaires-specific 3DS fields.
-    public var cartesBancaires: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires?
+    public var cartesBancaires: SetupIntentPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires?
 
-    public init(cartesBancaires: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires? = nil) {
+    public init(cartesBancaires: SetupIntentPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires? = nil) {
         self.cartesBancaires = cartesBancaires
     }
 
@@ -2200,10 +2200,10 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptio
 }
 
 /// Cartes Bancaires-specific 3DS fields.
-public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires: StripeParams {
+public struct SetupIntentPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires: StripeParams {
     /// The cryptogram calculation algorithm used by the card Issuer's ACS to calculate the Authentication
     /// cryptogram. Also known as `cavvAlgorithm`. messageExtension: CB-AVALGO
-    public var cbAvalgo: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo
+    public var cbAvalgo: SetupIntentPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo
     /// The exemption indicator returned from Cartes Bancaires in the ARes. message extension: CB-EXEMPTION;
     /// string (4 characters) This is a 3 byte bitmap (low significant byte first and most significant bit
     /// first) that has been Base64 encoded
@@ -2212,7 +2212,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptio
     /// value 0-99
     public var cbScore: Int?
 
-    public init(cbAvalgo: SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo, cbExemption: String? = nil, cbScore: Int? = nil) {
+    public init(cbAvalgo: SetupIntentPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo, cbExemption: String? = nil, cbScore: Int? = nil) {
         self.cbAvalgo = cbAvalgo
         self.cbExemption = cbExemption
         self.cbScore = cbScore
@@ -2225,7 +2225,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptio
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2240,7 +2240,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptio
     public static var a: Self { .init(rawValue: "A") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsCardThreeDSecureVersion: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsCardThreeDSecureVersion: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2260,15 +2260,15 @@ public struct SetupIntentConfirmPaymentMethodOptionsKlarna: ClearableParams {
     /// The currency of the SetupIntent. Three letter ISO currency code.
     public var currency: String?
     /// On-demand details if setting up a payment method for on-demand payments.
-    public var onDemand: SetupIntentConfirmPaymentMethodOptionsKlarnaOnDemand?
+    public var onDemand: SetupIntentPaymentMethodOptionsKlarnaOnDemand?
     /// Preferred language of the Klarna authorization page that the customer is redirected to
-    public var preferredLocale: SetupIntentConfirmPaymentMethodOptionsKlarnaPreferredLocale?
+    public var preferredLocale: SetupIntentPaymentMethodOptionsKlarnaPreferredLocale?
     /// Subscription details if setting up or charging a subscription
-    public var subscriptions: [SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptions]?
+    public var subscriptions: [SetupIntentPaymentMethodOptionsKlarnaSubscriptions]?
     /// Fields to send empty, which clears them: `params.clear(.subscriptions)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(currency: String? = nil, onDemand: SetupIntentConfirmPaymentMethodOptionsKlarnaOnDemand? = nil, preferredLocale: SetupIntentConfirmPaymentMethodOptionsKlarnaPreferredLocale? = nil, subscriptions: [SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptions]? = nil) {
+    public init(currency: String? = nil, onDemand: SetupIntentPaymentMethodOptionsKlarnaOnDemand? = nil, preferredLocale: SetupIntentPaymentMethodOptionsKlarnaPreferredLocale? = nil, subscriptions: [SetupIntentPaymentMethodOptionsKlarnaSubscriptions]? = nil) {
         self.currency = currency
         self.onDemand = onDemand
         self.preferredLocale = preferredLocale
@@ -2290,7 +2290,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsKlarna: ClearableParams {
 }
 
 /// On-demand details if setting up a payment method for on-demand payments.
-public struct SetupIntentConfirmPaymentMethodOptionsKlarnaOnDemand: StripeParams {
+public struct SetupIntentPaymentMethodOptionsKlarnaOnDemand: StripeParams {
     /// Your average amount value. You can use a value across your customer base, or segment based on
     /// customer type, country, etc.
     public var averageAmount: Int?
@@ -2301,11 +2301,11 @@ public struct SetupIntentConfirmPaymentMethodOptionsKlarnaOnDemand: StripeParams
     /// customer base, or segment based on customer type, country, etc.
     public var minimumAmount: Int?
     /// Interval at which the customer is making purchases
-    public var purchaseInterval: SetupIntentConfirmPaymentMethodOptionsKlarnaOnDemandPurchaseInterval?
+    public var purchaseInterval: SetupIntentPaymentMethodOptionsKlarnaOnDemandPurchaseInterval?
     /// The number of `purchase_interval` between charges
     public var purchaseIntervalCount: Int?
 
-    public init(averageAmount: Int? = nil, maximumAmount: Int? = nil, minimumAmount: Int? = nil, purchaseInterval: SetupIntentConfirmPaymentMethodOptionsKlarnaOnDemandPurchaseInterval? = nil, purchaseIntervalCount: Int? = nil) {
+    public init(averageAmount: Int? = nil, maximumAmount: Int? = nil, minimumAmount: Int? = nil, purchaseInterval: SetupIntentPaymentMethodOptionsKlarnaOnDemandPurchaseInterval? = nil, purchaseIntervalCount: Int? = nil) {
         self.averageAmount = averageAmount
         self.maximumAmount = maximumAmount
         self.minimumAmount = minimumAmount
@@ -2322,7 +2322,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsKlarnaOnDemand: StripeParams
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsKlarnaOnDemandPurchaseInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsKlarnaOnDemandPurchaseInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2335,7 +2335,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsKlarnaOnDemandPurchaseInterv
     public static var year: Self { .init(rawValue: "year") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsKlarnaPreferredLocale: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsKlarnaPreferredLocale: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2390,11 +2390,11 @@ public struct SetupIntentConfirmPaymentMethodOptionsKlarnaPreferredLocale: RawRe
     public static var svSe: Self { .init(rawValue: "sv-SE") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptions: StripeParams {
+public struct SetupIntentPaymentMethodOptionsKlarnaSubscriptions: StripeParams {
     /// Unit of time between subscription charges.
-    public var interval: SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsInterval
+    public var interval: SetupIntentPaymentMethodOptionsKlarnaSubscriptionsInterval
     /// Describes the upcoming charge for this subscription.
-    public var nextBilling: SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsNextBilling
+    public var nextBilling: SetupIntentPaymentMethodOptionsKlarnaSubscriptionsNextBilling
     /// A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value
     /// that persists across subscription charges.
     public var reference: String
@@ -2404,7 +2404,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptions: StripeP
     /// Name for subscription.
     public var name: String?
 
-    public init(interval: SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsInterval, nextBilling: SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsNextBilling, reference: String, intervalCount: Int? = nil, name: String? = nil) {
+    public init(interval: SetupIntentPaymentMethodOptionsKlarnaSubscriptionsInterval, nextBilling: SetupIntentPaymentMethodOptionsKlarnaSubscriptionsNextBilling, reference: String, intervalCount: Int? = nil, name: String? = nil) {
         self.interval = interval
         self.nextBilling = nextBilling
         self.reference = reference
@@ -2421,7 +2421,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptions: StripeP
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsKlarnaSubscriptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2435,7 +2435,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsInterval:
 }
 
 /// Describes the upcoming charge for this subscription.
-public struct SetupIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsNextBilling: StripeParams {
+public struct SetupIntentPaymentMethodOptionsKlarnaSubscriptionsNextBilling: StripeParams {
     /// The amount of the next charge for the subscription.
     public var amount: Int
     /// The date of the next charge for the subscription in YYYY-MM-DD format.
@@ -2482,9 +2482,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsPaypal: StripeParams {
 /// options.
 public struct SetupIntentConfirmPaymentMethodOptionsPayto: StripeParams {
     /// Additional fields for Mandate creation.
-    public var mandateOptions: SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsPaytoMandateOptions?
 
-    public init(mandateOptions: SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsPaytoMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
@@ -2494,27 +2494,27 @@ public struct SetupIntentConfirmPaymentMethodOptionsPayto: StripeParams {
 }
 
 /// Additional fields for Mandate creation.
-public struct SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptions: ClearableParams {
+public struct SetupIntentPaymentMethodOptionsPaytoMandateOptions: ClearableParams {
     /// Amount that will be collected. It is required when `amount_type` is `fixed`.
     public var amount: Int?
     /// The type of amount that will be collected. The amount charged must be exact or up to the value of
     /// `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
-    public var amountType: SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsAmountType?
+    public var amountType: SetupIntentPaymentMethodOptionsPaytoMandateOptionsAmountType?
     /// Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
     public var endDate: String?
     /// The periodicity at which payments will be collected. Defaults to `adhoc`.
-    public var paymentSchedule: SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPaymentSchedule?
+    public var paymentSchedule: SetupIntentPaymentMethodOptionsPaytoMandateOptionsPaymentSchedule?
     /// The number of payments that will be made during a payment period. Defaults to 1 except for when
     /// `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
     public var paymentsPerPeriod: Int?
     /// The purpose for which payments are made. Has a default value based on your merchant category code.
-    public var purpose: SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPurpose?
+    public var purpose: SetupIntentPaymentMethodOptionsPaytoMandateOptionsPurpose?
     /// Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
     public var startDate: String?
     /// Fields to send empty, which clears them: `params.clear(.amount)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(amount: Int? = nil, amountType: SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsAmountType? = nil, endDate: String? = nil, paymentSchedule: SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPaymentSchedule? = nil, paymentsPerPeriod: Int? = nil, purpose: SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPurpose? = nil, startDate: String? = nil) {
+    public init(amount: Int? = nil, amountType: SetupIntentPaymentMethodOptionsPaytoMandateOptionsAmountType? = nil, endDate: String? = nil, paymentSchedule: SetupIntentPaymentMethodOptionsPaytoMandateOptionsPaymentSchedule? = nil, paymentsPerPeriod: Int? = nil, purpose: SetupIntentPaymentMethodOptionsPaytoMandateOptionsPurpose? = nil, startDate: String? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.endDate = endDate
@@ -2547,7 +2547,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptions: Clearab
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsPaytoMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2558,7 +2558,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsAmountTyp
     public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2575,7 +2575,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPaymentSc
     public static var weekly: Self { .init(rawValue: "weekly") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPurpose: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsPaytoMandateOptionsPurpose: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2598,9 +2598,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPurpose: 
 /// If this is a `pix` SetupIntent, this sub-hash contains details about the Pix payment method options.
 public struct SetupIntentConfirmPaymentMethodOptionsPix: StripeParams {
     /// Additional fields for mandate creation.
-    public var mandateOptions: SetupIntentConfirmPaymentMethodOptionsPixMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsPixMandateOptions?
 
-    public init(mandateOptions: SetupIntentConfirmPaymentMethodOptionsPixMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsPixMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
@@ -2610,14 +2610,14 @@ public struct SetupIntentConfirmPaymentMethodOptionsPix: StripeParams {
 }
 
 /// Additional fields for mandate creation.
-public struct SetupIntentConfirmPaymentMethodOptionsPixMandateOptions: StripeParams {
+public struct SetupIntentPaymentMethodOptionsPixMandateOptions: StripeParams {
     /// Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for
     /// `amount_type=maximum`, defaults to 40000.
     public var amount: Int?
     /// Determines if the amount includes the IOF tax. Defaults to `never`.
-    public var amountIncludesIof: SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountIncludesIof?
+    public var amountIncludesIof: SetupIntentPaymentMethodOptionsPixMandateOptionsAmountIncludesIof?
     /// Type of amount. Defaults to `maximum`.
-    public var amountType: SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountType?
+    public var amountType: SetupIntentPaymentMethodOptionsPixMandateOptionsAmountType?
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     /// Only `brl` is supported currently.
     public var currency: String?
@@ -2626,14 +2626,14 @@ public struct SetupIntentConfirmPaymentMethodOptionsPixMandateOptions: StripePar
     /// date.
     public var endDate: String?
     /// Schedule at which the future payments will be charged. Defaults to `monthly`.
-    public var paymentSchedule: SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsPaymentSchedule?
+    public var paymentSchedule: SetupIntentPaymentMethodOptionsPixMandateOptionsPaymentSchedule?
     /// Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
     public var reference: String?
     /// Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future.
     /// Defaults to 3 days after the current date.
     public var startDate: String?
 
-    public init(amount: Int? = nil, amountIncludesIof: SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountIncludesIof? = nil, amountType: SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountType? = nil, currency: String? = nil, endDate: String? = nil, paymentSchedule: SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsPaymentSchedule? = nil, reference: String? = nil, startDate: String? = nil) {
+    public init(amount: Int? = nil, amountIncludesIof: SetupIntentPaymentMethodOptionsPixMandateOptionsAmountIncludesIof? = nil, amountType: SetupIntentPaymentMethodOptionsPixMandateOptionsAmountType? = nil, currency: String? = nil, endDate: String? = nil, paymentSchedule: SetupIntentPaymentMethodOptionsPixMandateOptionsPaymentSchedule? = nil, reference: String? = nil, startDate: String? = nil) {
         self.amount = amount
         self.amountIncludesIof = amountIncludesIof
         self.amountType = amountType
@@ -2656,7 +2656,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsPixMandateOptions: StripePar
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsPixMandateOptionsAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2667,7 +2667,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountInclu
     public static var never: Self { .init(rawValue: "never") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsPixMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2678,7 +2678,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountType:
     public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsPixMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2696,9 +2696,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsPixMandateOptionsPaymentSche
 /// method options.
 public struct SetupIntentConfirmPaymentMethodOptionsSepaDebit: StripeParams {
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentConfirmPaymentMethodOptionsSepaDebitMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsSepaDebitMandateOptions?
 
-    public init(mandateOptions: SetupIntentConfirmPaymentMethodOptionsSepaDebitMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsSepaDebitMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
@@ -2708,7 +2708,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsSepaDebit: StripeParams {
 }
 
 /// Additional fields for Mandate creation
-public struct SetupIntentConfirmPaymentMethodOptionsSepaDebitMandateOptions: ClearableParams {
+public struct SetupIntentPaymentMethodOptionsSepaDebitMandateOptions: ClearableParams {
     /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
     /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
     /// '.'. Cannot begin with 'STRIPE'.
@@ -2734,12 +2734,12 @@ public struct SetupIntentConfirmPaymentMethodOptionsSepaDebitMandateOptions: Cle
 /// If this is a `upi` SetupIntent, this sub-hash contains details about the UPI payment method options.
 public struct SetupIntentConfirmPaymentMethodOptionsUpi: ClearableParams {
     /// Configuration options for setting up an eMandate
-    public var mandateOptions: SetupIntentConfirmPaymentMethodOptionsUpiMandateOptions?
-    public var setupFutureUsage: SetupIntentConfirmPaymentMethodOptionsUpiSetupFutureUsage?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsUpiMandateOptions?
+    public var setupFutureUsage: SetupIntentPaymentMethodOptionsUpiSetupFutureUsage?
     /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(mandateOptions: SetupIntentConfirmPaymentMethodOptionsUpiMandateOptions? = nil, setupFutureUsage: SetupIntentConfirmPaymentMethodOptionsUpiSetupFutureUsage? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsUpiMandateOptions? = nil, setupFutureUsage: SetupIntentPaymentMethodOptionsUpiSetupFutureUsage? = nil) {
         self.mandateOptions = mandateOptions
         self.setupFutureUsage = setupFutureUsage
     }
@@ -2757,19 +2757,19 @@ public struct SetupIntentConfirmPaymentMethodOptionsUpi: ClearableParams {
 }
 
 /// Configuration options for setting up an eMandate
-public struct SetupIntentConfirmPaymentMethodOptionsUpiMandateOptions: StripeParams {
+public struct SetupIntentPaymentMethodOptionsUpiMandateOptions: StripeParams {
     /// Amount to be charged for future payments.
     public var amount: Int?
     /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
     /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
     /// param.
-    public var amountType: SetupIntentConfirmPaymentMethodOptionsUpiMandateOptionsAmountType?
+    public var amountType: SetupIntentPaymentMethodOptionsUpiMandateOptionsAmountType?
     /// A description of the mandate or subscription that is meant to be displayed to the customer.
     public var description: String?
     /// End date of the mandate or subscription.
     public var endDate: Date?
 
-    public init(amount: Int? = nil, amountType: SetupIntentConfirmPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
+    public init(amount: Int? = nil, amountType: SetupIntentPaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.description = description
@@ -2784,7 +2784,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsUpiMandateOptions: StripePar
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2795,7 +2795,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsUpiMandateOptionsAmountType:
     public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsUpiSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsUpiSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2811,15 +2811,15 @@ public struct SetupIntentConfirmPaymentMethodOptionsUpiSetupFutureUsage: RawRepr
 /// payment method options.
 public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccount: StripeParams {
     /// Additional fields for Financial Connections Session creation
-    public var financialConnections: SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnections?
+    public var financialConnections: SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnections?
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsUsBankAccountMandateOptions?
     /// Additional fields for network related functions
-    public var networks: SetupIntentConfirmPaymentMethodOptionsUsBankAccountNetworks?
+    public var networks: SetupIntentPaymentMethodOptionsUsBankAccountNetworks?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: SetupIntentConfirmPaymentMethodOptionsUsBankAccountVerificationMethod?
 
-    public init(financialConnections: SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnections? = nil, mandateOptions: SetupIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptions? = nil, networks: SetupIntentConfirmPaymentMethodOptionsUsBankAccountNetworks? = nil, verificationMethod: SetupIntentConfirmPaymentMethodOptionsUsBankAccountVerificationMethod? = nil) {
+    public init(financialConnections: SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnections? = nil, mandateOptions: SetupIntentPaymentMethodOptionsUsBankAccountMandateOptions? = nil, networks: SetupIntentPaymentMethodOptionsUsBankAccountNetworks? = nil, verificationMethod: SetupIntentConfirmPaymentMethodOptionsUsBankAccountVerificationMethod? = nil) {
         self.financialConnections = financialConnections
         self.mandateOptions = mandateOptions
         self.networks = networks
@@ -2835,20 +2835,20 @@ public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccount: StripeParams 
 }
 
 /// Additional fields for Financial Connections Session creation
-public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnections: StripeParams {
+public struct SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnections: StripeParams {
     /// Provide filters for the linked accounts that the customer can select for the payment method.
-    public var filters: SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsFilters?
+    public var filters: SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsFilters?
     /// The list of permissions to request. If this parameter is passed, the `payment_method` permission
     /// must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and
     /// `transactions`.
-    public var permissions: [SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions]?
+    public var permissions: [SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions]?
     /// List of data features that you would like to retrieve upon account creation.
-    public var prefetch: [SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch]?
+    public var prefetch: [SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch]?
     /// For webview integrations only. Upon completing OAuth login in the native browser, the user will be
     /// redirected to this URL to return to your app.
     public var returnUrl: String?
 
-    public init(filters: SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsFilters? = nil, permissions: [SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions]? = nil, prefetch: [SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch]? = nil, returnUrl: String? = nil) {
+    public init(filters: SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsFilters? = nil, permissions: [SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions]? = nil, prefetch: [SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch]? = nil, returnUrl: String? = nil) {
         self.filters = filters
         self.permissions = permissions
         self.prefetch = prefetch
@@ -2864,12 +2864,12 @@ public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnec
 }
 
 /// Provide filters for the linked accounts that the customer can select for the payment method.
-public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsFilters: StripeParams {
+public struct SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsFilters: StripeParams {
     /// The account subcategories to use to filter for selectable accounts. Valid subcategories are
     /// `checking` and `savings`.
-    public var accountSubcategories: [SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories]?
+    public var accountSubcategories: [SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories]?
 
-    public init(accountSubcategories: [SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories]? = nil) {
+    public init(accountSubcategories: [SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories]? = nil) {
         self.accountSubcategories = accountSubcategories
     }
 
@@ -2878,7 +2878,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnec
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2889,7 +2889,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnec
     public static var savings: Self { .init(rawValue: "savings") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2902,7 +2902,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnec
     public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2915,13 +2915,13 @@ public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnec
 }
 
 /// Additional fields for Mandate creation
-public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptions: ClearableParams {
+public struct SetupIntentPaymentMethodOptionsUsBankAccountMandateOptions: ClearableParams {
     /// The method used to collect offline mandate customer acceptance.
-    public var collectionMethod: SetupIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod?
+    public var collectionMethod: SetupIntentPaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod?
     /// Fields to send empty, which clears them: `params.clear(.collectionMethod)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(collectionMethod: SetupIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod? = nil) {
+    public init(collectionMethod: SetupIntentPaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod? = nil) {
         self.collectionMethod = collectionMethod
     }
 
@@ -2936,7 +2936,7 @@ public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptions:
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2947,16 +2947,16 @@ public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptionsC
 }
 
 /// Additional fields for network related functions
-public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountNetworks: StripeParams {
+public struct SetupIntentPaymentMethodOptionsUsBankAccountNetworks: StripeParams {
     /// Triggers validations to run across the selected networks
-    public var requested: [SetupIntentConfirmPaymentMethodOptionsUsBankAccountNetworksRequested]?
+    public var requested: [SetupIntentPaymentMethodOptionsUsBankAccountNetworksRequested]?
 
-    public init(requested: [SetupIntentConfirmPaymentMethodOptionsUsBankAccountNetworksRequested]? = nil) {
+    public init(requested: [SetupIntentPaymentMethodOptionsUsBankAccountNetworksRequested]? = nil) {
         self.requested = requested
     }
 }
 
-public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountNetworksRequested: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentPaymentMethodOptionsUsBankAccountNetworksRequested: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -2979,117 +2979,9 @@ public struct SetupIntentConfirmPaymentMethodOptionsUsBankAccountVerificationMet
     public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
-public struct SetupIntentCreateAllowedPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
-    public static var affirm: Self { .init(rawValue: "affirm") }
-    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
-    public static var alipay: Self { .init(rawValue: "alipay") }
-    public static var alma: Self { .init(rawValue: "alma") }
-    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
-    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
-    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
-    public static var bancontact: Self { .init(rawValue: "bancontact") }
-    public static var billie: Self { .init(rawValue: "billie") }
-    public static var bizum: Self { .init(rawValue: "bizum") }
-    public static var blik: Self { .init(rawValue: "blik") }
-    public static var bokuPromptpay: Self { .init(rawValue: "boku_promptpay") }
-    public static var boleto: Self { .init(rawValue: "boleto") }
-    public static var capchasePay: Self { .init(rawValue: "capchase_pay") }
-    public static var card: Self { .init(rawValue: "card") }
-    public static var cardPresent: Self { .init(rawValue: "card_present") }
-    public static var cashapp: Self { .init(rawValue: "cashapp") }
-    public static var checkScan: Self { .init(rawValue: "check_scan") }
-    public static var clickToPay: Self { .init(rawValue: "click_to_pay") }
-    public static var crypto: Self { .init(rawValue: "crypto") }
-    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
-    public static var demoPay: Self { .init(rawValue: "demo_pay") }
-    public static var duitnow: Self { .init(rawValue: "duitnow") }
-    public static var dummyAuthPush: Self { .init(rawValue: "dummy_auth_push") }
-    public static var dummyPassthroughCard: Self { .init(rawValue: "dummy_passthrough_card") }
-    public static var edenred: Self { .init(rawValue: "edenred") }
-    public static var eps: Self { .init(rawValue: "eps") }
-    public static var fpx: Self { .init(rawValue: "fpx") }
-    public static var gcash: Self { .init(rawValue: "gcash") }
-    public static var getbalance: Self { .init(rawValue: "getbalance") }
-    public static var giftCard: Self { .init(rawValue: "gift_card") }
-    public static var giropay: Self { .init(rawValue: "giropay") }
-    public static var gopay: Self { .init(rawValue: "gopay") }
-    public static var grabpay: Self { .init(rawValue: "grabpay") }
-    public static var idBankTransfer: Self { .init(rawValue: "id_bank_transfer") }
-    public static var ideal: Self { .init(rawValue: "ideal") }
-    public static var interacPresent: Self { .init(rawValue: "interac_present") }
-    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
-    public static var klarna: Self { .init(rawValue: "klarna") }
-    public static var knet: Self { .init(rawValue: "knet") }
-    public static var konbini: Self { .init(rawValue: "konbini") }
-    public static var krCard: Self { .init(rawValue: "kr_card") }
-    public static var krMarket: Self { .init(rawValue: "kr_market") }
-    public static var kriya: Self { .init(rawValue: "kriya") }
-    public static var link: Self { .init(rawValue: "link") }
-    public static var mbWay: Self { .init(rawValue: "mb_way") }
-    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
-    public static var momo: Self { .init(rawValue: "momo") }
-    public static var mondu: Self { .init(rawValue: "mondu") }
-    public static var multibanco: Self { .init(rawValue: "multibanco") }
-    public static var naverPay: Self { .init(rawValue: "naver_pay") }
-    public static var netbanking: Self { .init(rawValue: "netbanking") }
-    public static var ngBank: Self { .init(rawValue: "ng_bank") }
-    public static var ngBankTransfer: Self { .init(rawValue: "ng_bank_transfer") }
-    public static var ngCard: Self { .init(rawValue: "ng_card") }
-    public static var ngMarket: Self { .init(rawValue: "ng_market") }
-    public static var ngUssd: Self { .init(rawValue: "ng_ussd") }
-    public static var ngWallet: Self { .init(rawValue: "ng_wallet") }
-    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
-    public static var octopus: Self { .init(rawValue: "octopus") }
-    public static var oxxo: Self { .init(rawValue: "oxxo") }
-    public static var p24: Self { .init(rawValue: "p24") }
-    public static var paperCheck: Self { .init(rawValue: "paper_check") }
-    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
-    public static var payco: Self { .init(rawValue: "payco") }
-    public static var paynow: Self { .init(rawValue: "paynow") }
-    public static var paypal: Self { .init(rawValue: "paypal") }
-    public static var paypay: Self { .init(rawValue: "paypay") }
-    public static var payto: Self { .init(rawValue: "payto") }
-    public static var pix: Self { .init(rawValue: "pix") }
-    public static var promptpay: Self { .init(rawValue: "promptpay") }
-    public static var qris: Self { .init(rawValue: "qris") }
-    public static var rechnung: Self { .init(rawValue: "rechnung") }
-    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
-    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
-    public static var satispay: Self { .init(rawValue: "satispay") }
-    public static var scalapay: Self { .init(rawValue: "scalapay") }
-    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
-    public static var sequra: Self { .init(rawValue: "sequra") }
-    public static var shopPay: Self { .init(rawValue: "shop_pay") }
-    public static var shopeepay: Self { .init(rawValue: "shopeepay") }
-    public static var sofort: Self { .init(rawValue: "sofort") }
-    public static var southKoreaMarket: Self { .init(rawValue: "south_korea_market") }
-    public static var stripeBalance: Self { .init(rawValue: "stripe_balance") }
-    public static var sunbit: Self { .init(rawValue: "sunbit") }
-    public static var swish: Self { .init(rawValue: "swish") }
-    public static var tamara: Self { .init(rawValue: "tamara") }
-    public static var testPay: Self { .init(rawValue: "test_pay") }
-    public static var touchNGo: Self { .init(rawValue: "touch_n_go") }
-    public static var truemoney: Self { .init(rawValue: "truemoney") }
-    public static var twint: Self { .init(rawValue: "twint") }
-    public static var upi: Self { .init(rawValue: "upi") }
-    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
-    public static var usCashVoucher: Self { .init(rawValue: "us_cash_voucher") }
-    public static var vipps: Self { .init(rawValue: "vipps") }
-    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
-    public static var wero: Self { .init(rawValue: "wero") }
-    public static var zip: Self { .init(rawValue: "zip") }
-}
-
 /// When you enable this parameter, this SetupIntent accepts payment methods that you enable in the
 /// Dashboard and that are compatible with its other parameters.
-public struct SetupIntentCreateAutomaticPaymentMethods: StripeParams {
+public struct SetupIntentAutomaticPaymentMethods: StripeParams {
     /// Whether this feature is enabled.
     public var enabled: Bool
     /// Controls whether this SetupIntent will accept redirect-based payment methods. Redirect-based payment
@@ -3097,9 +2989,9 @@ public struct SetupIntentCreateAutomaticPaymentMethods: StripeParams {
     /// authentication or additional steps. To [confirm](https://docs.stripe.com/api/setup_intents/confirm)
     /// this SetupIntent, you may be required to provide a `return_url` to redirect customers back to your
     /// site after they authenticate or complete the setup.
-    public var allowRedirects: SetupIntentCreateAutomaticPaymentMethodsAllowRedirects?
+    public var allowRedirects: SetupIntentAutomaticPaymentMethodsAllowRedirects?
 
-    public init(enabled: Bool, allowRedirects: SetupIntentCreateAutomaticPaymentMethodsAllowRedirects? = nil) {
+    public init(enabled: Bool, allowRedirects: SetupIntentAutomaticPaymentMethodsAllowRedirects? = nil) {
         self.enabled = enabled
         self.allowRedirects = allowRedirects
     }
@@ -3110,7 +3002,7 @@ public struct SetupIntentCreateAutomaticPaymentMethods: StripeParams {
     }
 }
 
-public struct SetupIntentCreateAutomaticPaymentMethodsAllowRedirects: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentAutomaticPaymentMethodsAllowRedirects: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3121,7 +3013,7 @@ public struct SetupIntentCreateAutomaticPaymentMethodsAllowRedirects: RawReprese
     public static var never: Self { .init(rawValue: "never") }
 }
 
-public struct SetupIntentCreateExcludedPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentExcludedPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3185,7 +3077,7 @@ public struct SetupIntentCreateExcludedPaymentMethodTypes: RawRepresentable, Cod
     public static var zip: Self { .init(rawValue: "zip") }
 }
 
-public struct SetupIntentCreateFlowDirections: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentFlowDirections: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3198,9 +3090,9 @@ public struct SetupIntentCreateFlowDirections: RawRepresentable, Codable, Hashab
 
 public struct SetupIntentCreateMandateData: StripeParams {
     /// This hash contains details about the customer acceptance of the Mandate.
-    public var customerAcceptance: SetupIntentCreateMandateDataCustomerAcceptance
+    public var customerAcceptance: SetupIntentMandateDataCustomerAcceptance
 
-    public init(customerAcceptance: SetupIntentCreateMandateDataCustomerAcceptance) {
+    public init(customerAcceptance: SetupIntentMandateDataCustomerAcceptance) {
         self.customerAcceptance = customerAcceptance
     }
 
@@ -3210,17 +3102,17 @@ public struct SetupIntentCreateMandateData: StripeParams {
 }
 
 /// This hash contains details about the customer acceptance of the Mandate.
-public struct SetupIntentCreateMandateDataCustomerAcceptance: StripeParams {
+public struct SetupIntentMandateDataCustomerAcceptance: StripeParams {
     /// The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
-    public var type: SetupIntentCreateMandateDataCustomerAcceptanceType
+    public var type: SetupIntentMandateDataCustomerAcceptanceType
     /// The time at which the customer accepted the Mandate.
     public var acceptedAt: Date?
     /// If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
     public var offline: [String: String]?
     /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
-    public var online: SetupIntentCreateMandateDataCustomerAcceptanceOnline?
+    public var online: SetupIntentMandateDataCustomerAcceptanceOnline?
 
-    public init(type: SetupIntentCreateMandateDataCustomerAcceptanceType, acceptedAt: Date? = nil, offline: [String: String]? = nil, online: SetupIntentCreateMandateDataCustomerAcceptanceOnline? = nil) {
+    public init(type: SetupIntentMandateDataCustomerAcceptanceType, acceptedAt: Date? = nil, offline: [String: String]? = nil, online: SetupIntentMandateDataCustomerAcceptanceOnline? = nil) {
         self.type = type
         self.acceptedAt = acceptedAt
         self.offline = offline
@@ -3235,7 +3127,7 @@ public struct SetupIntentCreateMandateDataCustomerAcceptance: StripeParams {
     }
 }
 
-public struct SetupIntentCreateMandateDataCustomerAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentMandateDataCustomerAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -3247,7 +3139,7 @@ public struct SetupIntentCreateMandateDataCustomerAcceptanceType: RawRepresentab
 }
 
 /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
-public struct SetupIntentCreateMandateDataCustomerAcceptanceOnline: StripeParams {
+public struct SetupIntentMandateDataCustomerAcceptanceOnline: StripeParams {
     /// The IP address from which the Mandate was accepted by the customer.
     public var ipAddress: String
     /// The user agent of the browser from which the Mandate was accepted by the customer.
@@ -3262,973 +3154,6 @@ public struct SetupIntentCreateMandateDataCustomerAcceptanceOnline: StripeParams
         case ipAddress = "ip_address"
         case userAgent = "user_agent"
     }
-}
-
-/// When included, this hash creates a PaymentMethod that is set as the
-/// [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
-/// value in the SetupIntent.
-public struct SetupIntentCreatePaymentMethodData: StripeParams {
-    /// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name
-    /// matching this value. It contains additional information specific to the PaymentMethod type.
-    public var type: SetupIntentCreatePaymentMethodDataType
-    /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
-    /// method.
-    public var acssDebit: SetupIntentCreatePaymentMethodDataAcssDebit?
-    /// If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
-    public var affirm: [String: String]?
-    /// If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the
-    /// AfterpayClearpay payment method.
-    public var afterpayClearpay: [String: String]?
-    /// If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
-    public var alipay: [String: String]?
-    /// This field indicates whether this payment method can be shown again to its customer in a checkout
-    /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
-    /// method can be shown as a saved payment method in a checkout flow. The field defaults to
-    /// `unspecified`.
-    public var allowRedisplay: SetupIntentCreatePaymentMethodDataAllowRedisplay?
-    /// If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
-    public var alma: [String: String]?
-    /// If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment
-    /// method.
-    public var amazonPay: [String: String]?
-    /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
-    public var auBecsDebit: SetupIntentCreatePaymentMethodDataAuBecsDebit?
-    /// If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank
-    /// account.
-    public var bacsDebit: SetupIntentCreatePaymentMethodDataBacsDebit?
-    /// If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment
-    /// method.
-    public var bancontact: [String: String]?
-    /// If this is a `billie` PaymentMethod, this hash contains details about the Billie payment method.
-    public var billie: [String: String]?
-    /// Billing information associated with the PaymentMethod that may be used or required by particular
-    /// types of payment methods.
-    public var billingDetails: SetupIntentCreatePaymentMethodDataBillingDetails?
-    /// If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
-    public var bizum: [String: String]?
-    /// If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
-    public var blik: [String: String]?
-    /// If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
-    public var boleto: SetupIntentCreatePaymentMethodDataBoleto?
-    /// If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment
-    /// method.
-    public var cashapp: [String: String]?
-    /// If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
-    public var crypto: [String: String]?
-    /// If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance
-    /// payment method.
-    public var customerBalance: [String: String]?
-    /// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
-    public var eps: SetupIntentCreatePaymentMethodDataEps?
-    /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
-    public var fpx: SetupIntentCreatePaymentMethodDataFpx?
-    /// If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
-    public var giropay: [String: String]?
-    /// If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
-    public var grabpay: [String: String]?
-    /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
-    public var ideal: SetupIntentCreatePaymentMethodDataIdeal?
-    /// If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present
-    /// payment method.
-    public var interacPresent: [String: String]?
-    /// If this is a `kakao_pay` PaymentMethod, this hash contains details about the Kakao Pay payment
-    /// method.
-    public var kakaoPay: [String: String]?
-    /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
-    public var klarna: SetupIntentCreatePaymentMethodDataKlarna?
-    /// If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
-    public var konbini: [String: String]?
-    /// If this is a `kr_card` PaymentMethod, this hash contains details about the Korean Card payment
-    /// method.
-    public var krCard: [String: String]?
-    /// If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link
-    /// is also known as Onelink in the UK).
-    public var link: [String: String]?
-    /// If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
-    public var mbWay: [String: String]?
-    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
-    /// This can be useful for storing additional information about the object in a structured format.
-    /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
-    /// empty value to `metadata`.
-    public var metadata: [String: String]?
-    /// If this is a `mobilepay` PaymentMethod, this hash contains details about the MobilePay payment
-    /// method.
-    public var mobilepay: [String: String]?
-    /// If this is a `multibanco` PaymentMethod, this hash contains details about the Multibanco payment
-    /// method.
-    public var multibanco: [String: String]?
-    /// If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment
-    /// method.
-    public var naverPay: SetupIntentCreatePaymentMethodDataNaverPay?
-    /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
-    /// payment method.
-    public var nzBankAccount: SetupIntentCreatePaymentMethodDataNzBankAccount?
-    /// If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
-    public var oxxo: [String: String]?
-    /// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
-    public var p24: SetupIntentCreatePaymentMethodDataP24?
-    /// If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment
-    /// method.
-    public var payByBank: [String: String]?
-    /// If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
-    public var payco: [String: String]?
-    /// If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
-    public var paynow: [String: String]?
-    /// If this is a `paypal` PaymentMethod, this hash contains details about the PayPal payment method.
-    public var paypal: [String: String]?
-    /// If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
-    public var paypay: [String: String]?
-    /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-    public var payto: SetupIntentCreatePaymentMethodDataPayto?
-    /// If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
-    public var pix: [String: String]?
-    /// If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment
-    /// method.
-    public var promptpay: [String: String]?
-    /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
-    /// more information.
-    public var radarOptions: SetupIntentCreatePaymentMethodDataRadarOptions?
-    /// If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment
-    /// method.
-    public var revolutPay: [String: String]?
-    /// If this is a `samsung_pay` PaymentMethod, this hash contains details about the SamsungPay payment
-    /// method.
-    public var samsungPay: [String: String]?
-    /// If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
-    public var satispay: [String: String]?
-    /// If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
-    public var scalapay: [String: String]?
-    /// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank
-    /// account.
-    public var sepaDebit: SetupIntentCreatePaymentMethodDataSepaDebit?
-    /// If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
-    public var sequra: [String: String]?
-    /// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-    public var sofort: SetupIntentCreatePaymentMethodDataSofort?
-    /// If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
-    public var sunbit: [String: String]?
-    /// If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
-    public var swish: [String: String]?
-    /// If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
-    public var twint: [String: String]?
-    /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
-    public var upi: SetupIntentCreatePaymentMethodDataUpi?
-    /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
-    /// payment method.
-    public var usBankAccount: SetupIntentCreatePaymentMethodDataUsBankAccount?
-    /// If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment
-    /// method.
-    public var wechatPay: [String: String]?
-    /// If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
-    public var zip: [String: String]?
-
-    public init(type: SetupIntentCreatePaymentMethodDataType, acssDebit: SetupIntentCreatePaymentMethodDataAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: SetupIntentCreatePaymentMethodDataAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: SetupIntentCreatePaymentMethodDataAuBecsDebit? = nil, bacsDebit: SetupIntentCreatePaymentMethodDataBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: SetupIntentCreatePaymentMethodDataBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: SetupIntentCreatePaymentMethodDataBoleto? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, customerBalance: [String: String]? = nil, eps: SetupIntentCreatePaymentMethodDataEps? = nil, fpx: SetupIntentCreatePaymentMethodDataFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: SetupIntentCreatePaymentMethodDataIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: SetupIntentCreatePaymentMethodDataKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: SetupIntentCreatePaymentMethodDataNaverPay? = nil, nzBankAccount: SetupIntentCreatePaymentMethodDataNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: SetupIntentCreatePaymentMethodDataP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: SetupIntentCreatePaymentMethodDataPayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: SetupIntentCreatePaymentMethodDataRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: SetupIntentCreatePaymentMethodDataSepaDebit? = nil, sequra: [String: String]? = nil, sofort: SetupIntentCreatePaymentMethodDataSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, upi: SetupIntentCreatePaymentMethodDataUpi? = nil, usBankAccount: SetupIntentCreatePaymentMethodDataUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
-        self.type = type
-        self.acssDebit = acssDebit
-        self.affirm = affirm
-        self.afterpayClearpay = afterpayClearpay
-        self.alipay = alipay
-        self.allowRedisplay = allowRedisplay
-        self.alma = alma
-        self.amazonPay = amazonPay
-        self.auBecsDebit = auBecsDebit
-        self.bacsDebit = bacsDebit
-        self.bancontact = bancontact
-        self.billie = billie
-        self.billingDetails = billingDetails
-        self.bizum = bizum
-        self.blik = blik
-        self.boleto = boleto
-        self.cashapp = cashapp
-        self.crypto = crypto
-        self.customerBalance = customerBalance
-        self.eps = eps
-        self.fpx = fpx
-        self.giropay = giropay
-        self.grabpay = grabpay
-        self.ideal = ideal
-        self.interacPresent = interacPresent
-        self.kakaoPay = kakaoPay
-        self.klarna = klarna
-        self.konbini = konbini
-        self.krCard = krCard
-        self.link = link
-        self.mbWay = mbWay
-        self.metadata = metadata
-        self.mobilepay = mobilepay
-        self.multibanco = multibanco
-        self.naverPay = naverPay
-        self.nzBankAccount = nzBankAccount
-        self.oxxo = oxxo
-        self.p24 = p24
-        self.payByBank = payByBank
-        self.payco = payco
-        self.paynow = paynow
-        self.paypal = paypal
-        self.paypay = paypay
-        self.payto = payto
-        self.pix = pix
-        self.promptpay = promptpay
-        self.radarOptions = radarOptions
-        self.revolutPay = revolutPay
-        self.samsungPay = samsungPay
-        self.satispay = satispay
-        self.scalapay = scalapay
-        self.sepaDebit = sepaDebit
-        self.sequra = sequra
-        self.sofort = sofort
-        self.sunbit = sunbit
-        self.swish = swish
-        self.twint = twint
-        self.upi = upi
-        self.usBankAccount = usBankAccount
-        self.wechatPay = wechatPay
-        self.zip = zip
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case acssDebit = "acss_debit"
-        case affirm
-        case afterpayClearpay = "afterpay_clearpay"
-        case alipay
-        case allowRedisplay = "allow_redisplay"
-        case alma
-        case amazonPay = "amazon_pay"
-        case auBecsDebit = "au_becs_debit"
-        case bacsDebit = "bacs_debit"
-        case bancontact
-        case billie
-        case billingDetails = "billing_details"
-        case bizum
-        case blik
-        case boleto
-        case cashapp
-        case crypto
-        case customerBalance = "customer_balance"
-        case eps
-        case fpx
-        case giropay
-        case grabpay
-        case ideal
-        case interacPresent = "interac_present"
-        case kakaoPay = "kakao_pay"
-        case klarna
-        case konbini
-        case krCard = "kr_card"
-        case link
-        case mbWay = "mb_way"
-        case metadata
-        case mobilepay
-        case multibanco
-        case naverPay = "naver_pay"
-        case nzBankAccount = "nz_bank_account"
-        case oxxo
-        case p24
-        case payByBank = "pay_by_bank"
-        case payco
-        case paynow
-        case paypal
-        case paypay
-        case payto
-        case pix
-        case promptpay
-        case radarOptions = "radar_options"
-        case revolutPay = "revolut_pay"
-        case samsungPay = "samsung_pay"
-        case satispay
-        case scalapay
-        case sepaDebit = "sepa_debit"
-        case sequra
-        case sofort
-        case sunbit
-        case swish
-        case twint
-        case type
-        case upi
-        case usBankAccount = "us_bank_account"
-        case wechatPay = "wechat_pay"
-        case zip
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
-    public static var affirm: Self { .init(rawValue: "affirm") }
-    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
-    public static var alipay: Self { .init(rawValue: "alipay") }
-    public static var alma: Self { .init(rawValue: "alma") }
-    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
-    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
-    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
-    public static var bancontact: Self { .init(rawValue: "bancontact") }
-    public static var billie: Self { .init(rawValue: "billie") }
-    public static var bizum: Self { .init(rawValue: "bizum") }
-    public static var blik: Self { .init(rawValue: "blik") }
-    public static var boleto: Self { .init(rawValue: "boleto") }
-    public static var cashapp: Self { .init(rawValue: "cashapp") }
-    public static var crypto: Self { .init(rawValue: "crypto") }
-    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
-    public static var eps: Self { .init(rawValue: "eps") }
-    public static var fpx: Self { .init(rawValue: "fpx") }
-    public static var giropay: Self { .init(rawValue: "giropay") }
-    public static var grabpay: Self { .init(rawValue: "grabpay") }
-    public static var ideal: Self { .init(rawValue: "ideal") }
-    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
-    public static var klarna: Self { .init(rawValue: "klarna") }
-    public static var konbini: Self { .init(rawValue: "konbini") }
-    public static var krCard: Self { .init(rawValue: "kr_card") }
-    public static var link: Self { .init(rawValue: "link") }
-    public static var mbWay: Self { .init(rawValue: "mb_way") }
-    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
-    public static var multibanco: Self { .init(rawValue: "multibanco") }
-    public static var naverPay: Self { .init(rawValue: "naver_pay") }
-    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
-    public static var oxxo: Self { .init(rawValue: "oxxo") }
-    public static var p24: Self { .init(rawValue: "p24") }
-    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
-    public static var payco: Self { .init(rawValue: "payco") }
-    public static var paynow: Self { .init(rawValue: "paynow") }
-    public static var paypal: Self { .init(rawValue: "paypal") }
-    public static var paypay: Self { .init(rawValue: "paypay") }
-    public static var payto: Self { .init(rawValue: "payto") }
-    public static var pix: Self { .init(rawValue: "pix") }
-    public static var promptpay: Self { .init(rawValue: "promptpay") }
-    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
-    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
-    public static var satispay: Self { .init(rawValue: "satispay") }
-    public static var scalapay: Self { .init(rawValue: "scalapay") }
-    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
-    public static var sequra: Self { .init(rawValue: "sequra") }
-    public static var sofort: Self { .init(rawValue: "sofort") }
-    public static var sunbit: Self { .init(rawValue: "sunbit") }
-    public static var swish: Self { .init(rawValue: "swish") }
-    public static var twint: Self { .init(rawValue: "twint") }
-    public static var upi: Self { .init(rawValue: "upi") }
-    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
-    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
-    public static var zip: Self { .init(rawValue: "zip") }
-}
-
-/// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
-/// method.
-public struct SetupIntentCreatePaymentMethodDataAcssDebit: StripeParams {
-    /// Customer's bank account number.
-    public var accountNumber: String
-    /// Institution number of the customer's bank.
-    public var institutionNumber: String
-    /// Transit number of the customer's bank.
-    public var transitNumber: String
-
-    public init(accountNumber: String, institutionNumber: String, transitNumber: String) {
-        self.accountNumber = accountNumber
-        self.institutionNumber = institutionNumber
-        self.transitNumber = transitNumber
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountNumber = "account_number"
-        case institutionNumber = "institution_number"
-        case transitNumber = "transit_number"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var always: Self { .init(rawValue: "always") }
-    public static var limited: Self { .init(rawValue: "limited") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
-}
-
-/// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
-public struct SetupIntentCreatePaymentMethodDataAuBecsDebit: StripeParams {
-    /// The account number for the bank account.
-    public var accountNumber: String
-    /// Bank-State-Branch number of the bank account.
-    public var bsbNumber: String
-
-    public init(accountNumber: String, bsbNumber: String) {
-        self.accountNumber = accountNumber
-        self.bsbNumber = bsbNumber
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountNumber = "account_number"
-        case bsbNumber = "bsb_number"
-    }
-}
-
-/// If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank
-/// account.
-public struct SetupIntentCreatePaymentMethodDataBacsDebit: StripeParams {
-    /// Account number of the bank account that the funds will be debited from.
-    public var accountNumber: String?
-    /// Sort code of the bank account. (e.g., `10-20-30`)
-    public var sortCode: String?
-
-    public init(accountNumber: String? = nil, sortCode: String? = nil) {
-        self.accountNumber = accountNumber
-        self.sortCode = sortCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountNumber = "account_number"
-        case sortCode = "sort_code"
-    }
-}
-
-/// Billing information associated with the PaymentMethod that may be used or required by particular
-/// types of payment methods.
-public struct SetupIntentCreatePaymentMethodDataBillingDetails: ClearableParams {
-    /// Billing address.
-    public var address: SetupIntentCreatePaymentMethodDataBillingDetailsAddress?
-    /// Email address.
-    public var email: String?
-    /// Full name.
-    public var name: String?
-    /// Billing phone number (including extension).
-    public var phone: String?
-    /// Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM
-    /// sellers.
-    public var taxId: String?
-    /// Fields to send empty, which clears them: `params.clear(.address)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(address: SetupIntentCreatePaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
-        self.address = address
-        self.email = email
-        self.name = name
-        self.phone = phone
-        self.taxId = taxId
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case address
-        case email
-        case name
-        case phone
-        case taxId = "tax_id"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case address
-        case email
-        case name
-        case phone
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataBillingDetailsAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
-public struct SetupIntentCreatePaymentMethodDataBoleto: StripeParams {
-    /// The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
-    public var taxId: String
-
-    public init(taxId: String) {
-        self.taxId = taxId
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case taxId = "tax_id"
-    }
-}
-
-/// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
-public struct SetupIntentCreatePaymentMethodDataEps: StripeParams {
-    /// The customer's bank.
-    public var bank: SetupIntentCreatePaymentMethodDataEpsBank?
-
-    public init(bank: SetupIntentCreatePaymentMethodDataEpsBank? = nil) {
-        self.bank = bank
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataEpsBank: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var arzteUndApothekerBank: Self { .init(rawValue: "arzte_und_apotheker_bank") }
-    public static var austrianAnadiBankAg: Self { .init(rawValue: "austrian_anadi_bank_ag") }
-    public static var bankAustria: Self { .init(rawValue: "bank_austria") }
-    public static var bankhausCarlSpangler: Self { .init(rawValue: "bankhaus_carl_spangler") }
-    public static var bankhausSchelhammerUndSchatteraAg: Self { .init(rawValue: "bankhaus_schelhammer_und_schattera_ag") }
-    public static var bawagPskAg: Self { .init(rawValue: "bawag_psk_ag") }
-    public static var bksBankAg: Self { .init(rawValue: "bks_bank_ag") }
-    public static var brullKallmusBankAg: Self { .init(rawValue: "brull_kallmus_bank_ag") }
-    public static var btvVierLanderBank: Self { .init(rawValue: "btv_vier_lander_bank") }
-    public static var capitalBankGraweGruppeAg: Self { .init(rawValue: "capital_bank_grawe_gruppe_ag") }
-    public static var deutscheBankAg: Self { .init(rawValue: "deutsche_bank_ag") }
-    public static var dolomitenbank: Self { .init(rawValue: "dolomitenbank") }
-    public static var easybankAg: Self { .init(rawValue: "easybank_ag") }
-    public static var ersteBankUndSparkassen: Self { .init(rawValue: "erste_bank_und_sparkassen") }
-    public static var hypoAlpeadriabankInternationalAg: Self { .init(rawValue: "hypo_alpeadriabank_international_ag") }
-    public static var hypoBankBurgenlandAktiengesellschaft: Self { .init(rawValue: "hypo_bank_burgenland_aktiengesellschaft") }
-    public static var hypoNoeLbFurNiederosterreichUWien: Self { .init(rawValue: "hypo_noe_lb_fur_niederosterreich_u_wien") }
-    public static var hypoOberosterreichSalzburgSteiermark: Self { .init(rawValue: "hypo_oberosterreich_salzburg_steiermark") }
-    public static var hypoTirolBankAg: Self { .init(rawValue: "hypo_tirol_bank_ag") }
-    public static var hypoVorarlbergBankAg: Self { .init(rawValue: "hypo_vorarlberg_bank_ag") }
-    public static var marchfelderBank: Self { .init(rawValue: "marchfelder_bank") }
-    public static var oberbankAg: Self { .init(rawValue: "oberbank_ag") }
-    public static var raiffeisenBankengruppeOsterreich: Self { .init(rawValue: "raiffeisen_bankengruppe_osterreich") }
-    public static var schoellerbankAg: Self { .init(rawValue: "schoellerbank_ag") }
-    public static var spardaBankWien: Self { .init(rawValue: "sparda_bank_wien") }
-    public static var volksbankGruppe: Self { .init(rawValue: "volksbank_gruppe") }
-    public static var volkskreditbankAg: Self { .init(rawValue: "volkskreditbank_ag") }
-    public static var vrBankBraunau: Self { .init(rawValue: "vr_bank_braunau") }
-}
-
-/// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
-public struct SetupIntentCreatePaymentMethodDataFpx: StripeParams {
-    /// The customer's bank.
-    public var bank: SetupIntentCreatePaymentMethodDataFpxBank
-    /// Account holder type for FPX transaction
-    public var accountHolderType: SetupIntentCreatePaymentMethodDataFpxAccountHolderType?
-
-    public init(bank: SetupIntentCreatePaymentMethodDataFpxBank, accountHolderType: SetupIntentCreatePaymentMethodDataFpxAccountHolderType? = nil) {
-        self.bank = bank
-        self.accountHolderType = accountHolderType
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountHolderType = "account_holder_type"
-        case bank
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataFpxBank: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var affinBank: Self { .init(rawValue: "affin_bank") }
-    public static var agrobank: Self { .init(rawValue: "agrobank") }
-    public static var allianceBank: Self { .init(rawValue: "alliance_bank") }
-    public static var ambank: Self { .init(rawValue: "ambank") }
-    public static var bankIslam: Self { .init(rawValue: "bank_islam") }
-    public static var bankMuamalat: Self { .init(rawValue: "bank_muamalat") }
-    public static var bankOfChina: Self { .init(rawValue: "bank_of_china") }
-    public static var bankRakyat: Self { .init(rawValue: "bank_rakyat") }
-    public static var bnpParibas: Self { .init(rawValue: "bnp_paribas") }
-    public static var bsn: Self { .init(rawValue: "bsn") }
-    public static var cimb: Self { .init(rawValue: "cimb") }
-    public static var citibank: Self { .init(rawValue: "citibank") }
-    public static var deutscheBank: Self { .init(rawValue: "deutsche_bank") }
-    public static var hongLeongBank: Self { .init(rawValue: "hong_leong_bank") }
-    public static var hsbc: Self { .init(rawValue: "hsbc") }
-    public static var kfh: Self { .init(rawValue: "kfh") }
-    public static var maybank2e: Self { .init(rawValue: "maybank2e") }
-    public static var maybank2u: Self { .init(rawValue: "maybank2u") }
-    public static var mbsbBank: Self { .init(rawValue: "mbsb_bank") }
-    public static var ocbc: Self { .init(rawValue: "ocbc") }
-    public static var pbEnterprise: Self { .init(rawValue: "pb_enterprise") }
-    public static var publicBank: Self { .init(rawValue: "public_bank") }
-    public static var rhb: Self { .init(rawValue: "rhb") }
-    public static var standardChartered: Self { .init(rawValue: "standard_chartered") }
-    public static var uob: Self { .init(rawValue: "uob") }
-}
-
-public struct SetupIntentCreatePaymentMethodDataFpxAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var company: Self { .init(rawValue: "company") }
-    public static var individual: Self { .init(rawValue: "individual") }
-}
-
-/// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
-public struct SetupIntentCreatePaymentMethodDataIdeal: StripeParams {
-    /// The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
-    public var bank: SetupIntentCreatePaymentMethodDataIdealBank?
-
-    public init(bank: SetupIntentCreatePaymentMethodDataIdealBank? = nil) {
-        self.bank = bank
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataIdealBank: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var abnAmro: Self { .init(rawValue: "abn_amro") }
-    public static var adyen: Self { .init(rawValue: "adyen") }
-    public static var asnBank: Self { .init(rawValue: "asn_bank") }
-    public static var bunq: Self { .init(rawValue: "bunq") }
-    public static var buut: Self { .init(rawValue: "buut") }
-    public static var finom: Self { .init(rawValue: "finom") }
-    public static var handelsbanken: Self { .init(rawValue: "handelsbanken") }
-    public static var ing: Self { .init(rawValue: "ing") }
-    public static var knab: Self { .init(rawValue: "knab") }
-    public static var mollie: Self { .init(rawValue: "mollie") }
-    public static var moneyou: Self { .init(rawValue: "moneyou") }
-    public static var n26: Self { .init(rawValue: "n26") }
-    public static var nn: Self { .init(rawValue: "nn") }
-    public static var rabobank: Self { .init(rawValue: "rabobank") }
-    public static var regiobank: Self { .init(rawValue: "regiobank") }
-    public static var revolut: Self { .init(rawValue: "revolut") }
-    public static var snsBank: Self { .init(rawValue: "sns_bank") }
-    public static var triodosBank: Self { .init(rawValue: "triodos_bank") }
-    public static var vanLanschot: Self { .init(rawValue: "van_lanschot") }
-    public static var yoursafe: Self { .init(rawValue: "yoursafe") }
-}
-
-/// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
-public struct SetupIntentCreatePaymentMethodDataKlarna: StripeParams {
-    /// Customer's date of birth
-    public var dob: SetupIntentCreatePaymentMethodDataKlarnaDob?
-
-    public init(dob: SetupIntentCreatePaymentMethodDataKlarnaDob? = nil) {
-        self.dob = dob
-    }
-}
-
-/// Customer's date of birth
-public struct SetupIntentCreatePaymentMethodDataKlarnaDob: StripeParams {
-    /// The day of birth, between 1 and 31.
-    public var day: Int
-    /// The month of birth, between 1 and 12.
-    public var month: Int
-    /// The four-digit year of birth.
-    public var year: Int
-
-    public init(day: Int, month: Int, year: Int) {
-        self.day = day
-        self.month = month
-        self.year = year
-    }
-}
-
-/// If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment
-/// method.
-public struct SetupIntentCreatePaymentMethodDataNaverPay: StripeParams {
-    /// Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults
-    /// to `card`.
-    public var funding: SetupIntentCreatePaymentMethodDataNaverPayFunding?
-
-    public init(funding: SetupIntentCreatePaymentMethodDataNaverPayFunding? = nil) {
-        self.funding = funding
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataNaverPayFunding: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var card: Self { .init(rawValue: "card") }
-    public static var points: Self { .init(rawValue: "points") }
-}
-
-/// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
-/// payment method.
-public struct SetupIntentCreatePaymentMethodDataNzBankAccount: StripeParams {
-    /// The account number for the bank account.
-    public var accountNumber: String
-    /// The numeric code for the bank account's bank.
-    public var bankCode: String
-    /// The numeric code for the bank account's bank branch.
-    public var branchCode: String
-    /// The suffix of the bank account number.
-    public var suffix: String
-    /// The name on the bank account. Only required if the account holder name is different from the name of
-    /// the authorized signatory collected in the PaymentMethod’s billing details.
-    public var accountHolderName: String?
-    public var reference: String?
-
-    public init(accountNumber: String, bankCode: String, branchCode: String, suffix: String, accountHolderName: String? = nil, reference: String? = nil) {
-        self.accountNumber = accountNumber
-        self.bankCode = bankCode
-        self.branchCode = branchCode
-        self.suffix = suffix
-        self.accountHolderName = accountHolderName
-        self.reference = reference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountHolderName = "account_holder_name"
-        case accountNumber = "account_number"
-        case bankCode = "bank_code"
-        case branchCode = "branch_code"
-        case reference
-        case suffix
-    }
-}
-
-/// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
-public struct SetupIntentCreatePaymentMethodDataP24: StripeParams {
-    /// The customer's bank.
-    public var bank: SetupIntentCreatePaymentMethodDataP24Bank?
-
-    public init(bank: SetupIntentCreatePaymentMethodDataP24Bank? = nil) {
-        self.bank = bank
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataP24Bank: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var aliorBank: Self { .init(rawValue: "alior_bank") }
-    public static var bankMillennium: Self { .init(rawValue: "bank_millennium") }
-    public static var bankNowyBfgSa: Self { .init(rawValue: "bank_nowy_bfg_sa") }
-    public static var bankPekaoSa: Self { .init(rawValue: "bank_pekao_sa") }
-    public static var bankiSpbdzielcze: Self { .init(rawValue: "banki_spbdzielcze") }
-    public static var blik: Self { .init(rawValue: "blik") }
-    public static var bnpParibas: Self { .init(rawValue: "bnp_paribas") }
-    public static var boz: Self { .init(rawValue: "boz") }
-    public static var citiHandlowy: Self { .init(rawValue: "citi_handlowy") }
-    public static var creditAgricole: Self { .init(rawValue: "credit_agricole") }
-    public static var envelobank: Self { .init(rawValue: "envelobank") }
-    public static var etransferPocztowy24: Self { .init(rawValue: "etransfer_pocztowy24") }
-    public static var getinBank: Self { .init(rawValue: "getin_bank") }
-    public static var ideabank: Self { .init(rawValue: "ideabank") }
-    public static var ing: Self { .init(rawValue: "ing") }
-    public static var inteligo: Self { .init(rawValue: "inteligo") }
-    public static var mbankMtransfer: Self { .init(rawValue: "mbank_mtransfer") }
-    public static var nestPrzelew: Self { .init(rawValue: "nest_przelew") }
-    public static var noblePay: Self { .init(rawValue: "noble_pay") }
-    public static var pbacZIpko: Self { .init(rawValue: "pbac_z_ipko") }
-    public static var plusBank: Self { .init(rawValue: "plus_bank") }
-    public static var santanderPrzelew24: Self { .init(rawValue: "santander_przelew24") }
-    public static var tmobileUsbugiBankowe: Self { .init(rawValue: "tmobile_usbugi_bankowe") }
-    public static var toyotaBank: Self { .init(rawValue: "toyota_bank") }
-    public static var velobank: Self { .init(rawValue: "velobank") }
-    public static var volkswagenBank: Self { .init(rawValue: "volkswagen_bank") }
-}
-
-/// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-public struct SetupIntentCreatePaymentMethodDataPayto: StripeParams {
-    /// The account number for the bank account.
-    public var accountNumber: String?
-    /// Bank-State-Branch number of the bank account.
-    public var bsbNumber: String?
-    /// The PayID alias for the bank account.
-    public var payId: String?
-
-    public init(accountNumber: String? = nil, bsbNumber: String? = nil, payId: String? = nil) {
-        self.accountNumber = accountNumber
-        self.bsbNumber = bsbNumber
-        self.payId = payId
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountNumber = "account_number"
-        case bsbNumber = "bsb_number"
-        case payId = "pay_id"
-    }
-}
-
-/// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
-/// more information.
-public struct SetupIntentCreatePaymentMethodDataRadarOptions: StripeParams {
-    /// A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata
-    /// and device details that help Radar make more accurate predictions on your payments.
-    public var session: String?
-
-    public init(session: String? = nil) {
-        self.session = session
-    }
-}
-
-/// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank
-/// account.
-public struct SetupIntentCreatePaymentMethodDataSepaDebit: StripeParams {
-    /// IBAN of the bank account.
-    public var iban: String
-
-    public init(iban: String) {
-        self.iban = iban
-    }
-}
-
-/// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-public struct SetupIntentCreatePaymentMethodDataSofort: StripeParams {
-    /// Two-letter ISO code representing the country the bank account is located in.
-    public var country: SetupIntentCreatePaymentMethodDataSofortCountry
-
-    public init(country: SetupIntentCreatePaymentMethodDataSofortCountry) {
-        self.country = country
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataSofortCountry: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var at: Self { .init(rawValue: "AT") }
-    public static var be: Self { .init(rawValue: "BE") }
-    public static var de: Self { .init(rawValue: "DE") }
-    public static var es: Self { .init(rawValue: "ES") }
-    public static var it: Self { .init(rawValue: "IT") }
-    public static var nl: Self { .init(rawValue: "NL") }
-}
-
-/// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
-public struct SetupIntentCreatePaymentMethodDataUpi: StripeParams {
-    /// Configuration options for setting up an eMandate
-    public var mandateOptions: SetupIntentCreatePaymentMethodDataUpiMandateOptions?
-
-    public init(mandateOptions: SetupIntentCreatePaymentMethodDataUpiMandateOptions? = nil) {
-        self.mandateOptions = mandateOptions
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case mandateOptions = "mandate_options"
-    }
-}
-
-/// Configuration options for setting up an eMandate
-public struct SetupIntentCreatePaymentMethodDataUpiMandateOptions: StripeParams {
-    /// Amount to be charged for future payments.
-    public var amount: Int?
-    /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
-    /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
-    /// param.
-    public var amountType: SetupIntentCreatePaymentMethodDataUpiMandateOptionsAmountType?
-    /// A description of the mandate or subscription that is meant to be displayed to the customer.
-    public var description: String?
-    /// End date of the mandate or subscription.
-    public var endDate: Date?
-
-    public init(amount: Int? = nil, amountType: SetupIntentCreatePaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
-        self.amount = amount
-        self.amountType = amountType
-        self.description = description
-        self.endDate = endDate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case amountType = "amount_type"
-        case description
-        case endDate = "end_date"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fixed: Self { .init(rawValue: "fixed") }
-    public static var maximum: Self { .init(rawValue: "maximum") }
-}
-
-/// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
-/// payment method.
-public struct SetupIntentCreatePaymentMethodDataUsBankAccount: StripeParams {
-    /// Account holder type: individual or company.
-    public var accountHolderType: SetupIntentCreatePaymentMethodDataUsBankAccountAccountHolderType?
-    /// Account number of the bank account.
-    public var accountNumber: String?
-    /// Account type: checkings or savings. Defaults to checking if omitted.
-    public var accountType: SetupIntentCreatePaymentMethodDataUsBankAccountAccountType?
-    /// The ID of a Financial Connections Account to use as a payment method.
-    public var financialConnectionsAccount: String?
-    /// Routing number of the bank account.
-    public var routingNumber: String?
-
-    public init(accountHolderType: SetupIntentCreatePaymentMethodDataUsBankAccountAccountHolderType? = nil, accountNumber: String? = nil, accountType: SetupIntentCreatePaymentMethodDataUsBankAccountAccountType? = nil, financialConnectionsAccount: String? = nil, routingNumber: String? = nil) {
-        self.accountHolderType = accountHolderType
-        self.accountNumber = accountNumber
-        self.accountType = accountType
-        self.financialConnectionsAccount = financialConnectionsAccount
-        self.routingNumber = routingNumber
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountHolderType = "account_holder_type"
-        case accountNumber = "account_number"
-        case accountType = "account_type"
-        case financialConnectionsAccount = "financial_connections_account"
-        case routingNumber = "routing_number"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodDataUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var company: Self { .init(rawValue: "company") }
-    public static var individual: Self { .init(rawValue: "individual") }
-}
-
-public struct SetupIntentCreatePaymentMethodDataUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var checking: Self { .init(rawValue: "checking") }
-    public static var savings: Self { .init(rawValue: "savings") }
 }
 
 /// Payment method-specific configuration for this SetupIntent.
@@ -4319,11 +3244,11 @@ public struct SetupIntentCreatePaymentMethodOptionsAcssDebit: StripeParams {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: SetupIntentCreatePaymentMethodOptionsAcssDebitCurrency?
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsAcssDebitMandateOptions?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: SetupIntentCreatePaymentMethodOptionsAcssDebitVerificationMethod?
 
-    public init(currency: SetupIntentCreatePaymentMethodOptionsAcssDebitCurrency? = nil, mandateOptions: SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptions? = nil, verificationMethod: SetupIntentCreatePaymentMethodOptionsAcssDebitVerificationMethod? = nil) {
+    public init(currency: SetupIntentCreatePaymentMethodOptionsAcssDebitCurrency? = nil, mandateOptions: SetupIntentPaymentMethodOptionsAcssDebitMandateOptions? = nil, verificationMethod: SetupIntentCreatePaymentMethodOptionsAcssDebitVerificationMethod? = nil) {
         self.currency = currency
         self.mandateOptions = mandateOptions
         self.verificationMethod = verificationMethod
@@ -4347,81 +3272,6 @@ public struct SetupIntentCreatePaymentMethodOptionsAcssDebitCurrency: RawReprese
     public static var usd: Self { .init(rawValue: "usd") }
 }
 
-/// Additional fields for Mandate creation
-public struct SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptions: ClearableParams {
-    /// A URL for custom mandate text to render during confirmation step. The URL will be rendered with
-    /// additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a
-    /// Payment Intent, or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
-    public var customMandateUrl: String?
-    /// List of Stripe products where this mandate can be selected automatically.
-    public var defaultFor: [SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsDefaultFor]?
-    /// Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or
-    /// 'combined'.
-    public var intervalDescription: String?
-    /// Payment schedule for the mandate.
-    public var paymentSchedule: SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule?
-    /// Transaction type of the mandate.
-    public var transactionType: SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
-    /// Fields to send empty, which clears them: `params.clear(.customMandateUrl)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(customMandateUrl: String? = nil, defaultFor: [SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsDefaultFor]? = nil, intervalDescription: String? = nil, paymentSchedule: SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule? = nil, transactionType: SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType? = nil) {
-        self.customMandateUrl = customMandateUrl
-        self.defaultFor = defaultFor
-        self.intervalDescription = intervalDescription
-        self.paymentSchedule = paymentSchedule
-        self.transactionType = transactionType
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case customMandateUrl = "custom_mandate_url"
-        case defaultFor = "default_for"
-        case intervalDescription = "interval_description"
-        case paymentSchedule = "payment_schedule"
-        case transactionType = "transaction_type"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case customMandateUrl = "custom_mandate_url"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsDefaultFor: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var invoice: Self { .init(rawValue: "invoice") }
-    public static var subscription: Self { .init(rawValue: "subscription") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var combined: Self { .init(rawValue: "combined") }
-    public static var interval: Self { .init(rawValue: "interval") }
-    public static var sporadic: Self { .init(rawValue: "sporadic") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var business: Self { .init(rawValue: "business") }
-    public static var personal: Self { .init(rawValue: "personal") }
-}
-
 public struct SetupIntentCreatePaymentMethodOptionsAcssDebitVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
@@ -4438,38 +3288,14 @@ public struct SetupIntentCreatePaymentMethodOptionsAcssDebitVerificationMethod: 
 /// method options.
 public struct SetupIntentCreatePaymentMethodOptionsBacsDebit: StripeParams {
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentCreatePaymentMethodOptionsBacsDebitMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsBacsDebitMandateOptions?
 
-    public init(mandateOptions: SetupIntentCreatePaymentMethodOptionsBacsDebitMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsBacsDebitMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
-    }
-}
-
-/// Additional fields for Mandate creation
-public struct SetupIntentCreatePaymentMethodOptionsBacsDebitMandateOptions: ClearableParams {
-    /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
-    /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
-    /// '.'. Cannot begin with 'DDIC' or 'STRIPE'.
-    public var referencePrefix: String?
-    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(referencePrefix: String? = nil) {
-        self.referencePrefix = referencePrefix
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case referencePrefix = "reference_prefix"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case referencePrefix = "reference_prefix"
     }
 }
 
@@ -4479,9 +3305,9 @@ public struct SetupIntentCreatePaymentMethodOptionsBlik: StripeParams {
     /// on confirmation.
     public var code: String?
     /// Details of the BLIK mandate
-    public var mandateOptions: SetupIntentCreatePaymentMethodOptionsBlikMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsBlikMandateOptions?
 
-    public init(code: String? = nil, mandateOptions: SetupIntentCreatePaymentMethodOptionsBlikMandateOptions? = nil) {
+    public init(code: String? = nil, mandateOptions: SetupIntentPaymentMethodOptionsBlikMandateOptions? = nil) {
         self.code = code
         self.mandateOptions = mandateOptions
     }
@@ -4489,20 +3315,6 @@ public struct SetupIntentCreatePaymentMethodOptionsBlik: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case code
         case mandateOptions = "mandate_options"
-    }
-}
-
-/// Details of the BLIK mandate
-public struct SetupIntentCreatePaymentMethodOptionsBlikMandateOptions: StripeParams {
-    /// Expiry date of the mandate.
-    public var expiresAt: Date?
-
-    public init(expiresAt: Date? = nil) {
-        self.expiresAt = expiresAt
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case expiresAt = "expires_at"
     }
 }
 
@@ -4528,9 +3340,9 @@ public struct SetupIntentCreatePaymentMethodOptionsCard: StripeParams {
     public var setupCredentialUsage: SetupIntentCreatePaymentMethodOptionsCardSetupCredentialUsage?
     /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
     /// use for this setup.
-    public var threeDSecure: SetupIntentCreatePaymentMethodOptionsCardThreeDSecure?
+    public var threeDSecure: SetupIntentPaymentMethodOptionsCardThreeDSecure?
 
-    public init(mandateOptions: SetupIntentCreatePaymentMethodOptionsCardMandateOptions? = nil, moto: Bool? = nil, network: SetupIntentCreatePaymentMethodOptionsCardNetwork? = nil, requestThreeDSecure: SetupIntentCreatePaymentMethodOptionsCardRequestThreeDSecure? = nil, setupCredentialUsage: SetupIntentCreatePaymentMethodOptionsCardSetupCredentialUsage? = nil, threeDSecure: SetupIntentCreatePaymentMethodOptionsCardThreeDSecure? = nil) {
+    public init(mandateOptions: SetupIntentCreatePaymentMethodOptionsCardMandateOptions? = nil, moto: Bool? = nil, network: SetupIntentCreatePaymentMethodOptionsCardNetwork? = nil, requestThreeDSecure: SetupIntentCreatePaymentMethodOptionsCardRequestThreeDSecure? = nil, setupCredentialUsage: SetupIntentCreatePaymentMethodOptionsCardSetupCredentialUsage? = nil, threeDSecure: SetupIntentPaymentMethodOptionsCardThreeDSecure? = nil) {
         self.mandateOptions = mandateOptions
         self.moto = moto
         self.network = network
@@ -4577,9 +3389,9 @@ public struct SetupIntentCreatePaymentMethodOptionsCardMandateOptions: StripePar
     /// or 52 weeks). This parameter is optional when `interval=sporadic`.
     public var intervalCount: Int?
     /// Specifies the type of mandates supported. Possible values are `india`.
-    public var supportedTypes: [SetupIntentCreatePaymentMethodOptionsCardMandateOptionsSupportedTypes]?
+    public var supportedTypes: [SetupIntentPaymentMethodOptionsCardMandateOptionsSupportedTypes]?
 
-    public init(amount: Int, amountType: SetupIntentCreatePaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentCreatePaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Date, description: String? = nil, endDate: Date? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentCreatePaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
+    public init(amount: Int, amountType: SetupIntentCreatePaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentCreatePaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Date, description: String? = nil, endDate: Date? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentPaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.currency = currency
@@ -4629,16 +3441,6 @@ public struct SetupIntentCreatePaymentMethodOptionsCardMandateOptionsInterval: R
     public static var sporadic: Self { .init(rawValue: "sporadic") }
     public static var week: Self { .init(rawValue: "week") }
     public static var year: Self { .init(rawValue: "year") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsCardMandateOptionsSupportedTypes: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var india: Self { .init(rawValue: "india") }
 }
 
 public struct SetupIntentCreatePaymentMethodOptionsCardNetwork: RawRepresentable, Codable, Hashable, Sendable {
@@ -4697,165 +3499,21 @@ public struct SetupIntentCreatePaymentMethodOptionsCardSetupCredentialUsage: Raw
     public static var unscheduled: Self { .init(rawValue: "unscheduled") }
 }
 
-/// If 3D Secure authentication was performed with a third-party provider, the authentication details to
-/// use for this setup.
-public struct SetupIntentCreatePaymentMethodOptionsCardThreeDSecure: StripeParams {
-    /// The `transStatus` returned from the card Issuer’s ACS in the ARes.
-    public var aresTransStatus: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureAresTransStatus?
-    /// The cryptogram, also known as the "authentication value" (AAV, CAVV or AEVV). This value is 20
-    /// bytes, base64-encoded into a 28-character string. (Most 3D Secure providers will return the
-    /// base64-encoded version, which is what you should specify here.)
-    public var cryptogram: String?
-    /// The Electronic Commerce Indicator (ECI) is returned by your 3D Secure provider and indicates what
-    /// degree of authentication was performed.
-    public var electronicCommerceIndicator: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator?
-    /// Network specific 3DS fields. Network specific arguments require an explicit card brand choice. The
-    /// parameter `payment_method_options.card.network`` must be populated accordingly
-    public var networkOptions: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptions?
-    /// The challenge indicator (`threeDSRequestorChallengeInd`) which was requested in the AReq sent to the
-    /// card Issuer's ACS. A string containing 2 digits from 01-99.
-    public var requestorChallengeIndicator: String?
-    /// For 3D Secure 1, the XID. For 3D Secure 2, the Directory Server Transaction ID (dsTransID).
-    public var transactionId: String?
-    /// The version of 3D Secure that was performed.
-    public var version: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureVersion?
-
-    public init(aresTransStatus: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureAresTransStatus? = nil, cryptogram: String? = nil, electronicCommerceIndicator: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator? = nil, networkOptions: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptions? = nil, requestorChallengeIndicator: String? = nil, transactionId: String? = nil, version: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureVersion? = nil) {
-        self.aresTransStatus = aresTransStatus
-        self.cryptogram = cryptogram
-        self.electronicCommerceIndicator = electronicCommerceIndicator
-        self.networkOptions = networkOptions
-        self.requestorChallengeIndicator = requestorChallengeIndicator
-        self.transactionId = transactionId
-        self.version = version
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case aresTransStatus = "ares_trans_status"
-        case cryptogram
-        case electronicCommerceIndicator = "electronic_commerce_indicator"
-        case networkOptions = "network_options"
-        case requestorChallengeIndicator = "requestor_challenge_indicator"
-        case transactionId = "transaction_id"
-        case version
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsCardThreeDSecureAresTransStatus: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var a: Self { .init(rawValue: "A") }
-    public static var c: Self { .init(rawValue: "C") }
-    public static var i: Self { .init(rawValue: "I") }
-    public static var n: Self { .init(rawValue: "N") }
-    public static var r: Self { .init(rawValue: "R") }
-    public static var u: Self { .init(rawValue: "U") }
-    public static var y: Self { .init(rawValue: "Y") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var v01: Self { .init(rawValue: "01") }
-    public static var v02: Self { .init(rawValue: "02") }
-    public static var v05: Self { .init(rawValue: "05") }
-    public static var v06: Self { .init(rawValue: "06") }
-    public static var v07: Self { .init(rawValue: "07") }
-}
-
-/// Network specific 3DS fields. Network specific arguments require an explicit card brand choice. The
-/// parameter `payment_method_options.card.network`` must be populated accordingly
-public struct SetupIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptions: StripeParams {
-    /// Cartes Bancaires-specific 3DS fields.
-    public var cartesBancaires: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires?
-
-    public init(cartesBancaires: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires? = nil) {
-        self.cartesBancaires = cartesBancaires
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case cartesBancaires = "cartes_bancaires"
-    }
-}
-
-/// Cartes Bancaires-specific 3DS fields.
-public struct SetupIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires: StripeParams {
-    /// The cryptogram calculation algorithm used by the card Issuer's ACS to calculate the Authentication
-    /// cryptogram. Also known as `cavvAlgorithm`. messageExtension: CB-AVALGO
-    public var cbAvalgo: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo
-    /// The exemption indicator returned from Cartes Bancaires in the ARes. message extension: CB-EXEMPTION;
-    /// string (4 characters) This is a 3 byte bitmap (low significant byte first and most significant bit
-    /// first) that has been Base64 encoded
-    public var cbExemption: String?
-    /// The risk score returned from Cartes Bancaires in the ARes. message extension: CB-SCORE; numeric
-    /// value 0-99
-    public var cbScore: Int?
-
-    public init(cbAvalgo: SetupIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo, cbExemption: String? = nil, cbScore: Int? = nil) {
-        self.cbAvalgo = cbAvalgo
-        self.cbExemption = cbExemption
-        self.cbScore = cbScore
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case cbAvalgo = "cb_avalgo"
-        case cbExemption = "cb_exemption"
-        case cbScore = "cb_score"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var v0: Self { .init(rawValue: "0") }
-    public static var v1: Self { .init(rawValue: "1") }
-    public static var v2: Self { .init(rawValue: "2") }
-    public static var v3: Self { .init(rawValue: "3") }
-    public static var v4: Self { .init(rawValue: "4") }
-    public static var a: Self { .init(rawValue: "A") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsCardThreeDSecureVersion: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var v102: Self { .init(rawValue: "1.0.2") }
-    public static var v210: Self { .init(rawValue: "2.1.0") }
-    public static var v220: Self { .init(rawValue: "2.2.0") }
-    public static var v230: Self { .init(rawValue: "2.3.0") }
-    public static var v231: Self { .init(rawValue: "2.3.1") }
-}
-
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method
 /// options.
 public struct SetupIntentCreatePaymentMethodOptionsKlarna: ClearableParams {
     /// The currency of the SetupIntent. Three letter ISO currency code.
     public var currency: String?
     /// On-demand details if setting up a payment method for on-demand payments.
-    public var onDemand: SetupIntentCreatePaymentMethodOptionsKlarnaOnDemand?
+    public var onDemand: SetupIntentPaymentMethodOptionsKlarnaOnDemand?
     /// Preferred language of the Klarna authorization page that the customer is redirected to
-    public var preferredLocale: SetupIntentCreatePaymentMethodOptionsKlarnaPreferredLocale?
+    public var preferredLocale: SetupIntentPaymentMethodOptionsKlarnaPreferredLocale?
     /// Subscription details if setting up or charging a subscription
-    public var subscriptions: [SetupIntentCreatePaymentMethodOptionsKlarnaSubscriptions]?
+    public var subscriptions: [SetupIntentPaymentMethodOptionsKlarnaSubscriptions]?
     /// Fields to send empty, which clears them: `params.clear(.subscriptions)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(currency: String? = nil, onDemand: SetupIntentCreatePaymentMethodOptionsKlarnaOnDemand? = nil, preferredLocale: SetupIntentCreatePaymentMethodOptionsKlarnaPreferredLocale? = nil, subscriptions: [SetupIntentCreatePaymentMethodOptionsKlarnaSubscriptions]? = nil) {
+    public init(currency: String? = nil, onDemand: SetupIntentPaymentMethodOptionsKlarnaOnDemand? = nil, preferredLocale: SetupIntentPaymentMethodOptionsKlarnaPreferredLocale? = nil, subscriptions: [SetupIntentPaymentMethodOptionsKlarnaSubscriptions]? = nil) {
         self.currency = currency
         self.onDemand = onDemand
         self.preferredLocale = preferredLocale
@@ -4873,164 +3531,6 @@ public struct SetupIntentCreatePaymentMethodOptionsKlarna: ClearableParams {
     /// The fields Stripe lets you clear by sending them empty
     public enum ClearableField: String, StripeClearableField {
         case subscriptions
-    }
-}
-
-/// On-demand details if setting up a payment method for on-demand payments.
-public struct SetupIntentCreatePaymentMethodOptionsKlarnaOnDemand: StripeParams {
-    /// Your average amount value. You can use a value across your customer base, or segment based on
-    /// customer type, country, etc.
-    public var averageAmount: Int?
-    /// The maximum value you may charge a customer per purchase. You can use a value across your customer
-    /// base, or segment based on customer type, country, etc.
-    public var maximumAmount: Int?
-    /// The lowest or minimum value you may charge a customer per purchase. You can use a value across your
-    /// customer base, or segment based on customer type, country, etc.
-    public var minimumAmount: Int?
-    /// Interval at which the customer is making purchases
-    public var purchaseInterval: SetupIntentCreatePaymentMethodOptionsKlarnaOnDemandPurchaseInterval?
-    /// The number of `purchase_interval` between charges
-    public var purchaseIntervalCount: Int?
-
-    public init(averageAmount: Int? = nil, maximumAmount: Int? = nil, minimumAmount: Int? = nil, purchaseInterval: SetupIntentCreatePaymentMethodOptionsKlarnaOnDemandPurchaseInterval? = nil, purchaseIntervalCount: Int? = nil) {
-        self.averageAmount = averageAmount
-        self.maximumAmount = maximumAmount
-        self.minimumAmount = minimumAmount
-        self.purchaseInterval = purchaseInterval
-        self.purchaseIntervalCount = purchaseIntervalCount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case averageAmount = "average_amount"
-        case maximumAmount = "maximum_amount"
-        case minimumAmount = "minimum_amount"
-        case purchaseInterval = "purchase_interval"
-        case purchaseIntervalCount = "purchase_interval_count"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsKlarnaOnDemandPurchaseInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsKlarnaPreferredLocale: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var csCz: Self { .init(rawValue: "cs-CZ") }
-    public static var daDk: Self { .init(rawValue: "da-DK") }
-    public static var deAt: Self { .init(rawValue: "de-AT") }
-    public static var deCh: Self { .init(rawValue: "de-CH") }
-    public static var deDe: Self { .init(rawValue: "de-DE") }
-    public static var elGr: Self { .init(rawValue: "el-GR") }
-    public static var enAt: Self { .init(rawValue: "en-AT") }
-    public static var enAu: Self { .init(rawValue: "en-AU") }
-    public static var enBe: Self { .init(rawValue: "en-BE") }
-    public static var enCa: Self { .init(rawValue: "en-CA") }
-    public static var enCh: Self { .init(rawValue: "en-CH") }
-    public static var enCz: Self { .init(rawValue: "en-CZ") }
-    public static var enDe: Self { .init(rawValue: "en-DE") }
-    public static var enDk: Self { .init(rawValue: "en-DK") }
-    public static var enEs: Self { .init(rawValue: "en-ES") }
-    public static var enFi: Self { .init(rawValue: "en-FI") }
-    public static var enFr: Self { .init(rawValue: "en-FR") }
-    public static var enGb: Self { .init(rawValue: "en-GB") }
-    public static var enGr: Self { .init(rawValue: "en-GR") }
-    public static var enIe: Self { .init(rawValue: "en-IE") }
-    public static var enIt: Self { .init(rawValue: "en-IT") }
-    public static var enNl: Self { .init(rawValue: "en-NL") }
-    public static var enNo: Self { .init(rawValue: "en-NO") }
-    public static var enNz: Self { .init(rawValue: "en-NZ") }
-    public static var enPl: Self { .init(rawValue: "en-PL") }
-    public static var enPt: Self { .init(rawValue: "en-PT") }
-    public static var enRo: Self { .init(rawValue: "en-RO") }
-    public static var enSe: Self { .init(rawValue: "en-SE") }
-    public static var enUs: Self { .init(rawValue: "en-US") }
-    public static var esEs: Self { .init(rawValue: "es-ES") }
-    public static var esUs: Self { .init(rawValue: "es-US") }
-    public static var fiFi: Self { .init(rawValue: "fi-FI") }
-    public static var frBe: Self { .init(rawValue: "fr-BE") }
-    public static var frCa: Self { .init(rawValue: "fr-CA") }
-    public static var frCh: Self { .init(rawValue: "fr-CH") }
-    public static var frFr: Self { .init(rawValue: "fr-FR") }
-    public static var itCh: Self { .init(rawValue: "it-CH") }
-    public static var itIt: Self { .init(rawValue: "it-IT") }
-    public static var nbNo: Self { .init(rawValue: "nb-NO") }
-    public static var nlBe: Self { .init(rawValue: "nl-BE") }
-    public static var nlNl: Self { .init(rawValue: "nl-NL") }
-    public static var plPl: Self { .init(rawValue: "pl-PL") }
-    public static var ptPt: Self { .init(rawValue: "pt-PT") }
-    public static var roRo: Self { .init(rawValue: "ro-RO") }
-    public static var svFi: Self { .init(rawValue: "sv-FI") }
-    public static var svSe: Self { .init(rawValue: "sv-SE") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsKlarnaSubscriptions: StripeParams {
-    /// Unit of time between subscription charges.
-    public var interval: SetupIntentCreatePaymentMethodOptionsKlarnaSubscriptionsInterval
-    /// Describes the upcoming charge for this subscription.
-    public var nextBilling: SetupIntentCreatePaymentMethodOptionsKlarnaSubscriptionsNextBilling
-    /// A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value
-    /// that persists across subscription charges.
-    public var reference: String
-    /// The number of intervals (specified in the `interval` attribute) between subscription charges. For
-    /// example, `interval=month` and `interval_count=3` charges every 3 months.
-    public var intervalCount: Int?
-    /// Name for subscription.
-    public var name: String?
-
-    public init(interval: SetupIntentCreatePaymentMethodOptionsKlarnaSubscriptionsInterval, nextBilling: SetupIntentCreatePaymentMethodOptionsKlarnaSubscriptionsNextBilling, reference: String, intervalCount: Int? = nil, name: String? = nil) {
-        self.interval = interval
-        self.nextBilling = nextBilling
-        self.reference = reference
-        self.intervalCount = intervalCount
-        self.name = name
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case interval
-        case intervalCount = "interval_count"
-        case name
-        case nextBilling = "next_billing"
-        case reference
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsKlarnaSubscriptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
-/// Describes the upcoming charge for this subscription.
-public struct SetupIntentCreatePaymentMethodOptionsKlarnaSubscriptionsNextBilling: StripeParams {
-    /// The amount of the next charge for the subscription.
-    public var amount: Int
-    /// The date of the next charge for the subscription in YYYY-MM-DD format.
-    public var date: String
-
-    public init(amount: Int, date: String) {
-        self.amount = amount
-        self.date = date
     }
 }
 
@@ -5069,223 +3569,38 @@ public struct SetupIntentCreatePaymentMethodOptionsPaypal: StripeParams {
 /// options.
 public struct SetupIntentCreatePaymentMethodOptionsPayto: StripeParams {
     /// Additional fields for Mandate creation.
-    public var mandateOptions: SetupIntentCreatePaymentMethodOptionsPaytoMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsPaytoMandateOptions?
 
-    public init(mandateOptions: SetupIntentCreatePaymentMethodOptionsPaytoMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsPaytoMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
     }
-}
-
-/// Additional fields for Mandate creation.
-public struct SetupIntentCreatePaymentMethodOptionsPaytoMandateOptions: ClearableParams {
-    /// Amount that will be collected. It is required when `amount_type` is `fixed`.
-    public var amount: Int?
-    /// The type of amount that will be collected. The amount charged must be exact or up to the value of
-    /// `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
-    public var amountType: SetupIntentCreatePaymentMethodOptionsPaytoMandateOptionsAmountType?
-    /// Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
-    public var endDate: String?
-    /// The periodicity at which payments will be collected. Defaults to `adhoc`.
-    public var paymentSchedule: SetupIntentCreatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule?
-    /// The number of payments that will be made during a payment period. Defaults to 1 except for when
-    /// `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
-    public var paymentsPerPeriod: Int?
-    /// The purpose for which payments are made. Has a default value based on your merchant category code.
-    public var purpose: SetupIntentCreatePaymentMethodOptionsPaytoMandateOptionsPurpose?
-    /// Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
-    public var startDate: String?
-    /// Fields to send empty, which clears them: `params.clear(.amount)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(amount: Int? = nil, amountType: SetupIntentCreatePaymentMethodOptionsPaytoMandateOptionsAmountType? = nil, endDate: String? = nil, paymentSchedule: SetupIntentCreatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule? = nil, paymentsPerPeriod: Int? = nil, purpose: SetupIntentCreatePaymentMethodOptionsPaytoMandateOptionsPurpose? = nil, startDate: String? = nil) {
-        self.amount = amount
-        self.amountType = amountType
-        self.endDate = endDate
-        self.paymentSchedule = paymentSchedule
-        self.paymentsPerPeriod = paymentsPerPeriod
-        self.purpose = purpose
-        self.startDate = startDate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case amountType = "amount_type"
-        case endDate = "end_date"
-        case paymentSchedule = "payment_schedule"
-        case paymentsPerPeriod = "payments_per_period"
-        case purpose
-        case startDate = "start_date"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case amount
-        case amountType = "amount_type"
-        case endDate = "end_date"
-        case paymentSchedule = "payment_schedule"
-        case paymentsPerPeriod = "payments_per_period"
-        case purpose
-        case startDate = "start_date"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsPaytoMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fixed: Self { .init(rawValue: "fixed") }
-    public static var maximum: Self { .init(rawValue: "maximum") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var adhoc: Self { .init(rawValue: "adhoc") }
-    public static var annual: Self { .init(rawValue: "annual") }
-    public static var daily: Self { .init(rawValue: "daily") }
-    public static var fortnightly: Self { .init(rawValue: "fortnightly") }
-    public static var monthly: Self { .init(rawValue: "monthly") }
-    public static var quarterly: Self { .init(rawValue: "quarterly") }
-    public static var semiAnnual: Self { .init(rawValue: "semi_annual") }
-    public static var weekly: Self { .init(rawValue: "weekly") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsPaytoMandateOptionsPurpose: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var dependantSupport: Self { .init(rawValue: "dependant_support") }
-    public static var government: Self { .init(rawValue: "government") }
-    public static var loan: Self { .init(rawValue: "loan") }
-    public static var mortgage: Self { .init(rawValue: "mortgage") }
-    public static var other: Self { .init(rawValue: "other") }
-    public static var pension: Self { .init(rawValue: "pension") }
-    public static var personal: Self { .init(rawValue: "personal") }
-    public static var retail: Self { .init(rawValue: "retail") }
-    public static var salary: Self { .init(rawValue: "salary") }
-    public static var tax: Self { .init(rawValue: "tax") }
-    public static var utility: Self { .init(rawValue: "utility") }
 }
 
 /// If this is a `pix` SetupIntent, this sub-hash contains details about the Pix payment method options.
 public struct SetupIntentCreatePaymentMethodOptionsPix: StripeParams {
     /// Additional fields for mandate creation.
-    public var mandateOptions: SetupIntentCreatePaymentMethodOptionsPixMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsPixMandateOptions?
 
-    public init(mandateOptions: SetupIntentCreatePaymentMethodOptionsPixMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsPixMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
     }
-}
-
-/// Additional fields for mandate creation.
-public struct SetupIntentCreatePaymentMethodOptionsPixMandateOptions: StripeParams {
-    /// Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for
-    /// `amount_type=maximum`, defaults to 40000.
-    public var amount: Int?
-    /// Determines if the amount includes the IOF tax. Defaults to `never`.
-    public var amountIncludesIof: SetupIntentCreatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof?
-    /// Type of amount. Defaults to `maximum`.
-    public var amountType: SetupIntentCreatePaymentMethodOptionsPixMandateOptionsAmountType?
-    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-    /// Only `brl` is supported currently.
-    public var currency: String?
-    /// Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not
-    /// provided, the mandate will be active until canceled. If provided, end date should be after start
-    /// date.
-    public var endDate: String?
-    /// Schedule at which the future payments will be charged. Defaults to `monthly`.
-    public var paymentSchedule: SetupIntentCreatePaymentMethodOptionsPixMandateOptionsPaymentSchedule?
-    /// Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
-    public var reference: String?
-    /// Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future.
-    /// Defaults to 3 days after the current date.
-    public var startDate: String?
-
-    public init(amount: Int? = nil, amountIncludesIof: SetupIntentCreatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof? = nil, amountType: SetupIntentCreatePaymentMethodOptionsPixMandateOptionsAmountType? = nil, currency: String? = nil, endDate: String? = nil, paymentSchedule: SetupIntentCreatePaymentMethodOptionsPixMandateOptionsPaymentSchedule? = nil, reference: String? = nil, startDate: String? = nil) {
-        self.amount = amount
-        self.amountIncludesIof = amountIncludesIof
-        self.amountType = amountType
-        self.currency = currency
-        self.endDate = endDate
-        self.paymentSchedule = paymentSchedule
-        self.reference = reference
-        self.startDate = startDate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case amountIncludesIof = "amount_includes_iof"
-        case amountType = "amount_type"
-        case currency
-        case endDate = "end_date"
-        case paymentSchedule = "payment_schedule"
-        case reference
-        case startDate = "start_date"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var always: Self { .init(rawValue: "always") }
-    public static var never: Self { .init(rawValue: "never") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsPixMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fixed: Self { .init(rawValue: "fixed") }
-    public static var maximum: Self { .init(rawValue: "maximum") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsPixMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var halfyearly: Self { .init(rawValue: "halfyearly") }
-    public static var monthly: Self { .init(rawValue: "monthly") }
-    public static var quarterly: Self { .init(rawValue: "quarterly") }
-    public static var weekly: Self { .init(rawValue: "weekly") }
-    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
 /// If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment
 /// method options.
 public struct SetupIntentCreatePaymentMethodOptionsSepaDebit: StripeParams {
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentCreatePaymentMethodOptionsSepaDebitMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsSepaDebitMandateOptions?
 
-    public init(mandateOptions: SetupIntentCreatePaymentMethodOptionsSepaDebitMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsSepaDebitMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
@@ -5294,39 +3609,15 @@ public struct SetupIntentCreatePaymentMethodOptionsSepaDebit: StripeParams {
     }
 }
 
-/// Additional fields for Mandate creation
-public struct SetupIntentCreatePaymentMethodOptionsSepaDebitMandateOptions: ClearableParams {
-    /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
-    /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
-    /// '.'. Cannot begin with 'STRIPE'.
-    public var referencePrefix: String?
-    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(referencePrefix: String? = nil) {
-        self.referencePrefix = referencePrefix
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case referencePrefix = "reference_prefix"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case referencePrefix = "reference_prefix"
-    }
-}
-
 /// If this is a `upi` SetupIntent, this sub-hash contains details about the UPI payment method options.
 public struct SetupIntentCreatePaymentMethodOptionsUpi: ClearableParams {
     /// Configuration options for setting up an eMandate
-    public var mandateOptions: SetupIntentCreatePaymentMethodOptionsUpiMandateOptions?
-    public var setupFutureUsage: SetupIntentCreatePaymentMethodOptionsUpiSetupFutureUsage?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsUpiMandateOptions?
+    public var setupFutureUsage: SetupIntentPaymentMethodOptionsUpiSetupFutureUsage?
     /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(mandateOptions: SetupIntentCreatePaymentMethodOptionsUpiMandateOptions? = nil, setupFutureUsage: SetupIntentCreatePaymentMethodOptionsUpiSetupFutureUsage? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsUpiMandateOptions? = nil, setupFutureUsage: SetupIntentPaymentMethodOptionsUpiSetupFutureUsage? = nil) {
         self.mandateOptions = mandateOptions
         self.setupFutureUsage = setupFutureUsage
     }
@@ -5343,70 +3634,19 @@ public struct SetupIntentCreatePaymentMethodOptionsUpi: ClearableParams {
     }
 }
 
-/// Configuration options for setting up an eMandate
-public struct SetupIntentCreatePaymentMethodOptionsUpiMandateOptions: StripeParams {
-    /// Amount to be charged for future payments.
-    public var amount: Int?
-    /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
-    /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
-    /// param.
-    public var amountType: SetupIntentCreatePaymentMethodOptionsUpiMandateOptionsAmountType?
-    /// A description of the mandate or subscription that is meant to be displayed to the customer.
-    public var description: String?
-    /// End date of the mandate or subscription.
-    public var endDate: Date?
-
-    public init(amount: Int? = nil, amountType: SetupIntentCreatePaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
-        self.amount = amount
-        self.amountType = amountType
-        self.description = description
-        self.endDate = endDate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case amountType = "amount_type"
-        case description
-        case endDate = "end_date"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fixed: Self { .init(rawValue: "fixed") }
-    public static var maximum: Self { .init(rawValue: "maximum") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsUpiSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var offSession: Self { .init(rawValue: "off_session") }
-    public static var onSession: Self { .init(rawValue: "on_session") }
-}
-
 /// If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account
 /// payment method options.
 public struct SetupIntentCreatePaymentMethodOptionsUsBankAccount: StripeParams {
     /// Additional fields for Financial Connections Session creation
-    public var financialConnections: SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnections?
+    public var financialConnections: SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnections?
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentCreatePaymentMethodOptionsUsBankAccountMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsUsBankAccountMandateOptions?
     /// Additional fields for network related functions
-    public var networks: SetupIntentCreatePaymentMethodOptionsUsBankAccountNetworks?
+    public var networks: SetupIntentPaymentMethodOptionsUsBankAccountNetworks?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: SetupIntentCreatePaymentMethodOptionsUsBankAccountVerificationMethod?
 
-    public init(financialConnections: SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnections? = nil, mandateOptions: SetupIntentCreatePaymentMethodOptionsUsBankAccountMandateOptions? = nil, networks: SetupIntentCreatePaymentMethodOptionsUsBankAccountNetworks? = nil, verificationMethod: SetupIntentCreatePaymentMethodOptionsUsBankAccountVerificationMethod? = nil) {
+    public init(financialConnections: SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnections? = nil, mandateOptions: SetupIntentPaymentMethodOptionsUsBankAccountMandateOptions? = nil, networks: SetupIntentPaymentMethodOptionsUsBankAccountNetworks? = nil, verificationMethod: SetupIntentCreatePaymentMethodOptionsUsBankAccountVerificationMethod? = nil) {
         self.financialConnections = financialConnections
         self.mandateOptions = mandateOptions
         self.networks = networks
@@ -5419,139 +3659,6 @@ public struct SetupIntentCreatePaymentMethodOptionsUsBankAccount: StripeParams {
         case networks
         case verificationMethod = "verification_method"
     }
-}
-
-/// Additional fields for Financial Connections Session creation
-public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnections: StripeParams {
-    /// Provide filters for the linked accounts that the customer can select for the payment method.
-    public var filters: SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsFilters?
-    /// The list of permissions to request. If this parameter is passed, the `payment_method` permission
-    /// must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and
-    /// `transactions`.
-    public var permissions: [SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions]?
-    /// List of data features that you would like to retrieve upon account creation.
-    public var prefetch: [SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch]?
-    /// For webview integrations only. Upon completing OAuth login in the native browser, the user will be
-    /// redirected to this URL to return to your app.
-    public var returnUrl: String?
-
-    public init(filters: SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsFilters? = nil, permissions: [SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions]? = nil, prefetch: [SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch]? = nil, returnUrl: String? = nil) {
-        self.filters = filters
-        self.permissions = permissions
-        self.prefetch = prefetch
-        self.returnUrl = returnUrl
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case filters
-        case permissions
-        case prefetch
-        case returnUrl = "return_url"
-    }
-}
-
-/// Provide filters for the linked accounts that the customer can select for the payment method.
-public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsFilters: StripeParams {
-    /// The account subcategories to use to filter for selectable accounts. Valid subcategories are
-    /// `checking` and `savings`.
-    public var accountSubcategories: [SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories]?
-
-    public init(accountSubcategories: [SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories]? = nil) {
-        self.accountSubcategories = accountSubcategories
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountSubcategories = "account_subcategories"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var checking: Self { .init(rawValue: "checking") }
-    public static var savings: Self { .init(rawValue: "savings") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var balances: Self { .init(rawValue: "balances") }
-    public static var ownership: Self { .init(rawValue: "ownership") }
-    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
-    public static var transactions: Self { .init(rawValue: "transactions") }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var balances: Self { .init(rawValue: "balances") }
-    public static var ownership: Self { .init(rawValue: "ownership") }
-    public static var transactions: Self { .init(rawValue: "transactions") }
-}
-
-/// Additional fields for Mandate creation
-public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountMandateOptions: ClearableParams {
-    /// The method used to collect offline mandate customer acceptance.
-    public var collectionMethod: SetupIntentCreatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod?
-    /// Fields to send empty, which clears them: `params.clear(.collectionMethod)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(collectionMethod: SetupIntentCreatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod? = nil) {
-        self.collectionMethod = collectionMethod
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case collectionMethod = "collection_method"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case collectionMethod = "collection_method"
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var paper: Self { .init(rawValue: "paper") }
-}
-
-/// Additional fields for network related functions
-public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountNetworks: StripeParams {
-    /// Triggers validations to run across the selected networks
-    public var requested: [SetupIntentCreatePaymentMethodOptionsUsBankAccountNetworksRequested]?
-
-    public init(requested: [SetupIntentCreatePaymentMethodOptionsUsBankAccountNetworksRequested]? = nil) {
-        self.requested = requested
-    }
-}
-
-public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountNetworksRequested: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var ach: Self { .init(rawValue: "ach") }
-    public static var usDomesticWire: Self { .init(rawValue: "us_domestic_wire") }
 }
 
 public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
@@ -5570,7 +3677,7 @@ public struct SetupIntentCreatePaymentMethodOptionsUsBankAccountVerificationMeth
 /// completion. Single-use mandates are only valid for the following payment methods: `acss_debit`,
 /// `alipay`, `au_becs_debit`, `bacs_debit`, `bancontact`, `boleto`, `ideal`, `link`, `sepa_debit`, and
 /// `us_bank_account`.
-public struct SetupIntentCreateSingleUse: StripeParams {
+public struct SetupIntentSingleUse: StripeParams {
     /// Amount the customer is granting permission to collect later. A positive integer representing how
     /// much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal)
     /// (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount
@@ -5588,7 +3695,7 @@ public struct SetupIntentCreateSingleUse: StripeParams {
     }
 }
 
-public struct SetupIntentCreateUsage: RawRepresentable, Codable, Hashable, Sendable {
+public struct SetupIntentUsage: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {
@@ -5597,1156 +3704,6 @@ public struct SetupIntentCreateUsage: RawRepresentable, Codable, Hashable, Senda
 
     public static var offSession: Self { .init(rawValue: "off_session") }
     public static var onSession: Self { .init(rawValue: "on_session") }
-}
-
-public struct SetupIntentUpdateAllowedPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
-    public static var affirm: Self { .init(rawValue: "affirm") }
-    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
-    public static var alipay: Self { .init(rawValue: "alipay") }
-    public static var alma: Self { .init(rawValue: "alma") }
-    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
-    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
-    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
-    public static var bancontact: Self { .init(rawValue: "bancontact") }
-    public static var billie: Self { .init(rawValue: "billie") }
-    public static var bizum: Self { .init(rawValue: "bizum") }
-    public static var blik: Self { .init(rawValue: "blik") }
-    public static var bokuPromptpay: Self { .init(rawValue: "boku_promptpay") }
-    public static var boleto: Self { .init(rawValue: "boleto") }
-    public static var capchasePay: Self { .init(rawValue: "capchase_pay") }
-    public static var card: Self { .init(rawValue: "card") }
-    public static var cardPresent: Self { .init(rawValue: "card_present") }
-    public static var cashapp: Self { .init(rawValue: "cashapp") }
-    public static var checkScan: Self { .init(rawValue: "check_scan") }
-    public static var clickToPay: Self { .init(rawValue: "click_to_pay") }
-    public static var crypto: Self { .init(rawValue: "crypto") }
-    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
-    public static var demoPay: Self { .init(rawValue: "demo_pay") }
-    public static var duitnow: Self { .init(rawValue: "duitnow") }
-    public static var dummyAuthPush: Self { .init(rawValue: "dummy_auth_push") }
-    public static var dummyPassthroughCard: Self { .init(rawValue: "dummy_passthrough_card") }
-    public static var edenred: Self { .init(rawValue: "edenred") }
-    public static var eps: Self { .init(rawValue: "eps") }
-    public static var fpx: Self { .init(rawValue: "fpx") }
-    public static var gcash: Self { .init(rawValue: "gcash") }
-    public static var getbalance: Self { .init(rawValue: "getbalance") }
-    public static var giftCard: Self { .init(rawValue: "gift_card") }
-    public static var giropay: Self { .init(rawValue: "giropay") }
-    public static var gopay: Self { .init(rawValue: "gopay") }
-    public static var grabpay: Self { .init(rawValue: "grabpay") }
-    public static var idBankTransfer: Self { .init(rawValue: "id_bank_transfer") }
-    public static var ideal: Self { .init(rawValue: "ideal") }
-    public static var interacPresent: Self { .init(rawValue: "interac_present") }
-    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
-    public static var klarna: Self { .init(rawValue: "klarna") }
-    public static var knet: Self { .init(rawValue: "knet") }
-    public static var konbini: Self { .init(rawValue: "konbini") }
-    public static var krCard: Self { .init(rawValue: "kr_card") }
-    public static var krMarket: Self { .init(rawValue: "kr_market") }
-    public static var kriya: Self { .init(rawValue: "kriya") }
-    public static var link: Self { .init(rawValue: "link") }
-    public static var mbWay: Self { .init(rawValue: "mb_way") }
-    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
-    public static var momo: Self { .init(rawValue: "momo") }
-    public static var mondu: Self { .init(rawValue: "mondu") }
-    public static var multibanco: Self { .init(rawValue: "multibanco") }
-    public static var naverPay: Self { .init(rawValue: "naver_pay") }
-    public static var netbanking: Self { .init(rawValue: "netbanking") }
-    public static var ngBank: Self { .init(rawValue: "ng_bank") }
-    public static var ngBankTransfer: Self { .init(rawValue: "ng_bank_transfer") }
-    public static var ngCard: Self { .init(rawValue: "ng_card") }
-    public static var ngMarket: Self { .init(rawValue: "ng_market") }
-    public static var ngUssd: Self { .init(rawValue: "ng_ussd") }
-    public static var ngWallet: Self { .init(rawValue: "ng_wallet") }
-    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
-    public static var octopus: Self { .init(rawValue: "octopus") }
-    public static var oxxo: Self { .init(rawValue: "oxxo") }
-    public static var p24: Self { .init(rawValue: "p24") }
-    public static var paperCheck: Self { .init(rawValue: "paper_check") }
-    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
-    public static var payco: Self { .init(rawValue: "payco") }
-    public static var paynow: Self { .init(rawValue: "paynow") }
-    public static var paypal: Self { .init(rawValue: "paypal") }
-    public static var paypay: Self { .init(rawValue: "paypay") }
-    public static var payto: Self { .init(rawValue: "payto") }
-    public static var pix: Self { .init(rawValue: "pix") }
-    public static var promptpay: Self { .init(rawValue: "promptpay") }
-    public static var qris: Self { .init(rawValue: "qris") }
-    public static var rechnung: Self { .init(rawValue: "rechnung") }
-    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
-    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
-    public static var satispay: Self { .init(rawValue: "satispay") }
-    public static var scalapay: Self { .init(rawValue: "scalapay") }
-    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
-    public static var sequra: Self { .init(rawValue: "sequra") }
-    public static var shopPay: Self { .init(rawValue: "shop_pay") }
-    public static var shopeepay: Self { .init(rawValue: "shopeepay") }
-    public static var sofort: Self { .init(rawValue: "sofort") }
-    public static var southKoreaMarket: Self { .init(rawValue: "south_korea_market") }
-    public static var stripeBalance: Self { .init(rawValue: "stripe_balance") }
-    public static var sunbit: Self { .init(rawValue: "sunbit") }
-    public static var swish: Self { .init(rawValue: "swish") }
-    public static var tamara: Self { .init(rawValue: "tamara") }
-    public static var testPay: Self { .init(rawValue: "test_pay") }
-    public static var touchNGo: Self { .init(rawValue: "touch_n_go") }
-    public static var truemoney: Self { .init(rawValue: "truemoney") }
-    public static var twint: Self { .init(rawValue: "twint") }
-    public static var upi: Self { .init(rawValue: "upi") }
-    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
-    public static var usCashVoucher: Self { .init(rawValue: "us_cash_voucher") }
-    public static var vipps: Self { .init(rawValue: "vipps") }
-    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
-    public static var wero: Self { .init(rawValue: "wero") }
-    public static var zip: Self { .init(rawValue: "zip") }
-}
-
-public struct SetupIntentUpdateExcludedPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
-    public static var affirm: Self { .init(rawValue: "affirm") }
-    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
-    public static var alipay: Self { .init(rawValue: "alipay") }
-    public static var alma: Self { .init(rawValue: "alma") }
-    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
-    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
-    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
-    public static var bancontact: Self { .init(rawValue: "bancontact") }
-    public static var billie: Self { .init(rawValue: "billie") }
-    public static var bizum: Self { .init(rawValue: "bizum") }
-    public static var blik: Self { .init(rawValue: "blik") }
-    public static var boleto: Self { .init(rawValue: "boleto") }
-    public static var card: Self { .init(rawValue: "card") }
-    public static var cashapp: Self { .init(rawValue: "cashapp") }
-    public static var crypto: Self { .init(rawValue: "crypto") }
-    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
-    public static var eps: Self { .init(rawValue: "eps") }
-    public static var fpx: Self { .init(rawValue: "fpx") }
-    public static var giropay: Self { .init(rawValue: "giropay") }
-    public static var grabpay: Self { .init(rawValue: "grabpay") }
-    public static var ideal: Self { .init(rawValue: "ideal") }
-    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
-    public static var klarna: Self { .init(rawValue: "klarna") }
-    public static var konbini: Self { .init(rawValue: "konbini") }
-    public static var krCard: Self { .init(rawValue: "kr_card") }
-    public static var mbWay: Self { .init(rawValue: "mb_way") }
-    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
-    public static var multibanco: Self { .init(rawValue: "multibanco") }
-    public static var naverPay: Self { .init(rawValue: "naver_pay") }
-    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
-    public static var oxxo: Self { .init(rawValue: "oxxo") }
-    public static var p24: Self { .init(rawValue: "p24") }
-    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
-    public static var payco: Self { .init(rawValue: "payco") }
-    public static var paynow: Self { .init(rawValue: "paynow") }
-    public static var paypal: Self { .init(rawValue: "paypal") }
-    public static var paypay: Self { .init(rawValue: "paypay") }
-    public static var payto: Self { .init(rawValue: "payto") }
-    public static var pix: Self { .init(rawValue: "pix") }
-    public static var promptpay: Self { .init(rawValue: "promptpay") }
-    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
-    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
-    public static var satispay: Self { .init(rawValue: "satispay") }
-    public static var scalapay: Self { .init(rawValue: "scalapay") }
-    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
-    public static var sequra: Self { .init(rawValue: "sequra") }
-    public static var sofort: Self { .init(rawValue: "sofort") }
-    public static var sunbit: Self { .init(rawValue: "sunbit") }
-    public static var swish: Self { .init(rawValue: "swish") }
-    public static var twint: Self { .init(rawValue: "twint") }
-    public static var upi: Self { .init(rawValue: "upi") }
-    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
-    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
-    public static var zip: Self { .init(rawValue: "zip") }
-}
-
-public struct SetupIntentUpdateFlowDirections: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var inbound: Self { .init(rawValue: "inbound") }
-    public static var outbound: Self { .init(rawValue: "outbound") }
-}
-
-/// When included, this hash creates a PaymentMethod that is set as the
-/// [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
-/// value in the SetupIntent.
-public struct SetupIntentUpdatePaymentMethodData: StripeParams {
-    /// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name
-    /// matching this value. It contains additional information specific to the PaymentMethod type.
-    public var type: SetupIntentUpdatePaymentMethodDataType
-    /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
-    /// method.
-    public var acssDebit: SetupIntentUpdatePaymentMethodDataAcssDebit?
-    /// If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
-    public var affirm: [String: String]?
-    /// If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the
-    /// AfterpayClearpay payment method.
-    public var afterpayClearpay: [String: String]?
-    /// If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
-    public var alipay: [String: String]?
-    /// This field indicates whether this payment method can be shown again to its customer in a checkout
-    /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
-    /// method can be shown as a saved payment method in a checkout flow. The field defaults to
-    /// `unspecified`.
-    public var allowRedisplay: SetupIntentUpdatePaymentMethodDataAllowRedisplay?
-    /// If this is an Alma PaymentMethod, this hash contains details about the Alma payment method.
-    public var alma: [String: String]?
-    /// If this is an AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment
-    /// method.
-    public var amazonPay: [String: String]?
-    /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
-    public var auBecsDebit: SetupIntentUpdatePaymentMethodDataAuBecsDebit?
-    /// If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank
-    /// account.
-    public var bacsDebit: SetupIntentUpdatePaymentMethodDataBacsDebit?
-    /// If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment
-    /// method.
-    public var bancontact: [String: String]?
-    /// If this is a `billie` PaymentMethod, this hash contains details about the Billie payment method.
-    public var billie: [String: String]?
-    /// Billing information associated with the PaymentMethod that may be used or required by particular
-    /// types of payment methods.
-    public var billingDetails: SetupIntentUpdatePaymentMethodDataBillingDetails?
-    /// If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
-    public var bizum: [String: String]?
-    /// If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
-    public var blik: [String: String]?
-    /// If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
-    public var boleto: SetupIntentUpdatePaymentMethodDataBoleto?
-    /// If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment
-    /// method.
-    public var cashapp: [String: String]?
-    /// If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
-    public var crypto: [String: String]?
-    /// If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance
-    /// payment method.
-    public var customerBalance: [String: String]?
-    /// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
-    public var eps: SetupIntentUpdatePaymentMethodDataEps?
-    /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
-    public var fpx: SetupIntentUpdatePaymentMethodDataFpx?
-    /// If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
-    public var giropay: [String: String]?
-    /// If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
-    public var grabpay: [String: String]?
-    /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
-    public var ideal: SetupIntentUpdatePaymentMethodDataIdeal?
-    /// If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present
-    /// payment method.
-    public var interacPresent: [String: String]?
-    /// If this is a `kakao_pay` PaymentMethod, this hash contains details about the Kakao Pay payment
-    /// method.
-    public var kakaoPay: [String: String]?
-    /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
-    public var klarna: SetupIntentUpdatePaymentMethodDataKlarna?
-    /// If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
-    public var konbini: [String: String]?
-    /// If this is a `kr_card` PaymentMethod, this hash contains details about the Korean Card payment
-    /// method.
-    public var krCard: [String: String]?
-    /// If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link
-    /// is also known as Onelink in the UK).
-    public var link: [String: String]?
-    /// If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
-    public var mbWay: [String: String]?
-    /// Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object.
-    /// This can be useful for storing additional information about the object in a structured format.
-    /// Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an
-    /// empty value to `metadata`.
-    public var metadata: [String: String]?
-    /// If this is a `mobilepay` PaymentMethod, this hash contains details about the MobilePay payment
-    /// method.
-    public var mobilepay: [String: String]?
-    /// If this is a `multibanco` PaymentMethod, this hash contains details about the Multibanco payment
-    /// method.
-    public var multibanco: [String: String]?
-    /// If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment
-    /// method.
-    public var naverPay: SetupIntentUpdatePaymentMethodDataNaverPay?
-    /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
-    /// payment method.
-    public var nzBankAccount: SetupIntentUpdatePaymentMethodDataNzBankAccount?
-    /// If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
-    public var oxxo: [String: String]?
-    /// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
-    public var p24: SetupIntentUpdatePaymentMethodDataP24?
-    /// If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment
-    /// method.
-    public var payByBank: [String: String]?
-    /// If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
-    public var payco: [String: String]?
-    /// If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
-    public var paynow: [String: String]?
-    /// If this is a `paypal` PaymentMethod, this hash contains details about the PayPal payment method.
-    public var paypal: [String: String]?
-    /// If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
-    public var paypay: [String: String]?
-    /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-    public var payto: SetupIntentUpdatePaymentMethodDataPayto?
-    /// If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
-    public var pix: [String: String]?
-    /// If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment
-    /// method.
-    public var promptpay: [String: String]?
-    /// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
-    /// more information.
-    public var radarOptions: SetupIntentUpdatePaymentMethodDataRadarOptions?
-    /// If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment
-    /// method.
-    public var revolutPay: [String: String]?
-    /// If this is a `samsung_pay` PaymentMethod, this hash contains details about the SamsungPay payment
-    /// method.
-    public var samsungPay: [String: String]?
-    /// If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
-    public var satispay: [String: String]?
-    /// If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
-    public var scalapay: [String: String]?
-    /// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank
-    /// account.
-    public var sepaDebit: SetupIntentUpdatePaymentMethodDataSepaDebit?
-    /// If this is a SeQura PaymentMethod, this hash contains details about the SeQura payment method.
-    public var sequra: [String: String]?
-    /// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-    public var sofort: SetupIntentUpdatePaymentMethodDataSofort?
-    /// If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
-    public var sunbit: [String: String]?
-    /// If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
-    public var swish: [String: String]?
-    /// If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
-    public var twint: [String: String]?
-    /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
-    public var upi: SetupIntentUpdatePaymentMethodDataUpi?
-    /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
-    /// payment method.
-    public var usBankAccount: SetupIntentUpdatePaymentMethodDataUsBankAccount?
-    /// If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment
-    /// method.
-    public var wechatPay: [String: String]?
-    /// If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
-    public var zip: [String: String]?
-
-    public init(type: SetupIntentUpdatePaymentMethodDataType, acssDebit: SetupIntentUpdatePaymentMethodDataAcssDebit? = nil, affirm: [String: String]? = nil, afterpayClearpay: [String: String]? = nil, alipay: [String: String]? = nil, allowRedisplay: SetupIntentUpdatePaymentMethodDataAllowRedisplay? = nil, alma: [String: String]? = nil, amazonPay: [String: String]? = nil, auBecsDebit: SetupIntentUpdatePaymentMethodDataAuBecsDebit? = nil, bacsDebit: SetupIntentUpdatePaymentMethodDataBacsDebit? = nil, bancontact: [String: String]? = nil, billie: [String: String]? = nil, billingDetails: SetupIntentUpdatePaymentMethodDataBillingDetails? = nil, bizum: [String: String]? = nil, blik: [String: String]? = nil, boleto: SetupIntentUpdatePaymentMethodDataBoleto? = nil, cashapp: [String: String]? = nil, crypto: [String: String]? = nil, customerBalance: [String: String]? = nil, eps: SetupIntentUpdatePaymentMethodDataEps? = nil, fpx: SetupIntentUpdatePaymentMethodDataFpx? = nil, giropay: [String: String]? = nil, grabpay: [String: String]? = nil, ideal: SetupIntentUpdatePaymentMethodDataIdeal? = nil, interacPresent: [String: String]? = nil, kakaoPay: [String: String]? = nil, klarna: SetupIntentUpdatePaymentMethodDataKlarna? = nil, konbini: [String: String]? = nil, krCard: [String: String]? = nil, link: [String: String]? = nil, mbWay: [String: String]? = nil, metadata: [String: String]? = nil, mobilepay: [String: String]? = nil, multibanco: [String: String]? = nil, naverPay: SetupIntentUpdatePaymentMethodDataNaverPay? = nil, nzBankAccount: SetupIntentUpdatePaymentMethodDataNzBankAccount? = nil, oxxo: [String: String]? = nil, p24: SetupIntentUpdatePaymentMethodDataP24? = nil, payByBank: [String: String]? = nil, payco: [String: String]? = nil, paynow: [String: String]? = nil, paypal: [String: String]? = nil, paypay: [String: String]? = nil, payto: SetupIntentUpdatePaymentMethodDataPayto? = nil, pix: [String: String]? = nil, promptpay: [String: String]? = nil, radarOptions: SetupIntentUpdatePaymentMethodDataRadarOptions? = nil, revolutPay: [String: String]? = nil, samsungPay: [String: String]? = nil, satispay: [String: String]? = nil, scalapay: [String: String]? = nil, sepaDebit: SetupIntentUpdatePaymentMethodDataSepaDebit? = nil, sequra: [String: String]? = nil, sofort: SetupIntentUpdatePaymentMethodDataSofort? = nil, sunbit: [String: String]? = nil, swish: [String: String]? = nil, twint: [String: String]? = nil, upi: SetupIntentUpdatePaymentMethodDataUpi? = nil, usBankAccount: SetupIntentUpdatePaymentMethodDataUsBankAccount? = nil, wechatPay: [String: String]? = nil, zip: [String: String]? = nil) {
-        self.type = type
-        self.acssDebit = acssDebit
-        self.affirm = affirm
-        self.afterpayClearpay = afterpayClearpay
-        self.alipay = alipay
-        self.allowRedisplay = allowRedisplay
-        self.alma = alma
-        self.amazonPay = amazonPay
-        self.auBecsDebit = auBecsDebit
-        self.bacsDebit = bacsDebit
-        self.bancontact = bancontact
-        self.billie = billie
-        self.billingDetails = billingDetails
-        self.bizum = bizum
-        self.blik = blik
-        self.boleto = boleto
-        self.cashapp = cashapp
-        self.crypto = crypto
-        self.customerBalance = customerBalance
-        self.eps = eps
-        self.fpx = fpx
-        self.giropay = giropay
-        self.grabpay = grabpay
-        self.ideal = ideal
-        self.interacPresent = interacPresent
-        self.kakaoPay = kakaoPay
-        self.klarna = klarna
-        self.konbini = konbini
-        self.krCard = krCard
-        self.link = link
-        self.mbWay = mbWay
-        self.metadata = metadata
-        self.mobilepay = mobilepay
-        self.multibanco = multibanco
-        self.naverPay = naverPay
-        self.nzBankAccount = nzBankAccount
-        self.oxxo = oxxo
-        self.p24 = p24
-        self.payByBank = payByBank
-        self.payco = payco
-        self.paynow = paynow
-        self.paypal = paypal
-        self.paypay = paypay
-        self.payto = payto
-        self.pix = pix
-        self.promptpay = promptpay
-        self.radarOptions = radarOptions
-        self.revolutPay = revolutPay
-        self.samsungPay = samsungPay
-        self.satispay = satispay
-        self.scalapay = scalapay
-        self.sepaDebit = sepaDebit
-        self.sequra = sequra
-        self.sofort = sofort
-        self.sunbit = sunbit
-        self.swish = swish
-        self.twint = twint
-        self.upi = upi
-        self.usBankAccount = usBankAccount
-        self.wechatPay = wechatPay
-        self.zip = zip
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case acssDebit = "acss_debit"
-        case affirm
-        case afterpayClearpay = "afterpay_clearpay"
-        case alipay
-        case allowRedisplay = "allow_redisplay"
-        case alma
-        case amazonPay = "amazon_pay"
-        case auBecsDebit = "au_becs_debit"
-        case bacsDebit = "bacs_debit"
-        case bancontact
-        case billie
-        case billingDetails = "billing_details"
-        case bizum
-        case blik
-        case boleto
-        case cashapp
-        case crypto
-        case customerBalance = "customer_balance"
-        case eps
-        case fpx
-        case giropay
-        case grabpay
-        case ideal
-        case interacPresent = "interac_present"
-        case kakaoPay = "kakao_pay"
-        case klarna
-        case konbini
-        case krCard = "kr_card"
-        case link
-        case mbWay = "mb_way"
-        case metadata
-        case mobilepay
-        case multibanco
-        case naverPay = "naver_pay"
-        case nzBankAccount = "nz_bank_account"
-        case oxxo
-        case p24
-        case payByBank = "pay_by_bank"
-        case payco
-        case paynow
-        case paypal
-        case paypay
-        case payto
-        case pix
-        case promptpay
-        case radarOptions = "radar_options"
-        case revolutPay = "revolut_pay"
-        case samsungPay = "samsung_pay"
-        case satispay
-        case scalapay
-        case sepaDebit = "sepa_debit"
-        case sequra
-        case sofort
-        case sunbit
-        case swish
-        case twint
-        case type
-        case upi
-        case usBankAccount = "us_bank_account"
-        case wechatPay = "wechat_pay"
-        case zip
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
-    public static var affirm: Self { .init(rawValue: "affirm") }
-    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
-    public static var alipay: Self { .init(rawValue: "alipay") }
-    public static var alma: Self { .init(rawValue: "alma") }
-    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
-    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
-    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
-    public static var bancontact: Self { .init(rawValue: "bancontact") }
-    public static var billie: Self { .init(rawValue: "billie") }
-    public static var bizum: Self { .init(rawValue: "bizum") }
-    public static var blik: Self { .init(rawValue: "blik") }
-    public static var boleto: Self { .init(rawValue: "boleto") }
-    public static var cashapp: Self { .init(rawValue: "cashapp") }
-    public static var crypto: Self { .init(rawValue: "crypto") }
-    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
-    public static var eps: Self { .init(rawValue: "eps") }
-    public static var fpx: Self { .init(rawValue: "fpx") }
-    public static var giropay: Self { .init(rawValue: "giropay") }
-    public static var grabpay: Self { .init(rawValue: "grabpay") }
-    public static var ideal: Self { .init(rawValue: "ideal") }
-    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
-    public static var klarna: Self { .init(rawValue: "klarna") }
-    public static var konbini: Self { .init(rawValue: "konbini") }
-    public static var krCard: Self { .init(rawValue: "kr_card") }
-    public static var link: Self { .init(rawValue: "link") }
-    public static var mbWay: Self { .init(rawValue: "mb_way") }
-    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
-    public static var multibanco: Self { .init(rawValue: "multibanco") }
-    public static var naverPay: Self { .init(rawValue: "naver_pay") }
-    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
-    public static var oxxo: Self { .init(rawValue: "oxxo") }
-    public static var p24: Self { .init(rawValue: "p24") }
-    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
-    public static var payco: Self { .init(rawValue: "payco") }
-    public static var paynow: Self { .init(rawValue: "paynow") }
-    public static var paypal: Self { .init(rawValue: "paypal") }
-    public static var paypay: Self { .init(rawValue: "paypay") }
-    public static var payto: Self { .init(rawValue: "payto") }
-    public static var pix: Self { .init(rawValue: "pix") }
-    public static var promptpay: Self { .init(rawValue: "promptpay") }
-    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
-    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
-    public static var satispay: Self { .init(rawValue: "satispay") }
-    public static var scalapay: Self { .init(rawValue: "scalapay") }
-    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
-    public static var sequra: Self { .init(rawValue: "sequra") }
-    public static var sofort: Self { .init(rawValue: "sofort") }
-    public static var sunbit: Self { .init(rawValue: "sunbit") }
-    public static var swish: Self { .init(rawValue: "swish") }
-    public static var twint: Self { .init(rawValue: "twint") }
-    public static var upi: Self { .init(rawValue: "upi") }
-    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
-    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
-    public static var zip: Self { .init(rawValue: "zip") }
-}
-
-/// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
-/// method.
-public struct SetupIntentUpdatePaymentMethodDataAcssDebit: StripeParams {
-    /// Customer's bank account number.
-    public var accountNumber: String
-    /// Institution number of the customer's bank.
-    public var institutionNumber: String
-    /// Transit number of the customer's bank.
-    public var transitNumber: String
-
-    public init(accountNumber: String, institutionNumber: String, transitNumber: String) {
-        self.accountNumber = accountNumber
-        self.institutionNumber = institutionNumber
-        self.transitNumber = transitNumber
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountNumber = "account_number"
-        case institutionNumber = "institution_number"
-        case transitNumber = "transit_number"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var always: Self { .init(rawValue: "always") }
-    public static var limited: Self { .init(rawValue: "limited") }
-    public static var unspecified: Self { .init(rawValue: "unspecified") }
-}
-
-/// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
-public struct SetupIntentUpdatePaymentMethodDataAuBecsDebit: StripeParams {
-    /// The account number for the bank account.
-    public var accountNumber: String
-    /// Bank-State-Branch number of the bank account.
-    public var bsbNumber: String
-
-    public init(accountNumber: String, bsbNumber: String) {
-        self.accountNumber = accountNumber
-        self.bsbNumber = bsbNumber
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountNumber = "account_number"
-        case bsbNumber = "bsb_number"
-    }
-}
-
-/// If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank
-/// account.
-public struct SetupIntentUpdatePaymentMethodDataBacsDebit: StripeParams {
-    /// Account number of the bank account that the funds will be debited from.
-    public var accountNumber: String?
-    /// Sort code of the bank account. (e.g., `10-20-30`)
-    public var sortCode: String?
-
-    public init(accountNumber: String? = nil, sortCode: String? = nil) {
-        self.accountNumber = accountNumber
-        self.sortCode = sortCode
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountNumber = "account_number"
-        case sortCode = "sort_code"
-    }
-}
-
-/// Billing information associated with the PaymentMethod that may be used or required by particular
-/// types of payment methods.
-public struct SetupIntentUpdatePaymentMethodDataBillingDetails: ClearableParams {
-    /// Billing address.
-    public var address: SetupIntentUpdatePaymentMethodDataBillingDetailsAddress?
-    /// Email address.
-    public var email: String?
-    /// Full name.
-    public var name: String?
-    /// Billing phone number (including extension).
-    public var phone: String?
-    /// Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM
-    /// sellers.
-    public var taxId: String?
-    /// Fields to send empty, which clears them: `params.clear(.address)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(address: SetupIntentUpdatePaymentMethodDataBillingDetailsAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, taxId: String? = nil) {
-        self.address = address
-        self.email = email
-        self.name = name
-        self.phone = phone
-        self.taxId = taxId
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case address
-        case email
-        case name
-        case phone
-        case taxId = "tax_id"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case address
-        case email
-        case name
-        case phone
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataBillingDetailsAddress: StripeParams {
-    /// City, district, suburb, town, or village.
-    public var city: String?
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-    public var country: String?
-    /// Address line 1, such as the street, PO Box, or company name.
-    public var line1: String?
-    /// Address line 2, such as the apartment, suite, unit, or building.
-    public var line2: String?
-    /// ZIP or postal code.
-    public var postalCode: String?
-    /// State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-    public var state: String?
-
-    public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postalCode: String? = nil, state: String? = nil) {
-        self.city = city
-        self.country = country
-        self.line1 = line1
-        self.line2 = line2
-        self.postalCode = postalCode
-        self.state = state
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case city
-        case country
-        case line1
-        case line2
-        case postalCode = "postal_code"
-        case state
-    }
-}
-
-/// If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
-public struct SetupIntentUpdatePaymentMethodDataBoleto: StripeParams {
-    /// The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
-    public var taxId: String
-
-    public init(taxId: String) {
-        self.taxId = taxId
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case taxId = "tax_id"
-    }
-}
-
-/// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
-public struct SetupIntentUpdatePaymentMethodDataEps: StripeParams {
-    /// The customer's bank.
-    public var bank: SetupIntentUpdatePaymentMethodDataEpsBank?
-
-    public init(bank: SetupIntentUpdatePaymentMethodDataEpsBank? = nil) {
-        self.bank = bank
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataEpsBank: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var arzteUndApothekerBank: Self { .init(rawValue: "arzte_und_apotheker_bank") }
-    public static var austrianAnadiBankAg: Self { .init(rawValue: "austrian_anadi_bank_ag") }
-    public static var bankAustria: Self { .init(rawValue: "bank_austria") }
-    public static var bankhausCarlSpangler: Self { .init(rawValue: "bankhaus_carl_spangler") }
-    public static var bankhausSchelhammerUndSchatteraAg: Self { .init(rawValue: "bankhaus_schelhammer_und_schattera_ag") }
-    public static var bawagPskAg: Self { .init(rawValue: "bawag_psk_ag") }
-    public static var bksBankAg: Self { .init(rawValue: "bks_bank_ag") }
-    public static var brullKallmusBankAg: Self { .init(rawValue: "brull_kallmus_bank_ag") }
-    public static var btvVierLanderBank: Self { .init(rawValue: "btv_vier_lander_bank") }
-    public static var capitalBankGraweGruppeAg: Self { .init(rawValue: "capital_bank_grawe_gruppe_ag") }
-    public static var deutscheBankAg: Self { .init(rawValue: "deutsche_bank_ag") }
-    public static var dolomitenbank: Self { .init(rawValue: "dolomitenbank") }
-    public static var easybankAg: Self { .init(rawValue: "easybank_ag") }
-    public static var ersteBankUndSparkassen: Self { .init(rawValue: "erste_bank_und_sparkassen") }
-    public static var hypoAlpeadriabankInternationalAg: Self { .init(rawValue: "hypo_alpeadriabank_international_ag") }
-    public static var hypoBankBurgenlandAktiengesellschaft: Self { .init(rawValue: "hypo_bank_burgenland_aktiengesellschaft") }
-    public static var hypoNoeLbFurNiederosterreichUWien: Self { .init(rawValue: "hypo_noe_lb_fur_niederosterreich_u_wien") }
-    public static var hypoOberosterreichSalzburgSteiermark: Self { .init(rawValue: "hypo_oberosterreich_salzburg_steiermark") }
-    public static var hypoTirolBankAg: Self { .init(rawValue: "hypo_tirol_bank_ag") }
-    public static var hypoVorarlbergBankAg: Self { .init(rawValue: "hypo_vorarlberg_bank_ag") }
-    public static var marchfelderBank: Self { .init(rawValue: "marchfelder_bank") }
-    public static var oberbankAg: Self { .init(rawValue: "oberbank_ag") }
-    public static var raiffeisenBankengruppeOsterreich: Self { .init(rawValue: "raiffeisen_bankengruppe_osterreich") }
-    public static var schoellerbankAg: Self { .init(rawValue: "schoellerbank_ag") }
-    public static var spardaBankWien: Self { .init(rawValue: "sparda_bank_wien") }
-    public static var volksbankGruppe: Self { .init(rawValue: "volksbank_gruppe") }
-    public static var volkskreditbankAg: Self { .init(rawValue: "volkskreditbank_ag") }
-    public static var vrBankBraunau: Self { .init(rawValue: "vr_bank_braunau") }
-}
-
-/// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
-public struct SetupIntentUpdatePaymentMethodDataFpx: StripeParams {
-    /// The customer's bank.
-    public var bank: SetupIntentUpdatePaymentMethodDataFpxBank
-    /// Account holder type for FPX transaction
-    public var accountHolderType: SetupIntentUpdatePaymentMethodDataFpxAccountHolderType?
-
-    public init(bank: SetupIntentUpdatePaymentMethodDataFpxBank, accountHolderType: SetupIntentUpdatePaymentMethodDataFpxAccountHolderType? = nil) {
-        self.bank = bank
-        self.accountHolderType = accountHolderType
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountHolderType = "account_holder_type"
-        case bank
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataFpxBank: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var affinBank: Self { .init(rawValue: "affin_bank") }
-    public static var agrobank: Self { .init(rawValue: "agrobank") }
-    public static var allianceBank: Self { .init(rawValue: "alliance_bank") }
-    public static var ambank: Self { .init(rawValue: "ambank") }
-    public static var bankIslam: Self { .init(rawValue: "bank_islam") }
-    public static var bankMuamalat: Self { .init(rawValue: "bank_muamalat") }
-    public static var bankOfChina: Self { .init(rawValue: "bank_of_china") }
-    public static var bankRakyat: Self { .init(rawValue: "bank_rakyat") }
-    public static var bnpParibas: Self { .init(rawValue: "bnp_paribas") }
-    public static var bsn: Self { .init(rawValue: "bsn") }
-    public static var cimb: Self { .init(rawValue: "cimb") }
-    public static var citibank: Self { .init(rawValue: "citibank") }
-    public static var deutscheBank: Self { .init(rawValue: "deutsche_bank") }
-    public static var hongLeongBank: Self { .init(rawValue: "hong_leong_bank") }
-    public static var hsbc: Self { .init(rawValue: "hsbc") }
-    public static var kfh: Self { .init(rawValue: "kfh") }
-    public static var maybank2e: Self { .init(rawValue: "maybank2e") }
-    public static var maybank2u: Self { .init(rawValue: "maybank2u") }
-    public static var mbsbBank: Self { .init(rawValue: "mbsb_bank") }
-    public static var ocbc: Self { .init(rawValue: "ocbc") }
-    public static var pbEnterprise: Self { .init(rawValue: "pb_enterprise") }
-    public static var publicBank: Self { .init(rawValue: "public_bank") }
-    public static var rhb: Self { .init(rawValue: "rhb") }
-    public static var standardChartered: Self { .init(rawValue: "standard_chartered") }
-    public static var uob: Self { .init(rawValue: "uob") }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataFpxAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var company: Self { .init(rawValue: "company") }
-    public static var individual: Self { .init(rawValue: "individual") }
-}
-
-/// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
-public struct SetupIntentUpdatePaymentMethodDataIdeal: StripeParams {
-    /// The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
-    public var bank: SetupIntentUpdatePaymentMethodDataIdealBank?
-
-    public init(bank: SetupIntentUpdatePaymentMethodDataIdealBank? = nil) {
-        self.bank = bank
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataIdealBank: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var abnAmro: Self { .init(rawValue: "abn_amro") }
-    public static var adyen: Self { .init(rawValue: "adyen") }
-    public static var asnBank: Self { .init(rawValue: "asn_bank") }
-    public static var bunq: Self { .init(rawValue: "bunq") }
-    public static var buut: Self { .init(rawValue: "buut") }
-    public static var finom: Self { .init(rawValue: "finom") }
-    public static var handelsbanken: Self { .init(rawValue: "handelsbanken") }
-    public static var ing: Self { .init(rawValue: "ing") }
-    public static var knab: Self { .init(rawValue: "knab") }
-    public static var mollie: Self { .init(rawValue: "mollie") }
-    public static var moneyou: Self { .init(rawValue: "moneyou") }
-    public static var n26: Self { .init(rawValue: "n26") }
-    public static var nn: Self { .init(rawValue: "nn") }
-    public static var rabobank: Self { .init(rawValue: "rabobank") }
-    public static var regiobank: Self { .init(rawValue: "regiobank") }
-    public static var revolut: Self { .init(rawValue: "revolut") }
-    public static var snsBank: Self { .init(rawValue: "sns_bank") }
-    public static var triodosBank: Self { .init(rawValue: "triodos_bank") }
-    public static var vanLanschot: Self { .init(rawValue: "van_lanschot") }
-    public static var yoursafe: Self { .init(rawValue: "yoursafe") }
-}
-
-/// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
-public struct SetupIntentUpdatePaymentMethodDataKlarna: StripeParams {
-    /// Customer's date of birth
-    public var dob: SetupIntentUpdatePaymentMethodDataKlarnaDob?
-
-    public init(dob: SetupIntentUpdatePaymentMethodDataKlarnaDob? = nil) {
-        self.dob = dob
-    }
-}
-
-/// Customer's date of birth
-public struct SetupIntentUpdatePaymentMethodDataKlarnaDob: StripeParams {
-    /// The day of birth, between 1 and 31.
-    public var day: Int
-    /// The month of birth, between 1 and 12.
-    public var month: Int
-    /// The four-digit year of birth.
-    public var year: Int
-
-    public init(day: Int, month: Int, year: Int) {
-        self.day = day
-        self.month = month
-        self.year = year
-    }
-}
-
-/// If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment
-/// method.
-public struct SetupIntentUpdatePaymentMethodDataNaverPay: StripeParams {
-    /// Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults
-    /// to `card`.
-    public var funding: SetupIntentUpdatePaymentMethodDataNaverPayFunding?
-
-    public init(funding: SetupIntentUpdatePaymentMethodDataNaverPayFunding? = nil) {
-        self.funding = funding
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataNaverPayFunding: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var card: Self { .init(rawValue: "card") }
-    public static var points: Self { .init(rawValue: "points") }
-}
-
-/// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
-/// payment method.
-public struct SetupIntentUpdatePaymentMethodDataNzBankAccount: StripeParams {
-    /// The account number for the bank account.
-    public var accountNumber: String
-    /// The numeric code for the bank account's bank.
-    public var bankCode: String
-    /// The numeric code for the bank account's bank branch.
-    public var branchCode: String
-    /// The suffix of the bank account number.
-    public var suffix: String
-    /// The name on the bank account. Only required if the account holder name is different from the name of
-    /// the authorized signatory collected in the PaymentMethod’s billing details.
-    public var accountHolderName: String?
-    public var reference: String?
-
-    public init(accountNumber: String, bankCode: String, branchCode: String, suffix: String, accountHolderName: String? = nil, reference: String? = nil) {
-        self.accountNumber = accountNumber
-        self.bankCode = bankCode
-        self.branchCode = branchCode
-        self.suffix = suffix
-        self.accountHolderName = accountHolderName
-        self.reference = reference
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountHolderName = "account_holder_name"
-        case accountNumber = "account_number"
-        case bankCode = "bank_code"
-        case branchCode = "branch_code"
-        case reference
-        case suffix
-    }
-}
-
-/// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
-public struct SetupIntentUpdatePaymentMethodDataP24: StripeParams {
-    /// The customer's bank.
-    public var bank: SetupIntentUpdatePaymentMethodDataP24Bank?
-
-    public init(bank: SetupIntentUpdatePaymentMethodDataP24Bank? = nil) {
-        self.bank = bank
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataP24Bank: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var aliorBank: Self { .init(rawValue: "alior_bank") }
-    public static var bankMillennium: Self { .init(rawValue: "bank_millennium") }
-    public static var bankNowyBfgSa: Self { .init(rawValue: "bank_nowy_bfg_sa") }
-    public static var bankPekaoSa: Self { .init(rawValue: "bank_pekao_sa") }
-    public static var bankiSpbdzielcze: Self { .init(rawValue: "banki_spbdzielcze") }
-    public static var blik: Self { .init(rawValue: "blik") }
-    public static var bnpParibas: Self { .init(rawValue: "bnp_paribas") }
-    public static var boz: Self { .init(rawValue: "boz") }
-    public static var citiHandlowy: Self { .init(rawValue: "citi_handlowy") }
-    public static var creditAgricole: Self { .init(rawValue: "credit_agricole") }
-    public static var envelobank: Self { .init(rawValue: "envelobank") }
-    public static var etransferPocztowy24: Self { .init(rawValue: "etransfer_pocztowy24") }
-    public static var getinBank: Self { .init(rawValue: "getin_bank") }
-    public static var ideabank: Self { .init(rawValue: "ideabank") }
-    public static var ing: Self { .init(rawValue: "ing") }
-    public static var inteligo: Self { .init(rawValue: "inteligo") }
-    public static var mbankMtransfer: Self { .init(rawValue: "mbank_mtransfer") }
-    public static var nestPrzelew: Self { .init(rawValue: "nest_przelew") }
-    public static var noblePay: Self { .init(rawValue: "noble_pay") }
-    public static var pbacZIpko: Self { .init(rawValue: "pbac_z_ipko") }
-    public static var plusBank: Self { .init(rawValue: "plus_bank") }
-    public static var santanderPrzelew24: Self { .init(rawValue: "santander_przelew24") }
-    public static var tmobileUsbugiBankowe: Self { .init(rawValue: "tmobile_usbugi_bankowe") }
-    public static var toyotaBank: Self { .init(rawValue: "toyota_bank") }
-    public static var velobank: Self { .init(rawValue: "velobank") }
-    public static var volkswagenBank: Self { .init(rawValue: "volkswagen_bank") }
-}
-
-/// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
-public struct SetupIntentUpdatePaymentMethodDataPayto: StripeParams {
-    /// The account number for the bank account.
-    public var accountNumber: String?
-    /// Bank-State-Branch number of the bank account.
-    public var bsbNumber: String?
-    /// The PayID alias for the bank account.
-    public var payId: String?
-
-    public init(accountNumber: String? = nil, bsbNumber: String? = nil, payId: String? = nil) {
-        self.accountNumber = accountNumber
-        self.bsbNumber = bsbNumber
-        self.payId = payId
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountNumber = "account_number"
-        case bsbNumber = "bsb_number"
-        case payId = "pay_id"
-    }
-}
-
-/// Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for
-/// more information.
-public struct SetupIntentUpdatePaymentMethodDataRadarOptions: StripeParams {
-    /// A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata
-    /// and device details that help Radar make more accurate predictions on your payments.
-    public var session: String?
-
-    public init(session: String? = nil) {
-        self.session = session
-    }
-}
-
-/// If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank
-/// account.
-public struct SetupIntentUpdatePaymentMethodDataSepaDebit: StripeParams {
-    /// IBAN of the bank account.
-    public var iban: String
-
-    public init(iban: String) {
-        self.iban = iban
-    }
-}
-
-/// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-public struct SetupIntentUpdatePaymentMethodDataSofort: StripeParams {
-    /// Two-letter ISO code representing the country the bank account is located in.
-    public var country: SetupIntentUpdatePaymentMethodDataSofortCountry
-
-    public init(country: SetupIntentUpdatePaymentMethodDataSofortCountry) {
-        self.country = country
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataSofortCountry: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var at: Self { .init(rawValue: "AT") }
-    public static var be: Self { .init(rawValue: "BE") }
-    public static var de: Self { .init(rawValue: "DE") }
-    public static var es: Self { .init(rawValue: "ES") }
-    public static var it: Self { .init(rawValue: "IT") }
-    public static var nl: Self { .init(rawValue: "NL") }
-}
-
-/// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
-public struct SetupIntentUpdatePaymentMethodDataUpi: StripeParams {
-    /// Configuration options for setting up an eMandate
-    public var mandateOptions: SetupIntentUpdatePaymentMethodDataUpiMandateOptions?
-
-    public init(mandateOptions: SetupIntentUpdatePaymentMethodDataUpiMandateOptions? = nil) {
-        self.mandateOptions = mandateOptions
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case mandateOptions = "mandate_options"
-    }
-}
-
-/// Configuration options for setting up an eMandate
-public struct SetupIntentUpdatePaymentMethodDataUpiMandateOptions: StripeParams {
-    /// Amount to be charged for future payments.
-    public var amount: Int?
-    /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
-    /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
-    /// param.
-    public var amountType: SetupIntentUpdatePaymentMethodDataUpiMandateOptionsAmountType?
-    /// A description of the mandate or subscription that is meant to be displayed to the customer.
-    public var description: String?
-    /// End date of the mandate or subscription.
-    public var endDate: Date?
-
-    public init(amount: Int? = nil, amountType: SetupIntentUpdatePaymentMethodDataUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
-        self.amount = amount
-        self.amountType = amountType
-        self.description = description
-        self.endDate = endDate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case amountType = "amount_type"
-        case description
-        case endDate = "end_date"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fixed: Self { .init(rawValue: "fixed") }
-    public static var maximum: Self { .init(rawValue: "maximum") }
-}
-
-/// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
-/// payment method.
-public struct SetupIntentUpdatePaymentMethodDataUsBankAccount: StripeParams {
-    /// Account holder type: individual or company.
-    public var accountHolderType: SetupIntentUpdatePaymentMethodDataUsBankAccountAccountHolderType?
-    /// Account number of the bank account.
-    public var accountNumber: String?
-    /// Account type: checkings or savings. Defaults to checking if omitted.
-    public var accountType: SetupIntentUpdatePaymentMethodDataUsBankAccountAccountType?
-    /// The ID of a Financial Connections Account to use as a payment method.
-    public var financialConnectionsAccount: String?
-    /// Routing number of the bank account.
-    public var routingNumber: String?
-
-    public init(accountHolderType: SetupIntentUpdatePaymentMethodDataUsBankAccountAccountHolderType? = nil, accountNumber: String? = nil, accountType: SetupIntentUpdatePaymentMethodDataUsBankAccountAccountType? = nil, financialConnectionsAccount: String? = nil, routingNumber: String? = nil) {
-        self.accountHolderType = accountHolderType
-        self.accountNumber = accountNumber
-        self.accountType = accountType
-        self.financialConnectionsAccount = financialConnectionsAccount
-        self.routingNumber = routingNumber
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountHolderType = "account_holder_type"
-        case accountNumber = "account_number"
-        case accountType = "account_type"
-        case financialConnectionsAccount = "financial_connections_account"
-        case routingNumber = "routing_number"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var company: Self { .init(rawValue: "company") }
-    public static var individual: Self { .init(rawValue: "individual") }
-}
-
-public struct SetupIntentUpdatePaymentMethodDataUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var checking: Self { .init(rawValue: "checking") }
-    public static var savings: Self { .init(rawValue: "savings") }
 }
 
 /// Payment method-specific configuration for this SetupIntent.
@@ -6837,11 +3794,11 @@ public struct SetupIntentUpdatePaymentMethodOptionsAcssDebit: StripeParams {
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
     public var currency: SetupIntentUpdatePaymentMethodOptionsAcssDebitCurrency?
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsAcssDebitMandateOptions?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: SetupIntentUpdatePaymentMethodOptionsAcssDebitVerificationMethod?
 
-    public init(currency: SetupIntentUpdatePaymentMethodOptionsAcssDebitCurrency? = nil, mandateOptions: SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions? = nil, verificationMethod: SetupIntentUpdatePaymentMethodOptionsAcssDebitVerificationMethod? = nil) {
+    public init(currency: SetupIntentUpdatePaymentMethodOptionsAcssDebitCurrency? = nil, mandateOptions: SetupIntentPaymentMethodOptionsAcssDebitMandateOptions? = nil, verificationMethod: SetupIntentUpdatePaymentMethodOptionsAcssDebitVerificationMethod? = nil) {
         self.currency = currency
         self.mandateOptions = mandateOptions
         self.verificationMethod = verificationMethod
@@ -6865,81 +3822,6 @@ public struct SetupIntentUpdatePaymentMethodOptionsAcssDebitCurrency: RawReprese
     public static var usd: Self { .init(rawValue: "usd") }
 }
 
-/// Additional fields for Mandate creation
-public struct SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions: ClearableParams {
-    /// A URL for custom mandate text to render during confirmation step. The URL will be rendered with
-    /// additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a
-    /// Payment Intent, or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
-    public var customMandateUrl: String?
-    /// List of Stripe products where this mandate can be selected automatically.
-    public var defaultFor: [SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsDefaultFor]?
-    /// Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or
-    /// 'combined'.
-    public var intervalDescription: String?
-    /// Payment schedule for the mandate.
-    public var paymentSchedule: SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule?
-    /// Transaction type of the mandate.
-    public var transactionType: SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType?
-    /// Fields to send empty, which clears them: `params.clear(.customMandateUrl)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(customMandateUrl: String? = nil, defaultFor: [SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsDefaultFor]? = nil, intervalDescription: String? = nil, paymentSchedule: SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule? = nil, transactionType: SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType? = nil) {
-        self.customMandateUrl = customMandateUrl
-        self.defaultFor = defaultFor
-        self.intervalDescription = intervalDescription
-        self.paymentSchedule = paymentSchedule
-        self.transactionType = transactionType
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case customMandateUrl = "custom_mandate_url"
-        case defaultFor = "default_for"
-        case intervalDescription = "interval_description"
-        case paymentSchedule = "payment_schedule"
-        case transactionType = "transaction_type"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case customMandateUrl = "custom_mandate_url"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsDefaultFor: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var invoice: Self { .init(rawValue: "invoice") }
-    public static var subscription: Self { .init(rawValue: "subscription") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var combined: Self { .init(rawValue: "combined") }
-    public static var interval: Self { .init(rawValue: "interval") }
-    public static var sporadic: Self { .init(rawValue: "sporadic") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var business: Self { .init(rawValue: "business") }
-    public static var personal: Self { .init(rawValue: "personal") }
-}
-
 public struct SetupIntentUpdatePaymentMethodOptionsAcssDebitVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
     public let rawValue: String
 
@@ -6956,38 +3838,14 @@ public struct SetupIntentUpdatePaymentMethodOptionsAcssDebitVerificationMethod: 
 /// method options.
 public struct SetupIntentUpdatePaymentMethodOptionsBacsDebit: StripeParams {
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentUpdatePaymentMethodOptionsBacsDebitMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsBacsDebitMandateOptions?
 
-    public init(mandateOptions: SetupIntentUpdatePaymentMethodOptionsBacsDebitMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsBacsDebitMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
-    }
-}
-
-/// Additional fields for Mandate creation
-public struct SetupIntentUpdatePaymentMethodOptionsBacsDebitMandateOptions: ClearableParams {
-    /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
-    /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
-    /// '.'. Cannot begin with 'DDIC' or 'STRIPE'.
-    public var referencePrefix: String?
-    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(referencePrefix: String? = nil) {
-        self.referencePrefix = referencePrefix
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case referencePrefix = "reference_prefix"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case referencePrefix = "reference_prefix"
     }
 }
 
@@ -6997,9 +3855,9 @@ public struct SetupIntentUpdatePaymentMethodOptionsBlik: StripeParams {
     /// on confirmation.
     public var code: String?
     /// Details of the BLIK mandate
-    public var mandateOptions: SetupIntentUpdatePaymentMethodOptionsBlikMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsBlikMandateOptions?
 
-    public init(code: String? = nil, mandateOptions: SetupIntentUpdatePaymentMethodOptionsBlikMandateOptions? = nil) {
+    public init(code: String? = nil, mandateOptions: SetupIntentPaymentMethodOptionsBlikMandateOptions? = nil) {
         self.code = code
         self.mandateOptions = mandateOptions
     }
@@ -7007,20 +3865,6 @@ public struct SetupIntentUpdatePaymentMethodOptionsBlik: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case code
         case mandateOptions = "mandate_options"
-    }
-}
-
-/// Details of the BLIK mandate
-public struct SetupIntentUpdatePaymentMethodOptionsBlikMandateOptions: StripeParams {
-    /// Expiry date of the mandate.
-    public var expiresAt: Date?
-
-    public init(expiresAt: Date? = nil) {
-        self.expiresAt = expiresAt
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case expiresAt = "expires_at"
     }
 }
 
@@ -7046,9 +3890,9 @@ public struct SetupIntentUpdatePaymentMethodOptionsCard: StripeParams {
     public var setupCredentialUsage: SetupIntentUpdatePaymentMethodOptionsCardSetupCredentialUsage?
     /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
     /// use for this setup.
-    public var threeDSecure: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecure?
+    public var threeDSecure: SetupIntentPaymentMethodOptionsCardThreeDSecure?
 
-    public init(mandateOptions: SetupIntentUpdatePaymentMethodOptionsCardMandateOptions? = nil, moto: Bool? = nil, network: SetupIntentUpdatePaymentMethodOptionsCardNetwork? = nil, requestThreeDSecure: SetupIntentUpdatePaymentMethodOptionsCardRequestThreeDSecure? = nil, setupCredentialUsage: SetupIntentUpdatePaymentMethodOptionsCardSetupCredentialUsage? = nil, threeDSecure: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecure? = nil) {
+    public init(mandateOptions: SetupIntentUpdatePaymentMethodOptionsCardMandateOptions? = nil, moto: Bool? = nil, network: SetupIntentUpdatePaymentMethodOptionsCardNetwork? = nil, requestThreeDSecure: SetupIntentUpdatePaymentMethodOptionsCardRequestThreeDSecure? = nil, setupCredentialUsage: SetupIntentUpdatePaymentMethodOptionsCardSetupCredentialUsage? = nil, threeDSecure: SetupIntentPaymentMethodOptionsCardThreeDSecure? = nil) {
         self.mandateOptions = mandateOptions
         self.moto = moto
         self.network = network
@@ -7095,9 +3939,9 @@ public struct SetupIntentUpdatePaymentMethodOptionsCardMandateOptions: StripePar
     /// or 52 weeks). This parameter is optional when `interval=sporadic`.
     public var intervalCount: Int?
     /// Specifies the type of mandates supported. Possible values are `india`.
-    public var supportedTypes: [SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsSupportedTypes]?
+    public var supportedTypes: [SetupIntentPaymentMethodOptionsCardMandateOptionsSupportedTypes]?
 
-    public init(amount: Int, amountType: SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Date, description: String? = nil, endDate: Date? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
+    public init(amount: Int, amountType: SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsAmountType, currency: String, interval: SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsInterval, reference: String, startDate: Date, description: String? = nil, endDate: Date? = nil, intervalCount: Int? = nil, supportedTypes: [SetupIntentPaymentMethodOptionsCardMandateOptionsSupportedTypes]? = nil) {
         self.amount = amount
         self.amountType = amountType
         self.currency = currency
@@ -7147,16 +3991,6 @@ public struct SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsInterval: R
     public static var sporadic: Self { .init(rawValue: "sporadic") }
     public static var week: Self { .init(rawValue: "week") }
     public static var year: Self { .init(rawValue: "year") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsCardMandateOptionsSupportedTypes: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var india: Self { .init(rawValue: "india") }
 }
 
 public struct SetupIntentUpdatePaymentMethodOptionsCardNetwork: RawRepresentable, Codable, Hashable, Sendable {
@@ -7215,165 +4049,21 @@ public struct SetupIntentUpdatePaymentMethodOptionsCardSetupCredentialUsage: Raw
     public static var unscheduled: Self { .init(rawValue: "unscheduled") }
 }
 
-/// If 3D Secure authentication was performed with a third-party provider, the authentication details to
-/// use for this setup.
-public struct SetupIntentUpdatePaymentMethodOptionsCardThreeDSecure: StripeParams {
-    /// The `transStatus` returned from the card Issuer’s ACS in the ARes.
-    public var aresTransStatus: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureAresTransStatus?
-    /// The cryptogram, also known as the "authentication value" (AAV, CAVV or AEVV). This value is 20
-    /// bytes, base64-encoded into a 28-character string. (Most 3D Secure providers will return the
-    /// base64-encoded version, which is what you should specify here.)
-    public var cryptogram: String?
-    /// The Electronic Commerce Indicator (ECI) is returned by your 3D Secure provider and indicates what
-    /// degree of authentication was performed.
-    public var electronicCommerceIndicator: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator?
-    /// Network specific 3DS fields. Network specific arguments require an explicit card brand choice. The
-    /// parameter `payment_method_options.card.network`` must be populated accordingly
-    public var networkOptions: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptions?
-    /// The challenge indicator (`threeDSRequestorChallengeInd`) which was requested in the AReq sent to the
-    /// card Issuer's ACS. A string containing 2 digits from 01-99.
-    public var requestorChallengeIndicator: String?
-    /// For 3D Secure 1, the XID. For 3D Secure 2, the Directory Server Transaction ID (dsTransID).
-    public var transactionId: String?
-    /// The version of 3D Secure that was performed.
-    public var version: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureVersion?
-
-    public init(aresTransStatus: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureAresTransStatus? = nil, cryptogram: String? = nil, electronicCommerceIndicator: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator? = nil, networkOptions: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptions? = nil, requestorChallengeIndicator: String? = nil, transactionId: String? = nil, version: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureVersion? = nil) {
-        self.aresTransStatus = aresTransStatus
-        self.cryptogram = cryptogram
-        self.electronicCommerceIndicator = electronicCommerceIndicator
-        self.networkOptions = networkOptions
-        self.requestorChallengeIndicator = requestorChallengeIndicator
-        self.transactionId = transactionId
-        self.version = version
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case aresTransStatus = "ares_trans_status"
-        case cryptogram
-        case electronicCommerceIndicator = "electronic_commerce_indicator"
-        case networkOptions = "network_options"
-        case requestorChallengeIndicator = "requestor_challenge_indicator"
-        case transactionId = "transaction_id"
-        case version
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureAresTransStatus: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var a: Self { .init(rawValue: "A") }
-    public static var c: Self { .init(rawValue: "C") }
-    public static var i: Self { .init(rawValue: "I") }
-    public static var n: Self { .init(rawValue: "N") }
-    public static var r: Self { .init(rawValue: "R") }
-    public static var u: Self { .init(rawValue: "U") }
-    public static var y: Self { .init(rawValue: "Y") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var v01: Self { .init(rawValue: "01") }
-    public static var v02: Self { .init(rawValue: "02") }
-    public static var v05: Self { .init(rawValue: "05") }
-    public static var v06: Self { .init(rawValue: "06") }
-    public static var v07: Self { .init(rawValue: "07") }
-}
-
-/// Network specific 3DS fields. Network specific arguments require an explicit card brand choice. The
-/// parameter `payment_method_options.card.network`` must be populated accordingly
-public struct SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptions: StripeParams {
-    /// Cartes Bancaires-specific 3DS fields.
-    public var cartesBancaires: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires?
-
-    public init(cartesBancaires: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires? = nil) {
-        self.cartesBancaires = cartesBancaires
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case cartesBancaires = "cartes_bancaires"
-    }
-}
-
-/// Cartes Bancaires-specific 3DS fields.
-public struct SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancaires: StripeParams {
-    /// The cryptogram calculation algorithm used by the card Issuer's ACS to calculate the Authentication
-    /// cryptogram. Also known as `cavvAlgorithm`. messageExtension: CB-AVALGO
-    public var cbAvalgo: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo
-    /// The exemption indicator returned from Cartes Bancaires in the ARes. message extension: CB-EXEMPTION;
-    /// string (4 characters) This is a 3 byte bitmap (low significant byte first and most significant bit
-    /// first) that has been Base64 encoded
-    public var cbExemption: String?
-    /// The risk score returned from Cartes Bancaires in the ARes. message extension: CB-SCORE; numeric
-    /// value 0-99
-    public var cbScore: Int?
-
-    public init(cbAvalgo: SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo, cbExemption: String? = nil, cbScore: Int? = nil) {
-        self.cbAvalgo = cbAvalgo
-        self.cbExemption = cbExemption
-        self.cbScore = cbScore
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case cbAvalgo = "cb_avalgo"
-        case cbExemption = "cb_exemption"
-        case cbScore = "cb_score"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var v0: Self { .init(rawValue: "0") }
-    public static var v1: Self { .init(rawValue: "1") }
-    public static var v2: Self { .init(rawValue: "2") }
-    public static var v3: Self { .init(rawValue: "3") }
-    public static var v4: Self { .init(rawValue: "4") }
-    public static var a: Self { .init(rawValue: "A") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsCardThreeDSecureVersion: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var v102: Self { .init(rawValue: "1.0.2") }
-    public static var v210: Self { .init(rawValue: "2.1.0") }
-    public static var v220: Self { .init(rawValue: "2.2.0") }
-    public static var v230: Self { .init(rawValue: "2.3.0") }
-    public static var v231: Self { .init(rawValue: "2.3.1") }
-}
-
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method
 /// options.
 public struct SetupIntentUpdatePaymentMethodOptionsKlarna: ClearableParams {
     /// The currency of the SetupIntent. Three letter ISO currency code.
     public var currency: String?
     /// On-demand details if setting up a payment method for on-demand payments.
-    public var onDemand: SetupIntentUpdatePaymentMethodOptionsKlarnaOnDemand?
+    public var onDemand: SetupIntentPaymentMethodOptionsKlarnaOnDemand?
     /// Preferred language of the Klarna authorization page that the customer is redirected to
-    public var preferredLocale: SetupIntentUpdatePaymentMethodOptionsKlarnaPreferredLocale?
+    public var preferredLocale: SetupIntentPaymentMethodOptionsKlarnaPreferredLocale?
     /// Subscription details if setting up or charging a subscription
-    public var subscriptions: [SetupIntentUpdatePaymentMethodOptionsKlarnaSubscriptions]?
+    public var subscriptions: [SetupIntentPaymentMethodOptionsKlarnaSubscriptions]?
     /// Fields to send empty, which clears them: `params.clear(.subscriptions)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(currency: String? = nil, onDemand: SetupIntentUpdatePaymentMethodOptionsKlarnaOnDemand? = nil, preferredLocale: SetupIntentUpdatePaymentMethodOptionsKlarnaPreferredLocale? = nil, subscriptions: [SetupIntentUpdatePaymentMethodOptionsKlarnaSubscriptions]? = nil) {
+    public init(currency: String? = nil, onDemand: SetupIntentPaymentMethodOptionsKlarnaOnDemand? = nil, preferredLocale: SetupIntentPaymentMethodOptionsKlarnaPreferredLocale? = nil, subscriptions: [SetupIntentPaymentMethodOptionsKlarnaSubscriptions]? = nil) {
         self.currency = currency
         self.onDemand = onDemand
         self.preferredLocale = preferredLocale
@@ -7391,164 +4081,6 @@ public struct SetupIntentUpdatePaymentMethodOptionsKlarna: ClearableParams {
     /// The fields Stripe lets you clear by sending them empty
     public enum ClearableField: String, StripeClearableField {
         case subscriptions
-    }
-}
-
-/// On-demand details if setting up a payment method for on-demand payments.
-public struct SetupIntentUpdatePaymentMethodOptionsKlarnaOnDemand: StripeParams {
-    /// Your average amount value. You can use a value across your customer base, or segment based on
-    /// customer type, country, etc.
-    public var averageAmount: Int?
-    /// The maximum value you may charge a customer per purchase. You can use a value across your customer
-    /// base, or segment based on customer type, country, etc.
-    public var maximumAmount: Int?
-    /// The lowest or minimum value you may charge a customer per purchase. You can use a value across your
-    /// customer base, or segment based on customer type, country, etc.
-    public var minimumAmount: Int?
-    /// Interval at which the customer is making purchases
-    public var purchaseInterval: SetupIntentUpdatePaymentMethodOptionsKlarnaOnDemandPurchaseInterval?
-    /// The number of `purchase_interval` between charges
-    public var purchaseIntervalCount: Int?
-
-    public init(averageAmount: Int? = nil, maximumAmount: Int? = nil, minimumAmount: Int? = nil, purchaseInterval: SetupIntentUpdatePaymentMethodOptionsKlarnaOnDemandPurchaseInterval? = nil, purchaseIntervalCount: Int? = nil) {
-        self.averageAmount = averageAmount
-        self.maximumAmount = maximumAmount
-        self.minimumAmount = minimumAmount
-        self.purchaseInterval = purchaseInterval
-        self.purchaseIntervalCount = purchaseIntervalCount
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case averageAmount = "average_amount"
-        case maximumAmount = "maximum_amount"
-        case minimumAmount = "minimum_amount"
-        case purchaseInterval = "purchase_interval"
-        case purchaseIntervalCount = "purchase_interval_count"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsKlarnaOnDemandPurchaseInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsKlarnaPreferredLocale: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var csCz: Self { .init(rawValue: "cs-CZ") }
-    public static var daDk: Self { .init(rawValue: "da-DK") }
-    public static var deAt: Self { .init(rawValue: "de-AT") }
-    public static var deCh: Self { .init(rawValue: "de-CH") }
-    public static var deDe: Self { .init(rawValue: "de-DE") }
-    public static var elGr: Self { .init(rawValue: "el-GR") }
-    public static var enAt: Self { .init(rawValue: "en-AT") }
-    public static var enAu: Self { .init(rawValue: "en-AU") }
-    public static var enBe: Self { .init(rawValue: "en-BE") }
-    public static var enCa: Self { .init(rawValue: "en-CA") }
-    public static var enCh: Self { .init(rawValue: "en-CH") }
-    public static var enCz: Self { .init(rawValue: "en-CZ") }
-    public static var enDe: Self { .init(rawValue: "en-DE") }
-    public static var enDk: Self { .init(rawValue: "en-DK") }
-    public static var enEs: Self { .init(rawValue: "en-ES") }
-    public static var enFi: Self { .init(rawValue: "en-FI") }
-    public static var enFr: Self { .init(rawValue: "en-FR") }
-    public static var enGb: Self { .init(rawValue: "en-GB") }
-    public static var enGr: Self { .init(rawValue: "en-GR") }
-    public static var enIe: Self { .init(rawValue: "en-IE") }
-    public static var enIt: Self { .init(rawValue: "en-IT") }
-    public static var enNl: Self { .init(rawValue: "en-NL") }
-    public static var enNo: Self { .init(rawValue: "en-NO") }
-    public static var enNz: Self { .init(rawValue: "en-NZ") }
-    public static var enPl: Self { .init(rawValue: "en-PL") }
-    public static var enPt: Self { .init(rawValue: "en-PT") }
-    public static var enRo: Self { .init(rawValue: "en-RO") }
-    public static var enSe: Self { .init(rawValue: "en-SE") }
-    public static var enUs: Self { .init(rawValue: "en-US") }
-    public static var esEs: Self { .init(rawValue: "es-ES") }
-    public static var esUs: Self { .init(rawValue: "es-US") }
-    public static var fiFi: Self { .init(rawValue: "fi-FI") }
-    public static var frBe: Self { .init(rawValue: "fr-BE") }
-    public static var frCa: Self { .init(rawValue: "fr-CA") }
-    public static var frCh: Self { .init(rawValue: "fr-CH") }
-    public static var frFr: Self { .init(rawValue: "fr-FR") }
-    public static var itCh: Self { .init(rawValue: "it-CH") }
-    public static var itIt: Self { .init(rawValue: "it-IT") }
-    public static var nbNo: Self { .init(rawValue: "nb-NO") }
-    public static var nlBe: Self { .init(rawValue: "nl-BE") }
-    public static var nlNl: Self { .init(rawValue: "nl-NL") }
-    public static var plPl: Self { .init(rawValue: "pl-PL") }
-    public static var ptPt: Self { .init(rawValue: "pt-PT") }
-    public static var roRo: Self { .init(rawValue: "ro-RO") }
-    public static var svFi: Self { .init(rawValue: "sv-FI") }
-    public static var svSe: Self { .init(rawValue: "sv-SE") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsKlarnaSubscriptions: StripeParams {
-    /// Unit of time between subscription charges.
-    public var interval: SetupIntentUpdatePaymentMethodOptionsKlarnaSubscriptionsInterval
-    /// Describes the upcoming charge for this subscription.
-    public var nextBilling: SetupIntentUpdatePaymentMethodOptionsKlarnaSubscriptionsNextBilling
-    /// A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value
-    /// that persists across subscription charges.
-    public var reference: String
-    /// The number of intervals (specified in the `interval` attribute) between subscription charges. For
-    /// example, `interval=month` and `interval_count=3` charges every 3 months.
-    public var intervalCount: Int?
-    /// Name for subscription.
-    public var name: String?
-
-    public init(interval: SetupIntentUpdatePaymentMethodOptionsKlarnaSubscriptionsInterval, nextBilling: SetupIntentUpdatePaymentMethodOptionsKlarnaSubscriptionsNextBilling, reference: String, intervalCount: Int? = nil, name: String? = nil) {
-        self.interval = interval
-        self.nextBilling = nextBilling
-        self.reference = reference
-        self.intervalCount = intervalCount
-        self.name = name
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case interval
-        case intervalCount = "interval_count"
-        case name
-        case nextBilling = "next_billing"
-        case reference
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsKlarnaSubscriptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var day: Self { .init(rawValue: "day") }
-    public static var month: Self { .init(rawValue: "month") }
-    public static var week: Self { .init(rawValue: "week") }
-    public static var year: Self { .init(rawValue: "year") }
-}
-
-/// Describes the upcoming charge for this subscription.
-public struct SetupIntentUpdatePaymentMethodOptionsKlarnaSubscriptionsNextBilling: StripeParams {
-    /// The amount of the next charge for the subscription.
-    public var amount: Int
-    /// The date of the next charge for the subscription in YYYY-MM-DD format.
-    public var date: String
-
-    public init(amount: Int, date: String) {
-        self.amount = amount
-        self.date = date
     }
 }
 
@@ -7587,223 +4119,38 @@ public struct SetupIntentUpdatePaymentMethodOptionsPaypal: StripeParams {
 /// options.
 public struct SetupIntentUpdatePaymentMethodOptionsPayto: StripeParams {
     /// Additional fields for Mandate creation.
-    public var mandateOptions: SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsPaytoMandateOptions?
 
-    public init(mandateOptions: SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsPaytoMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
     }
-}
-
-/// Additional fields for Mandate creation.
-public struct SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptions: ClearableParams {
-    /// Amount that will be collected. It is required when `amount_type` is `fixed`.
-    public var amount: Int?
-    /// The type of amount that will be collected. The amount charged must be exact or up to the value of
-    /// `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
-    public var amountType: SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptionsAmountType?
-    /// Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
-    public var endDate: String?
-    /// The periodicity at which payments will be collected. Defaults to `adhoc`.
-    public var paymentSchedule: SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule?
-    /// The number of payments that will be made during a payment period. Defaults to 1 except for when
-    /// `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
-    public var paymentsPerPeriod: Int?
-    /// The purpose for which payments are made. Has a default value based on your merchant category code.
-    public var purpose: SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPurpose?
-    /// Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
-    public var startDate: String?
-    /// Fields to send empty, which clears them: `params.clear(.amount)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(amount: Int? = nil, amountType: SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptionsAmountType? = nil, endDate: String? = nil, paymentSchedule: SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule? = nil, paymentsPerPeriod: Int? = nil, purpose: SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPurpose? = nil, startDate: String? = nil) {
-        self.amount = amount
-        self.amountType = amountType
-        self.endDate = endDate
-        self.paymentSchedule = paymentSchedule
-        self.paymentsPerPeriod = paymentsPerPeriod
-        self.purpose = purpose
-        self.startDate = startDate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case amountType = "amount_type"
-        case endDate = "end_date"
-        case paymentSchedule = "payment_schedule"
-        case paymentsPerPeriod = "payments_per_period"
-        case purpose
-        case startDate = "start_date"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case amount
-        case amountType = "amount_type"
-        case endDate = "end_date"
-        case paymentSchedule = "payment_schedule"
-        case paymentsPerPeriod = "payments_per_period"
-        case purpose
-        case startDate = "start_date"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fixed: Self { .init(rawValue: "fixed") }
-    public static var maximum: Self { .init(rawValue: "maximum") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var adhoc: Self { .init(rawValue: "adhoc") }
-    public static var annual: Self { .init(rawValue: "annual") }
-    public static var daily: Self { .init(rawValue: "daily") }
-    public static var fortnightly: Self { .init(rawValue: "fortnightly") }
-    public static var monthly: Self { .init(rawValue: "monthly") }
-    public static var quarterly: Self { .init(rawValue: "quarterly") }
-    public static var semiAnnual: Self { .init(rawValue: "semi_annual") }
-    public static var weekly: Self { .init(rawValue: "weekly") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPurpose: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var dependantSupport: Self { .init(rawValue: "dependant_support") }
-    public static var government: Self { .init(rawValue: "government") }
-    public static var loan: Self { .init(rawValue: "loan") }
-    public static var mortgage: Self { .init(rawValue: "mortgage") }
-    public static var other: Self { .init(rawValue: "other") }
-    public static var pension: Self { .init(rawValue: "pension") }
-    public static var personal: Self { .init(rawValue: "personal") }
-    public static var retail: Self { .init(rawValue: "retail") }
-    public static var salary: Self { .init(rawValue: "salary") }
-    public static var tax: Self { .init(rawValue: "tax") }
-    public static var utility: Self { .init(rawValue: "utility") }
 }
 
 /// If this is a `pix` SetupIntent, this sub-hash contains details about the Pix payment method options.
 public struct SetupIntentUpdatePaymentMethodOptionsPix: StripeParams {
     /// Additional fields for mandate creation.
-    public var mandateOptions: SetupIntentUpdatePaymentMethodOptionsPixMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsPixMandateOptions?
 
-    public init(mandateOptions: SetupIntentUpdatePaymentMethodOptionsPixMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsPixMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
     public enum CodingKeys: String, CodingKey {
         case mandateOptions = "mandate_options"
     }
-}
-
-/// Additional fields for mandate creation.
-public struct SetupIntentUpdatePaymentMethodOptionsPixMandateOptions: StripeParams {
-    /// Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for
-    /// `amount_type=maximum`, defaults to 40000.
-    public var amount: Int?
-    /// Determines if the amount includes the IOF tax. Defaults to `never`.
-    public var amountIncludesIof: SetupIntentUpdatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof?
-    /// Type of amount. Defaults to `maximum`.
-    public var amountType: SetupIntentUpdatePaymentMethodOptionsPixMandateOptionsAmountType?
-    /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
-    /// Only `brl` is supported currently.
-    public var currency: String?
-    /// Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not
-    /// provided, the mandate will be active until canceled. If provided, end date should be after start
-    /// date.
-    public var endDate: String?
-    /// Schedule at which the future payments will be charged. Defaults to `monthly`.
-    public var paymentSchedule: SetupIntentUpdatePaymentMethodOptionsPixMandateOptionsPaymentSchedule?
-    /// Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
-    public var reference: String?
-    /// Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future.
-    /// Defaults to 3 days after the current date.
-    public var startDate: String?
-
-    public init(amount: Int? = nil, amountIncludesIof: SetupIntentUpdatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof? = nil, amountType: SetupIntentUpdatePaymentMethodOptionsPixMandateOptionsAmountType? = nil, currency: String? = nil, endDate: String? = nil, paymentSchedule: SetupIntentUpdatePaymentMethodOptionsPixMandateOptionsPaymentSchedule? = nil, reference: String? = nil, startDate: String? = nil) {
-        self.amount = amount
-        self.amountIncludesIof = amountIncludesIof
-        self.amountType = amountType
-        self.currency = currency
-        self.endDate = endDate
-        self.paymentSchedule = paymentSchedule
-        self.reference = reference
-        self.startDate = startDate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case amountIncludesIof = "amount_includes_iof"
-        case amountType = "amount_type"
-        case currency
-        case endDate = "end_date"
-        case paymentSchedule = "payment_schedule"
-        case reference
-        case startDate = "start_date"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var always: Self { .init(rawValue: "always") }
-    public static var never: Self { .init(rawValue: "never") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsPixMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fixed: Self { .init(rawValue: "fixed") }
-    public static var maximum: Self { .init(rawValue: "maximum") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsPixMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var halfyearly: Self { .init(rawValue: "halfyearly") }
-    public static var monthly: Self { .init(rawValue: "monthly") }
-    public static var quarterly: Self { .init(rawValue: "quarterly") }
-    public static var weekly: Self { .init(rawValue: "weekly") }
-    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
 /// If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment
 /// method options.
 public struct SetupIntentUpdatePaymentMethodOptionsSepaDebit: StripeParams {
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentUpdatePaymentMethodOptionsSepaDebitMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsSepaDebitMandateOptions?
 
-    public init(mandateOptions: SetupIntentUpdatePaymentMethodOptionsSepaDebitMandateOptions? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsSepaDebitMandateOptions? = nil) {
         self.mandateOptions = mandateOptions
     }
 
@@ -7812,39 +4159,15 @@ public struct SetupIntentUpdatePaymentMethodOptionsSepaDebit: StripeParams {
     }
 }
 
-/// Additional fields for Mandate creation
-public struct SetupIntentUpdatePaymentMethodOptionsSepaDebitMandateOptions: ClearableParams {
-    /// Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of
-    /// only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&',
-    /// '.'. Cannot begin with 'STRIPE'.
-    public var referencePrefix: String?
-    /// Fields to send empty, which clears them: `params.clear(.referencePrefix)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(referencePrefix: String? = nil) {
-        self.referencePrefix = referencePrefix
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case referencePrefix = "reference_prefix"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case referencePrefix = "reference_prefix"
-    }
-}
-
 /// If this is a `upi` SetupIntent, this sub-hash contains details about the UPI payment method options.
 public struct SetupIntentUpdatePaymentMethodOptionsUpi: ClearableParams {
     /// Configuration options for setting up an eMandate
-    public var mandateOptions: SetupIntentUpdatePaymentMethodOptionsUpiMandateOptions?
-    public var setupFutureUsage: SetupIntentUpdatePaymentMethodOptionsUpiSetupFutureUsage?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsUpiMandateOptions?
+    public var setupFutureUsage: SetupIntentPaymentMethodOptionsUpiSetupFutureUsage?
     /// Fields to send empty, which clears them: `params.clear(.setupFutureUsage)`.
     public var fieldsToClear: Set<ClearableField> = []
 
-    public init(mandateOptions: SetupIntentUpdatePaymentMethodOptionsUpiMandateOptions? = nil, setupFutureUsage: SetupIntentUpdatePaymentMethodOptionsUpiSetupFutureUsage? = nil) {
+    public init(mandateOptions: SetupIntentPaymentMethodOptionsUpiMandateOptions? = nil, setupFutureUsage: SetupIntentPaymentMethodOptionsUpiSetupFutureUsage? = nil) {
         self.mandateOptions = mandateOptions
         self.setupFutureUsage = setupFutureUsage
     }
@@ -7861,70 +4184,19 @@ public struct SetupIntentUpdatePaymentMethodOptionsUpi: ClearableParams {
     }
 }
 
-/// Configuration options for setting up an eMandate
-public struct SetupIntentUpdatePaymentMethodOptionsUpiMandateOptions: StripeParams {
-    /// Amount to be charged for future payments.
-    public var amount: Int?
-    /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
-    /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
-    /// param.
-    public var amountType: SetupIntentUpdatePaymentMethodOptionsUpiMandateOptionsAmountType?
-    /// A description of the mandate or subscription that is meant to be displayed to the customer.
-    public var description: String?
-    /// End date of the mandate or subscription.
-    public var endDate: Date?
-
-    public init(amount: Int? = nil, amountType: SetupIntentUpdatePaymentMethodOptionsUpiMandateOptionsAmountType? = nil, description: String? = nil, endDate: Date? = nil) {
-        self.amount = amount
-        self.amountType = amountType
-        self.description = description
-        self.endDate = endDate
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case amount
-        case amountType = "amount_type"
-        case description
-        case endDate = "end_date"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var fixed: Self { .init(rawValue: "fixed") }
-    public static var maximum: Self { .init(rawValue: "maximum") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsUpiSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var none: Self { .init(rawValue: "none") }
-    public static var offSession: Self { .init(rawValue: "off_session") }
-    public static var onSession: Self { .init(rawValue: "on_session") }
-}
-
 /// If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account
 /// payment method options.
 public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccount: StripeParams {
     /// Additional fields for Financial Connections Session creation
-    public var financialConnections: SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnections?
+    public var financialConnections: SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnections?
     /// Additional fields for Mandate creation
-    public var mandateOptions: SetupIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptions?
+    public var mandateOptions: SetupIntentPaymentMethodOptionsUsBankAccountMandateOptions?
     /// Additional fields for network related functions
-    public var networks: SetupIntentUpdatePaymentMethodOptionsUsBankAccountNetworks?
+    public var networks: SetupIntentPaymentMethodOptionsUsBankAccountNetworks?
     /// Bank account verification method. The default value is `automatic`.
     public var verificationMethod: SetupIntentUpdatePaymentMethodOptionsUsBankAccountVerificationMethod?
 
-    public init(financialConnections: SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnections? = nil, mandateOptions: SetupIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptions? = nil, networks: SetupIntentUpdatePaymentMethodOptionsUsBankAccountNetworks? = nil, verificationMethod: SetupIntentUpdatePaymentMethodOptionsUsBankAccountVerificationMethod? = nil) {
+    public init(financialConnections: SetupIntentPaymentMethodOptionsUsBankAccountFinancialConnections? = nil, mandateOptions: SetupIntentPaymentMethodOptionsUsBankAccountMandateOptions? = nil, networks: SetupIntentPaymentMethodOptionsUsBankAccountNetworks? = nil, verificationMethod: SetupIntentUpdatePaymentMethodOptionsUsBankAccountVerificationMethod? = nil) {
         self.financialConnections = financialConnections
         self.mandateOptions = mandateOptions
         self.networks = networks
@@ -7937,139 +4209,6 @@ public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccount: StripeParams {
         case networks
         case verificationMethod = "verification_method"
     }
-}
-
-/// Additional fields for Financial Connections Session creation
-public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnections: StripeParams {
-    /// Provide filters for the linked accounts that the customer can select for the payment method.
-    public var filters: SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsFilters?
-    /// The list of permissions to request. If this parameter is passed, the `payment_method` permission
-    /// must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and
-    /// `transactions`.
-    public var permissions: [SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions]?
-    /// List of data features that you would like to retrieve upon account creation.
-    public var prefetch: [SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch]?
-    /// For webview integrations only. Upon completing OAuth login in the native browser, the user will be
-    /// redirected to this URL to return to your app.
-    public var returnUrl: String?
-
-    public init(filters: SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsFilters? = nil, permissions: [SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions]? = nil, prefetch: [SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch]? = nil, returnUrl: String? = nil) {
-        self.filters = filters
-        self.permissions = permissions
-        self.prefetch = prefetch
-        self.returnUrl = returnUrl
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case filters
-        case permissions
-        case prefetch
-        case returnUrl = "return_url"
-    }
-}
-
-/// Provide filters for the linked accounts that the customer can select for the payment method.
-public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsFilters: StripeParams {
-    /// The account subcategories to use to filter for selectable accounts. Valid subcategories are
-    /// `checking` and `savings`.
-    public var accountSubcategories: [SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories]?
-
-    public init(accountSubcategories: [SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories]? = nil) {
-        self.accountSubcategories = accountSubcategories
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case accountSubcategories = "account_subcategories"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var checking: Self { .init(rawValue: "checking") }
-    public static var savings: Self { .init(rawValue: "savings") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var balances: Self { .init(rawValue: "balances") }
-    public static var ownership: Self { .init(rawValue: "ownership") }
-    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
-    public static var transactions: Self { .init(rawValue: "transactions") }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var balances: Self { .init(rawValue: "balances") }
-    public static var ownership: Self { .init(rawValue: "ownership") }
-    public static var transactions: Self { .init(rawValue: "transactions") }
-}
-
-/// Additional fields for Mandate creation
-public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptions: ClearableParams {
-    /// The method used to collect offline mandate customer acceptance.
-    public var collectionMethod: SetupIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod?
-    /// Fields to send empty, which clears them: `params.clear(.collectionMethod)`.
-    public var fieldsToClear: Set<ClearableField> = []
-
-    public init(collectionMethod: SetupIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod? = nil) {
-        self.collectionMethod = collectionMethod
-    }
-
-    public enum CodingKeys: String, CodingKey {
-        case collectionMethod = "collection_method"
-        case fieldsToClear = "__stripe_kit_fields_to_clear"
-    }
-
-    /// The fields Stripe lets you clear by sending them empty
-    public enum ClearableField: String, StripeClearableField {
-        case collectionMethod = "collection_method"
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var paper: Self { .init(rawValue: "paper") }
-}
-
-/// Additional fields for network related functions
-public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountNetworks: StripeParams {
-    /// Triggers validations to run across the selected networks
-    public var requested: [SetupIntentUpdatePaymentMethodOptionsUsBankAccountNetworksRequested]?
-
-    public init(requested: [SetupIntentUpdatePaymentMethodOptionsUsBankAccountNetworksRequested]? = nil) {
-        self.requested = requested
-    }
-}
-
-public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountNetworksRequested: RawRepresentable, Codable, Hashable, Sendable {
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static var ach: Self { .init(rawValue: "ach") }
-    public static var usDomesticWire: Self { .init(rawValue: "us_domestic_wire") }
 }
 
 public struct SetupIntentUpdatePaymentMethodOptionsUsBankAccountVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
