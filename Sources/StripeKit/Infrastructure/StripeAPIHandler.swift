@@ -16,14 +16,20 @@ public struct StripeAPIHandler: Sendable {
     let apiKey: String
     /// The connected account every request is made as, unless its options name another
     let stripeAccount: String?
+    /// How many times a request is retried after a network error or a response Stripe marks
+    /// retryable (see `shouldRetry`). 0 turns retries off.
+    public let maxNetworkRetries: Int
     /// Generated from the spec, so it always matches the models (see `StripeClient.apiVersion`)
     var apiVersion: String { StripeClient.apiVersion }
     let baseURL = "https://api.stripe.com"
 
-    public init(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil) {
+    /// - Parameter maxNetworkRetries: Retries after a network error or a retryable response,
+    ///   2 by default, as in Stripe's own SDKs.
+    public init(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil, maxNetworkRetries: Int = 2) {
         self.httpClient = httpClient
         self.apiKey = apiKey
         self.stripeAccount = stripeAccount
+        self.maxNetworkRetries = max(0, maxNetworkRetries)
     }
 
     // MARK: - Requests
@@ -133,8 +139,9 @@ public struct StripeAPIHandler: Sendable {
         if let stripeAccount = options.stripeAccount ?? stripeAccount {
             request.headers.add(name: "Stripe-Account", value: stripeAccount)
         }
-        // Idempotency-Key: safe retries, always per request
-        if let idempotencyKey = options.idempotencyKey {
+        // Idempotency-Key: the request's own, or for a POST that may be retried, a generated one,
+        // so a retry after a lost response can't perform it twice (as Stripe's SDKs do)
+        if let idempotencyKey = options.idempotencyKey ?? (method == .POST && maxNetworkRetries > 0 ? "stripe-kit-retry-\(UUID().uuidString)" : nil) {
             request.headers.add(name: "Idempotency-Key", value: idempotencyKey)
         }
         if method == .POST {
@@ -145,18 +152,72 @@ public struct StripeAPIHandler: Sendable {
     }
 
     /// Send `request` and return the response body, or throw the `StripeError` it describes.
+    /// Retries up to `maxNetworkRetries` times after a network error or a retryable response,
+    /// waiting `retryDelay` between attempts. The request is sent unchanged each time, so a
+    /// POST keeps its idempotency key.
     private func execute(_ request: HTTPClientRequest, timeout: TimeAmount, maxBytes: Int) async throws -> Data {
-        let response = try await httpClient.execute(request, timeout: timeout)
-        let data = Data(try await response.body.collect(upTo: maxBytes).readableBytesView)
+        var retries = 0
+        while true {
+            let response: HTTPClientResponse
+            do {
+                response = try await httpClient.execute(request, timeout: timeout)
+            } catch where retries < maxNetworkRetries && !(error is CancellationError) {
+                // No response (connection refused or reset, timeout, ...): Stripe may or may not
+                // have received it, and the idempotency key makes a POST safe to resend
+                retries += 1
+                try await Self.sleep(seconds: Self.retryDelay(retry: retries, retryAfter: nil))
+                continue
+            }
+            let data = Data(try await response.body.collect(upTo: maxBytes).readableBytesView)
 
-        guard (200..<300).contains(response.status.code) else {
+            if (200..<300).contains(response.status.code) {
+                return data
+            }
+            if retries < maxNetworkRetries, Self.shouldRetry(status: response.status.code, headers: response.headers) {
+                retries += 1
+                let retryAfter = response.headers.first(name: "Retry-After")
+                try await Self.sleep(seconds: Self.retryDelay(retry: retries, retryAfter: retryAfter))
+                continue
+            }
             // Errors are JSON, even from endpoints whose success response is a file
             if let stripeError = try? JSONDecoder().decode(StripeError.self, from: data) {
                 throw stripeError
             }
             throw StripeError(error: StripeAPIError(type: .apiError, message: "HTTP \(response.status.code)"))
         }
-        return data
+    }
+
+    // MARK: - Retry Policy
+
+    /// Whether a failed response is worth retrying, following Stripe's SDKs: the
+    /// `Stripe-Should-Retry` header when Stripe sends it, otherwise a 409 conflict (e.g. a
+    /// lock timeout) or a 5xx error.
+    static func shouldRetry(status: UInt, headers: HTTPHeaders) -> Bool {
+        switch headers.first(name: "Stripe-Should-Retry") {
+        case "true": return true
+        case "false": return false
+        default: return status == 409 || status >= 500
+        }
+    }
+
+    static let initialRetryDelay: TimeInterval = 0.5
+    static let maxRetryDelay: TimeInterval = 5
+
+    /// Seconds to wait before retry number `retry` (1-based): exponential backoff from 0.5s,
+    /// capped at 5s, with jitter (50–100% of it, but never under 0.5s), and at least as long as
+    /// a `Retry-After` of up to 60 seconds asks. `random` is the jitter, in 0...1.
+    static func retryDelay(retry: Int, retryAfter: String?, random: Double = .random(in: 0...1)) -> TimeInterval {
+        var delay = min(initialRetryDelay * pow(2, Double(retry - 1)), maxRetryDelay)
+        delay *= 0.5 * (1 + random)
+        delay = max(initialRetryDelay, delay)
+        if let retryAfter = retryAfter.flatMap({ TimeInterval($0) }), retryAfter <= 60 {
+            delay = max(delay, retryAfter)
+        }
+        return delay
+    }
+
+    private static func sleep(seconds: TimeInterval) async throws {
+        try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
     }
 }
 

@@ -233,6 +233,14 @@ Stripe supports [idempotency keys](https://docs.stripe.com/api/idempotent_reques
 let customer = try await stripe.customers.create(params, options: .init(idempotencyKey: UUID().uuidString))
 ```
 
+### Retries
+
+Like Stripe's own SDKs, requests are retried up to 2 times, with exponential backoff (0.5s, doubling, up to 5s, with jitter), after a network error or a response Stripe marks retryable: its `Stripe-Should-Retry` header when present, otherwise a 409 or a 5xx. A `Retry-After` of up to 60 seconds is honoured. POSTs get a generated idempotency key unless you pass your own, so a retry can't perform one twice.
+
+```swift
+let stripe = StripeClient.live(httpClient: .shared, apiKey: key, maxNetworkRetries: 3)  // 0 turns retries off
+```
+
 ### Stripe Connect (`onBehalfOf`)
 
 Make requests as a connected account (sends the `Stripe-Account` header; unrelated to the `on_behalf_of` param), for one request or a whole client:

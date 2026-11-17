@@ -421,9 +421,12 @@ extension StripeClient {
 
 extension StripeClient {
     /// Create a live client connected to the Stripe API.
-    /// - Parameter stripeAccount: Make every request as this connected account (see `onBehalfOf(_:)`).
-    public static func live(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil) -> StripeClient {
-        .live(handler: StripeAPIHandler(httpClient: httpClient, apiKey: apiKey, stripeAccount: stripeAccount))
+    /// - Parameters:
+    ///   - stripeAccount: Make every request as this connected account (see `onBehalfOf(_:)`).
+    ///   - maxNetworkRetries: Retries after a network error or a response Stripe marks retryable,
+    ///     with backoff, 2 by default as in Stripe's own SDKs. 0 turns retries off.
+    public static func live(httpClient: HTTPClient, apiKey: String, stripeAccount: String? = nil, maxNetworkRetries: Int = 2) -> StripeClient {
+        .live(handler: StripeAPIHandler(httpClient: httpClient, apiKey: apiKey, stripeAccount: stripeAccount, maxNetworkRetries: maxNetworkRetries))
     }
 
     /// A client whose routes all send their requests through `handler`.
